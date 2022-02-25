@@ -304,7 +304,9 @@ with its resource routes and <cite>ResourceController</cite>.</p>
 creates the five most common routes needed for full CRUD of a resource: create a new resource, update an existing one,
 list all of that resource, show a single resource, and delete a single resource. The first parameter is the resource
 name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>             <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
@@ -328,7 +330,9 @@ name:</p>
 <p>The second parameter accepts an array of options that can be used to modify the routes that are generated. While these
 routes are geared toward API-usage, where more methods are allowed, you can pass in the <code class="docutils literal notranslate"><span class="pre">websafe</span></code> option to have it
 generate update and delete methods that work with HTML forms:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;websafe&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;websafe&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">]);</span>
 
 <span class="c1">// The following equivalent routes are created:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)/delete&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
@@ -339,7 +343,9 @@ generate update and delete methods that work with HTML forms:</p>
 <h3><a class="toc-backref" href="#id5">Change the Controller Used</a><a class="headerlink" href="#change-the-controller-used" title="Permalink to this headline"></a></h3>
 <p>You can specify the controller that should be used by passing in the <code class="docutils literal notranslate"><span class="pre">controller</span></code> option with the name of
 the controller that should be used:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Would create routes like:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Gallery::index&#39;</span><span class="p">);</span>
@@ -350,7 +356,9 @@ the controller that should be used:</p>
 <h3><a class="toc-backref" href="#id6">Change the Placeholder Used</a><a class="headerlink" href="#change-the-placeholder-used" title="Permalink to this headline"></a></h3>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> placeholder is used when a resource ID is needed. You can change this by passing
 in the <code class="docutils literal notranslate"><span class="pre">placeholder</span></code> option with the new string to use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;(:num)&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;(:num)&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Generates routes like:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
@@ -361,11 +369,15 @@ in the <code class="docutils literal notranslate"><span class="pre">placeholder<
 <h3><a class="toc-backref" href="#id7">Limit the Routes Made</a><a class="headerlink" href="#limit-the-routes-made" title="Permalink to this headline"></a></h3>
 <p>You can restrict the routes generated with the <code class="docutils literal notranslate"><span class="pre">only</span></code> option. This should be <strong>an array</strong> or <strong>comma separated list</strong> of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">]]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
 <p>Otherwise you can remove unused routes with the <code class="docutils literal notranslate"><span class="pre">except</span></code> option. This should also be <strong>an array</strong> or <strong>comma separated list</strong> of method names. This option run after <code class="docutils literal notranslate"><span class="pre">only</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new,edit&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new,edit&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Valid methods are: <code class="docutils literal notranslate"><span class="pre">index</span></code>, <code class="docutils literal notranslate"><span class="pre">show</span></code>, <code class="docutils literal notranslate"><span class="pre">create</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span></code>, <code class="docutils literal notranslate"><span class="pre">new</span></code>, <code class="docutils literal notranslate"><span class="pre">edit</span></code> and <code class="docutils literal notranslate"><span class="pre">delete</span></code>.</p>
@@ -398,7 +410,9 @@ implement those methods that you want handled:</p>
 </pre></div>
 </div>
 <p>The routing for this would be:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -411,7 +425,9 @@ for your resource, or process forms submitted from those views.</p>
 <p>It is not needed, since the presentation can be handled with
 a conventional controller - it is a convenience.
 Its usage is similar to the resource routing:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
@@ -432,7 +448,9 @@ Its usage is similar to the resource routing:</p>
 </div>
 <p>You would not have routes for <cite>photos</cite> for both a resource and a presenter
 controller. You need to distinguish them, for instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;api/photo&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;api/photo&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;admin/photos&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -441,7 +459,9 @@ controller. You need to distinguish them, for instance:</p>
 <h3><a class="toc-backref" href="#id10">Change the Controller Used</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <p>You can specify the controller that should be used by passing in the <code class="docutils literal notranslate"><span class="pre">controller</span></code> option with the name of
 the controller that should be used:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Would create routes like:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Gallery::index&#39;</span><span class="p">);</span>
@@ -452,7 +472,9 @@ the controller that should be used:</p>
 <h3><a class="toc-backref" href="#id11">Change the Placeholder Used</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> placeholder is used when a resource ID is needed. You can change this by passing
 in the <code class="docutils literal notranslate"><span class="pre">placeholder</span></code> option with the new string to use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;(:num)&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;(:num)&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Generates routes like:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
@@ -463,11 +485,15 @@ in the <code class="docutils literal notranslate"><span class="pre">placeholder<
 <h3><a class="toc-backref" href="#id12">Limit the Routes Made</a><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <p>You can restrict the routes generated with the <code class="docutils literal notranslate"><span class="pre">only</span></code> option. This should be <strong>an array</strong> or <strong>comma separated list</strong> of method names that should
 be created. Only routes that match one of these methods will be created. The rest will be ignored:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">]]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
 <p>Otherwise you can remove unused routes with the <code class="docutils literal notranslate"><span class="pre">except</span></code> option. This should also be <strong>an array</strong> or <strong>comma separated list</strong> of method names. This option run after <code class="docutils literal notranslate"><span class="pre">only</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new,edit&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;new,edit&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Valid methods are: <code class="docutils literal notranslate"><span class="pre">index</span></code>, <code class="docutils literal notranslate"><span class="pre">show</span></code>, <code class="docutils literal notranslate"><span class="pre">new</span></code>, <code class="docutils literal notranslate"><span class="pre">create</span></code>, <code class="docutils literal notranslate"><span class="pre">edit</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span></code>, <code class="docutils literal notranslate"><span class="pre">remove</span></code> and <code class="docutils literal notranslate"><span class="pre">delete</span></code>.</p>
@@ -501,7 +527,9 @@ implement those methods that you want handled:</p>
 </pre></div>
 </div>
 <p>The routing for this would be:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>

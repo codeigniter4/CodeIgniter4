@@ -358,7 +358,9 @@ instances of our User Entity class instead of an object or array like normal.</p
 <section id="working-with-the-entity-class">
 <h3><a class="toc-backref" href="#id4">Working With the Entity Class</a><a class="headerlink" href="#working-with-the-entity-class" title="Permalink to this headline"></a></h3>
 <p>Now that all of the pieces are in place, you would work with the Entity class as you would any other class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 
 <span class="c1">// Display</span>
 <span class="k">echo</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">;</span>
@@ -403,7 +405,9 @@ call the <code class="docutils literal notranslate"><span class="pre">update()</
 and populate the class properties. Any property in the array will be set on the Entity. However, when saving through
 the model, only the fields in <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> will actually be saved to the database, so you can store additional data
 on your entities without worrying much about stray fields getting saved incorrectly.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">fill</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -411,7 +415,9 @@ on your entities without worrying much about stray fields getting saved incorrec
 </pre></div>
 </div>
 <p>You can also pass the data in the constructor and the data will be passed through the <code class="docutils literal notranslate"><span class="pre">fill()</span></code> method during instantiation.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">();</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
@@ -485,7 +491,9 @@ is UTC so we can easily convert the viewer’s current timezone. In <code class=
 a formatted string in the application’s current timezone.</p>
 <p>While fairly simple, these examples show that using Entity classes can provide a very flexible way to enforce
 business logic and create objects that are pleasant to use.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Auto-hash the password - both do the same thing</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Auto-hash the password - both do the same thing</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">password</span> <span class="o">=</span> <span class="s1">&#39;my great password&#39;</span><span class="p">;</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">setPassword</span><span class="p">(</span><span class="s1">&#39;my great password&#39;</span><span class="p">);</span>
 </pre></div>
@@ -578,7 +586,9 @@ of helpful methods in an immutable, localized way.</p>
 </div>
 <p>Now, when any of those properties are set, they will be converted to a Time instance, using the application’s
 current timezone, as set in <strong>app/Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
 
 <span class="c1">// Converted to Time instance</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">created_at</span> <span class="o">=</span> <span class="s1">&#39;April 15, 2017 10:30:00&#39;</span><span class="p">;</span>
@@ -645,7 +655,9 @@ Unlike the rest of the data types that you can cast properties into, the:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span>    <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span>    <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
 <span class="nv">$options</span> <span class="o">=</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">;</span>
 
 <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span><span class="p">;</span>
@@ -676,7 +688,9 @@ by humans:</p>
 </pre></div>
 </div>
 <p>Stored in the database as “red,yellow,green”:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$widget</span><span class="o">-&gt;</span><span class="na">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$widget</span><span class="o">-&gt;</span><span class="na">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -737,7 +751,9 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 </pre></div>
 </div>
 <p>If you don’t need to change values when getting or setting a value. Then just don’t implement the appropriate method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
 <span class="p">{</span>
@@ -752,7 +768,9 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 <p>In some cases, one type is not enough. In this situation, you can use additional parameters.
 Additional parameters are indicated in square brackets and listed with a comma.</p>
 <p><strong>type[param1, param2]</strong></p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Defining a type with parameters</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Defining a type with parameters</span>
 <span class="k">protected</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;some_attribute&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;class[App\SomeClass, param2, param3]&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -763,7 +781,9 @@ Additional parameters are indicated in square brackets and listed with a comma.<
 <span class="p">];</span>
 </pre></div>
 </div>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Entity\Cast\BaseCast</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">SomeHandler</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
 <span class="p">{</span>
@@ -794,7 +814,9 @@ If casting type has predefined parameters, then <code class="docutils literal no
 <h2><a class="toc-backref" href="#id15">Checking for Changed Attributes</a><a class="headerlink" href="#checking-for-changed-attributes" title="Permalink to this headline"></a></h2>
 <p>You can check if an Entity attribute has changed since it was created. The only parameter is the name of the
 attribute to check:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span> <span class="c1">// false</span>
 
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s1">&#39;Fred&#39;</span><span class="p">;</span>
@@ -802,7 +824,9 @@ attribute to check:</p>
 </pre></div>
 </div>
 <p>Or to check the whole entity for changed values omit the parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span> <span class="c1">// true</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span><span class="o">-&gt;</span><span class="na">hasChanged</span><span class="p">();</span> <span class="c1">// true</span>
 </pre></div>
 </div>
 </section>

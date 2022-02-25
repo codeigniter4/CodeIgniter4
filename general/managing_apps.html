@@ -281,21 +281,27 @@ rename or relocate your application directory.</p>
 it to a different location on your server, other than your project root, open
 your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</em> in the
 <code class="docutils literal notranslate"><span class="pre">$appDirectory</span></code> variable (at about line 44):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/app&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/app&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>You will need to modify two additional files in your project root, so that
 they can find the <strong>Paths</strong> configuration file:</p>
 <ul>
 <li><p><strong>/spark</strong> runs command line apps; the path is specified on or about line 35:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
 </li>
 <li><p><strong>/public/index.php</strong> is the front controller for your webapp; the config
 path is specified on or about line 20:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this if you move your application folder</span>
 </pre></div>
 </div>
@@ -334,7 +340,9 @@ of those would be set to refer to the shared common <strong>system</strong> fold
 modify <strong>spark</strong> inside each application’s project folder, as directed above.</p>
 <p>When you use Composer autoloader, fix the <code class="docutils literal notranslate"><span class="pre">COMPOSER_PATH</span></code> constant in <strong>app/Config/Constants.php</strong> inside each
 of those:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">,</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;../vendor/autoload.php&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">,</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;../vendor/autoload.php&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>

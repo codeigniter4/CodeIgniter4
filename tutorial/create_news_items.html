@@ -272,7 +272,9 @@ this functionality.</p>
 <h2>Enable CSRF Filter<a class="headerlink" href="#enable-csrf-filter" title="Permalink to this headline"></a></h2>
 <p>Before creating a form, let’s enable the CSRF protection.</p>
 <p>Open the <strong>app/Config/Filters.php</strong> file and update the <code class="docutils literal notranslate"><span class="pre">$methods</span></code> property like the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
@@ -321,7 +323,9 @@ errors related to form validation.</p>
 check whether the form was submitted and whether the submitted data
 passed the validation rules. You’ll use the <a class="reference internal" href="../libraries/validation.html"><span class="doc">form
 validation</span></a> library to do this.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 
@@ -406,7 +410,9 @@ you have to add an extra rule to <strong>app/Config/Routes.php</strong> file. Ma
 file contains the following. This makes sure CodeIgniter sees <code class="docutils literal notranslate"><span class="pre">create</span></code>
 as a method instead of a news item’s slug. You can read more about different
 routing types <a class="reference internal" href="../incoming/routing.html"><span class="doc">here</span></a>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">],</span> <span class="s1">&#39;news/create&#39;</span><span class="p">,</span> <span class="s1">&#39;News::create&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">],</span> <span class="s1">&#39;news/create&#39;</span><span class="p">,</span> <span class="s1">&#39;News::create&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;News::index&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>

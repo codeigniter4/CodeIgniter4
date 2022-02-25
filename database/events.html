@@ -280,7 +280,9 @@ uses this to collect the queries to display in the Toolbar.</p>
 a <a class="reference internal" href="queries.html"><span class="doc">Query</span></a> instance of the current query. You could use this to display all queries
 in STDOUT, or logging to a file, or even creating tools to do automatic query analysis to help you spot
 potentially missing indexes, slow queries, etc. An example usage might be:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// In Config\Events.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// In Config\Events.php</span>
 <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter\Debug\Toolbar\Collectors\Database::collect&#39;</span><span class="p">);</span>
 
 <span class="c1">// Collect the queries so something can be done with them later.</span>

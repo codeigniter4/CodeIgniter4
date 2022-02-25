@@ -275,7 +275,9 @@ cookies.</p>
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -356,14 +358,18 @@ the <code class="docutils literal notranslate"><span class="pre">$cookiePrefix</
 </dl>
 <p>Lets you delete a cookie. Unless you’ve set a custom path or other
 values, only the name of the cookie is needed.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">delete_cookie</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">delete_cookie</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This function is otherwise identical to <code class="docutils literal notranslate"><span class="pre">set_cookie()</span></code>, except that it
 does not have the value and expiration parameters. You can submit an
 array of values in the first parameter or you can set discrete
 parameters.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">delete_cookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">delete_cookie</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>

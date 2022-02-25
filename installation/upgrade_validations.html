@@ -316,7 +316,9 @@
 </div></blockquote>
 </li>
 <li><p>You have to change the validation rules. The new syntax is to set the rules as array in the controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$isValid</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$isValid</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[3]&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
     <span class="s1">&#39;phone&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|numeric|max_length[10]&#39;</span>

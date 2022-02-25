@@ -296,7 +296,9 @@
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
 <li><p>Specify the default language in <strong>Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -310,7 +312,9 @@
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-x">
 <h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// error.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// error.php</span>
 <span class="nv">$lang</span><span class="p">[</span><span class="s1">&#39;error_email_missing&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">;</span>
 <span class="nv">$lang</span><span class="p">[</span><span class="s1">&#39;error_url_missing&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="s1">&#39;You must submit a URL&#39;</span><span class="p">;</span>
 <span class="nv">$lang</span><span class="p">[</span><span class="s1">&#39;error_username_missing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;You must submit a username&#39;</span><span class="p">;</span>
@@ -324,7 +328,9 @@
 </section>
 <section id="codeigniter-version-4-x">
 <h3><a class="toc-backref" href="#id6">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Errors.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Errors.php</span>
 <span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;errorEmailMissing&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">,</span>
     <span class="s1">&#39;errorURLMissing&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a URL&#39;</span><span class="p">,</span>

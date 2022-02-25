@@ -303,7 +303,9 @@ in the last section of the table of contents:</p>
 <p>Sessions will typically run globally with each page load, so the Session
 class should be magically initialized.</p>
 <p>To access and initialize the session:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">session</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">session</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$config</span></code> parameter is optional - your application configuration.
@@ -316,7 +318,9 @@ one.</p>
 <p>Alternatively, you can use the helper function that will use the default
 configuration options. This version is a little friendlier to read,
 but does not take any configuration options.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span> <span class="o">=</span> <span class="nx">session</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span> <span class="o">=</span> <span class="nx">session</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -361,7 +365,9 @@ more problems!</p>
 have the session open, while you’ve already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">session_write_close</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">session_write_close</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -384,25 +390,35 @@ that are further explained below: flashdata and tempdata.</p>
 <h3><a class="toc-backref" href="#id6">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline"></a></h3>
 <p>Any piece of information from the session array is available through the
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Or through the conventional accessor method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or through the magic getter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">item</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">item</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Or even through the session helper method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nx">session</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="nx">session</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">item</span></code> is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored ‘name’ item to the <code class="docutils literal notranslate"><span class="pre">$name</span></code>
 variable, you will do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$name</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">];</span>
 
 <span class="c1">// or:</span>
 
@@ -420,7 +436,9 @@ to access does not exist.</p>
 </div>
 <p>If you want to retrieve all of the existing userdata, you can simply
 omit the item key (magic getter only works for single property values):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">;</span>
 
 <span class="c1">// or:</span>
 
@@ -439,12 +457,16 @@ variable. Or as a property of <code class="docutils literal notranslate"><span c
 <p>The former userdata method is deprecated,
 but you can pass an array containing your new session data to the
 <code class="docutils literal notranslate"><span class="pre">set()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">$array</span></code> is an associative array containing your new data. Here’s
 an example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$newdata</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$newdata</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;johndoe@some-site.com&#39;</span><span class="p">,</span>
     <span class="s1">&#39;logged_in&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
@@ -455,12 +477,16 @@ an example:</p>
 </div>
 <p>If you want to add session data one value at a time, <code class="docutils literal notranslate"><span class="pre">set()</span></code> also
 supports this syntax:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">,</span> <span class="s1">&#39;some_value&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">,</span> <span class="s1">&#39;some_value&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you want to verify that a session value exists, simply check with
 <code class="docutils literal notranslate"><span class="pre">isset()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// returns false if the &#39;some_name&#39; item doesn&#39;t exist or is null,</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// returns false if the &#39;some_name&#39; item doesn&#39;t exist or is null,</span>
 <span class="c1">// true otherwise:</span>
 <span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
@@ -468,7 +494,9 @@ supports this syntax:</p>
 </pre></div>
 </div>
 <p>Or you can call <code class="docutils literal notranslate"><span class="pre">has()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -476,7 +504,9 @@ supports this syntax:</p>
 <h3><a class="toc-backref" href="#id8">Pushing new value to session data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline"></a></h3>
 <p>The push method is used to push a new value onto a session value that is an array.
 For instance, if the ‘hobbies’ key contains an array of hobbies, you can add a new value onto the array like so:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sport&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;tennis&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sport&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;tennis&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -484,7 +514,9 @@ For instance, if the ‘hobbies’ key contains an array of hobbies, you can add
 <h3><a class="toc-backref" href="#id9">Removing Session Data</a><a class="headerlink" href="#removing-session-data" title="Permalink to this headline"></a></h3>
 <p>Just as with any other variable, unsetting a value in <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> can be
 done through <code class="docutils literal notranslate"><span class="pre">unset()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]);</span>
 
 <span class="c1">// or multiple values:</span>
 
@@ -498,11 +530,15 @@ done through <code class="docutils literal notranslate"><span class="pre">unset(
 session, <code class="docutils literal notranslate"><span class="pre">remove()</span></code> can be used to remove it, by passing the
 session key. For example, if you wanted to remove ‘some_name’ from your
 session data array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="s1">&#39;some_name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This method also accepts an array of item keys to unset:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array_items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$array_items</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">remove</span><span class="p">(</span><span class="nv">$array_items</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -516,28 +552,38 @@ status messages (for example: “Record 2 deleted”).</p>
 <p>It should be noted that flashdata variables are regular session variables,
 managed inside the CodeIgniter session handler.</p>
 <p>To mark an existing item as “flashdata”:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you want to mark multiple items as flashdata, simply pass the keys as an
 array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>To add flashdata:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or alternatively, using the <code class="docutils literal notranslate"><span class="pre">setFlashdata()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also pass an array to <code class="docutils literal notranslate"><span class="pre">setFlashdata()</span></code>, in the same manner as
 <code class="docutils literal notranslate"><span class="pre">set()</span></code>.</p>
 <p>Reading flashdata variables is the same as reading regular session data
 through <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -548,11 +594,15 @@ grabbing all userdata from the session, however.</p>
 </div>
 <p>However, if you want to be sure that you’re reading “flashdata” (and not
 any other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or to get an array with all flashdata, simply omit the key parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -563,7 +613,9 @@ found.</p>
 <p>If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the <code class="docutils literal notranslate"><span class="pre">keepFlashdata()</span></code> method.
 You can either pass a single item or an array of flashdata items to keep.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">keepFlashdata</span><span class="p">([</span><span class="s1">&#39;item1&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">,</span> <span class="s1">&#39;item3&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -577,13 +629,17 @@ deleted, the value is automatically removed.</p>
 CodeIgniter session handler.</p>
 <p>To mark an existing item as “tempdata”, simply pass its key and expiry time
 (in seconds!) to the <code class="docutils literal notranslate"><span class="pre">markAsTempdata()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;item&#39; will be erased after 300 seconds</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// &#39;item&#39; will be erased after 300 seconds</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Both &#39;item&#39; and &#39;item2&#39; will expire after 300 seconds</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Both &#39;item&#39; and &#39;item2&#39; will expire after 300 seconds</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;item2&#39;</span><span class="p">],</span> <span class="mi">300</span><span class="p">);</span>
 
 <span class="c1">// &#39;item&#39; will be erased after 300 seconds, while &#39;item2&#39;</span>
@@ -595,16 +651,22 @@ you want them all to have the same expiry time or not:</p>
 </pre></div>
 </div>
 <p>To add tempdata:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span><span class="p">;</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span> <span class="c1">// Expire in 5 minutes</span>
 </pre></div>
 </div>
 <p>Or alternatively, using the <code class="docutils literal notranslate"><span class="pre">setTempdata()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also pass an array to <code class="docutils literal notranslate"><span class="pre">setTempdata()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$tempdata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newuser&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thanks for joining!&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$tempdata</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;newuser&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Thanks for joining!&#39;</span><span class="p">];</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">setTempdata</span><span class="p">(</span><span class="nv">$tempdata</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$expire</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -615,7 +677,9 @@ time-to-live value of 300 seconds (or 5 minutes) will be used.</p>
 </div>
 <p>To read a tempdata variable, again you can just access it through the
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -626,11 +690,15 @@ grabbing all userdata from the session, however.</p>
 </div>
 <p>Or if you want to be sure that you’re reading “tempdata” (and not any
 other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>And of course, if you want to retrieve all existing tempdata:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -640,14 +708,18 @@ found.</p>
 </div>
 <p>If you need to remove a tempdata value before it expires, you can directly
 unset it from the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>However, this won’t remove the marker that makes this specific item to be
 tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you’d want to use
 <code class="docutils literal notranslate"><span class="pre">removeTempdata()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">removeTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">removeTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -657,7 +729,9 @@ intend to reuse that same key in the same request, you’d want to use
 simply use either PHP’s <a class="reference external" href="https://www.php.net/session_destroy">session_destroy()</a>
 function, or the library’s <code class="docutils literal notranslate"><span class="pre">destroy()</span></code> method. Both will work in exactly the
 same way:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">session_destroy</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">session_destroy</span><span class="p">();</span>
 
 <span class="c1">// or</span>
 
@@ -674,7 +748,9 @@ unusable during the same request after you destroy the session.</p>
 <p>You may also use the <code class="docutils literal notranslate"><span class="pre">stop()</span></code> method to completely kill the session
 by removing the old session_id, destroying all data, and destroying
 the cookie that contained the session id:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -908,7 +984,9 @@ table that we already mentioned and then set it as your
 <code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code> value.
 For example, if you would like to use ‘ci_sessions’ as your table name,
 you would do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;ci_sessions&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -948,7 +1026,9 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 </div>
 <p>You can choose the Database group to use by adding a new line to the
 <strong>app/Config/App.php</strong> file with the name of the group to use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$sessionDBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">session:migration</span></code> command
@@ -1004,7 +1084,9 @@ the link above.</p>
 </div>
 <p>For the most common case however, a simple <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair should be
 sufficient:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDiver</span>    <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$sessionDiver</span>    <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1030,7 +1112,9 @@ expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code> format is fairly straightforward here,
 being just a <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1041,7 +1125,9 @@ third colon-separated (<code class="docutils literal notranslate"><span class="p
 to note that we haven’t tested if that is reliable.</p>
 <p>If you want to experiment with this feature (on your own risk), simply
 separate the multiple server paths with commas:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// localhost will be given higher priority (5) here,</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// localhost will be given higher priority (5) here,</span>
 <span class="c1">// compared to 192.0.2.1 with a weight of 1.</span>
 <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>
 </pre></div>

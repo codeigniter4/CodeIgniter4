@@ -294,16 +294,22 @@ relative URI to an existing one and have it resolved safely and correctly.</p>
 <section id="creating-uri-instances">
 <h2><a class="toc-backref" href="#id1">Creating URI instances</a><a class="headerlink" href="#creating-uri-instances" title="Permalink to this headline"></a></h2>
 <p>Creating a URI instance is as simple as creating a new class instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">service()</span></code> function to return an instance for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>When you create the new instance, you can pass a full or partial URL in the constructor and it will be parsed
 into its appropriate sections:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 <span class="nv">$uri</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -311,14 +317,18 @@ into its appropriate sections:</p>
 <h3><a class="toc-backref" href="#id2">The Current URI</a><a class="headerlink" href="#the-current-uri" title="Permalink to this headline"></a></h3>
 <p>Many times, all you really want is an object representing the current URL of this request.
 You can use one of the functions available in the <strong>url_helper</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You must pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter, otherwise, it will return the string representation of the current URL.
 This URI is based on the path (relative to your <code class="docutils literal notranslate"><span class="pre">baseURL</span></code>) as determined by the current request object and
 your settings in <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> (baseURL, indexPage, and forceGlobalSecureRequests).
 Assuming that you’re in a controller that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> you can get this relative path:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$path</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -327,13 +337,17 @@ Assuming that you’re in a controller that extends <code class="docutils litera
 <h2><a class="toc-backref" href="#id3">URI Strings</a><a class="headerlink" href="#uri-strings" title="Permalink to this headline"></a></h2>
 <p>Many times, all you really want is to get a string representation of a URI. This is easy to do by simply casting
 the URI as a string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="nx">current_url</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 <span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$uri</span><span class="p">;</span>  <span class="c1">// http://example.com/index.php</span>
 </pre></div>
 </div>
 <p>If you know the pieces of the URI and just want to ensure it’s all formatted correctly, you can generate a string
 using the URI class’ static <code class="docutils literal notranslate"><span class="pre">createURIString()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uriString</span> <span class="o">=</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="nv">$scheme</span><span class="p">,</span> <span class="nv">$authority</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$query</span><span class="p">,</span> <span class="nv">$fragment</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uriString</span> <span class="o">=</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="nv">$scheme</span><span class="p">,</span> <span class="nv">$authority</span><span class="p">,</span> <span class="nv">$path</span><span class="p">,</span> <span class="nv">$query</span><span class="p">,</span> <span class="nv">$fragment</span><span class="p">);</span>
 
 <span class="c1">// Creates: http://exmample.com/some/path?foo=bar#first-heading</span>
 <span class="k">echo</span> <span class="nx">URI</span><span class="o">::</span><span class="na">createURIString</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;some/path&#39;</span><span class="p">,</span> <span class="s1">&#39;foo=bar&#39;</span><span class="p">,</span> <span class="s1">&#39;first-heading&#39;</span><span class="p">);</span>
@@ -353,7 +367,9 @@ details on what those parts are, and how to work with them.</p>
 <section id="scheme">
 <h3><a class="toc-backref" href="#id5">Scheme</a><a class="headerlink" href="#scheme" title="Permalink to this headline"></a></h3>
 <p>The scheme is frequently ‘http’ or ‘https’, but any scheme is supported, including ‘file’, ‘mailto’, etc.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getScheme</span><span class="p">();</span> <span class="c1">// &#39;http&#39;</span>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setScheme</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">);</span>
@@ -365,7 +381,9 @@ details on what those parts are, and how to work with them.</p>
 <p>Many URIs contain several elements that are collectively known as the ‘authority’. This includes any user info,
 the host and the port number. You can retrieve all of these pieces as one single string with the <code class="docutils literal notranslate"><span class="pre">getAuthority()</span></code>
 method, or you can manipulate the individual parts.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>  <span class="c1">// user@example.com:21</span>
 </pre></div>
@@ -373,7 +391,9 @@ method, or you can manipulate the individual parts.</p>
 <p>By default, this will not display the password portion since you wouldn’t want to show that to anyone. If you want
 to show the password, you can use the <code class="docutils literal notranslate"><span class="pre">showPassword()</span></code> method. This URI instance will continue to show that password
 until you turn it off again, so always make sure that you turn it off as soon as you are finished with it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>  <span class="c1">// user@example.com:21</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>  <span class="c1">// user@example.com:21</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">();</span>   <span class="c1">// user:password@example.com:21</span>
 
 <span class="c1">// Turn password display off again.</span>
@@ -381,7 +401,9 @@ until you turn it off again, so always make sure that you turn it off as soon as
 </pre></div>
 </div>
 <p>If you do not want to display the port, pass in <code class="docutils literal notranslate"><span class="pre">true</span></code> as the only parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>  <span class="c1">// user@example.com</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getAuthority</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>  <span class="c1">// user@example.com</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -393,11 +415,15 @@ until you turn it off again, so always make sure that you turn it off as soon as
 <h3><a class="toc-backref" href="#id7">Userinfo</a><a class="headerlink" href="#userinfo" title="Permalink to this headline"></a></h3>
 <p>The userinfo section is simply the username and password that you might see with an FTP URI. While you can get
 this as part of the Authority, you can also retrieve it yourself:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user</span>
 </pre></div>
 </div>
 <p>By default, it will not display the password, but you can override that with the <code class="docutils literal notranslate"><span class="pre">showPassword()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user:password</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getUserInfo</span><span class="p">();</span>   <span class="c1">// user:password</span>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">showPassword</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -406,7 +432,9 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <h3><a class="toc-backref" href="#id8">Host</a><a class="headerlink" href="#host" title="Permalink to this headline"></a></h3>
 <p>The host portion of the URI is typically the domain name of the URL. This can be easily set and retrieved with the
 <code class="docutils literal notranslate"><span class="pre">getHost()</span></code> and <code class="docutils literal notranslate"><span class="pre">setHost()</span></code> methods:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>   <span class="c1">// www.example.com</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setHost</span><span class="p">(</span><span class="s1">&#39;anotherexample.com&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getHost</span><span class="p">();</span>    <span class="c1">// anotherexample.com</span>
@@ -416,7 +444,9 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <section id="port">
 <h3><a class="toc-backref" href="#id9">Port</a><a class="headerlink" href="#port" title="Permalink to this headline"></a></h3>
 <p>The port is an integer number between 0 and 65535. Each sheme has a default value associated with it.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;ftp://user:password@example.com:21/some/path&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span>   <span class="c1">// 21</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPort</span><span class="p">(</span><span class="mi">2201</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPort</span><span class="p">();</span> <span class="c1">// 2201</span>
@@ -428,7 +458,9 @@ this as part of the Authority, you can also retrieve it yourself:</p>
 <h3><a class="toc-backref" href="#id10">Path</a><a class="headerlink" href="#path" title="Permalink to this headline"></a></h3>
 <p>The path are all of the segments within the site itself. As expected, the <code class="docutils literal notranslate"><span class="pre">getPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">setPath()</span></code> methods
 can be used to manipulate it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>   <span class="c1">// &#39;some/path&#39;</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;another/path&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// &#39;another/path&#39;</span>
@@ -444,7 +476,9 @@ characters, and remove dot segments for safety.</p>
 <h3><a class="toc-backref" href="#id11">Query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
 <p>The query variables can be manipulated through the class using simple string representations. Query values can only
 be set as a string currently.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">();</span>  <span class="c1">// &#39;foo=bar&#39;</span>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="s1">&#39;foo=bar&amp;bar=baz&#39;</span><span class="p">);</span>
@@ -455,19 +489,25 @@ be set as a string currently.</p>
 <p>Query values cannot contain fragments. An InvalidArgumentException will be thrown if it does.</p>
 </div>
 <p>You can set query values using an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setQueryArray</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">setQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">setQueryArray()</span></code> methods overwrite any existing query variables. You can add a value to the
 query variables collection without destroying the existing query variables with the <code class="docutils literal notranslate"><span class="pre">addQuery()</span></code> method. The first
 parameter is the name of the variable, and the second parameter is the value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">addQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">addQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>Filtering Query Values</strong></p>
 <p>You can filter the query values returned by passing an options array to the <code class="docutils literal notranslate"><span class="pre">getQuery()</span></code> method, with either an
 <em>only</em> or an <em>except</em> key:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
 
 <span class="c1">// Returns &#39;foo=bar&#39;</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]]);</span>
@@ -478,7 +518,9 @@ parameter is the name of the variable, and the second parameter is the value:</p
 </div>
 <p>This only changes the values returned during this one call. If you need to modify the URI’s query values more permanently,
 you can use the <code class="docutils literal notranslate"><span class="pre">stripQuery()</span></code> and <code class="docutils literal notranslate"><span class="pre">keepQuery()</span></code> methods to change the actual object’s query variable collection:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
 
 <span class="c1">// Leaves just the &#39;baz&#39; variable</span>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">stripQuery</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
@@ -498,7 +540,9 @@ If you want to use more liberal rules (which allow key names to contain dots), y
 <h3><a class="toc-backref" href="#id12">Fragment</a><a class="headerlink" href="#fragment" title="Permalink to this headline"></a></h3>
 <p>Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URL’s these are links
 to an on-page anchor. Media URI’s can make use of them in various other ways.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path#first-heading&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/some/path#first-heading&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>   <span class="c1">// &#39;first-heading&#39;</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setFragment</span><span class="p">(</span><span class="s1">&#39;second-heading&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getFragment</span><span class="p">();</span>    <span class="c1">// &#39;second-heading&#39;</span>
@@ -510,7 +554,9 @@ to an on-page anchor. Media URI’s can make use of them in various other ways.<
 <h2><a class="toc-backref" href="#id13">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h2>
 <p>Each section of the path between the slashes is a single segment. The URI class provides a simple way to determine
 what the values of the segments are. The segments start at 1 being the furthest left of the path.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// URI = http://example.com/users/15/profile</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// URI = http://example.com/users/15/profile</span>
 
 <span class="c1">// Prints &#39;15&#39;</span>
 <span class="k">if</span> <span class="p">(</span><span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;users&#39;</span><span class="p">)</span> <span class="p">{</span>
@@ -519,7 +565,9 @@ what the values of the segments are. The segments start at 1 being the furthest 
 </pre></div>
 </div>
 <p>You can also set a different default value for a particular segment by using the second parameter of the <code class="docutils literal notranslate"><span class="pre">getSegment()</span></code> method. The default is empty string.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// URI = http://example.com/users/15/profile</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// URI = http://example.com/users/15/profile</span>
 
 <span class="c1">// will print &#39;profile&#39;</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegment</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">);</span>
@@ -534,11 +582,15 @@ what the values of the segments are. The segments start at 1 being the furthest 
 </pre></div>
 </div>
 <p>You can get a count of the total segments:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$total</span> <span class="o">=</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getTotalSegments</span><span class="p">();</span> <span class="c1">// 3</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$total</span> <span class="o">=</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getTotalSegments</span><span class="p">();</span> <span class="c1">// 3</span>
 </pre></div>
 </div>
 <p>Finally, you can retrieve an array of all of the segments:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$segments</span> <span class="o">=</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">();</span>
 
 <span class="cm">/*</span>
 <span class="cm">    Produces:</span>
@@ -556,7 +608,9 @@ what the values of the segments are. The segments start at 1 being the furthest 
 <h2><a class="toc-backref" href="#id14">Disable Throwing Exceptions</a><a class="headerlink" href="#disable-throwing-exceptions" title="Permalink to this headline"></a></h2>
 <p>By default, some methods of this class may throw an exception. If you want to disable it, you can set a special flag
 that will prevent throwing exceptions.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Disable throwing exceptions</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Disable throwing exceptions</span>
 <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">setSilent</span><span class="p">();</span>
 
 <span class="c1">// Enable throwing exceptions (default)</span>

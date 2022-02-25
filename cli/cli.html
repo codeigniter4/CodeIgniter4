@@ -355,7 +355,9 @@ you with CLI-only tools.</p>
 the CLI as easily as you would create any other route. Instead of using the <code class="docutils literal notranslate"><span class="pre">get()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">post()</span></code>, or similar method, you would use the <code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. Everything else
 works exactly like a normal route definition:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;tools/message/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Tools::message/$1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;tools/message/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Tools::message/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>For more information, see the <a class="reference internal" href="../incoming/routing.html#command-line-only-routes"><span class="std std-ref">Routes</span></a> page.</p>

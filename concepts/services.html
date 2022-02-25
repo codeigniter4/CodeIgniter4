@@ -287,7 +287,9 @@ of hard-coding a class name to load, the classes to call are defined within a ve
 configuration file. This file acts as a type of factory to create new instances of the required class.</p>
 <p>A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\Timer</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\Timer</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>And this works great. Until you decide that you want to use a different timer class in its place.
@@ -300,7 +302,9 @@ come in handy.</p>
 class for us. This class is kept very simple. It only contains a method for each class that we want
 to use as a service. The method typically returns a shared instance of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$timer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>When you need to change the implementation used, you can modify the services configuration file, and
@@ -318,16 +322,22 @@ error-resistant.</p>
 required parameter is the service name. This is the same as the method name within the Services
 file always returns a SHARED instance of the class, so calling the function multiple times should
 always return the same instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the creation method requires additional parameters, they can be passed after the service name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The second function, <code class="docutils literal notranslate"><span class="pre">single_service()</span></code> works just like <code class="docutils literal notranslate"><span class="pre">service()</span></code> but returns a new instance of
 the class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="nx">single_service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">single_service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -342,7 +352,9 @@ the classes are compatible.</p>
 <p>For example, the <code class="docutils literal notranslate"><span class="pre">RouterCollection</span></code> class implements the <code class="docutils literal notranslate"><span class="pre">RouterCollectionInterface</span></code>. When you
 want to create a replacement that provides a different way to create routes, you just need to
 create a new class that implements the <code class="docutils literal notranslate"><span class="pre">RouterCollectionInterface</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyRouter</span> <span class="k">implements</span> <span class="nx">\CodeIgniter\Router\RouteCollectionInterface</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">MyRouter</span> <span class="k">implements</span> <span class="nx">\CodeIgniter\Router\RouteCollectionInterface</span>
 <span class="p">{</span>
     <span class="c1">// Implement required methods here.</span>
 <span class="p">}</span>
@@ -350,7 +362,9 @@ create a new class that implements the <code class="docutils literal notranslate
 </div>
 <p>Finally, modify <strong>/app/Config/Services.php</strong> to create a new instance of <code class="docutils literal notranslate"><span class="pre">MyRouter</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouterCollection</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouter</span><span class="p">();</span>
 <span class="p">}</span>
@@ -364,7 +378,9 @@ Since the services file is a very simple class, it is easy to make this work.</p
 to find the views at <code class="docutils literal notranslate"><span class="pre">APPPATH.views/</span></code>. We want the developer to have the option of
 changing that path, though, if their needs require it. So the class accepts the <code class="docutils literal notranslate"><span class="pre">$viewPath</span></code>
 as a constructor parameter. The service method looks like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
 <span class="p">}</span>
@@ -372,7 +388,9 @@ as a constructor parameter. The service method looks like this:</p>
 </div>
 <p>This sets the default path in the constructor method, but allows for easily changing
 the path it uses:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">&#39;/shared/views&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">&#39;/shared/views&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -383,7 +401,9 @@ is created. This is easily handled with the <code class="docutils literal notran
 factory method. This handles checking if an instance has been created and saved
 within the class, and, if not, creates a new one. All of the factory methods provide a
 <code class="docutils literal notranslate"><span class="pre">$getShared</span> <span class="pre">=</span> <span class="pre">true</span></code> value as the last parameter. You should stick to the method also:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Services</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Services</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nv">$getShared</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
     <span class="p">{</span>
@@ -428,7 +448,9 @@ models, etc, and you’d like to make some of the classes available as a service
 </div>
 <p>Now you can use this file as described above. When you want to grab the posts service from any controller, you
 would simply use the framework’s <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> class to grab your service:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">postManager</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">postManager</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition note">

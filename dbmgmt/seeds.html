@@ -319,7 +319,9 @@ but organize the tasks into separate seeder files:</p>
 </div>
 <p>You can also use a fully-qualified class name in the <strong>call()</strong> method, allowing you to keep your seeders
 anywhere the autoloader can find them. This is great for more modular code bases:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;UserSeeder&#39;</span><span class="p">);</span>
     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;My\Database\Seeds\CountrySeeder&#39;</span><span class="p">);</span>
@@ -330,7 +332,9 @@ anywhere the autoloader can find them. This is great for more modular code bases
 <section id="using-seeders">
 <h2>Using Seeders<a class="headerlink" href="#using-seeders" title="Permalink to this headline"></a></h2>
 <p>You can grab a copy of the main seeder through the database config class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$seeder</span> <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">seeder</span><span class="p">();</span>
 <span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;TestSeeder&#39;</span><span class="p">);</span>
 </pre></div>
 </div>

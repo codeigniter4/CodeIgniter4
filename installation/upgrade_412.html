@@ -302,7 +302,9 @@ pick-and-choose across various test case needs. The <code class="docutils litera
 classes have been deprecated and their methods moved to <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code> and
 <code class="docutils literal notranslate"><span class="pre">FeatureTestTrait</span></code> respectively. Update your test cases to extend the main test case
 and use any traits you need. For example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestCase</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestCase</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">MyDatabaseTest</span> <span class="k">extends</span> <span class="nx">DatabaseTestCase</span>
 <span class="p">{</span>
@@ -314,7 +316,9 @@ and use any traits you need. For example:</p>
 </pre></div>
 </div>
 <p>… becomes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">MyDatabaseTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>

@@ -291,7 +291,9 @@ requirements are not met.</p>
 <section id="example-usage">
 <h2><a class="toc-backref" href="#id1">Example Usage</a><a class="headerlink" href="#example-usage" title="Permalink to this headline"></a></h2>
 <p>The following example shows a common usage pattern within your controllers.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Saving to the cache!&lt;br /&gt;&#39;</span><span class="p">;</span>
     <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">&#39;foobarbaz!&#39;</span><span class="p">;</span>
 
@@ -303,7 +305,9 @@ requirements are not met.</p>
 </pre></div>
 </div>
 <p>You can grab an instance of the cache engine directly through the Services class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">cache</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$cache</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">cache</span><span class="p">();</span>
 
 <span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
@@ -368,7 +372,9 @@ to projects and modules. This will replace the hard-coded value in a future rele
 <p>This method will attempt to fetch an item from the cache store. If the
 item does not exist, the method will return null.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -417,7 +423,9 @@ and save the result. Either way, this will return the value.</p>
 <p>This method will save an item to the cache store. If saving fails, the
 method will return <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">,</span> <span class="s1">&#39;data_to_cache&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">,</span> <span class="s1">&#39;data_to_cache&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -446,7 +454,9 @@ in order to allow usage of <code class="docutils literal notranslate"><span clas
 <p>This method will delete a specific item from the cache store. If item
 deletion fails, the method will return false.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;cache_item_id&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -475,7 +485,9 @@ matching their keys against a glob-style pattern. It will return the total numbe
 Due to limitations, it couldn’t be implemented for Memcached and Wincache handlers.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;prefix_*&#39;</span><span class="p">);</span> <span class="c1">// deletes all items of which keys start with &quot;prefix_&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;prefix_*&#39;</span><span class="p">);</span> <span class="c1">// deletes all items of which keys start with &quot;prefix_&quot;</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">deleteMatching</span><span class="p">(</span><span class="s1">&#39;*_suffix&#39;</span><span class="p">);</span> <span class="c1">// deletes all items of which keys end with &quot;_suffix&quot;</span>
 </pre></div>
 </div>
@@ -502,7 +514,9 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 </dl>
 <p>Performs atomic incrementation of a raw stored value.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;iterator&#39; has a value of 2</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// &#39;iterator&#39; has a value of 2</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">increment</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 6</span>
 </pre></div>
@@ -528,7 +542,9 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 </dl>
 <p>Performs atomic decrementation of a raw stored value.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// &#39;iterator&#39; has a value of 6</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// &#39;iterator&#39; has a value of 6</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 5</span>
 <span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">decrement</span><span class="p">(</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// &#39;iterator&#39; is now 3</span>
 </pre></div>
@@ -549,7 +565,9 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <p>This method will ‘clean’ the entire cache. If the deletion of the
 cache files fails, the method will return false.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">clean</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">clean</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -567,7 +585,9 @@ cache files fails, the method will return false.</p>
 </dl>
 <p>This method will return information on the entire cache.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">getCacheInfo</span><span class="p">());</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">getCacheInfo</span><span class="p">());</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -596,7 +616,9 @@ on which adapter is being used.</p>
 <p>This method will return detailed information on a specific item in the
 cache.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">getMetadata</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">));</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$cache</span><span class="o">-&gt;</span><span class="na">getMetadata</span><span class="p">(</span><span class="s1">&#39;my_cached_item&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -627,7 +649,9 @@ still return <code class="docutils literal notranslate"><span class="pre">false<
 <p>This method is used by handler methods to check that keys are valid. It will throw
 an <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> for non-strings, invalid characters, and empty lengths.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$prefixedKey</span> <span class="o">=</span> <span class="nx">BaseHandler</span><span class="o">::</span><span class="na">validateKey</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$prefixedKey</span> <span class="o">=</span> <span class="nx">BaseHandler</span><span class="o">::</span><span class="na">validateKey</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$prefix</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -646,7 +670,9 @@ directory to be really writable by the application.</p>
 <section id="memcached-caching">
 <h3><a class="toc-backref" href="#id6">Memcached Caching</a><a class="headerlink" href="#memcached-caching" title="Permalink to this headline"></a></h3>
 <p>Memcached servers can be specified in the cache configuration file. Available options are:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$memcached</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$memcached</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;host&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
     <span class="s1">&#39;port&#39;</span>   <span class="o">=&gt;</span> <span class="mi">11211</span><span class="p">,</span>
     <span class="s1">&#39;weight&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
@@ -668,7 +694,9 @@ directory to be really writable by the application.</p>
 <p>Redis is an in-memory key-value store which can operate in LRU cache mode.
 To use it, you need <a class="reference external" href="https://github.com/phpredis/phpredis">Redis server and phpredis PHP extension</a>.</p>
 <p>Config options to connect to redis server stored in the cache configuration file. Available options are:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$redis</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$redis</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;host&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span>
     <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
     <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>

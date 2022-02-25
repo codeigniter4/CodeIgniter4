@@ -306,7 +306,9 @@ Command-line requests will not have these features.</p>
 <section id="configuring-the-locale">
 <h3><a class="toc-backref" href="#id2">Configuring the Locale</a><a class="headerlink" href="#configuring-the-locale" title="Permalink to this headline"></a></h3>
 <p>Every site will have a default language/locale they operate in. This can be set in <strong>Config/App.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The value can be any string that your application uses to manage text strings and other formats. It is
@@ -329,14 +331,18 @@ will be used to set the locale.</p>
 <h4>Content Negotiation<a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h4>
 <p>You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
 The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in <code class="docutils literal notranslate"><span class="pre">$supportLocales</span></code>. If no match is found between the languages
 that you support, and the requested language, the first item in $supportedLocales will be used. In
 the following example, the <strong>en</strong> locale would be used if no match is found:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 </section>
@@ -345,7 +351,9 @@ the following example, the <strong>en</strong> locale would be used if no match 
 <p>The second method uses a custom placeholder to detect the desired locale and set it on the Request. The
 placeholder <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> can be placed as a segment in your route. If present, the contents of the matching
 segment will be your locale:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;{locale}/books&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Books::index&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;{locale}/books&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Books::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In this example, if the user tried to visit <code class="docutils literal notranslate"><span class="pre">http://example.com/fr/books</span></code>, then the locale would be
@@ -375,7 +383,9 @@ If your controller is extending <code class="docutils literal notranslate"><span
 </pre></div>
 </div>
 <p>Alternatively, you can use the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a> to retrieve the current request:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$locale</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$locale</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -388,13 +398,17 @@ If your controller is extending <code class="docutils literal notranslate"><span
 describe the type of content it holds. For example, let’s say you want to create a file containing error messages.
 You might name it simply: <strong>Errors.php</strong>.</p>
 <p>Within the file, you would return an array, where each element in the array has a language key and can have string to return:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>It also support nested definition:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;nested&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span><span class="p">,</span>
@@ -403,7 +417,9 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 <span class="p">];</span>
 </pre></div>
 </div>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;errorEmailMissing&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must submit an email address&#39;</span><span class="p">,</span>
     <span class="s1">&#39;errorURLMissing&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a URL&#39;</span><span class="p">,</span>
     <span class="s1">&#39;errorUsernameMissing&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must submit a username&#39;</span><span class="p">,</span>
@@ -421,11 +437,15 @@ You might name it simply: <strong>Errors.php</strong>.</p>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">lang()</span></code> helper function to retrieve text from any of the language files, by passing the
 filename and the language key as the first parameter, separated by a period (.). For example, to load the
 <code class="docutils literal notranslate"><span class="pre">errorEmailMissing</span></code> string from the <code class="docutils literal notranslate"><span class="pre">Errors</span></code> language file, you would do the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.errorEmailMissing&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.errorEmailMissing&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>For nested definition, you would do the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.nested.error.message&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Errors.nested.error.message&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the requested language key doesn’t exist in the file for the current locale, the string will be passed
@@ -440,7 +460,9 @@ A great overview can be found over at <a class="reference external" href="https:
 </div>
 <p>You can pass an array of values to replace placeholders in the language string as the second parameter to the
 <code class="docutils literal notranslate"><span class="pre">lang()</span></code> function. This allows for very simple number translations and formatting:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The language file, Tests.php:</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// The language file, Tests.php:</span>
 <span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;apples&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;I have {0, number} apples.&#39;</span><span class="p">,</span>
     <span class="s1">&#39;men&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;The top {1, number} men out-performed the remaining {0, number}&#39;</span><span class="p">,</span>
@@ -452,12 +474,16 @@ A great overview can be found over at <a class="reference external" href="https:
 </pre></div>
 </div>
 <p>The first item in the placeholder corresponds to the index of the item in the array, if it’s numerical:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;The top 23 men out-performed the remaining 20&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Displays &quot;The top 23 men out-performed the remaining 20&quot;</span>
 <span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.men&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">23</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can also use named keys to make it easier to keep things straight, if you’d like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Displays &quot;I have 3 apples.&quot;</span>
 <span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Tests.namedApples&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;number_apples&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -473,7 +499,9 @@ library, the following types of data can be replaced:</p>
 <li><p>duration</p></li>
 </ul>
 <p>Here are a few examples:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The language file, Tests.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// The language file, Tests.php</span>
 <span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;shortTime&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, short}.&#39;</span><span class="p">,</span>
     <span class="s1">&#39;mediumTime&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The time is now {0, time, medium}.&#39;</span><span class="p">,</span>
@@ -521,7 +549,9 @@ earlier will give you an excellent idea as to the options available.</p>
 <h4>Specifying Locale<a class="headerlink" href="#specifying-locale" title="Permalink to this headline"></a></h4>
 <p>To specify a different locale to be used when replacing parameters, you can pass the locale in as the
 third parameter to the <code class="docutils literal notranslate"><span class="pre">lang()</span></code> method.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Displays &quot;The time is now 23:21:28 GMT-5&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Displays &quot;The time is now 23:21:28 GMT-5&quot;</span>
 <span class="k">echo</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;Test.longTime&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nb">time</span><span class="p">()],</span> <span class="s1">&#39;ru-RU&#39;</span><span class="p">);</span>
 
 <span class="c1">// Displays &quot;£7.41&quot;</span>
@@ -534,7 +564,9 @@ third parameter to the <code class="docutils literal notranslate"><span class="p
 <section id="nested-arrays">
 <h4>Nested Arrays<a class="headerlink" href="#nested-arrays" title="Permalink to this headline"></a></h4>
 <p>Language files also allow nested arrays to make working with lists, etc… easier.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Language/en/Fruit.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Language/en/Fruit.php</span>
 
 <span class="k">return</span> <span class="p">[</span>
     <span class="s1">&#39;list&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>

@@ -290,7 +290,9 @@ is not a valid IP address, then will return 0.0.0.0</p>
 </dl>
 <p>Returns the IP address for the current user. If the IP address is not valid, the method
 will return ‘0.0.0.0’:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getIPAddress</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -327,7 +329,9 @@ on whether it is valid or not.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The $request-&gt;getIPAddress() method above automatically validates the IP address.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">isValidIP</span><span class="p">(</span><span class="nv">$ip</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Not Valid&#39;</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="s1">&#39;Valid&#39;</span><span class="p">;</span>
@@ -361,7 +365,9 @@ an IP format. The default checks for both formats.</p>
 </dl>
 <p>Returns the <code class="docutils literal notranslate"><span class="pre">$_SERVER['REQUEST_METHOD']</span></code>, with the option to set it
 in uppercase or lowercase.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Outputs: post</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span> <span class="c1">// Outputs: post</span>
 </pre></div>
@@ -406,12 +412,16 @@ in uppercase or lowercase.</p>
 </dl>
 <p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
 <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches server data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> values, pass all the required keys
 as an array.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -436,12 +446,16 @@ as an array.</p>
 </dl>
 <p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
 <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches getEnv data (<code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To return an array of multiple <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> values, pass all the required keys
 as an array.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">&#39;CI_ENVIRONMENT&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">&#39;CI_ENVIRONMENT&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>

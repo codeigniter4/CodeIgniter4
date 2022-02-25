@@ -290,7 +290,9 @@
 <p><strong>$db-&gt;listTables();</strong></p>
 <p>Returns an array containing the names of all the tables in the database
 you are currently connected to. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$tables</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">listTables</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$tables</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">listTables</span><span class="p">();</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$tables</span> <span class="k">as</span> <span class="nv">$table</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$table</span><span class="p">;</span>
@@ -307,7 +309,9 @@ you are currently connected to. Example:</p>
 <p><strong>$db-&gt;tableExists();</strong></p>
 <p>Sometimes it’s helpful to know whether a particular table exists before
 running an operation on it. Returns a boolean true/false. Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">tableExists</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">tableExists</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// some code...</span>
 <span class="p">}</span>
 </pre></div>
@@ -327,7 +331,9 @@ running an operation on it. Returns a boolean true/false. Usage example:</p>
 two ways:</p>
 <ol class="arabic">
 <li><p>You can supply the table name and call it from the <code class="docutils literal notranslate"><span class="pre">$db-&gt;object</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
@@ -338,7 +344,9 @@ two ways:</p>
 </ol>
 <p>2. You can gather the field names associated with any query you run by
 calling the function from your query result object:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM some_table&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM some_table&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getFieldNames</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$field</span><span class="p">;</span>
@@ -351,7 +359,9 @@ calling the function from your query result object:</p>
 <p><strong>$db-&gt;fieldExists()</strong></p>
 <p>Sometimes it’s helpful to know whether a particular field exists before
 performing an action. Returns a boolean true/false. Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">fieldExists</span><span class="p">(</span><span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="s1">&#39;table_name&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">fieldExists</span><span class="p">(</span><span class="s1">&#39;field_name&#39;</span><span class="p">,</span> <span class="s1">&#39;table_name&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// some code...</span>
 <span class="p">}</span>
 </pre></div>
@@ -374,7 +384,9 @@ the column type, max length, etc.</p>
 <p>Not all databases provide meta-data.</p>
 </div>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getFieldData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$field</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
@@ -386,7 +398,9 @@ the column type, max length, etc.</p>
 </div>
 <p>If you have run a query already you can use the result object instead of
 supplying the table name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">fieldData</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -404,7 +418,9 @@ database:</p>
 <p><strong>$db-&gt;getIndexData()</strong></p>
 <p>Returns an array of objects containing index information.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$keys</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getIndexData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$keys</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getIndexData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
@@ -419,7 +435,9 @@ for each key associated with a table.</p>
 <p><strong>$db-&gt;getForeignKeyData()</strong></p>
 <p>Returns an array of objects containing foreign key information.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$keys</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getForeignKeyData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$keys</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getForeignKeyData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>

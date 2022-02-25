@@ -292,11 +292,15 @@ the URI Protocol information. It will recommend that you try a couple of
 alternate settings. If it still doesn’t work after you’ve tried this
 you’ll need to force CodeIgniter to add a question mark to your URLs. To
 do this open your <strong>app/Config/App.php</strong> file and change this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$indexPage</span> <span class="o">=</span> <span class="s1">&#39;index.php&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$indexPage</span> <span class="o">=</span> <span class="s1">&#39;index.php&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>To this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$indexPage</span> <span class="o">=</span> <span class="s1">&#39;index.php?&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$indexPage</span> <span class="o">=</span> <span class="s1">&#39;index.php?&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>

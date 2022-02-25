@@ -275,7 +275,9 @@ dates.</p>
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id2">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -304,7 +306,9 @@ in your config file. If you do not intend to set your master time reference to
 any other PHP supported timezone (which you’ll typically do if you run a site
 that lets each user set their own timezone settings) there is no benefit to using
 this function over PHP’s <code class="docutils literal notranslate"><span class="pre">time()</span></code> function.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">now</span><span class="p">(</span><span class="s1">&#39;Australia/Victoria&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">now</span><span class="p">(</span><span class="s1">&#39;Australia/Victoria&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If a timezone is not provided, it will return <code class="docutils literal notranslate"><span class="pre">time()</span></code> based on the
@@ -334,7 +338,9 @@ this function over PHP’s <code class="docutils literal notranslate"><span clas
 <p>Generates a <cite>select</cite> form field of available timezones (optionally filtered by <cite>$what</cite> and <cite>$country</cite>).
 You can supply an option class to apply to the field to make formatting easier, as well as a default
 selected value.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">timezone_select</span><span class="p">(</span><span class="s1">&#39;custom-select&#39;</span><span class="p">,</span> <span class="s1">&#39;America/New_York&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">timezone_select</span><span class="p">(</span><span class="s1">&#39;custom-select&#39;</span><span class="p">,</span> <span class="s1">&#39;America/New_York&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>

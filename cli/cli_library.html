@@ -303,30 +303,42 @@ need to ensure your controller can locate it via a <code class="docutils literal
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the <code class="docutils literal notranslate"><span class="pre">prompt()</span></code> or <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code> method.</p>
 <p>You can provide a question by passing it in as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can provide a default answer that will be used if the user just hits enter by passing the default in the
 second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$color</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$overwrite</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;File exists. Overwrite?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$overwrite</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;File exists. Overwrite?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Validation rules can also be written in the array syntax:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;valid_email&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;valid_email&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p><strong>promptByKey()</strong></p>
 <p>Predefined answers (options) for prompt sometimes need to be described or are too complex to select via their value.
 <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code> allows the user to select an option by its key instead of its value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">(</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;The red apple&#39;</span><span class="p">,</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span> <span class="s1">&#39;The ripe banana&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">(</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;The red apple&#39;</span><span class="p">,</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span> <span class="s1">&#39;The ripe banana&#39;</span><span class="p">]);</span>
 
 <span class="c1">//These are your choices:</span>
 <span class="c1">//  [0]  The red apple</span>
@@ -337,7 +349,9 @@ second parameter:</p>
 </pre></div>
 </div>
 <p>Named keys are also possible:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">([</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="s1">&#39;Which would you like?&#39;</span><span class="p">],</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">([</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="s1">&#39;Which would you like?&#39;</span><span class="p">],</span> <span class="p">[</span>
     <span class="s1">&#39;apple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The red apple&#39;</span><span class="p">,</span>
     <span class="s1">&#39;orange&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span>
     <span class="s1">&#39;banana&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The ripe banana&#39;</span>
@@ -359,16 +373,22 @@ second parameter:</p>
 <p>Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
 or a complex table of information that wraps to the user’s terminal window. At the core of this is the <code class="docutils literal notranslate"><span class="pre">write()</span></code>
 method which takes the string to output as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;The rain in Spain falls mainly on the plains.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;The rain in Spain falls mainly on the plains.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can change the color of the text by passing in a color name as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File created.&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File created.&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This could be used to differentiate messages by status, or create ‘headers’ by using a different color. You can
 even set background colors by passing the color name in as the third parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File overwritten.&#39;</span><span class="p">,</span> <span class="s1">&#39;light_red&#39;</span><span class="p">,</span> <span class="s1">&#39;dark_gray&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;File overwritten.&#39;</span><span class="p">,</span> <span class="s1">&#39;light_red&#39;</span><span class="p">,</span> <span class="s1">&#39;dark_gray&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The following foreground colors are available:</p>
@@ -407,7 +427,9 @@ even set background colors by passing the color name in as the third parameter:<
 Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
 print “Done” on the same line:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">CLI</span><span class="o">::</span><span class="na">print</span><span class="p">(</span><span class="nv">$i</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -417,7 +439,9 @@ print “Done” on the same line:</p>
 use the <code class="docutils literal notranslate"><span class="pre">color()</span></code> method to make a string fragment that can be used in the same way, except that it will not force
 an EOL after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use
 it inside of a <code class="docutils literal notranslate"><span class="pre">write()</span></code> method to create a string of a different color inside:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;fileA </span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s1">&#39;/path/to/file&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">),</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;fileA </span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s1">&#39;/path/to/file&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">),</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This example would write a single line to the window, with <code class="docutils literal notranslate"><span class="pre">fileA</span></code> in yellow, followed by a tab, and then
@@ -427,14 +451,18 @@ it inside of a <code class="docutils literal notranslate"><span class="pre">writ
 to STDERR, instead of STDOUT, like <code class="docutils literal notranslate"><span class="pre">write()</span></code> and <code class="docutils literal notranslate"><span class="pre">color()</span></code> do. This can be useful if you have scripts watching
 for errors so they don’t have to sift through all of the information, only the actual error messages. You use it
 exactly as you would the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="s1">&#39;Cannot write to file: &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="s1">&#39;Cannot write to file: &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>wrap()</strong></p>
 <p>This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
 This might be useful when displaying a list of options with descriptions that you want to wrap in the current
 window and not go off screen:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s2">&quot;task1</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s2">&quot;task1</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
 <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="s2">&quot;Some long description goes here that might be longer than the current window.&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -442,7 +470,9 @@ window and not go off screen:</p>
 the window size, so we default to 80 characters. If you want to restrict the width to something shorter that
 you can be pretty sure fits within the window, pass the maximum line-length as the second parameter. This
 will break the string at the nearest word barrier so that words are not broken.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Wrap the text at max 20 characters wide</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Wrap the text at max 20 characters wide</span>
 <span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="nv">$description</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -450,7 +480,9 @@ will break the string at the nearest word barrier so that words are not broken.<
 on the right with their descriptions. By default, this will wrap back to the left edge of the window, which
 doesn’t allow things to line up in columns. In cases like this, you can pass in a number of spaces to pad
 every line after the first line, so that you will have a crisp column edge on the left:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$titles</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$titles</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;task1a&#39;</span><span class="p">,</span>
     <span class="s1">&#39;task1abc&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -490,14 +522,18 @@ task1abc   Lorem Ipsum has been the
 </div>
 <p><strong>newLine()</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">newLine()</span></code> method displays a blank line to the user. It does not take any parameters:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">newLine</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">newLine</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>clearScreen()</strong></p>
 <p>You can clear the current terminal window with the <code class="docutils literal notranslate"><span class="pre">clearScreen()</span></code> method. In most versions of Windows, this will
 simply insert 40 blank lines since Windows doesn’t support this feature. Windows 10 bash integration should change
 this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CLI</span><span class="o">::</span><span class="na">clearScreen</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">CLI</span><span class="o">::</span><span class="na">clearScreen</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>showProgress()</strong></p>
@@ -510,7 +546,9 @@ this:</p>
 <p>To use it, pass in the current step as the first parameter, and the total number of steps as the second parameter.
 The percent complete and the length of the display will be determined based on that number. When you are done,
 pass <code class="docutils literal notranslate"><span class="pre">false</span></code> as the first parameter and the progress bar will be removed.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$totalSteps</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$tasks</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$totalSteps</span> <span class="o">=</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$tasks</span><span class="p">);</span>
 <span class="nv">$currStep</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$tasks</span> <span class="k">as</span> <span class="nv">$task</span><span class="p">)</span> <span class="p">{</span>
@@ -523,7 +561,9 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 </pre></div>
 </div>
 <p><strong>table()</strong></p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Updated At&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Updated At&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">];</span>
 <span class="nv">$tbody</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;A great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-15 10:35:02&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
     <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Another great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-16 13:46:54&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -543,7 +583,9 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 <p><strong>wait()</strong></p>
 <p>Waits a certain number of seconds, optionally showing a wait message and
 waiting for a key press.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// wait for specified interval, with countdown displayed</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// wait for specified interval, with countdown displayed</span>
 <span class="nx">CLI</span><span class="o">::</span><span class="na">wait</span><span class="p">(</span><span class="nv">$seconds</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 
 <span class="c1">// show continuation message and wait for input</span>

@@ -299,7 +299,9 @@ in the database driver file.</p>
 <p>Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">();</span>
 
 <span class="c1">// Produces an integer, like 25</span>
 </pre></div>
@@ -308,7 +310,9 @@ Example:</p>
 <p>Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span>
 
 <span class="c1">// Produces an integer, like 5</span>
 </pre></div>
@@ -316,12 +320,16 @@ Example:</p>
 <p><strong>$db-&gt;getPlatform()</strong></p>
 <p>Outputs the database platform you are running (MySQL, MS SQL, Postgres,
 etc…):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getPlatform</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getPlatform</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>$db-&gt;getVersion()</strong></p>
 <p>Outputs the database version you are running:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getVersion</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getVersion</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>

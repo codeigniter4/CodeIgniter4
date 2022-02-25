@@ -293,18 +293,24 @@ it simple to measure the performance of different aspects of your application. A
 the <code class="docutils literal notranslate"><span class="pre">start()</span></code> and <code class="docutils literal notranslate"><span class="pre">stop()</span></code> methods.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">start()</span></code> methods takes a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$benchmark</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">timer</span><span class="p">();</span>
 <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">stop()</span></code> method takes the name of the timer that you want to stop as the only parameter, also:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.</p>
 <p>Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html"><span class="doc">global function</span></a> <code class="docutils literal notranslate"><span class="pre">timer()</span></code> to start
 and stop timers:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Start the timer</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Start the timer</span>
 <span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 <span class="c1">// Stop a running timer,</span>
 <span class="c1">// if one of this name has been started</span>
@@ -316,7 +322,9 @@ and stop timers:</p>
 <p>When your application runs, all of the timers that you have set are collected by the Timer class. It does
 not automatically display them, though. You can retrieve all of your timers by calling the <code class="docutils literal notranslate"><span class="pre">getTimers()</span></code> method.
 This returns an array of benchmark information, including start, end, and duration:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">();</span>
 
 <span class="cm">/*</span>
 <span class="cm">    Produces:</span>
@@ -333,7 +341,9 @@ This returns an array of benchmark information, including start, end, and durati
 </div>
 <p>You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as
 the only parameter. The default value is 4 numbers behind the decimal point:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The timers are automatically displayed in the <a class="reference internal" href="debugging.html"><span class="doc">Debub Toolbar</span></a>.</p>
@@ -343,7 +353,9 @@ the only parameter. The default value is 4 numbers behind the decimal point:</p>
 <p>While the <code class="docutils literal notranslate"><span class="pre">getTimers()</span></code> method will give you the raw data for all of the timers in your project, you can retrieve
 the duration of a single timer, in seconds, with the <cite>getElapsedTime()</cite> method. The first parameter is the name of
 the timer to display. The second is the number of decimal places to display. This defaults to 4:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">timer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 <span class="c1">// Displays: 0.0234</span>
 </pre></div>
 </div>
@@ -360,7 +372,9 @@ The results can then be retrieved and used by your script, or displayed as an HT
 <p>Tasks are defined within Closures. Any output the task creates will be discarded automatically. They are
 added to the Iterator class through the <cite>add()</cite> method. The first parameter is a name you want to refer to
 this test by. The second parameter is the Closure, itself:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Benchmark\Iterator</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Benchmark\Iterator</span><span class="p">();</span>
 
 <span class="c1">// Add a new task</span>
 <span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;single_concat&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -379,13 +393,17 @@ this test by. The second parameter is the Closure, itself:</p>
 <p>Once you’ve added the tasks to run, you can use the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method to loop over the tasks many times.
 By default, it will run each task 1000 times. This is probably sufficient for most simple tests. If you need
 to run the tests more times than that, you can pass the number as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Run the tests 3000 times.</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Run the tests 3000 times.</span>
 <span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Once it has run, it will return an HTML table with the results of the test. If you don’t want the results
 displayed, you can pass in <cite>false</cite> as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Don&#39;t display the results.</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Don&#39;t display the results.</span>
 <span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>

@@ -274,7 +274,9 @@
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -313,7 +315,9 @@ specifies the length. The following choices are available:</p>
 <li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
 </ul>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">random_string</span><span class="p">(</span><span class="s1">&#39;alnum&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -340,7 +344,9 @@ specifies the length. The following choices are available:</p>
 number. Useful for creating “copies” or a file or duplicating database
 content which has unique titles or slugs.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">);</span> <span class="c1">// &quot;file_1&quot;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">);</span> <span class="c1">// &quot;file_1&quot;</span>
 <span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// &quot;file-2&quot;</span>
 <span class="k">echo</span> <span class="nx">increment_string</span><span class="p">(</span><span class="s1">&#39;file_4&#39;</span><span class="p">);</span> <span class="c1">// &quot;file_5&quot;</span>
 </pre></div>
@@ -365,14 +371,18 @@ content which has unique titles or slugs.</p>
 </dl>
 <p>Allows two or more items to be alternated between, when cycling through
 a loop. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;string one&#39;</span><span class="p">,</span> <span class="s1">&#39;string two&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>You can add as many parameters as you want, and with each iteration of
 your loop the next item will be returned.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nx">alternator</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -403,7 +413,9 @@ function with no arguments to re-initialize.</p>
 <p>Converts double slashes in a string to a single slash, except those
 found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;http://example.com//index.php&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;http://example.com//index.php&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">reduce_double_slashes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in &quot;http://example.com/index.php&quot;</span>
 </pre></div>
 </div>
@@ -427,7 +439,9 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 </dl>
 <p>Removes any slashes from an array of strings.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O\&#39;reilly?&quot;</span><span class="p">,</span>
     <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O\&#39;connor.&quot;</span>
 <span class="p">];</span>
@@ -436,7 +450,9 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 </pre></div>
 </div>
 <p>The above will return the following array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="p">[</span>
     <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O&#39;reilly?&quot;</span><span class="p">,</span>
     <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span>
 <span class="p">];</span>
@@ -470,13 +486,17 @@ alias for <code class="docutils literal notranslate"><span class="pre">stripslas
 </dl>
 <p>Reduces multiple instances of a particular character occurring directly
 after each other. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Fred, Bill,, Joe, Jimmy&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Fred, Bill,, Joe, Jimmy&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
 <p>If the third parameter is set to true it will remove occurrences of the
 character at the beginning and the end of the string. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;,Fred, Bill,, Joe, Jimmy,&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;,Fred, Bill,, Joe, Jimmy,&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
@@ -500,7 +520,9 @@ character at the beginning and the end of the string. Example:</p>
 </dl>
 <p>Converts single and double quotes in a string to the corresponding HTML
 entities. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">quotes_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joe&amp;#39;s &amp;quot;dinner&amp;quot;&quot;</span>
 </pre></div>
 </div>
@@ -523,7 +545,9 @@ entities. Example:</p>
 </dd>
 </dl>
 <p>Removes single and double quotes from a string. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_quotes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joes dinner&quot;</span>
 </pre></div>
 </div>
@@ -548,7 +572,9 @@ entities. Example:</p>
 </dd>
 </dl>
 <p>Truncates a string to the number of <em>words</em> specified. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">word_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
 <span class="c1">// Returns:  Here is a nice</span>
 </pre></div>
@@ -579,7 +605,9 @@ default it adds an ellipsis.</p>
 maintains the integrity of words so the character count may be slightly
 more or less than what you specify.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">character_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="c1">// Returns:  Here is a nice text string</span>
 </pre></div>
@@ -617,7 +645,9 @@ supported character sets, so it may not be 100% reliable in all cases,
 but for the most part, it should correctly identify characters outside
 the normal range (like accented characters).</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">ascii_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">ascii_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -663,7 +693,9 @@ It turns character entities back into ASCII.</p>
 when non-English characters need to be used where only standard ASCII
 characters are safely used, for instance, in URLs.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">convert_accented_characters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">convert_accented_characters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -698,7 +730,9 @@ words which you disallow. The third (optional) parameter can contain
 a replacement value for the words. If not specified they are replaced
 with pound signs: ####.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$disallowed</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;darn&#39;</span><span class="p">,</span> <span class="s1">&#39;shucks&#39;</span><span class="p">,</span> <span class="s1">&#39;golly&#39;</span><span class="p">,</span> <span class="s1">&#39;phooey&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$disallowed</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;darn&#39;</span><span class="p">,</span> <span class="s1">&#39;shucks&#39;</span><span class="p">,</span> <span class="s1">&#39;golly&#39;</span><span class="p">,</span> <span class="s1">&#39;phooey&#39;</span><span class="p">];</span>
 <span class="nv">$string</span>     <span class="o">=</span> <span class="nx">word_censor</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="nv">$disallowed</span><span class="p">,</span> <span class="s1">&#39;Beep!&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -721,7 +755,9 @@ with pound signs: ####.</p>
 </dd>
 </dl>
 <p>Colorizes a string of code (PHP, HTML, etc.). Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">highlight_code</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">highlight_code</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The function uses PHP’s <code class="docutils literal notranslate"><span class="pre">highlight_string()</span></code> function, so the
@@ -752,7 +788,9 @@ contain the original string, the second will contain the phrase you wish
 to highlight. The third and fourth parameters will contain the
 opening/closing HTML tags you would like the phrase wrapped in.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string about nothing in particular.&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string about nothing in particular.&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">highlight_phrase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;nice text&quot;</span><span class="p">,</span> <span class="s1">&#39;&lt;span style=&quot;color:#990000;&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -795,7 +833,9 @@ such browsers:</p>
 <p>Wraps text at the specified <em>character</em> count while maintaining
 complete words.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a simple string of text that will help us demonstrate this function.&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a simple string of text that will help us demonstrate this function.&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">word_wrap</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
 
 <span class="cm">/*</span>
@@ -841,7 +881,9 @@ string, .5 in the middle, and 0 at the left.</p>
 <p>An optional fourth parameter is the kind of ellipsis. By default,
 &amp;hellip; will be inserted.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;this_string_is_entirely_too_long_and_might_break_my_design.jpg&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;this_string_is_entirely_too_long_and_might_break_my_design.jpg&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">ellipsize</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -878,7 +920,9 @@ number of characters to count before and after the central phrase. If no phrase
 passed, the excerpt will include the first $radius characters with the ellipsis
 at the end.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$text</span> <span class="o">=</span> <span class="s1">&#39;Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$text</span> <span class="o">=</span> <span class="s1">&#39;Ut vel faucibus odio. Quisque quis congue libero. Etiam gravida</span>
 <span class="s1">eros lorem, eget porttitor augue dignissim tincidunt. In eget risus eget</span>
 <span class="s1">mauris faucibus molestie vitae ultricies odio. Vestibulum id ultricies diam.</span>
 <span class="s1">Curabitur non mauris lectus. Phasellus eu sodales sem. Integer dictum purus</span>

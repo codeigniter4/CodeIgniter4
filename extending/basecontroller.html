@@ -284,12 +284,16 @@ advantage of preloaded components and any additional functionality you provide:<
 <p>The base controller is a great place to load any helpers, models, libraries, services, etc. that you intend to
 use every time your project runs. Helpers should be added to the pre-defined <code class="docutils literal notranslate"><span class="pre">$helpers</span></code> array. For example, if
 you want the HTML and Text helpers universally available:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$helpers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Any other components to load or data to process should be added to the constructor <code class="docutils literal notranslate"><span class="pre">initController()</span></code>. For
 example, if your project uses the Session Library heavily you may want to initiate it here:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">initController</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">initController</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// Do Not Edit This Line</span>
     <span class="k">parent</span><span class="o">::</span><span class="na">initController</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$logger</span><span class="p">);</span>
@@ -312,7 +316,9 @@ has an involved public interface and a simple administrative portal you may want
 the public controllers and make <code class="docutils literal notranslate"><span class="pre">AdminController</span></code> for any administrative controllers.</p>
 <p>If you do not want to use the base controller you may bypass it by having your controllers extend the system
 Controller instead:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Controller</span>
 <span class="p">{</span>
 
 <span class="p">}</span>

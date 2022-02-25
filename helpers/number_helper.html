@@ -276,7 +276,9 @@ numeric data in a locale-aware manner.</p>
 <section id="loading-this-helper">
 <h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -308,7 +310,9 @@ a value provided, for the given locale and options, then a
 </dl>
 <p>Formats numbers as bytes, based on size, and adds the appropriate
 suffix. Examples:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">456</span><span class="p">);</span> <span class="c1">// Returns 456 Bytes</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">456</span><span class="p">);</span> <span class="c1">// Returns 456 Bytes</span>
 <span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">4567</span><span class="p">);</span> <span class="c1">// Returns 4.5 KB</span>
 <span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">45678</span><span class="p">);</span> <span class="c1">// Returns 44.6 KB</span>
 <span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">456789</span><span class="p">);</span> <span class="c1">// Returns 447.8 KB</span>
@@ -318,14 +322,18 @@ suffix. Examples:</p>
 </pre></div>
 </div>
 <p>An optional second parameter allows you to set the precision of the result:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">45678</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 44.61 KB</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">45678</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 44.61 KB</span>
 </pre></div>
 </div>
 <p>An optional third parameter allows you to specify the locale that should
 be used when generating the number, and can affect the formatting. If no
 locale is specified, the Request will be analyzed and an appropriate
 locale taken from the headers, or the app-default:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates 11.2 TB</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Generates 11.2 TB</span>
 <span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
 <span class="c1">// Generates 11,2 TB</span>
 <span class="k">echo</span> <span class="nx">number_to_size</span><span class="p">(</span><span class="mi">12345678912345</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;fr_FR&#39;</span><span class="p">);</span>
@@ -358,18 +366,24 @@ language file: <em>language/&lt;your_lang&gt;/Number.php</em></p>
 </dl>
 <p>Converts a number into a human-readable version, like <strong>123.4 trillion</strong>
 for numbers up to the quadrillions. Examples:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456</span><span class="p">);</span> <span class="c1">// Returns 123 thousand</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456</span><span class="p">);</span> <span class="c1">// Returns 123 thousand</span>
 <span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">123456789</span><span class="p">);</span> <span class="c1">// Returns 123 million</span>
 <span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">1234567890123</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 1.23 trillion</span>
 <span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 123.46 billion</span>
 </pre></div>
 </div>
 <p>An optional second parameter allows you to set the precision of the result:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">45678</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 45.68 thousand</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="mi">45678</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// Returns 45.68 thousand</span>
 </pre></div>
 </div>
 <p>An optional third parameter allows the locale to be specified:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">);</span> <span class="c1">// Returns 123,46 billion</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_amount</span><span class="p">(</span><span class="s1">&#39;123,456,789,012&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">);</span> <span class="c1">// Returns 123,46 billion</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -394,7 +408,9 @@ for numbers up to the quadrillions. Examples:</p>
 </dd>
 </dl>
 <p>Converts a number in common currency formats, like USD, EUR, GBP, etc:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;USD&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns $1,234.56</span>
 <span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;EUR&#39;</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns 1.234,56 €</span>
 <span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;GBP&#39;</span><span class="p">,</span> <span class="s1">&#39;en_GB&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns £1,234.56</span>
 <span class="k">echo</span> <span class="nx">number_to_currency</span><span class="p">(</span><span class="mf">1234.56</span><span class="p">,</span> <span class="s1">&#39;YEN&#39;</span><span class="p">,</span> <span class="s1">&#39;ja_JP&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>  <span class="c1">// Returns YEN 1,234.56</span>
@@ -420,7 +436,9 @@ for numbers up to the quadrillions. Examples:</p>
 </dd>
 </dl>
 <p>Converts a number into roman:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>  <span class="c1">// Returns XXIII</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">23</span><span class="p">);</span>  <span class="c1">// Returns XXIII</span>
 <span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">324</span><span class="p">);</span>  <span class="c1">// Returns CCCXXIV</span>
 <span class="k">echo</span> <span class="nx">number_to_roman</span><span class="p">(</span><span class="mi">2534</span><span class="p">);</span>  <span class="c1">// Returns MMDXXXIV</span>
 </pre></div>

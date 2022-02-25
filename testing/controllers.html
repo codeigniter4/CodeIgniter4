@@ -339,12 +339,16 @@ to run as the parameter:</p>
 <p><strong>controller($class)</strong></p>
 <p>Specifies the class name of the controller to test. The first parameter must be a fully qualified class name
 (i.e., include the namespace):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>execute(string $method, …$params)</strong></p>
 <p>Executes the specified method within the controller. The first parameter is the name of the method to run:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -353,7 +357,9 @@ to run as the parameter:</p>
 for details.</p>
 <p><strong>withConfig($config)</strong></p>
 <p>Allows you to pass in a modified version of <strong>ConfigApp.php</strong> to test with different settings:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Config\App</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Config\App</span><span class="p">();</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">appTimezone</span> <span class="o">=</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">;</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withConfig</span><span class="p">(</span><span class="nv">$config</span><span class="p">)</span>
@@ -364,7 +370,9 @@ for details.</p>
 <p>If you do not provide one, the application’s App config file will be used.</p>
 <p><strong>withRequest($request)</strong></p>
 <p>Allows you to provide an <strong>IncomingRequest</strong> instance tailored to your testing needs:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\IncomingRequest</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span> <span class="k">new</span> <span class="nx">URI</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">));</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\IncomingRequest</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span> <span class="k">new</span> <span class="nx">URI</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">));</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="nv">$locale</span><span class="p">);</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">)</span>
@@ -376,7 +384,9 @@ for details.</p>
 into your controller.</p>
 <p><strong>withResponse($response)</strong></p>
 <p>Allows you to provide a <strong>Response</strong> instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Response</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">());</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Response</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">());</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
@@ -387,7 +397,9 @@ into your controller.</p>
 into your controller.</p>
 <p><strong>withLogger($logger)</strong></p>
 <p>Allows you to provide a <strong>Logger</strong> instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Log\Handlers\FileHandler</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Log\Handlers\FileHandler</span><span class="p">();</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">withLogger</span><span class="p">(</span><span class="nv">$logger</span><span class="p">)</span>
@@ -401,7 +413,9 @@ into your controller.</p>
 <p>Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
 representing a valid URI:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withURI</span><span class="p">(</span><span class="s1">&#39;http://example.com/forums/categories&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withURI</span><span class="p">(</span><span class="s1">&#39;http://example.com/forums/categories&#39;</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="s1">&#39;showCategories&#39;</span><span class="p">);</span>
 </pre></div>
@@ -410,7 +424,9 @@ representing a valid URI:</p>
 <p><strong>withBody($body)</strong></p>
 <p>Allows you to provide a custom body for the request. This can be helpful when testing API controllers where
 you need to set a JSON value as the body. The only parameter is a string that represents the body of the request:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_encode</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">)</span>
                 <span class="o">-&gt;</span><span class="na">controller</span><span class="p">(</span><span class="nx">\App\Controllers\ForumController</span><span class="o">::</span><span class="na">class</span><span class="p">)</span>
@@ -462,7 +478,9 @@ you can alter any of the properties before calling the support methods:</p>
 <p>The default configuration will usually be best for your testing since it most closely emulates
 a “live” project, but (for example) if you wanted to simulate a filter triggering accidentally
 on an unfiltered route you could add it to the Config:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FilterTestCase</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">FilterTestCase</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">FilterTestTrait</span><span class="p">;</span>
 
@@ -502,7 +520,9 @@ a large performance advantage over Controller and HTTP Testing.</p>
 </dd>
 </dl>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFiltersForRoute</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span> <span class="c1">// [&#39;toolbar&#39;]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFiltersForRoute</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span> <span class="c1">// [&#39;toolbar&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -531,7 +551,9 @@ method using these properties to test your Filter code safely and check the resu
 </dd>
 </dl>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">&#39;MayEditWidgets&#39;</span><span class="p">);</span>
@@ -549,22 +571,30 @@ method using these properties to test your Filter code safely and check the resu
 <p>In addition to the helper methods above <code class="docutils literal notranslate"><span class="pre">FilterTestTrait</span></code> also comes with some assertions
 to streamline your test methods.</p>
 <p>The <strong>assertFilter()</strong> method checks that the given route at position uses the filter (by its alias):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Make sure users are logged in before checking their account</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Make sure users are logged in before checking their account</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertFilter</span><span class="p">(</span><span class="s1">&#39;users/account&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">,</span> <span class="s1">&#39;login&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <strong>assertNotFilter()</strong> method checks that the given route at position does not use the filter (by its alias):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Make sure API calls do not try to use the Debug Toolbar</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Make sure API calls do not try to use the Debug Toolbar</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotFilter</span><span class="p">(</span><span class="s1">&#39;api/v1/widgets&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">,</span> <span class="s1">&#39;toolbar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <strong>assertHasFilters()</strong> method checks that the given route at position has at least one filter set:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Make sure that filters are enabled</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Make sure that filters are enabled</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">&#39;filtered/route&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <strong>assertNotHasFilters()</strong> method checks that the given route at position has no filters set:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Make sure no filters run for our static pages</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Make sure no filters run for our static pages</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertNotHasFilters</span><span class="p">(</span><span class="s1">&#39;about/contact&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
 </pre></div>
 </div>

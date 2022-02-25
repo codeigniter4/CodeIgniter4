@@ -289,7 +289,9 @@ you tell it how large the bucket is, and how many tokens it can hold and the tim
 <p>Let’s say we want an action to happen once every second. The first call to the Throttler would look like the following.
 The first parameter is the bucket name, the second parameter the number of tokens the bucket holds, and
 the third being the amount of time it takes the bucket to refill:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$throttler</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">throttler</span><span class="p">();</span>
 <span class="nv">$throttler</span><span class="o">-&gt;</span><span class="na">check</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="nx">MINUTE</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -370,14 +372,18 @@ made to the site, not per page.</p>
 to apply only to POST requests, though API’s might want to limit every request made by a user. In order to apply
 this to incoming requests, you need to edit <strong>/app/Config/Filters.php</strong> and first add an alias to the
 filter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1">// ...</span>
     <span class="s1">&#39;throttle&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\Throttle</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>Next, we assign it to all POST requests made on the site:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;throttle&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>

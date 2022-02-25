@@ -283,14 +283,18 @@ and <a class="reference internal" href="images.html"><span class="doc">images</s
 <p>You create a new File instance by passing in the path to the file in the constructor.
 By default, the file does not need to exist. However, you can pass an additional argument of “true”
 to check that the file exists and throw <code class="docutils literal notranslate"><span class="pre">FileNotFoundException()</span></code> if it does not.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nv">$path</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nv">$path</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="taking-advantage-of-spl">
 <h2><a class="toc-backref" href="#id2">Taking Advantage of Spl</a><a class="headerlink" href="#taking-advantage-of-spl" title="Permalink to this headline"></a></h2>
 <p>Once you have an instance, you have the full power of the SplFileInfo class at the ready, including:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get the file&#39;s basename</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Get the file&#39;s basename</span>
 <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getBasename</span><span class="p">();</span>
 <span class="c1">// Get last modified time</span>
 <span class="k">echo</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getMTime</span><span class="p">();</span>
@@ -316,19 +320,25 @@ to check that the file exists and throw <code class="docutils literal notranslat
 <p><strong>getRandomName()</strong></p>
 <p>You can generate a cryptographically secure random filename, with the current timestamp prepended, with the <code class="docutils literal notranslate"><span class="pre">getRandomName()</span></code>
 method. This is especially useful to rename files when moving it so that the filename is unguessable:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generates something like: 1465965676_385e33f741.jpg</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Generates something like: 1465965676_385e33f741.jpg</span>
 <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>getSize()</strong></p>
 <p>Returns the size of the uploaded file in bytes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$size</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span> <span class="c1">// 256901</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$size</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span> <span class="c1">// 256901</span>
 </pre></div>
 </div>
 <p><strong>getSizeByUnit()</strong></p>
 <p>Returns the size of the uploaded file default in bytes. You can pass in either ‘kb’ or ‘mb’ as the first parameter to get
 the results in kilobytes or megabytes, respectively:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$bytes</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">();</span> <span class="c1">// 256901</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$bytes</span>     <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">();</span> <span class="c1">// 256901</span>
 <span class="nv">$kilobytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;kb&#39;</span><span class="p">);</span> <span class="c1">// 250.880</span>
 <span class="nv">$megabytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span> <span class="c1">// 0.245</span>
 </pre></div>
@@ -336,7 +346,9 @@ the results in kilobytes or megabytes, respectively:</p>
 <p><strong>getMimeType()</strong></p>
 <p>Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
 the type of file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getMimeType</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getMimeType</span><span class="p">();</span>
 
 <span class="k">echo</span> <span class="nv">$type</span><span class="p">;</span> <span class="c1">// image/png</span>
 </pre></div>
@@ -345,7 +357,9 @@ the type of file:</p>
 <p>Attempts to determine the file extension based on the trusted <code class="docutils literal notranslate"><span class="pre">getMimeType()</span></code> method. If the mime type is unknown,
 will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
 the values in <strong>app/Config/Mimes.php</strong> to determine extension:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;jpg&#39; (WITHOUT the period)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Returns &#39;jpg&#39; (WITHOUT the period)</span>
 <span class="nv">$ext</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">guessExtension</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -353,17 +367,23 @@ the values in <strong>app/Config/Mimes.php</strong> to determine extension:</p>
 <h3><a class="toc-backref" href="#id4">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline"></a></h3>
 <p>Each file can be moved to its new location with the aptly named <code class="docutils literal notranslate"><span class="pre">move()</span></code> method. This takes the directory to move
 the file to as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default, the original filename was used. You can specify a new filename by passing it as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
 <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The move() method returns a new File instance that for the relocated file, so you must capture the result if the
 resulting location is needed:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$file</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$file</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -374,7 +394,9 @@ resulting location is needed:</p>
 <p>Working with groups of files can be cumbersome, so the framework supplies the <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> class to facilitate
 locating and working with groups of files across the filesystem. At its most basic, <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an index
 of files you set or build:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">([</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">([</span>
     <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
     <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;spark&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
@@ -383,7 +405,9 @@ of files you set or build:</p>
 </div>
 <p>After you have input the files you would like to work with you may remove files or use the filtering commands to remove
 or retain files matching a certain regex or glob-style pattern:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters/DevelopToolbar&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removeFile</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Filters/DevelopToolbar&#39;</span><span class="p">);</span>
 
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;#\.gitkeep#&#39;</span><span class="p">);</span>
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">retainPattern</span><span class="p">(</span><span class="s1">&#39;*.php&#39;</span><span class="p">);</span>
@@ -391,7 +415,9 @@ or retain files matching a certain regex or glob-style pattern:</p>
 </div>
 <p>When your collection is complete, you can use <code class="docutils literal notranslate"><span class="pre">get()</span></code> to retrieve the final list of file paths, or take advantage of
 <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> being countable and iterable to work directly with each <code class="docutils literal notranslate"><span class="pre">File</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="s1">&#39;My files: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="nx">PHP_EOL</span><span class="p">,</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="s1">&#39;My files: &#39;</span> <span class="o">.</span> <span class="nb">implode</span><span class="p">(</span><span class="nx">PHP_EOL</span><span class="p">,</span> <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
 <span class="k">echo</span> <span class="s1">&#39;I have &#39;</span> <span class="o">.</span> <span class="nb">count</span><span class="p">(</span><span class="nv">$files</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39; files!&#39;</span><span class="p">;</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$files</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
@@ -409,7 +435,9 @@ or retain files matching a certain regex or glob-style pattern:</p>
 <p><strong>define()</strong></p>
 <p>Allows child classes to define their own initial files. This method is called by the constructor and allows
 predefined collections without having to use their methods. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ConfigCollection</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Files\FileCollection</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">ConfigCollection</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Files\FileCollection</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">define</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
@@ -450,7 +478,9 @@ to <code class="docutils literal notranslate"><span class="pre">glob()</span></c
 If a <code class="docutils literal notranslate"><span class="pre">$scope</span></code> is provided then only files in or under that directory will be considered (i.e. files
 outside of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> are always retained). When no scope is provided then all files are subject.</p>
 <p>Examples:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$files</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileCollection</span><span class="p">();</span>
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// Adds all Config files and directories</span>
 
 <span class="nv">$files</span><span class="o">-&gt;</span><span class="na">removePattern</span><span class="p">(</span><span class="s1">&#39;*tion.php&#39;</span><span class="p">);</span> <span class="c1">// Would remove Encryption.php, Validation.php, and boot/production.php</span>

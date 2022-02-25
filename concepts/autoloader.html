@@ -293,7 +293,9 @@ arrays: one for the classmap, and one for PSR-4 compatible namespaces.</p>
 application’s files. This is most important for any business-logic related classes, entity classes,
 etc. The <code class="docutils literal notranslate"><span class="pre">psr4</span></code> array in the configuration file allows you to map the namespace to the directory
 those classes can be found in:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;App&#39;</span>         <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
     <span class="s1">&#39;CodeIgniter&#39;</span> <span class="o">=&gt;</span> <span class="nx">SYSTEMPATH</span><span class="p">,</span>
 <span class="p">];</span>
@@ -307,7 +309,9 @@ have a trailing slash.</p>
 libraries, or models in the application directory, if you do, they will be found under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace.
 You may change this namespace by editing the <strong>/app/Config/Constants.php</strong> file and setting the
 new namespace value under the <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code> setting:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">define</span><span class="p">(</span><span class="s1">&#39;APP_NAMESPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;App&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You will need to modify any existing files that are referencing the current namespace.</p>
@@ -323,7 +327,9 @@ namespace has changed.</p>
 <p>The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
 by not hitting the file-system with extra <code class="docutils literal notranslate"><span class="pre">is_file()</span></code> calls. You can use the classmap to link to
 third-party libraries that are not namespaced:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$classmap</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;Markdown&#39;</span> <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;third_party/markdown.php&#39;</span>
 <span class="p">];</span>
 </pre></div>

@@ -331,7 +331,9 @@ now CSRF protection works on not only <strong>POST</strong> but also <strong>PUT
 <p>When you use <strong>PUT/PATCH/DELETE</strong> requests, you need to send CSRF token. Or remove the CSRF filter
 for such requests if you don’t need CSRF protection for them.</p>
 <p>If you want the same behavior as the previous version, set the CSRF filter like the following in <strong>app/Config/Filters.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$methods</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
     <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
 <span class="p">];</span>

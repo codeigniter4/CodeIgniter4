@@ -304,7 +304,9 @@ likely choosing a JPEG image to return.</p>
 </dd>
 </dl>
 <p>Returns the current message body, if any has been set. If not body exists, returns null:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -396,7 +398,9 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 </dl>
 <p>Allows you to retrieve the current value of a single message header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive header name.
 While the header is converted internally as described above, you can access the header with any type of case:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// These are all the same:</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// These are all the same:</span>
 <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;HOST&#39;</span><span class="p">);</span>
 <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
 <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
@@ -404,7 +408,9 @@ While the header is converted internally as described above, you can access the 
 </div>
 <p>If the header has multiple values, <code class="docutils literal notranslate"><span class="pre">getValue()</span></code> will return as an array of values. You can use the <code class="docutils literal notranslate"><span class="pre">getValueLine()</span></code>
 method to retrieve the values as a string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
 <span class="cm">/*</span>
 <span class="cm">    Outputs something like:</span>
@@ -430,7 +436,9 @@ method to retrieve the values as a string:</p>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Document-URI&#39;</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_URL</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -471,7 +479,9 @@ method to retrieve the values as a string:</p>
 </dl>
 <p>Returns the value(s) of the header as a string. This method allows you to easily get a string representation
 of the header values when the header has multiple values. The values are appropriately joined:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
 <span class="cm">/*</span>
 <span class="cm">    Outputs:</span>
@@ -501,7 +511,9 @@ of the header values when the header has multiple values. The values are appropr
 <p>Sets the value of a single header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header. If the header
 doesn’t already exist in the collection, it will be created. The <code class="docutils literal notranslate"><span class="pre">$value</span></code> can be either a string
 or an array of strings:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">,</span> <span class="s1">&#39;codeigniter.com&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">,</span> <span class="s1">&#39;codeigniter.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -523,7 +535,9 @@ or an array of strings:</p>
 </dd>
 </dl>
 <p>Removes the header from the Message. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">removeHeader</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -547,7 +561,9 @@ or an array of strings:</p>
 </dl>
 <p>Adds a value to an existing header. The header must already be an array of values instead of a single string.
 If it is a string then a LogicException will be thrown.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US; q=0.8&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US; q=0.8&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -571,7 +587,9 @@ If it is a string then a LogicException will be thrown.</p>
 </dl>
 <p>Prepends a value to an existing header. The header must already be an array of values instead of a single string.
 If it is a string then a LogicException will be thrown.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">prependHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en,&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">prependHeader</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">,</span> <span class="s1">&#39;en,&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -608,7 +626,9 @@ Acceptable values are <code class="docutils literal notranslate"><span class="pr
 </dd>
 </dl>
 <p>Sets the HTTP protocol version this Message uses. Valid values are <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.1</span></code> and <code class="docutils literal notranslate"><span class="pre">2.0</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$message</span><span class="o">-&gt;</span><span class="na">setProtocolVersion</span><span class="p">(</span><span class="s1">&#39;1.1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>

@@ -305,13 +305,17 @@ local URL so that your pages become more portable in the event your URL
 changes.</p>
 <p>Segments can be optionally passed to the function as a string or an
 array. Here is a string example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
 <em>http://example.com/index.php/news/local/123</em></p>
 <p>Here is an example of segments passed as an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$segments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">site_url</span><span class="p">(</span><span class="nv">$segments</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -338,21 +342,27 @@ We use this for unit testing the framework itself.</p>
 </dd>
 </dl>
 <p>Returns your site base URL, as specified in your config file. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, without
 the <em>indexPage</em> being appended.</p>
 <p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or
 an array. Here is a string example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;blog/post/123&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;blog/post/123&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
 <em>http://example.com/blog/post/123</em></p>
 <p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a
 string to a file, such as an image or stylesheet. For example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;images/icons/edit.png&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">base_url</span><span class="p">(</span><span class="s1">&#39;images/icons/edit.png&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This would give you something like:
@@ -381,7 +391,9 @@ viewed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Calling this function is the same as doing this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">site_url</span><span class="p">(</span><span class="nx">uri_string</span><span class="p">());</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">site_url</span><span class="p">(</span><span class="nx">uri_string</span><span class="p">());</span>
 </pre></div>
 </div>
 </div>
@@ -466,7 +478,9 @@ For example, if your URL was this:</p>
 </dl>
 <p>Returns your site <strong>indexPage</strong>, as specified in your config file.
 Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">index_page</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>As with <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you may specify an alternate configuration.
@@ -511,7 +525,9 @@ leave it blank, the URL will be used.</p>
 added to the link. The attributes can be a simple string or an
 associative array.</p>
 <p>Here are some examples:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="s1">&#39;title=&quot;News title&quot;&#39;</span><span class="p">);</span>
 <span class="c1">// Prints: &lt;a href=&quot;http://example.com/index.php/news/local/123&quot; title=&quot;News title&quot;&gt;My News&lt;/a&gt;</span>
 
 <span class="k">echo</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;My News&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The best news!&#39;</span><span class="p">]);</span>
@@ -556,7 +572,9 @@ attributes in the third parameter to control how the window is opened.
 If the third parameter is not set it will simply open a new window with
 your own browser settings.</p>
 <p>Here is an example with attributes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$atts</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$atts</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;width&#39;</span>       <span class="o">=&gt;</span> <span class="mi">800</span><span class="p">,</span>
     <span class="s1">&#39;height&#39;</span>      <span class="o">=&gt;</span> <span class="mi">600</span><span class="p">,</span>
     <span class="s1">&#39;scrollbars&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span>
@@ -580,7 +598,9 @@ We use this for unit testing the framework itself.</p>
 set the ones that are different from what you need. If you want the
 function to use all of its defaults simply pass an empty array in the
 third parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="p">[]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">anchor_popup</span><span class="p">(</span><span class="s1">&#39;news/local/123&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Me!&#39;</span><span class="p">,</span> <span class="p">[]);</span>
 </pre></div>
 </div>
 </div>
@@ -620,12 +640,16 @@ HTML attribute to the anchor tag.</p>
 </dd>
 </dl>
 <p>Creates a standard HTML e-mail link. Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here to Contact Me&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Click Here to Contact Me&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>As with the <a class="reference internal" href="#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> tab above, you can set attributes using the
 third parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mail me&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">mailto</span><span class="p">(</span><span class="s1">&#39;me@my-site.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Contact Me&#39;</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -678,7 +702,9 @@ help prevent the e-mail address from being harvested by spam bots.</p>
 </dl>
 <p>Automatically turns URLs and e-mail addresses contained in a string into
 links. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The second parameter determines whether URLs and e-mails are converted or
@@ -686,16 +712,22 @@ just one or the other. The default behavior is both if the parameter is not
 specified. E-mail links are encoded as <a class="reference internal" href="#safe_mailto" title="safe_mailto"><code class="xref php php-func docutils literal notranslate"><span class="pre">safe_mailto()</span></code></a> as shown
 above.</p>
 <p>Converts only URLs:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Converts only e-mail addresses:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The third parameter determines whether links are shown in a new window.
 The value can be true or false (boolean):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">auto_link</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -725,7 +757,9 @@ The value can be true or false (boolean):</p>
 <p>Takes a string as input and creates a human-friendly URL string. This is
 useful if, for example, you have a blog in which you’d like to use the
 title of your entries in the URL. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">);</span>
 <span class="c1">// Produces: Whats-wrong-with-CSS</span>
 </pre></div>
@@ -733,7 +767,9 @@ title of your entries in the URL. Example:</p>
 <p>The second parameter determines the word delimiter. By default dashes
 are used. Preferred options are: <strong>-</strong> (dash) or <strong>_</strong> (underscore).</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: Whats_wrong_with_CSS</span>
 </pre></div>
@@ -741,7 +777,9 @@ are used. Preferred options are: <strong>-</strong> (dash) or <strong>_</strong>
 <p>The third parameter determines whether or not lowercase characters are
 forced. By default they are not. Options are boolean true/false.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$title</span>     <span class="o">=</span> <span class="s2">&quot;What&#39;s wrong with CSS?&quot;</span><span class="p">;</span>
 <span class="nv">$url_title</span> <span class="o">=</span> <span class="nx">url_title</span><span class="p">(</span><span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// Produces: whats-wrong-with-css</span>
 </pre></div>
@@ -790,7 +828,9 @@ accented characters automatically.</p>
 <p>This function will add <em>http://</em> or <em>https://</em> in the event that a protocol prefix
 is missing from a URL.</p>
 <p>Pass the URL string to the function like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$url</span> <span class="o">=</span> <span class="nx">prep_url</span><span class="p">(</span><span class="s1">&#39;example.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -813,12 +853,16 @@ is missing from a URL.</p>
 </dd>
 </dl>
 <p>Builds an absolute URL to a controller method in your app. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also add arguments to the route.
 Here is an example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Page::index&#39;</span><span class="p">,</span> <span class="s1">&#39;home&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">url_to</span><span class="p">(</span><span class="s1">&#39;Page::index&#39;</span><span class="p">,</span> <span class="s1">&#39;home&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example would return something like:
@@ -841,14 +885,18 @@ into your views.</p>
 </dd>
 </dl>
 <p>Compares the current URL’s path against the given path to see if they match. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This would match <code class="docutils literal notranslate"><span class="pre">http://example.com/admin</span></code>. You can use the <code class="docutils literal notranslate"><span class="pre">*</span></code> wildcard to match
 any other applicable characters in the URL:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin*&#39;</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">url_is</span><span class="p">(</span><span class="s1">&#39;admin*&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

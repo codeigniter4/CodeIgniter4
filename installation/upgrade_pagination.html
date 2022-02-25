@@ -318,7 +318,9 @@
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-x">
 <h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;pagination&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">load</span><span class="o">-&gt;</span><span class="na">library</span><span class="p">(</span><span class="s1">&#39;pagination&#39;</span><span class="p">);</span>
 <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;base_url&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="nx">base_url</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;users/index/&#39;</span><span class="p">;</span>
 <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;total_rows&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">count_all</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="nv">$config</span><span class="p">[</span><span class="s1">&#39;per_page&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
@@ -334,7 +336,9 @@
 </section>
 <section id="codeigniter-version-4-x">
 <h3><a class="toc-backref" href="#id6">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;users&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">paginate</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>

@@ -299,14 +299,18 @@ This is defined in the boot files (e.g. <strong>app/Config/Boot/development.php<
 <p><strong>d()</strong></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">d()</span></code> method dumps all of the data it knows about the contents passed as the only parameter to the screen, and
 allows the script to continue executing:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">d</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">d</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>dd()</strong></p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">d()</span></code>, except that it also <code class="docutils literal notranslate"><span class="pre">dies()</span></code> and no further code is executed this request.</p>
 <p><strong>trace()</strong></p>
 <p>This provides a backtrace to the current execution point, with Kint’s own unique spin:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">trace</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">trace</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>For more information, see <a class="reference external" href="https://kint-php.github.io/kint//">Kint’s page</a>.</p>
@@ -337,7 +341,9 @@ running by removing it from the <code class="docutils literal notranslate"><span
 <p>CodeIgniter ships with several Collectors that, as the name implies, collect data to display on the toolbar. You
 can easily make your own to customize the toolbar. To determine which collectors are shown, again head over to
 the <strong>app/Config/Toolbar.php</strong> configuration file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$collectors</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$collectors</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Timers</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Database</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="nx">\CodeIgniter\Debug\Toolbar\Collectors\Logs</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
@@ -433,7 +439,9 @@ number of queries across all connections, while the Files tab displays the total
 </ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">formatTimelineData()</span></code> method must return an array of arrays formatted in a way that the timeline can use
 it to sort it correctly and display the correct information. The inner arrays must include the following information:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>     <span class="c1">// Name displayed on the left of the timeline</span>
     <span class="s1">&#39;component&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>     <span class="c1">// Name of the Component listed in the middle of timeline</span>
     <span class="s1">&#39;start&#39;</span>     <span class="o">=&gt;</span> <span class="mf">0.00</span><span class="p">,</span>   <span class="c1">// start time, like microtime(true)</span>
@@ -451,7 +459,9 @@ it to sort it correctly and display the correct information. The inner arrays mu
 </ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">getVarData()</span></code> method should return an array containing arrays of key/value pairs to display. The name of the
 outer array’s key is the name of the section on the Vars tab:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;section 1&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
         <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span>

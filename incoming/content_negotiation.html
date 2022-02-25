@@ -273,14 +273,18 @@ can handle this for you.</p>
 <section id="loading-the-class">
 <h2>Loading the Class<a class="headerlink" href="#loading-the-class" title="Permalink to this headline"></a></h2>
 <p>You can load an instance of the class manually through the Service class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$negotiate</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">negotiator</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$negotiate</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">negotiator</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This will grab the current request instance and automatically inject it into the Negotiator class.</p>
 <p>This class does not need to be loaded on it’s own. Instead, it can be accessed through this request’s <code class="docutils literal notranslate"><span class="pre">IncomingRequest</span></code>
 instance. While you cannot access it directly this way, you can easily access all of methods through the <code class="docutils literal notranslate"><span class="pre">negotiate()</span></code>
 method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>When accessed this way, the first parameter is the type of content you’re trying to find a match for, while the
@@ -302,7 +306,9 @@ from an API endpoint:</p>
 </div>
 <p>The server now needs to provide a list of what type of content it can provide. In this example, the API might
 be able to return data as raw HTML, JSON, or XML. This list should be provided in order of preference:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
     <span class="s1">&#39;text/html&#39;</span><span class="p">,</span>
     <span class="s1">&#39;application/xml&#39;</span><span class="p">,</span>
@@ -317,7 +323,9 @@ be able to return data as raw HTML, JSON, or XML. This list should be provided i
 the negotiate method. By default, if no match is found, the first element in the <code class="docutils literal notranslate"><span class="pre">$supported</span></code> array would be returned.
 In some cases, though, you might need to enforce the format to be a strict match. If you pass <code class="docutils literal notranslate"><span class="pre">true</span></code> as the
 final value, it will return an empty string if no match is found:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$format</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 <span class="c1">// or</span>
 <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">media</span><span class="p">(</span><span class="nv">$supported</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -335,7 +343,9 @@ header:</p>
 </div>
 <p>In this example, the browser would prefer French, with a second choice of English. If your website supports English
 and German you would do something like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$supported</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;en&#39;</span><span class="p">,</span>
     <span class="s1">&#39;de&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -357,7 +367,9 @@ specify the type of compression the client supports:</p>
 </pre></div>
 </div>
 <p>Your web server will define what types of compression you can use. Some, like Apache, only support <strong>gzip</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$type</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$type</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
 <span class="c1">// or</span>
 <span class="nv">$type</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">encoding</span><span class="p">([</span><span class="s1">&#39;gzip&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -372,7 +384,9 @@ specify the type of compression the client supports:</p>
 </pre></div>
 </div>
 <p>By default, if no matches are found, <strong>utf-8</strong> will be returned:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;charset&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">negotiate</span><span class="p">(</span><span class="s1">&#39;charset&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
 <span class="c1">// or</span>
 <span class="nv">$charset</span> <span class="o">=</span> <span class="nv">$negotiate</span><span class="o">-&gt;</span><span class="na">charset</span><span class="p">([</span><span class="s1">&#39;utf-8&#39;</span><span class="p">]);</span>
 </pre></div>

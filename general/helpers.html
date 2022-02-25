@@ -298,19 +298,25 @@ global <strong>system/Helpers</strong> directory.</p>
 <section id="loading-a-helper">
 <h2><a class="toc-backref" href="#id1">Loading a Helper</a><a class="headerlink" href="#loading-a-helper" title="Permalink to this headline"></a></h2>
 <p>Loading a helper file is quite simple using the following method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">name</span></code> is the file name of the helper, without the “<strong>.php</strong>” file
 extension or the “<strong>_helper</strong>” part.</p>
 <p>For example, to load the <strong>Cookie Helper</strong> file, which is named
 <strong>cookie_helper.php</strong>, you would do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">([</span><span class="s1">&#39;cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">([</span><span class="s1">&#39;cookie&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>A helper can be loaded anywhere within your controller methods (or
@@ -342,7 +348,9 @@ code into its own namespace, <code class="docutils literal notranslate"><span cl
 <strong>/Modules/Blog/Helpers/</strong>. A <strong>blog_helper</strong> file would be at
 <strong>/Modules/Blog/Helpers/blog_helper.php</strong>. Within our controller we could
 use the following command to load the helper for us:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;Example\Blog\blog&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;Example\Blog\blog&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -382,7 +390,9 @@ add to, or to replace the functions a Helper provides.</p>
 <p>For example, to extend the native <strong>Array Helper</strong> you’ll create a file
 named <strong>app/Helpers/array_helper.php</strong>, and add or override
 functions:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// any_in_array() is not in the Array Helper, so it defines a new function</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// any_in_array() is not in the Array Helper, so it defines a new function</span>
 <span class="k">function</span> <span class="nf">any_in_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">,</span> <span class="nv">$haystack</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$needle</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$needle</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$needle</span> <span class="o">:</span> <span class="p">[</span><span class="nv">$needle</span><span class="p">];</span>

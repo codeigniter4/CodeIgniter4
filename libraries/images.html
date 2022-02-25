@@ -289,12 +289,16 @@ actions:</p>
 <h2><a class="toc-backref" href="#id1">Initializing the Class</a><a class="headerlink" href="#initializing-the-class" title="Permalink to this headline"></a></h2>
 <p>Like most other classes in CodeIgniter, the image class is initialized
 in your controller by calling the Services class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass the alias for the image library you wish to use into the
 Service function:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The available Handlers are as follows:</p>
@@ -317,7 +321,9 @@ and can run <code class="docutils literal notranslate"><span class="pre">exec()<
 identical. You will set some preferences corresponding to the action you
 intend to perform, then call one of the available processing functions.
 For example, to create an image thumbnail you’ll do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic_thumb.jpg&#39;</span><span class="p">);</span>
@@ -333,7 +339,9 @@ desired aspect ratio, and then crop and resize the result.</p>
 needed before saving. The original image is left untouched, and a new image
 is used and passed through each method, applying the results on top of the
 previous results:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">reorient</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">rotate</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
@@ -363,7 +371,9 @@ adjust PHP memory limits.</p>
 <p><code class="docutils literal notranslate"><span class="pre">save()</span></code> can take an additional parameter <code class="docutils literal notranslate"><span class="pre">$quality</span></code> to alter the resulting image
 quality. Values range from 0 to 100 with 90 being the framework default. This parameter
 only applies to JPEG images and will be ignored otherwise:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="c1">// processing methods</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
@@ -375,7 +385,9 @@ only applies to JPEG images and will be ignored otherwise:</p>
 </div>
 <p>If you are only interested in changing the image quality without doing any processing.
 You will need to include the image resource or you will end up with an exact copy:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withResource</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/image/my_low_quality_pic.jpg&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
@@ -399,7 +411,9 @@ You will need to include the image resource or you will end up with an exact cop
 If they fail they will throw a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Images\ImageException</span></code> that contains
 the error message. A good practice is to catch the exceptions, showing an
 error upon failure, like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">try</span> <span class="p">{</span>
     <span class="nv">$image</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">)</span>
@@ -426,7 +440,9 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 </ul>
 <p>To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$info</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$info</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">getFile</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">getProperties</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -449,7 +465,9 @@ offset values:</p>
 </div>
 <ul>
 <li><p><strong>$imageType</strong> is one of PHP’s image type constants (see for example <a class="reference external" href="https://www.php.net/manual/en/function.image-type-to-mime-type.php">https://www.php.net/manual/en/function.image-type-to-mime-type.php</a>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nx">IMAGETYPE_PNG</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.png&#39;</span><span class="p">);</span>
@@ -480,7 +498,9 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <li><p><strong>$position</strong> determines the portion of the image to crop out. Allowed positions: ‘top-left’, ‘top’, ‘top-right’, ‘left’, ‘center’, ‘right’, ‘bottom-left’, ‘bottom’, ‘bottom-right’.</p></li>
 </ul>
 <p>This provides a much simpler way to crop that will always maintain the aspect ratio:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">fit</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -501,7 +521,9 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <li><p><strong>$green</strong> is the green value of the background.</p></li>
 <li><p><strong>$blue</strong> is the blue value of the background.</p></li>
 </ul>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -522,7 +544,9 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <ul class="simple">
 <li><p><strong>$dir</strong> specifies the axis to flip along. Can be either ‘vertical’ or ‘horizontal’.</p></li>
 </ul>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">flip</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -544,7 +568,9 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 <p>When resizing images you can choose whether to maintain the ratio of the original image, or stretch/squash the new
 image to fit the desired dimensions. If $maintainRatio is true, the dimension specified by $masterDim will stay the same,
 while the other dimension will be altered to match the original image’s aspect ratio.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
@@ -576,7 +602,9 @@ products.</p>
 </div>
 <p>The first parameter is the string of text that you wish to display. The second parameter is an array of options
 that allow you to specify how the text should be displayed:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.jpg&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">text</span><span class="p">(</span><span class="s1">&#39;Copyright 2017 My Photo Co&#39;</span><span class="p">,</span> <span class="p">[</span>
         <span class="s1">&#39;color&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;#fff&#39;</span><span class="p">,</span>

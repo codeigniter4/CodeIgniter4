@@ -380,7 +380,9 @@ That’s why your folders/files MUST start with a capital letter and the rest MU
 If you want another naming convention you need to manually define it using the
 <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
 <p>Here is an example based on PSR-4 Autoloader:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">NamespaceName</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">SubNamespaceNames</span><span class="o">&gt;</span><span class="p">)</span><span class="o">*</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">ClassName</span><span class="o">&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">\</span><span class="o">&lt;</span><span class="nx">NamespaceName</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">SubNamespaceNames</span><span class="o">&gt;</span><span class="p">)</span><span class="o">*</span><span class="nx">\</span><span class="o">&lt;</span><span class="nx">ClassName</span><span class="o">&gt;</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;helloworld&#39;</span><span class="p">,</span> <span class="s1">&#39;\App\Controllers\HelloWorld::index&#39;</span><span class="p">);</span>
 </pre></div>
@@ -459,12 +461,16 @@ present, as will be the case when only your site root URL is requested. Let’s 
 with the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller.</p>
 <p>To specify a default controller open your <strong>app/Config/Routes.php</strong>
 file and set this variable:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Helloworld&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Helloworld&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> is the name of the controller class you want to be used.</p>
 <p>A few lines further down <strong>Routes.php</strong> in the “Route Definitions” section, comment out the line:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you now browse to your site without specifying any URI segments you’ll
@@ -481,7 +487,9 @@ see the “Hello World” message.</p>
 <p>As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">// Some code here...</span>
 <span class="p">}</span>
@@ -496,7 +504,9 @@ is called, allowing you to define your own method routing rules.</p>
 </div>
 <p>The overridden method call (typically the second segment of the URI) will
 be passed as a parameter to the <code class="docutils literal notranslate"><span class="pre">_remap()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nv">$method</span> <span class="o">===</span> <span class="s1">&#39;some_method&#39;</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$method</span><span class="p">();</span>
@@ -509,7 +519,9 @@ be passed as a parameter to the <code class="docutils literal notranslate"><span
 <p>Any extra segments after the method name are passed into <code class="docutils literal notranslate"><span class="pre">_remap()</span></code>. These parameters can be passed to the method
 to emulate CodeIgniter’s default behavior.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">_remap</span><span class="p">(</span><span class="nv">$method</span><span class="p">,</span> <span class="o">...</span><span class="nv">$params</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$method</span> <span class="o">=</span> <span class="s1">&#39;process_&#39;</span><span class="o">.</span><span class="nv">$method</span><span class="p">;</span>
 
@@ -528,7 +540,9 @@ to emulate CodeIgniter’s default behavior.</p>
 To achieve this, simply declare the method as <code class="docutils literal notranslate"><span class="pre">private</span></code> or <code class="docutils literal notranslate"><span class="pre">protected</span></code>.
 That will prevent it from being served by a URL request. For example,
 if you were to define a method like this for the <code class="docutils literal notranslate"><span class="pre">Helloworld</span></code> controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">function</span> <span class="nf">utility</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">utility</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="c1">// some code</span>
 <span class="p">}</span>
@@ -587,7 +601,9 @@ as a class property, <code class="docutils literal notranslate"><span class="pre
 <p><strong>forceHTTPS</strong></p>
 <p>A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span> <span class="p">{</span>
     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forceHTTPS</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -595,7 +611,9 @@ controllers:</p>
 <p>By default, and in modern browsers that support the HTTP Strict Transport Security header, this
 call should force the browser to convert non-HTTPS calls to HTTPS calls for one year. You can
 modify this by passing the duration (in seconds) as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isSecure</span><span class="p">())</span> <span class="p">{</span>
     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forceHTTPS</span><span class="p">(</span><span class="mi">31536000</span><span class="p">);</span> <span class="c1">// one year</span>
 <span class="p">}</span>
 </pre></div>
@@ -609,7 +627,9 @@ modify this by passing the duration (in seconds) as the first parameter:</p>
 <p>You can define an array of helper files as a class property. Whenever the controller is loaded
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">MyController</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
@@ -630,7 +650,9 @@ if the items are not valid. Internally, this uses the controller’s
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;request</span></code> instance to get the data to be validated.
 The <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation Library docs</span></a> have details on
 rule and message array formats, as well as available rules:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
         <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;required|is_unique[users.email,id,</span><span class="si">{</span><span class="nv">$userID</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
@@ -647,7 +669,9 @@ rule and message array formats, as well as available rules:</p>
 </div>
 <p>If you find it simpler to keep the rules in the configuration file, you can replace
 the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> array with the name of the group as defined in <code class="docutils literal notranslate"><span class="pre">Config\Validation.php</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$userID</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="s1">&#39;userRules&#39;</span><span class="p">))</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
@@ -669,7 +693,9 @@ the <code class="docutils literal notranslate"><span class="pre">$rules</span></
 <p>Sometimes you may want to check the controller method parameters or other custom data.
 In that case, you can use the <code class="docutils literal notranslate"><span class="pre">$this-&gt;validateData()</span></code> method.
 The method accepts an array of data to validate in the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">product</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">product</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$id</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span>

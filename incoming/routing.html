@@ -348,7 +348,9 @@ it creates an instance of the RouteCollection class (<code class="docutils liter
 Routes can be specified using placeholders or Regular Expressions.</p>
 <p>When you specify a route, you choose a method to corresponding to HTTP verbs (request method).
 If you expect a GET request, you use the <code class="docutils literal notranslate"><span class="pre">get()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A route simply takes the URI path on the left, and maps it to the controller and method on the right,
@@ -356,7 +358,9 @@ along with any parameters that should be passed to the controller. The controlle
 be listed in the same way that you would use a static method, by separating the class
 and its method with a double-colon, like <code class="docutils literal notranslate"><span class="pre">Users::list</span></code>. If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Calls $Users-&gt;list()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Calls $Users-&gt;list()</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::list&#39;</span><span class="p">);</span>
 
 <span class="c1">// Calls $Users-&gt;list(1, 23)</span>
@@ -364,19 +368,25 @@ passed to it, then they would be listed after the method name, separated by forw
 </pre></div>
 </div>
 <p>You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">&#39;products/1&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;products/1&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can supply multiple verbs that a route should match by passing them in as an array to the <code class="docutils literal notranslate"><span class="pre">match()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">],</span> <span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">],</span> <span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="placeholders">
 <h3><a class="toc-backref" href="#id10">Placeholders</a><a class="headerlink" href="#placeholders" title="Permalink to this headline"></a></h3>
 <p>A typical route might look something like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In a route, the first parameter contains the URI to be matched, while the second parameter
@@ -429,31 +439,43 @@ in <a class="reference internal" href="../outgoing/localization.html"><span clas
 <p>Here are a few basic routing examples.</p>
 <p>A URL containing the word <strong>journals</strong> in the first segment will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class,
 and the default method, which is usually <code class="docutils literal notranslate"><span class="pre">index()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;journals&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;journals&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A URL containing the segments <strong>blog/joe</strong> will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class and the <code class="docutils literal notranslate"><span class="pre">users</span></code> method.
 The ID will be set to <code class="docutils literal notranslate"><span class="pre">34</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog/joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs::users/34&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog/joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs::users/34&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A URL with <strong>product</strong> as the first segment, and anything in the second will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
 and the <code class="docutils literal notranslate"><span class="pre">productLookup</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>A URL with <strong>product</strong> as the first segment, and a number in the second will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
 and the <code class="docutils literal notranslate"><span class="pre">productLookupByID</span></code> method passing in the match as a variable to the method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookupByID/$1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookupByID/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that a single <code class="docutils literal notranslate"><span class="pre">(:any)</span></code> will match multiple segments in the URL if present. For example the route:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>will match <strong>product/123</strong>, <strong>product/123/456</strong>, <strong>product/123/456/789</strong> and so on. The implementation in the
 Controller should take into account the maximum parameters:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">productLookup</span><span class="p">(</span><span class="nv">$seg1</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg2</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg3</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">productLookup</span><span class="p">(</span><span class="nv">$seg1</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg2</span> <span class="o">=</span> <span class="k">false</span><span class="p">,</span> <span class="nv">$seg3</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$seg1</span><span class="p">;</span> <span class="c1">// Will be 123 in all examples</span>
     <span class="k">echo</span> <span class="nv">$seg2</span><span class="p">;</span> <span class="c1">// false in first, 456 in second and third example</span>
     <span class="k">echo</span> <span class="nv">$seg3</span><span class="p">;</span> <span class="c1">// false in first and second, 789 in third</span>
@@ -462,7 +484,9 @@ Controller should take into account the maximum parameters:</p>
 </div>
 <p>If matching multiple segments is not the intended behavior, <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> should be used when defining the
 routes. With the examples URLs from above:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>will only match <strong>product/123</strong> and generate 404 errors for other example.</p>
@@ -474,7 +498,9 @@ and readability.</p>
 <p>You add new placeholders with the <code class="docutils literal notranslate"><span class="pre">addPlaceholder()</span></code> method. The first parameter is the string to be used as
 the placeholder. The second parameter is the Regular Expression pattern it should be replaced with.
 This must be called before you add the route:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">addPlaceholder</span><span class="p">(</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span> <span class="s1">&#39;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">addPlaceholder</span><span class="p">(</span><span class="s1">&#39;uuid&#39;</span><span class="p">,</span> <span class="s1">&#39;[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/(:uuid)&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::show/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -487,7 +513,9 @@ is allowed, as are back-references.</p>
 <p class="admonition-title">Important</p>
 <p>Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
 A typical RegEx route might look something like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;products/([a-z]+)/(\d+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Products::show/$1/id_$2&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;products/([a-z]+)/(\d+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Products::show/$1/id_$2&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -497,7 +525,9 @@ of the <code class="docutils literal notranslate"><span class="pre">Products</sp
 represent the delimiter between multiple segments.</p>
 <p>For example, if a user accesses a password protected area of your web application and you wish to be able to
 redirect them back to the same page after they log in, you may find this example useful:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login/(.+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Auth::login/$1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login/(.+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Auth::login/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>For those of you who don’t know regular expressions and want to learn more about them,
@@ -512,7 +542,9 @@ redirect them back to the same page after they log in, you may find this example
 <p>You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nv">$rss</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RSSFeeder</span><span class="p">();</span>
 
     <span class="k">return</span> <span class="nv">$rss</span><span class="o">-&gt;</span><span class="na">feed</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">);</span>
@@ -525,7 +557,9 @@ a simple view:</p>
 <p>While the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method is simple to use, it is often handier to work with multiple routes at once, using
 the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method. Instead of calling the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the <code class="docutils literal notranslate"><span class="pre">map()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$multipleRoutes</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$multipleRoutes</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;product/(:num)&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Catalog::productLookupById&#39;</span><span class="p">,</span>
     <span class="s1">&#39;product/(:alphanum)&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Catalog::productLookupByName&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -541,7 +575,9 @@ to other routes with the <code class="docutils literal notranslate"><span class=
 second parameter is either the new URI to redirect to, or the name of a named route. The third parameter is
 the HTTP status code that should be sent along with the redirect. The default value is <code class="docutils literal notranslate"><span class="pre">302</span></code> which is a temporary
 redirect and is recommended in most cases:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/profile&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::profile&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;as&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;profile&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/profile&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::profile&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;as&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;profile&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Redirect to a named route</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">addRedirect</span><span class="p">(</span><span class="s1">&#39;users/about&#39;</span><span class="p">,</span> <span class="s1">&#39;profile&#39;</span><span class="p">);</span>
@@ -557,7 +593,9 @@ controller can be loaded.</p>
 <p>You can group your routes under a common name with the <code class="docutils literal notranslate"><span class="pre">group()</span></code> method. The group name becomes a segment that
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::index&#39;</span><span class="p">);</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Blog::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
@@ -565,7 +603,9 @@ extensive set of routes that all share the opening string, like when building an
 </div>
 <p>This would prefix the <strong>users</strong> and <strong>blog</strong> URIs with <strong>admin</strong>, handling URLs like <strong>admin/users</strong> and <strong>admin/blog</strong>.</p>
 <p>If you need to assign options to a group, like a <a class="reference internal" href="#assigning-namespace"><span class="std std-ref">Assigning Namespace</span></a>, do it before the callback:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -573,14 +613,18 @@ extensive set of routes that all share the opening string, like when building an
 <p>This would handle a resource route to the <code class="docutils literal notranslate"><span class="pre">App\API\v1\Users</span></code> controller with the <strong>api/users</strong> URI.</p>
 <p>You can also use a specific <a class="reference internal" href="filters.html"><span class="doc">filter</span></a> for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 </div>
 <p>The value for the filter must match one of the aliases defined within <strong>app/Config/Filters.php</strong>.</p>
 <p>It is possible to nest groups within groups for finer organization if you need it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::list&#39;</span><span class="p">);</span>
     <span class="p">});</span>
@@ -596,7 +640,9 @@ run the filter before or after the controller. This is especially handy during a
 config options like namespace, subdomain, etc. Without necessarily needing to add a prefix to the group, you can pass
 an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
 given route config options:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Myth\Auth\Controllers&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Myth\Auth\Controllers&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;AuthController::login&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;as&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;login&#39;</span><span class="p">]);</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="s1">&#39;AuthController::attemptLogin&#39;</span><span class="p">);</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;logout&#39;</span><span class="p">,</span> <span class="s1">&#39;AuthController::logout&#39;</span><span class="p">);</span>
@@ -610,7 +656,9 @@ given route config options:</p>
 tools that only the developer can use on their local machines that are not reachable on testing or production servers.
 This can be done with the <code class="docutils literal notranslate"><span class="pre">environment()</span></code> method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">environment</span><span class="p">(</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">environment</span><span class="p">(</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;builder&#39;</span><span class="p">,</span> <span class="s1">&#39;Tools\Builder::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -625,12 +673,16 @@ to update your application code. This is typically used within views to create l
 function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
 separated by a double colon (<code class="docutils literal notranslate"><span class="pre">::</span></code>), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The route is defined as:</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// The route is defined as:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/(:num)/gallery(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Controllers\Galleries::showUserGallery/$1/$2&#39;</span><span class="p">);</span>
 
-<span class="c1">// Generate the relative URL to link to user ID 15, gallery 12</span>
-<span class="c1">// Generates: /users/15/gallery/12</span>
-<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;&lt;?= route_to(&#39;App\Controllers\Galleries::showUserGallery&#39;, 15, 12) ?&gt;&quot;</span><span class="o">&gt;</span><span class="nx">View</span> <span class="nx">Gallery</span><span class="o">&lt;/</span><span class="nx">a</span><span class="o">&gt;</span>
+<span class="cp">?&gt;</span>
+
+<span class="cm">&lt;!-- Generate the relative URL to link to user ID 15, gallery 12: --&gt;</span> 
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">route_to</span><span class="p">(</span><span class="s1">&#39;App\Controllers\Galleries::showUserGallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- Result: &#39;/users/15/gallery/12&#39; --&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -640,12 +692,16 @@ should be passed to the route are passed in next:</p>
 later, and even if the route definition changes, all of the links in your application built with <code class="docutils literal notranslate"><span class="pre">route_to()</span></code>
 will still work without you having to make any changes. A route is named by passing in the <code class="docutils literal notranslate"><span class="pre">as</span></code> option
 with the name of the route:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The route is defined as:</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// The route is defined as:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/(:num)/gallery(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Galleries::showUserGallery/$1/$2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;as&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;user_gallery&#39;</span><span class="p">]);</span>
 
-<span class="c1">// Generate the relative URL to link to user ID 15, gallery 12</span>
-<span class="c1">// Generates: /users/15/gallery/12</span>
-<span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;&lt;?= route_to(&#39;user_gallery&#39;, 15, 12) ?&gt;&quot;</span><span class="o">&gt;</span><span class="nx">View</span> <span class="nx">Gallery</span><span class="o">&lt;/</span><span class="nx">a</span><span class="o">&gt;</span>
+<span class="cp">?&gt;</span>
+
+<span class="cm">&lt;!-- Generate the relative URL to link to user ID 15, gallery 12: --&gt;</span> 
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">route_to</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- Result: &#39;/users/15/gallery/12&#39; --&gt;</span>
 </pre></div>
 </div>
 <p>This has the added benefit of making the views more readable, too.</p>
@@ -654,7 +710,9 @@ with the name of the route:</p>
 <h3><a class="toc-backref" href="#id21">Routes with any HTTP verbs</a><a class="headerlink" href="#routes-with-any-http-verbs" title="Permalink to this headline"></a></h3>
 <p>It is possible to define a route with any HTTP verbs.
 You can use the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;products&#39;</span><span class="p">,</span> <span class="s1">&#39;Product::feature&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -677,7 +735,9 @@ when trying to find a match.</p>
 <code class="docutils literal notranslate"><span class="pre">cli()</span></code> method. This is great for building cron jobs or CLI-only tools. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method will still be
 available from the command line:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;migrate&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Database::migrate&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">cli</span><span class="p">(</span><span class="s1">&#39;migrate&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Database::migrate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -690,7 +750,9 @@ anyone could access the command with the help of auto-routing via HTTP.</p>
 <h3><a class="toc-backref" href="#id23">Global Options</a><a class="headerlink" href="#global-options" title="Permalink to this headline"></a></h3>
 <p>All of the methods for creating a route (add, get, post, <a class="reference internal" href="restful.html"><span class="doc">resource</span></a> etc) can take an array of options that
 can modify the generated routes, or further restrict them. The <code class="docutils literal notranslate"><span class="pre">$options</span></code> array is always the last parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
@@ -724,16 +786,22 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 </div>
 <p><strong>Alias filter</strong></p>
 <p>You specify an alias defined in <strong>app/Config/Filters.php</strong> for the filter value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You may also supply arguments to be passed to the alias filter’s <code class="docutils literal notranslate"><span class="pre">before()</span></code> and <code class="docutils literal notranslate"><span class="pre">after()</span></code> methods:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;users/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth:dual,noreturn&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;users/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth:dual,noreturn&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p><strong>Classname filter</strong></p>
 <p>You specify a filter classname for the filter value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p><strong>Multiple filters</strong></p>
@@ -742,7 +810,9 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 <p><em>Multiple filters</em> is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See <a class="reference internal" href="../installation/upgrade_415.html#upgrade-415-multiple-filters-for-a-route"><span class="std std-ref">Multiple filters for a route</span></a> for the details.</p>
 </div>
 <p>You specify an array for the filter value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin-auth&#39;</span><span class="p">,</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin-auth&#39;</span><span class="p">,</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -751,7 +821,9 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 <p>While a default namespace will be prepended to the generated controllers (see below), you can also specify
 a different namespace to be used in any options array, with the <code class="docutils literal notranslate"><span class="pre">namespace</span></code> option. The value should be the
 namespace you want modified:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Routes to \Admin\Users::index()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Routes to \Admin\Users::index()</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin/users&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Admin&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -763,7 +835,9 @@ or, in the case of <code class="docutils literal notranslate"><span class="pre">
 <h4>Limit to Hostname<a class="headerlink" href="#limit-to-hostname" title="Permalink to this headline"></a></h4>
 <p>You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the “hostname” option along with the desired domain to allow it on as part of the options array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;accounts.example.com&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;accounts.example.com&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>This example would only allow the specified hosts to work if the domain exactly matched <strong>accounts.example.com</strong>.
@@ -773,13 +847,17 @@ It would not work under the main site at <strong>example.com</strong>.</p>
 <h4>Limit to Subdomains<a class="headerlink" href="#limit-to-subdomains" title="Permalink to this headline"></a></h4>
 <p>When the <code class="docutils literal notranslate"><span class="pre">subdomain</span></code> option is present, the system will restrict the routes to only be available on that
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Limit to media.example.com</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Limit to media.example.com</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;subdomain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;media&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You can restrict it to any subdomain by setting the value to an asterisk, (<code class="docutils literal notranslate"><span class="pre">*</span></code>). If you are viewing from a URL
 that does not have any subdomain present, this will not be matched:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Limit to any sub-domain</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Limit to any sub-domain</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;subdomain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;*&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -796,7 +874,9 @@ to separate suffixes or www) can potentially lead to false positives.</p>
 value being the number of segments to offset.</p>
 <p>This can be beneficial when developing API’s with the first URI segment being the version number. It can also
 be used when the first parameter is a language string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;users/show/$1&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;offset&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;users/show/$1&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;offset&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">]);</span>
 
 <span class="c1">// Creates:</span>
 <span class="nv">$routes</span><span class="p">[</span><span class="s1">&#39;users/(:num)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;users/show/$2&#39;</span><span class="p">;</span>
@@ -810,7 +890,9 @@ Then the module routes will not be processed correctly.
 You can solve this problem by lowering the priority of route processing using the <code class="docutils literal notranslate"><span class="pre">priority</span></code> option. The parameter
 accepts positive integers and zero. The higher the number specified in the <code class="docutils literal notranslate"><span class="pre">priority</span></code>, the lower
 route priority in the processing queue:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// First you need to enable sorting.</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// First you need to enable sorting.</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">();</span>
 
 <span class="c1">// App\Config\Routes</span>
@@ -823,7 +905,9 @@ route priority in the processing queue:</p>
 </pre></div>
 </div>
 <p>To disable this functionality, you must call the method with the parameter <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -844,7 +928,9 @@ application’s needs. These options are available at the top of <strong>app/Con
 specified by the route. By default, this value is <code class="docutils literal notranslate"><span class="pre">App\Controllers</span></code>.</p>
 <p>If you set the value empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>), it leaves each route to specify the fully namespaced
 controller:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
 
 <span class="c1">// Controller is \Users</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::index&#39;</span><span class="p">);</span>
@@ -855,7 +941,9 @@ controller:</p>
 </div>
 <p>If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
 then you can change this value to save typing:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultNamespace</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
 
 <span class="c1">// Controller is \App\Users</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::index&#39;</span><span class="p">);</span>
@@ -870,7 +958,9 @@ then you can change this value to save typing:</p>
 <p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
 which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -885,7 +975,9 @@ when a controller is found that matches the URI, but no segment exists for the m
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
 <p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
 <code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -894,7 +986,9 @@ when a controller is found that matches the URI, but no segment exists for the m
 <p>This option enables you to automatically replace dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setTranslateURIDashes</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setTranslateURIDashes</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -903,7 +997,9 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods as described above. You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -917,7 +1013,9 @@ requests. If the URI is accessible by the GET method, the CSRF protection will n
 <p>When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> method. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Would execute the show404 method of the App\Errors class</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Would execute the show404 method of the App\Errors class</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">);</span>
 
 <span class="c1">// Will display a custom view</span>
@@ -933,7 +1031,9 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <p>Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see <a class="reference internal" href="#routing-priority"><span class="std std-ref">Route processing queue</span></a>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// to enable</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// to enable</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">();</span>
 
 <span class="c1">// to disable</span>

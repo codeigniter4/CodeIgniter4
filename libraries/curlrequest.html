@@ -323,7 +323,9 @@ will provide it, so please check with your host to verify if you run into proble
 If you send more than one request with an instance of the class,
 this behavior may cause an error request with unnecessary headers.</p>
 <p>You can change the behavior by editing the following config parameter value in <strong>app/Config/CURLRequest.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$shareOptions</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$shareOptions</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -332,12 +334,16 @@ this behavior may cause an error request with unnecessary headers.</p>
 <h2><a class="toc-backref" href="#id3">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Permalink to this headline"></a></h2>
 <p>The library can be loaded either manually or through the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services class</span></a>.</p>
 <p>To load with the Services class call the <code class="docutils literal notranslate"><span class="pre">curlrequest()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass in an array of default options as the first parameter to modify how cURL will handle the request.
 The options are described later in this document:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;timeout&#39;</span>  <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">];</span>
@@ -351,7 +357,9 @@ The options are described later in this document:</p>
 <p>When creating the class manually, you need to pass a few dependencies in. The first parameter is an
 instance of the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> class. The second parameter is a URI instance. The third
 parameter is a Response object. The fourth parameter is the optional default <code class="docutils literal notranslate"><span class="pre">$options</span></code> array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\CURLRequest</span><span class="p">(</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\CURLRequest</span><span class="p">(</span>
     <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span>
     <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(),</span>
     <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\Response</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">()),</span>
@@ -369,7 +377,9 @@ you have complete control over how the information is handled.</p>
 <h3><a class="toc-backref" href="#id5">Making Requests</a><a class="headerlink" href="#making-requests" title="Permalink to this headline"></a></h3>
 <p>Most communication is done through the <code class="docutils literal notranslate"><span class="pre">request()</span></code> method, which fires off the request, and then returns
 a Response instance to you. This takes the HTTP method, the url and an array of options as the parameters.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">();</span>
 
 <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;https://api.github.com/user&#39;</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;pass&#39;</span><span class="p">],</span>
@@ -382,7 +392,9 @@ a Response instance to you. This takes the HTTP method, the url and an array of 
 </div>
 <p>Since the response is an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code> you have all of the normal information
 available to you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span>
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
 <span class="nv">$language</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">negotiateLanguage</span><span class="p">([</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">]);</span>
@@ -390,7 +402,9 @@ available to you:</p>
 </div>
 <p>While the <code class="docutils literal notranslate"><span class="pre">request()</span></code> method is the most flexible, you can also use the following shortcut methods. They
 each take the URL as the first parameter and an array of options as the second:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">head</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">options</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
@@ -404,7 +418,9 @@ each take the URL as the first parameter and an array of options as the second:<
 <p>A <code class="docutils literal notranslate"><span class="pre">baseURI</span></code> can be set as one of the options during the instantiation of the class. This allows you to
 set a base URI, and then make all requests with that client using relative URLs. This is especially handy
 when working with APIs:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">([</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">([</span>
     <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://example.com/api/v1/&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 
@@ -467,12 +483,16 @@ examples of how the combinations are resolved.</p>
 <p>Each <code class="docutils literal notranslate"><span class="pre">request()</span></code> call returns a Response object that contains a lot of useful information and some helpful
 methods. The most commonly used methods let you determine the response itself.</p>
 <p>You can get the status code and reason phrase of the response:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$code</span>   <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span> <span class="c1">// 200</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$code</span>   <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getStatusCode</span><span class="p">();</span> <span class="c1">// 200</span>
 <span class="nv">$reason</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getReason</span><span class="p">();</span> <span class="c1">// OK</span>
 </pre></div>
 </div>
 <p>You can retrieve headers from the response:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get a header line</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Get a header line</span>
 <span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
 
 <span class="c1">// Get all headers</span>
@@ -482,12 +502,16 @@ methods. The most commonly used methods let you determine the response itself.</
 </pre></div>
 </div>
 <p>The body can be retrieved using the <code class="docutils literal notranslate"><span class="pre">getBody()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>The body is the raw body provided by the remote server. If the content type requires formatting, you will need
 to ensure that your script handles that:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">),</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">),</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$body</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -503,11 +527,15 @@ or any of the shortcut methods.</p>
 <p>By default, cURL will follow all “Location:” headers the remote servers send back. The <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option
 allows you to modify how that works.</p>
 <p>If you set the value to <code class="docutils literal notranslate"><span class="pre">false</span></code>, then it will not follow any redirects at all:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code> will apply the default settings to the request:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 
 <span class="cm">/*</span>
 <span class="cm">    Sets the following defaults:</span>
@@ -519,7 +547,9 @@ allows you to modify how that works.</p>
 </pre></div>
 </div>
 <p>You can pass in array as the value of the <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option to specify new settings in place of the defaults:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
     <span class="s1">&#39;max&#39;</span>       <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
     <span class="s1">&#39;protocols&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;https&#39;</span><span class="p">]</span> <span class="c1">// Force HTTPS domains only.</span>
 <span class="p">]]);</span>
@@ -537,7 +567,9 @@ allows you to modify how that works.</p>
 Digest authentication - this simply passes the username and password along for you. The value must be an
 array where the first element is the username, and the second is the password. The third parameter should be
 the type of authentication to use, either <code class="docutils literal notranslate"><span class="pre">basic</span></code> or <code class="docutils literal notranslate"><span class="pre">digest</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;digest&#39;</span><span class="p">]]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;auth&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;digest&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -545,12 +577,16 @@ the type of authentication to use, either <code class="docutils literal notransl
 <h3><a class="toc-backref" href="#id10">body</a><a class="headerlink" href="#body" title="Permalink to this headline"></a></h3>
 <p>There are two ways to set the body of the request for request types that support them, like PUT, OR POST.
 The first way is to use the <code class="docutils literal notranslate"><span class="pre">setBody()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">)</span> <span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">)</span> <span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The second method is by passing a <code class="docutils literal notranslate"><span class="pre">body</span></code> option in. This is provided to maintain Guzzle API compatibility,
 and functions the exact same way as the previous example. The value must be a string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="nv">$body</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="nv">$body</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -559,7 +595,9 @@ and functions the exact same way as the previous example. The value must be a st
 <p>To specify the location of a PEM formatted client-side certificate, pass a string with the full path to the
 file as the <code class="docutils literal notranslate"><span class="pre">cert</span></code> option. If a password is required, set the value to an array with the first element
 as the path to the certificate, and the second as the password:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cert&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;/path/server.pem&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cert&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;/path/server.pem&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -568,7 +606,9 @@ as the path to the certificate, and the second as the password:</p>
 <p>By default, CodeIgniter does not impose a limit for cURL to attempt to connect to a website. If you need to
 modify this value, you can do so by passing the amount of time in seconds with the <code class="docutils literal notranslate"><span class="pre">connect_timeout</span></code> option.
 You can pass 0 to wait indefinitely:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;connect_timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;connect_timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -577,7 +617,9 @@ You can pass 0 to wait indefinitely:</p>
 <p>This specifies the filename that CURL should use to read cookie values from, and
 to save cookie values to. This is done using the CURL_COOKIEJAR and CURL_COOKIEFILE options.
 An example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cookie&#39;</span> <span class="o">=&gt;</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;CookieSaver.txt&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cookie&#39;</span> <span class="o">=&gt;</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;CookieSaver.txt&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -591,14 +633,18 @@ the server’s error log.</p>
 <div><p>$response-&gt;request(‘GET’, ‘<a class="reference external" href="http://example.com">http://example.com</a>’, [‘debug’ =&gt; true]);</p>
 </div></blockquote>
 <p>You can pass a filename as the value for debug to have the output written to a file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/usr/local/curl_log.txt&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;debug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/usr/local/curl_log.txt&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
 <section id="delay">
 <h3><a class="toc-backref" href="#id15">delay</a><a class="headerlink" href="#delay" title="Permalink to this headline"></a></h3>
 <p>Allows you to pause a number of milliseconds before sending the request:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Delay for 2 seconds</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Delay for 2 seconds</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;delay&#39;</span> <span class="o">=&gt;</span> <span class="mi">2000</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -608,7 +654,9 @@ the server’s error log.</p>
 <p>You can send form data in an application/x-www-form-urlencoded POST request by passing an associative array in
 the <code class="docutils literal notranslate"><span class="pre">form_params</span></code> option. This will set the <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header to <code class="docutils literal notranslate"><span class="pre">application/x-www-form-urlencoded</span></code>
 if it’s not already set:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/post&#39;</span><span class="p">,</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/post&#39;</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;form_params&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
         <span class="s1">&#39;baz&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">],</span>
@@ -628,7 +676,9 @@ requests.</p>
 <p>While you can set any headers this request needs by using the <code class="docutils literal notranslate"><span class="pre">setHeader()</span></code> method, you can also pass an associative
 array of headers in as an option. Each key is the name of a header, and each value is a string or array of strings
 representing the header field values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;User-Agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;testing/1.0&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Accept&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
@@ -644,7 +694,9 @@ further headers arrays or calls to <code class="docutils literal notranslate"><s
 <h3><a class="toc-backref" href="#id18">http_errors</a><a class="headerlink" href="#http-errors" title="Permalink to this headline"></a></h3>
 <p>By default, CURLRequest will fail if the HTTP code returned is greater than or equal to 400. You can set
 <code class="docutils literal notranslate"><span class="pre">http_errors</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> to return the content instead:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">);</span>
 <span class="c1">// Will fail verbosely</span>
 
 <span class="nv">$res</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/status/500&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;http_errors&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
@@ -658,7 +710,9 @@ further headers arrays or calls to <code class="docutils literal notranslate"><s
 <p>The <code class="docutils literal notranslate"><span class="pre">json</span></code> option is used to easily upload JSON encoded data as the body of a request. A Content-Type header
 of <code class="docutils literal notranslate"><span class="pre">application/json</span></code> is added, overwriting any Content-Type that might be already set. The data provided to
 this option can be any value that <code class="docutils literal notranslate"><span class="pre">json_encode()</span></code> accepts:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;/put&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;json&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;/put&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;json&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -674,7 +728,9 @@ method of CURLRequest, and set the Content-Type header with the <code class="doc
 the <a class="reference external" href="https://www.php.net/manual/en/class.curlfile.php">CURLFile Class</a>. The values should be an associative array
 of POST data to send. For safer usage, the legacy method of uploading files by prefixing their name with an <cite>&#64;</cite>
 has been disabled. Any files that you want to send must be passed as instances of CURLFile:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$post_data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$post_data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;foo&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
     <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">\CURLFile</span><span class="p">(</span><span class="s1">&#39;/path/to/file.txt&#39;</span><span class="p">),</span>
 <span class="p">];</span>
@@ -690,7 +746,9 @@ requests.</p>
 <section id="query">
 <h3><a class="toc-backref" href="#id21">query</a><a class="headerlink" href="#query" title="Permalink to this headline"></a></h3>
 <p>You can pass along data to send as query string variables by passing an associative array as the <code class="docutils literal notranslate"><span class="pre">query</span></code> option:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Send a GET request to /get?foo=bar</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Send a GET request to /get?foo=bar</span>
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/get&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;query&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
@@ -699,14 +757,18 @@ requests.</p>
 <h3><a class="toc-backref" href="#id22">timeout</a><a class="headerlink" href="#timeout" title="Permalink to this headline"></a></h3>
 <p>By default, cURL functions are allowed to run as long as they take, with no time limit. You can modify this with the <code class="docutils literal notranslate"><span class="pre">timeout</span></code>
 option. The value should be the number of seconds you want the functions to execute for. Use 0 to wait indefinitely:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
 <section id="user-agent">
 <h3><a class="toc-backref" href="#id23">user_agent</a><a class="headerlink" href="#user-agent" title="Permalink to this headline"></a></h3>
 <p>Allows specifying the User Agent for requests:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;user_agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter Framework v4&#39;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;user_agent&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter Framework v4&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -717,7 +779,9 @@ SSL certificate verification and uses the default CA bundle provided by the oper
 will disable the certificate verification (this is insecure, and allows man-in-the-middle attacks!). You can set it
 to a string that contains the path to a CA bundle to enable verification with a custom certificate. The default value
 is true:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use the system&#39;s CA bundle (this is the default setting)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Use the system&#39;s CA bundle (this is the default setting)</span>
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;verify&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 
 <span class="c1">// Use a custom SSL certificate on disk.</span>
@@ -732,7 +796,9 @@ is true:</p>
 <h3><a class="toc-backref" href="#id25">version</a><a class="headerlink" href="#version" title="Permalink to this headline"></a></h3>
 <p>To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
 or 1.1, 2.0 is currently unsupported.):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Force HTTP/1.0</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Force HTTP/1.0</span>
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;version&#39;</span> <span class="o">=&gt;</span> <span class="mf">1.0</span><span class="p">]);</span>
 </pre></div>
 </div>

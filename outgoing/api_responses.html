@@ -304,7 +304,9 @@ should be returned for which response types.</p>
 </div>
 <p>In this example, an HTTP status code of 201 is returned, with the generic status message, ‘Created’. Methods
 exist for the most common use cases:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generic response method</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Generic response method</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
 
 <span class="c1">// Generic failure response</span>
@@ -355,7 +357,9 @@ if nothing else has been specified within <strong>Config/Format.php</strong>, th
 <p>To define the formatter that is used, edit <strong>Config/Format.php</strong>. The <code class="docutils literal notranslate"><span class="pre">$supportedResponseFormats</span></code> contains a list of
 mime types that your application can automatically format the response for. By default, the system knows how to
 format both XML and JSON responses:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$supportedResponseFormats</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$supportedResponseFormats</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
     <span class="s1">&#39;application/xml&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -367,7 +371,9 @@ format in this array is what will be returned.</p>
 <p>Next, you need to define the class that is used to format the array of data. This must be a fully qualified class
 name, and the class must implement <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Format\FormatterInterface</span></code>. Formatters come out of the box that
 support both JSON and XML:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$formatters</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$formatters</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;application/json&#39;</span> <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\JSONFormatter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="s1">&#39;application/xml&#39;</span>  <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Format\XMLFormatter</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
@@ -386,7 +392,9 @@ JSON data will be sent back to the client.</p>
 <code class="docutils literal notranslate"><span class="pre">$format</span></code>, it will be automatically determined through content negotiation.</p>
 </dd></dl>
 
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setResponseFormat</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">([</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setResponseFormat</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">([</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -441,7 +449,9 @@ response status. Not every client will respect the custom codes, though, and wil
 that match the status code.</p>
 <p>The response is an array with two elements: <code class="docutils literal notranslate"><span class="pre">error</span></code> and <code class="docutils literal notranslate"><span class="pre">messages</span></code>. The <code class="docutils literal notranslate"><span class="pre">error</span></code> element contains the status
 code of the error. The <code class="docutils literal notranslate"><span class="pre">messages</span></code> element contains an array of error messages. It would look something like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$response</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$response</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;status&#39;</span>   <span class="o">=&gt;</span> <span class="mi">400</span><span class="p">,</span>
     <span class="s1">&#39;code&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;321a&#39;</span><span class="p">,</span>
     <span class="s1">&#39;messages&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
@@ -468,7 +478,9 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 </dd>
 </dl>
 <p>Sets the appropriate status code to use when a new resource was created, typically 201:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -489,7 +501,9 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 </dd>
 </dl>
 <p>Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -510,7 +524,9 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 </dl>
 <p>Sets the appropriate status code to use when a command was successfully executed by the server but there is no
 meaningful reply to send back to the client, typically 204.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondNoContent</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -533,7 +549,9 @@ meaningful reply to send back to the client, typically 204.</p>
 </dl>
 <p>Sets the appropriate status code to use when the user either has not been authorized,
 or has incorrect authorization. Status code is 401.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failUnauthorized</span><span class="p">(</span><span class="s1">&#39;Invalid Auth token&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failUnauthorized</span><span class="p">(</span><span class="s1">&#39;Invalid Auth token&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -556,7 +574,9 @@ or has incorrect authorization. Status code is 401.</p>
 <p>Unlike <code class="docutils literal notranslate"><span class="pre">failUnauthorized()</span></code>, this method should be used when the requested API endpoint is never allowed.
 Unauthorized implies the client is encouraged to try again with different credentials. Forbidden means
 the client should not try again because it won’t help. Status code is 403.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failForbidden</span><span class="p">(</span><span class="s1">&#39;Invalid API endpoint.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failForbidden</span><span class="p">(</span><span class="s1">&#39;Invalid API endpoint.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -577,7 +597,9 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </dd>
 </dl>
 <p>Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;User 13 cannot be found.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failNotFound</span><span class="p">(</span><span class="s1">&#39;User 13 cannot be found.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -598,7 +620,9 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </dd>
 </dl>
 <p>Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failValidationErrors</span><span class="p">(</span><span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">());</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -620,7 +644,9 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </dl>
 <p>Sets the appropriate status code to use when the resource the client is trying to create already exists.
 Status code is typically 409.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceExists</span><span class="p">(</span><span class="s1">&#39;A user already exists with that email.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceExists</span><span class="p">(</span><span class="s1">&#39;A user already exists with that email.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -642,7 +668,9 @@ Status code is typically 409.</p>
 </dl>
 <p>Sets the appropriate status code to use when the requested resource was previously deleted and
 is no longer available. Status code is typically 410.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceGone</span><span class="p">(</span><span class="s1">&#39;That user has been previously deleted.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failResourceGone</span><span class="p">(</span><span class="s1">&#39;That user has been previously deleted.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -664,7 +692,9 @@ is no longer available. Status code is typically 410.</p>
 </dl>
 <p>Sets the appropriate status code to use when the client has called an API endpoint too many times.
 This might be due to some form of throttling or rate limiting. Status code is typically 400.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failTooManyRequests</span><span class="p">(</span><span class="s1">&#39;You must wait 15 seconds before making another request.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failTooManyRequests</span><span class="p">(</span><span class="s1">&#39;You must wait 15 seconds before making another request.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -685,7 +715,9 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 </dd>
 </dl>
 <p>Sets the appropriate status code to use when there is a server error.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failServerError</span><span class="p">(</span><span class="s1">&#39;Server error.&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">failServerError</span><span class="p">(</span><span class="s1">&#39;Server error.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>

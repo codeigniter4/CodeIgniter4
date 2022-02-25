@@ -300,7 +300,9 @@
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
 <li><p>To enable CSRF protection in CI4 you have to enable it in <strong>app/Config/Filters.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="c1">//&#39;honeypot&#39;,</span>
         <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
@@ -317,21 +319,23 @@
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-x">
 <h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$csrf</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$csrf</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">security</span><span class="o">-&gt;</span><span class="na">get_csrf_token_name</span><span class="p">(),</span>
     <span class="s1">&#39;hash&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">security</span><span class="o">-&gt;</span><span class="na">get_csrf_hash</span><span class="p">()</span>
 <span class="p">);</span>
 
-<span class="c1">// ...</span>
+<span class="cp">?&gt;</span>
 
-<span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;name&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;email&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;password&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;password&quot;</span><span class="o">&gt;</span>
+<span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;name&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;password&quot;</span><span class="p">&gt;</span>
 
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;&lt;?= </span><span class="si">$csrf[&#39;name&#39;]</span><span class="s2"> ?&gt;&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&lt;?= </span><span class="si">$csrf[&#39;hash&#39;]</span><span class="s2"> ?&gt;&quot;</span> <span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Save&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="nx">form</span><span class="o">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$csrf</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$csrf</span><span class="p">[</span><span class="s1">&#39;hash&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Save&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </section>

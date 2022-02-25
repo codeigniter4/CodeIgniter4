@@ -276,7 +276,9 @@ in semantically relevant ways.</p>
 <h2><a class="toc-backref" href="#id1">Loading the Library</a><a class="headerlink" href="#loading-the-library" title="Permalink to this headline"></a></h2>
 <p>Like all services in CodeIgniter, it can be loaded via <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code>, though you usually will not need
 to load it manually:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -303,7 +305,9 @@ to load it manually:</p>
 <p>Formats text so that it is semantically and typographically correct
 HTML.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">autoTypography</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">autoTypography</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -335,7 +339,9 @@ pages.</p>
 to curly entities, but it also converts em-dashes,
 double spaces, and ampersands.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">formatCharacters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">formatCharacters</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -360,7 +366,9 @@ double spaces, and ampersands.</p>
 This function is identical to the native PHP <code class="docutils literal notranslate"><span class="pre">nl2br()</span></code> function,
 except that it ignores <code class="docutils literal notranslate"><span class="pre">&lt;pre&gt;</span></code> tags.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">nl2brExceptPre</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$string</span> <span class="o">=</span> <span class="nv">$typography</span><span class="o">-&gt;</span><span class="na">nl2brExceptPre</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>

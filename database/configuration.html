@@ -276,7 +276,9 @@ file is located at <strong>app/Config/Database.php</strong>. You can also set
 database connection values in the <strong>.env</strong> file. See below for more details.</p>
 <p>The config settings are stored in a class property that is an array with this
 prototype:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
@@ -307,7 +309,9 @@ If you want to change the location, you must set the full path to the new folder
 require a full DSN string to be provided. If that is the case, you
 should use the ‘DSN’ configuration setting, as if you’re using the
 driver’s underlying native PHP extension, like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// PDO</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// PDO</span>
 <span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pgsql:host=localhost;port=5432;dbname=database_name&#39;</span><span class="p">;</span>
 
 <span class="c1">// Oracle</span>
@@ -320,12 +324,16 @@ driver’s underlying native PHP extension, like this:</p>
 will try to build it with the rest of the provided settings.</p>
 </div>
 <p>You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;DBDriver://username:password@hostname:port/database&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;DBDriver://username:password@hostname:port/database&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>To override default config values when connecting with a universal version of the DSN string,
 add the config variables as a query string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// MySQLi</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// MySQLi</span>
 <span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;MySQLi://username:password@hostname:3306/database?charset=utf8&amp;DBCollat=utf8_general_ci&#39;</span><span class="p">;</span>
 <span class="c1">// Postgre</span>
 <span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Postgre://username:password@hostname:5432/database?charset=utf8&amp;connect_timeout=5&amp;sslmode=1&#39;</span><span class="p">;</span>
@@ -339,7 +347,9 @@ fields, CodeIgniter will append them.</p>
 </div>
 <p>You can also specify failovers for the situation when the main connection cannot connect for some reason.
 These failovers can be specified by setting the failover for a connection like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;failover&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;failover&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span>
         <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost1&#39;</span><span class="p">,</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -381,7 +391,9 @@ values. If, for example, you run multiple environments (development,
 production, test, etc.) under a single installation, you can set up a
 connection group for each, then switch between groups as needed. For
 example, to set up a “test” environment you would do this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$test</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="nv">$test</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;DSN&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;hostname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
@@ -403,7 +415,9 @@ example, to set up a “test” environment you would do this:</p>
 </div>
 <p>Then, to globally tell the system to use that group you would set this
 variable located in the config file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$defaultGroup</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$defaultGroup</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -415,7 +429,9 @@ but it too can be renamed to something more relevant to your project.</p>
 <p>You could modify the config file to detect the environment and automatically
 update the <cite>defaultGroup</cite> value to the correct one by adding the required logic
 within the class’ constructor:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Database</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Database</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$development</span> <span class="o">=</span> <span class="p">[</span><span class="cm">/* ... */</span><span class="p">];</span>
     <span class="k">public</span> <span class="nv">$test</span>        <span class="o">=</span> <span class="p">[</span><span class="cm">/* ... */</span><span class="p">];</span>
@@ -530,7 +546,9 @@ while developing an application.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>port</strong></p></td>
 <td><p>The database port number. To use this value you have to add a line to the database config array.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5432</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5432</span><span class="p">;</span>
 </pre></div>
 </div>
 </td>

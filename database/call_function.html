@@ -276,7 +276,9 @@ natively included in CodeIgniter, in a platform-independent manner. For
 example, let’s say you want to call the <code class="docutils literal notranslate"><span class="pre">mysql_get_client_info()</span></code>
 function, which is <strong>not</strong> natively supported by CodeIgniter. You could
 do so like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;get_client_info&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;get_client_info&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You must supply the name of the function, <strong>without</strong> the mysql_
@@ -287,16 +289,22 @@ function calls are identical between platforms, so there are limits to
 how useful this function can be in terms of portability.</p>
 <p>Any parameters needed by the function you are calling will be added to
 the second parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;some_function&#39;</span><span class="p">,</span> <span class="nv">$param1</span><span class="p">,</span> <span class="nv">$param2</span><span class="p">,</span> <span class="cm">/* ... */</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">callFunction</span><span class="p">(</span><span class="s1">&#39;some_function&#39;</span><span class="p">,</span> <span class="nv">$param1</span><span class="p">,</span> <span class="nv">$param2</span><span class="p">,</span> <span class="cm">/* ... */</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Often, you will either need to supply a database connection ID or a
 database result ID. The connection ID can be accessed using:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">connID</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$db</span><span class="o">-&gt;</span><span class="na">connID</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>The result ID can be accessed from within your result object, like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SOME QUERY&quot;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SOME QUERY&quot;</span><span class="p">);</span>
 
 <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">resultID</span><span class="p">;</span>
 </pre></div>

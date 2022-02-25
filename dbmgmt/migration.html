@@ -360,7 +360,9 @@ See <strong>make:migration</strong> in <a class="reference internal" href="#comm
 <p>When your tables include Foreign Keys, migrations can often cause problems as you attempt to drop tables and columns.
 To temporarily bypass the foreign key checks while running migrations, use the <code class="docutils literal notranslate"><span class="pre">disableForeignKeyChecks()</span></code> and
 <code class="docutils literal notranslate"><span class="pre">enableForeignKeyChecks()</span></code> methods on the database connection.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">disableForeignKeyChecks</span><span class="p">()</span>
 
@@ -412,7 +414,9 @@ it finds in Database/Migrations.</p>
 <p>Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.</p>
 <p>For example, assume that we have the following namespaces defined in our Autoload
 configuration file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$psr4</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;App&#39;</span>       <span class="o">=&gt;</span> <span class="nx">APPPATH</span><span class="p">,</span>
     <span class="s1">&#39;MyCompany&#39;</span> <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;MyCompany&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -613,7 +617,9 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </dd>
 </dl>
 <p>Regress can be used to roll back changes to a previous state, batch by batch.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">regress</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">regress</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">regress</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -661,7 +667,9 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </dd>
 </dl>
 <p>Sets the namespace the library should look for migration files:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$namespace</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setNamespace</span><span class="p">(</span><span class="nv">$namespace</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -683,7 +691,9 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </dd>
 </dl>
 <p>Sets the group the library should look for migration files:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setGroup</span><span class="p">(</span><span class="nv">$group</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$migration</span><span class="o">-&gt;</span><span class="na">setGroup</span><span class="p">(</span><span class="nv">$group</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
 </pre></div>
 </div>
 </dd></dl>

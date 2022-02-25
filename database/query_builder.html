@@ -305,7 +305,9 @@ system.</p>
 <p>The Query Builder is loaded through the <code class="docutils literal notranslate"><span class="pre">table()</span></code> method on the
 database connection. This sets the <strong>FROM</strong> portion of the query for you
 and returns a new instance of the Query Builder class:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$db</span>      <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$db</span>      <span class="o">=</span> <span class="nx">\Config\Database</span><span class="o">::</span><span class="na">connect</span><span class="p">();</span>
 <span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -320,13 +322,17 @@ the class, so no resources are used by default.</p>
 <p><strong>$builder-&gt;get()</strong></p>
 <p>Runs the selection query and returns the result. Can be used by itself
 to retrieve all records from a table:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
 <span class="nv">$query</span>   <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>  <span class="c1">// Produces: SELECT * FROM mytable</span>
 </pre></div>
 </div>
 <p>The first and second parameters enable you to set a limit and offset
 clause:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 
 <span class="c1">// Executes: SELECT * FROM mytable LIMIT 20, 10</span>
 <span class="c1">// (in MySQL. Other databases have slightly different syntax)</span>
@@ -334,7 +340,9 @@ clause:</p>
 </div>
 <p>You’ll notice that the above method is assigned to a variable named
 $query, which can be used to show the results:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
@@ -347,7 +355,9 @@ discussion regarding result generation.</p>
 <p>Compiles the selection query just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code> but does not <em>run</em>
 the query. This method simply returns the SQL query as a string.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">();</span>
 <span class="k">echo</span> <span class="nv">$sql</span><span class="p">;</span>
 
 <span class="c1">// Prints string: SELECT * FROM mytable</span>
@@ -355,7 +365,9 @@ the query. This method simply returns the SQL query as a string.</p>
 </div>
 <p>The first parameter enables you to set whether or not the query builder query
 will be reset (by default it will be reset, just like when using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 
 <span class="c1">// Prints string: SELECT * FROM mytable LIMIT 20, 10</span>
 <span class="c1">// (in MySQL. Other databases have slightly different syntax)</span>
@@ -374,7 +386,9 @@ using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;
 <p>Identical to the <code class="docutils literal notranslate"><span class="pre">get()</span></code> method except that it permits you to add a
 “where” clause in the first parameter, instead of using the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code>
 method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getWhere</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">],</span> <span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">getWhere</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">],</span> <span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Please read about the <code class="docutils literal notranslate"><span class="pre">where()</span></code> method below for more information.</p>
@@ -383,7 +397,9 @@ method:</p>
 <h3><a class="toc-backref" href="#id4">Select</a><a class="headerlink" href="#select" title="Permalink to this headline"></a></h3>
 <p><strong>$builder-&gt;select()</strong></p>
 <p>Permits you to write the <strong>SELECT</strong> portion of your query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
 <span class="c1">// Executes: SELECT title, content, date FROM mytable</span>
@@ -399,14 +415,18 @@ to select all fields and automatically adds <code class="docutils literal notran
 to <code class="docutils literal notranslate"><span class="pre">false</span></code>, CodeIgniter will not try to protect your field or table names.
 This is useful if you need a compound select statement where automatic
 escaping of fields may break them.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;(SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;selectMax()</strong></p>
 <p>Writes a <strong>SELECT MAX(field)</strong> portion for your query. You can optionally
 include a second parameter to rename the resulting field.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMax</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMax</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 <span class="c1">// Produces: SELECT MAX(age) as age FROM mytable</span>
 
@@ -419,7 +439,9 @@ include a second parameter to rename the resulting field.</p>
 <p>Writes a <strong>SELECT MIN(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMin</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectMin</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 <span class="c1">// Produces: SELECT MIN(age) as age FROM mytable</span>
 </pre></div>
@@ -428,7 +450,9 @@ the resulting field.</p>
 <p>Writes a <strong>SELECT AVG(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectAvg</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectAvg</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 <span class="c1">// Produces: SELECT AVG(age) as age FROM mytable</span>
 </pre></div>
@@ -437,7 +461,9 @@ the resulting field.</p>
 <p>Writes a <strong>SELECT SUM(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectSum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectSum</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 <span class="c1">// Produces: SELECT SUM(age) as age FROM mytable</span>
 </pre></div>
@@ -451,7 +477,9 @@ the resulting field.</p>
 <p>This method is particularly helpful when used with <code class="docutils literal notranslate"><span class="pre">groupBy()</span></code>. For
 counting results generally see <code class="docutils literal notranslate"><span class="pre">countAll()</span></code> or <code class="docutils literal notranslate"><span class="pre">countAllResults()</span></code>.</p>
 </div>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectCount</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">selectCount</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 <span class="c1">// Produces: SELECT COUNT(age) as age FROM mytable</span>
 </pre></div>
@@ -461,7 +489,9 @@ counting results generally see <code class="docutils literal notranslate"><span 
 <h3><a class="toc-backref" href="#id5">From</a><a class="headerlink" href="#from" title="Permalink to this headline"></a></h3>
 <p><strong>$builder-&gt;from()</strong></p>
 <p>Permits you to write the <strong>FROM</strong> portion of your query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
@@ -480,7 +510,9 @@ to the FROM portion of your query.</p>
 <p><strong>$builder-&gt;fromSubquery()</strong></p>
 <p>Permits you to write part of a <strong>FROM</strong> query as a subquery.</p>
 <p>This is where we add a subquery to an existing table:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">fromSubquery</span><span class="p">(</span><span class="nv">$subquery</span><span class="p">,</span> <span class="s1">&#39;alias&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
@@ -488,7 +520,9 @@ to the FROM portion of your query.</p>
 </pre></div>
 </div>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">$db-&gt;newQuery()</span></code> method to make a subquery the main table:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id, name&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id, name&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">newQuery</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fromSubquery</span><span class="p">(</span><span class="nv">$subquery</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
@@ -500,7 +534,9 @@ to the FROM portion of your query.</p>
 <h3><a class="toc-backref" href="#id7">Join</a><a class="headerlink" href="#join" title="Permalink to this headline"></a></h3>
 <p><strong>$builder-&gt;join()</strong></p>
 <p>Permits you to write the <strong>JOIN</strong> portion of your query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;blogs&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;blogs&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
@@ -514,7 +550,9 @@ query.</p>
 <p>If you need a specific type of <strong>JOIN</strong> you can specify it via the third
 parameter of the method. Options are: <code class="docutils literal notranslate"><span class="pre">left</span></code>, <code class="docutils literal notranslate"><span class="pre">right</span></code>, <code class="docutils literal notranslate"><span class="pre">outer</span></code>, <code class="docutils literal notranslate"><span class="pre">inner</span></code>, <code class="docutils literal notranslate"><span class="pre">left</span>
 <span class="pre">outer</span></code>, and <code class="docutils literal notranslate"><span class="pre">right</span> <span class="pre">outer</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: LEFT JOIN comments ON comments.id = blogs.id</span>
 </pre></div>
 </div>
@@ -538,14 +576,18 @@ producing safer queries, except when using a custom string.</p>
 <ol class="arabic">
 <li><p><strong>Simple key/value method:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE name = &#39;Joe&#39;</span>
 </pre></div>
 </div>
 <p>Notice that the equal sign is added for you.</p>
 <p>If you use multiple method calls they will be chained together with
 <strong>AND</strong> between them:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
 <span class="c1">// WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
@@ -557,7 +599,9 @@ producing safer queries, except when using a custom string.</p>
 <blockquote>
 <div><p>You can include an operator in the first parameter in order to
 control the comparison:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &lt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE name != &#39;Joe&#39; AND id &lt; 45</span>
 </pre></div>
@@ -566,13 +610,17 @@ control the comparison:</p>
 </li>
 <li><p><strong>Associative array method:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">];</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE name = &#39;Joe&#39; AND title = &#39;boss&#39; AND status = &#39;active&#39;</span>
 </pre></div>
 </div>
 <p>You can include your own operators using this method as well:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name !=&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;date &gt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$date</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name !=&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">,</span> <span class="s1">&#39;date &gt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$date</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -581,7 +629,9 @@ control the comparison:</p>
 <li><p><strong>Custom string:</strong></p>
 <blockquote>
 <div><p>You can write your own clauses manually:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=&#39;Joe&#39; AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -589,7 +639,9 @@ control the comparison:</p>
 <p class="admonition-title">Warning</p>
 <p>If you are using user-supplied data within the string, you MUST escape the
 data manually. Failure to do so could result in SQL injections.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$name</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">);</span>
 <span class="nv">$where</span> <span class="o">=</span> <span class="s2">&quot;name=</span><span class="si">{</span><span class="nv">$name</span><span class="si">}</span><span class="s2"> AND status=&#39;boss&#39; OR status=&#39;active&#39;&quot;</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="nv">$where</span><span class="p">);</span>
 </pre></div>
@@ -601,7 +653,9 @@ data manually. Failure to do so could result in SQL injections.</p>
 <ol class="arabic" id="query-builder-where-subquery" start="5">
 <li><p><strong>Subqueries:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With closure</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// With closure</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;advance_amount &lt;&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;MAX(advance_amount)&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;orders&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
@@ -620,7 +674,9 @@ data manually. Failure to do so could result in SQL injections.</p>
 <p><strong>$builder-&gt;orWhere()</strong></p>
 <p>This method is identical to the one above, except that multiple
 instances are joined by <strong>OR</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;name !=&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhere</span><span class="p">(</span><span class="s1">&#39;id &gt;&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE name != &#39;Joe&#39; OR id &gt; 50</span>
 </pre></div>
@@ -628,13 +684,17 @@ instances are joined by <strong>OR</strong>:</p>
 <p><strong>$builder-&gt;whereIn()</strong></p>
 <p>Generates a <strong>WHERE</strong> field IN (‘item’, ‘item’) SQL query joined with <strong>AND</strong> if
 appropriate:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -648,13 +708,17 @@ appropriate:</p>
 <p><strong>$builder-&gt;orWhereIn()</strong></p>
 <p>Generates a <strong>WHERE field IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong> if
 appropriate:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -669,13 +733,17 @@ appropriate:</p>
 <p><strong>$builder-&gt;whereNotIn()</strong></p>
 <p>Generates a <strong>WHERE field NOT IN (‘item’, ‘item’)</strong> SQL query joined with
 <strong>AND</strong> if appropriate:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -690,13 +758,17 @@ appropriate:</p>
 <p><strong>$builder-&gt;orWhereNotIn()</strong></p>
 <p>Generates a <strong>WHERE field NOT IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong>
 if appropriate:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Frank&#39;</span><span class="p">,</span> <span class="s1">&#39;Todd&#39;</span><span class="p">,</span> <span class="s1">&#39;James&#39;</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="nv">$names</span><span class="p">);</span>
 <span class="c1">// Produces: OR username NOT IN (&#39;Frank&#39;, &#39;Todd&#39;, &#39;James&#39;)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -728,13 +800,17 @@ may require indexes to be made for <code class="docutils literal notranslate"><s
 <ol class="arabic">
 <li><p><strong>Simple key/value method:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p>If you use multiple method calls they will be chained together with
 <strong>AND</strong> between them:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -742,7 +818,9 @@ may require indexes to be made for <code class="docutils literal notranslate"><s
 <p>If you want to control where the wildcard (<strong>%</strong>) is placed, you can use
 an optional third argument. Your options are <code class="docutils literal notranslate"><span class="pre">before</span></code>, <code class="docutils literal notranslate"><span class="pre">after</span></code> and
 <code class="docutils literal notranslate"><span class="pre">both</span></code> (which is the default).</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span> <span class="c1">// Produces: WHERE `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span> <span class="c1">// Produces: WHERE `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>  <span class="c1">// Produces: WHERE `title` LIKE &#39;match%&#39; ESCAPE &#39;!&#39;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">);</span>   <span class="c1">// Produces: WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -751,7 +829,9 @@ an optional third argument. Your options are <code class="docutils literal notra
 </li>
 <li><p><strong>Associative array method:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 <span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page1` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page2` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -762,38 +842,50 @@ an optional third argument. Your options are <code class="docutils literal notra
 <p><strong>$builder-&gt;orLike()</strong></p>
 <p>This method is identical to the one above, except that multiple
 instances are joined by <strong>OR</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
 <span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;notLike()</strong></p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">like()</span></code>, except that it generates
 <strong>NOT LIKE</strong> statements:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="c1">// WHERE `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="c1">// WHERE `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;orNotLike()</strong></p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">notLike()</span></code>, except that multiple
 instances are joined by <strong>OR</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orNotLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// WHERE `title` LIKE &#39;%match% OR  `body` NOT LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;groupBy()</strong></p>
 <p>Permits you to write the <strong>GROUP BY</strong> portion of your query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">);</span>
 <span class="c1">// Produces: GROUP BY title</span>
 </pre></div>
 </div>
 <p>You can also pass an array of multiple values as well:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">([</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">groupBy</span><span class="p">([</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]);</span>
 <span class="c1">// Produces: GROUP BY title, date</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;distinct()</strong></p>
 <p>Adds the <strong>DISTINCT</strong> keyword to a query</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">distinct</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">distinct</span><span class="p">();</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 <span class="c1">// Produces: SELECT DISTINCT * FROM mytable</span>
 </pre></div>
@@ -801,19 +893,25 @@ instances are joined by <strong>OR</strong>:</p>
 <p><strong>$builder-&gt;having()</strong></p>
 <p>Permits you to write the <strong>HAVING</strong> portion of your query. There are 2
 possible syntaxes, 1 argument or 2:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id = 45&#39;</span><span class="p">);</span> <span class="c1">// Produces: HAVING user_id = 45</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id = 45&#39;</span><span class="p">);</span> <span class="c1">// Produces: HAVING user_id = 45</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span> <span class="c1">// Produces: HAVING user_id = 45</span>
 </pre></div>
 </div>
 <p>You can also pass an array of multiple values as well:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">([</span><span class="s1">&#39;title =&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Title&#39;</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">([</span><span class="s1">&#39;title =&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Title&#39;</span><span class="p">,</span> <span class="s1">&#39;id &lt;&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
 <span class="c1">// Produces: HAVING title = &#39;My Title&#39;, id &lt; 45</span>
 </pre></div>
 </div>
 <p>If you are using a database that CodeIgniter escapes queries for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span> <span class="c1">// Produces: HAVING `user_id` = 45 in some databases such as MySQL</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">);</span> <span class="c1">// Produces: HAVING `user_id` = 45 in some databases such as MySQL</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span>  <span class="mi">45</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// Produces: HAVING user_id = 45</span>
 </pre></div>
 </div>
@@ -822,13 +920,17 @@ setting it to <code class="docutils literal notranslate"><span class="pre">false
 <p><strong>$builder-&gt;havingIn()</strong></p>
 <p>Generates a <strong>HAVING field IN (‘item’, ‘item’)</strong> SQL query joined with <strong>AND</strong> if
 appropriate:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
 <span class="c1">// Produces: HAVING group_id IN (1, 2, 3)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -842,13 +944,17 @@ appropriate:</p>
 <p><strong>$builder-&gt;orHavingIn()</strong></p>
 <p>Generates a <strong>HAVING field IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong> if
 appropriate</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
 <span class="c1">// Produces: OR group_id IN (1, 2, 3)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">//With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -863,13 +969,17 @@ appropriate</p>
 <p><strong>$builder-&gt;havingNotIn()</strong></p>
 <p>Generates a <strong>HAVING field NOT IN (‘item’, ‘item’)</strong> SQL query joined with
 <strong>AND</strong> if appropriate</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
 <span class="c1">// Produces: HAVING group_id NOT IN (1, 2, 3)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">//With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -884,13 +994,17 @@ appropriate</p>
 <p><strong>$builder-&gt;orHavingNotIn()</strong></p>
 <p>Generates a <strong>HAVING field NOT IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong>
 if appropriate</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$groups</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="nv">$groups</span><span class="p">);</span>
 <span class="c1">// Produces: OR group_id NOT IN (1, 2, 3)</span>
 </pre></div>
 </div>
 <p>You can use subqueries instead of an array of values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">//With closure</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">//With closure</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">BaseBuilder</span> <span class="nv">$builder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;users_jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;group_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">});</span>
@@ -919,13 +1033,17 @@ may require indexes to be made for <code class="docutils literal notranslate"><s
 <ol class="arabic">
 <li><p><strong>Simple key/value method:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p>If you use multiple method calls they will be chained together with
 <strong>AND</strong> between them:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `body` LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -933,7 +1051,9 @@ may require indexes to be made for <code class="docutils literal notranslate"><s
 <p>If you want to control where the wildcard (<strong>%</strong>) is placed, you can use
 an optional third argument. Your options are <code class="docutils literal notranslate"><span class="pre">before</span></code>, <code class="docutils literal notranslate"><span class="pre">after</span></code> and
 <code class="docutils literal notranslate"><span class="pre">both</span></code> (which is the default).</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span> <span class="c1">// Produces: HAVING `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span> <span class="c1">// Produces: HAVING `title` LIKE &#39;%match&#39; ESCAPE &#39;!&#39;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">);</span>  <span class="c1">// Produces: HAVING `title` LIKE &#39;match%&#39; ESCAPE &#39;!&#39;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">);</span>   <span class="c1">// Produces: HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -942,7 +1062,9 @@ an optional third argument. Your options are <code class="docutils literal notra
 </li>
 <li><p><strong>Associative array method:</strong></p>
 <blockquote>
-<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
+<div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page1&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">,</span> <span class="s1">&#39;page2&#39;</span> <span class="o">=&gt;</span> <span class="nv">$match</span><span class="p">];</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
 <span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page1` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; AND  `page2` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -953,21 +1075,27 @@ an optional third argument. Your options are <code class="docutils literal notra
 <p><strong>$builder-&gt;orHavingLike()</strong></p>
 <p>This method is identical to the one above, except that multiple
 instances are joined by <strong>OR</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
 <span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;notHavingLike()</strong></p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">havingLike()</span></code>, except that it generates
 <strong>NOT LIKE</strong> statements:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notHavingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notHavingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// HAVING `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;orNotHavingLike()</strong></p>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">notHavingLike()</span></code>, except that multiple
 instances are joined by <strong>OR</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orNotHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="c1">// HAVING `title` LIKE &#39;%match% OR  `body` NOT LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
@@ -980,24 +1108,32 @@ instances are joined by <strong>OR</strong>:</p>
 <p>The first parameter contains the name of the column you would like to order by.</p>
 <p>The second parameter lets you set the direction of the result.
 Options are <code class="docutils literal notranslate"><span class="pre">ASC</span></code>, <code class="docutils literal notranslate"><span class="pre">DESC</span></code> AND <code class="docutils literal notranslate"><span class="pre">RANDOM</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: ORDER BY `title` DESC</span>
 </pre></div>
 </div>
 <p>You can also pass your own string in the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title DESC, name ASC&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title DESC, name ASC&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: ORDER BY `title` DESC, `name` ASC</span>
 </pre></div>
 </div>
 <p>Or multiple method calls can be made if you need multiple fields.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;ASC&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: ORDER BY `title` DESC, `name` ASC</span>
 </pre></div>
 </div>
 <p>If you choose the <code class="docutils literal notranslate"><span class="pre">RANDOM</span></code> direction option, then the first parameters will
 be ignored, unless you specify a numeric seed value.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: ORDER BY RAND()</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;RANDOM&#39;</span><span class="p">);</span>
@@ -1009,12 +1145,16 @@ be ignored, unless you specify a numeric seed value.</p>
 <h2><a class="toc-backref" href="#id11">Limiting or Counting Results</a><a class="headerlink" href="#limiting-or-counting-results" title="Permalink to this headline"></a></h2>
 <p><strong>$builder-&gt;limit()</strong></p>
 <p>Lets you limit the number of rows you would like returned by the query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
 <span class="c1">// Produces: LIMIT 10</span>
 </pre></div>
 </div>
 <p>The second parameter lets you set a result offset.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="c1">// Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)</span>
 </pre></div>
 </div>
@@ -1022,7 +1162,9 @@ be ignored, unless you specify a numeric seed value.</p>
 <p>Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
 <code class="docutils literal notranslate"><span class="pre">where()</span></code>, <code class="docutils literal notranslate"><span class="pre">orWhere()</span></code>, <code class="docutils literal notranslate"><span class="pre">like()</span></code>, <code class="docutils literal notranslate"><span class="pre">orLike()</span></code>, etc. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span> <span class="c1">// Produces an integer, like 25</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span> <span class="c1">// Produces an integer, like 25</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">();</span> <span class="c1">// Produces an integer, like 17</span>
@@ -1031,13 +1173,17 @@ Builder query. Queries will accept Query Builder restrictors such as
 <p>However, this method also resets any field values that you may have passed
 to <code class="docutils literal notranslate"><span class="pre">select()</span></code>. If you need to keep them, you can pass <code class="docutils literal notranslate"><span class="pre">false</span></code> as the
 first parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Produces an integer, like 17</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Produces an integer, like 17</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;countAll()</strong></p>
 <p>Permits you to determine the number of rows in a particular table.
 Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">();</span> <span class="c1">// Produces an integer, like 25</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAll</span><span class="p">();</span> <span class="c1">// Produces an integer, like 25</span>
 </pre></div>
 </div>
 <p>As is in <code class="docutils literal notranslate"><span class="pre">countAllResult()</span></code> method, this method resets any field values that you may have passed
@@ -1048,7 +1194,9 @@ first parameter.</p>
 <h2><a class="toc-backref" href="#id12">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
 <p>Query grouping allows you to create groups of <strong>WHERE</strong> clauses by enclosing them in parentheses. This will allow
 you to create queries with complex <strong>WHERE</strong> clauses. Nested groups are supported. Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">from</span><span class="p">(</span><span class="s1">&#39;my_table&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">groupStart</span><span class="p">()</span>
         <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
         <span class="o">-&gt;</span><span class="na">orGroupStart</span><span class="p">()</span>
@@ -1094,7 +1242,9 @@ you to create queries with complex <strong>WHERE</strong> clauses. Nested groups
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. Here is an example using an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span><span class="p">,</span>
@@ -1106,7 +1256,9 @@ method. Here is an example using an array:</p>
 </div>
 <p>The first parameter is an associative array of values.</p>
 <p>Here is an example using an object:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Myclass</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Myclass</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
@@ -1127,7 +1279,9 @@ method. Here is an example using an array:</p>
 <p>Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won’t be inserted.
 You can optionally pass an <strong>boolean</strong> to the method. Here is an example using the array of the above example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span><span class="p">,</span>
@@ -1141,7 +1295,9 @@ You can optionally pass an <strong>boolean</strong> to the method. Here is an ex
 <p>Compiles the insertion query just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;insert()</span></code> but does not
 <em>run</em> the query. This method simply returns the SQL query as a string.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span><span class="p">,</span>
@@ -1155,7 +1311,9 @@ You can optionally pass an <strong>boolean</strong> to the method. Here is an ex
 </div>
 <p>The first parameter enables you to set whether or not the query builder query
 will be reset (by default it will be–just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;insert()</span></code>):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;My Title&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledInsert</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;My Title&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledInsert</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 
 <span class="c1">// Produces string: INSERT INTO mytable (`title`) VALUES (&#39;My Title&#39;)</span>
 
@@ -1175,7 +1333,9 @@ using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. Here is an example using an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span>
         <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
         <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
@@ -1208,7 +1368,9 @@ In our case, it will save you from the need to implement complex
 logics with different combinations of  <code class="docutils literal notranslate"><span class="pre">select()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">delete()</span></code> and <code class="docutils literal notranslate"><span class="pre">insert()</span></code> calls.</p>
 <p>Example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span><span class="p">,</span>
@@ -1228,14 +1390,18 @@ automatically escaped, just like with <code class="docutils literal notranslate"
 <p>This method enables you to set values for inserts or updates.</p>
 <p><strong>It can be used instead of passing a data array directly to the insert()
 or update() methods:</strong></p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
 <span class="c1">// Produces: INSERT INTO mytable (`name`) VALUES (&#39;{$name}&#39;)</span>
 </pre></div>
 </div>
 <p>If you use multiple method called they will be assembled properly
 based on whether you are doing an insert or an update:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$title</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
@@ -1245,7 +1411,9 @@ based on whether you are doing an insert or an update:</p>
 will prevent data from being escaped if set to <code class="docutils literal notranslate"><span class="pre">false</span></code>. To illustrate the
 difference, here is <code class="docutils literal notranslate"><span class="pre">set()</span></code> used both with and without the escape
 parameter.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;field+1&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">,</span> <span class="s1">&#39;field+1&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span>
 <span class="c1">// gives UPDATE mytable SET field = field+1 WHERE `id` = 2</span>
@@ -1257,7 +1425,9 @@ parameter.</p>
 </pre></div>
 </div>
 <p>You can also pass an associative array to this method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$array</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
     <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
     <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="nv">$status</span><span class="p">,</span>
@@ -1268,7 +1438,9 @@ parameter.</p>
 </pre></div>
 </div>
 <p>Or an object:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Myclass</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Myclass</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
@@ -1284,7 +1456,9 @@ parameter.</p>
 <p>Generates an update string and runs the query based on the data you
 supply. You can pass an <strong>array</strong> or an <strong>object</strong> to the method. Here
 is an example using an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$title</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span>
     <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="nv">$date</span><span class="p">,</span>
@@ -1300,7 +1474,9 @@ is an example using an array:</p>
 </pre></div>
 </div>
 <p>Or you can supply an object:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Myclass</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Myclass</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$title</span>   <span class="o">=</span> <span class="s1">&#39;My Title&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$content</span> <span class="o">=</span> <span class="s1">&#39;My Content&#39;</span><span class="p">;</span>
@@ -1324,11 +1500,15 @@ is an example using an array:</p>
 <p>You’ll notice the use of the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code> method, enabling you
 to set the <strong>WHERE</strong> clause. You can optionally pass this information
 directly into the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method as a string:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s2">&quot;id = 4&quot;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s2">&quot;id = 4&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or as an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You may also use the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;set()</span></code> method described above when
@@ -1337,7 +1517,9 @@ performing updates.</p>
 <p>Generates an update string based on the data you supply, and runs the query.
 You can either pass an <strong>array</strong> or an <strong>object</strong> to the method.
 Here is an example using an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
    <span class="p">[</span>
       <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span> <span class="p">,</span>
       <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name 2&#39;</span> <span class="p">,</span>
@@ -1388,14 +1570,18 @@ that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INS
 <h2><a class="toc-backref" href="#id15">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
 <p><strong>$builder-&gt;delete()</strong></p>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the query.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
 <span class="c1">// Produces: // DELETE FROM mytable  // WHERE id = $id</span>
 </pre></div>
 </div>
 <p>The first parameter is the where clause.
 You can also use the <code class="docutils literal notranslate"><span class="pre">where()</span></code> or <code class="docutils literal notranslate"><span class="pre">or_where()</span></code> methods instead of passing
 the data to the first parameter of the method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
 
 <span class="c1">// Produces:</span>
@@ -1408,13 +1594,17 @@ method, or <code class="docutils literal notranslate"><span class="pre">emptyTab
 <p><strong>$builder-&gt;emptyTable()</strong></p>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the
 query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">emptyTable</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">emptyTable</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
 <span class="c1">// Produces: DELETE FROM mytable</span>
 </pre></div>
 </div>
 <p><strong>$builder-&gt;truncate()</strong></p>
 <p>Generates a <strong>TRUNCATE</strong> SQL string and runs the query.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">();</span>
 
 <span class="c1">// Produce:</span>
 <span class="c1">// TRUNCATE mytable</span>
@@ -1434,7 +1624,9 @@ that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSE
 <h2><a class="toc-backref" href="#id16">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
 <p>Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
                  <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
                  <span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
                  <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
@@ -1449,7 +1641,9 @@ executing it first using a method like <code class="docutils literal notranslate
 <p>This is useful in situations where you are using Query Builder to generate SQL
 (e.g., <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledSelect()</span></code>) but then choose to, for instance,
 run the query:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Note that the second parameter of the ``get_compiled_select`` method is false</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Note that the second parameter of the ``get_compiled_select`` method is false</span>
 <span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">([</span><span class="s1">&#39;field1&#39;</span><span class="p">,</span><span class="s1">&#39;field2&#39;</span><span class="p">])</span>
                <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;field3&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
                <span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>

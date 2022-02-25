@@ -292,11 +292,15 @@ keep the best user experience for your users.</p>
 <p>This section is a quick overview for newer programmers, or for developers who are not experienced with using exceptions.</p>
 <p>Exceptions are simply events that happen when the exception is “thrown”. This halts the current flow of the script, and
 execution is then sent to the error handler which displays the appropriate error page:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Some message goes here&quot;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Some message goes here&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you are calling a method that might throw an exception, you can catch that exception using a <code class="docutils literal notranslate"><span class="pre">try/catch</span></code> block:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">try</span> <span class="p">{</span>
     <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
@@ -308,14 +312,18 @@ the scripts dies, echoing the error message that the <code class="docutils liter
 <p>In the example above, we catch any type of Exception. If we only want to watch for specific types of exceptions, like
 a <code class="docutils literal notranslate"><span class="pre">UnknownFileException</span></code>, we can specify that in the catch parameter. Any other exceptions that are thrown and are
 not child classes of the caught exception will be passed on to the error handler:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something here...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This can be handy for handling the error yourself, or for performing cleanup before the script ends. If you want
 the error handler to function as normal, you can throw a new exception within the catch block:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">catch</span> <span class="p">(</span><span class="nx">\CodeIgniter\UnknownFileException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something here...</span>
 
     <span class="k">throw</span> <span class="k">new</span> <span class="nx">\RuntimeException</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">(),</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getCode</span><span class="p">(),</span> <span class="nv">$e</span><span class="p">);</span>
@@ -336,14 +344,18 @@ in the <strong>.env</strong> file.</p>
 <h3><a class="toc-backref" href="#id3">Logging Exceptions</a><a class="headerlink" href="#logging-exceptions" title="Permalink to this headline"></a></h3>
 <p>By default, all Exceptions other than 404 - Page Not Found exceptions are logged. This can be turned on and off
 by setting the <code class="docutils literal notranslate"><span class="pre">$log</span></code> value of <strong>app/Config/Exceptions.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$log</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>To ignore logging on other status codes, you can set the status code to ignore in the same file:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Exceptions</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$ignoredCodes</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">404</span> <span class="p">];</span>
 <span class="p">}</span>
@@ -365,7 +377,9 @@ are not set up to log <strong>critical</strong> errors, which all exceptions are
 <strong>app/Views/errors/html/error_404.php</strong>. You should customize all of the error views for your site.
 If, in <strong>app/Config/Routes.php</strong>, you have specified a 404 Override, that will be called instead of the standard
 404 page:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$page</span> <span class="o">=</span> <span class="nv">$pageModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="o">::</span><span class="na">forPageNotFound</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -376,7 +390,9 @@ If, in <strong>app/Config/Routes.php</strong>, you have specified a 404 Override
 <h3><a class="toc-backref" href="#id6">ConfigException</a><a class="headerlink" href="#configexception" title="Permalink to this headline"></a></h3>
 <p>This exception should be used when the values from the configuration class are invalid, or when the config class
 is not the right type, etc:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\ConfigException</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\ConfigException</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This provides an HTTP status code of 500 and an exit code of 3.</p>
@@ -385,7 +401,9 @@ is not the right type, etc:</p>
 <h3><a class="toc-backref" href="#id7">DatabaseException</a><a class="headerlink" href="#databaseexception" title="Permalink to this headline"></a></h3>
 <p>This exception is thrown for database errors, such as when the database connection cannot be created,
 or when it is temporarily lost:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Database\Exceptions\DatabaseException</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Database\Exceptions\DatabaseException</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This provides an HTTP status code of 500 and an exit code of 8.</p>
@@ -394,12 +412,16 @@ or when it is temporarily lost:</p>
 <h3><a class="toc-backref" href="#id8">RedirectException</a><a class="headerlink" href="#redirectexception" title="Permalink to this headline"></a></h3>
 <p>This exception is a special case allowing for overriding of all other response routing and
 forcing a redirect to a specific route or URL:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$route</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$route</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">$route</span></code> may be a named route, relative URI, or a complete URL. You can also supply a
 redirect code to use instead of the default (<code class="docutils literal notranslate"><span class="pre">302</span></code>, “temporary redirect”):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$route</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\Exceptions\RedirectException</span><span class="p">(</span><span class="nv">$route</span><span class="p">,</span> <span class="mi">301</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>

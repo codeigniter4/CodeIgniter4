@@ -320,7 +320,9 @@ wasn’t found (404). Head over to IANA for a <a class="reference external" href
 <p>While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
 abstracts them so that you have a consistent, simple interface to them. The <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest class</span></a>
 is an object-oriented representation of the HTTP request. It provides everything you need:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\IncomingRequest</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\IncomingRequest</span><span class="p">;</span>
 
 <span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
 
@@ -356,7 +358,9 @@ The <code class="docutils literal notranslate"><span class="pre">isAJAX()</span>
 </div>
 <p>CodeIgniter also provides a <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response class</span></a> that is an object-oriented representation
 of the HTTP response. This gives you an easy and powerful way to construct your response to the client:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Response</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Response</span><span class="p">;</span>
 
 <span class="nv">$response</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">);</span>
 

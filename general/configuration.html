@@ -296,13 +296,17 @@ the application configuration files in the <strong>/app/Config</strong> folder.<
 <p>You can access configuration files for your classes in several different ways.</p>
 <ul>
 <li><p>By using the <code class="docutils literal notranslate"><span class="pre">new</span></code> keyword to create an instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Creating new configuration object by hand</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Creating new configuration object by hand</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\Pager</span><span class="p">();</span>
 </pre></div>
 </div>
 </li>
 <li><p>By using the <code class="docutils literal notranslate"><span class="pre">config()</span></code> function:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Get shared instance with config function</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Get shared instance with config function</span>
 <span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
 
 <span class="c1">// Access config class with namespace</span>
@@ -316,7 +320,9 @@ the application configuration files in the <strong>/app/Config</strong> folder.<
 </li>
 </ul>
 <p>All configuration object properties are public, so you access the settings like any other property:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Pager&#39;</span><span class="p">);</span>
 <span class="c1">// Access settings as object properties</span>
 <span class="nv">$pageSize</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">;</span>
 </pre></div>
@@ -381,7 +387,9 @@ application by either renaming the template to <strong>.env</strong>, or by maki
 into the environment. If a variable already exists in the environment, it will NOT be
 overwritten. The loaded Environment variables are accessed using any of the following:
 <code class="docutils literal notranslate"><span class="pre">getenv()</span></code>, <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nb">getenv</span><span class="p">(</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">);</span>
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_ENV</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 <span class="nv">$s3_bucket</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">];</span>
 </pre></div>
@@ -484,7 +492,9 @@ contains a dot.</p>
 </pre></div>
 </div>
 <p>If this was referring to a SimpleConfig configuration object, the above example would be treated as:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="s2">&quot;Berlin&quot;</span><span class="p">;</span>
 <span class="nv">$address</span><span class="p">[</span><span class="s1">&#39;country&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Germany&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -521,7 +531,9 @@ named for each configuration class you wish to extend. For example, a third-part
 wish to supply an additional template to <code class="docutils literal notranslate"><span class="pre">Pager</span></code> without overwriting whatever a develop has
 already configured. In <strong>src/Config/Registrar.php</strong> there would be a <code class="docutils literal notranslate"><span class="pre">Registrar</span></code> class with
 the single <code class="docutils literal notranslate"><span class="pre">Pager()</span></code> method (note the case-sensitivity):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Registrar</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Registrar</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">Pager</span><span class="p">()</span><span class="o">:</span> <span class="k">array</span>
     <span class="p">{</span>
@@ -543,7 +555,9 @@ overwrite priority.</p>
 <p>A configuration file can also specify any number of registrars explicitly.
 This is done by adding a <code class="docutils literal notranslate"><span class="pre">$registrars</span></code> property to your configuration file,
 holding an array of the names of candidate registrars:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">SupportingPackageRegistrar</span><span class="o">::</span><span class="na">class</span>
 <span class="p">];</span>
 </pre></div>
@@ -591,7 +605,9 @@ the method named for the configuration class and incorporate any returned proper
 <p>With the above example, when <code class="docutils literal notranslate"><span class="pre">MySalesConfig</span></code> is instantiated, it will end up with
 the two properties declared, but the value of the <code class="docutils literal notranslate"><span class="pre">$target</span></code> property will be overridden
 by treating <code class="docutils literal notranslate"><span class="pre">RegionalSales</span></code> as a “registrar”. The resulting configuration properties:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$target</span>   <span class="o">=</span> <span class="mi">45</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$target</span>   <span class="o">=</span> <span class="mi">45</span><span class="p">;</span>
 <span class="nv">$campaign</span> <span class="o">=</span> <span class="s2">&quot;Winter Wonderland&quot;</span><span class="p">;</span>
 </pre></div>
 </div>

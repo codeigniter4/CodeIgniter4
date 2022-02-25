@@ -313,7 +313,9 @@ updating records, deleting records, and more.</p>
 <p>Models are typically stored in the <code class="docutils literal notranslate"><span class="pre">app/Models</span></code> directory. They should have a namespace that matches their
 location within the directory, like <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models</span></code>.</p>
 <p>You can access models within your classes by creating a new instance or using the <code class="docutils literal notranslate"><span class="pre">model()</span></code> helper function.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Create a new class manually</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Create a new class manually</span>
 <span class="nv">$userModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
 
 <span class="c1">// Create a new class with the model function</span>
@@ -530,48 +532,64 @@ time specified in the property name.</p>
 <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, <code class="docutils literal notranslate"><span class="pre">delete()</span></code> and more.</p>
 <p><strong>find()</strong></p>
 <p>Returns a single row where the primary key matches the value passed in as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$user_id</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$user_id</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The value is returned in the format specified in <code class="docutils literal notranslate"><span class="pre">$returnType</span></code>.</p>
 <p>You can specify more than one row to return by passing an array of primaryKey values instead
 of just one:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If no parameters are passed in, will return all rows in that model’s table, effectively acting
 like <code class="docutils literal notranslate"><span class="pre">findAll()</span></code>, though less explicit.</p>
 <p><strong>findColumn()</strong></p>
 <p>Returns null or an indexed array of column values:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findColumn</span><span class="p">(</span><span class="nv">$column_name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findColumn</span><span class="p">(</span><span class="nv">$column_name</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">$column_name</span></code> should be a name of single column else you will get the DataException.</p>
 <p><strong>findAll()</strong></p>
 <p>Returns all results:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This query may be modified by interjecting Query Builder commands as needed prior to calling this method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                    <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass in a limit and offset values as the first and second
 parameters, respectively:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>first()</strong></p>
 <p>Returns the first row in the result set. This is best used in combination with the query builder.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                   <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>withDeleted()</strong></p>
 <p>If <code class="docutils literal notranslate"><span class="pre">$useSoftDeletes</span></code> is true, then the <strong>find*()</strong> methods will not return any rows where ‘deleted_at IS NOT NULL’.
 To temporarily override this, you can use the <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> method prior to calling the <strong>find*()</strong> method.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Only gets non-deleted rows (deleted = 0)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Only gets non-deleted rows (deleted = 0)</span>
 <span class="nv">$activeUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
 <span class="c1">// Gets all rows</span>
@@ -581,7 +599,9 @@ To temporarily override this, you can use the <code class="docutils literal notr
 <p><strong>onlyDeleted()</strong></p>
 <p>Whereas <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> will return both deleted and not-deleted rows, this method modifies
 the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$deletedUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">onlyDeleted</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$deletedUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">onlyDeleted</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -591,7 +611,9 @@ the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
 <p>An associative array of data is passed into this method as the only parameter to create a new
 row of data in the database. The array’s keys must match the name of the columns in a <code class="docutils literal notranslate"><span class="pre">$table</span></code>, while
 the array’s values are the values to save for that key:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -603,7 +625,9 @@ the array’s values are the values to save for that key:</p>
 <p>Updates an existing record in the database. The first parameter is the <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code> of the record to update.
 An associative array of data is passed into this method as the second parameter. The array’s keys must match the name
 of the columns in a <code class="docutils literal notranslate"><span class="pre">$table</span></code>, while the array’s values are the values to save for that key:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -612,7 +636,9 @@ of the columns in a <code class="docutils literal notranslate"><span class="pre"
 </pre></div>
 </div>
 <p>Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
 <span class="p">];</span>
 
@@ -621,7 +647,9 @@ of the columns in a <code class="docutils literal notranslate"><span class="pre"
 </div>
 <p>When you need a more flexible solution, you can leave the parameters empty and it functions like the Query Builder’s
 update command, with the added benefit of validation, events, etc:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userModel</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span>
     <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">set</span><span class="p">([</span><span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span>
@@ -630,7 +658,9 @@ update command, with the added benefit of validation, events, etc:</p>
 <p><strong>save()</strong></p>
 <p>This is a wrapper around the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the <strong>primary key</strong> value:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Defined as a model property</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Defined as a model property</span>
 <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
 
 <span class="c1">// Does an insert()</span>
@@ -657,7 +687,9 @@ simple classes that represent a single instance of an object type, like a user, 
 class is responsible for maintaining the business logic surrounding the object itself, like formatting
 elements in a certain way, etc. They shouldn’t have any idea about how they are saved to the database. At their
 simplest, they might look like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Job</span>
 <span class="p">{</span>
@@ -682,7 +714,9 @@ simplest, they might look like this:</p>
 </pre></div>
 </div>
 <p>A very simple model to work with this might look like:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">JobModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
@@ -697,7 +731,9 @@ simplest, they might look like this:</p>
 <p>This model works with data from the <code class="docutils literal notranslate"><span class="pre">jobs</span></code> table, and returns all results as an instance of <code class="docutils literal notranslate"><span class="pre">App\Entities\Job</span></code>.
 When you need to persist that record to the database, you will need to either write custom methods, or use the
 model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method to inspect the class, grab any public and private properties, and save them to the database:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Retrieve a Job instance</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Retrieve a Job instance</span>
 <span class="nv">$job</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
 
 <span class="c1">// Make some changes</span>
@@ -717,23 +753,31 @@ that provides several handy features that make developing Entities simpler.</p>
 <h3><a class="toc-backref" href="#id10">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h3>
 <p><strong>delete()</strong></p>
 <p>Takes a primary key value as the first parameter and deletes the matching record from the model’s table:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the model’s <code class="docutils literal notranslate"><span class="pre">$useSoftDeletes</span></code> value is true, this will update the row to set <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> to the current
 date and time. You can force a permanent delete by setting the second parameter as true.</p>
 <p>An array of primary keys can be passed in as the first parameter to delete multiple records at once:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If no parameters are passed in, will act like the Query Builder’s delete method, requiring a where call
 previously:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>purgeDeleted()</strong></p>
 <p>Cleans out the database table by permanently removing all rows that have ‘deleted_at IS NOT NULL’.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -744,7 +788,9 @@ standard, without duplicating code. The Model class provides a way to automatica
 prior to saving to the database with the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods.</p>
 <p>The first step is to fill out the <code class="docutils literal notranslate"><span class="pre">$validationRules</span></code> class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the <code class="docutils literal notranslate"><span class="pre">$validationMessages</span></code> array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$validationRules</span>    <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
@@ -775,7 +821,9 @@ be applied. If you have custom error message that you want to use, place them in
 </dl>
 <p>This function will set the field validation rules.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
 <span class="nv">$fieldRules</span> <span class="o">=</span> <span class="s1">&#39;required|alpha_numeric_space|min_length[3]&#39;</span><span class="p">;</span>
 
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationRule</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldRules</span><span class="p">);</span>
@@ -795,7 +843,9 @@ be applied. If you have custom error message that you want to use, place them in
 </dl>
 <p>This function will set the validation rules.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email|is_unique[users.email]&#39;</span><span class="p">,</span>
@@ -823,7 +873,9 @@ be applied. If you have custom error message that you want to use, place them in
 </dl>
 <p>This function will set the field wise error messages.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
 <span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your name is required here&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -844,7 +896,9 @@ be applied. If you have custom error message that you want to use, place them in
 </dl>
 <p>This function will set the field messages.</p>
 <p>Usage example:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;required&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Your baby name is missing.&#39;</span><span class="p">,</span>
         <span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Too short, man!&#39;</span><span class="p">,</span>
@@ -857,7 +911,9 @@ be applied. If you have custom error message that you want to use, place them in
 
 <p>Now, whenever you call the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods, the data will be validated. If it fails,
 the model will return boolean <strong>false</strong>. You can use the <code class="docutils literal notranslate"><span class="pre">errors()</span></code> method to retrieve the validation errors:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;updateUser&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">errors</span><span class="p">()]);</span>
 <span class="p">}</span>
 </pre></div>
@@ -875,7 +931,9 @@ errors at the top of the form, or to display them individually:</p>
 </div>
 <p>If you’d rather organize your rules and error messages within the Validation configuration file, you can do that
 and simply set <code class="docutils literal notranslate"><span class="pre">$validationRules</span></code> to the name of the validation rule group you created:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -886,18 +944,24 @@ and simply set <code class="docutils literal notranslate"><span class="pre">$val
 <h3><a class="toc-backref" href="#id12">Retrieving Validation Rules</a><a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this headline"></a></h3>
 <p>You can retrieve a model’s validation rules by accessing its <code class="docutils literal notranslate"><span class="pre">validationRules</span></code>
 property:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">validationRules</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">validationRules</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>You can also retrieve just a subset of those rules by calling the accessor
 method directly, with options:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> parameter is an associative array with one element,
 whose key is either <code class="docutils literal notranslate"><span class="pre">'except'</span></code> or <code class="docutils literal notranslate"><span class="pre">'only'</span></code>, and which has as its
 value an array of fieldnames of interest:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// get the rules for all but the &quot;username&quot; field</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// get the rules for all but the &quot;username&quot; field</span>
 <span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]]);</span>
 <span class="c1">// get the rules for only the &quot;city&quot; and &quot;state&quot; fields</span>
 <span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]]);</span>
@@ -910,21 +974,27 @@ value an array of fieldnames of interest:</p>
 sounds fairly obscure but can be especially handy with the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> validation rule. Placeholders are simply
 the name of the field (or array key) that was passed in as <code class="docutils literal notranslate"><span class="pre">$data</span></code> surrounded by curly brackets. It will be
 replaced by the <strong>value</strong> of the matched incoming field. An example should clarify this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email|is_unique[users.email,id,{id}]&#39;</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder’s value. Assuming that the form POST data had the following:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_POST</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$_POST</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo@example.com&#39;</span>
 <span class="p">];</span>
 </pre></div>
 </div>
 <p>then the <code class="docutils literal notranslate"><span class="pre">{id}</span></code> placeholder would be replaced with the number <strong>4</strong>, giving this revised rule:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email|is_unique[users.email,id,4]&#39;</span>
 <span class="p">];</span>
 </pre></div>
@@ -939,12 +1009,16 @@ keys passed in don’t conflict with your form data.</p>
 that can be changed during inserts and updates in the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> class property. Any data provided
 in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
 or primary keys do not get changed.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Occasionally, you will find times where you need to be able to change these elements. This is often during
 testing, migrations, or seeds. In these cases, you can turn the protection on or off:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
       <span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
       <span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -954,17 +1028,23 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 <h3><a class="toc-backref" href="#id15">Working With Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline"></a></h3>
 <p>You can get access to a shared instance of the Query Builder for that model’s database connection any time you
 need it:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>This builder is already set up with the model’s <code class="docutils literal notranslate"><span class="pre">$table</span></code>. If you need access to another table
 you can pass it in as a parameter, but be aware that this will not return a shared instance:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$groupBuilder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$groupBuilder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also use Query Builder methods and the Model’s CRUD methods in the same chained call, allowing for
 very elegant use:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span>
                    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span><span class="p">)</span>
                    <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
@@ -979,7 +1059,9 @@ For example, if you need to get the compiledInsert you should do so directly on 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can also access the model’s database connection seamlessly:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user_name</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user_name</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -996,12 +1078,16 @@ it is reset to its default value.</p>
 </div>
 <p><strong>asArray()</strong></p>
 <p>Returns data from the next <strong>find*()</strong> method as associative arrays:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>asObject()</strong></p>
 <p>Returns data from the next <strong>find*()</strong> method as standard objects or custom class intances:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Return as standard objects</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Return as standard objects</span>
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 
 <span class="c1">// Return as custom class instances</span>
@@ -1016,7 +1102,9 @@ To make this simpler, you may use the chunk() method to get smaller chunks of da
 do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
 parameter is a Closure that will be called for each row of data.</p>
 <p>This is best used during cronjobs, data exports, or other large tasks.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">chunk</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">chunk</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something.</span>
     <span class="c1">// $data is a single row of data.</span>
 <span class="p">});</span>
@@ -1038,7 +1126,9 @@ will always contain a key named <strong>data</strong> that contains the primary 
 of the insert* or update* methods, that will be the key/value pairs that are being inserted into the database. The
 main array will also contain the other values passed to the method, and be detailed later. The callback method
 must return the original $data array so other callbacks have the full information.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="k">function</span> <span class="nf">hashPassword</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">hashPassword</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
@@ -1057,16 +1147,22 @@ must return the original $data array so other callbacks have the full informatio
 <p>You specify when to run the callbacks by adding the method name to the appropriate class property (<code class="docutils literal notranslate"><span class="pre">$beforeInsert</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterUpdate</span></code>,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$beforeInsert</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$beforeInsert</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
 <span class="k">protected</span> <span class="nv">$beforeUpdate</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Additionally, each model may allow (default) or deny callbacks class-wide by setting its <code class="docutils literal notranslate"><span class="pre">$allowCallbacks</span></code> property:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$allowCallbacks</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$allowCallbacks</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>You may also change this setting temporarily for a single model call sing the <code class="docutils literal notranslate"><span class="pre">allowCallbacks()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">allowCallbacks</span><span class="p">(</span><span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// No callbacks triggered</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">allowCallbacks</span><span class="p">(</span><span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// No callbacks triggered</span>
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Callbacks subject to original property value</span>
 </pre></div>
 </div>
@@ -1155,7 +1251,9 @@ insert method, it is first converted to an array.</p></td>
 from the model. For <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> any changes made to <code class="docutils literal notranslate"><span class="pre">data</span></code> in the return array will automatically be passed back
 to the calling context. In order for <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> to intercept the find workflow it must also return an additional
 boolean, <code class="docutils literal notranslate"><span class="pre">returnData</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;checkCache&#39;</span><span class="p">];</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;checkCache&#39;</span><span class="p">];</span>
 <span class="c1">// ...</span>
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkCache</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
 <span class="p">{</span>
