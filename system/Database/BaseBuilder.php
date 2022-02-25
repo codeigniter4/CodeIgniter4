@@ -447,10 +447,8 @@ class BaseBuilder
 
     /**
      * Adds a subquery to the selection
-     *
-     * @return static
      */
-    public function selectSubquery(BaseBuilder $subquery, string $as)
+    public function selectSubquery(BaseBuilder $subquery, string $as): self
     {
         if (! $this->isSubquery($subquery)) {
             throw new DatabaseException(
