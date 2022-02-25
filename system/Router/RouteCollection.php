@@ -1265,10 +1265,8 @@ class RouteCollection implements RouteCollectionInterface
 
         $params = '';
 
-        if ($count > 0) {
-            for ($i = 1; $i <= $count; $i++) {
-                $params .= '/$' . $i;
-            }
+        for ($i = 1; $i <= $count; $i++) {
+            $params .= '/$' . $i;
         }
 
         return $params;
