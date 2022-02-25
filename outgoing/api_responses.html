@@ -467,7 +467,7 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 <dd class="field-even"><p>The value of the Response object’s send() method.</p>
 </dd>
 </dl>
-<p>Sets the appropriate status code to use when a new resource was created, typically 201.:</p>
+<p>Sets the appropriate status code to use when a new resource was created, typically 201:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>

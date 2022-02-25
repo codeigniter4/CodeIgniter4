@@ -896,7 +896,7 @@ method directly, with options:</p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> parameter is an associative array with one element,
 whose key is either <code class="docutils literal notranslate"><span class="pre">'except'</span></code> or <code class="docutils literal notranslate"><span class="pre">'only'</span></code>, and which has as its
-value an array of fieldnames of interest.:</p>
+value an array of fieldnames of interest:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// get the rules for all but the &quot;username&quot; field</span>
 <span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]]);</span>
 <span class="c1">// get the rules for only the &quot;city&quot; and &quot;state&quot; fields</span>

@@ -494,7 +494,7 @@ in PHPunit</a>.</p>
 in PHPunit</a>.</p>
 <p><strong>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
 <p>For extended execution time testing, tests that the absolute difference
-between expected and actual time is within the prescribed tolerance.:</p>
+between expected and actual time is within the prescribed tolerance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
 <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;-11 minutes&#39;</span><span class="p">));</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnough</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">));</span>
@@ -503,7 +503,7 @@ between expected and actual time is within the prescribed tolerance.:</p>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
 <p><strong>assertCloseEnoughString($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
 <p>For extended execution time testing, tests that the absolute difference
-between expected and actual time, formatted as strings, is within the prescribed tolerance.:</p>
+between expected and actual time, formatted as strings, is within the prescribed tolerance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Timer</span><span class="p">();</span>
 <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">,</span> <span class="nb">strtotime</span><span class="p">(</span><span class="s1">&#39;-11 minutes&#39;</span><span class="p">));</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertCloseEnoughString</span><span class="p">(</span><span class="mi">11</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="nv">$timer</span><span class="o">-&gt;</span><span class="na">getElapsedTime</span><span class="p">(</span><span class="s1">&#39;longjohn&#39;</span><span class="p">));</span>
