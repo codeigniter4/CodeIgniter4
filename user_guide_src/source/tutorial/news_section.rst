@@ -93,7 +93,6 @@ some additional tools to make working with data simpler. Add the
 following code to your model.
 
 .. literalinclude:: news_section/002.php
-   :lines: 2-
 
 With this code, you can perform two different queries. You can get all
 news records, or get a news item by its slug. You might have
@@ -140,7 +139,6 @@ nothing is displayed yet. The next thing to do is, passing this data to
 the views. Modify the ``index()`` method to look like this:
 
 .. literalinclude:: news_section/004.php
-   :lines: 2-
 
 The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the ``$data['title']``
@@ -167,7 +165,6 @@ add some code to the controller and create a new view. Go back to the
 ``News`` controller and update the ``view()`` method with the following:
 
 .. literalinclude:: news_section/006.php
-   :lines: 2-
 
 Instead of calling the ``getNews()`` method without a parameter, the
 ``$slug`` variable is passed, so it will return the specific news item.
@@ -187,7 +184,6 @@ going directly to the ``Pages`` controller. The first line routes URI's
 with a slug to the ``view()`` method in the ``News`` controller.
 
 .. literalinclude:: news_section/008.php
-   :lines: 2-
 
 Point your browser to your "news" page, i.e., ``localhost:8080/news``,
 you should see a list of the news items, each of which has a link

@@ -34,28 +34,23 @@ handled with the ``prompt()`` or ``promptByKey()`` method.
 You can provide a question by passing it in as the first parameter:
 
 .. literalinclude:: cli_library/002.php
-   :lines: 2-
 
 You can provide a default answer that will be used if the user just hits enter by passing the default in the
 second parameter:
 
 .. literalinclude:: cli_library/003.php
-   :lines: 2-
 
 You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter:
 
 .. literalinclude:: cli_library/004.php
-   :lines: 2-
 
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter:
 
 .. literalinclude:: cli_library/005.php
-   :lines: 2-
 
 Validation rules can also be written in the array syntax:
 
 .. literalinclude:: cli_library/006.php
-   :lines: 2-
 
 **promptByKey()**
 
@@ -63,12 +58,10 @@ Predefined answers (options) for prompt sometimes need to be described or are to
 ``promptByKey()`` allows the user to select an option by its key instead of its value:
 
 .. literalinclude:: cli_library/007.php
-   :lines: 2-
 
 Named keys are also possible:
 
 .. literalinclude:: cli_library/008.php
-   :lines: 2-
 
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
@@ -82,18 +75,15 @@ or a complex table of information that wraps to the user's terminal window. At t
 method which takes the string to output as the first parameter:
 
 .. literalinclude:: cli_library/009.php
-   :lines: 2-
 
 You can change the color of the text by passing in a color name as the second parameter:
 
 .. literalinclude:: cli_library/010.php
-   :lines: 2-
 
 This could be used to differentiate messages by status, or create 'headers' by using a different color. You can
 even set background colors by passing the color name in as the third parameter:
 
 .. literalinclude:: cli_library/011.php
-   :lines: 2-
 
 The following foreground colors are available:
 
@@ -134,7 +124,6 @@ the same line, from different calls. This is especially helpful when you want to
 print "Done" on the same line:
 
 .. literalinclude:: cli_library/012.php
-   :lines: 2-
 
 **color()**
 
@@ -144,7 +133,6 @@ an EOL after printing. This allows you to create multiple outputs on the same ro
 it inside of a ``write()`` method to create a string of a different color inside:
 
 .. literalinclude:: cli_library/013.php
-   :lines: 2-
 
 This example would write a single line to the window, with ``fileA`` in yellow, followed by a tab, and then
 ``/path/to/file`` in white text.
@@ -157,7 +145,6 @@ for errors so they don't have to sift through all of the information, only the a
 exactly as you would the ``write()`` method:
 
 .. literalinclude:: cli_library/014.php
-   :lines: 2-
 
 **wrap()**
 
@@ -166,7 +153,6 @@ This might be useful when displaying a list of options with descriptions that yo
 window and not go off screen:
 
 .. literalinclude:: cli_library/015.php
-   :lines: 2-
 
 By default, the string will wrap at the terminal width. Windows currently doesn't provide a way to determine
 the window size, so we default to 80 characters. If you want to restrict the width to something shorter that
@@ -174,7 +160,6 @@ you can be pretty sure fits within the window, pass the maximum line-length as t
 will break the string at the nearest word barrier so that words are not broken.
 
 .. literalinclude:: cli_library/016.php
-   :lines: 2-
 
 You may find that you want a column on the left of titles, files, or tasks, while you want a column of text
 on the right with their descriptions. By default, this will wrap back to the left edge of the window, which
@@ -182,7 +167,6 @@ doesn't allow things to line up in columns. In cases like this, you can pass in 
 every line after the first line, so that you will have a crisp column edge on the left:
 
 .. literalinclude:: cli_library/017.php
-   :lines: 2-
 
 Would create something like this:
 
@@ -200,7 +184,6 @@ Would create something like this:
 The ``newLine()`` method displays a blank line to the user. It does not take any parameters:
 
 .. literalinclude:: cli_library/018.php
-   :lines: 2-
 
 **clearScreen()**
 
@@ -209,7 +192,6 @@ simply insert 40 blank lines since Windows doesn't support this feature. Windows
 this:
 
 .. literalinclude:: cli_library/019.php
-   :lines: 2-
 
 **showProgress()**
 
@@ -227,12 +209,10 @@ The percent complete and the length of the display will be determined based on t
 pass ``false`` as the first parameter and the progress bar will be removed.
 
 .. literalinclude:: cli_library/020.php
-   :lines: 2-
 
 **table()**
 
 .. literalinclude:: cli_library/021.php
-   :lines: 2-
 
 .. code-block:: none
 
@@ -249,4 +229,3 @@ Waits a certain number of seconds, optionally showing a wait message and
 waiting for a key press.
 
 .. literalinclude:: cli_library/022.php
-   :lines: 2-

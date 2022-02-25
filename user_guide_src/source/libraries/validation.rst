@@ -171,7 +171,6 @@ Add Validation Rules
 Then add validation rules in the controller (**Form.php**):
 
 .. literalinclude:: validation/002.php
-   :lines: 2-
 
 If you submit the form you should see the success page or the form with error messages.
 
@@ -205,7 +204,6 @@ Using Strict Rules
 If you want to use these rules, you need to change the rule classes in **app/Config/Validation.php**:
 
 .. literalinclude:: validation/003.php
-   :lines: 2-
 
 Loading the Library
 ************************************************
@@ -213,7 +211,6 @@ Loading the Library
 The library is loaded as a service named **validation**:
 
 .. literalinclude:: validation/004.php
-   :lines: 2-
 
 This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rulesets, and collections of rules that can be easily reused.
@@ -239,7 +236,6 @@ This method sets a single rule. It has the method signature::
 The ``$rules`` either takes in a pipe-delimited list of rules or an array collection of rules:
 
 .. literalinclude:: validation/005.php
-   :lines: 2-
 
 The value you pass to ``$field`` must match the key of any data array that is sent in. If
 the data is taken directly from ``$_POST``, then it must be an exact match for
@@ -256,12 +252,10 @@ setRules()
 Like ``setRule()``, but accepts an array of field names and their rules:
 
 .. literalinclude:: validation/006.php
-   :lines: 2-
 
 To give a labeled error message you can set up as:
 
 .. literalinclude:: validation/007.php
-   :lines: 2-
 
 withRequest()
 =============
@@ -272,7 +266,6 @@ current Request object and it will take all of the input data and set it as the
 data to be validated:
 
 .. literalinclude:: validation/008.php
-   :lines: 2-
 
 Working with Validation
 ************************************************
@@ -284,18 +277,15 @@ If your data is in a nested associative array, you can use "dot array syntax" to
 easily validate your data:
 
 .. literalinclude:: validation/009.php
-   :lines: 2-
 
 You can use the '*' wildcard symbol to match any one level of the array:
 
 .. literalinclude:: validation/010.php
-   :lines: 2-
 
 "dot array syntax" can also be useful when you have single dimension array data.
 For example, data returned by multi select dropdown:
 
 .. literalinclude:: validation/011.php
-   :lines: 2-
 
 Validate 1 Value
 ================================================
@@ -303,7 +293,6 @@ Validate 1 Value
 Validate one value against a rule:
 
 .. literalinclude:: validation/012.php
-   :lines: 2-
 
 Saving Sets of Validation Rules to the Config File
 =======================================================
@@ -323,24 +312,20 @@ class with the name of your group. This element will hold an array with your val
 rules. As shown earlier, the validation array will have this prototype:
 
 .. literalinclude:: validation/013.php
-   :lines: 2-
 
 You can specify the group to use when you call the ``run()`` method:
 
 .. literalinclude:: validation/014.php
-   :lines: 2-
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
 be used for any errors when this group is used:
 
 .. literalinclude:: validation/015.php
-   :lines: 2-
 
 Or pass all settings in an array:
 
 .. literalinclude:: validation/016.php
-   :lines: 2-
 
 See below for details on the formatting of the array.
 
@@ -352,14 +337,12 @@ Getting & Setting Rule Groups
 This method gets a rule group from the validation configuration:
 
 .. literalinclude:: validation/017.php
-   :lines: 2-
 
 **Set Rule Group**
 
 This method sets a rule group from the validation configuration to the validation service:
 
 .. literalinclude:: validation/018.php
-   :lines: 2-
 
 Running Multiple Validations
 =======================================================
@@ -374,7 +357,6 @@ errors from previous run. Be aware that ``reset()`` will invalidate any data, ru
 you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
 
 .. literalinclude:: validation/019.php
-   :lines: 2-
 
 Validation Placeholders
 =======================================================
@@ -385,18 +367,15 @@ the name of the field (or array key) that was passed in as ``$data`` surrounded 
 replaced by the **value** of the matched incoming field. An example should clarify this:
 
 .. literalinclude:: validation/020.php
-   :lines: 2-
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
 
 .. literalinclude:: validation/021.php
-   :lines: 2-
 
 then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule:
 
 .. literalinclude:: validation/022.php
-   :lines: 2-
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
 
@@ -427,12 +406,10 @@ These are two ways to provide custom error messages.
 As the last parameter:
 
 .. literalinclude:: validation/023.php
-   :lines: 2-
 
 Or as a labeled style:
 
 .. literalinclude:: validation/024.php
-   :lines: 2-
 
 If you'd like to include a field's "human" name, or the optional parameter some rules allow for (such as max_length),
 or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively:
@@ -454,7 +431,6 @@ Let's say we have a file with translations located here: ``app/Languages/en/Rule
 We can simply use the language lines defined in this file, like this:
 
 .. literalinclude:: validation/025.php
-   :lines: 2-
 
 .. _validation-getting-all-errors:
 
@@ -464,7 +440,6 @@ Getting All Errors
 If you need to retrieve all error messages for failed fields, you can use the ``getErrors()`` method:
 
 .. literalinclude:: validation/026.php
-   :lines: 2-
 
 If no errors exist, an empty array will be returned.
 
@@ -495,7 +470,6 @@ You can retrieve the error for a single field with the ``getError()`` method. Th
 name:
 
 .. literalinclude:: validation/027.php
-   :lines: 2-
 
 If no error exists, an empty string will be returned.
 
@@ -507,12 +481,10 @@ Check If Error Exists
 You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name:
 
 .. literalinclude:: validation/028.php
-   :lines: 2-
 
 When specifying a field with a wildcard, all errors matching the mask will be checked:
 
 .. literalinclude:: validation/028.2.php
-   :lines: 2-
 
 Customizing Error Display
 *************************
@@ -534,7 +506,6 @@ An array named ``$errors`` is available within the view that contains a list of 
 the name of the field that had the error, and the value is the error message, like this:
 
 .. literalinclude:: validation/030.php
-   :lines: 2-
 
 There are actually two types of views that you can create. The first has an array of all of the errors, and is what
 we just looked at. The other type is simpler, and only contains a single variable, ``$error`` that contains the
@@ -550,7 +521,6 @@ Inside, you'll find the ``$templates`` property where you can list as many custo
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
 .. literalinclude:: validation/031.php
-   :lines: 2-
 
 Specifying the Template
 =======================
@@ -572,7 +542,6 @@ autoloader can find it. These files are called RuleSets. To add a new RuleSet, e
 add the new file to the ``$ruleSets`` array:
 
 .. literalinclude:: validation/032.php
-   :lines: 2-
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
@@ -581,19 +550,16 @@ Within the file itself, each method is a rule and must accept a string as the fi
 a boolean true or false value signifying true if it passed the test or false if it did not:
 
 .. literalinclude:: validation/033.php
-   :lines: 2-
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
 within errors. In custom rules, you may provide error messages by accepting a ``$error`` variable by reference in the
 second parameter:
 
 .. literalinclude:: validation/034.php
-   :lines: 2-
 
 Your new custom rule could now be used just like any other rule:
 
 .. literalinclude:: validation/035.php
-   :lines: 2-
 
 Allowing Parameters
 ===================
@@ -603,7 +569,6 @@ the parameter string, and an array with all of the data that was submitted the f
 for rules like ``require_with`` that needs to check the value of another submitted field to base its result on:
 
 .. literalinclude:: validation/036.php
-   :lines: 2-
 
 Custom errors can be returned as the fourth parameter, just as described above.
 
@@ -616,7 +581,6 @@ The following is a list of all the native rules that are available to use:
     There can be no spaces before and after ``ignore_value``.
 
 .. literalinclude:: validation/037.php
-   :lines: 2-
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example

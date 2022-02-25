@@ -18,7 +18,6 @@ as it runs as a filter and has no manual interaction.
 If you find a case where you do need direct access though, you may load it through the Services file:
 
 .. literalinclude:: security/001.php
-   :lines: 2-
 
 .. _cross-site-request-forgery:
 
@@ -48,7 +47,6 @@ You can set to use the Session based CSRF protection by editing the following co
 **app/Config/Security.php**:
 
 .. literalinclude:: security/002.php
-   :lines: 2-
 
 Token Randomization
 -------------------
@@ -63,7 +61,6 @@ You can enable it by editing the following config parameter value in
 **app/Config/Security.php**:
 
 .. literalinclude:: security/003.php
-   :lines: 2-
 
 Token Regeneration
 ------------------
@@ -77,7 +74,6 @@ may alter this behavior by editing the following config parameter value in
 **app/Config/Security.php**:
 
 .. literalinclude:: security/004.php
-   :lines: 2-
 
 Redirection on Failure
 ----------------------
@@ -92,7 +88,6 @@ than simply crashing. This can be turned off by editing the following config par
 **app/Config/Security.php**:
 
 .. literalinclude:: security/005.php
-   :lines: 2-
 
 Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an error.
 
@@ -103,24 +98,20 @@ You can enable CSRF protection by altering your **app/Config/Filters.php**
 and enabling the `csrf` filter globally:
 
 .. literalinclude:: security/006.php
-   :lines: 2-
 
 Select URIs can be whitelisted from CSRF protection (for example API
 endpoints expecting externally POSTed content). You can add these URIs
 by adding them as exceptions in the filter:
 
 .. literalinclude:: security/007.php
-   :lines: 2-
 
 Regular expressions are also supported (case-insensitive):
 
 .. literalinclude:: security/008.php
-   :lines: 2-
 
 It is also possible to enable the CSRF filter only for specific methods:
 
 .. literalinclude:: security/009.php
-   :lines: 2-
 
 .. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
     because auto-routing permits any HTTP method to access a controller.
@@ -183,4 +174,3 @@ If it is acceptable for the user input to include relative paths, e.g., **file/i
 the second optional parameter, ``$relativePath`` to ``true``.
 
 .. literalinclude:: security/010.php
-   :lines: 2-

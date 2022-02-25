@@ -24,14 +24,12 @@ the Events class' ``on()`` method. The first parameter is the name of the event 
 a callable that will be run when that event is triggered:
 
 .. literalinclude:: events/001.php
-   :lines: 2-
 
 In this example, whenever the **pre_controller** event is executed, an instance of ``MyClass`` is created and the
 ``MyFunction`` method is run. Note that the second parameter can be *any* form of
 `callable <https://www.php.net/manual/en/function.is-callable.php>`_ that PHP recognizes:
 
 .. literalinclude:: events/002.php
-   :lines: 2-
 
 Setting Priorities
 ------------------
@@ -41,7 +39,6 @@ are called. You can do this by passing a priority value as the third parameter o
 are executed first, with a value of 1 having the highest priority, and there being no limit on the lower values:
 
 .. literalinclude:: events/003.php
-   :lines: 2-
 
 Any subscribers with the same priority will be executed in the order they were defined.
 
@@ -49,7 +46,6 @@ Three constants are defined for your use, that set some helpful ranges on the va
 but you might find they aid readability:
 
 .. literalinclude:: events/004.php
-   :lines: 2-
 
 Once sorted, all subscribers are executed in order. If any subscriber returns a boolean false value, then execution of
 the subscribers will stop.
@@ -61,13 +57,11 @@ The Events library makes it simple for you to create events in your own code, al
 need to call the ``trigger()`` method on the **Events** class with the name of the event:
 
 .. literalinclude:: events/005.php
-   :lines: 2-
 
 You can pass any number of arguments to the subscribers by adding them as additional parameters. Subscribers will be
 given the arguments in the same order as defined:
 
 .. literalinclude:: events/006.php
-   :lines: 2-
 
 Simulating Events
 =================
@@ -77,12 +71,10 @@ and counter-productive. You can tell the Events class to only simulate running t
 When **true**, all events will be skipped over during the trigger method. Everything else will work as normal, though.
 
 .. literalinclude:: events/007.php
-   :lines: 2-
 
 You can stop simulation by passing false:
 
 .. literalinclude:: events/008.php
-   :lines: 2-
 
 Event Points
 ============

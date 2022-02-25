@@ -80,7 +80,6 @@ Rendering the View
 Rendering the view and it's layout is done exactly as any other view would be displayed within a controller:
 
 .. literalinclude:: view_layouts/001.php
-   :lines: 2-
 
 It renders the View **app/Views/some_view.php** and if it extends ``default``,
 the Layout **app/Views/default.php** is also used automatically.

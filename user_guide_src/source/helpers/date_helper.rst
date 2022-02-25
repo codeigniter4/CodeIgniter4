@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: date_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -36,7 +35,6 @@ The following functions are available:
     this function over PHP's ``time()`` function.
 
     .. literalinclude:: date_helper/002.php
-       :lines: 2-
 
     If a timezone is not provided, it will return ``time()`` based on the
     **time_reference** setting.
@@ -55,7 +53,6 @@ The following functions are available:
     selected value.
 
     .. literalinclude:: date_helper/003.php
-       :lines: 2-
 
 Many functions previously found in the CodeIgniter 3 ``date_helper`` have been moved to the ``I18n``
 module in CodeIgniter 4.

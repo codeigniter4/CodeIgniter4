@@ -31,12 +31,10 @@ superglobal variables for the HTTP verb you are using. So, a method of **GET** w
 populated, while a **post** request would have the **$_POST** array populated.
 
 .. literalinclude:: feature/002.php
-   :lines: 2-
 
 Shorthand methods for each of the HTTP verbs exist to ease typing and make things clearer:
 
 .. literalinclude:: feature/003.php
-   :lines: 2-
 
 .. note:: The ``$params`` array does not make sense for every HTTP verb, but is included for consistency.
 
@@ -47,7 +45,6 @@ You can use a custom collection of routes by passing an array of "routes" into t
 override any existing routes in the system:
 
 .. literalinclude:: feature/004.php
-   :lines: 2-
 
 Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
@@ -60,7 +57,6 @@ of key/value pairs that should exist within the ``$_SESSION`` variable when this
 that the current values of ``$_SESSION`` should be used. This is handy for testing authentication and more.
 
 .. literalinclude:: feature/005.php
-   :lines: 2-
 
 Setting Headers
 ---------------
@@ -69,7 +65,6 @@ You can set header values with the ``withHeaders()`` method. This takes an array
 passed as a header into the call:
 
 .. literalinclude:: feature/006.php
-   :lines: 2-
 
 Bypassing Events
 ----------------
@@ -78,7 +73,6 @@ Events are handy to use in your application, but can be problematic during testi
 to send out emails. You can tell the system to skip any event handling with the ``skipEvents()`` method:
 
 .. literalinclude:: feature/007.php
-   :lines: 2-
 
 Formatting The Request
 -----------------------
@@ -89,7 +83,6 @@ body of the request in the given format. This will also set the `Content-Type` h
 This is useful when testing JSON or XML API's so that you can set the request in the form that the controller will expect.
 
 .. literalinclude:: feature/008.php
-   :lines: 2-
 
 Setting the Body
 ----------------

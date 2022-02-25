@@ -110,14 +110,12 @@ must be present within the path specified in ``$basePath``.
 Asserts that a row with criteria matching the key/value pairs in ``$criteria`` DOES NOT exist in the database.
 
 .. literalinclude:: database/004.php
-   :lines: 2-
 
 **seeInDatabase($table, $criteria)**
 
 Asserts that a row with criteria matching the key/value pairs in ``$criteria`` DOES exist in the database.
 
 .. literalinclude:: database/005.php
-   :lines: 2-
 
 **grabFromDatabase($table, $column, $criteria)**
 
@@ -125,7 +123,6 @@ Returns the value of ``$column`` from the specified table where the row matches 
 row is found, it will only test against the first one.
 
 .. literalinclude:: database/006.php
-   :lines: 2-
 
 **hasInDatabase($table, $data)**
 
@@ -133,11 +130,9 @@ Inserts a new row into the database. This row is removed after the current test 
 array with the data to insert into the table.
 
 .. literalinclude:: database/007.php
-   :lines: 2-
 
 **seeNumRecords($expected, $table, $criteria)**
 
 Asserts that a number of matching rows are found in the database that match ``$criteria``.
 
 .. literalinclude:: database/008.php
-   :lines: 2-

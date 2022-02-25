@@ -50,12 +50,10 @@ classes have been deprecated and their methods moved to ``DatabaseTestTrait`` an
 and use any traits you need. For example:
 
 .. literalinclude:: upgrade_412/001.php
-   :lines: 2-
 
 ... becomes:
 
 .. literalinclude:: upgrade_412/002.php
-   :lines: 2-
 
 Finally, ``ControllerTester`` has been superseded by ``ControllerTestTrait`` to standardize
 approach and take advantage of the updated response testing (below).

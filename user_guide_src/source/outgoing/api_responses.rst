@@ -23,7 +23,6 @@ In this example, an HTTP status code of 201 is returned, with the generic status
 exist for the most common use cases:
 
 .. literalinclude:: api_responses/002.php
-   :lines: 2-
 
 ***********************
 Handling Response Types
@@ -42,7 +41,6 @@ mime types that your application can automatically format the response for. By d
 format both XML and JSON responses:
 
 .. literalinclude:: api_responses/003.php
-   :lines: 2-
 
 This is the array that is used during :doc:`Content Negotiation </incoming/content_negotiation>` to determine which
 type of response to return. If no matches are found between what the client requested and what you support, the first
@@ -53,7 +51,6 @@ name, and the class must implement ``CodeIgniter\Format\FormatterInterface``. Fo
 support both JSON and XML:
 
 .. literalinclude:: api_responses/004.php
-   :lines: 2-
 
 So, if your request asks for JSON formatted data in an **Accept** header, the data array you pass any of the
 ``respond*`` or ``fail*`` methods will be formatted by the ``CodeIgniter\Format\JSONFormatter`` class. The resulting
@@ -69,7 +66,6 @@ Class Reference
     ``$format``, it will be automatically determined through content negotiation.
 
 .. literalinclude:: api_responses/005.php
-   :lines: 2-
 
 .. php:method:: respond($data[, $statusCode = 200[, $message = '']])
 
@@ -115,7 +111,6 @@ Class Reference
     code of the error. The ``messages`` element contains an array of error messages. It would look something like:
 
     .. literalinclude:: api_responses/006.php
-       :lines: 2-
 
 .. php:method:: respondCreated($data = null[, string $message = ''])
 
@@ -126,7 +121,6 @@ Class Reference
     Sets the appropriate status code to use when a new resource was created, typically 201:
 
     .. literalinclude:: api_responses/007.php
-       :lines: 2-
 
 .. php:method:: respondDeleted($data = null[, string $message = ''])
 
@@ -137,7 +131,6 @@ Class Reference
     Sets the appropriate status code to use when a new resource was deleted as the result of this API call, typically 200.
 
     .. literalinclude:: api_responses/008.php
-       :lines: 2-
 
 .. php:method:: respondNoContent(string $message = 'No Content')
 
@@ -148,7 +141,6 @@ Class Reference
     meaningful reply to send back to the client, typically 204.
 
     .. literalinclude:: api_responses/009.php
-       :lines: 2-
 
 .. php:method:: failUnauthorized(string $description = 'Unauthorized'[, string $code = null[, string $message = '']])
 
@@ -161,7 +153,6 @@ Class Reference
     or has incorrect authorization. Status code is 401.
 
     .. literalinclude:: api_responses/010.php
-       :lines: 2-
 
 .. php:method:: failForbidden(string $description = 'Forbidden'[, string $code=null[, string $message = '']])
 
@@ -175,7 +166,6 @@ Class Reference
     the client should not try again because it won't help. Status code is 403.
 
     .. literalinclude:: api_responses/011.php
-       :lines: 2-
 
 .. php:method:: failNotFound(string $description = 'Not Found'[, string $code=null[, string $message = '']])
 
@@ -187,7 +177,6 @@ Class Reference
     Sets the appropriate status code to use when the requested resource cannot be found. Status code is 404.
 
     .. literalinclude:: api_responses/012.php
-       :lines: 2-
 
 .. php:method:: failValidationErrors($errors[, string $code=null[, string $message = '']])
 
@@ -199,7 +188,6 @@ Class Reference
     Sets the appropriate status code to use when data the client sent did not pass validation rules. Status code is typically 400.
 
     .. literalinclude:: api_responses/013.php
-       :lines: 2-
 
 .. php:method:: failResourceExists(string $description = 'Conflict'[, string $code=null[, string $message = '']])
 
@@ -212,7 +200,6 @@ Class Reference
     Status code is typically 409.
 
     .. literalinclude:: api_responses/014.php
-       :lines: 2-
 
 .. php:method:: failResourceGone(string $description = 'Gone'[, string $code=null[, string $message = '']])
 
@@ -225,7 +212,6 @@ Class Reference
     is no longer available. Status code is typically 410.
 
     .. literalinclude:: api_responses/015.php
-       :lines: 2-
 
 .. php:method:: failTooManyRequests(string $description = 'Too Many Requests'[, string $code=null[, string $message = '']])
 
@@ -238,7 +224,6 @@ Class Reference
     This might be due to some form of throttling or rate limiting. Status code is typically 400.
 
     .. literalinclude:: api_responses/016.php
-       :lines: 2-
 
 .. php:method:: failServerError(string $description = 'Internal Server Error'[, string $code = null[, string $message = '']])
 
@@ -250,4 +235,3 @@ Class Reference
     Sets the appropriate status code to use when there is a server error.
 
     .. literalinclude:: api_responses/017.php
-       :lines: 2-

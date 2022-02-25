@@ -33,7 +33,6 @@ set your preferences in the **app/Config/Email.php** file.
 Here is a basic example demonstrating how you might send email:
 
 .. literalinclude:: email/001.php
-   :lines: 2-
 
 .. _setting-email-preferences:
 
@@ -50,7 +49,6 @@ email initialize method. Here is an example of how you might set some
 preferences:
 
 .. literalinclude:: email/002.php
-   :lines: 2-
 
 .. note:: Most of the preferences have default values that will be used
     if you do not set them.
@@ -173,12 +171,10 @@ Class Reference
         Sets the email address and name of the person sending the email:
 
         .. literalinclude:: email/003.php
-           :lines: 2-
 
         You can also set a Return-Path, to help redirect undelivered mail:
 
         .. literalinclude:: email/004.php
-           :lines: 2-
 
         .. note:: Return-Path can't be used if you've configured 'smtp' as
             your protocol.
@@ -194,7 +190,6 @@ Class Reference
         information in the `setFrom <#setFrom>`_ method is used. Example:
 
         .. literalinclude:: email/005.php
-           :lines: 2-
 
     .. php:method:: setTo($to)
 
@@ -206,13 +201,10 @@ Class Reference
         a comma-delimited list or an array:
 
         .. literalinclude:: email/006.php
-           :lines: 2-
 
         .. literalinclude:: email/007.php
-           :lines: 2-
 
         .. literalinclude:: email/008.php
-           :lines: 2-
 
     .. php:method:: setCC($cc)
 
@@ -246,7 +238,6 @@ Class Reference
         Sets the email subject:
 
         .. literalinclude:: email/009.php
-           :lines: 2-
 
     .. php:method:: setMessage($body)
 
@@ -257,7 +248,6 @@ Class Reference
         Sets the e-mail message body:
 
         .. literalinclude:: email/010.php
-           :lines: 2-
 
     .. php:method:: setAltMessage($str)
 
@@ -268,7 +258,6 @@ Class Reference
         Sets the alternative e-mail message body:
 
         .. literalinclude:: email/011.php
-           :lines: 2-
 
         This is an optional message string which can be used if you send
         HTML formatted email. It lets you specify an alternative message
@@ -288,7 +277,6 @@ Class Reference
         Appends additional headers to the e-mail:
 
         .. literalinclude:: email/012.php
-           :lines: 2-
 
     .. php:method:: clear($clearAttachments = false)
 
@@ -301,13 +289,11 @@ Class Reference
         permitting the data to be reset between cycles.
 
         .. literalinclude:: email/013.php
-           :lines: 2-
 
         If you set the parameter to true any attachments will be cleared as
         well:
 
         .. literalinclude:: email/014.php
-           :lines: 2-
 
     .. php:method:: send($autoClear = true)
 
@@ -319,13 +305,11 @@ Class Reference
         success or failure, enabling it to be used conditionally:
 
         .. literalinclude:: email/015.php
-           :lines: 2-
 
         This method will automatically clear all parameters if the request was
         successful. To stop this behaviour pass false:
 
         .. literalinclude:: email/016.php
-           :lines: 2-
 
         .. note:: In order to use the ``printDebugger()`` method, you need
             to avoid clearing the email parameters.
@@ -350,30 +334,25 @@ Class Reference
         For example:
 
         .. literalinclude:: email/017.php
-           :lines: 2-
 
         To use the default disposition (attachment), leave the second parameter blank,
         otherwise use a custom disposition:
 
         .. literalinclude:: email/018.php
-           :lines: 2-
 
         You can also use a URL:
 
         .. literalinclude:: email/019.php
-           :lines: 2-
 
         If you'd like to use a custom file name, you can use the third parameter:
 
         .. literalinclude:: email/020.php
-           :lines: 2-
 
         If you need to use a buffer string instead of a real - physical - file you can
         use the first parameter as buffer, the third parameter as file name and the fourth
         parameter as mime-type:
 
         .. literalinclude:: email/021.php
-           :lines: 2-
 
     .. php:method:: setAttachmentCID($filename)
 
@@ -385,7 +364,6 @@ Class Reference
         (picture) attachment into HTML. First parameter must be the already attached file name.
 
         .. literalinclude:: email/022.php
-           :lines: 2-
 
         .. note:: Content-ID for each e-mail must be re-created for it to be unique.
 
@@ -404,6 +382,5 @@ Class Reference
         Example:
 
         .. literalinclude:: email/023.php
-           :lines: 2-
 
         .. note:: By default, all of the raw data will be printed.

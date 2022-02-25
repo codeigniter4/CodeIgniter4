@@ -18,7 +18,6 @@ To enable a Honeypot, changes have to be made to the **app/Config/Filters.php**.
 from the ``$globals`` array, like:
 
 .. literalinclude:: honeypot/001.php
-   :lines: 2-
 
 A sample Honeypot filter is bundled, as ``system/Filters/Honeypot.php``.
 If it is not suitable, make your own at ``app/Filters/Honeypot.php``,

@@ -33,7 +33,6 @@ Configuring the Locale
 Every site will have a default language/locale they operate in. This can be set in **Config/App.php**:
 
 .. literalinclude:: localization/001.php
-   :lines: 2-
 
 The value can be any string that your application uses to manage text strings and other formats. It is
 recommended that a `BCP 47 <http://www.rfc-editor.org/rfc/bcp/bcp47.txt>`_ language code is used. This results in
@@ -62,7 +61,6 @@ You can set up content negotiation to happen automatically by setting two additi
 The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:
 
 .. literalinclude:: localization/002.php
-   :lines: 2-
 
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in ``$supportLocales``. If no match is found between the languages
@@ -70,7 +68,6 @@ that you support, and the requested language, the first item in $supportedLocale
 the following example, the **en** locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
-   :lines: 2-
 
 In Routes
 ---------
@@ -80,7 +77,6 @@ placeholder ``{locale}`` can be placed as a segment in your route. If present, t
 segment will be your locale:
 
 .. literalinclude:: localization/004.php
-   :lines: 2-
 
 In this example, if the user tried to visit ``http://example.com/fr/books``, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
@@ -99,7 +95,6 @@ If your controller is extending ``CodeIgniter\Controller``, this will be availab
 Alternatively, you can use the :doc:`Services class </concepts/services>` to retrieve the current request:
 
 .. literalinclude:: localization/006.php
-   :lines: 2-
 
 *********************
 Language Localization
@@ -115,15 +110,12 @@ You might name it simply: **Errors.php**.
 Within the file, you would return an array, where each element in the array has a language key and can have string to return:
 
 .. literalinclude:: localization/007.php
-   :lines: 2-
 
 It also support nested definition:
 
 .. literalinclude:: localization/008.php
-   :lines: 2-
 
 .. literalinclude:: localization/009.php
-   :lines: 2-
 
 Basic Usage
 ===========
@@ -133,12 +125,10 @@ filename and the language key as the first parameter, separated by a period (.).
 ``errorEmailMissing`` string from the ``Errors`` language file, you would do the following:
 
 .. literalinclude:: localization/010.php
-   :lines: 2-
 
 For nested definition, you would do the following:
 
 .. literalinclude:: localization/011.php
-   :lines: 2-
 
 If the requested language key doesn't exist in the file for the current locale, the string will be passed
 back, unchanged. In this example, it would return 'Errors.errorEmailMissing' or 'Errors.nested.error.message' if it didn't exist.
@@ -154,17 +144,14 @@ You can pass an array of values to replace placeholders in the language string a
 ``lang()`` function. This allows for very simple number translations and formatting:
 
 .. literalinclude:: localization/012.php
-   :lines: 2-
 
 The first item in the placeholder corresponds to the index of the item in the array, if it's numerical:
 
 .. literalinclude:: localization/013.php
-   :lines: 2-
 
 You can also use named keys to make it easier to keep things straight, if you'd like:
 
 .. literalinclude:: localization/014.php
-   :lines: 2-
 
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
@@ -180,7 +167,6 @@ library, the following types of data can be replaced:
 Here are a few examples:
 
 .. literalinclude:: localization/015.php
-   :lines: 2-
 
 You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
 idea on what capabilities it has, like performing the conditional replacement, pluralization, and more. Both of the links provided
@@ -193,7 +179,6 @@ To specify a different locale to be used when replacing parameters, you can pass
 third parameter to the ``lang()`` method.
 
 .. literalinclude:: localization/016.php
-   :lines: 2-
 
 Nested Arrays
 -------------
@@ -201,7 +186,6 @@ Nested Arrays
 Language files also allow nested arrays to make working with lists, etc... easier.
 
 .. literalinclude:: localization/017.php
-   :lines: 2-
 
 Language Fallback
 =================

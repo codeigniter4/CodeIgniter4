@@ -17,7 +17,6 @@ Get XML FROM Result
 This method returns the xml result from database result. You can do like this:
 
 .. literalinclude:: utilities/001.php
-   :lines: 2-
 
 and it will get the following xml result::
 

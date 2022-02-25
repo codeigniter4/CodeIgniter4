@@ -25,18 +25,15 @@ the common path structure for namespaces and folders, Factories know that the mo
 and classes are found within **Models**, so you can request a model by its shorthand base name:
 
 .. literalinclude:: factories/001.php
-   :lines: 2-
 
 Or you could also request a specific class:
 
 .. literalinclude:: factories/002.php
-   :lines: 2-
 
 Next time you ask for the same class anywhere in your code, ``Factories`` will be sure
 you get back the instance as before:
 
 .. literalinclude:: factories/003.php
-   :lines: 2-
 
 Factory Parameters
 ==================
@@ -50,7 +47,6 @@ your app uses a separate database for authentication and you want to be sure tha
 to access user records always go through that connection:
 
 .. literalinclude:: factories/004.php
-   :lines: 2-
 
 Now any time the ``UserModel`` is loaded from ``Factories`` it will in fact be returning a
 class instance that uses the alternate database connection.
@@ -108,7 +104,6 @@ supply the desired array of options using the ``setOptions()`` method and they w
 merged with the default values and stored for the next call:
 
 .. literalinclude:: factories/006.php
-   :lines: 2-
 
 Parameter Options
 -----------------

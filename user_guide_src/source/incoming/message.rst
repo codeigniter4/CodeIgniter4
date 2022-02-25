@@ -44,7 +44,6 @@ Class Reference
         Returns the current message body, if any has been set. If not body exists, returns null:
 
         .. literalinclude:: message/001.php
-           :lines: 2-
 
     .. php:method:: setBody($data)
 
@@ -92,18 +91,15 @@ Class Reference
         While the header is converted internally as described above, you can access the header with any type of case:
 
         .. literalinclude:: message/002.php
-           :lines: 2-
 
         If the header has multiple values, ``getValue()`` will return as an array of values. You can use the ``getValueLine()``
         method to retrieve the values as a string:
 
         .. literalinclude:: message/003.php
-           :lines: 2-
 
         You can filter the header by passing a filter value in as the second parameter:
 
         .. literalinclude:: message/004.php
-           :lines: 2-
 
     .. php:method:: hasHeader($name)
 
@@ -121,7 +117,6 @@ Class Reference
         of the header values when the header has multiple values. The values are appropriately joined:
 
         .. literalinclude:: message/005.php
-           :lines: 2-
 
     .. php:method:: setHeader($name, $value)
 
@@ -135,7 +130,6 @@ Class Reference
         or an array of strings:
 
         .. literalinclude:: message/006.php
-           :lines: 2-
 
     .. php:method:: removeHeader($name)
 
@@ -146,7 +140,6 @@ Class Reference
         Removes the header from the Message. ``$name`` is the case-insensitive name of the header:
 
         .. literalinclude:: message/007.php
-           :lines: 2-
 
     .. php:method:: appendHeader($name, $value)
 
@@ -159,7 +152,6 @@ Class Reference
         If it is a string then a LogicException will be thrown.
 
         .. literalinclude:: message/008.php
-           :lines: 2-
 
     .. php:method:: prependHeader($name, $value)
 
@@ -172,7 +164,6 @@ Class Reference
         If it is a string then a LogicException will be thrown.
 
         .. literalinclude:: message/009.php
-           :lines: 2-
 
     .. php:method:: getProtocolVersion()
 
@@ -191,4 +182,3 @@ Class Reference
         Sets the HTTP protocol version this Message uses. Valid values are ``1.0``, ``1.1`` and ``2.0``:
 
         .. literalinclude:: message/010.php
-           :lines: 2-

@@ -23,7 +23,6 @@ Upgrade Guide
 1. To enable CSRF protection in CI4 you have to enable it in **app/Config/Filters.php**:
 
    .. literalinclude:: upgrade_security/001.php
-      :lines: 2-
 
 2. Within your HTML forms you have to remove the CSRF input field which looks similar to ``<input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" />``.
 3. Now, within your HTML forms you have to add ``<?= csrf_field() ?>`` somewhere in the form body, unless you are using ``form_open()``.
@@ -35,7 +34,6 @@ CodeIgniter Version 3.x
 ------------------------
 
 .. literalinclude:: upgrade_security/002.php
-   :lines: 2-
 
 CodeIgniter Version 4.x
 -----------------------

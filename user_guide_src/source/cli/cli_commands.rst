@@ -48,7 +48,6 @@ Commands can also be ran from within your own code. This is most often done with
 but they can be used at any time. You do this by using the ``command()`` function. This function is always available.
 
 .. literalinclude:: cli_commands/001.php
-   :lines: 2-
 
 The only argument is string that is the command called and any parameters. This appears exactly as you would call
 it from the command line.
@@ -127,7 +126,6 @@ any CLI arguments after the command name for your use. If the CLI string was::
 Then **foo** is the command name, and the ``$params`` array would be:
 
 .. literalinclude:: cli_commands/003.php
-   :lines: 2-
 
 This can also be accessed through the :doc:`CLI </cli/cli_library>` library, but this already has your command removed
 from the string. These parameters can be used to customize how your scripts behave.
@@ -135,7 +133,6 @@ from the string. These parameters can be used to customize how your scripts beha
 Our demo command might have a ``run`` method something like:
 
 .. literalinclude:: cli_commands/004.php
-   :lines: 2-
 
 ***********
 BaseCommand
@@ -155,7 +152,6 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         This method allows you to run other commands during the execution of your current command:
 
         .. literalinclude:: cli_commands/005.php
-           :lines: 2-
 
     .. php:method:: showError(Throwable $e)
 
@@ -164,7 +160,6 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         A convenience method to maintain a consistent and clear error output to the CLI:
 
         .. literalinclude:: cli_commands/006.php
-           :lines: 2-
 
     .. php:method:: showHelp()
 
@@ -178,4 +173,3 @@ be familiar with when creating your own commands. It also has a :doc:`Logger </g
         A method to calculate padding for $key => $value array output. The padding can be used to output a will formatted table in CLI:
 
         .. literalinclude:: cli_commands/007.php
-           :lines: 2-

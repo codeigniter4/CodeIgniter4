@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: form_helper/001.php
-   :lines: 2-
 
 Escaping field values
 =====================
@@ -28,7 +27,6 @@ elements. In order to do that safely, you'll need to use
 Consider the following example:
 
 .. literalinclude:: form_helper/002.php
-   :lines: 2-
 
 Since the above string contains a set of quotes, it will cause the form
 to break. The :php:func:`esc()` function converts HTML special
@@ -66,7 +64,6 @@ The following functions are available:
     Here's a simple example:
 
     .. literalinclude:: form_helper/003.php
-       :lines: 2-
 
     The above example would create a form that points to your site URL plus the
     "email/send" URI segments, like this::
@@ -76,7 +73,6 @@ The following functions are available:
     You can also add {locale} like the following:
 
     .. literalinclude:: form_helper/004.php
-       :lines: 2-
 
     The above example would create a form that points to your site URL plus the current request locale with
     "email/send" URI segments, like this::
@@ -89,12 +85,10 @@ The following functions are available:
         parameter, like this:
 
         .. literalinclude:: form_helper/005.php
-           :lines: 2-
 
         Alternatively, you can specify the second parameter as a string:
 
         .. literalinclude:: form_helper/006.php
-           :lines: 2-
 
         The above examples would create a form similar to this::
 
@@ -103,7 +97,6 @@ The following functions are available:
         If CSRF filter is turned on `form_open()` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
 
         .. literalinclude:: form_helper/007.php
-           :lines: 2-
 
         will return::
 
@@ -118,7 +111,6 @@ The following functions are available:
         third parameter, like this:
 
         .. literalinclude:: form_helper/008.php
-           :lines: 2-
 
         You can skip the second parameter by passing any false value to it.
 
@@ -151,22 +143,18 @@ The following functions are available:
     name/value string to create one field:
 
     .. literalinclude:: form_helper/009.php
-       :lines: 2-
 
     ... or you can submit an associative array to create multiple fields:
 
     .. literalinclude:: form_helper/010.php
-       :lines: 2-
 
     You can also pass an associative array to the value field:
 
     .. literalinclude:: form_helper/011.php
-       :lines: 2-
 
     If you want to create hidden input fields with extra attributes:
 
     .. literalinclude:: form_helper/012.php
-       :lines: 2-
 
 .. php:function:: form_input([$data = ''[, $value = ''[, $extra = ''[, $type = 'text']]]])
 
@@ -181,29 +169,24 @@ The following functions are available:
     the field name and value in the first and second parameter:
 
     .. literalinclude:: form_helper/013.php
-       :lines: 2-
 
     Or you can pass an associative array containing any data you wish your
     form to contain:
 
     .. literalinclude:: form_helper/014.php
-       :lines: 2-
 
     If you would like your form to contain some additional data, like
     JavaScript, you can pass it as a string in the third parameter:
 
     .. literalinclude:: form_helper/015.php
-       :lines: 2-
 
     Or you can pass it as an array:
 
     .. literalinclude:: form_helper/016.php
-       :lines: 2-
 
     To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter:
 
     .. literalinclude:: form_helper/017.php
-       :lines: 2-
 
 .. php:function:: form_password([$data = ''[, $value = ''[, $extra = '']]])
 
@@ -261,19 +244,16 @@ The following functions are available:
     Example:
 
     .. literalinclude:: form_helper/018.php
-       :lines: 2-
 
     If you would like the opening <select> to contain additional data, like
     an id attribute or JavaScript, you can pass it as a string in the fourth
     parameter:
 
     .. literalinclude:: form_helper/019.php
-       :lines: 2-
 
     Or you can pass it as an array:
 
     .. literalinclude:: form_helper/020.php
-       :lines: 2-
 
     If the array passed as ``$options`` is a multidimensional array, then
     ``form_dropdown()`` will produce an <optgroup> with the array key as the
@@ -309,13 +289,11 @@ The following functions are available:
     Example:
 
     .. literalinclude:: form_helper/021.php
-       :lines: 2-
 
     Similar to other functions, you can submit an associative array in the
     second parameter if you prefer to set additional attributes:
 
     .. literalinclude:: form_helper/022.php
-       :lines: 2-
 
 .. php:function:: form_fieldset_close([$extra = ''])
 
@@ -328,7 +306,6 @@ The following functions are available:
     the tag. For example
 
     .. literalinclude:: form_helper/023.php
-       :lines: 2-
 
 .. php:function:: form_checkbox([$data = ''[, $value = ''[, $checked = false[, $extra = '']]]])
 
@@ -342,7 +319,6 @@ The following functions are available:
     Lets you generate a checkbox field. Simple example:
 
     .. literalinclude:: form_helper/024.php
-       :lines: 2-
 
     The third parameter contains a boolean true/false to determine whether
     the box should be checked or not.
@@ -351,19 +327,16 @@ The following functions are available:
     array of attributes to the function:
 
     .. literalinclude:: form_helper/025.php
-       :lines: 2-
 
     Also as with other functions, if you would like the tag to contain
     additional data like JavaScript, you can pass it as a string in the
     fourth parameter:
 
     .. literalinclude:: form_helper/026.php
-       :lines: 2-
 
     Or you can pass it as an array:
 
     .. literalinclude:: form_helper/027.php
-       :lines: 2-
 
 .. php:function:: form_radio([$data = ''[, $value = ''[, $checked = false[, $extra = '']]]])
 
@@ -388,7 +361,6 @@ The following functions are available:
     Lets you generate a <label>. Simple example:
 
     .. literalinclude:: form_helper/028.php
-       :lines: 2-
 
     Similar to other functions, you can submit an associative array in the
     third parameter if you prefer to set additional attributes.
@@ -396,7 +368,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: form_helper/029.php
-       :lines: 2-
 
 .. php:function:: form_submit([$data = ''[, $value = ''[, $extra = '']]])
 
@@ -409,7 +380,6 @@ The following functions are available:
     Lets you generate a standard submit button. Simple example:
 
     .. literalinclude:: form_helper/030.php
-       :lines: 2-
 
     Similar to other functions, you can submit an associative array in the
     first parameter if you prefer to set your own attributes. The third
@@ -438,19 +408,16 @@ The following functions are available:
     button name and content in the first and second parameter:
 
     .. literalinclude:: form_helper/031.php
-       :lines: 2-
 
     Or you can pass an associative array containing any data you wish your
     form to contain:
 
     .. literalinclude:: form_helper/032.php
-       :lines: 2-
 
     If you would like your form to contain some additional data, like
     JavaScript, you can pass it as a string in the third parameter:
 
     .. literalinclude:: form_helper/033.php
-       :lines: 2-
 
 .. php:function:: form_close([$extra = ''])
 
@@ -463,7 +430,6 @@ The following functions are available:
     the tag. For example:
 
     .. literalinclude:: form_helper/034.php
-       :lines: 2-
 
 .. php:function:: set_value($field[, $default = ''[, $html_escape = true]])
 

@@ -23,17 +23,14 @@ You can access configuration files for your classes in several different ways.
 - By using the ``new`` keyword to create an instance:
 
   .. literalinclude:: configuration/001.php
-     :lines: 2-
 
 - By using the ``config()`` function:
 
   .. literalinclude:: configuration/002.php
-     :lines: 2-
 
 All configuration object properties are public, so you access the settings like any other property:
 
 .. literalinclude:: configuration/003.php
-   :lines: 2-
 
 If no namespace is provided, it will look for the file in all defined namespaces
 as well as **/app/Config/**.
@@ -93,7 +90,6 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 ``getenv()``, ``$_SERVER``, or ``$_ENV``.
 
 .. literalinclude:: configuration/005.php
-   :lines: 2-
 
 .. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 
@@ -206,7 +202,6 @@ contains a dot.
 If this was referring to a SimpleConfig configuration object, the above example would be treated as:
 
 .. literalinclude:: configuration/006.php
-   :lines: 2-
 
 Any other elements of the ``$address`` property would be unchanged.
 
@@ -252,7 +247,6 @@ already configured. In **src/Config/Registrar.php** there would be a ``Registrar
 the single ``Pager()`` method (note the case-sensitivity):
 
 .. literalinclude:: configuration/007.php
-   :lines: 2-
 
 Registrar methods must always return an array, with keys corresponding to the properties
 of the target config file. Existing values are merged, and Registrar properties have
@@ -266,7 +260,6 @@ This is done by adding a ``$registrars`` property to your configuration file,
 holding an array of the names of candidate registrars:
 
 .. literalinclude:: configuration/008.php
-   :lines: 2-
 
 In order to act as a "registrar" the classes so identified must have a
 static function with the same name as the configuration class, and it should return an associative
@@ -289,4 +282,3 @@ the two properties declared, but the value of the ``$target`` property will be o
 by treating ``RegionalSales`` as a "registrar". The resulting configuration properties:
 
 .. literalinclude:: configuration/011.php
-   :lines: 2-

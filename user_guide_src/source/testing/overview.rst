@@ -86,26 +86,22 @@ Most tests require some preparation in order to run correctly. PHPUnit's ``TestC
 to help with staging and clean up:
 
 .. literalinclude:: overview/003.php
-   :lines: 2-
 
 The static methods run before and after the entire test case, whereas the local methods run
 between each test. If you implement any of these special functions make sure you run their
 parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/004.php
-   :lines: 2-
 
 In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property for
 parameter-free methods you want run during set up and tear down:
 
 .. literalinclude:: overview/005.php
-   :lines: 2-
 
 You can see by default these handle the mocking of intrusive services, but your class may override
 that or provide their own:
 
 .. literalinclude:: overview/006.php
-   :lines: 2-
 
 Traits
 ------
@@ -117,7 +113,6 @@ of your test cases you could create an authentication trait with a set up method
 logged in user:
 
 .. literalinclude:: overview/007.php
-   :lines: 2-
 
 Additional Assertions
 ---------------------
@@ -129,21 +124,18 @@ Additional Assertions
 Ensure that something you expected to be logged actually was:
 
 .. literalinclude:: overview/008.php
-   :lines: 2-
 
 **assertEventTriggered($eventName)**
 
 Ensure that an event you expected to be triggered actually was:
 
 .. literalinclude:: overview/009.php
-   :lines: 2-
 
 **assertHeaderEmitted($header, $ignoreCase = false)**
 
 Ensure that a header or cookie was actually emitted:
 
 .. literalinclude:: overview/010.php
-   :lines: 2-
 
 Note: the test case with this should be `run as a separate process
 in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
@@ -153,7 +145,6 @@ in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparate
 Ensure that a header or cookie was not emitted:
 
 .. literalinclude:: overview/011.php
-   :lines: 2-
 
 Note: the test case with this should be `run as a separate process
 in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
@@ -164,7 +155,6 @@ For extended execution time testing, tests that the absolute difference
 between expected and actual time is within the prescribed tolerance:
 
 .. literalinclude:: overview/012.php
-   :lines: 2-
 
 The above test will allow the actual time to be either 660 or 661 seconds.
 
@@ -174,7 +164,6 @@ For extended execution time testing, tests that the absolute difference
 between expected and actual time, formatted as strings, is within the prescribed tolerance:
 
 .. literalinclude:: overview/013.php
-   :lines: 2-
 
 The above test will allow the actual time to be either 660 or 661 seconds.
 
@@ -190,7 +179,6 @@ Enables you to call private methods from outside the class. This returns a funct
 parameter is an instance of the class to test. The second parameter is the name of the method you want to call.
 
 .. literalinclude:: overview/014.php
-   :lines: 2-
 
 **getPrivateProperty($instance, $property)**
 
@@ -198,7 +186,6 @@ Retrieves the value of a private/protected class property from an instance of a 
 instance of the class to test. The second parameter is the name of the property.
 
 .. literalinclude:: overview/015.php
-   :lines: 2-
 
 **setPrivateProperty($instance, $property, $value)**
 
@@ -206,7 +193,6 @@ Set a protected value within a class instance. The first parameter is an instanc
 parameter is the name of the property to set the value of. The third parameter is the value to set it to:
 
 .. literalinclude:: overview/016.php
-   :lines: 2-
 
 Mocking Services
 ================
@@ -222,7 +208,6 @@ This method allows you to define the exact instance that will be returned by the
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.
 
 .. literalinclude:: overview/017.php
-   :lines: 2-
 
 The first parameter is the service that you are replacing. The name must match the function name in the Services
 class exactly. The second parameter is the instance to replace it with.
@@ -246,7 +231,6 @@ static methods like **Services**, but they take an additional preceding paramete
 component name:
 
 .. literalinclude:: overview/018.php
-   :lines: 2-
 
 .. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
@@ -261,4 +245,3 @@ might be helpful. The ``CITestStreamFilter`` helps you capture the output from t
 An example demonstrating this inside one of your test cases:
 
 .. literalinclude:: overview/019.php
-   :lines: 2-

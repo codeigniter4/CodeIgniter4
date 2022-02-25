@@ -43,14 +43,12 @@ Using the Encryption Library
 Like all services in CodeIgniter, it can be loaded via ``Config\Services``:
 
 .. literalinclude:: encryption/001.php
-   :lines: 2-
 
 Assuming you have set your starting key (see :ref:`configuration`),
 encrypting and decrypting data is simple - pass the appropriate string to ``encrypt()``
 and/or ``decrypt()`` methods:
 
 .. literalinclude:: encryption/002.php
-   :lines: 2-
 
 And that's it! The Encryption library will do everything necessary
 for the whole process to be cryptographically secure out-of-the-box.
@@ -77,7 +75,6 @@ object of your own to the ``Services`` call. The ``$config`` variable must be
 an instance of the ``Config\Encryption`` class.
 
 .. literalinclude:: encryption/003.php
-   :lines: 2-
 
 Default Behavior
 ================
@@ -96,7 +93,6 @@ nor the output of a hashing function, etc. To create a proper key,
 you can use the Encryption library's ``createKey()`` method.
 
 .. literalinclude:: encryption/004.php
-   :lines: 2-
 
 The key can be stored in **app/Config/Encryption.php**, or you can design
 a storage mechanism of your own and pass the key dynamically when encrypting/decrypting.
@@ -105,7 +101,6 @@ To save your key to your **app/Config/Encryption.php**, open the file
 and set:
 
 .. literalinclude:: encryption/005.php
-   :lines: 2-
 
 Encoding Keys or Results
 ------------------------
@@ -116,13 +111,11 @@ is hard to deal with (i.e., a copy-paste may damage it), so you may use
 a more friendly manner. For example:
 
 .. literalinclude:: encryption/006.php
-   :lines: 2-
 
 You might find the same technique useful for the results
 of encryption:
 
 .. literalinclude:: encryption/007.php
-   :lines: 2-
 
 Using Prefixes in Storing Keys
 ------------------------------
@@ -134,7 +127,6 @@ intelligently parse the key and still pass a binary string to
 the library.
 
 .. literalinclude:: encryption/008.php
-   :lines: 2-
 
 Similarly, you can use these prefixes in your **.env** file, too!
 ::
@@ -215,7 +207,6 @@ Instead of (or in addition to) using ``Services`` as described in :ref:`usage`,
 you can create an "Encrypter" directly, or change the settings of an existing instance.
 
 .. literalinclude:: encryption/009.php
-   :lines: 2-
 
 Remember, that ``$config`` must be an instance of ``Config\Encryption`` class.
 
@@ -246,7 +237,6 @@ Class Reference
         Example:
 
         .. literalinclude:: encryption/010.php
-           :lines: 2-
 
         Please refer to the :ref:`configuration` section for detailed info.
 
@@ -272,7 +262,6 @@ Class Reference
         Examples:
 
         .. literalinclude:: encryption/011.php
-           :lines: 2-
 
     .. php:method:: decrypt($data[, $params = null])
 
@@ -294,4 +283,3 @@ Class Reference
         Examples:
 
         .. literalinclude:: encryption/012.php
-           :lines: 2-

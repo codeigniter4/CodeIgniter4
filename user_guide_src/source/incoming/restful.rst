@@ -31,7 +31,6 @@ list all of that resource, show a single resource, and delete a single resource.
 name:
 
 .. literalinclude:: restful/001.php
-   :lines: 2-
 
 .. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
@@ -42,7 +41,6 @@ routes are geared toward API-usage, where more methods are allowed, you can pass
 generate update and delete methods that work with HTML forms:
 
 .. literalinclude:: restful/002.php
-   :lines: 2-
 
 Change the Controller Used
 --------------------------
@@ -51,7 +49,6 @@ You can specify the controller that should be used by passing in the ``controlle
 the controller that should be used:
 
 .. literalinclude:: restful/003.php
-   :lines: 2-
 
 Change the Placeholder Used
 ---------------------------
@@ -60,7 +57,6 @@ By default, the ``(:segment)`` placeholder is used when a resource ID is needed.
 in the ``placeholder`` option with the new string to use:
 
 .. literalinclude:: restful/004.php
-   :lines: 2-
 
 Limit the Routes Made
 ---------------------
@@ -69,12 +65,10 @@ You can restrict the routes generated with the ``only`` option. This should be *
 be created. Only routes that match one of these methods will be created. The rest will be ignored:
 
 .. literalinclude:: restful/005.php
-   :lines: 2-
 
 Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``:
 
 .. literalinclude:: restful/006.php
-   :lines: 2-
 
 Valid methods are: ``index``, ``show``, ``create``, ``update``, ``new``, ``edit`` and ``delete``.
 
@@ -92,7 +86,6 @@ implement those methods that you want handled:
 The routing for this would be:
 
 .. literalinclude:: restful/008.php
-   :lines: 2-
 
 Presenter Routes
 ============================================================
@@ -107,7 +100,6 @@ a conventional controller - it is a convenience.
 Its usage is similar to the resource routing:
 
 .. literalinclude:: restful/009.php
-   :lines: 2-
 
 .. note:: The ordering above is for clarity, whereas the actual order the routes are created in, in RouteCollection, ensures proper route resolution
 
@@ -115,7 +107,6 @@ You would not have routes for `photos` for both a resource and a presenter
 controller. You need to distinguish them, for instance:
 
 .. literalinclude:: restful/010.php
-   :lines: 2-
 
 The second parameter accepts an array of options that can be used to modify the routes that are generated.
 
@@ -126,7 +117,6 @@ You can specify the controller that should be used by passing in the ``controlle
 the controller that should be used:
 
 .. literalinclude:: restful/011.php
-   :lines: 2-
 
 Change the Placeholder Used
 ---------------------------
@@ -135,7 +125,6 @@ By default, the ``(:segment)`` placeholder is used when a resource ID is needed.
 in the ``placeholder`` option with the new string to use:
 
 .. literalinclude:: restful/012.php
-   :lines: 2-
 
 Limit the Routes Made
 ---------------------
@@ -144,12 +133,10 @@ You can restrict the routes generated with the ``only`` option. This should be *
 be created. Only routes that match one of these methods will be created. The rest will be ignored:
 
 .. literalinclude:: restful/013.php
-   :lines: 2-
 
 Otherwise you can remove unused routes with the ``except`` option. This should also be **an array** or **comma separated list** of method names. This option run after ``only``:
 
 .. literalinclude:: restful/014.php
-   :lines: 2-
 
 Valid methods are: ``index``, ``show``, ``new``, ``create``, ``edit``, ``update``, ``remove`` and ``delete``.
 
@@ -168,7 +155,6 @@ implement those methods that you want handled:
 The routing for this would be:
 
 .. literalinclude:: restful/016.php
-   :lines: 2-
 
 Presenter/Controller Comparison
 =============================================================

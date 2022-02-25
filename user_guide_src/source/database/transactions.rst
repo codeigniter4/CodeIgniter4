@@ -40,7 +40,6 @@ To run your queries using transactions you will use the
 follows:
 
 .. literalinclude:: transactions/001.php
-   :lines: 2-
 
 You can run as many queries as you want between the start/complete
 functions and they will all be committed or rolled back based on the success
@@ -58,7 +57,6 @@ group will not affect any others.
 Strict Mode can be disabled as follows:
 
 .. literalinclude:: transactions/002.php
-   :lines: 2-
 
 Managing Errors
 ===============
@@ -68,7 +66,6 @@ you'll see a standard error message if the commit was unsuccessful. If
 debugging is turned off, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
-   :lines: 2-
 
 Disabling Transactions
 ======================
@@ -77,7 +74,6 @@ Transactions are enabled by default. If you would like to disable transactions y
 can do so using ``$this->db->transOff()``:
 
 .. literalinclude:: transactions/004.php
-   :lines: 2-
 
 When transactions are disabled, your queries will be auto-committed, just
 as they are when running queries without transactions.
@@ -91,7 +87,6 @@ a valid result. To use test mode simply set the first parameter in the
 ``$this->db->transStart()`` function to true:
 
 .. literalinclude:: transactions/005.php
-   :lines: 2-
 
 Running Transactions Manually
 =============================
@@ -99,7 +94,6 @@ Running Transactions Manually
 If you would like to run transactions manually you can do so as follows:
 
 .. literalinclude:: transactions/006.php
-   :lines: 2-
 
 .. note:: Make sure to use ``$this->db->transBegin()`` when running manual
     transactions, **NOT** ``$this->db->transStart()``.

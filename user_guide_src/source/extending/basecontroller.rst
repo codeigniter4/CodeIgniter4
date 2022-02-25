@@ -16,13 +16,11 @@ use every time your project runs. Helpers should be added to the pre-defined ``$
 you want the HTML and Text helpers universally available:
 
 .. literalinclude:: basecontroller/002.php
-   :lines: 2-
 
 Any other components to load or data to process should be added to the constructor ``initController()``. For
 example, if your project uses the Session Library heavily you may want to initiate it here:
 
 .. literalinclude:: basecontroller/003.php
-   :lines: 2-
 
 Additional Methods
 ==================
@@ -42,4 +40,3 @@ If you do not want to use the base controller you may bypass it by having your c
 Controller instead:
 
 .. literalinclude:: basecontroller/004.php
-   :lines: 2-

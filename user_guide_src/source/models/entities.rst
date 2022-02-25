@@ -61,7 +61,6 @@ Working With the Entity Class
 Now that all of the pieces are in place, you would work with the Entity class as you would any other class:
 
 .. literalinclude:: entities/003.php
-   :lines: 2-
 
 You may have noticed that the ``User`` class has not set any properties for the columns, but you can still
 access them as if they were public properties. The base class, ``CodeIgniter\Entity\Entity``, takes care of this for you, as
@@ -86,12 +85,10 @@ the model, only the fields in ``$allowedFields`` will actually be saved to the d
 on your entities without worrying much about stray fields getting saved incorrectly.
 
 .. literalinclude:: entities/004.php
-   :lines: 2-
 
 You can also pass the data in the constructor and the data will be passed through the ``fill()`` method during instantiation.
 
 .. literalinclude:: entities/005.php
-   :lines: 2-
 
 Bulk Accessing Properties
 -------------------------
@@ -131,7 +128,6 @@ While fairly simple, these examples show that using Entity classes can provide a
 business logic and create objects that are pleasant to use.
 
 .. literalinclude:: entities/007.php
-   :lines: 2-
 
 Data Mapping
 ============
@@ -184,7 +180,6 @@ Now, when any of those properties are set, they will be converted to a Time inst
 current timezone, as set in **app/Config/App.php**:
 
 .. literalinclude:: entities/011.php
-   :lines: 2-
 
 Property Casting
 ----------------
@@ -220,7 +215,6 @@ the value whenever the property is set:
 .. literalinclude:: entities/013.php
 
 .. literalinclude:: entities/014.php
-   :lines: 2-
 
 CSV Casting
 -----------
@@ -235,7 +229,6 @@ by humans:
 Stored in the database as "red,yellow,green":
 
 .. literalinclude:: entities/016.php
-   :lines: 2-
 
 .. note:: Casting as CSV uses PHP's internal ``implode`` and ``explode`` methods and assumes all values are string-safe and free of commas. For more complex data casts try ``array`` or ``json``.
 
@@ -256,7 +249,6 @@ Now you need to register it:
 If you don't need to change values when getting or setting a value. Then just don't implement the appropriate method:
 
 .. literalinclude:: entities/019.php
-   :lines: 2-
 
 **Parameters**
 
@@ -266,10 +258,8 @@ Additional parameters are indicated in square brackets and listed with a comma.
 **type[param1, param2]**
 
 .. literalinclude:: entities/020.php
-   :lines: 2-
 
 .. literalinclude:: entities/021.php
-   :lines: 2-
 
 .. note:: If the casting type is marked as nullable ``?bool`` and the passed value is not null, then the parameter with
     the value ``nullable`` will be passed to the casting type handler.
@@ -282,9 +272,7 @@ You can check if an Entity attribute has changed since it was created. The only 
 attribute to check:
 
 .. literalinclude:: entities/022.php
-   :lines: 2-
 
 Or to check the whole entity for changed values omit the parameter:
 
 .. literalinclude:: entities/023.php
-   :lines: 2-

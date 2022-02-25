@@ -18,7 +18,6 @@ By default, the file does not need to exist. However, you can pass an additional
 to check that the file exists and throw ``FileNotFoundException()`` if it does not.
 
 .. literalinclude:: files/001.php
-   :lines: 2-
 
 Taking Advantage of Spl
 =======================
@@ -26,7 +25,6 @@ Taking Advantage of Spl
 Once you have an instance, you have the full power of the SplFileInfo class at the ready, including:
 
 .. literalinclude:: files/002.php
-   :lines: 2-
 
 New Features
 ============
@@ -39,14 +37,12 @@ You can generate a cryptographically secure random filename, with the current ti
 method. This is especially useful to rename files when moving it so that the filename is unguessable:
 
 .. literalinclude:: files/003.php
-   :lines: 2-
 
 **getSize()**
 
 Returns the size of the uploaded file in bytes:
 
 .. literalinclude:: files/004.php
-   :lines: 2-
 
 **getSizeByUnit()**
 
@@ -54,7 +50,6 @@ Returns the size of the uploaded file default in bytes. You can pass in either '
 the results in kilobytes or megabytes, respectively:
 
 .. literalinclude:: files/005.php
-   :lines: 2-
 
 **getMimeType()**
 
@@ -62,7 +57,6 @@ Retrieve the media type (mime type) of the file. Uses methods that are considere
 the type of file:
 
 .. literalinclude:: files/006.php
-   :lines: 2-
 
 **guessExtension()**
 
@@ -71,7 +65,6 @@ will return null. This is often a more trusted source than simply using the exte
 the values in **app/Config/Mimes.php** to determine extension:
 
 .. literalinclude:: files/007.php
-   :lines: 2-
 
 Moving Files
 ------------
@@ -80,18 +73,15 @@ Each file can be moved to its new location with the aptly named ``move()`` metho
 the file to as the first parameter:
 
 .. literalinclude:: files/008.php
-   :lines: 2-
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
 
 .. literalinclude:: files/009.php
-   :lines: 2-
 
 The move() method returns a new File instance that for the relocated file, so you must capture the result if the
 resulting location is needed:
 
 .. literalinclude:: files/010.php
-   :lines: 2-
 
 ****************
 File Collections
@@ -102,19 +92,16 @@ locating and working with groups of files across the filesystem. At its most bas
 of files you set or build:
 
 .. literalinclude:: files/011.php
-   :lines: 2-
 
 After you have input the files you would like to work with you may remove files or use the filtering commands to remove
 or retain files matching a certain regex or glob-style pattern:
 
 .. literalinclude:: files/012.php
-   :lines: 2-
 
 When your collection is complete, you can use ``get()`` to retrieve the final list of file paths, or take advantage of
 ``FileCollection`` being countable and iterable to work directly with each ``File``:
 
 .. literalinclude:: files/013.php
-   :lines: 2-
 
 Below are the specific methods for working with a ``FileCollection``.
 
@@ -132,7 +119,6 @@ Allows child classes to define their own initial files. This method is called by
 predefined collections without having to use their methods. Example:
 
 .. literalinclude:: files/014.php
-   :lines: 2-
 
 Now you may use the ``ConfigCollection`` anywhere in your project to access all App Config files without
 having to re-call the collection methods every time.
@@ -181,7 +167,6 @@ outside of ``$scope`` are always retained). When no scope is provided then all f
 Examples:
 
 .. literalinclude:: files/015.php
-   :lines: 2-
 
 Retrieving Files
 ================

@@ -85,7 +85,6 @@ the CLI as easily as you would create any other route. Instead of using the ``ge
 works exactly like a normal route definition:
 
 .. literalinclude:: cli/002.php
-   :lines: 2-
 
 For more information, see the :ref:`Routes <command-line-only-routes>` page.
 

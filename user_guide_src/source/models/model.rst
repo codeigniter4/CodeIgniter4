@@ -25,7 +25,6 @@ location within the directory, like ``namespace App\Models``.
 You can access models within your classes by creating a new instance or using the ``model()`` helper function.
 
 .. literalinclude:: model/001.php
-   :lines: 2-
 
 CodeIgniter's Model
 ===================
@@ -203,7 +202,6 @@ Several functions are provided for doing basic CRUD work on your tables, includi
 Returns a single row where the primary key matches the value passed in as the first parameter:
 
 .. literalinclude:: model/006.php
-   :lines: 2-
 
 The value is returned in the format specified in ``$returnType``.
 
@@ -211,7 +209,6 @@ You can specify more than one row to return by passing an array of primaryKey va
 of just one:
 
 .. literalinclude:: model/007.php
-   :lines: 2-
 
 If no parameters are passed in, will return all rows in that model's table, effectively acting
 like ``findAll()``, though less explicit.
@@ -221,7 +218,6 @@ like ``findAll()``, though less explicit.
 Returns null or an indexed array of column values:
 
 .. literalinclude:: model/008.php
-   :lines: 2-
 
 ``$column_name`` should be a name of single column else you will get the DataException.
 
@@ -230,25 +226,21 @@ Returns null or an indexed array of column values:
 Returns all results:
 
 .. literalinclude:: model/009.php
-   :lines: 2-
 
 This query may be modified by interjecting Query Builder commands as needed prior to calling this method:
 
 .. literalinclude:: model/010.php
-   :lines: 2-
 
 You can pass in a limit and offset values as the first and second
 parameters, respectively:
 
 .. literalinclude:: model/011.php
-   :lines: 2-
 
 **first()**
 
 Returns the first row in the result set. This is best used in combination with the query builder.
 
 .. literalinclude:: model/012.php
-   :lines: 2-
 
 **withDeleted()**
 
@@ -256,7 +248,6 @@ If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any
 To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 
 .. literalinclude:: model/013.php
-   :lines: 2-
 
 **onlyDeleted()**
 
@@ -264,7 +255,6 @@ Whereas ``withDeleted()`` will return both deleted and not-deleted rows, this me
 the next **find*()** methods to return only soft deleted rows:
 
 .. literalinclude:: model/014.php
-   :lines: 2-
 
 Saving Data
 -----------
@@ -276,7 +266,6 @@ row of data in the database. The array's keys must match the name of the columns
 the array's values are the values to save for that key:
 
 .. literalinclude:: model/015.php
-   :lines: 2-
 
 **update()**
 
@@ -285,18 +274,15 @@ An associative array of data is passed into this method as the second parameter.
 of the columns in a ``$table``, while the array's values are the values to save for that key:
 
 .. literalinclude:: model/016.php
-   :lines: 2-
 
 Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:
 
 .. literalinclude:: model/017.php
-   :lines: 2-
 
 When you need a more flexible solution, you can leave the parameters empty and it functions like the Query Builder's
 update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
-   :lines: 2-
 
 **save()**
 
@@ -304,7 +290,6 @@ This is a wrapper around the ``insert()`` and ``update()`` methods that handle i
 automatically, based on whether it finds an array key matching the **primary key** value:
 
 .. literalinclude:: model/019.php
-   :lines: 2-
 
 The save method also can make working with custom class result objects much simpler by recognizing a non-simple
 object and grabbing its public and protected values into an array, which is then passed to the appropriate
@@ -315,19 +300,16 @@ elements in a certain way, etc. They shouldn't have any idea about how they are 
 simplest, they might look like this:
 
 .. literalinclude:: model/020.php
-   :lines: 2-
 
 A very simple model to work with this might look like:
 
 .. literalinclude:: model/021.php
-   :lines: 2-
 
 This model works with data from the ``jobs`` table, and returns all results as an instance of ``App\Entities\Job``.
 When you need to persist that record to the database, you will need to either write custom methods, or use the
 model's ``save()`` method to inspect the class, grab any public and private properties, and save them to the database:
 
 .. literalinclude:: model/022.php
-   :lines: 2-
 
 .. note:: If you find yourself working with Entities a lot, CodeIgniter provides a built-in :doc:`Entity class </models/entities>`
     that provides several handy features that make developing Entities simpler.
@@ -340,7 +322,6 @@ Deleting Data
 Takes a primary key value as the first parameter and deletes the matching record from the model's table:
 
 .. literalinclude:: model/023.php
-   :lines: 2-
 
 If the model's ``$useSoftDeletes`` value is true, this will update the row to set ``deleted_at`` to the current
 date and time. You can force a permanent delete by setting the second parameter as true.
@@ -348,20 +329,17 @@ date and time. You can force a permanent delete by setting the second parameter 
 An array of primary keys can be passed in as the first parameter to delete multiple records at once:
 
 .. literalinclude:: model/024.php
-   :lines: 2-
 
 If no parameters are passed in, will act like the Query Builder's delete method, requiring a where call
 previously:
 
 .. literalinclude:: model/025.php
-   :lines: 2-
 
 **purgeDeleted()**
 
 Cleans out the database table by permanently removing all rows that have 'deleted_at IS NOT NULL'.
 
 .. literalinclude:: model/026.php
-   :lines: 2-
 
 Validating Data
 ---------------
@@ -374,7 +352,6 @@ The first step is to fill out the ``$validationRules`` class property with the f
 be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:
 
 .. literalinclude:: model/027.php
-   :lines: 2-
 
 The other way to set the validation rules to fields by functions,
 
@@ -388,7 +365,6 @@ The other way to set the validation rules to fields by functions,
     Usage example:
 
     .. literalinclude:: model/028.php
-       :lines: 2-
 
 .. php:function:: setValidationRules($validationRules)
 
@@ -399,7 +375,6 @@ The other way to set the validation rules to fields by functions,
     Usage example:
 
     .. literalinclude:: model/029.php
-       :lines: 2-
 
 The other way to set the validation message to fields by functions,
 
@@ -413,7 +388,6 @@ The other way to set the validation message to fields by functions,
     Usage example:
 
     .. literalinclude:: model/030.php
-       :lines: 2-
 
 .. php:function:: setValidationMessages($fieldMessages)
 
@@ -424,13 +398,11 @@ The other way to set the validation message to fields by functions,
     Usage example:
 
     .. literalinclude:: model/031.php
-       :lines: 2-
 
 Now, whenever you call the ``insert()``, ``update()``, or ``save()`` methods, the data will be validated. If it fails,
 the model will return boolean **false**. You can use the ``errors()`` method to retrieve the validation errors:
 
 .. literalinclude:: model/032.php
-   :lines: 2-
 
 This returns an array with the field names and their associated errors that can be used to either show all of the
 errors at the top of the form, or to display them individually:
@@ -441,7 +413,6 @@ If you'd rather organize your rules and error messages within the Validation con
 and simply set ``$validationRules`` to the name of the validation rule group you created:
 
 .. literalinclude:: model/034.php
-   :lines: 2-
 
 Retrieving Validation Rules
 ---------------------------
@@ -450,20 +421,17 @@ You can retrieve a model's validation rules by accessing its ``validationRules``
 property:
 
 .. literalinclude:: model/035.php
-   :lines: 2-
 
 You can also retrieve just a subset of those rules by calling the accessor
 method directly, with options:
 
 .. literalinclude:: model/036.php
-   :lines: 2-
 
 The ``$options`` parameter is an associative array with one element,
 whose key is either ``'except'`` or ``'only'``, and which has as its
 value an array of fieldnames of interest:
 
 .. literalinclude:: model/037.php
-   :lines: 2-
 
 Validation Placeholders
 -----------------------
@@ -474,18 +442,15 @@ the name of the field (or array key) that was passed in as ``$data`` surrounded 
 replaced by the **value** of the matched incoming field. An example should clarify this:
 
 .. literalinclude:: model/038.php
-   :lines: 2-
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
 that has an id matching the placeholder's value. Assuming that the form POST data had the following:
 
 .. literalinclude:: model/039.php
-   :lines: 2-
 
 then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule:
 
 .. literalinclude:: model/040.php
-   :lines: 2-
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
 
@@ -501,13 +466,11 @@ in addition to these will be removed prior to hitting the database. This is grea
 or primary keys do not get changed.
 
 .. literalinclude:: model/041.php
-   :lines: 2-
 
 Occasionally, you will find times where you need to be able to change these elements. This is often during
 testing, migrations, or seeds. In these cases, you can turn the protection on or off:
 
 .. literalinclude:: model/042.php
-   :lines: 2-
 
 Working With Query Builder
 --------------------------
@@ -516,19 +479,16 @@ You can get access to a shared instance of the Query Builder for that model's da
 need it:
 
 .. literalinclude:: model/043.php
-   :lines: 2-
 
 This builder is already set up with the model's ``$table``. If you need access to another table
 you can pass it in as a parameter, but be aware that this will not return a shared instance:
 
 .. literalinclude:: model/044.php
-   :lines: 2-
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use:
 
 .. literalinclude:: model/045.php
-   :lines: 2-
 
 .. important:: The Model does not provide a perfect interface to the Query Builder.
     The Model and the Query Builder are separate classes with different purposes.
@@ -538,7 +498,6 @@ very elegant use:
 .. note:: You can also access the model's database connection seamlessly:
 
     .. literalinclude:: model/046.php
-       :lines: 2-
 
 Runtime Return Type Changes
 ----------------------------
@@ -555,14 +514,12 @@ provides methods that allow you to do just that.
 Returns data from the next **find*()** method as associative arrays:
 
 .. literalinclude:: model/047.php
-   :lines: 2-
 
 **asObject()**
 
 Returns data from the next **find*()** method as standard objects or custom class intances:
 
 .. literalinclude:: model/048.php
-   :lines: 2-
 
 Processing Large Amounts of Data
 --------------------------------
@@ -575,7 +532,6 @@ parameter is a Closure that will be called for each row of data.
 This is best used during cronjobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
-   :lines: 2-
 
 Model Events
 ============
@@ -596,7 +552,6 @@ main array will also contain the other values passed to the method, and be detai
 must return the original $data array so other callbacks have the full information.
 
 .. literalinclude:: model/050.php
-   :lines: 2-
 
 Specifying Callbacks To Run
 ---------------------------
@@ -606,17 +561,14 @@ etc). Multiple callbacks can be added to a single event and they will be process
 use the same callback in multiple events:
 
 .. literalinclude:: model/051.php
-   :lines: 2-
 
 Additionally, each model may allow (default) or deny callbacks class-wide by setting its ``$allowCallbacks`` property:
 
 .. literalinclude:: model/052.php
-   :lines: 2-
 
 You may also change this setting temporarily for a single model call sing the ``allowCallbacks()`` method:
 
 .. literalinclude:: model/053.php
-   :lines: 2-
 
 Event Parameters
 ----------------
@@ -662,7 +614,6 @@ to the calling context. In order for ``beforeFind`` to intercept the find workfl
 boolean, ``returnData``:
 
 .. literalinclude:: model/054.php
-   :lines: 2-
 
 Manual Model Creation
 =====================

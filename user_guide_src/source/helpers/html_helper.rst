@@ -15,7 +15,6 @@ Loading this Helper
 This helper is loaded using the following code:
 
 .. literalinclude:: html_helper/001.php
-   :lines: 2-
 
 Available Functions
 ===================
@@ -34,7 +33,6 @@ The following functions are available:
     image source. Example:
 
     .. literalinclude:: html_helper/002.php
-       :lines: 2-
 
     There is an optional second parameter that is a true/false value that
     specifics if the *src* should have the page specified by
@@ -42,7 +40,6 @@ The following functions are available:
     Presumably, this would be if you were using a media controller:
 
     .. literalinclude:: html_helper/003.php
-       :lines: 2-
 
     Additionally, an associative array can be passed as the first parameter,
     for complete control over all attributes and values. If an *alt* attribute
@@ -51,7 +48,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: html_helper/004.php
-       :lines: 2-
 
 .. php:function:: img_data([$src = ''[, $indexPage = false[, $attributes = '']]])
 
@@ -64,13 +60,11 @@ The following functions are available:
     Example:
 
     .. literalinclude:: html_helper/005.php
-       :lines: 2-
 
     There is an optional second parameter to specify the MIME type, otherwise the
     function will use your Mimes config to guess:
 
     .. literalinclude:: html_helper/006.php
-       :lines: 2-
 
     Note that ``$path`` must exist and be a readable image format supported by the ``data:`` protocol.
     This function is not recommended for very large files, but it provides a convenient way
@@ -98,18 +92,15 @@ The following functions are available:
     Example:
 
     .. literalinclude:: html_helper/007.php
-       :lines: 2-
 
     Further examples:
 
     .. literalinclude:: html_helper/008.php
-       :lines: 2-
 
     Alternately, an associative array can be passed to the ``link_tag()`` function
     for complete control over all attributes and values:
 
     .. literalinclude:: html_helper/009.php
-       :lines: 2-
 
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
@@ -126,13 +117,11 @@ The following functions are available:
     Example:
 
     .. literalinclude:: html_helper/010.php
-       :lines: 2-
 
     Alternately, an associative array can be passed to the ``script_tag()`` function
     for complete control over all attributes and values:
 
     .. literalinclude:: html_helper/011.php
-       :lines: 2-
 
 .. php:function:: ul($list[, $attributes = ''])
 
@@ -145,7 +134,6 @@ The following functions are available:
     multi-dimensional arrays. Example:
 
     .. literalinclude:: html_helper/012.php
-       :lines: 2-
 
     The above code will produce this:
 
@@ -161,7 +149,6 @@ The following functions are available:
     Here is a more complex example, using a multi-dimensional array:
 
     .. literalinclude:: html_helper/013.php
-       :lines: 2-
 
     The above code will produce this:
 
@@ -233,7 +220,6 @@ The following functions are available:
     source arrays. Example:
 
     .. literalinclude:: html_helper/014.php
-       :lines: 2-
 
     The above code will produce this:
 
@@ -283,7 +269,6 @@ The following functions are available:
     source source. Example:
 
     .. literalinclude:: html_helper/015.php
-       :lines: 2-
 
 .. php:function:: embed($src = ''[, $type = false[, $attributes = ''[, $indexPage = false]]])
 
@@ -298,7 +283,6 @@ The following functions are available:
     embed source. Example:
 
     .. literalinclude:: html_helper/016.php
-       :lines: 2-
 
 .. php:function:: object($data = ''[, $type = false[, $attributes = '']])
 
@@ -313,7 +297,6 @@ The following functions are available:
     object data. Example:
 
     .. literalinclude:: html_helper/017.php
-       :lines: 2-
 
     The above code will produce this:
 
@@ -338,7 +321,6 @@ The following functions are available:
     param source. Example:
 
     .. literalinclude:: html_helper/018.php
-       :lines: 2-
 
 .. php:function:: track($name = ''[, $type = false[, $attributes = '']])
 
@@ -352,7 +334,6 @@ The following functions are available:
     formatted in WebVTT format. Example:
 
     .. literalinclude:: html_helper/019.php
-       :lines: 2-
 
 .. php:function:: doctype([$type = 'html5'])
 
@@ -366,7 +347,6 @@ The following functions are available:
     Example:
 
     .. literalinclude:: html_helper/020.php
-       :lines: 2-
 
     The following is a list of the pre-defined doctype choices. These are configurable,
     pulled from **app/Config/DocTypes.php**, or they could be over-ridden in your **.env** configuration.
