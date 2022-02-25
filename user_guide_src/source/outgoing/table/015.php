@@ -6,9 +6,9 @@ $newList = $table->makeColumns($list, 3);
 
 $table->generate($newList);
 
-// Generates a table with this prototype
 ?>
 
+<!-- Generates a table with this prototype: -->
 <table border="0" cellpadding="4" cellspacing="0">
     <tr>
         <td>one</td>
