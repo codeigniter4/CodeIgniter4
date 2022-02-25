@@ -158,7 +158,7 @@ The resulting query will be::
 
 The secondary benefit of using binds is that the values are
 automatically escaped producing safer queries.
-You don't have to remember to manually escape data — the engine does it automatically for you.
+You don't have to remember to manually escape data - the engine does it automatically for you.
 
 Named Bindings
 ==============

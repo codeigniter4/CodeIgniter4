@@ -46,7 +46,7 @@ parse()
 -------
 
 This helper method is a static version of the default constructor. It takes a string acceptable as DateTime's
-constructor as the first parameter, a timezone as the second parameter, and the locale as the third parameter.:
+constructor as the first parameter, a timezone as the second parameter, and the locale as the third parameter:
 
 .. literalinclude:: time/004.php
    :lines: 2-

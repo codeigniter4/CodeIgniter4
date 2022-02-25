@@ -74,7 +74,7 @@ example, only the table opening tag is being changed:
    :lines: 2-
 
 You can also set defaults for these by passing an array of template settings
-to the Table constructor.:
+to the Table constructor:
 
 .. literalinclude:: table/008.php
    :lines: 2-

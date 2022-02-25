@@ -94,7 +94,7 @@ static page bodies will be located in the **app/Views/pages/**
 directory.
 
 In that directory, create two files named **home.php** and **about.php**.
-Within those files, type some text − anything you'd like − and save them.
+Within those files, type some text - anything you'd like - and save them.
 If you like to be particularly un-original, try "Hello World!".
 
 In order to load those pages, you'll have to check whether the requested

@@ -70,7 +70,7 @@ like this:
 .. literalinclude:: incomingrequest/007.php
    :lines: 2-
 
-With CodeIgniter’s built in methods you can simply do this:
+With CodeIgniter's built-in methods you can simply do this:
 
 .. literalinclude:: incomingrequest/008.php
    :lines: 2-

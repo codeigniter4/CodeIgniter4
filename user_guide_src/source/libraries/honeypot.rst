@@ -15,7 +15,7 @@ Enabling Honeypot
 =====================
 
 To enable a Honeypot, changes have to be made to the **app/Config/Filters.php**. Just uncomment honeypot
-from the ``$globals`` array, like...:
+from the ``$globals`` array, like:
 
 .. literalinclude:: honeypot/001.php
    :lines: 2-

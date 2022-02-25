@@ -175,7 +175,7 @@ Runtime Configuration
 If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
-name or an array of them.:
+name or an array of them:
 
 .. literalinclude:: response/012.php
    :lines: 2-

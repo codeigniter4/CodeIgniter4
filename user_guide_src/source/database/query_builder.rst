@@ -190,12 +190,12 @@ Subqueries
 
 Permits you to write part of a **FROM** query as a subquery.
 
-This is where we add a subquery to an existing table.:
+This is where we add a subquery to an existing table:
 
 .. literalinclude:: query_builder/016.php
    :lines: 2-
 
-Use the ``$db->newQuery()`` method to make a subquery the main table.:
+Use the ``$db->newQuery()`` method to make a subquery the main table:
 
 .. literalinclude:: query_builder/017.php
    :lines: 2-
@@ -460,7 +460,7 @@ appropriate:
 .. literalinclude:: query_builder/050.php
    :lines: 2-
 
-You can use subqueries instead of an array of values.:
+You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/051.php
    :lines: 2-
@@ -473,7 +473,7 @@ appropriate
 .. literalinclude:: query_builder/052.php
    :lines: 2-
 
-You can use subqueries instead of an array of values.:
+You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/053.php
    :lines: 2-
@@ -486,7 +486,7 @@ Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with
 .. literalinclude:: query_builder/054.php
    :lines: 2-
 
-You can use subqueries instead of an array of values.:
+You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/055.php
    :lines: 2-
@@ -499,7 +499,7 @@ if appropriate
 .. literalinclude:: query_builder/056.php
    :lines: 2-
 
-You can use subqueries instead of an array of values.:
+You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/057.php
    :lines: 2-

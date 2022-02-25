@@ -32,7 +32,7 @@ Defined Routes
 In some instances, however, you may want to remap this relationship so that a different
 class/method can be called instead of the one corresponding to the URL.
 
-For example, let’s say you want your URLs to have this prototype::
+For example, let's say you want your URLs to have this prototype::
 
     example.com/product/1/
     example.com/product/2/
@@ -194,7 +194,7 @@ redirect them back to the same page after they log in, you may find this example
 .. literalinclude:: routing/015.php
    :lines: 2-
 
-For those of you who don’t know regular expressions and want to learn more about them,
+For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
 
 .. important:: Note: You can also mix and match wildcards with regular expressions.
@@ -548,7 +548,7 @@ Translate URI Dashes
 
 This option enables you to automatically replace dashes (``-``) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
-dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:
+dash isn't a valid class or method name character and would cause a fatal error if you try to use it:
 
 .. literalinclude:: routing/045.php
    :lines: 2-

@@ -434,13 +434,13 @@ Or as a labeled style:
 .. literalinclude:: validation/024.php
    :lines: 2-
 
-If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
-or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
+If you'd like to include a field's "human" name, or the optional parameter some rules allow for (such as max_length),
+or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively:
 
     'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
-On a field with the human name Username and a rule of ``min_length[6]`` with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
-at least 6 characters.”
+On a field with the human name Username and a rule of ``min_length[6]`` with a value of "Pizza", an error would display: "Supplied value (Pizza) for Username must have
+at least 6 characters."
 
 .. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displying them, XSS attacks are possible.
 
@@ -714,8 +714,8 @@ valid_email             No         Fails if field does not contain a valid
 valid_emails            No         Fails if any value provided in a comma
                                    separated list is not a valid email.
 valid_ip                No         Fails if the supplied IP is not valid.        valid_ip[ipv6]
-                                   Accepts an optional parameter of ‘ipv4’ or
-                                   ‘ipv6’ to specify an IP format.
+                                   Accepts an optional parameter of 'ipv4' or
+                                   'ipv6' to specify an IP format.
 valid_url               No         Fails if field does not contain (loosely) a
                                    URL. Includes simple strings that could be
                                    hostnames, like "codeigniter".
