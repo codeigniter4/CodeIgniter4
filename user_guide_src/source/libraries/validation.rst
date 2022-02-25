@@ -468,7 +468,7 @@ If you need to retrieve all error messages for failed fields, you can use the ``
 
 If no errors exist, an empty array will be returned.
 
-When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys.::
+When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys::
 
     // for data
     'contacts' => [
@@ -486,7 +486,7 @@ When using a wildcard, the error will point to a specific field, replacing the a
     contacts.*.name => 'required'
 
     // error will be
-    'contacts.friends.1.name' => 'The contacts.*.name field is required.',
+    'contacts.friends.1.name' => 'The contacts.*.name field is required.'
 
 Getting a Single Error
 ======================
@@ -509,15 +509,10 @@ You can check to see if an error exists with the ``hasError()`` method. The only
 .. literalinclude:: validation/028.php
    :lines: 2-
 
-When specifying a field with a wildcard, all errors matching the mask will be checked.::
+When specifying a field with a wildcard, all errors matching the mask will be checked:
 
-    // for errors
-    [
-        'foo.0.bar'   => 'Error',
-        'foo.baz.bar' => 'Error',
-    ]
-
-    $validation->hasError('foo.*.bar'); // return true
+.. literalinclude:: validation/028.2.php
+   :lines: 2-
 
 Customizing Error Display
 *************************
