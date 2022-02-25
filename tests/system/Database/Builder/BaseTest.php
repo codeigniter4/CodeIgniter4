@@ -63,6 +63,5 @@ final class BaseTest extends CIUnitTestCase
         $builder = $this->db->table('users');
 
         $builder->fromSubquery($builder, 'sub');
-        $builder->getCompiledSelect();
     }
 }
