@@ -108,6 +108,21 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
         );
     }
 
+    public function testCSRFVerifyPostNoToken()
+    {
+        $this->expectException(SecurityException::class);
+        $this->expectExceptionMessage('The action you requested is not allowed.');
+
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        unset($_POST['csrf_test_name']);
+
+        $request = new IncomingRequest(new MockAppConfig(), new URI('http://badurl.com'), null, new UserAgent());
+
+        $security = new Security(new MockAppConfig());
+
+        $security->verify($request);
+    }
+
     public function testCSRFVerifyPostThrowsExceptionOnNoMatch()
     {
         $this->expectException(SecurityException::class);
