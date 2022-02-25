@@ -16,5 +16,7 @@ public function index()
 }
 
 // In the views:
+?>
+
 <?= $pager->links('group1') ?>
 <?= $pager->simpleLinks('group2') ?>

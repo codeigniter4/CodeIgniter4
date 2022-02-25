@@ -6,6 +6,7 @@ $csrf = array(
 );
 
 // ...
+?>
 
 <form>
     <input name="name" type="text">
