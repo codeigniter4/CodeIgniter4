@@ -32,7 +32,7 @@ use Throwable;
 class CliRenderer extends TextRenderer
 {
     /**
-     * @var bool enable colors when Kint is run in *UNIX* command line
+     * @var bool enable colors
      */
     public static $cli_colors = true;
 

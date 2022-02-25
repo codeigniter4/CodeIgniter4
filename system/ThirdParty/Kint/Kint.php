@@ -548,17 +548,17 @@ class Kint
      *
      * Functionally equivalent to Kint::dump(1) or Kint::dump(debug_backtrace())
      *
+     * @param mixed ...$args
+     *
      * @return int|string
      */
-    public static function dump()
+    public static function dump(...$args)
     {
         if (false === static::$enabled_mode) {
             return 0;
         }
 
         Utils::normalizeAliases(static::$aliases);
-
-        $args = \func_get_args();
 
         $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \count($args));
 
