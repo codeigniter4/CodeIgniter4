@@ -384,19 +384,19 @@ that are further explained below: flashdata and tempdata.</p>
 <h3><a class="toc-backref" href="#id6">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline"></a></h3>
 <p>Any piece of information from the session array is available through the
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Or through the conventional accessor method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Or through the magic getter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$session</span><span class="o">-&gt;</span><span class="na">item</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">item</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>Or even through the session helper method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">session</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nx">session</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">item</span></code> is the array key corresponding to the item you wish to fetch.
@@ -406,7 +406,7 @@ variable, you will do this:</p>
 
 <span class="c1">// or:</span>
 
-<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">name</span>
+<span class="nv">$name</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span>
 
 <span class="c1">// or:</span>
 
@@ -420,11 +420,11 @@ to access does not exist.</p>
 </div>
 <p>If you want to retrieve all of the existing userdata, you can simply
 omit the item key (magic getter only works for single property values):</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">;</span>
 
 <span class="c1">// or:</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 </pre></div>
 </div>
 </section>
@@ -462,7 +462,9 @@ supports this syntax:</p>
 <code class="docutils literal notranslate"><span class="pre">isset()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// returns false if the &#39;some_name&#39; item doesn&#39;t exist or is null,</span>
 <span class="c1">// true otherwise:</span>
-<span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">])</span>
+<span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Or you can call <code class="docutils literal notranslate"><span class="pre">has()</span></code>:</p>
@@ -535,7 +537,7 @@ array:</p>
 <code class="docutils literal notranslate"><span class="pre">set()</span></code>.</p>
 <p>Reading flashdata variables is the same as reading regular session data
 through <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -613,7 +615,7 @@ time-to-live value of 300 seconds (or 5 minutes) will be used.</p>
 </div>
 <p>To read a tempdata variable, again you can just access it through the
 <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> superglobal array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$item</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -1061,7 +1063,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

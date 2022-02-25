@@ -471,8 +471,8 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 </div>
 <p>Which would return a simple array like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance</span>
-<span class="p">]</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance,</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -485,11 +485,11 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 </div>
 <p>The array returned by <code class="docutils literal notranslate"><span class="pre">getFiles()</span></code> would look more like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-    <span class="s1">&#39;my-form&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+     <span class="s1">&#39;my-form&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;details&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance</span>
-        <span class="p">]</span>
-    <span class="p">]</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -503,10 +503,11 @@ The array returns in a manner that you would expect. With the simplest usage, a 
     <span class="s1">&#39;my-form&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;details&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="mi">0</span> <span class="o">=&gt;</span> <span class="cm">/* UploadedFile instance */</span><span class="p">,</span>
-                <span class="mi">1</span> <span class="o">=&gt;</span> <span class="cm">/* UploadedFile instance */</span>
-        <span class="p">]</span>
-    <span class="p">]</span>
+                <span class="mi">0</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance,</span>
+                <span class="mi">1</span> <span class="o">=&gt;</span> <span class="c1">// UploadedFile instance,</span>
+            <span class="p">],</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -710,7 +711,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

@@ -415,13 +415,16 @@ the JSON stream. Using <code class="docutils literal notranslate"><span class="p
 <p><strong>Get Specific Data from JSON</strong></p>
 <p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> for the
 data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// With a request body of:</span>
-<span class="p">{</span>
-    <span class="s2">&quot;foo&quot;</span><span class="o">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;fizz&quot;</span><span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;buzz&quot;</span><span class="o">:</span> <span class="s2">&quot;baz&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">    With a request body of:</span>
+<span class="cm">    {</span>
+<span class="cm">        &quot;foo&quot;: &quot;bar&quot;,</span>
+<span class="cm">        &quot;fizz&quot;: {</span>
+<span class="cm">            &quot;buzz&quot;: &quot;baz&quot;</span>
+<span class="cm">        }</span>
+<span class="cm">    }</span>
+<span class="cm">*/</span>
+
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 <span class="c1">// $data = &quot;bar&quot;</span>
 
@@ -452,10 +455,14 @@ correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYP
 <p>This will retrieve data and convert it to an array. Like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInput</span><span class="p">());</span>
 
-<span class="p">[</span>
-    <span class="s1">&#39;Param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Value1&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Value2&#39;</span>
-<span class="p">]</span>
+<span class="cm">/*</span>
+<span class="cm">    Outputs:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        &#39;Param1&#39; =&gt; &#39;Value1&#39;,</span>
+<span class="cm">        &#39;Param2&#39; =&gt; &#39;Value2&#39;,</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <p><strong>Filtering Input Data</strong></p>
@@ -477,11 +484,15 @@ an array of all headers, with the key as the name of the header, and the value i
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">headers</span><span class="p">());</span>
 
-<span class="p">[</span>
-    <span class="s1">&#39;Host&#39;</span>          <span class="o">=&gt;</span> <span class="nx">CodeIgniter\HTTP\Header</span><span class="p">,</span>
-    <span class="s1">&#39;Cache-Control&#39;</span> <span class="o">=&gt;</span> <span class="nx">CodeIgniter\HTTP\Header</span><span class="p">,</span>
-    <span class="s1">&#39;Accept&#39;</span>        <span class="o">=&gt;</span> <span class="nx">CodeIgniter\HTTP\Header</span><span class="p">,</span>
-<span class="p">]</span>
+<span class="cm">/*</span>
+<span class="cm">    Outputs:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        &#39;Host&#39;          =&gt; CodeIgniter\HTTP\Header,</span>
+<span class="cm">        &#39;Cache-Control&#39; =&gt; CodeIgniter\HTTP\Header,</span>
+<span class="cm">        &#39;Accept&#39;        =&gt; CodeIgniter\HTTP\Header,</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <p>If you only need a single header, you can pass the name into the <code class="docutils literal notranslate"><span class="pre">header()</span></code> method. This will grab the
@@ -952,7 +963,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

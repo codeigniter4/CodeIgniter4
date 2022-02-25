@@ -507,7 +507,7 @@ form or the success page.</p>
     <span class="s1">&#39;passconf&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
     <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
 <span class="p">]))</span> <span class="p">{</span>
-    <span class="o">...</span>
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -622,18 +622,23 @@ data to be validated:</p>
 <h3><a class="toc-backref" href="#id19">Validating Keys that are Arrays</a><a class="headerlink" href="#validating-keys-that-are-arrays" title="Permalink to this headline"></a></h3>
 <p>If your data is in a nested associative array, you can use “dot array syntax” to
 easily validate your data:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The data to test:</span>
-<span class="s1">&#39;contacts&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Joe Smith&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;friends&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="p">[</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Fred Flinstone&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
-        <span class="p">[</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Wilma&#39;</span><span class="p">,</span>
-        <span class="p">],</span>
-    <span class="p">]</span>
-<span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">    The data to test:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        &#39;contacts&#39; =&gt; [</span>
+<span class="cm">           &#39;name&#39; =&gt; &#39;Joe Smith&#39;,</span>
+<span class="cm">            &#39;friends&#39; =&gt; [</span>
+<span class="cm">                [</span>
+<span class="cm">                    &#39;name&#39; =&gt; &#39;Fred Flinstone&#39;,</span>
+<span class="cm">                ],</span>
+<span class="cm">                [</span>
+<span class="cm">                    &#39;name&#39; =&gt; &#39;Wilma&#39;,</span>
+<span class="cm">                ],</span>
+<span class="cm">            ]</span>
+<span class="cm">        ]</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 
 <span class="c1">// Joe Smith</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
@@ -655,12 +660,18 @@ easily validate your data:</p>
 </div>
 <p>“dot array syntax” can also be useful when you have single dimension array data.
 For example, data returned by multi select dropdown:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// The data to test:</span>
-<span class="s1">&#39;user_ids&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-    <span class="mi">1</span><span class="p">,</span>
-    <span class="mi">2</span><span class="p">,</span>
-    <span class="mi">3</span><span class="p">,</span>
-<span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">    The data to test:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        &#39;user_ids&#39; =&gt; [</span>
+<span class="cm">            1,</span>
+<span class="cm">            2,</span>
+<span class="cm">            3,</span>
+<span class="cm">        ]</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
+
 <span class="c1">// Rule</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
     <span class="s1">&#39;user_ids.*&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
@@ -908,11 +919,14 @@ We can simply use the language lines defined in this file, like this:</p>
 <p>If you need to retrieve all error messages for failed fields, you can use the <code class="docutils literal notranslate"><span class="pre">getErrors()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$errors</span> <span class="o">=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">();</span>
 
-<span class="c1">// Returns:</span>
-<span class="p">[</span>
-    <span class="s1">&#39;field1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;error message&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;field2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;error message&#39;</span><span class="p">,</span>
-<span class="p">]</span>
+<span class="cm">/*</span>
+<span class="cm">   Produces:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        &#39;field1&#39; =&gt; &#39;error message&#39;,</span>
+<span class="cm">        &#39;field2&#39; =&gt; &#39;error message&#39;,</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <p>If no errors exist, an empty array will be returned.</p>
@@ -1546,7 +1560,7 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

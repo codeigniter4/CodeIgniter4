@@ -283,7 +283,9 @@ of random data. Use fabricators in your seeds or test cases to stage fake data f
 <h2><a class="toc-backref" href="#id1">Supported Models</a><a class="headerlink" href="#supported-models" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> supports any model that extends the framework’s core model, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Model</span></code>.
 You may use your own custom models by ensuring they implement <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Interfaces\FabricatorModel</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span> <span class="k">implements</span> <span class="nx">CodeIgniter\Test\Interfaces\FabricatorModel</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span> <span class="k">implements</span> <span class="nx">CodeIgniter\Test\Interfaces\FabricatorModel</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -341,6 +343,7 @@ method where you can define exactly what the faked data should look like:</p>
             <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Auth&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">allowRemembering</span> <span class="o">?</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="k">null</span><span class="p">,</span>
         <span class="p">];</span>
     <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Notice in this example how the first three values are equivalent to the formatters from before. However for <code class="docutils literal notranslate"><span class="pre">avatar</span></code>
@@ -354,6 +357,9 @@ a child class in your test support folder:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
     <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -382,7 +388,7 @@ You can check the locale of an existing fabricator using its <code class="docuti
     <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;201-886-0269 x3767&quot;</span><span class="p">,</span>
     <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also get a lot of them back by supplying a count:</p>
@@ -409,7 +415,7 @@ from <code class="docutils literal notranslate"><span class="pre">create()</span
     <span class="s1">&#39;login&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
     <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;2020-05-08 14:52:10&quot;</span><span class="p">,</span>
     <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;2020-05-08 14:52:10&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p>Similar to <code class="docutils literal notranslate"><span class="pre">make()</span></code> you can supply a count to insert and return an array of objects:</p>
@@ -442,7 +448,7 @@ you can use <code class="docutils literal notranslate"><span class="pre">setOver
     <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;251-806-2169&quot;</span><span class="p">,</span>
     <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">);</span>
 
 <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
@@ -450,7 +456,7 @@ you can use <code class="docutils literal notranslate"><span class="pre">setOver
     <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;525-214-2656 x23546&quot;</span><span class="p">,</span>
     <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> can take a second parameter to indicate whether this should be a persistent
@@ -467,7 +473,7 @@ override or only for a single action:</p>
     <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;741-857-1933 x1351&quot;</span><span class="p">,</span>
     <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">);</span>
 
 <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Hans&quot;</span><span class="p">,</span>
@@ -475,7 +481,7 @@ override or only for a single action:</p>
     <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;487-235-7006&quot;</span><span class="p">,</span>
     <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p>If no second parameter is supplied then passed values will persist by default.</p>
@@ -517,6 +523,7 @@ Your model’s fake method could look like this:</p>
             <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">)),</span>
         <span class="p">];</span>
     <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Now creating a new user will ensure it is a part of a valid group: <code class="docutils literal notranslate"><span class="pre">$user</span> <span class="pre">=</span> <span class="pre">fake(UserModel::class);</span></code></p>
@@ -551,7 +558,7 @@ you deleted a fake item but wanted to track the change.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

@@ -410,6 +410,7 @@ that or provide their own:</p>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">model</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">()</span>
     <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -427,12 +428,16 @@ logged in user:</p>
         <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFakeUser</span><span class="p">();</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logInUser</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="o">...</span>
+    
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 
 <span class="k">class</span> <span class="nc">AuthenticationFeatureTest</span>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">AuthTrait</span><span class="p">;</span>
-<span class="o">...</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -444,7 +449,7 @@ logged in user:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LoggerConfig</span><span class="p">();</span>
 <span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Logger</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 
-<span class="o">...</span> <span class="k">do</span> <span class="nx">something</span> <span class="nx">that</span> <span class="nx">you</span> <span class="nx">expect</span> <span class="nx">a</span> <span class="nb">log</span> <span class="nx">entry</span> <span class="nx">from</span>
+<span class="c1">// ... do something that you expect a log entry from</span>
 <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogged</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
@@ -639,7 +644,7 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

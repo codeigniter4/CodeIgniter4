@@ -406,21 +406,27 @@ While the header is converted internally as described above, you can access the 
 method to retrieve the values as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
-<span class="c1">// Outputs something like:</span>
-<span class="s1">&#39;Accept-Language: en,en-US&#39;</span>
+<span class="cm">/*</span>
+<span class="cm">    Outputs something like:</span>
+<span class="cm">    &#39;Accept-Language: en,en-US&#39;</span>
+<span class="cm">*/</span>
 
 <span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>
 
-<span class="c1">// Outputs something like:</span>
-<span class="p">[</span>
-    <span class="s1">&#39;en&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;en-US&#39;</span>
-<span class="p">]</span>
+<span class="cm">/*</span>
+<span class="cm">    Outputs something like:</span>
+<span class="cm">    [</span>
+<span class="cm">        &#39;en&#39;,</span>
+<span class="cm">        &#39;en-US&#39;</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 
 <span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValueLine</span><span class="p">();</span>
 
-<span class="c1">// Outputs something like:</span>
-<span class="s1">&#39;en,en-US&#39;</span>
+<span class="cm">/*</span>
+<span class="cm">    Outputs something like:</span>
+<span class="cm">   &#39;en,en-US&#39;</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
@@ -467,8 +473,10 @@ method to retrieve the values as a string:</p>
 of the header values when the header has multiple values. The values are appropriately joined:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
 
-<span class="c1">// Outputs:</span>
-<span class="nx">en</span><span class="p">,</span> <span class="nx">en</span><span class="o">-</span><span class="nx">US</span>
+<span class="cm">/*</span>
+<span class="cm">    Outputs:</span>
+<span class="cm">    &#39;en,en-US&#39;</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -623,7 +631,7 @@ Acceptable values are <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

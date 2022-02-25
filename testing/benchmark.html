@@ -318,14 +318,17 @@ not automatically display them, though. You can retrieve all of your timers by c
 This returns an array of benchmark information, including start, end, and duration:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">();</span>
 
-<span class="c1">// Timers =</span>
-<span class="p">[</span>
-    <span class="s1">&#39;render view&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;start&#39;</span>    <span class="o">=&gt;</span> <span class="mi">1234567890</span><span class="p">,</span>
-        <span class="s1">&#39;end&#39;</span>      <span class="o">=&gt;</span> <span class="mi">1345678920</span><span class="p">,</span>
-        <span class="s1">&#39;duration&#39;</span> <span class="o">=&gt;</span> <span class="mf">15.4315</span><span class="p">,</span> <span class="c1">// number of seconds</span>
-    <span class="p">]</span>
-<span class="p">]</span>
+<span class="cm">/*</span>
+<span class="cm">    Produces:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        &#39;render view&#39;  =&gt; [</span>
+<span class="cm">            &#39;start&#39;    =&gt; 1234567890,</span>
+<span class="cm">            &#39;end&#39;      =&gt; 1345678920,</span>
+<span class="cm">            &#39;duration&#39; =&gt; 15.4315, // number of seconds</span>
+<span class="cm">        ]</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <p>You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as
@@ -402,7 +405,7 @@ displayed, you can pass in <cite>false</cite> as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

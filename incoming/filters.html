@@ -504,7 +504,7 @@ See <a class="reference internal" href="routing.html#spark-routes"><span class="
 <p>This filter adds HTTP response headers that your application can use to increase the security of your application.</p>
 <p>If you want to customize the headers, extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\SecureHeaders</span></code> and override the <code class="docutils literal notranslate"><span class="pre">$headers</span></code> property. And change the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> property in <strong>app/Config/Filters.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="o">...</span>
+    <span class="c1">// ...</span>
     <span class="s1">&#39;secureheaders&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\SecureHeaders</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
@@ -526,7 +526,7 @@ See <a class="reference internal" href="routing.html#spark-routes"><span class="
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

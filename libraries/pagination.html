@@ -481,12 +481,12 @@ methods, respectively. To change the way those are displayed application-wide, y
 you place that file at <strong>app/Views/Pagers/foundation_full.php</strong>. Since the <strong>application</strong> directory is
 namespaced as <code class="docutils literal notranslate"><span class="pre">App</span></code>, and all directories underneath it map directly to segments of the namespace, you can locate
 the view file through it’s namespace:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span><span class="p">,</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\Views\Pagers\foundation_full&#39;</span>
 </pre></div>
 </div>
 <p>Since it is under the standard <strong>app/Views</strong> directory, though, you do not need to namespace it since the
 <code class="docutils literal notranslate"><span class="pre">view()</span></code> method can locate it by filename. In that case, you can simply give the sub-directory and file name:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Pagers/foundation_full&#39;</span><span class="p">,</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;default_full&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Pagers/foundation_full&#39;</span>
 </pre></div>
 </div>
 <p>Once you have created the view and set it in the configuration, it will automatically be used. You don’t have to
@@ -651,7 +651,7 @@ result set.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

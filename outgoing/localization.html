@@ -388,15 +388,19 @@ If your controller is extending <code class="docutils literal notranslate"><span
 describe the type of content it holds. For example, let’s say you want to create a file containing error messages.
 You might name it simply: <strong>Errors.php</strong>.</p>
 <p>Within the file, you would return an array, where each element in the array has a language key and can have string to return:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>It also support nested definition:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-    <span class="s1">&#39;nested&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span><span class="p">,</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
+    <span class="s1">&#39;languageKey&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;nested&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The actual message to be shown.&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
     <span class="p">],</span>
-<span class="p">],</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span>
@@ -590,7 +594,7 @@ up because the translations folders get mapped appropriately.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

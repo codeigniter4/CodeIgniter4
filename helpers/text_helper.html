@@ -798,13 +798,16 @@ complete words.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a simple string of text that will help us demonstrate this function.&quot;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">word_wrap</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
 
-<span class="c1">// Would produce:</span>
-<span class="c1">// Here is a simple string</span>
-<span class="c1">// of text that will help us</span>
-<span class="c1">// demonstrate this</span>
-<span class="c1">// function.</span>
+<span class="cm">/*</span>
+<span class="cm">  Would produce:</span>
 
-<span class="nx">Excessively</span> <span class="nx">long</span> <span class="nx">words</span> <span class="nx">will</span> <span class="nx">be</span> <span class="nb">split</span><span class="p">,</span> <span class="nx">but</span> <span class="nx">URLs</span> <span class="nx">will</span> <span class="k">not</span> <span class="nx">be</span><span class="o">.</span>
+<span class="cm">    Here is a simple string</span>
+<span class="cm">    of text that will help us</span>
+<span class="cm">    demonstrate this</span>
+<span class="cm">    function.</span>
+
+<span class="cm">  Excessively long words will be split, but URLs will not be.</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -910,7 +913,7 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

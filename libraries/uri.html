@@ -470,7 +470,7 @@ parameter is the name of the variable, and the second parameter is the value:</p
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$uri</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://www.example.com?foo=bar&amp;bar=baz&amp;baz=foz&#39;</span><span class="p">);</span>
 
 <span class="c1">// Returns &#39;foo=bar&#39;</span>
-<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]]);</span>
 
 <span class="c1">// Returns &#39;foo=bar&amp;baz=foz&#39;</span>
 <span class="k">echo</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]]);</span>
@@ -540,12 +540,15 @@ what the values of the segments are. The segments start at 1 being the furthest 
 <p>Finally, you can retrieve an array of all of the segments:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$segments</span> <span class="o">=</span> <span class="nv">$uri</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">();</span>
 
-<span class="c1">// $segments =</span>
-<span class="p">[</span>
-    <span class="mi">0</span> <span class="o">=&gt;</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
-    <span class="mi">1</span> <span class="o">=&gt;</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span>
-    <span class="mi">2</span> <span class="o">=&gt;</span> <span class="s1">&#39;profile&#39;</span>
-<span class="p">]</span>
+<span class="cm">/*</span>
+<span class="cm">    Produces:</span>
+
+<span class="cm">    [</span>
+<span class="cm">        0 =&gt; &#39;users&#39;,</span>
+<span class="cm">        1 =&gt; &#39;15&#39;,</span>
+<span class="cm">        2 =&gt; &#39;profile&#39;,</span>
+<span class="cm">    ]</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 </section>
@@ -575,7 +578,7 @@ that will prevent throwing exceptions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 

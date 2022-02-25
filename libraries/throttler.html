@@ -371,7 +371,7 @@ to apply only to POST requests, though API’s might want to limit every request
 this to incoming requests, you need to edit <strong>/app/Config/Filters.php</strong> and first add an alias to the
 filter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="o">...</span>
+    <span class="c1">// ...</span>
     <span class="s1">&#39;throttle&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\Throttle</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
@@ -468,7 +468,7 @@ Won’t fail if the bucket doesn’t exist.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Feb 23, 2022.
+      <span class="lastupdated">Last updated on Feb 25, 2022.
       </span></p>
   </div>
 
