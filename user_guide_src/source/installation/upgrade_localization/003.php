@@ -12,6 +12,6 @@ return [
     ],
 ];
 
-...
+// ...
 
 echo lang('Errors.errorEmailMissing');

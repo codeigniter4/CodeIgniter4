@@ -2,7 +2,7 @@
 
 $this->output->set_status_header(404);
 
-...
+// ...
 
 $this->output
     ->set_content_type('application/json')

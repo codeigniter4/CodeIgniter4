@@ -1,3 +1,5 @@
 <?php
 
-if (url_is('admin')) { ... }
+if (url_is('admin')) {
+    // ...
+}

@@ -1,3 +1,5 @@
 <?php
 
-$error = $validation->getError('username');
+if ($validation->hasError('username')) {
+    echo $validation->getError('username');
+}

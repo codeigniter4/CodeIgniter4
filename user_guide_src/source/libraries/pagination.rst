@@ -166,22 +166,20 @@ methods, respectively. To change the way those are displayed application-wide, y
 For example, say you create a new view file that works with the Foundation CSS framework, and
 you place that file at **app/Views/Pagers/foundation_full.php**. Since the **application** directory is
 namespaced as ``App``, and all directories underneath it map directly to segments of the namespace, you can locate
-the view file through it's namespace:
+the view file through it's namespace::
 
-.. literalinclude:: pagination/011.php
-   :lines: 2-
+    'default_full' => 'App\Views\Pagers\foundation_full'
 
 Since it is under the standard **app/Views** directory, though, you do not need to namespace it since the
-``view()`` method can locate it by filename. In that case, you can simply give the sub-directory and file name:
+``view()`` method can locate it by filename. In that case, you can simply give the sub-directory and file name::
 
-.. literalinclude:: pagination/012.php
-   :lines: 2-
+    'default_full' => 'Pagers/foundation_full'
 
 Once you have created the view and set it in the configuration, it will automatically be used. You don't have to
 replace the existing templates. You can create as many additional templates as you need in the configuration
 file. A common situation would be needing different styles for the frontend and the backend of your application.
 
-.. literalinclude:: pagination/013.php
+.. literalinclude:: pagination/011.php
    :lines: 2-
 
 Once configured, you can specify it as a the last parameter in the ``links()``, ``simpleLinks()``, and ``makeLinks()``
@@ -198,7 +196,7 @@ When you create a new view, you only need to create the code that is needed for 
 You should not create unnecessary wrapping divs since it might be used in multiple places and you only limit their
 usefulness. It is easiest to demonstrate creating a new view by showing you the existing ``default_full`` template:
 
-.. literalinclude:: pagination/014.php
+.. literalinclude:: pagination/012.php
 
 **setSurroundCount()**
 
@@ -228,7 +226,7 @@ result set.
 Returns an array of data about all of the numbered links. Each link's array contains the uri for the link, the
 title, which is just the number, and a boolean that tells whether the link is the current/active link or not:
 
-.. literalinclude:: pagination/015.php
+.. literalinclude:: pagination/013.php
    :lines: 2-
 
 In the code presented for the standard pagination structure, the methods ``getPrevious()`` and ``getNext()`` are used to obtain the links to the previous and next pagination groups respectively.
@@ -237,7 +235,7 @@ If you want to use the pagination structure where prev and next will be links to
 
 See following an example with these changes:
 
-.. literalinclude:: pagination/016.php
+.. literalinclude:: pagination/014.php
 
 **hasPreviousPage()** & **hasNextPage()**
 

@@ -1,3 +1,3 @@
 <?php
 
-session('item');
+$item = session('item');

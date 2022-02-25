@@ -1,3 +1,5 @@
 <?php
 
-if ($response->hasCookie($name)) ...
+if ($response->hasCookie($name)) {
+    // ...
+}

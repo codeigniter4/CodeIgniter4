@@ -1,3 +1,19 @@
 <?php
 
-'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
+$validation->setRules([
+        'username' => [
+            'label'  => 'Rules.username',
+            'rules'  => 'required|is_unique[users.username]',
+            'errors' => [
+                'required' => 'Rules.username.required',
+            ],
+        ],
+        'password' => [
+            'label'  => 'Rules.password',
+            'rules'  => 'required|min_length[10]',
+            'errors' => [
+                'min_length' => 'Rules.password.min_length',
+            ],
+        ],
+    ]
+);

@@ -1,6 +1,7 @@
 <?php
 
-$errors = [
-    'username' => 'The username field must be unique.',
-    'email'    => 'You must provide a valid email address.'
+public $templates = [
+    'list'    => 'CodeIgniter\Validation\Views\list',
+    'single'  => 'CodeIgniter\Validation\Views\single',
+    'my_list' => '_errors_list',
 ];

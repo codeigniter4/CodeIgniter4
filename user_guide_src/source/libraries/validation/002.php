@@ -6,5 +6,5 @@ if (! $this->validate([
     'passconf' => 'required|matches[password]',
     'email'    => 'required|valid_email',
 ])) {
-    ...
+    // ...
 }

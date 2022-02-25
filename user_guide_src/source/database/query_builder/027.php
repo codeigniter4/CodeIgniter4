@@ -9,5 +9,5 @@ $builder->where('advance_amount <', function (BaseBuilder $builder) {
 // Produces: WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)
 
 // With builder directly
-$subQuery = $db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2)
+$subQuery = $db->table('orders')->select('MAX(advance_amount)', false)->where('id >', 2);
 $builder->where('advance_amount <', $subQuery);

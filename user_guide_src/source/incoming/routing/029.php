@@ -11,4 +11,4 @@ $routes->patch('from', 'to', $options);
 $routes->match(['get', 'put'], 'from', 'to', $options);
 $routes->resource('photos', $options);
 $routes->map($array, $options);
-$routes->group('name', $options, function ());
+$routes->group('name', $options, function (){});

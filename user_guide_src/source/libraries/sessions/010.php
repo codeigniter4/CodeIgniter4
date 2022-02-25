@@ -1,7 +1,7 @@
 <?php
 
-$_SESSION
+$userData = $_SESSION;
 
 // or:
 
-$session->get();
+$userData = $session->get();

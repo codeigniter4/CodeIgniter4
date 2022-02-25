@@ -9,3 +9,6 @@ class MyDatabaseTest extends CIUnitTestCase
 
     public function testBadRow()
     {
+        // ...
+    }
+}

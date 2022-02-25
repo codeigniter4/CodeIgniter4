@@ -81,7 +81,7 @@ foreach ($srcIterator as $chapterInfo) {
                     rename($sectionFolder . '/' . $prefix . $exampleName . '.php', $sectionFolder . '/' . $newName . '.php');
 
                     // Fix include link
-                    $sectionContent = preg_replace(preg_quote(str_replace($exampleName, $prefix . $exampleName, $includeStrings[$exampleIndex]), '~'), str_replace($exampleName, $newName, $includeStrings[$exampleIndex]), $sectionContent, 1, $count);
+                    $sectionContent = preg_replace('~' . preg_quote(str_replace($exampleName, $prefix . $exampleName, $includeStrings[$exampleIndex]), '~') . '~', str_replace($exampleName, $newName, $includeStrings[$exampleIndex]), $sectionContent, 1, $count);
                 }
 
                 // Write new content to rst

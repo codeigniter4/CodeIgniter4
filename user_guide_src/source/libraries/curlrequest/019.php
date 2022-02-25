@@ -1,3 +1,3 @@
 <?php
 
-$client->request('get', '/', ['cert' => ['/path/server.pem', 'password']);
+$client->request('get', '/', ['cert' => ['/path/server.pem', 'password']]);

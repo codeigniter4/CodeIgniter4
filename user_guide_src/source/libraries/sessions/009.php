@@ -4,7 +4,7 @@ $name = $_SESSION['name'];
 
 // or:
 
-$name = $session->name
+$name = $session->name;
 
 // or:
 

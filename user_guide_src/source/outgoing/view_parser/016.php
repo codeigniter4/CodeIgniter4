@@ -5,4 +5,4 @@ public $plugins = [
 ];
 
 // Tag is replaced by the return value of Some\Class::methodName static function.
-{+ foo +}
+// {+ foo +}
