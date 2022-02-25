@@ -9,8 +9,8 @@ if (! $model->save($user)) {
 
 ?>
 
-<?php // In the view ?>
+<!-- In your view file: -->
 <input type="email" name="email" value="<?= old('email') ?>">
 
-<?php // Or with arrays ?>
+<!-- Or with arrays: -->
 <input type="email" name="user[email]" value="<?= old('user.email') ?>">
