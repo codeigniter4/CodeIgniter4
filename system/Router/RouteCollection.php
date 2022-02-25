@@ -1137,7 +1137,8 @@ class RouteCollection implements RouteCollectionInterface
             $from = trim($from, '/');
         }
 
-        if (is_array($to)) {
+        // When redirecting to named route, $to is an array like `['zombies' => '\Zombies::index']`.
+        if (is_array($to) && count($to) === 2) {
             $to = $this->processArrayCallableSyntax($from, $to);
         }
 
