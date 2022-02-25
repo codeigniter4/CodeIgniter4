@@ -277,8 +277,9 @@ class Security implements SecurityInterface
             return $this;
         }
 
-        $rawToken = $this->getPostedToken($request);
-        $token    = ($rawToken !== null && $this->tokenRandomize) ? $this->derandomize($rawToken) : $rawToken;
+        $postedToken = $this->getPostedToken($request);
+        $token       = ($postedToken !== null && $this->tokenRandomize)
+            ? $this->derandomize($postedToken) : $postedToken;
 
         // Do the tokens match?
         if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
