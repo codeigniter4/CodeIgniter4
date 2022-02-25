@@ -5,7 +5,6 @@ $csrf = array(
     'hash' => $this->security->get_csrf_hash()
 );
 
-// ...
 ?>
 
 <form>
