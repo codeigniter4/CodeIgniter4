@@ -137,7 +137,7 @@ A few lines further down **Routes.php** in the "Route Definitions" section, comm
    :lines: 2-
 
 If you now browse to your site without specifying any URI segments you'll
-see the “Hello World” message.
+see the "Hello World" message.
 
 .. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
 

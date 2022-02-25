@@ -322,8 +322,8 @@ Class Reference
         :param    string|string[]    $fieldName: Name of a key field or an array of fields
         :param    string    $tableName: Name of a parent table
         :param    string|string[]    $tableField: Name of a parent table field or an array of fields
-        :param    string    $onUpdate: Desired action for the “on update”
-        :param    string    $onDelete: Desired action for the “on delete”
+        :param    string    $onUpdate: Desired action for the "on update"
+        :param    string    $onDelete: Desired action for the "on delete"
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 

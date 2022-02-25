@@ -74,4 +74,4 @@ If you need to use a constructor in your class make sure you extend the parent c
 .. literalinclude:: core_classes/004.php
 
 **Tip:**  Any functions in your class that are named identically to the methods in the parent class will be used
-instead of the native ones (this is known as “method overriding”). This allows you to substantially alter the CodeIgniter core.
+instead of the native ones (this is known as "method overriding"). This allows you to substantially alter the CodeIgniter core.

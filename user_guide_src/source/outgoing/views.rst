@@ -14,7 +14,7 @@ Views are never called directly, they must be loaded by a controller. Remember t
 the Controller acts as the traffic cop, so it is responsible for fetching a particular view. If you have
 not read the :doc:`Controllers </incoming/controllers>` page, you should do so before continuing.
 
-Using the example controller you created in the controller page, let’s add a view to it.
+Using the example controller you created in the controller page, let's add a view to it.
 
 Creating a View
 ===============
@@ -150,7 +150,7 @@ The data array you pass to your view files is not limited to simple variables. Y
 arrays, which can be looped to generate multiple rows. For example, if you pull data from your database it will
 typically be in the form of a multi-dimensional array.
 
-Here’s a simple example. Add this to your controller:
+Here's a simple example. Add this to your controller:
 
 .. literalinclude:: views/011.php
 
