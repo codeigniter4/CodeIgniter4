@@ -34,6 +34,17 @@ as a class property, ``$this->response``.
 An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
 
+Helpers
+=======
+
+You can define an array of helper files as a class property. Whenever the controller is loaded
+these helper files will be automatically loaded into memory so that you can use their methods anywhere
+inside the controller:
+
+.. literalinclude:: controllers/016.php
+
+.. _controllers-validating-data:
+
 forceHTTPS
 **********
 
@@ -49,17 +60,6 @@ modify this by passing the duration (in seconds) as the first parameter:
 .. literalinclude:: controllers/015.php
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including ``YEAR``, ``MONTH``, and more.
-
-Helpers
-=======
-
-You can define an array of helper files as a class property. Whenever the controller is loaded
-these helper files will be automatically loaded into memory so that you can use their methods anywhere
-inside the controller:
-
-.. literalinclude:: controllers/016.php
-
-.. _controllers-validating-data:
 
 Validating data
 ***************
