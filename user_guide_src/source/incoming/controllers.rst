@@ -13,46 +13,6 @@ What is a Controller?
 
 A Controller is simply a class file that handles a HTTP request. :doc:`URI Routing <routing>` associates a URI with a controller.
 
-Remapping Method Calls
-**********************
-
-As noted above, the second segment of the URI typically determines which
-method in the controller gets called. CodeIgniter permits you to override
-this behavior through the use of the ``_remap()`` method:
-
-.. literalinclude:: controllers/010.php
-
-.. important:: If your controller contains a method named ``_remap()``,
-    it will **always** get called regardless of what your URI contains. It
-    overrides the normal behavior in which the URI determines which method
-    is called, allowing you to define your own method routing rules.
-
-The overridden method call (typically the second segment of the URI) will
-be passed as a parameter to the ``_remap()`` method:
-
-.. literalinclude:: controllers/011.php
-
-Any extra segments after the method name are passed into ``_remap()``. These parameters can be passed to the method
-to emulate CodeIgniter's default behavior.
-
-Example:
-
-.. literalinclude:: controllers/012.php
-
-Private methods
-***************
-
-In some cases, you may want certain methods hidden from public access.
-To achieve this, simply declare the method as ``private`` or ``protected``.
-That will prevent it from being served by a URL request. For example,
-if you were to define a method like this for the ``Helloworld`` controller:
-
-.. literalinclude:: controllers/013.php
-
-then trying to access it using the following URL will not work::
-
-    example.com/index.php/helloworld/utility/
-
 Included Properties
 *******************
 
@@ -131,6 +91,20 @@ In that case, you can use the ``$this->validateData()`` method.
 The method accepts an array of data to validate in the first parameter:
 
 .. literalinclude:: controllers/019.php
+
+Private methods
+***************
+
+In some cases, you may want certain methods hidden from public access.
+To achieve this, simply declare the method as ``private`` or ``protected``.
+That will prevent it from being served by a URL request. For example,
+if you were to define a method like this for the ``Helloworld`` controller:
+
+.. literalinclude:: controllers/013.php
+
+then trying to access it using the following URL will not work::
+
+    example.com/index.php/helloworld/utility/
 
 Auto Routing
 ************
@@ -303,6 +277,32 @@ in there that matches the name of your default controller as specified in
 your **app/Config/Routes.php** file.
 
 CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
+
+Remapping Method Calls
+**********************
+
+As noted above, the second segment of the URI typically determines which
+method in the controller gets called. CodeIgniter permits you to override
+this behavior through the use of the ``_remap()`` method:
+
+.. literalinclude:: controllers/010.php
+
+.. important:: If your controller contains a method named ``_remap()``,
+    it will **always** get called regardless of what your URI contains. It
+    overrides the normal behavior in which the URI determines which method
+    is called, allowing you to define your own method routing rules.
+
+The overridden method call (typically the second segment of the URI) will
+be passed as a parameter to the ``_remap()`` method:
+
+.. literalinclude:: controllers/011.php
+
+Any extra segments after the method name are passed into ``_remap()``. These parameters can be passed to the method
+to emulate CodeIgniter's default behavior.
+
+Example:
+
+.. literalinclude:: controllers/012.php
 
 That's it!
 **********
