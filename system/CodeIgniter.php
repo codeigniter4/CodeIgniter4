@@ -45,7 +45,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.1.8';
+    public const CI_VERSION = '4.1.9';
 
     private const MIN_PHP_VERSION = '7.4';
 
@@ -318,6 +318,12 @@ class CodeIgniter
 
         $this->spoofRequestMethod();
 
+        if ($this->request instanceof IncomingRequest && $this->request->getMethod() === 'cli') {
+            $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+
+            return $this->sendResponse();
+        }
+
         Events::trigger('pre_system');
 
         // Check for a cached page. Execution will stop
@@ -400,6 +406,7 @@ class CodeIgniter
     /**
      * Handles the main request logic and fires the controller.
      *
+     * @throws PageNotFoundException
      * @throws RedirectException
      *
      * @return mixed|RequestInterface|ResponseInterface
@@ -1046,7 +1053,10 @@ class CodeIgniter
             return;
         }
 
-        $this->request = $this->request->setMethod($method);
+        // Only allows PUT, PATCH, DELETE
+        if (in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE'], true)) {
+            $this->request = $this->request->setMethod($method);
+        }
     }
 
     /**
