@@ -443,7 +443,6 @@ To disable this functionality, you must call the method with the parameter ``fal
 
 .. _routes-configuration-options:
 
-****************************
 Routes Configuration Options
 ****************************
 
