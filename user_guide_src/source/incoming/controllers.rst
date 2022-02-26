@@ -34,7 +34,8 @@ as a class property, ``$this->response``.
 An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
 
-**forceHTTPS**
+forceHTTPS
+**********
 
 A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers:
