@@ -107,6 +107,8 @@ then trying to access it using the following URL will not work::
 
     example.com/index.php/helloworld/utility/
 
+.. _controller-auto-routing:
+
 Auto Routing
 ************
 
