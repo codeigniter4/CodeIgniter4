@@ -116,11 +116,6 @@ parameters:
 			path: system/CodeIgniter.php
 
 		-
-			message: "#^Dead catch \\- CodeIgniter\\\\Exceptions\\\\PageNotFoundException is never thrown in the try block\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
 			message: "#^Property Config\\\\App\\:\\:\\$appTimezone \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/CodeIgniter.php

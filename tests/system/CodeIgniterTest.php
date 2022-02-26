@@ -425,4 +425,59 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
+
+    public function testRunCLIRoute()
+    {
+        $_SERVER['argv'] = ['index.php', 'cli'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI']     = '/cli';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'CLI';
+
+        $routes = Services::routes();
+        $routes->cli('cli', '\Tests\Support\Controllers\Popcorn::index');
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('Method Not Allowed', $output);
+    }
+
+    public function testSpoofRequestMethodCanUsePUT()
+    {
+        $_SERVER['argv'] = ['index.php'];
+        $_SERVER['argc'] = 1;
+
+        $_SERVER['REQUEST_URI']     = '/';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'POST';
+
+        $_POST['_method'] = 'PUT';
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        ob_get_clean();
+
+        $this->assertSame('put', Services::request()->getMethod());
+    }
+
+    public function testSpoofRequestMethodCannotUseGET()
+    {
+        $_SERVER['argv'] = ['index.php'];
+        $_SERVER['argc'] = 1;
+
+        $_SERVER['REQUEST_URI']     = '/';
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
+        $_SERVER['REQUEST_METHOD']  = 'POST';
+
+        $_POST['_method'] = 'GET';
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        ob_get_clean();
+
+        $this->assertSame('post', Services::request()->getMethod());
+    }
 }
