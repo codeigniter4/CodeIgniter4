@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -52,5 +53,15 @@ final class BaseTest extends CIUnitTestCase
         $builder->from('foo');
         $result = $builder->getTable();
         $this->assertSame('jobs', $result);
+    }
+
+    public function testSubquerySameBaseBuilderObject()
+    {
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('The subquery cannot be the same object as the main query object.');
+
+        $builder = $this->db->table('users');
+
+        $builder->fromSubquery($builder, 'sub');
     }
 }

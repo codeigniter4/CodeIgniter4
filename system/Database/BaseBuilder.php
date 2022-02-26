@@ -2763,6 +2763,10 @@ class BaseBuilder
             $builder($builder = $this->db->newQuery());
         }
 
+        if ($builder === $this) {
+            throw new DatabaseException('The subquery cannot be the same object as the main query object.');
+        }
+
         $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');
 
         if ($wrapped) {
