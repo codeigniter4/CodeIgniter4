@@ -541,6 +541,17 @@ It is recommended that all routes are defined in the **app/Config/Routes.php** f
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
 
+URI Segments
+============
+
+The segments in the URL, in following with the Model-View-Controller approach, usually represent::
+
+    example.com/class/method/ID
+
+1. The first segment represents the controller **class** that should be invoked.
+2. The second segment represents the class **method** that should be called.
+3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
+
 Consider this URI::
 
     example.com/index.php/helloworld/index/1
