@@ -135,6 +135,15 @@ The method accepts an array of data to validate in the first parameter:
 Auto Routing
 ************
 
+This section describes the functionality of the auto-routing.
+It automatically routes an HTTP request, and executes the corresponding controller method
+without route definitions. The auto-routing is enabled by default.
+
+.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
+    the auto-routing feature. See :ref:`use-defined-routes-only`.
+
+.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+
 Consider this URI::
 
     example.com/index.php/helloworld/
