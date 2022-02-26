@@ -7,8 +7,8 @@ Controllers handle incoming requests.
 .. toctree::
     :titlesonly:
 
-    controllers
     routing
+    controllers
     filters
     message
     request
