@@ -21,7 +21,7 @@ This class provides several features that are available to all of your controlle
 
 **Request Object**
 
-The application's main :doc:`Request Instance </incoming/request>` is always available
+The application's main :doc:`Request Instance </incoming/incomingrequest>` is always available
 as a class property, ``$this->request``.
 
 **Response Object**
