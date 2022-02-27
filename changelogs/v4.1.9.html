@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testing Your Database &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <title>Version 4.1.9 &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Generating Test Data" href="fabricator.html" />
-    <link rel="prev" title="Testing" href="overview.html" /> 
+    <link rel="next" title="Version 4.1.8" href="v4.1.8.html" />
+    <link rel="prev" title="Version 4.2.0" href="v4.2.0.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,12 +48,12 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../installation/index.html">Installation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -202,17 +202,17 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="overview.html">Getting Started</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fabricator.html">Generating Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="controllers.html">Controller Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="feature.html">HTTP Testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="response.html">Testing Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Your Application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mocking.html">Mocking</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
 </ul>
 </li>
 </ul>
@@ -252,8 +252,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Testing</a> &raquo;</li>
-      <li>Testing Your Database</li>
+          <li><a href="../installation/index.html">Installation</a> &raquo;</li>
+          <li><a href="index.html">Change Logs</a> &raquo;</li>
+      <li>Version 4.1.9</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -262,197 +263,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="testing-your-database">
-<h1>Testing Your Database<a class="headerlink" href="#testing-your-database" title="Permalink to this headline"></a></h1>
+  <section id="version-4-1-9">
+<h1>Version 4.1.9<a class="headerlink" href="#version-4-1-9" title="Permalink to this headline"></a></h1>
+<p>Release Date: February 25, 2022</p>
+<p><strong>4.1.9 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#the-test-class" id="id1">The Test Class</a></p></li>
-<li><p><a class="reference internal" href="#setting-up-a-test-database" id="id2">Setting Up a Test Database</a></p>
-<ul>
-<li><p><a class="reference internal" href="#migrations-and-seeds" id="id3">Migrations and Seeds</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#helper-methods" id="id4">Helper Methods</a></p></li>
+<li><p><a class="reference internal" href="#security" id="id1">SECURITY</a></p></li>
 </ul>
 </div>
-<section id="the-test-class">
-<h2><a class="toc-backref" href="#id1">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h2>
-<p>In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
-tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> and use the <code class="docutils literal notranslate"><span class="pre">DatabaseTestTrait</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
-<span class="p">{</span>
-    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
-
-    <span class="c1">// ...</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Because special functionality executed during the <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> phases, you must ensure
-that you call the parent’s methods if you need to use those methods, otherwise you will lose much
-of the functionality described here:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
-<span class="p">{</span>
-    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
-
-        <span class="c1">// Do something here....</span>
-    <span class="p">}</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">tearDown</span><span class="p">();</span>
-
-        <span class="c1">// Do something here....</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="setting-up-a-test-database">
-<h2><a class="toc-backref" href="#id2">Setting Up a Test Database</a><a class="headerlink" href="#setting-up-a-test-database" title="Permalink to this headline"></a></h2>
-<p>When running database tests, you need to provide a database that can be used during testing. Instead of
-using the PHPUnit built-in database features, the framework provides tools specific to CodeIgniter. The first
-step is to ensure that you have set up a <code class="docutils literal notranslate"><span class="pre">tests</span></code> database group in <strong>app/Config/Database.php</strong>.
-This specifies a database connection that is only used while running tests, to keep your other data safe.</p>
-<p>If you have multiple developers on your team, you will likely want to keep your credentials stored in
-the <strong>.env</strong> file. To do so, edit the file to ensure the following lines are present and have the
-correct information:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">dbdriver</span> <span class="o">=</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-<section id="migrations-and-seeds">
-<h3><a class="toc-backref" href="#id3">Migrations and Seeds</a><a class="headerlink" href="#migrations-and-seeds" title="Permalink to this headline"></a></h3>
-<p>When running tests, you need to ensure that your database has the correct schema set up and that
-it is in a known state for every test. You can use migrations and seeds to set up your database,
-by adding a couple of class properties to your test.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">App\Database</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\DatabaseTestTrait</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">MyTests</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
-<span class="p">{</span>
-    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
-
-    <span class="k">protected</span> <span class="nv">$refresh</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$seed</span>     <span class="o">=</span> <span class="s1">&#39;TestSeeder&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$basePath</span> <span class="o">=</span> <span class="s1">&#39;path/to/database/files&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><strong>$migrate</strong></p>
-<p>This boolean value determines whether the database migration runs before test.
-By default, the database is always migrated to the latest available state as defined by <code class="docutils literal notranslate"><span class="pre">$namespace</span></code>.
-If false, migration never runs. If you want to disable migration, set false.</p>
-<p><strong>$migrateOnce</strong></p>
-<p>This boolean value determines whether the database migration runs only once. If you want
-to run migration once before the first test, set true. If not present or false, migration
-runs before each test.</p>
-<p><strong>$refresh</strong></p>
-<p>This boolean value determines whether the database is completely refreshed before test. If true,
-all migrations are rolled back to version 0.</p>
-<p><strong>$seed</strong></p>
-<p>If present and not empty, this specifies the name of a Seed file that is used to populate the database with
-test data prior to test running.</p>
-<p><strong>$seedOnce</strong></p>
-<p>This boolean value determines whether the database seeding runs only once. If you want
-to run database seeding once before the first test, set true. If not present or false, database seeding
-runs before each test.</p>
-<p><strong>$basePath</strong></p>
-<p>By default, CodeIgniter will look in <strong>tests/_support/Database/Seeds</strong> to locate the seeds that it should run during testing.
-You can change this directory by specifying the <code class="docutils literal notranslate"><span class="pre">$basePath</span></code> property. This should not include the <strong>Seeds</strong> directory,
-but the path to the single directory that holds the sub-directory.</p>
-<p><strong>$namespace</strong></p>
-<p>By default, CodeIgniter will look in <strong>tests/_support/Database/Migrations</strong> to locate the migrations
-that it should run during testing. You can change this location by specifying a new namespace in the <code class="docutils literal notranslate"><span class="pre">$namespace</span></code> properties.
-This should not include the <strong>Database\Migrations</strong> sub-namespace but just the base namespace.
-To run migrations from all available namespaces set this property to <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
-</section>
-</section>
-<section id="helper-methods">
-<h2><a class="toc-backref" href="#id4">Helper Methods</a><a class="headerlink" href="#helper-methods" title="Permalink to this headline"></a></h2>
-<p>The <strong>DatabaseTestTrait</strong> class provides several helper methods to aid in testing your database.</p>
-<p><strong>regressDatabase()</strong></p>
-<p>Called during <code class="docutils literal notranslate"><span class="pre">$refresh</span></code> described above, this method is available if you need to reset the database manually.</p>
-<p><strong>migrateDatabase()</strong></p>
-<p>Called during <code class="docutils literal notranslate"><span class="pre">setUp</span></code>, this method is available if you need to run migrations manually.</p>
-<p><strong>seed($name)</strong></p>
-<p>Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
-must be present within the path specified in <code class="docutils literal notranslate"><span class="pre">$basePath</span></code>.</p>
-<p><strong>dontSeeInDatabase($table, $criteria)</strong></p>
-<p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES NOT exist in the database.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
-</pre></div>
-</div>
-<p><strong>seeInDatabase($table, $criteria)</strong></p>
-<p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES exist in the database.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
-</pre></div>
-</div>
-<p><strong>grabFromDatabase($table, $column, $criteria)</strong></p>
-<p>Returns the value of <code class="docutils literal notranslate"><span class="pre">$column</span></code> from the specified table where the row matches <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>. If more than one
-row is found, it will only test against the first one.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$username</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">grabFromDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">]);</span>
-</pre></div>
-</div>
-<p><strong>hasInDatabase($table, $data)</strong></p>
-<p>Inserts a new row into the database. This row is removed after the current test runs. <code class="docutils literal notranslate"><span class="pre">$data</span></code> is an associative
-array with the data to insert into the table.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Joe Cool&#39;</span><span class="p">,</span>
-<span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">hasInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
-</pre></div>
-</div>
-<p><strong>seeNumRecords($expected, $table, $criteria)</strong></p>
-<p>Asserts that a number of matching rows are found in the database that match <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeNumRecords</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
-</pre></div>
-</div>
+<section id="security">
+<h2><a class="toc-backref" href="#id1">SECURITY</a><a class="headerlink" href="#security" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><em>Remote CLI Command Execution Vulnerability</em> was fixed. See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-xjp4-6w75-qrj7">Security advisory GHSA-xjp4-6w75-qrj7</a> for more information.</p></li>
+<li><p><em>Cross-Site Request Forgery (CSRF) Protection Bypass Vulnerability</em> was fixed. See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-4v37-24gm-h554">Security advisory GHSA-4v37-24gm-h554</a> for more information.</p></li>
+</ul>
 </section>
 </section>
 
@@ -460,8 +285,8 @@ array with the data to insert into the table.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="overview.html" class="btn btn-neutral float-left" title="Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="fabricator.html" class="btn btn-neutral float-right" title="Generating Test Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="v4.2.0.html" class="btn btn-neutral float-left" title="Version 4.2.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.1.8.html" class="btn btn-neutral float-right" title="Version 4.1.8" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
