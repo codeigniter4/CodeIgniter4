@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.1.8 to 4.2.0
+Upgrading from 4.1.9 to 4.2.0
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
