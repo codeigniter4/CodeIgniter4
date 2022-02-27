@@ -27,6 +27,8 @@ final class CommandTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
+
         parent::setUp();
 
         CITestStreamFilter::$buffer = '';

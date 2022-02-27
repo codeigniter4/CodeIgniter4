@@ -26,6 +26,8 @@ final class RoutesTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
+
         parent::setUp();
 
         CITestStreamFilter::$buffer = '';
@@ -40,6 +42,8 @@ final class RoutesTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         stream_filter_remove($this->streamFilter);
+
+        $this->resetServices();
     }
 
     protected function getBuffer()
@@ -60,6 +64,7 @@ final class RoutesTest extends CIUnitTestCase
     public function testRoutesCommandRouteFilterAndAutoRoute()
     {
         $routes = Services::routes();
+        $routes->setDefaultNamespace('App\Controllers');
         $routes->resetRoutes();
         $routes->get('/', 'Home::index', ['filter' => 'csrf']);
 
