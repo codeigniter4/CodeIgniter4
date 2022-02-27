@@ -7,7 +7,7 @@ using `Composer <https://getcomposer.org>`_, or using
 `Git <https://git-scm.com/>`_.
 Which is right for you?
 
-- We recommend the Composer installation. Because it keeps CodeIgniter up to date easily.
+- We recommend the Composer installation because it keeps CodeIgniter up to date easily.
 - If you would like the simple "download & go" install that CodeIgniter3
   is known for, choose the manual installation.
 
