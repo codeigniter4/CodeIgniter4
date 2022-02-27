@@ -23,7 +23,7 @@ If you expect a GET request, you use the ``get()`` method:
 
 .. literalinclude:: routing/001.php
 
-A route simply takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
+A route takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the class
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
