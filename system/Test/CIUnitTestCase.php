@@ -299,9 +299,9 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Resets shared instanced for all Services
      */
-    protected function resetServices()
+    protected function resetServices(bool $initAutoloader = false)
     {
-        Services::reset();
+        Services::reset($initAutoloader);
     }
 
     /**
