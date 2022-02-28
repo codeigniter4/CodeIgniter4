@@ -1,3 +1,6 @@
 <?php
 
-public $supportedLocales = ['en', 'es', 'fr-FR'];
+class App extends BaseConfig
+{
+    public $supportedLocales = ['en', 'es', 'fr-FR'];
+}

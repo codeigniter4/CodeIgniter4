@@ -1,3 +1,6 @@
 <?php
 
-public $defaultLocale = 'en';
+class App extends BaseConfig
+{
+    public $defaultLocale = 'en';
+}

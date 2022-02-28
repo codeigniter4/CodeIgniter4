@@ -1,5 +1,8 @@
 <?php
 
-public array $decorators = [
-    'App\Views\Decorators\MyDecorator',
-];
+class View extends BaseView
+{
+    public array $decorators = [
+        'App\Views\Decorators\MyDecorator',
+    ];
+}

@@ -1,6 +1,9 @@
 <?php
 
-public $filters = [
-    'abs'        => '\CodeIgniter\View\Filters::abs',
-    'capitalize' => '\CodeIgniter\View\Filters::capitalize',
-];
+class View extends BaseView
+{
+    public $filters = [
+        'abs'        => '\CodeIgniter\View\Filters::abs',
+        'capitalize' => '\CodeIgniter\View\Filters::capitalize',
+    ];
+}

@@ -1,8 +1,11 @@
 <?php
 
-public $plugins = [
-    'foo' => '\Some\Class::methodName',
-    'bar' => function ($str, array $params=[]) {
-        return $str;
-    },
-];
+class View extends BaseView
+{
+   'foo' => '\Some\Class::methodName',
+    public $plugins = [
+        'bar' => function($str, array $params = []) {
+            return $str;
+        },
+    ];
+}

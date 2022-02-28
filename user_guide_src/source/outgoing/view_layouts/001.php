@@ -1,6 +1,9 @@
 <?php
 
-public function index()
+class MyController extends BaseController
 {
-    echo view('some_view');
+    public function index()
+    {
+        echo view('some_view');
+    }
 }

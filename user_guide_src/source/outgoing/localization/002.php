@@ -1,3 +1,6 @@
 <?php
 
-public $negotiateLocale = true;
+class App extends BaseConfig
+{
+    public $negotiateLocale = true;
+}

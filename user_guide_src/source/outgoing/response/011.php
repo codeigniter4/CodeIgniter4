@@ -1,3 +1,6 @@
 <?php
 
-public $CSPEnabled = true;
+class App extends BaseConfig
+{
+    public $CSPEnabled = true;
+}

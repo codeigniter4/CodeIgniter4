@@ -1,5 +1,8 @@
 <?php
 
-public $filters = [
-    'str_repeat' => '\str_repeat',
-];
+class View extends BaseView
+{
+    public $filters = [
+        'str_repeat' => '\str_repeat',
+    ];
+}
