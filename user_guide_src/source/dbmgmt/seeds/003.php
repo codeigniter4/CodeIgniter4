@@ -1,7 +1,10 @@
 <?php
 
-public function run()
+class SimpleSeeder extends Seeder
 {
-    $this->call('UserSeeder');
-    $this->call('My\Database\Seeds\CountrySeeder');
+    public function run()
+    {
+        $this->call('UserSeeder');
+        $this->call('My\Database\Seeds\CountrySeeder');
+    }
 }

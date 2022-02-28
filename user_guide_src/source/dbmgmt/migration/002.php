@@ -1,10 +1,12 @@
 <?php
 
-public function up()
+class AddBlog extends Migration
 {
-    $this->db->disableForeignKeyChecks()
+    public function up()
+    {
+        $this->db->disableForeignKeyChecks();
 
-    // Migration rules would go here..
-
-    $this->db->enableForeignKeyChecks();
+        // Migration rules would go here..
+        $this->db->enableForeignKeyChecks();
+    }
 }
