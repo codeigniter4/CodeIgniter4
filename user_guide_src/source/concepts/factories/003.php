@@ -2,6 +2,10 @@
 
 class SomeOtherClass
 {
-    $widgets = Factories::models('WidgetModel');
-    // ...
+    public function someFunction()
+    {
+        $widgets = Factories::models('WidgetModel');
+
+        // ...
+    }
 }

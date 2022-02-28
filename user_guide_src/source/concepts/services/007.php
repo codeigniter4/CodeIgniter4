@@ -1,6 +1,9 @@
 <?php
 
-public static function routes()
+class Services extends BaseService
 {
-    return new \App\Router\MyRouter();
+    public static function routes()
+    {
+        return new \App\Router\MyRouter();
+    }
 }
