@@ -1,3 +1,6 @@
 <?php
 
-public $tokenRandomize = true;
+class Security extends BaseConfig
+{
+    public $tokenRandomize = true;
+}

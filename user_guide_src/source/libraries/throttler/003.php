@@ -1,6 +1,9 @@
 <?php
 
-public $aliases = [
-    // ...
-    'throttle' => \App\Filters\Throttle::class,
-];
+class Filters extends BaseConfig
+{
+    public $aliases = [
+        // ...
+        'throttle' => \App\Filters\Throttle::class,
+    ];
+}

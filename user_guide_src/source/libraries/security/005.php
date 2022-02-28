@@ -1,3 +1,6 @@
 <?php
 
-public $redirect = false;
+class Security extends BaseConfig
+{
+    public $redirect = false;
+}

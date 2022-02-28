@@ -1,3 +1,6 @@
 <?php
 
-public $sessionDBGroup = 'groupName';
+class App extends BaseConfig
+{
+    public $sessionDBGroup = 'groupName';
+}

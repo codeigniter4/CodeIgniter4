@@ -1,3 +1,6 @@
 <?php
 
-public $csrfProtection = 'session';
+class Security extends BaseConfig
+{
+    public $csrfProtection = 'session';
+}

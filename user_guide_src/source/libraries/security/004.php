@@ -1,3 +1,6 @@
 <?php
 
-public $regenerate  = true;
+class Security extends BaseConfig
+{
+    public $regenerate = true;
+}

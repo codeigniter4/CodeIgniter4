@@ -1,3 +1,6 @@
 <?php
 
-public $shareOptions = false;
+class CURLRequest extends BaseConfig
+{
+    public $shareOptions = false;
+}

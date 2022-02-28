@@ -10,10 +10,14 @@ $data = [
 
 // You can move the conditions to a separate method.
 // Model method
-public function banned()
+class UserModel extends Model
 {
-    $this->builder()->where('ban', 1);
-    return $this; // This will allow the call chain to be used.
+    public function banned()
+    {
+        $this->builder()->where('ban', 1);
+
+        return $this; // This will allow the call chain to be used.
+    }
 }
 
 $data = [

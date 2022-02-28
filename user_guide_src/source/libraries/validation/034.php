@@ -1,12 +1,15 @@
 <?php
 
-public function even(string $str, string &$error = null): bool
+class MyRules
 {
-    if ((int) $str % 2 !== 0) {
-        $error = lang('myerrors.evenError');
+    public function even(string $str, ?string &$error = null): bool
+    {
+        if ((int) $str % 2 !== 0) {
+            $error = lang('myerrors.evenError');
 
-        return false;
+            return false;
+        }
+
+        return true;
     }
-
-    return true;
 }

@@ -1,3 +1,6 @@
 <?php
 
-public $key = 'YOUR KEY';
+class Encryption extends BaseConfig
+{
+    public $key = 'YOUR KEY';
+}
