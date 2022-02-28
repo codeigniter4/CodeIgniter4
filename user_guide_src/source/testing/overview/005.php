@@ -1,8 +1,10 @@
 <?php
 
-protected $setUpMethods = [
-    'mockEmail',
-    'mockSession',
-];
-
-protected $tearDownMethods = [];
+final class OneOfMyModelsTest extends CIUnitTestCase
+{
+    protected $setUpMethods = [
+        'mockEmail',
+        'mockSession',
+    ];
+    protected $tearDownMethods = [];
+}

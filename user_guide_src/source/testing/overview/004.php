@@ -1,7 +1,10 @@
 <?php
 
-public function setUp(): void
+final class OneOfMyModelsTest extends CIUnitTestCase
 {
-    parent::setUp();
-    helper('text');
+    protected function setUp(): void
+    {
+        parent::setUp();
+        helper('text');
+    }
 }

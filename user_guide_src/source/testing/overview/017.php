@@ -1,11 +1,14 @@
 <?php
 
-public function testSomething()
+final class Sometest extends CIUnitTestCase
 {
-    $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-                        ->setMethods(['request'])
-                        ->getMock();
-    Services::injectMock('curlrequest', $curlrequest);
+    public function testSomething()
+    {
+        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
+            ->setMethods(['request'])
+            ->getMock();
+        Services::injectMock('curlrequest', $curlrequest);
 
-    // Do normal testing here....
+        // Do normal testing here....
+    }
 }

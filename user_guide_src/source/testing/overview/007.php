@@ -2,16 +2,18 @@
 
 trait AuthTrait
 {
-    protected setUpAuthTrait()
+    protected function setUpAuthTrait()
     {
         $user = $this->createFakeUser();
         $this->logInUser($user);
     }
-    
     // ...
 }
 
-class AuthenticationFeatureTest
+/**
+ * @internal
+ */
+final class AuthenticationFeatureTest
 {
     use AuthTrait;
 

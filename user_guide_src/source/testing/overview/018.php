@@ -1,9 +1,12 @@
 <?php
 
-protected function setUp()
+final class Sometest extends CIUnitTestCase
 {
-    parent::setUp();
+    protected function setUp()
+    {
+        parent::setUp();
 
-    $model = new MockUserModel();
-    Factories::injectMock('models', 'App\Models\UserModel', $model);
+        $model = new MockUserModel();
+        Factories::injectMock('models', 'App\Models\UserModel', $model);
+    }
 }

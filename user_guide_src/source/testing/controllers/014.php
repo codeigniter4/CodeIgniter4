@@ -1,9 +1,14 @@
 <?php
 
-protected function testUnauthorizedAccessRedirects()
+final class FilterTestCase extends CIUnitTestCase
 {
-    $caller = $this->getFilterCaller('permission', 'before');
-    $result = $caller('MayEditWidgets');
+    use FilterTestTrait;
 
-    $this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
+    protected function testUnauthorizedAccessRedirects()
+    {
+        $caller = $this->getFilterCaller('permission', 'before');
+        $result = $caller('MayEditWidgets');
+
+        $this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
+    }
 }

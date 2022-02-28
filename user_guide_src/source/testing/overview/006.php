@@ -1,6 +1,6 @@
 <?php
 
-class OneOfMyModelsTest extends CIUnitTestCase
+final class OneOfMyModelsTest extends CIUnitTestCase
 {
     protected $tearDownMethods = [
         'purgeRows',
@@ -8,6 +8,6 @@ class OneOfMyModelsTest extends CIUnitTestCase
 
     protected function purgeRows()
     {
-        $this->model->purgeDeleted()
+        $this->model->purgeDeleted();
     }
 }
