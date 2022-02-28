@@ -1,10 +1,13 @@
 <?php
 
-public function _remap($method)
+class myController extends BaseController
 {
-    if ($method === 'some_method') {
-        return $this->$method();
-    } else {
+    public function _remap($method)
+    {
+        if ($method === 'some_method') {
+            return $this->{$method}();
+        }
+
         return $this->default_method();
     }
 }

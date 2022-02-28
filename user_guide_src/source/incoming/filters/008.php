@@ -1,6 +1,9 @@
 <?php
 
-public $methods = [
-    'post' => ['foo', 'bar'],
-    'get'  => ['baz'],
-]
+class Filters extends BaseConfig
+{
+    public $methods = [
+        'post' => ['foo', 'bar'],
+        'get'  => ['baz'],
+    ];
+}

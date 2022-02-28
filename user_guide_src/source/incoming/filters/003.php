@@ -1,5 +1,8 @@
 <?php
 
-public $aliases = [
-    'csrf' => \CodeIgniter\Filters\CSRF::class,
-];
+class Filters extends BaseConfig
+{
+    public $aliases = [
+        'csrf' => \CodeIgniter\Filters\CSRF::class,
+    ];
+}

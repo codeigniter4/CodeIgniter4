@@ -1,6 +1,9 @@
 <?php
 
-public $aliases = [
-    // ...
-    'secureheaders' => \App\Filters\SecureHeaders::class,
-];
+class Filters extends BaseConfig
+{
+    public $aliases = [
+        // ...
+        'secureheaders' => \App\Filters\SecureHeaders::class,
+    ];
+}

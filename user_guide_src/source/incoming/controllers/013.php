@@ -1,6 +1,9 @@
 <?php
 
-protected function utility()
+class myController extends BaseController
 {
-    // some code
+    protected function utility()
+    {
+        // some code
+    }
 }

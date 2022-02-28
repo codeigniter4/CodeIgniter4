@@ -1,8 +1,11 @@
 <?php
 
-public $globals = [
-    'before' => [
-        'csrf',
-    ],
-    'after' => [],
-];
+class Filters extends BaseConfig
+{
+    public $globals = [
+        'before' => [
+            'csrf',
+        ],
+        'after' => [],
+    ];
+}

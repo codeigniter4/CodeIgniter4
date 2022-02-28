@@ -1,19 +1,23 @@
 <?php
 
-public function product(int $id)
+class storeController extends BaseController
 {
-    $data = [
-        'id'   => $id,
-        'name' => $this->request->getVar('name'),
-    ];
-    $rule = [
-        'id'   => 'integer',
-        'name' => 'required|max_length[255]',
-    ];
+    public function product(int $id)
+    {
+        $data = [
+            'id'   => $id,
+            'name' => $this->request->getVar('name'),
+        ];
 
-    if (! $this->validateData($data, $rule) {
+        $rule = [
+            'id'   => 'integer',
+            'name' => 'required|max_length[255]',
+        ];
+
+        if (! $this->validateData($data, $rule)) {
+            // ...
+        }
+
         // ...
     }
-
-    // ...
 }
