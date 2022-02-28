@@ -1,3 +1,6 @@
 <?php
 
-public $appDirectory = '/path/to/your/app';
+class Paths
+{
+    public $appDirectory = '/path/to/your/app';
+}

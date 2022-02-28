@@ -1,3 +1,6 @@
 <?php
 
-public $discoverInComposer = false;
+class Modules extends BaseModules
+{
+    public $discoverInComposer = false;
+}

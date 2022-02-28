@@ -1,3 +1,6 @@
 <?php
 
-public $threshold = 5;
+class Logger extends BaseConfig
+{
+    public $threshold = 5;
+}
