@@ -1,4 +1,7 @@
 <?php
 
-protected $beforeInsert = ['hashPassword'];
-protected $beforeUpdate = ['hashPassword'];
+class MyModel extends Model
+{
+    protected $beforeInsert = ['hashPassword'];
+    protected $beforeUpdate = ['hashPassword'];
+}

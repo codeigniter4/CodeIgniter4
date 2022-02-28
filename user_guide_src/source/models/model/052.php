@@ -1,3 +1,6 @@
 <?php
 
-protected $allowCallbacks = false;
+class MyModel extends Model
+{
+    protected $allowCallbacks = false;
+}

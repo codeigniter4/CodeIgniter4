@@ -1,3 +1,6 @@
 <?php
 
-protected $allowedFields = ['name', 'email', 'address'];
+class MyModel extends Model
+{
+    protected $allowedFields = ['name', 'email', 'address'];
+}
