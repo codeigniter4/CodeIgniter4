@@ -307,6 +307,11 @@ Example:
 
 .. literalinclude:: controllers/012.php
 
+Extending the Controller
+************************
+
+If you want to extend the controller, see :doc:`../extending/basecontroller`.
+
 That's it!
 **********
 
