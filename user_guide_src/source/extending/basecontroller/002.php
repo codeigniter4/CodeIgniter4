@@ -1,3 +1,6 @@
 <?php
 
-protected $helpers = ['html', 'text'];
+class Home extends BaseController
+{
+    protected $helpers = ['html', 'text'];
+}

@@ -1,10 +1,13 @@
 <?php
 
-public static function routes(bool $getShared = true)
+class Services extends BaseService
 {
-    if ($getShared) {
-        return static::getSharedInstance('routes');
-    }
+    public static function routes(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('routes');
+        }
 
-    return new \App\Libraries\RouteCollection(static::locator(), config('Modules'));
+        return new \App\Libraries\RouteCollection(static::locator(), config('Modules'));
+    }
 }

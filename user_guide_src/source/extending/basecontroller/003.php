@@ -1,9 +1,12 @@
 <?php
 
-public function initController(...)
+class Home extends BaseController
 {
-    // Do Not Edit This Line
-    parent::initController($request, $response, $logger);
+    public function initController(/* ... */)
+    {
+        // Do Not Edit This Line
+        parent::initController($request, $response, $logger);
 
-    $this->session = \Config\Services::session();
+        $this->session = \Config\Services::session();
+    }
 }
