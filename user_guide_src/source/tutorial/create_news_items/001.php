@@ -1,5 +1,8 @@
 <?php
 
-public $methods = [
-    'post' => ['csrf'],
-];
+class Filters extends BaseConfig
+{
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+}
