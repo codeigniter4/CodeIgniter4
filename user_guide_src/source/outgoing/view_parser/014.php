@@ -2,8 +2,9 @@
 
 class View extends BaseView
 {
-   'foo' => '\Some\Class::methodName',
+
     public $plugins = [
+        'foo' => '\Some\Class::methodName',
         'bar' => function($str, array $params = []) {
             return $str;
         },
