@@ -1,8 +1,11 @@
 <?php
 
-public function testUserAccess()
+final class MyTestClass extends \CodeIgniter\Test\CIUnitTestCase
 {
-    $user = fake('App\Models\UserModel');
+    public function testUserAccess()
+    {
+        $user = fake('App\Models\UserModel');
 
-    $this->assertTrue($this->userHasAccess($user));
+        $this->assertTrue($this->userHasAccess($user));
+    }
 }
