@@ -10,10 +10,7 @@ trait AuthTrait
     // ...
 }
 
-/**
- * @internal
- */
-final class AuthenticationFeatureTest
+final class AuthenticationFeatureTest extends CIUnitTestCase
 {
     use AuthTrait;
 

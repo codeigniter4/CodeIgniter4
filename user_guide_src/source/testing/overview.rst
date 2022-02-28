@@ -87,8 +87,9 @@ to help with staging and clean up::
 
     public static function setUpBeforeClass(): void
     public static function tearDownAfterClass(): void
-    public function setUp(): void
-    public function tearDown(): void
+
+    protected function setUp(): void
+    protected function tearDown(): void
 
 The static methods run before and after the entire test case, whereas the local methods run
 between each test. If you implement any of these special functions make sure you run their

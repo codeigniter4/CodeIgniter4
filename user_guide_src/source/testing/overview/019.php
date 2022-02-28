@@ -2,18 +2,18 @@
 
 final class Sometest extends CIUnitTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         CITestStreamFilter::$buffer = '';
         $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         stream_filter_remove($this->stream_filter);
     }
 
-    public function testSomeOutput()
+    public function testSomeOutput(): void
     {
         CLI::write('first.');
         $expected = "first.\n";
