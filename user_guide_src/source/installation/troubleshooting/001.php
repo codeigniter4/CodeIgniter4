@@ -1,3 +1,6 @@
 <?php
 
-public $indexPage = 'index.php';
+class App extends BaseConfig
+{
+    public $indexPage = 'index.php';
+}
