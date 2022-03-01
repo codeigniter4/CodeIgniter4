@@ -446,6 +446,16 @@ class BaseBuilder
     }
 
     /**
+     * Adds a subquery to the selection
+     */
+    public function selectSubquery(BaseBuilder $subquery, string $as): self
+    {
+        $this->QBSelect[] = $this->buildSubquery($subquery, true, $as);
+
+        return $this;
+    }
+
+    /**
      * SELECT [MAX|MIN|AVG|SUM|COUNT]()
      *
      * @used-by selectMax()

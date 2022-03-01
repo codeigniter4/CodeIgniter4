@@ -91,6 +91,8 @@ method:
 
 Please read about the ``where()`` method below for more information.
 
+.. _query-builder-select:
+
 Select
 ======
 
@@ -152,6 +154,13 @@ the resulting field.
         counting results generally see ``countAll()`` or ``countAllResults()``.
 
 .. literalinclude:: query_builder/014.php
+
+**$builder->selectSubquery()**
+
+Adds a subquery to the SELECT section.
+
+.. literalinclude:: query_builder/098.php
+   :lines: 2-
 
 From
 ====
@@ -968,6 +977,15 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds a ``SELECT COUNT(field)`` clause to a query.
+
+.. php:method:: selectSubquery(BaseBuilder $subquery, string $as)
+
+        :param string $subquery: Instance of BaseBuilder
+        :param string $as: Alias for the resulting value name
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Adds a subquery to the selection
 
     .. php:method:: distinct([$val = true])
 

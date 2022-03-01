@@ -246,4 +246,17 @@ final class SelectTest extends CIUnitTestCase
 
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    public function testSelectSubquery()
+    {
+        $builder  = new BaseBuilder('users', $this->db);
+        $subquery = new BaseBuilder('countries', $this->db);
+
+        $subquery->select('name')->where('id', 1);
+        $builder->select('name')->selectSubquery($subquery, 'country');
+
+        $expected = 'SELECT "name", (SELECT "name" FROM "countries" WHERE "id" = 1) AS "country" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
 }
