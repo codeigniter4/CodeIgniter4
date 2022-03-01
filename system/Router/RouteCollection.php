@@ -76,7 +76,7 @@ class RouteCollection implements RouteCollectionInterface
      *
      * @var bool
      */
-    protected $autoRoute = true;
+    protected $autoRoute = false;
 
     /**
      * A callable that will be shown

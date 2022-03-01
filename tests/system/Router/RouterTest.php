@@ -728,7 +728,10 @@ final class RouterTest extends CIUnitTestCase
     public function testAutoRouteMethodEmpty()
     {
         $router = new Router($this->collection, $this->request);
+        $this->collection->setAutoRoute(true);
+
         $router->handle('Home/');
+
         $this->assertSame('Home', $router->controllerName());
         $this->assertSame('index', $router->methodName());
     }
@@ -775,6 +778,7 @@ final class RouterTest extends CIUnitTestCase
     public function testRouterPriorDirectory()
     {
         $router = new Router($this->collection, $this->request);
+        $this->collection->setAutoRoute(true);
 
         $router->setDirectory('foo/bar/baz', false, true);
         $router->handle('Some_controller/some_method/param1/param2/param3');

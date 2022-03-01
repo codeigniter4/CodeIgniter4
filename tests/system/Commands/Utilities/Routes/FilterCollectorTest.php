@@ -23,6 +23,8 @@ final class FilterCollectorTest extends CIUnitTestCase
     {
         $routes = Services::routes();
         $routes->resetRoutes();
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->get('/', 'Home::index');
 
         $collector = new FilterCollector();
 

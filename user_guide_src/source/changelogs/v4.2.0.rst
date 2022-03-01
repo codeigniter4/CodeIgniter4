@@ -43,6 +43,7 @@ Changes
 - The process of sending cookies has been moved to the ``Response`` class. Now the ``Session`` class doesn't send cookies, set them to the Response.
 - Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See :ref:`validation-getting-all-errors`.
 - ``Validation::getError()`` when using a wildcard will return all found errors matching the mask as a string.
+- To make the default configuration more secure, auto-routing has been changed to disabled by default.
 
 Deprecations
 ************
