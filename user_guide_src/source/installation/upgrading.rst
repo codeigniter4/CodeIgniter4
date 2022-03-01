@@ -12,15 +12,15 @@ upgrading from.
 .. toctree::
     :titlesonly:
 
-    Upgrading from 4.1.8 to 4.2.0 <upgrade_420>
-    Upgrading from 4.1.7 to 4.1.8 <upgrade_418>
-    Upgrading from 4.1.6 to 4.1.7 <upgrade_417>
-    Upgrading from 4.1.5 to 4.1.6 <upgrade_416>
-    Upgrading from 4.1.4 to 4.1.5 <upgrade_415>
-    Upgrading from 4.1.3 to 4.1.4 <upgrade_414>
-    Upgrading from 4.1.2 to 4.1.3 <upgrade_413>
-    Upgrading from 4.1.1 to 4.1.2 <upgrade_412>
-    Upgrading from 4.0.5 to 4.1.0 or 4.1.1 <upgrade_410>
-    Upgrading from 4.0.4 to 4.0.5 <upgrade_405>
-    Upgrading from 4.0.x to 4.0.4 <upgrade_404>
-    Upgrading from 3.x to 4.x <upgrade_4xx>
+    upgrade_420
+    upgrade_418
+    upgrade_417
+    upgrade_416
+    upgrade_415
+    upgrade_414
+    upgrade_413
+    upgrade_412
+    upgrade_410
+    upgrade_405
+    upgrade_404
+    upgrade_4xx
