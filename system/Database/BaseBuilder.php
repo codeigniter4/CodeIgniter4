@@ -450,12 +450,6 @@ class BaseBuilder
      */
     public function selectSubquery(BaseBuilder $subquery, string $as): self
     {
-        if (! $this->isSubquery($subquery)) {
-            throw new DatabaseException(
-                'The BaseBuilder::selectSubquery() method expects a BaseBuilder instance.'
-            );
-        }
-
         $this->QBSelect[] = $this->buildSubquery($subquery, true, $as);
 
         return $this;
