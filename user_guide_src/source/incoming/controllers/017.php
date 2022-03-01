@@ -1,6 +1,6 @@
 <?php
 
-class userController extends BaseController
+class UserController extends BaseController
 {
     public function updateUser(int $userID)
     {

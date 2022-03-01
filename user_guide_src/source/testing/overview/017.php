@@ -1,6 +1,6 @@
 <?php
 
-final class Sometest extends CIUnitTestCase
+final class SomeTest extends CIUnitTestCase
 {
     public function testSomething()
     {

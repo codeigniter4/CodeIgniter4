@@ -1,6 +1,6 @@
 <?php
 
-class storeController extends BaseController
+class StoreController extends BaseController
 {
     public function product(int $id)
     {

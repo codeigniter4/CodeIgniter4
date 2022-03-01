@@ -1,6 +1,6 @@
 <?php
 
-class myController extends BaseController
+class Products extends BaseController
 {
     public function _remap()
     {
