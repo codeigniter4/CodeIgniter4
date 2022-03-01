@@ -10,4 +10,5 @@ class Filters extends BaseConfig
         'get'  => ['csrf'],
         'post' => ['csrf'],
     ];
+    // ...
 }

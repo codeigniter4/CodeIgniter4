@@ -6,6 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class CustomClass extends BaseConfig
 {
-   public $siteName  = 'My Great Site';
-   public $siteEmail = 'webmaster@example.com';
+    public $siteName  = 'My Great Site';
+    public $siteEmail = 'webmaster@example.com';
+    // ...
 }

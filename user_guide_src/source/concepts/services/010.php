@@ -14,4 +14,5 @@ class Services extends BaseService
 
         return static::getSharedInstance('routes');
     }
+    // ...
 }

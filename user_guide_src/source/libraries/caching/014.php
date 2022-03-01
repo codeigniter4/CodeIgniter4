@@ -6,6 +6,8 @@ use CodeIgniter\Config\BaseConfig;
 
 class Cache extends BaseConfig
 {
+    // ...
+
     public $redis = [
         'host'     => '127.0.0.1',
         'password' => null,
@@ -13,4 +15,5 @@ class Cache extends BaseConfig
         'timeout'  => 0,
         'database' => 0,
     ];
+    // ...
 }

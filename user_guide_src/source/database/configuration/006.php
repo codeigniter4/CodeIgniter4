@@ -24,4 +24,5 @@ class Database extends Config
         'strictOn' => false,
         'failover' => [],
     ];
+    // ...
 }

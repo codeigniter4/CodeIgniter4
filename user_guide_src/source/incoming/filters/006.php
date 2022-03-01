@@ -12,4 +12,5 @@ class Filters extends BaseConfig
         ],
         'after' => [],
     ];
+    // ...
 }

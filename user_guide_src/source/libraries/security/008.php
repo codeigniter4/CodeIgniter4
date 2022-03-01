@@ -11,4 +11,5 @@ class Filters extends BaseConfig
             'csrf' => ['except' => ['api/record/[0-9]+']],
         ],
     ];
+    // ...
 }

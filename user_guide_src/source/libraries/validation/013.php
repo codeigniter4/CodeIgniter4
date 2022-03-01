@@ -10,4 +10,5 @@ class Validation
         'pass_confirm' => 'required|matches[password]',
         'email'        => 'required|valid_email',
     ];
+    // ...
 }

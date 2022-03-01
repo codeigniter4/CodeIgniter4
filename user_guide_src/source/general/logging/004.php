@@ -12,4 +12,5 @@ class Logger extends BaseConfig
             'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
         ],
     ];
+    // ...
 }

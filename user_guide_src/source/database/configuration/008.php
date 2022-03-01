@@ -14,4 +14,5 @@ class Database extends Config
     {
         $this->defaultGroup = ENVIRONMENT;
     }
+    // ...
 }

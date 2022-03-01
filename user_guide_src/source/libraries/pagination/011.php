@@ -11,4 +11,5 @@ class Pager extends BaseConfig
         'default_simple' => 'CodeIgniter\Pager\Views\default_simple',
         'front_full'     => 'App\Views\Pagers\foundation_full',
     ];
+    // ...
 }

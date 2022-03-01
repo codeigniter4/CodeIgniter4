@@ -10,4 +10,5 @@ class Format extends BaseConfig
         'application/json',
         'application/xml',
     ];
+    // ...
 }

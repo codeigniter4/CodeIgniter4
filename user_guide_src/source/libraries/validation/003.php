@@ -10,4 +10,5 @@ class Validation
         \CodeIgniter\Validation\StrictRules\FormatRules::class,
         \CodeIgniter\Validation\StrictRules\Rules::class,
     ];
+    // ...
 }

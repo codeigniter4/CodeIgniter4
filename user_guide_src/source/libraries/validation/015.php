@@ -18,4 +18,5 @@ class Validation
             'valid_email' => 'Please check the Email field. It does not appear to be valid.',
         ],
     ];
+    // ...
 }

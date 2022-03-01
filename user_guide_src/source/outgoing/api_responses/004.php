@@ -10,4 +10,5 @@ class Format extends BaseConfig
         'application/json' => \CodeIgniter\Format\JSONFormatter::class,
         'application/xml'  => \CodeIgniter\Format\XMLFormatter::class,
     ];
+    // ...
 }
