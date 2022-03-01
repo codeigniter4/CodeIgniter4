@@ -22,7 +22,7 @@ This tutorial will primarily focus on:
 -  Model-View-Controller basics
 -  Routing basics
 -  Form validation
--  Performing basic database queries using CodeIgniter's "Query Builder"
+-  Performing basic database queries using CodeIgniter's Model
 
 The entire tutorial is split up over several pages, each explaining a
 small part of the functionality of the CodeIgniter framework. You'll go
