@@ -465,31 +465,6 @@ then you can change this value to save typing:
 
 .. literalinclude:: routing/046.php
 
-Default Controller
-==================
-
-When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
-
-.. literalinclude:: routing/047.php
-
-The default controller is also used when no matching route has been found, and the URI would point to a directory
-in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
-**app/Controllers/Admin/Home.php**, it would be used.
-
-Default Method
-==============
-
-This works similar to the default controller setting, but is used to determine the default method that is used
-when a controller is found that matches the URI, but no segment exists for the method. The default value is
-``index``.
-
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
-
-.. literalinclude:: routing/048.php
-
 Translate URI Dashes
 ====================
 
@@ -566,7 +541,32 @@ and executes the corresponding controller method. The auto-routing is enabled by
 
 .. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
 
+Default Controller
+==================
+
+When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
+the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
+which matches the controller at **app/Controllers/Home.php**:
+
+.. literalinclude:: routing/047.php
+
+The default controller is also used when no matching route has been found, and the URI would point to a directory
+in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
+**app/Controllers/Admin/Home.php**, it would be used.
+
 See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+
+Default Method
+==============
+
+This works similar to the default controller setting, but is used to determine the default method that is used
+when a controller is found that matches the URI, but no segment exists for the method. The default value is
+``index``.
+
+In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
+``Products::listAll()`` method would be executed:
+
+.. literalinclude:: routing/048.php
 
 Confirming Routes
 *****************
