@@ -9,18 +9,14 @@ The first thing you're going to do is set up a **controller** to handle
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.
 
-For example, when a call is made to:
-
-::
+For example, when a call is made to::
 
     http://example.com/news/latest/10
 
 We might imagine that there is a controller named "news". The method
 being called on news would be "latest". The news method's job could be to
 grab 10 news items, and render them on the page. Very often in MVC,
-you'll see URL patterns that match:
-
-::
+you'll see URL patterns that match::
 
     http://example.com/[controller-class]/[controller-method]/[arguments]
 
@@ -138,9 +134,7 @@ since it will not properly process the ``.htaccess`` rules that are provided in
 ``public``, and which eliminate the need to specify "index.php/"
 as part of a URL. CodeIgniter has its own command that you can use though.
 
-From the command line, at the root of your project:
-
-::
+From the command line, at the root of your project::
 
     > php spark serve
 
@@ -182,9 +176,7 @@ Routing
 The controller is now functioning!
 
 Using custom routing rules, you have the power to map any URI to any
-controller and method, and break free from the normal convention:
-
-::
+controller and method, and break free from the normal convention::
 
     http://example.com/[controller-class]/[controller-method]/[arguments]
 

@@ -18,13 +18,7 @@ commands (mysql, MySQL Workbench, or phpMyAdmin).
 You need to create a database that can be used for this tutorial,
 and then configure CodeIgniter to use it.
 
-Using your database client, connect to your database and run the SQL command below (MySQL).
-Also, add some seed records. For now, we'll just show you the SQL statements needed
-to create the table, but you should be aware that this can be done programmatically
-once you are more familiar with CodeIgniter; you can read about :doc:`Migrations <../dbmgmt/migration>`
-and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
-
-::
+Using your database client, connect to your database and run the SQL command below (MySQL)::
 
     CREATE TABLE news (
         id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -35,12 +29,15 @@ and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
         KEY slug (slug)
     );
 
+Also, add some seed records. For now, we'll just show you the SQL statements needed
+to create the table, but you should be aware that this can be done programmatically
+once you are more familiar with CodeIgniter; you can read about :doc:`Migrations <../dbmgmt/migration>`
+and :doc:`Seeds <../dbmgmt/seeds>` to create more useful database setups later.
+
 A note of interest: a "slug", in the context of web publishing, is a
 user- and SEO-friendly short text used in a URL to identify and describe a resource.
 
-The seed records might be something like:
-
-::
+The seed records might be something like::
 
     INSERT INTO news VALUES
     (1,'Elvis sighted','elvis-sighted','Elvis was sighted at the Podunk internet cafe. It looked like he was writing a CodeIgniter app.'),
@@ -53,9 +50,7 @@ Connect to Your Database
 The local configuration file, ``.env``, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use. Make sure you've configured
-your database properly as described :doc:`here <../database/configuration>`.
-
-::
+your database properly as described :doc:`here <../database/configuration>`::
 
     database.default.hostname = localhost
     database.default.database = ci4tutorial

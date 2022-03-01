@@ -29,9 +29,7 @@ To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model. Create a new view at
-**app/Views/news/create.php**.
-
-::
+**app/Views/news/create.php**::
 
     <h2><?= esc($title) ?></h2>
 
@@ -89,9 +87,7 @@ slug, perfect for creating URIs.
 After this, a view is loaded to display a success message. Create a view at
 **app/Views/news/success.php** and write a success message.
 
-This could be as simple as:
-
-::
+This could be as simple as::
 
     News item created successfully.
 
