@@ -81,18 +81,18 @@ and the default method, which is usually ``index()``:
 
 .. literalinclude:: routing/006.php
 
-A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users`` method.
+A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
 The ID will be set to ``34``:
 
 .. literalinclude:: routing/007.php
 
 A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookup`` method:
+and the ``productLookup()`` method:
 
 .. literalinclude:: routing/008.php
 
 A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookupByID`` method passing in the match as a variable to the method:
+and the ``productLookupByID()`` method passing in the match as a variable to the method:
 
 .. literalinclude:: routing/009.php
 
