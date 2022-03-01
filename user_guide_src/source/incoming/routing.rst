@@ -539,10 +539,13 @@ and executes the corresponding controller method. The auto-routing is enabled by
 .. note:: To prevent misconfiguration and miscoding, we recommend that you disable
     the auto-routing feature. See :ref:`use-defined-routes-only`.
 
+Configuration Options
+=====================
+
 .. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
 
 Default Controller
-==================
+------------------
 
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
@@ -557,7 +560,7 @@ in the controllers directory. For example, if the user visits **example.com/admi
 See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
 
 Default Method
-==============
+--------------
 
 This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
