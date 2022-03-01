@@ -7,4 +7,6 @@ class Autoload extends AutoloadConfig
         'Config'      => APPPATH . 'Config',
         'Acme\Blog'   => ROOTPATH . 'acme/Blog', // Change
     ];
+    
+    // ...
 }
