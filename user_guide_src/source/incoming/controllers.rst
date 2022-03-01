@@ -114,10 +114,10 @@ Auto Routing
 
 This section describes the functionality of the auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
-without route definitions. The auto-routing is enabled by default.
+without route definitions. The auto-routing is disabled by default.
 
 .. note:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature. See :ref:`use-defined-routes-only`.
+    the auto-routing feature.
 
 .. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
 
@@ -220,7 +220,7 @@ Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 .. literalinclude:: controllers/014.php
 
 .. important:: If you are using the :doc:`URI Routing <routing>`
-    feature, the segments passed to your method will be the re-routed
+    feature, the segments passed to your method will be the defined
     ones.
 
 Defining a Default Controller

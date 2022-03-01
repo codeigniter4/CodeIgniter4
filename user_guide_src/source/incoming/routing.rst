@@ -312,7 +312,7 @@ available from the command line:
 
 .. literalinclude:: routing/032.php
 
-.. warning:: If you don't disable auto-routing and place the command file in **app/Controllers**,
+.. warning:: If you enable auto-routing and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 Global Options
@@ -515,6 +515,11 @@ It is recommended that all routes are defined in the **app/Config/Routes.php** f
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
 
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you disable
+    the auto-routing feature.
+
+.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+
 Enable Auto Routing
 ===================
 
@@ -543,15 +548,14 @@ In the above example, CodeIgniter would attempt to find a controller named **Hel
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
 We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is enabled by default.
+and executes the corresponding controller method. The auto-routing is disabled by default.
 
-.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature. See :ref:`use-defined-routes-only`.
+See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
 
 Configuration Options
 =====================
 
-.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+These options are available at the top of **app/Config/Routes.php**.
 
 Default Controller
 ------------------
