@@ -1,5 +1,9 @@
 <?php
 
+namespace Config;
+
+// ...
+
 class Filters extends BaseConfig
 {
     public $aliases = [

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controllers;
+
 class ProductController extends BaseController
 {
     public function productLookup($seg1 = false, $seg2 = false, $seg3 = false)

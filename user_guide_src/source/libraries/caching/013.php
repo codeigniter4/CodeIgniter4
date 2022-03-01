@@ -1,5 +1,9 @@
 <?php
 
+namespace Config;
+
+// ...
+
 class Cache extends BaseConfig
 {
     // ...
