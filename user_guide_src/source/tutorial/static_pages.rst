@@ -1,5 +1,5 @@
-Static pages
-###############################################################################
+Static Pages
+############
 
 .. note:: This tutorial assumes you've downloaded CodeIgniter and
    :doc:`installed the framework <../installation/index>` in your
@@ -27,8 +27,8 @@ you'll see URL patterns that match:
 As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.
 
-Let's make our first controller
--------------------------------------------------------
+Let's Make our First Controller
+*******************************
 
 Create a file at **app/Controllers/Pages.php** with the following
 code.
@@ -85,8 +85,8 @@ includes the following code::
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
 
-Adding logic to the controller
--------------------------------------------------------
+Adding Logic to the Controller
+******************************
 
 Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
@@ -131,7 +131,7 @@ view.
     :doc:`here </outgoing/views>`.
 
 Running the App
--------------------------------------------------------
+***************
 
 Ready to test? You cannot run the app using PHP's built-in server,
 since it will not properly process the ``.htaccess`` rules that are provided in
@@ -177,7 +177,7 @@ controller you made above produces...
     +---------------------------------+-----------------------------------------------------------------+
 
 Routing
--------------------------------------------------------
+*******
 
 The controller is now functioning!
 

@@ -1,13 +1,13 @@
-News section
-###############################################################################
+News Section
+############
 
 In the last section, we went over some basic concepts of the framework
 by writing a class that references static pages. We cleaned up the URI by
 adding custom routing rules. Now it's time to introduce dynamic content
 and start using a database.
 
-Create a database to work with
--------------------------------------------------------
+Create a Database to Work with
+******************************
 
 The CodeIgniter installation assumes that you have set up an appropriate
 database, as outlined in the :doc:`requirements </intro/requirements>`.
@@ -47,8 +47,8 @@ The seed records might be something like:
     (2,'Say it isn\'t so!','say-it-isnt-so','Scientists conclude that some programmers have a sense of humor.'),
     (3,'Caffeination, Yes!','caffeination-yes','World\'s largest coffee shop open onsite nested coffee shop for staff only.');
 
-Connect to your database
--------------------------------------------------------
+Connect to Your Database
+************************
 
 The local configuration file, ``.env``, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
@@ -63,8 +63,8 @@ your database properly as described :doc:`here <../database/configuration>`.
     database.default.password = root
     database.default.DBDriver = MySQLi
 
-Setting up your model
--------------------------------------------------------
+Setting up Your Model
+*********************
 
 Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
@@ -106,8 +106,8 @@ that use the Query Builder to run their commands on the current table, and
 returning an array of results in the format of your choice. In this example,
 ``findAll()`` returns an array of array.
 
-Display the news
--------------------------------------------------------
+Display the News
+****************
 
 Now that the queries are written, the model should be tied to the views
 that are going to display the news items to the user. This could be done
@@ -174,7 +174,7 @@ The only thing left to do is create the corresponding view at
 .. literalinclude:: news_section/007.php
 
 Routing
--------------------------------------------------------
+*******
 
 Because of the wildcard routing rule created earlier, you need an extra
 route to view the controller that you just made. Modify your routing file
