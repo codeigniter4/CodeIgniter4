@@ -1,5 +1,5 @@
-Static pages
-###############################################################################
+Static Pages
+############
 
 .. note:: This tutorial assumes you've downloaded CodeIgniter and
    :doc:`installed the framework <../installation/index>` in your
@@ -9,26 +9,22 @@ The first thing you're going to do is set up a **controller** to handle
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.
 
-For example, when a call is made to:
-
-::
+For example, when a call is made to::
 
     http://example.com/news/latest/10
 
 We might imagine that there is a controller named "news". The method
 being called on news would be "latest". The news method's job could be to
 grab 10 news items, and render them on the page. Very often in MVC,
-you'll see URL patterns that match:
-
-::
+you'll see URL patterns that match::
 
     http://example.com/[controller-class]/[controller-method]/[arguments]
 
 As URL schemes become more complex, this may change. But for now, this
 is all we will need to know.
 
-Let's make our first controller
--------------------------------------------------------
+Let's Make our First Controller
+*******************************
 
 Create a file at **app/Controllers/Pages.php** with the following
 code.
@@ -85,8 +81,8 @@ includes the following code::
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
 
-Adding logic to the controller
--------------------------------------------------------
+Adding Logic to the Controller
+******************************
 
 Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
@@ -131,16 +127,14 @@ view.
     :doc:`here </outgoing/views>`.
 
 Running the App
--------------------------------------------------------
+***************
 
 Ready to test? You cannot run the app using PHP's built-in server,
 since it will not properly process the ``.htaccess`` rules that are provided in
 ``public``, and which eliminate the need to specify "index.php/"
 as part of a URL. CodeIgniter has its own command that you can use though.
 
-From the command line, at the root of your project:
-
-::
+From the command line, at the root of your project::
 
     > php spark serve
 
@@ -177,14 +171,12 @@ controller you made above produces...
     +---------------------------------+-----------------------------------------------------------------+
 
 Routing
--------------------------------------------------------
+*******
 
 The controller is now functioning!
 
 Using custom routing rules, you have the power to map any URI to any
-controller and method, and break free from the normal convention:
-
-::
+controller and method, and break free from the normal convention::
 
     http://example.com/[controller-class]/[controller-method]/[arguments]
 

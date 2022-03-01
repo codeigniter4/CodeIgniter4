@@ -1,4 +1,4 @@
-Create news items
+Create News Items
 #################
 
 You now know how you can read data from a database using CodeIgniter, but
@@ -7,7 +7,7 @@ you'll expand your news controller and model created earlier to include
 this functionality.
 
 Enable CSRF Filter
-------------------
+******************
 
 Before creating a form, let's enable the CSRF protection.
 
@@ -22,16 +22,14 @@ You can read more about the CSRF protection in :doc:`Security </libraries/securi
     because auto-routing permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
-Create a form
--------------
+Create a Form
+*************
 
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model. Create a new view at
-**app/Views/news/create.php**.
-
-::
+**app/Views/news/create.php**::
 
     <h2><?= esc($title) ?></h2>
 
@@ -89,14 +87,12 @@ slug, perfect for creating URIs.
 After this, a view is loaded to display a success message. Create a view at
 **app/Views/news/success.php** and write a success message.
 
-This could be as simple as:
-
-::
+This could be as simple as::
 
     News item created successfully.
 
 Model Updating
--------------------------------------------------------
+**************
 
 The only thing that remains is ensuring that your model is set up
 to allow data to be saved properly. The ``save()`` method that was
@@ -119,7 +115,7 @@ This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.
 
 Routing
--------------------------------------------------------
+*******
 
 Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
@@ -144,7 +140,7 @@ Add some news and check out the different pages you made.
     :width: 45%
 
 Congratulations
--------------------------------------------------------
+***************
 
 You just completed your first CodeIgniter4 application!
 

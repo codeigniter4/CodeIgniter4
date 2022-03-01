@@ -22,7 +22,7 @@ This tutorial will primarily focus on:
 -  Model-View-Controller basics
 -  Routing basics
 -  Form validation
--  Performing basic database queries using CodeIgniter's "Query Builder"
+-  Performing basic database queries using CodeIgniter's Model
 
 The entire tutorial is split up over several pages, each explaining a
 small part of the functionality of the CodeIgniter framework. You'll go
@@ -55,9 +55,7 @@ Getting Up and Running
 
 You can download a release manually from the site, but for this tutorial we will
 use the recommended way and install the AppStarter package through Composer.
-From your command line type the following:
-
-::
+From your command line type the following::
 
     > composer create-project codeigniter4/appstarter ci-news
 
@@ -88,9 +86,7 @@ The Welcome Page
 ****************
 
 Now point your browser to the correct URL you will be greeted by a welcome screen.
-Try it now by heading to the following URL:
-
-::
+Try it now by heading to the following URL::
 
     http://localhost:8080
 
