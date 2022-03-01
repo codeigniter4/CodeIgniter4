@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+
 class News extends BaseController
 {
     public function view($slug = null)

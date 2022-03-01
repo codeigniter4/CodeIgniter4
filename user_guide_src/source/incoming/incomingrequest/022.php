@@ -1,6 +1,8 @@
 <?php
 
-class MyMenuTest extends CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+final class MyMenuTest extends CIUnitTestCase
 {
     public function testActiveLinkUsesCurrentUrl()
     {

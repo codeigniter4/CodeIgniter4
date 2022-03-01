@@ -1,5 +1,9 @@
 <?php
 
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
 class App extends BaseConfig
 {
     // localhost will be given higher priority (5) here,

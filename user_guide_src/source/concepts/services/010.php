@@ -1,6 +1,10 @@
 <?php
 
-class Services
+namespace Config;
+
+use CodeIgniter\Config\BaseService;
+
+class Services extends BaseService
 {
     public static function routes($getShared = false)
     {

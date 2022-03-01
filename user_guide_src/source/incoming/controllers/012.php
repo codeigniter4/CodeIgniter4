@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controllers;
+
 class Products extends BaseController
 {
     public function _remap($method, ...$params)

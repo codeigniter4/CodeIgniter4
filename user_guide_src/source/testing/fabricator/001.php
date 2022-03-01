@@ -1,5 +1,10 @@
 <?php
 
-class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel {
+namespace App\Models;
+
+use CodeIgniter\Test\Interfaces\FabricatorModel;
+
+class MyModel implements FabricatorModel
+{
     // ...
 }

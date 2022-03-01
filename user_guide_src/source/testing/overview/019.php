@@ -1,5 +1,7 @@
 <?php
 
+use CodeIgniter\Test\CIUnitTestCase;
+
 final class SomeTest extends CIUnitTestCase
 {
     protected function setUp(): void

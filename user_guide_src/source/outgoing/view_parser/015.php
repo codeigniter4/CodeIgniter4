@@ -1,12 +1,16 @@
 <?php
 
-class View extends \CodeIgniter\Config\View
+namespace Config;
+
+use CodeIgniter\Config\View as BaseView;
+
+class View extends BaseView
 {
     public $plugins = [];
 
     public function __construct()
     {
-        $this->plugins['bar'] = function (array $params=[]) {
+        $this->plugins['bar'] = static function (array $params = []) {
             return $params[0] ?? '';
         };
 

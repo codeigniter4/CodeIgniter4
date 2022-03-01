@@ -1,6 +1,8 @@
 <?php
 
-final class MyTestClass extends \CodeIgniter\Test\CIUnitTestCase
+use CodeIgniter\Test\CIUnitTestCase;
+
+final class MyTestClass extends CIUnitTestCase
 {
     public function testUserAccess()
     {

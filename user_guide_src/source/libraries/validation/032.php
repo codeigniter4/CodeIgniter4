@@ -1,5 +1,7 @@
 <?php
 
+namespace Config;
+
 use CodeIgniter\Validation\CreditCardRules;
 use CodeIgniter\Validation\FileRules;
 use CodeIgniter\Validation\FormatRules;

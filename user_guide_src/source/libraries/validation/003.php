@@ -1,5 +1,7 @@
 <?php
 
+namespace Config;
+
 class Validation
 {
     public $ruleSets = [

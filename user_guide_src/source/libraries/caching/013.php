@@ -2,7 +2,7 @@
 
 namespace Config;
 
-// ...
+use CodeIgniter\Config\BaseConfig;
 
 class Cache extends BaseConfig
 {
@@ -13,6 +13,5 @@ class Cache extends BaseConfig
         'weight' => 1,
         'raw'    => false,
     ];
-    
     // ...
 }

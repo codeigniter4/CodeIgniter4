@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
-class Migrate extends \CodeIgniter\Controller
+use CodeIgniter\Controller;
+
+class Migrate extends Controller
 {
     public function index()
     {

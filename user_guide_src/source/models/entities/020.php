@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Entities;
+
+use CodeIgniter\Entity\Entity;
+
 class MyEntity extends Entity
 {
     // Defining a type with parameters

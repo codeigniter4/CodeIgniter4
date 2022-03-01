@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Models;
+
 class UserModel
 {
     protected $table = 'users';
@@ -9,7 +11,7 @@ class UserModel
         return [
             'first'    => $faker->firstName,
             'email'    => $faker->email,
-            'group_id' => rand(1, Fabricator::getCount('groups')),
+            'group_id' => mt_rand(1, Fabricator::getCount('groups')),
         ];
     }
 }

@@ -10,6 +10,8 @@ trait AuthTrait
     // ...
 }
 
+use CodeIgniter\Test\CIUnitTestCase;
+
 final class AuthenticationFeatureTest extends CIUnitTestCase
 {
     use AuthTrait;

@@ -1,5 +1,9 @@
 <?php
 
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
 class Cache extends BaseConfig
 {
     public $redis = [
