@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create news items &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <title>Create News Items &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Conclusion" href="conclusion.html" />
-    <link rel="prev" title="News section" href="news_section.html" /> 
+    <link rel="prev" title="News Section" href="news_section.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -62,9 +62,9 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Build Your First Application</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static pages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="news_section.html">News section</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="news_section.html">News Section</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Create News Items</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
 </ul>
 </li>
@@ -253,7 +253,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Build Your First Application</a> &raquo;</li>
-      <li>Create news items</li>
+      <li>Create News Items</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -263,7 +263,7 @@
            <div itemprop="articleBody">
              
   <section id="create-news-items">
-<h1>Create news items<a class="headerlink" href="#create-news-items" title="Permalink to this headline"></a></h1>
+<h1>Create News Items<a class="headerlink" href="#create-news-items" title="Permalink to this headline"></a></h1>
 <p>You now know how you can read data from a database using CodeIgniter, but
 you haven’t written any information to the database yet. In this section,
 you’ll expand your news controller and model created earlier to include
@@ -289,12 +289,12 @@ Accessing the controller with a method you don’t expect could bypass the filte
 </div>
 </section>
 <section id="create-a-form">
-<h2>Create a form<a class="headerlink" href="#create-a-form" title="Permalink to this headline"></a></h2>
+<h2>Create a Form<a class="headerlink" href="#create-a-form" title="Permalink to this headline"></a></h2>
 <p>To input data into the database, you need to create a form where you can
 input the information to be stored. This means you’ll be needing a form
 with two fields, one for the title and one for the text. You’ll derive
 the slug from our title in the model. Create a new view at
-<strong>app/Views/news/create.php</strong>.</p>
+<strong>app/Views/news/create.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
 <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -438,7 +438,7 @@ The two modified configuration files (<strong>Config/Routes.php</strong> &amp; <
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="news_section.html" class="btn btn-neutral float-left" title="News section" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="news_section.html" class="btn btn-neutral float-left" title="News Section" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="conclusion.html" class="btn btn-neutral float-right" title="Conclusion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

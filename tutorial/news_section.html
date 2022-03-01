@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News section &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+  <title>News Section &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Create news items" href="create_news_items.html" />
-    <link rel="prev" title="Static pages" href="static_pages.html" /> 
+    <link rel="next" title="Create News Items" href="create_news_items.html" />
+    <link rel="prev" title="Static Pages" href="static_pages.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -62,9 +62,9 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Build Your First Application</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static pages</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">News section</a></li>
-<li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create news items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="static_pages.html">Static Pages</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">News Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_news_items.html">Create News Items</a></li>
 <li class="toctree-l2"><a class="reference internal" href="conclusion.html">Conclusion</a></li>
 </ul>
 </li>
@@ -253,7 +253,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Build Your First Application</a> &raquo;</li>
-      <li>News section</li>
+      <li>News Section</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -263,13 +263,13 @@
            <div itemprop="articleBody">
              
   <section id="news-section">
-<h1>News section<a class="headerlink" href="#news-section" title="Permalink to this headline"></a></h1>
+<h1>News Section<a class="headerlink" href="#news-section" title="Permalink to this headline"></a></h1>
 <p>In the last section, we went over some basic concepts of the framework
 by writing a class that references static pages. We cleaned up the URI by
 adding custom routing rules. Now it’s time to introduce dynamic content
 and start using a database.</p>
 <section id="create-a-database-to-work-with">
-<h2>Create a database to work with<a class="headerlink" href="#create-a-database-to-work-with" title="Permalink to this headline"></a></h2>
+<h2>Create a Database to Work with<a class="headerlink" href="#create-a-database-to-work-with" title="Permalink to this headline"></a></h2>
 <p>The CodeIgniter installation assumes that you have set up an appropriate
 database, as outlined in the <a class="reference internal" href="../intro/requirements.html"><span class="doc">requirements</span></a>.
 In this tutorial, we provide SQL code for a MySQL database, and
@@ -277,11 +277,7 @@ we also assume that you have a suitable client for issuing database
 commands (mysql, MySQL Workbench, or phpMyAdmin).</p>
 <p>You need to create a database that can be used for this tutorial,
 and then configure CodeIgniter to use it.</p>
-<p>Using your database client, connect to your database and run the SQL command below (MySQL).
-Also, add some seed records. For now, we’ll just show you the SQL statements needed
-to create the table, but you should be aware that this can be done programmatically
-once you are more familiar with CodeIgniter; you can read about <a class="reference internal" href="../dbmgmt/migration.html"><span class="doc">Migrations</span></a>
-and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Seeds</span></a> to create more useful database setups later.</p>
+<p>Using your database client, connect to your database and run the SQL command below (MySQL):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CREATE</span> <span class="nx">TABLE</span> <span class="nx">news</span> <span class="p">(</span>
     <span class="nx">id</span> <span class="nx">INT</span> <span class="nx">UNSIGNED</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="nx">AUTO_INCREMENT</span><span class="p">,</span>
     <span class="nx">title</span> <span class="nx">VARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
@@ -292,6 +288,10 @@ and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">
 <span class="p">);</span>
 </pre></div>
 </div>
+<p>Also, add some seed records. For now, we’ll just show you the SQL statements needed
+to create the table, but you should be aware that this can be done programmatically
+once you are more familiar with CodeIgniter; you can read about <a class="reference internal" href="../dbmgmt/migration.html"><span class="doc">Migrations</span></a>
+and <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Seeds</span></a> to create more useful database setups later.</p>
 <p>A note of interest: a “slug”, in the context of web publishing, is a
 user- and SEO-friendly short text used in a URL to identify and describe a resource.</p>
 <p>The seed records might be something like:</p>
@@ -303,11 +303,11 @@ user- and SEO-friendly short text used in a URL to identify and describe a resou
 </div>
 </section>
 <section id="connect-to-your-database">
-<h2>Connect to your database<a class="headerlink" href="#connect-to-your-database" title="Permalink to this headline"></a></h2>
+<h2>Connect to Your Database<a class="headerlink" href="#connect-to-your-database" title="Permalink to this headline"></a></h2>
 <p>The local configuration file, <code class="docutils literal notranslate"><span class="pre">.env</span></code>, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use. Make sure you’ve configured
-your database properly as described <a class="reference internal" href="../database/configuration.html"><span class="doc">here</span></a>.</p>
+your database properly as described <a class="reference internal" href="../database/configuration.html"><span class="doc">here</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">localhost</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="nx">ci4tutorial</span>
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">root</span>
@@ -317,7 +317,7 @@ your database properly as described <a class="reference internal" href="../datab
 </div>
 </section>
 <section id="setting-up-your-model">
-<h2>Setting up your model<a class="headerlink" href="#setting-up-your-model" title="Permalink to this headline"></a></h2>
+<h2>Setting up Your Model<a class="headerlink" href="#setting-up-your-model" title="Permalink to this headline"></a></h2>
 <p>Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
@@ -374,7 +374,7 @@ returning an array of results in the format of your choice. In this example,
 <code class="docutils literal notranslate"><span class="pre">findAll()</span></code> returns an array of array.</p>
 </section>
 <section id="display-the-news">
-<h2>Display the news<a class="headerlink" href="#display-the-news" title="Permalink to this headline"></a></h2>
+<h2>Display the News<a class="headerlink" href="#display-the-news" title="Permalink to this headline"></a></h2>
 <p>Now that the queries are written, the model should be tied to the views
 that are going to display the news items to the user. This could be done
 in our <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller created earlier, but for the sake of clarity,
@@ -537,8 +537,8 @@ to display just the one article.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="static_pages.html" class="btn btn-neutral float-left" title="Static pages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="create_news_items.html" class="btn btn-neutral float-right" title="Create news items" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="static_pages.html" class="btn btn-neutral float-left" title="Static Pages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="create_news_items.html" class="btn btn-neutral float-right" title="Create News Items" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
