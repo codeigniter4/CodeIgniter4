@@ -7,4 +7,6 @@ class Encryption extends BaseConfig
 
     // or
     public $key = 'base64:<your-base64-encoded-key>';
+    
+    // ...
 }
