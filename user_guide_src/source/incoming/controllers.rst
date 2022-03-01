@@ -279,7 +279,7 @@ called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
 your **app/Config/Routes.php** file.
 
-CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
+CodeIgniter also permits you to map your URIs using its :doc:`URI Routing <routing>` feature.
 
 Remapping Method Calls
 **********************
