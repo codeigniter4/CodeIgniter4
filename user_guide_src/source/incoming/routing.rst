@@ -515,6 +515,15 @@ It is recommended that all routes are defined in the **app/Config/Routes.php** f
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
 
+Enable Auto Routing
+===================
+
+Since v4.2.0, the auto-routing is disabled by default.
+
+To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+
+    $routes->setAutoRoute(true);
+
 URI Segments
 ============
 
