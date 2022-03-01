@@ -6,46 +6,13 @@ URI Routing
     :local:
     :depth: 2
 
-******************************
-Auto Routes and Defined Routes
-******************************
+What is URI Routing?
+********************
 
-Auto Routes
-===========
+URI Routing associates a URI with a controller's method.
 
-Typically there is a one-to-one relationship between a URL string and its corresponding
-controller class/method. The segments in a URI normally follow this pattern::
-
-    example.com/class/method/id/
-
-We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is enabled by default.
-
-.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature. See :ref:`use-defined-routes-only`.
-
-.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
-
-Defined Routes
-==============
-
-In some instances, however, you may want to remap this relationship so that a different
-class/method can be called instead of the one corresponding to the URL.
-
-For example, let's say you want your URLs to have this prototype::
-
-    example.com/product/1/
-    example.com/product/2/
-    example.com/product/3/
-    example.com/product/4/
-
-Normally the second segment of the URL path is reserved for the method name, but in the example
-above it instead has a product ID. To overcome this, CodeIgniter allows you to remap the URI handler.
-We call this "**Defined Routes**".
-
-******************************
-Setting Your Own Routing Rules
-******************************
+Setting Routing Rules
+*********************
 
 Routing rules are defined in the **app/Config/Routes.php** file. In it you'll see that
 it creates an instance of the RouteCollection class (``$routes``) that permits you to specify your own routing criteria.
@@ -56,7 +23,7 @@ If you expect a GET request, you use the ``get()`` method:
 
 .. literalinclude:: routing/001.php
 
-A route simply takes the URI path on the left, and maps it to the controller and method on the right,
+A route takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
 along with any parameters that should be passed to the controller. The controller and method should
 be listed in the same way that you would use a static method, by separating the class
 and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
@@ -476,7 +443,6 @@ To disable this functionality, you must call the method with the parameter ``fal
 
 .. _routes-configuration-options:
 
-****************************
 Routes Configuration Options
 ****************************
 
@@ -539,7 +505,7 @@ Use Defined Routes Only
 =======================
 
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods as described above. You can disable this automatic matching, and restrict routes
+controllers and methods as described in :ref:`auto-routing`. You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
 .. literalinclude:: routing/046.php
@@ -565,7 +531,43 @@ For an example use of lowering the priority see :ref:`routing-priority`:
 
 .. literalinclude:: routing/048.php
 
-*****************
+.. _auto-routing:
+
+Auto Routing
+************
+
+It is recommended that all routes are defined in the **app/Config/Routes.php** file.
+However, CodeIgniter can also automatically route HTTP requests based on conventions
+and execute the corresponding controller methods.
+
+URI Segments
+============
+
+The segments in the URL, in following with the Model-View-Controller approach, usually represent::
+
+    example.com/class/method/ID
+
+1. The first segment represents the controller **class** that should be invoked.
+2. The second segment represents the class **method** that should be called.
+3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
+
+Consider this URI::
+
+    example.com/index.php/helloworld/index/1
+
+In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php**
+and executes ``index()`` method with passing ``'1'`` as the first argument.
+
+We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
+and executes the corresponding controller method. The auto-routing is enabled by default.
+
+.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
+    the auto-routing feature. See :ref:`use-defined-routes-only`.
+
+.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+
+See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+
 Confirming Routes
 *****************
 

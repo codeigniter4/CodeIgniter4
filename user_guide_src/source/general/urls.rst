@@ -11,20 +11,9 @@ By default, URLs in CodeIgniter are designed to be search-engine and human-frien
 
     example.com/news/article/my_article
 
-URI Segments
-============
+Your URLs can be defined using the :doc:`URI Routing </incoming/routing>` feature with flexibility.
 
-The segments in the URL, in following with the Model-View-Controller approach, usually represent::
-
-    example.com/class/method/ID
-
-1. The first segment represents the controller **class** that should be invoked.
-2. The second segment represents the class **method** that should be called.
-3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
-
-The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/url_helper>` contain functions that make it easy
-to work with your URI data. In addition, your URLs can be remapped using the :doc:`URI Routing </incoming/routing>`
-feature for more flexibility.
+The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/url_helper>` contain functions that make it easy to work with your URI data.
 
 Removing the index.php file
 ===========================
