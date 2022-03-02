@@ -4,7 +4,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class SomeTest extends CIUnitTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

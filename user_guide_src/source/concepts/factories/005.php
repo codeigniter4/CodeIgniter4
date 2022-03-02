@@ -10,5 +10,4 @@ class Factories extends BaseFactory
     public $filters = [
         'instanceOf' => FilterInterface::class,
     ];
-    // ...
 }

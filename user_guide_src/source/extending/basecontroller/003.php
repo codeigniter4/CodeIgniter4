@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+    // ...
+    
     public function initController(/* ... */)
     {
         // Do Not Edit This Line
