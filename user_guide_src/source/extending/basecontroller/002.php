@@ -2,7 +2,13 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+use CodeIgniter\Controller;
+
+abstract class BaseController extends Controller
 {
+    // ...
+
     protected $helpers = ['html', 'text'];
+
+    // ...
 }

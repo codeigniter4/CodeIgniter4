@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+use CodeIgniter\Controller;
+
+abstract class BaseController extends Controller
 {
     // ...
-    
+
     public function initController(/* ... */)
     {
         // Do Not Edit This Line
