@@ -171,8 +171,7 @@ The only thing left to do is create the corresponding view at
 Routing
 *******
 
-Because of the wildcard routing rule created earlier, you need an extra
-route to view the controller that you just made. Modify your routing file
+Modify your routing file
 (**app/Config/Routes.php**) so it looks as follows.
 This makes sure the requests reach the ``News`` controller instead of
 going directly to the ``Pages`` controller. The first line routes URI's

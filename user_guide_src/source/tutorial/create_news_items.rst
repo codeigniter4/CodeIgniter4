@@ -119,7 +119,7 @@ Routing
 
 Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
-file contains the following. This makes sure CodeIgniter sees ``create``
+file contains the following. This makes sure CodeIgniter sees ``create()``
 as a method instead of a news item's slug. You can read more about different
 routing types :doc:`here </incoming/routing>`.
 
