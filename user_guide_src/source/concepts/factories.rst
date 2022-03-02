@@ -79,8 +79,8 @@ Factories Behavior
 
 Options can be applied in one of three ways (listed in ascending priority):
 
-* A configuration file ``Factory`` with a component property.
-* The static method ``Factories::setOptions``.
+* A configuration class ``Config\Factory`` with a ``$component`` property.
+* The static method ``Factories::setOptions()``.
 * Passing options directly at call time with a parameter.
 
 Configurations
@@ -89,7 +89,7 @@ Configurations
 To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component. For example,
 if you wanted to ensure that all Filters used by your app were valid framework instances,
-your **Factories.php** file might look like this:
+your **Factory.php** file might look like this:
 
 .. literalinclude:: factories/005.php
 
