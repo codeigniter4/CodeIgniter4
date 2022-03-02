@@ -116,8 +116,9 @@ This section describes the functionality of the auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
 without route definitions. The auto-routing is disabled by default.
 
-.. warning:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature.
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    the auto-routing feature. It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
 
 .. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
 

@@ -515,8 +515,9 @@ It is recommended that all routes are defined in the **app/Config/Routes.php** f
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
 
-.. warning:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature.
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    the auto-routing feature. It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
 
 .. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
 
