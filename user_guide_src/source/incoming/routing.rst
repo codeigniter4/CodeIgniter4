@@ -479,8 +479,12 @@ dash isn't a valid class or method name character and would cause a fatal error 
 Use Defined Routes Only
 =======================
 
+Since v4.2.0, the auto-routing is disabled by default.
+
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods as described in :ref:`auto-routing`. You can disable this automatic matching, and restrict routes
+controllers and methods when :ref:`auto-routing` is enabled.
+
+You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
 .. literalinclude:: routing/050.php
