@@ -21,25 +21,22 @@ use PhpCsFixer\Finder;
 $finder = Finder::create()
     ->files()
     ->in([
-        __DIR__ . '/system',
-        __DIR__ . '/tests',
-        __DIR__ . '/utils',
+        __DIR__ . '/user_guide_src/source',
     ])
-    ->exclude(['ThirdParty'])
-    ->notName('#Foobar.php$#')
-    ->append([
-        __FILE__,
-        __DIR__ . '/.no-header.php-cs-fixer.dist.php',
-        __DIR__ . '/.user-guide.php-cs-fixer.dist.php',
-        __DIR__ . '/rector.php',
-        __DIR__ . '/spark',
-        __DIR__ . '/user_guide_src/renumerate.php',
+    ->notPath([
+        'ci3sample/',
+        'libraries/sessions/017.php',
     ]);
 
-$overrides = [];
+$overrides = [
+    'echo_tag_syntax'             => false,
+    'php_unit_internal_class'     => false,
+    'no_unused_imports'           => false,
+    'class_attributes_separation' => false,
+];
 
 $options = [
-    'cacheFile'    => 'build/.php-cs-fixer.cache',
+    'cacheFile'    => 'build/.user-guide.php-cs-fixer.cache',
     'finder'       => $finder,
     'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [
@@ -48,8 +45,4 @@ $options = [
     ],
 ];
 
-return Factory::create(new CodeIgniter4(), $overrides, $options)->forLibrary(
-    'CodeIgniter 4 framework',
-    'CodeIgniter Foundation',
-    'admin@codeigniter.com'
-);
+return Factory::create(new CodeIgniter4(), $overrides, $options)->forProjects();
