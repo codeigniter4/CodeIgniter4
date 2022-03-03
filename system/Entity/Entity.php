@@ -279,13 +279,25 @@ class Entity implements JsonSerializable
      *
      * @return $this
      */
-    public function setAttributes(array $data)
+    public function injectRawData(array $data)
     {
         $this->attributes = $data;
 
         $this->syncOriginal();
 
         return $this;
+    }
+
+    /**
+     * Set raw data array without any mutations
+     *
+     * @return $this
+     *
+     * @deprecated Use injectRawData() instead.
+     */
+    public function setAttributes(array $data)
+    {
+        return $this->injectRawData($data);
     }
 
     /**
@@ -449,7 +461,7 @@ class Entity implements JsonSerializable
         // so maybe wants to do sth with null value automatically
         $method = 'set' . str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $key)));
 
-        if (method_exists($this, $method)) {
+        if (method_exists($this, $method) && $method !== 'setAttributes') {
             $this->{$method}($value);
 
             return $this;
