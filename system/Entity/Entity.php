@@ -274,7 +274,7 @@ class Entity implements JsonSerializable
      *
      * @return $this
      */
-    public function setAttributes(array $data)
+    public function injectRawData(array $data)
     {
         $this->attributes = $data;
 
