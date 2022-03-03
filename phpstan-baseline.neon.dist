@@ -915,3 +915,7 @@ parameters:
 			paths:
 				- system/Cache/CacheFactory.php
 				- system/Filters/Filters.php
+
+		-
+			message: "#^Binary operation \"/\" between string and 8 results in an error\\.$#"
+			path: system/Encryption/Handlers/OpenSSLHandler.php

@@ -155,7 +155,7 @@ final class URITest extends CIUnitTestCase
     {
         $this->expectException(HTTPException::class);
         $url = 'http://abc:a123';
-        $uri = new URI($url);
+        new URI($url);
     }
 
     public function testMissingScheme()

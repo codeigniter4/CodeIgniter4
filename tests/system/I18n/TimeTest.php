@@ -235,7 +235,7 @@ final class TimeTest extends CIUnitTestCase
         $this->expectException(I18nException::class);
         $this->expectExceptionMessage(lang('Time.invalidFormat', [$format]));
 
-        $time = Time::createFromFormat($format, 'America/Chicago');
+        Time::createFromFormat($format, 'America/Chicago');
     }
 
     public function testCreateFromTimestamp()

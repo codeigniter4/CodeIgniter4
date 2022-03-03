@@ -30,11 +30,7 @@ final class ForgeTest extends CIUnitTestCase
 
     protected $refresh = true;
     protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
-
-    /**
-     * @var Forge
-     */
-    protected $forge;
+    protected Forge $forge;
 
     protected function setUp(): void
     {
@@ -812,7 +808,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey(['username', 'active']);
-        $create = $this->forge->createTable($tableName, true);
+        $this->forge->createTable($tableName, true);
 
         $fieldsNames = $this->db->getFieldNames($tableName);
         $fieldsData  = $this->db->getFieldData($tableName);

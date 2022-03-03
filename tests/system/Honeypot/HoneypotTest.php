@@ -114,7 +114,7 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $this->expectException(HoneypotException::class);
-        $request = $filters->run($uri, 'before');
+        $filters->run($uri, 'before');
     }
 
     public function testHoneypotFilterAfter()
