@@ -22,11 +22,42 @@ If you find a case where you do need direct access though, you may load it throu
 .. _cross-site-request-forgery:
 
 *********************************
-Cross-site request forgery (CSRF)
+Cross-Site Request Forgery (CSRF)
 *********************************
 
 .. warning:: The CSRF Protection is only available for **POST/PUT/PATCH/DELETE** requests.
     Requests for other methods are not protected.
+
+Prerequisite
+============
+
+When you use the CodeIgniter's CSRF protection, you still need to code as the following.
+Otherwise, the CSRF protection may be bypassed.
+
+When Auto-Routing is Disabled
+-----------------------------
+
+Do one of the following:
+
+1. Do not use ``$routes->add()``, and use HTTP verbs in routes.
+2. Check the request method in the controller method before processing.
+
+E.g.::
+
+    if (strtolower($this->request->getMethod()) !== 'post') {
+        return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+    }
+
+When Auto-Routing is Enabled
+----------------------------
+
+1. Check the request method in the controller method before processing.
+
+E.g.::
+
+    if (strtolower($this->request->getMethod()) !== 'post') {
+        return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
+    }
 
 Config for CSRF
 ===============
