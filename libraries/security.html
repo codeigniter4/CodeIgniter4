@@ -268,22 +268,28 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loading-the-library" id="id2">Loading the Library</a></p></li>
-<li><p><a class="reference internal" href="#cross-site-request-forgery-csrf" id="id3">Cross-site request forgery (CSRF)</a></p>
+<li><p><a class="reference internal" href="#cross-site-request-forgery-csrf" id="id3">Cross-Site Request Forgery (CSRF)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#config-for-csrf" id="id4">Config for CSRF</a></p>
+<li><p><a class="reference internal" href="#prerequisite" id="id4">Prerequisite</a></p>
 <ul>
-<li><p><a class="reference internal" href="#csrf-protection-methods" id="id5">CSRF Protection Methods</a></p></li>
-<li><p><a class="reference internal" href="#token-randomization" id="id6">Token Randomization</a></p></li>
-<li><p><a class="reference internal" href="#token-regeneration" id="id7">Token Regeneration</a></p></li>
-<li><p><a class="reference internal" href="#redirection-on-failure" id="id8">Redirection on Failure</a></p></li>
+<li><p><a class="reference internal" href="#when-auto-routing-is-disabled" id="id5">When Auto-Routing is Disabled</a></p></li>
+<li><p><a class="reference internal" href="#when-auto-routing-is-enabled" id="id6">When Auto-Routing is Enabled</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#enable-csrf-protection" id="id9">Enable CSRF Protection</a></p></li>
-<li><p><a class="reference internal" href="#html-forms" id="id10">HTML Forms</a></p></li>
-<li><p><a class="reference internal" href="#the-order-of-token-sent-by-users" id="id11">The Order of Token Sent by Users</a></p></li>
+<li><p><a class="reference internal" href="#config-for-csrf" id="id7">Config for CSRF</a></p>
+<ul>
+<li><p><a class="reference internal" href="#csrf-protection-methods" id="id8">CSRF Protection Methods</a></p></li>
+<li><p><a class="reference internal" href="#token-randomization" id="id9">Token Randomization</a></p></li>
+<li><p><a class="reference internal" href="#token-regeneration" id="id10">Token Regeneration</a></p></li>
+<li><p><a class="reference internal" href="#redirection-on-failure" id="id11">Redirection on Failure</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#other-helpful-methods" id="id12">Other Helpful Methods</a></p></li>
+<li><p><a class="reference internal" href="#enable-csrf-protection" id="id12">Enable CSRF Protection</a></p></li>
+<li><p><a class="reference internal" href="#html-forms" id="id13">HTML Forms</a></p></li>
+<li><p><a class="reference internal" href="#the-order-of-token-sent-by-users" id="id14">The Order of Token Sent by Users</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#other-helpful-methods" id="id15">Other Helpful Methods</a></p></li>
 </ul>
 </div>
 <section id="loading-the-library">
@@ -298,16 +304,47 @@ as it runs as a filter and has no manual interaction.</p>
 </div>
 </section>
 <section id="cross-site-request-forgery-csrf">
-<span id="cross-site-request-forgery"></span><h2><a class="toc-backref" href="#id3">Cross-site request forgery (CSRF)</a><a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permalink to this headline"></a></h2>
+<span id="cross-site-request-forgery"></span><h2><a class="toc-backref" href="#id3">Cross-Site Request Forgery (CSRF)</a><a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permalink to this headline"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The CSRF Protection is only available for <strong>POST/PUT/PATCH/DELETE</strong> requests.
 Requests for other methods are not protected.</p>
 </div>
+<section id="prerequisite">
+<h3><a class="toc-backref" href="#id4">Prerequisite</a><a class="headerlink" href="#prerequisite" title="Permalink to this headline"></a></h3>
+<p>When you use the CodeIgniter’s CSRF protection, you still need to code as the following.
+Otherwise, the CSRF protection may be bypassed.</p>
+<section id="when-auto-routing-is-disabled">
+<h4><a class="toc-backref" href="#id5">When Auto-Routing is Disabled</a><a class="headerlink" href="#when-auto-routing-is-disabled" title="Permalink to this headline"></a></h4>
+<p>Do one of the following:</p>
+<ol class="arabic simple">
+<li><p>Do not use <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add()</span></code>, and use HTTP verbs in routes.</p></li>
+<li><p>Check the request method in the controller method before processing.</p></li>
+</ol>
+<p>E.g.:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strtolower</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="o">!==</span> <span class="s1">&#39;post&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;Method Not Allowed&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="when-auto-routing-is-enabled">
+<h4><a class="toc-backref" href="#id6">When Auto-Routing is Enabled</a><a class="headerlink" href="#when-auto-routing-is-enabled" title="Permalink to this headline"></a></h4>
+<ol class="arabic simple">
+<li><p>Check the request method in the controller method before processing.</p></li>
+</ol>
+<p>E.g.:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strtolower</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="o">!==</span> <span class="s1">&#39;post&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;Method Not Allowed&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="config-for-csrf">
-<h3><a class="toc-backref" href="#id4">Config for CSRF</a><a class="headerlink" href="#config-for-csrf" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Config for CSRF</a><a class="headerlink" href="#config-for-csrf" title="Permalink to this headline"></a></h3>
 <section id="csrf-protection-methods">
-<span id="id1"></span><h4><a class="toc-backref" href="#id5">CSRF Protection Methods</a><a class="headerlink" href="#csrf-protection-methods" title="Permalink to this headline"></a></h4>
+<span id="id1"></span><h4><a class="toc-backref" href="#id8">CSRF Protection Methods</a><a class="headerlink" href="#csrf-protection-methods" title="Permalink to this headline"></a></h4>
 <p>By default, the Cookie based CSRF Protection is used. It is
 <a class="reference external" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#double-submit-cookie">Double Submit Cookie</a>
 on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
@@ -322,7 +359,7 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 </div>
 </section>
 <section id="token-randomization">
-<h4><a class="toc-backref" href="#id6">Token Randomization</a><a class="headerlink" href="#token-randomization" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id9">Token Randomization</a><a class="headerlink" href="#token-randomization" title="Permalink to this headline"></a></h4>
 <p>To mitigate compression side-channel attacks like <a class="reference external" href="https://en.wikipedia.org/wiki/BREACH">BREACH</a>, and prevent an attacker from guessing the CSRF tokens, you can configure token randomization (off by default).</p>
 <p>If you enable it, a random mask is added to the token and used to scramble it.</p>
 <p>You can enable it by editing the following config parameter value in
@@ -334,7 +371,7 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 </div>
 </section>
 <section id="token-regeneration">
-<h4><a class="toc-backref" href="#id7">Token Regeneration</a><a class="headerlink" href="#token-regeneration" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id10">Token Regeneration</a><a class="headerlink" href="#token-regeneration" title="Permalink to this headline"></a></h4>
 <p>Tokens may be either regenerated on every submission (default) or
 kept the same throughout the life of the CSRF cookie. The default
 regeneration of tokens provides stricter security, but may result
@@ -349,7 +386,7 @@ may alter this behavior by editing the following config parameter value in
 </div>
 </section>
 <section id="redirection-on-failure">
-<h4><a class="toc-backref" href="#id8">Redirection on Failure</a><a class="headerlink" href="#redirection-on-failure" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id11">Redirection on Failure</a><a class="headerlink" href="#redirection-on-failure" title="Permalink to this headline"></a></h4>
 <p>When a request fails the CSRF validation check, it will redirect to the previous page by default,
 setting an <code class="docutils literal notranslate"><span class="pre">error</span></code> flash message that you can display to the end user with the following code in your view:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">session</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -367,7 +404,7 @@ than simply crashing. This can be turned off by editing the following config par
 </section>
 </section>
 <section id="enable-csrf-protection">
-<h3><a class="toc-backref" href="#id9">Enable CSRF Protection</a><a class="headerlink" href="#enable-csrf-protection" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Enable CSRF Protection</a><a class="headerlink" href="#enable-csrf-protection" title="Permalink to this headline"></a></h3>
 <p>You can enable CSRF protection by altering your <strong>app/Config/Filters.php</strong>
 and enabling the <cite>csrf</cite> filter globally:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -419,7 +456,7 @@ Accessing the controller with a method you don’t expect could bypass the filte
 </div>
 </section>
 <section id="html-forms">
-<h3><a class="toc-backref" href="#id10">HTML Forms</a><a class="headerlink" href="#html-forms" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">HTML Forms</a><a class="headerlink" href="#html-forms" title="Permalink to this headline"></a></h3>
 <p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, then
 <code class="xref py py-func docutils literal notranslate"><span class="pre">form_open()</span></code> will automatically insert a hidden csrf field in
 your forms.</p>
@@ -450,7 +487,7 @@ meta tag for you:</p>
 </div>
 </section>
 <section id="the-order-of-token-sent-by-users">
-<h3><a class="toc-backref" href="#id11">The Order of Token Sent by Users</a><a class="headerlink" href="#the-order-of-token-sent-by-users" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">The Order of Token Sent by Users</a><a class="headerlink" href="#the-order-of-token-sent-by-users" title="Permalink to this headline"></a></h3>
 <p>The order of checking the availability of the CSRF token is as follows:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> array</p></li>
@@ -460,7 +497,7 @@ meta tag for you:</p>
 </section>
 </section>
 <section id="other-helpful-methods">
-<h2><a class="toc-backref" href="#id12">Other Helpful Methods</a><a class="headerlink" href="#other-helpful-methods" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">Other Helpful Methods</a><a class="headerlink" href="#other-helpful-methods" title="Permalink to this headline"></a></h2>
 <p>You will never need to use most of the methods in the Security class directly. The following are methods that
 you might find helpful that are not related to the CSRF protection.</p>
 <p><strong>sanitizeFilename()</strong></p>
@@ -488,7 +525,7 @@ the second optional parameter, <code class="docutils literal notranslate"><span 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 01, 2022.
+      <span class="lastupdated">Last updated on Mar 03, 2022.
       </span></p>
   </div>
 
