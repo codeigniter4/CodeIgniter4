@@ -89,7 +89,7 @@ class OpenSSLHandler extends BaseHandler
         // derive a secret key
         $secret = \hash_hkdf($this->digest, $this->key);
 
-        $hmacLength = self::substr($this->digest, 3) / 8;
+        $hmacLength = (int) self::substr($this->digest, 3) / 8;
         $hmacKey    = self::substr($data, 0, $hmacLength);
         $data       = self::substr($data, $hmacLength);
         $hmacCalc   = \hash_hmac($this->digest, $data, $secret, true);
