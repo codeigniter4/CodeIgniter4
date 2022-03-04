@@ -63,6 +63,18 @@ if [ "$FILES" != "" ]; then
         echo "Files in system, tests, utils, or root are not following the coding standards. Please fix them before commit."
         exit 1
     fi
+
+    # Next, run on user_guide_src/source PHP files
+    if [ -d /proc/cygdrive ]; then
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.user-guide.php-cs-fixer.dist.php
+    else
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.user-guide.php-cs-fixer.dist.php
+    fi
+
+    if [ $? != 0 ]; then
+        echo "Files in user_guide_src/source are not following the coding standards. Please fix them before commit."
+        exit 1
+    fi
 fi
 
 if [ "$STAGED_RST_FILES" != "" ]; then
