@@ -1,3 +1,10 @@
 <?php
 
-protected $allowCallbacks = false;
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class MyModel extends Model
+{
+    protected $allowCallbacks = false;
+}

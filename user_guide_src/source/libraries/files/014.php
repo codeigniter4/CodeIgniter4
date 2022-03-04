@@ -1,6 +1,8 @@
 <?php
 
-class ConfigCollection extends \CodeIgniter\Files\FileCollection
+use CodeIgniter\Files\FileCollection;
+
+class ConfigCollection extends FileCollection
 {
     protected function define(): void
     {

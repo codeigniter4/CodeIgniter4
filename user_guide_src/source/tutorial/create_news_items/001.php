@@ -1,5 +1,13 @@
 <?php
 
-public $methods = [
-    'post' => ['csrf'],
-];
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Filters extends BaseConfig
+{
+    public $methods = [
+        'post' => ['csrf'],
+    ];
+    // ...
+}

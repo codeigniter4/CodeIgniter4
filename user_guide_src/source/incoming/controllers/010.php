@@ -1,6 +1,11 @@
 <?php
 
-public function _remap()
+namespace App\Controllers;
+
+class Products extends BaseController
 {
-    // Some code here...
+    public function _remap()
+    {
+        // Some code here...
+    }
 }

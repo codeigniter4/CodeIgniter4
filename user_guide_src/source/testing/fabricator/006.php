@@ -2,7 +2,9 @@
 
 namespace Tests\Support\Models;
 
-class UserFabricator extends \App\Models\UserModel
+use App\Models\UserModel;
+
+class UserFabricator extends UserModel
 {
     public function fake(&$faker)
     {

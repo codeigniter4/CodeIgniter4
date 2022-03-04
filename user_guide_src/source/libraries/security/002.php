@@ -1,3 +1,11 @@
 <?php
 
-public $csrfProtection = 'session';
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Security extends BaseConfig
+{
+    public $csrfProtection = 'session';
+    // ...
+}

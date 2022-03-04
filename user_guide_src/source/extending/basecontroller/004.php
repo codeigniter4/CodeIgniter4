@@ -1,6 +1,10 @@
 <?php
 
-class Home extends \CodeIgniter\Controller
-{
+namespace App\Controllers;
 
+use CodeIgniter\Controller;
+
+class Home extends Controller
+{
+    // ...
 }

@@ -1,15 +1,22 @@
 <?php
 
-public function index()
+namespace App\Controllers;
+
+use App\Models\NewsModel;
+
+class News extends BaseController
 {
-    $model = model(NewsModel::class);
+    public function index()
+    {
+        $model = model(NewsModel::class);
 
-    $data = [
-        'news'  => $model->getNews(),
-        'title' => 'News archive',
-    ];
+        $data = [
+            'news'  => $model->getNews(),
+            'title' => 'News archive',
+        ];
 
-    echo view('templates/header', $data);
-    echo view('news/overview', $data);
-    echo view('templates/footer', $data);
+        echo view('templates/header', $data);
+        echo view('news/overview', $data);
+        echo view('templates/footer', $data);
+    }
 }

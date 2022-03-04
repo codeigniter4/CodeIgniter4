@@ -1,10 +1,17 @@
 <?php
 
-public function up()
+namespace App\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+
+class AddBlog extends Migration
 {
-    $this->db->disableForeignKeyChecks()
+    public function up()
+    {
+        $this->db->disableForeignKeyChecks();
 
-    // Migration rules would go here..
-
-    $this->db->enableForeignKeyChecks();
+        // Migration rules would go here..
+        
+        $this->db->enableForeignKeyChecks();
+    }
 }

@@ -1,6 +1,11 @@
 <?php
 
-public function index()
+namespace App\Controllers;
+
+class MyController extends BaseController
 {
-    echo view('some_view');
+    public function index()
+    {
+        echo view('some_view');
+    }
 }

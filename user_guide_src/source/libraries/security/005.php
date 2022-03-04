@@ -1,3 +1,11 @@
 <?php
 
-public $redirect = false;
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Security extends BaseConfig
+{
+    public $redirect = false;
+    // ...
+}

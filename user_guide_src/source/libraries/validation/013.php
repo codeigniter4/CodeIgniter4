@@ -1,5 +1,7 @@
 <?php
 
+namespace Config;
+
 class Validation
 {
     public $signup = [
@@ -8,4 +10,5 @@ class Validation
         'pass_confirm' => 'required|matches[password]',
         'email'        => 'required|valid_email',
     ];
+    // ...
 }

@@ -1,19 +1,24 @@
 <?php
 
-public function setUp()
-{
-    CITestStreamFilter::$buffer = '';
-    $this->stream_filter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-}
+use CodeIgniter\Test\CIUnitTestCase;
 
-public function tearDown()
+final class SomeTest extends CIUnitTestCase
 {
-    stream_filter_remove($this->stream_filter);
-}
+    protected function setUp(): void
+    {
+        CITestStreamFilter::$buffer = '';
+        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+    }
 
-public function testSomeOutput()
-{
-    CLI::write('first.');
-    $expected = "first.\n";
-    $this->assertSame($expected, CITestStreamFilter::$buffer);
+    protected function tearDown(): void
+    {
+        stream_filter_remove($this->stream_filter);
+    }
+
+    public function testSomeOutput(): void
+    {
+        CLI::write('first.');
+        $expected = "first.\n";
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
+    }
 }

@@ -1,6 +1,11 @@
 <?php
 
-protected function utility()
+namespace App\Controllers;
+
+class Products extends BaseController
 {
-    // some code
+    protected function utility()
+    {
+        // some code
+    }
 }

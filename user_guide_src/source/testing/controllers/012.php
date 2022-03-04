@@ -1,6 +1,11 @@
 <?php
 
-class FilterTestCase extends CIUnitTestCase
+namespace CodeIgniter;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\FilterTestTrait;
+
+final class FilterTestCase extends CIUnitTestCase
 {
     use FilterTestTrait;
 
@@ -10,6 +15,5 @@ class FilterTestCase extends CIUnitTestCase
 
         $this->assertHasFilters('unfiltered/route', 'before');
     }
-
     // ...
 }

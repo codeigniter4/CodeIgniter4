@@ -1,6 +1,10 @@
 <?php
 
-class Database
+namespace Config;
+
+use CodeIgniter\Database\Config;
+
+class Database extends Config
 {
     public $development = [/* ... */];
     public $test        = [/* ... */];

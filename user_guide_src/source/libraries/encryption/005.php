@@ -1,3 +1,12 @@
 <?php
 
-public $key = 'YOUR KEY';
+namespace Config;
+
+use CodeIgniter\Config\BaseConfig;
+
+class Encryption extends BaseConfig
+{
+    public $key = 'YOUR KEY';
+    
+    // ...
+}

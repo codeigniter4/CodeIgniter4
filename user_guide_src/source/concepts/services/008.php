@@ -1,6 +1,14 @@
 <?php
 
-public static function renderer($viewPath = APPPATH . 'views/')
+namespace Config;
+
+use CodeIgniter\Config\BaseService;
+
+class Services extends BaseService
 {
-    return new \CodeIgniter\View\View($viewPath);
+    public static function renderer($viewPath = APPPATH . 'views/')
+    {
+        return new \CodeIgniter\View\View($viewPath);
+    }
+    // ...
 }

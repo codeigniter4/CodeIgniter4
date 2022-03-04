@@ -1,7 +1,14 @@
 <?php
 
-public function setUp(): void
+namespace App\Models;
+
+use CodeIgniter\Test\CIUnitTestCase;
+
+final class OneOfMyModelsTest extends CIUnitTestCase
 {
-    parent::setUp();
-    helper('text');
+    protected function setUp(): void
+    {
+        parent::setUp();
+        helper('text');
+    }
 }

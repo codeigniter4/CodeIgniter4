@@ -1,5 +1,11 @@
 <?php
 
-public static $registrars = [
-    SupportingPackageRegistrar::class
-];
+namespace Config;
+
+class MyConfig extends BaseConfig
+{
+    public static $registrars = [
+        SupportingPackageRegistrar::class,
+    ];
+    // ...
+}

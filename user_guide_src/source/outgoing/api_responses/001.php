@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Controller;
 
-class Users extends \CodeIgniter\Controller
+class Users extends Controller
 {
     use ResponseTrait;
 

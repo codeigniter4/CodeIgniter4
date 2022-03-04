@@ -1,9 +1,14 @@
 <?php
 
-protected function setUp()
-{
-    parent::setUp();
+use CodeIgniter\Test\CIUnitTestCase;
 
-    $model = new MockUserModel();
-    Factories::injectMock('models', 'App\Models\UserModel', $model);
+final class SomeTest extends CIUnitTestCase
+{
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $model = new MockUserModel();
+        Factories::injectMock('models', 'App\Models\UserModel', $model);
+    }
 }

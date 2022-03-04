@@ -1,5 +1,7 @@
 <?php
 
+namespace Config;
+
 class Validation
 {
     public $signup = [
@@ -9,11 +11,12 @@ class Validation
                 'required' => 'You must choose a Username.',
             ],
         ],
-        'email'    => [
+        'email' => [
             'rules'  => 'required|valid_email',
             'errors' => [
                 'valid_email' => 'Please check the Email field. It does not appear to be valid.',
             ],
         ],
     ];
+    // ...
 }

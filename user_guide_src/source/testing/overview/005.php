@@ -1,8 +1,14 @@
 <?php
 
-protected $setUpMethods = [
-    'mockEmail',
-    'mockSession',
-];
+namespace App\Models;
 
-protected $tearDownMethods = [];
+use CodeIgniter\Test\CIUnitTestCase;
+
+final class OneOfMyModelsTest extends CIUnitTestCase
+{
+    protected $setUpMethods = [
+        'mockEmail',
+        'mockSession',
+    ];
+    protected $tearDownMethods = [];
+}
