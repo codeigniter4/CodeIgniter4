@@ -439,9 +439,7 @@ omit the item key (magic getter only works for single property values):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$_SESSION</span><span class="p">;</span>
-
 <span class="c1">// or:</span>
-
 <span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -517,9 +515,7 @@ done through <code class="docutils literal notranslate"><span class="pre">unset(
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">unset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]);</span>
-
 <span class="c1">// or multiple values:</span>
-
 <span class="nb">unset</span><span class="p">(</span>
     <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">],</span>
     <span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;another_name&#39;</span><span class="p">]</span>
@@ -732,9 +728,7 @@ same way:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">session_destroy</span><span class="p">();</span>
-
 <span class="c1">// or</span>
-
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">destroy</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -1168,6 +1162,7 @@ separate the multiple server paths with commas:</p>
     <span class="c1">// localhost will be given higher priority (5) here,</span>
     <span class="c1">// compared to 192.0.2.1 with a weight of 1.</span>
     <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

@@ -424,7 +424,6 @@ has either a scalar or string value, as in this example:</p>
 <span class="nv">$data</span>     <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blog_title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My ramblings&#39;</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
-
 <span class="c1">// Result: &lt;head&gt;&lt;title&gt;My ramblings&lt;/title&gt;&lt;/head&gt;</span>
 </pre></div>
 </div>
@@ -840,6 +839,7 @@ callable:</p>
         <span class="s1">&#39;abs&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;\CodeIgniter\View\Filters::abs&#39;</span><span class="p">,</span>
         <span class="s1">&#39;capitalize&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\CodeIgniter\View\Filters::capitalize&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -861,6 +861,7 @@ function prefixed with:</p>
     <span class="k">public</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;str_repeat&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\str_repeat&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -980,6 +981,7 @@ used within the template file. The value is any valid PHP callable, including st
     <span class="k">public</span> <span class="nv">$plugins</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\Some\Class::methodName&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1003,6 +1005,7 @@ used within the template file. The value is any valid PHP callable, including st
 
         <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
     <span class="p">}</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1043,6 +1046,7 @@ the content between its tags:</p>
     <span class="k">public</span> <span class="nv">$plugins</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;\Some\Class::methodName&#39;</span><span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
@@ -1066,7 +1070,6 @@ template, they are ignored:</p>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
-
 <span class="c1">// Result: Hello, John Doe</span>
 </pre></div>
 </div>
@@ -1082,7 +1085,6 @@ template, the original pseudo-variable is shown in the result:</p>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
-
 <span class="c1">// Result: Hello, John {initials} Doe</span>
 </pre></div>
 </div>
@@ -1103,7 +1105,6 @@ pair tag, but the closing variable pair tag is not rendered properly:</p>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
-
 <span class="c1">// Result: Hello, John Doe (Mr{degree} {/degrees})</span>
 </pre></div>
 </div>

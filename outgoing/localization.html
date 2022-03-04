@@ -315,6 +315,7 @@ Command-line requests will not have these features.</p>
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -348,6 +349,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -365,6 +367,7 @@ the following example, the <strong>en</strong> locale would be used if no match 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

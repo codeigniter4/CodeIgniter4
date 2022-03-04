@@ -549,6 +549,7 @@ If you validate it with the <code class="docutils literal notranslate"><span cla
         <span class="nx">\CodeIgniter\Validation\StrictRules\FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="nx">\CodeIgniter\Validation\StrictRules\Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -735,6 +736,7 @@ rules. As shown earlier, the validation array will have this prototype:</p>
         <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -760,6 +762,7 @@ be used for any errors when this group is used:</p>
         <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="k">public</span> <span class="nv">$signup_errors</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must choose a username.&#39;</span><span class="p">,</span>
@@ -768,6 +771,7 @@ be used for any errors when this group is used:</p>
             <span class="s1">&#39;valid_email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Please check the Email field. It does not appear to be valid.&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1105,6 +1109,7 @@ short alias they can be referenced by. If we were to add our example file from a
         <span class="s1">&#39;single&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Validation\Views\single&#39;</span><span class="p">,</span>
         <span class="s1">&#39;my_list&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_errors_list&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1145,6 +1150,7 @@ add the new file to the <code class="docutils literal notranslate"><span class="
         <span class="nx">FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="nx">CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

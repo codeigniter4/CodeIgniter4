@@ -378,6 +378,7 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
     <span class="p">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouter</span><span class="p">();</span>
     <span class="p">}</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -402,6 +403,7 @@ as a constructor parameter. The service method looks like this:</p>
     <span class="p">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
     <span class="p">}</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -437,6 +439,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 
         <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
     <span class="p">}</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

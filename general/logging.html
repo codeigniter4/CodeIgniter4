@@ -346,6 +346,7 @@ would be ignored:</p>
 <span class="k">class</span> <span class="nc">Logger</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$threshold</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -363,6 +364,7 @@ to the threshold value:</p>
 <span class="p">{</span>
     <span class="c1">// Log only debug and info type messages</span>
     <span class="k">public</span> <span class="nv">$threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -399,6 +401,7 @@ Each handler’s section will have one property in common: <code class="docutils
             <span class="s1">&#39;handles&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;critical&#39;</span><span class="p">,</span> <span class="s1">&#39;alert&#39;</span><span class="p">,</span> <span class="s1">&#39;emergency&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;notice&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">],</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

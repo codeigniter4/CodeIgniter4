@@ -404,6 +404,7 @@ filters to run:</p>
     <span class="k">public</span> <span class="nv">$aliases</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="nx">\CodeIgniter\Filters\CSRF</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -426,6 +427,7 @@ different authentication system since you only change the filter’s class and y
             <span class="nx">\App\Filters\ApiAuth</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -451,6 +453,7 @@ run on every request. Filters can be specified by adding their alias to either t
         <span class="p">],</span>
         <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -473,6 +476,7 @@ an array with the ‘except’ key and a URI to match as the value alongside the
         <span class="p">],</span>
         <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -495,6 +499,7 @@ URI’s you can use an array of URI patterns:</p>
         <span class="p">],</span>
         <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -517,6 +522,7 @@ specify the method name in lowercase. It’s value would be an array of filters 
         <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">],</span>
         <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;baz&#39;</span><span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -546,6 +552,7 @@ a list of URI patterns that filter should apply to:</p>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin/*&#39;</span><span class="p">],</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;users/*&#39;</span><span class="p">]],</span>
         <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/*&#39;</span><span class="p">,</span> <span class="s1">&#39;admin/*&#39;</span><span class="p">]],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -598,6 +605,7 @@ See <a class="reference internal" href="routing.html#spark-routes"><span class="
         <span class="c1">// ...</span>
         <span class="s1">&#39;secureheaders&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\SecureHeaders</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>

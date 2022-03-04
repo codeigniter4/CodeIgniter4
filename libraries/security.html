@@ -361,6 +361,7 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 <span class="k">class</span> <span class="nc">Security</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$csrfProtection</span> <span class="o">=</span> <span class="s1">&#39;session&#39;</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -381,6 +382,7 @@ on OWASP Cross-Site Request Forgery Prevention Cheat Sheet.</p>
 <span class="k">class</span> <span class="nc">Security</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$tokenRandomize</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -404,6 +406,7 @@ may alter this behavior by editing the following config parameter value in
 <span class="k">class</span> <span class="nc">Security</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$regenerate</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -453,6 +456,7 @@ and enabling the <cite>csrf</cite> filter globally:</p>
             <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -473,6 +477,7 @@ by adding them as exceptions in the filter:</p>
             <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/save&#39;</span><span class="p">]],</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -491,6 +496,7 @@ by adding them as exceptions in the filter:</p>
             <span class="s1">&#39;csrf&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;api/record/[0-9]+&#39;</span><span class="p">]],</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -508,6 +514,7 @@ by adding them as exceptions in the filter:</p>
         <span class="s1">&#39;get&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
         <span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;csrf&#39;</span><span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
