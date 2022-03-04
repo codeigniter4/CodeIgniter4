@@ -645,22 +645,21 @@ easily validate your data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
-<span class="cm">    The data to test:</span>
-
-<span class="cm">    [</span>
-<span class="cm">        &#39;contacts&#39; =&gt; [</span>
-<span class="cm">           &#39;name&#39; =&gt; &#39;Joe Smith&#39;,</span>
-<span class="cm">            &#39;friends&#39; =&gt; [</span>
-<span class="cm">                [</span>
-<span class="cm">                    &#39;name&#39; =&gt; &#39;Fred Flinstone&#39;,</span>
-<span class="cm">                ],</span>
-<span class="cm">                [</span>
-<span class="cm">                    &#39;name&#39; =&gt; &#39;Wilma&#39;,</span>
-<span class="cm">                ],</span>
-<span class="cm">            ]</span>
-<span class="cm">        ]</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * The data to test:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;contacts&#39; =&gt; [</span>
+<span class="cm"> *        &#39;name&#39; =&gt; &#39;Joe Smith&#39;,</span>
+<span class="cm"> *         &#39;friends&#39; =&gt; [</span>
+<span class="cm"> *             [</span>
+<span class="cm"> *                 &#39;name&#39; =&gt; &#39;Fred Flinstone&#39;,</span>
+<span class="cm"> *             ],</span>
+<span class="cm"> *             [</span>
+<span class="cm"> *                 &#39;name&#39; =&gt; &#39;Wilma&#39;,</span>
+<span class="cm"> *             ],</span>
+<span class="cm"> *         ]</span>
+<span class="cm"> *     ]</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 
 <span class="c1">// Joe Smith</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
@@ -687,16 +686,15 @@ For example, data returned by multi select dropdown:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
-<span class="cm">    The data to test:</span>
-
-<span class="cm">    [</span>
-<span class="cm">        &#39;user_ids&#39; =&gt; [</span>
-<span class="cm">            1,</span>
-<span class="cm">            2,</span>
-<span class="cm">            3,</span>
-<span class="cm">        ]</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * The data to test:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;user_ids&#39; =&gt; [</span>
+<span class="cm"> *         1,</span>
+<span class="cm"> *         2,</span>
+<span class="cm"> *         3,</span>
+<span class="cm"> *     ]</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 
 <span class="c1">// Rule</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">([</span>
@@ -982,15 +980,13 @@ We can simply use the language lines defined in this file, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$errors</span> <span class="o">=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">();</span>
-
 <span class="cm">/*</span>
-<span class="cm">   Produces:</span>
-
-<span class="cm">    [</span>
-<span class="cm">        &#39;field1&#39; =&gt; &#39;error message&#39;,</span>
-<span class="cm">        &#39;field2&#39; =&gt; &#39;error message&#39;,</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;field1&#39; =&gt; &#39;error message&#39;,</span>
+<span class="cm"> *     &#39;field2&#39; =&gt; &#39;error message&#39;,</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>If no errors exist, an empty array will be returned.</p>
@@ -1044,13 +1040,12 @@ name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
-<span class="cm">    For errors:</span>
-
-<span class="cm">    [</span>
-<span class="cm">        &#39;foo.0.bar&#39;   =&gt; &#39;Error&#39;,</span>
-<span class="cm">        &#39;foo.baz.bar&#39; =&gt; &#39;Error&#39;,</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * For errors:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;foo.0.bar&#39;   =&gt; &#39;Error&#39;,</span>
+<span class="cm"> *     &#39;foo.baz.bar&#39; =&gt; &#39;Error&#39;,</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 
 <span class="c1">// returns true</span>
 <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">hasError</span><span class="p">(</span><span class="s1">&#39;foo.*.bar&#39;</span><span class="p">);</span>

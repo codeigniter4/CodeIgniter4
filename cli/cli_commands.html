@@ -513,10 +513,11 @@ be familiar with when creating your own commands. It also has a <a class="refere
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">options</span> <span class="k">as</span> <span class="nv">$option</span> <span class="o">=&gt;</span> <span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="nv">$tab</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="nb">str_pad</span><span class="p">(</span><span class="nv">$option</span><span class="p">,</span> <span class="nv">$pad</span><span class="p">),</span> <span class="s1">&#39;green&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="nv">$description</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
 <span class="p">}</span>
-
-<span class="c1">// Output will be</span>
-<span class="c1">// -n        Set migration namespace</span>
-<span class="c1">// -r        override file</span>
+<span class="cm">/*</span>
+<span class="cm"> * Output will be:</span>
+<span class="cm"> * -n        Set migration namespace</span>
+<span class="cm"> * -r        override file</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 </dd></dl>

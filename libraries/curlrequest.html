@@ -544,14 +544,12 @@ allows you to modify how that works.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;allow_redirects&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Sets the following defaults:</span>
-
-<span class="cm">    &#39;max&#39;       =&gt; 5, // Maximum number of redirects to follow before stopping</span>
-<span class="cm">    &#39;strict&#39;    =&gt; true, // Ensure POST requests stay POST requests through redirects</span>
-<span class="cm">    &#39;protocols&#39; =&gt; [&#39;http&#39;, &#39;https&#39;] // Restrict redirects to one or more protocols</span>
-<span class="cm">*/</span>
+<span class="cm"> * Sets the following defaults:</span>
+<span class="cm"> * &#39;max&#39;       =&gt; 5, // Maximum number of redirects to follow before stopping</span>
+<span class="cm"> * &#39;strict&#39;    =&gt; true, // Ensure POST requests stay POST requests through redirects</span>
+<span class="cm"> * &#39;protocols&#39; =&gt; [&#39;http&#39;, &#39;https&#39;] // Restrict redirects to one or more protocols</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>You can pass in array as the value of the <code class="docutils literal notranslate"><span class="pre">allow_redirects</span></code> option to specify new settings in place of the defaults:</p>

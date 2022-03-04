@@ -476,14 +476,12 @@ name/value string to create one field:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Would produce:</span>
-
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;John Doe&quot; /&gt;</span>
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; /&gt;</span>
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;url&quot; value=&quot;http://example.com&quot; /&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;John Doe&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;url&quot; value=&quot;http://example.com&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>You can also pass an associative array to the value field:</p>
@@ -496,14 +494,12 @@ name/value string to create one field:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">&#39;my_array&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Would produce:</span>
-
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;my_array[name]&quot; value=&quot;John Doe&quot; /&gt;</span>
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;my_array[email]&quot; value=&quot;john@example.com&quot; /&gt;</span>
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;my_array[url]&quot; value=&quot;http://example.com&quot; /&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[name]&quot; value=&quot;John Doe&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[email]&quot; value=&quot;john@example.com&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[url]&quot; value=&quot;http://example.com&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>If you want to create hidden input fields with extra attributes:</p>
@@ -518,12 +514,10 @@ name/value string to create one field:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Would produce:</span>
-
-<span class="cm">    &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; id=&quot;hiddenemail&quot; class=&quot;hiddenemail&quot; /&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; id=&quot;hiddenemail&quot; class=&quot;hiddenemail&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -568,12 +562,10 @@ form to contain:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Would produce:</span>
-
-<span class="cm">    &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; id=&quot;username&quot; maxlength=&quot;100&quot; size=&quot;50&quot; style=&quot;width:50%&quot; /&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; id=&quot;username&quot; maxlength=&quot;100&quot; size=&quot;50&quot; style=&quot;width:50%&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>If you would like your form to contain some additional data, like
@@ -595,12 +587,10 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Email Address...&#39;</span><span class="p">],</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">     Would produce:</span>
-
-<span class="cm">    &lt;input type=&quot;email&quot; name=&quot;email&quot; value=&quot;joe@example.com&quot; placeholder=&quot;Email Address...&quot; /&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;email&quot; name=&quot;email&quot; value=&quot;joe@example.com&quot; placeholder=&quot;Email Address...&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -714,30 +704,26 @@ multiple select for you.</p>
 
 <span class="nv">$shirts_on_sale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;small&#39;</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="s1">&#39;large&#39;</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Would produce:</span>
-
-<span class="cm">    &lt;select name=&quot;shirts&quot;&gt;</span>
-<span class="cm">        &lt;option value=&quot;small&quot;&gt;Small Shirt&lt;/option&gt;</span>
-<span class="cm">        &lt;option value=&quot;med&quot;&gt;Medium Shirt&lt;/option&gt;</span>
-<span class="cm">        &lt;option value=&quot;large&quot; selected=&quot;selected&quot;&gt;Large Shirt&lt;/option&gt;</span>
-<span class="cm">        &lt;option value=&quot;xlarge&quot;&gt;Extra Large Shirt&lt;/option&gt;</span>
-<span class="cm">    &lt;/select&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;select name=&quot;shirts&quot;&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;small&quot;&gt;Small Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;med&quot;&gt;Medium Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;large&quot; selected=&quot;selected&quot;&gt;Large Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;xlarge&quot;&gt;Extra Large Shirt&lt;/option&gt;</span>
+<span class="cm"> * &lt;/select&gt;</span>
+<span class="cm"> */</span>
 
 <span class="k">echo</span> <span class="nx">form_dropdown</span><span class="p">(</span><span class="s1">&#39;shirts&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="nv">$shirts_on_sale</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Would produce:</span>
-
-<span class="cm">    &lt;select name=&quot;shirts&quot; multiple=&quot;multiple&quot;&gt;</span>
-<span class="cm">        &lt;option value=&quot;small&quot; selected=&quot;selected&quot;&gt;Small Shirt&lt;/option&gt;</span>
-<span class="cm">        &lt;option value=&quot;med&quot;&gt;Medium Shirt&lt;/option&gt;</span>
-<span class="cm">        &lt;option value=&quot;large&quot; selected=&quot;selected&quot;&gt;Large Shirt&lt;/option&gt;</span>
-<span class="cm">        &lt;option value=&quot;xlarge&quot;&gt;Extra Large Shirt&lt;/option&gt;</span>
-<span class="cm">    &lt;/select&gt;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;select name=&quot;shirts&quot; multiple=&quot;multiple&quot;&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;small&quot; selected=&quot;selected&quot;&gt;Small Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;med&quot;&gt;Medium Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;large&quot; selected=&quot;selected&quot;&gt;Large Shirt&lt;/option&gt;</span>
+<span class="cm"> *     &lt;option value=&quot;xlarge&quot;&gt;Extra Large Shirt&lt;/option&gt;</span>
+<span class="cm"> * &lt;/select&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>If you would like the opening &lt;select&gt; to contain additional data, like

@@ -411,28 +411,25 @@ method to retrieve the values as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Outputs something like:</span>
-<span class="cm">    &#39;Accept-Language: en,en-US&#39;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Outputs something like:</span>
+<span class="cm"> * &#39;Accept-Language: en,en-US&#39;</span>
+<span class="cm"> */</span>
 
 <span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">();</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Outputs something like:</span>
-<span class="cm">    [</span>
-<span class="cm">        &#39;en&#39;,</span>
-<span class="cm">        &#39;en-US&#39;</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * Outputs something like:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;en&#39;,</span>
+<span class="cm"> *     &#39;en-US&#39;,</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 
 <span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getValueLine</span><span class="p">();</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Outputs something like:</span>
-<span class="cm">   &#39;en,en-US&#39;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Outputs something like:</span>
+<span class="cm"> * en,en-US&#39;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>You can filter the header by passing a filter value in as the second parameter:</p>
@@ -482,11 +479,10 @@ of the header values when the header has multiple values. The values are appropr
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">);</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Outputs:</span>
-<span class="cm">    &#39;en,en-US&#39;</span>
-<span class="cm">*/</span>
+<span class="cm"> * Outputs:</span>
+<span class="cm"> * &#39;en,en-US&#39;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 </dd></dl>

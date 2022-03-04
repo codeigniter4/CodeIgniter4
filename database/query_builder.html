@@ -333,9 +333,10 @@ clause:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
-
-<span class="c1">// Executes: SELECT * FROM mytable LIMIT 20, 10</span>
-<span class="c1">// (in MySQL. Other databases have slightly different syntax)</span>
+<span class="cm">/*</span>
+<span class="cm"> * Executes: SELECT * FROM mytable LIMIT 20, 10</span>
+<span class="cm"> * (in MySQL. Other databases have slightly different syntax)</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>You’ll notice that the above method is assigned to a variable named
@@ -368,13 +369,15 @@ will be reset (by default it will be reset, just like when using <code class="do
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
-
-<span class="c1">// Prints string: SELECT * FROM mytable LIMIT 20, 10</span>
-<span class="c1">// (in MySQL. Other databases have slightly different syntax)</span>
+<span class="cm">/*</span>
+<span class="cm"> * Prints string: SELECT * FROM mytable LIMIT 20, 10</span>
+<span class="cm"> * (in MySQL. Other databases have slightly different syntax)</span>
+<span class="cm"> */</span>
 
 <span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title, content, date&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledSelect</span><span class="p">();</span>
-
-<span class="c1">// Prints string: SELECT title, content, date FROM mytable LIMIT 20, 10</span>
+<span class="cm">/*</span>
+<span class="cm"> * Prints string: SELECT title, content, date FROM mytable LIMIT 20, 10</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>The key thing to notice in the above example is that the second query did not
@@ -549,9 +552,10 @@ to the FROM portion of your query.</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;comments.id = blogs.id&#39;</span><span class="p">);</span>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-
-<span class="c1">// Produces:</span>
-<span class="c1">// SELECT * FROM blogs JOIN comments ON comments.id = blogs.id</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * SELECT * FROM blogs JOIN comments ON comments.id = blogs.id</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Multiple method calls can be made if you need several joins in one
@@ -1215,9 +1219,10 @@ you to create queries with complex <strong>WHERE</strong> clauses. Nested groups
     <span class="o">-&gt;</span><span class="na">groupEnd</span><span class="p">()</span>
     <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">)</span>
 <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-
-<span class="c1">// Generates:</span>
-<span class="c1">// SELECT * FROM (`my_table`) WHERE ( `a` = &#39;a&#39; OR ( `b` = &#39;b&#39; AND `c` = &#39;c&#39; ) ) AND `d` = &#39;d&#39;</span>
+<span class="cm">/*</span>
+<span class="cm"> * Generates:</span>
+<span class="cm"> * SELECT * FROM (`my_table`) WHERE ( `a` = &#39;a&#39; OR ( `b` = &#39;b&#39; AND `c` = &#39;c&#39; ) ) AND `d` = &#39;d&#39;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1475,11 +1480,12 @@ is an example using an array:</p>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-<span class="c1">// Produces:</span>
-<span class="c1">//</span>
-<span class="c1">// UPDATE mytable</span>
-<span class="c1">// SET title = &#39;{$title}&#39;, name = &#39;{$name}&#39;, date = &#39;{$date}&#39;</span>
-<span class="c1">// WHERE id = $id</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * UPDATE mytable</span>
+<span class="cm"> * SET title = &#39;{$title}&#39;, name = &#39;{$name}&#39;, date = &#39;{$date}&#39;</span>
+<span class="cm"> * WHERE id = $id</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Or you can supply an object:</p>
@@ -1495,11 +1501,12 @@ is an example using an array:</p>
 <span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">;</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
-<span class="c1">// Produces:</span>
-<span class="c1">//</span>
-<span class="c1">// UPDATE `mytable`</span>
-<span class="c1">// SET `title` = &#39;{$title}&#39;, `name` = &#39;{$name}&#39;, `date` = &#39;{$date}&#39;</span>
-<span class="c1">// WHERE id = `$id`</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * UPDATE `mytable`</span>
+<span class="cm"> * SET `title` = &#39;{$title}&#39;, `name` = &#39;{$name}&#39;, `date` = &#39;{$date}&#39;</span>
+<span class="cm"> * WHERE id = `$id`</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1542,17 +1549,18 @@ Here is an example using an array:</p>
 <span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">);</span>
-
-<span class="c1">// Produces:</span>
-<span class="c1">// UPDATE `mytable` SET `name` = CASE</span>
-<span class="c1">// WHEN `title` = &#39;My title&#39; THEN &#39;My Name 2&#39;</span>
-<span class="c1">// WHEN `title` = &#39;Another title&#39; THEN &#39;Another Name 2&#39;</span>
-<span class="c1">// ELSE `name` END,</span>
-<span class="c1">// `date` = CASE</span>
-<span class="c1">// WHEN `title` = &#39;My title&#39; THEN &#39;My date 2&#39;</span>
-<span class="c1">// WHEN `title` = &#39;Another title&#39; THEN &#39;Another date 2&#39;</span>
-<span class="c1">// ELSE `date` END</span>
-<span class="c1">// WHERE `title` IN (&#39;My title&#39;,&#39;Another title&#39;)</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * UPDATE `mytable` SET `name` = CASE</span>
+<span class="cm"> * WHEN `title` = &#39;My title&#39; THEN &#39;My Name 2&#39;</span>
+<span class="cm"> * WHEN `title` = &#39;Another title&#39; THEN &#39;Another Name 2&#39;</span>
+<span class="cm"> * ELSE `name` END,</span>
+<span class="cm"> * `date` = CASE</span>
+<span class="cm"> * WHEN `title` = &#39;My title&#39; THEN &#39;My date 2&#39;</span>
+<span class="cm"> * WHEN `title` = &#39;Another title&#39; THEN &#39;Another date 2&#39;</span>
+<span class="cm"> * ELSE `date` END</span>
+<span class="cm"> * WHERE `title` IN (&#39;My title&#39;,&#39;Another title&#39;)</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>The first parameter is an associative array of values, the second parameter is the where key.</p>
@@ -1582,7 +1590,7 @@ that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INS
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
-<span class="c1">// Produces: // DELETE FROM mytable  // WHERE id = $id</span>
+<span class="c1">// Produces: DELETE FROM mytable WHERE id = $id</span>
 </pre></div>
 </div>
 <p>The first parameter is the where clause.
@@ -1592,10 +1600,11 @@ the data to the first parameter of the method:</p>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$id</span><span class="p">);</span>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
-
-<span class="c1">// Produces:</span>
-<span class="c1">// DELETE FROM mytable</span>
-<span class="c1">// WHERE id = $id</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * DELETE FROM mytable</span>
+<span class="cm"> * WHERE id = $id</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>If you want to delete all data from a table, you can use the <code class="docutils literal notranslate"><span class="pre">truncate()</span></code>
@@ -1614,9 +1623,10 @@ query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">truncate</span><span class="p">();</span>
-
-<span class="c1">// Produce:</span>
-<span class="c1">// TRUNCATE mytable</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produce:</span>
+<span class="cm"> * TRUNCATE mytable</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1663,9 +1673,10 @@ run the query:</p>
 <span class="c1">// ...</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">();</span>
-
-<span class="c1">// Would execute and return an array of results of the following query:</span>
-<span class="c1">// SELECT field1, field1 from mytable where field3 = 5;</span>
+<span class="cm">/*</span>
+<span class="cm"> * Would execute and return an array of results of the following query:</span>
+<span class="cm"> * SELECT field1, field1 from mytable where field3 = 5;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 </section>

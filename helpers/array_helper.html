@@ -536,15 +536,16 @@ will be supplying an initial <code class="docutils literal notranslate"><span cl
 
 <span class="c1">// using the same data from above</span>
 <span class="nv">$flattened</span> <span class="o">=</span> <span class="nx">array_flatten_with_dots</span><span class="p">(</span><span class="nv">$arrayToFlatten</span><span class="p">,</span> <span class="s1">&#39;foo_&#39;</span><span class="p">);</span>
-
-<span class="c1">// $flattened is now:</span>
-<span class="p">[</span>
-    <span class="s1">&#39;foo_personal.first_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;foo_personal.last_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;smith&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;foo_personal.age&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;26&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;foo_personal.address&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;foo_other_details&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;marines officer&#39;</span><span class="p">,</span>
-<span class="p">];</span>
+<span class="cm">/*</span>
+<span class="cm"> * $flattened is now:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;foo_personal.first_name&#39; =&gt; &#39;john&#39;,</span>
+<span class="cm"> *     &#39;foo_personal.last_name&#39;  =&gt; &#39;smith&#39;,</span>
+<span class="cm"> *     &#39;foo_personal.age&#39;        =&gt; &#39;26&#39;,</span>
+<span class="cm"> *     &#39;foo_personal.address&#39;    =&gt; &#39;US&#39;,</span>
+<span class="cm"> *     &#39;foo_other_details&#39;       =&gt; &#39;marines officer&#39;,</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 </dd></dl>

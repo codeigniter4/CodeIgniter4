@@ -340,13 +340,14 @@ second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">(</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;The red apple&#39;</span><span class="p">,</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span> <span class="s1">&#39;The ripe banana&#39;</span><span class="p">]);</span>
-
-<span class="c1">//These are your choices:</span>
-<span class="c1">//  [0]  The red apple</span>
-<span class="c1">//  [1]  The plump orange</span>
-<span class="c1">//  [2]  The ripe banana</span>
-<span class="c1">//</span>
-<span class="c1">//[0, 1, 2]:</span>
+<span class="cm">/*</span>
+<span class="cm"> * These are your choices:</span>
+<span class="cm"> *   [0]  The red apple</span>
+<span class="cm"> *   [1]  The plump orange</span>
+<span class="cm"> *   [2]  The ripe banana</span>
+<span class="cm"> *</span>
+<span class="cm"> * [0, 1, 2]:</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Named keys are also possible:</p>
@@ -357,13 +358,14 @@ second parameter:</p>
     <span class="s1">&#39;orange&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span>
     <span class="s1">&#39;banana&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The ripe banana&#39;</span>
 <span class="p">]);</span>
-
-<span class="c1">//These are your choices:</span>
-<span class="c1">//  [apple]   The red apple</span>
-<span class="c1">//  [orange]  The plump orange</span>
-<span class="c1">//  [banana]  The ripe banana</span>
-<span class="c1">//</span>
-<span class="c1">//Which would you like? [apple, orange, banana]:</span>
+<span class="cm">/*</span>
+<span class="cm"> * These are your choices:</span>
+<span class="cm"> *   [apple]   The red apple</span>
+<span class="cm"> *   [orange]  The plump orange</span>
+<span class="cm"> *   [banana]  The ripe banana</span>
+<span class="cm"> *</span>
+<span class="cm"> * Which would you like? [apple, orange, banana]:</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.</p>

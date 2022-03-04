@@ -1020,11 +1020,14 @@ the return value from the plugin:</p>
     <span class="k">public</span> <span class="nv">$plugins</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\Some\Class::methodName&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 
-<span class="c1">// Tag is replaced by the return value of Some\Class::methodName static function.</span>
-<span class="c1">// {+ foo +}</span>
+<span class="cm">/*</span>
+<span class="cm"> * Tag is replaced by the return value of Some\Class::methodName() static function.</span>
+<span class="cm"> * {+ foo +}</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>If the callable is wrapped in an array, it is treated as an open/close tag pair that can operate on any of

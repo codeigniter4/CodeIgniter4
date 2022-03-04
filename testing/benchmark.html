@@ -325,18 +325,16 @@ This returns an array of benchmark information, including start, end, and durati
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$timers</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">getTimers</span><span class="p">();</span>
-
 <span class="cm">/*</span>
-<span class="cm">    Produces:</span>
-
-<span class="cm">    [</span>
-<span class="cm">        &#39;render view&#39;  =&gt; [</span>
-<span class="cm">            &#39;start&#39;    =&gt; 1234567890,</span>
-<span class="cm">            &#39;end&#39;      =&gt; 1345678920,</span>
-<span class="cm">            &#39;duration&#39; =&gt; 15.4315, // number of seconds</span>
-<span class="cm">        ]</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;render view&#39;  =&gt; [</span>
+<span class="cm"> *         &#39;start&#39;    =&gt; 1234567890,</span>
+<span class="cm"> *         &#39;end&#39;      =&gt; 1345678920,</span>
+<span class="cm"> *         &#39;duration&#39; =&gt; 15.4315, // number of seconds</span>
+<span class="cm"> *     ]</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>You can change the precision of the calculated duration by passing in the number of decimal places you want to be shown as

@@ -578,19 +578,16 @@ can help to test the responses.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
-<span class="cm">    Response body is this:</span>
-
-<span class="cm">    [&#39;foo&#39; =&gt; &#39;bar&#39;]</span>
-<span class="cm">*/</span>
+<span class="cm"> * Response body is this:</span>
+<span class="cm"> * [&#39;foo&#39; =&gt; &#39;bar&#39;]</span>
+<span class="cm"> */</span>
 
 <span class="nv">$json</span> <span class="o">=</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getJSON</span><span class="p">();</span>
-
 <span class="cm">/*</span>
-<span class="cm">    $json is this:</span>
-
-<span class="cm">    {</span>
-<span class="cm">        &quot;foo&quot;: &quot;bar&quot;</span>
-<span class="cm">    }</span>
+<span class="cm"> * $json is this:</span>
+<span class="cm"> * {</span>
+<span class="cm"> *     &quot;foo&quot;: &quot;bar&quot;</span>
+<span class="cm"> * }</span>
 <span class="cm">`*/</span>
 </pre></div>
 </div>
@@ -610,12 +607,11 @@ can help to test the responses.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="cm">/*</span>
-<span class="cm">    Response body is this:</span>
-
-<span class="cm">    [</span>
-<span class="cm">        &#39;config&#39; =&gt; [&#39;key-a&#39;, &#39;key-b&#39;],</span>
-<span class="cm">    ]</span>
-<span class="cm">*/</span>
+<span class="cm"> * Response body is this:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *     &#39;config&#39; =&gt; [&#39;key-a&#39;, &#39;key-b&#39;],</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
 
 <span class="c1">// Is true</span>
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]]);</span>

@@ -336,8 +336,10 @@ or will check if a database exists before create it (depending on DBMS).</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createDatabase</span><span class="p">(</span><span class="s1">&#39;my_db&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// gives CREATE DATABASE IF NOT EXISTS `my_db`</span>
-<span class="c1">// or will check if a database exists</span>
+<span class="cm">/*</span>
+<span class="cm"> * gives CREATE DATABASE IF NOT EXISTS `my_db`</span>
+<span class="cm"> * or will check if a database exists</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p><strong>$forge-&gt;dropDatabase(‘db_name’)</strong></p>
