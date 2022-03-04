@@ -10,16 +10,15 @@ class SomeHandler extends BaseCast
     {
         var_dump($params);
         /*
-            Output:
-
-            array(3) {
-              [0]=>
-              string(13) "App\SomeClass"
-              [1]=>
-              string(6) "param2"
-              [2]=>
-              string(6) "param3"
-            }
-        */
+         * Output:
+         * array(3) {
+         *   [0]=>
+         *   string(13) "App\SomeClass"
+         *   [1]=>
+         *   string(6) "param2"
+         *   [2]=>
+         *   string(6) "param3"
+         * }
+         */
     }
 }
