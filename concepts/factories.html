@@ -394,8 +394,8 @@ overrides other explicit class requests.</p></td>
 <h2><a class="toc-backref" href="#id5">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
 <p>Options can be applied in one of three ways (listed in ascending priority):</p>
 <ul class="simple">
-<li><p>A configuration file <code class="docutils literal notranslate"><span class="pre">Factory</span></code> with a component property.</p></li>
-<li><p>The static method <code class="docutils literal notranslate"><span class="pre">Factories::setOptions</span></code>.</p></li>
+<li><p>A configuration class <code class="docutils literal notranslate"><span class="pre">Config\Factory</span></code> with a <code class="docutils literal notranslate"><span class="pre">$component</span></code> property.</p></li>
+<li><p>The static method <code class="docutils literal notranslate"><span class="pre">Factories::setOptions()</span></code>.</p></li>
 <li><p>Passing options directly at call time with a parameter.</p></li>
 </ul>
 <section id="configurations">
@@ -403,7 +403,7 @@ overrides other explicit class requests.</p></td>
 <p>To set default component options, create a new Config files at <strong>app/Config/Factory.php</strong>
 that supplies options as an array property that matches the name of the component. For example,
 if you wanted to ensure that all Filters used by your app were valid framework instances,
-your <strong>Factories.php</strong> file might look like this:</p>
+your <strong>Factory.php</strong> file might look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -411,7 +411,7 @@ your <strong>Factories.php</strong> file might look like this:</p>
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\Factory</span> <span class="k">as</span> <span class="nx">BaseFactory</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Filters\FilterInterface</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">Factories</span> <span class="k">extends</span> <span class="nx">BaseFactory</span>
+<span class="k">class</span> <span class="nc">Factory</span> <span class="k">extends</span> <span class="nx">BaseFactory</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$filters</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;instanceOf&#39;</span> <span class="o">=&gt;</span> <span class="nx">FilterInterface</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
