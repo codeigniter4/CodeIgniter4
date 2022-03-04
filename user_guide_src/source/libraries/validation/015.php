@@ -10,6 +10,7 @@ class Validation
         'pass_confirm' => 'required|matches[password]',
         'email'        => 'required|valid_email',
     ];
+
     public $signup_errors = [
         'username' => [
             'required' => 'You must choose a username.',
@@ -18,5 +19,6 @@ class Validation
             'valid_email' => 'Please check the Email field. It does not appear to be valid.',
         ],
     ];
+
     // ...
 }

@@ -9,5 +9,6 @@ class Validation
         'single'  => 'CodeIgniter\Validation\Views\single',
         'my_list' => '_errors_list',
     ];
+
     // ...
 }

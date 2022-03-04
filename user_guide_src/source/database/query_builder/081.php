@@ -7,5 +7,4 @@ $data = [
 ];
 
 $builder->replace($data);
-
 // Executes: REPLACE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')

@@ -10,5 +10,6 @@ class Filters extends BaseConfig
         // ...
         'secureheaders' => \App\Filters\SecureHeaders::class,
     ];
+
     // ...
 }

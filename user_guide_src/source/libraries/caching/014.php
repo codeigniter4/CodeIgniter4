@@ -15,5 +15,6 @@ class Cache extends BaseConfig
         'timeout'  => 0,
         'database' => 0,
     ];
+
     // ...
 }

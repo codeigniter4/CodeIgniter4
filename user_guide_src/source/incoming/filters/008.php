@@ -10,5 +10,6 @@ class Filters extends BaseConfig
         'post' => ['foo', 'bar'],
         'get'  => ['baz'],
     ];
+
     // ...
 }

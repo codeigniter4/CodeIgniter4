@@ -10,5 +10,6 @@ class Filters extends BaseConfig
         // ...
         'throttle' => \App\Filters\Throttle::class,
     ];
+
     // ...
 }

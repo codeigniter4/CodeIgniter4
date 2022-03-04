@@ -16,5 +16,6 @@ class View extends BaseView
 
         parent::__construct();
     }
+
     // ...
 }
