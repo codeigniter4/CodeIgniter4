@@ -27,7 +27,7 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-.. literalinclude:: upgrade_file_upload/001.php
+.. literalinclude:: upgrade_file_upload/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------

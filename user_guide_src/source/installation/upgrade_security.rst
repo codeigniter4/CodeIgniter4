@@ -33,7 +33,7 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-.. literalinclude:: upgrade_security/002.php
+.. literalinclude:: upgrade_security/ci3sample/002.php
 
 CodeIgniter Version 4.x
 -----------------------

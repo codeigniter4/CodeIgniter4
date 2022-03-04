@@ -25,7 +25,7 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-.. literalinclude:: upgrade_responses/001.php
+.. literalinclude:: upgrade_responses/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------
