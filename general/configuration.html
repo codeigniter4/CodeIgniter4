@@ -354,7 +354,7 @@ The class should use the appropriate namespace, and it should extend
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$siteName</span>  <span class="o">=</span> <span class="s1">&#39;My Great Site&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$siteEmail</span> <span class="o">=</span> <span class="s1">&#39;webmaster@example.com&#39;</span><span class="p">;</span>
-
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -557,9 +557,15 @@ This is done by adding a <code class="docutils literal notranslate"><span class=
 holding an array of the names of candidate registrars:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">public</span> <span class="k">static</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nx">SupportingPackageRegistrar</span><span class="o">::</span><span class="na">class</span>
-<span class="p">];</span>
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyConfig</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="nv">$registrars</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">SupportingPackageRegistrar</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>In order to act as a “registrar” the classes so identified must have a
@@ -627,7 +633,7 @@ by treating <code class="docutils literal notranslate"><span class="pre">Regiona
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 

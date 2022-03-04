@@ -285,7 +285,12 @@ of random data. Use fabricators in your seeds or test cases to stage fake data f
 You may use your own custom models by ensuring they implement <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Interfaces\FabricatorModel</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">implements</span> <span class="nx">CodeIgniter\Test\Interfaces\FabricatorModel</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Interfaces\FabricatorModel</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">implements</span> <span class="nx">FabricatorModel</span>
+<span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -341,6 +346,8 @@ to further limit the scope of random data. A fabricator will check its represent
 method where you can define exactly what the faked data should look like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">UserModel</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
@@ -365,7 +372,9 @@ a child class in your test support folder:</p>
 
 <span class="k">namespace</span> <span class="nx">Tests\Support\Models</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">UserFabricator</span> <span class="k">extends</span> <span class="nx">\App\Models\UserModel</span>
+<span class="k">use</span> <span class="nx">App\Models\UserModel</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserFabricator</span> <span class="k">extends</span> <span class="nx">UserModel</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
     <span class="p">{</span>
@@ -553,6 +562,8 @@ Now you want to create fake users but don’t want to assign them to a non-exist
 Your model’s fake method could look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">UserModel</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$table</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
@@ -562,7 +573,7 @@ Your model’s fake method could look like this:</p>
         <span class="k">return</span> <span class="p">[</span>
             <span class="s1">&#39;first&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">,</span>
             <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">,</span>
-            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">)),</span>
+            <span class="s1">&#39;group_id&#39;</span> <span class="o">=&gt;</span> <span class="nb">mt_rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">Fabricator</span><span class="o">::</span><span class="na">getCount</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">)),</span>
         <span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -600,7 +611,7 @@ you deleted a fake item but wanted to track the change.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 

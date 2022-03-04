@@ -480,7 +480,12 @@ a “live” project, but (for example) if you wanted to simulate a filter trigg
 on an unfiltered route you could add it to the Config:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">FilterTestCase</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="k">namespace</span> <span class="nx">CodeIgniter</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\FilterTestTrait</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">FilterTestCase</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">FilterTestTrait</span><span class="p">;</span>
 
@@ -490,7 +495,6 @@ on an unfiltered route you could add it to the Config:</p>
 
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHasFilters</span><span class="p">(</span><span class="s1">&#39;unfiltered/route&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
     <span class="p">}</span>
-
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -553,12 +557,22 @@ method using these properties to test your Filter code safely and check the resu
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
-    <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">&#39;MayEditWidgets&#39;</span><span class="p">);</span>
+<span class="k">namespace</span> <span class="nx">CodeIgniter</span><span class="p">;</span>
 
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\RedirectResponse&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\FilterTestTrait</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">FilterTestCase</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">FilterTestTrait</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">testUnauthorizedAccessRedirects</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$caller</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getFilterCaller</span><span class="p">(</span><span class="s1">&#39;permission&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">);</span>
+        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$caller</span><span class="p">(</span><span class="s1">&#39;MayEditWidgets&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\HTTP\RedirectResponse&#39;</span><span class="p">,</span> <span class="nv">$result</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -614,7 +628,7 @@ to streamline your test methods.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 

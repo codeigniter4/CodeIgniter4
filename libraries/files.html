@@ -437,7 +437,9 @@ or retain files matching a certain regex or glob-style pattern:</p>
 predefined collections without having to use their methods. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">class</span> <span class="nc">ConfigCollection</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Files\FileCollection</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Files\FileCollection</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ConfigCollection</span> <span class="k">extends</span> <span class="nx">FileCollection</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">define</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
@@ -514,7 +516,7 @@ outside of <code class="docutils literal notranslate"><span class="pre">$scope</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 

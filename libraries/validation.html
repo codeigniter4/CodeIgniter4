@@ -539,12 +539,18 @@ If you validate it with the <code class="docutils literal notranslate"><span cla
 <p>If you want to use these rules, you need to change the rule classes in <strong>app/Config/Validation.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nx">\CodeIgniter\Validation\StrictRules\CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">\CodeIgniter\Validation\StrictRules\FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">\CodeIgniter\Validation\StrictRules\FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">\CodeIgniter\Validation\StrictRules\Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-<span class="p">];</span>
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Validation</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">\CodeIgniter\Validation\StrictRules\CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\CodeIgniter\Validation\StrictRules\FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\CodeIgniter\Validation\StrictRules\FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\CodeIgniter\Validation\StrictRules\Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -721,6 +727,8 @@ class with the name of your group. This element will hold an array with your val
 rules. As shown earlier, the validation array will have this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$signup</span> <span class="o">=</span> <span class="p">[</span>
@@ -729,6 +737,7 @@ rules. As shown earlier, the validation array will have this prototype:</p>
         <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -743,6 +752,8 @@ property the same as the group, and appended with <code class="docutils literal 
 be used for any errors when this group is used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$signup</span> <span class="o">=</span> <span class="p">[</span>
@@ -751,20 +762,22 @@ be used for any errors when this group is used:</p>
         <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|matches[password]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
     <span class="p">];</span>
-
     <span class="k">public</span> <span class="nv">$signup_errors</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-            <span class="s1">&#39;required&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;You must choose a username.&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must choose a username.&#39;</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;valid_email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Please check the Email field. It does not appear to be valid.&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Or pass all settings in an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
@@ -775,13 +788,14 @@ be used for any errors when this group is used:</p>
                 <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;You must choose a Username.&#39;</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">],</span>
-        <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email&#39;</span><span class="p">,</span>
             <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;valid_email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Please check the Email field. It does not appear to be valid.&#39;</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">],</span>
     <span class="p">];</span>
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1087,11 +1101,17 @@ Inside, you’ll find the <code class="docutils literal notranslate"><span class
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;list&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Validation\Views\list&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;single&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Validation\Views\single&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;my_list&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_errors_list&#39;</span><span class="p">,</span>
-<span class="p">];</span>
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Validation</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$templates</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;list&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Validation\Views\list&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;single&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;CodeIgniter\Validation\Views\single&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;my_list&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_errors_list&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -1115,17 +1135,23 @@ autoloader can find it. These files are called RuleSets. To add a new RuleSet, e
 add the new file to the <code class="docutils literal notranslate"><span class="pre">$ruleSets</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
 <span class="k">use</span> <span class="nx">CodeIgniter\Validation\CreditCardRules</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Validation\FileRules</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Validation\FormatRules</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Validation\Rules</span><span class="p">;</span>
 
-<span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nx">Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-    <span class="nx">CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-<span class="p">];</span>
+<span class="k">class</span> <span class="nc">Validation</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>You can add it as either a simple string with the fully qualified class name, or using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix as
@@ -1148,15 +1174,18 @@ within errors. In custom rules, you may provide error messages by accepting a <c
 second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">public</span> <span class="k">function</span> <span class="nf">even</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$str</span><span class="p">,</span> <span class="nx">string</span> <span class="o">&amp;</span><span class="nv">$error</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
+<span class="k">class</span> <span class="nc">MyRules</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">((</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$str</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nv">$error</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;myerrors.evenError&#39;</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">even</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$str</span><span class="p">,</span> <span class="o">?</span><span class="nx">string</span> <span class="o">&amp;</span><span class="nv">$error</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">((</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$str</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$error</span> <span class="o">=</span> <span class="nx">lang</span><span class="p">(</span><span class="s1">&#39;myerrors.evenError&#39;</span><span class="p">);</span>
 
-        <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
     <span class="p">}</span>
-
-    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1175,37 +1204,40 @@ the parameter string, and an array with all of the data that was submitted the f
 for rules like <code class="docutils literal notranslate"><span class="pre">require_with</span></code> that needs to check the value of another submitted field to base its result on:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">public</span> <span class="k">function</span> <span class="nf">required_with</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$fields</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$data</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
+<span class="k">class</span> <span class="nc">MyRules</span>
 <span class="p">{</span>
-    <span class="nv">$fields</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">required_with</span><span class="p">(</span><span class="nv">$str</span><span class="p">,</span> <span class="nx">string</span> <span class="nv">$fields</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$data</span><span class="p">)</span><span class="o">:</span> <span class="nx">bool</span>
+    <span class="p">{</span>
+        <span class="nv">$fields</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 
-    <span class="c1">// If the field is present we can safely assume that</span>
-    <span class="c1">// the field is here, no matter whether the corresponding</span>
-    <span class="c1">// search field is present or not.</span>
-    <span class="nv">$present</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">required</span><span class="p">(</span><span class="nv">$str</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+        <span class="c1">// If the field is present we can safely assume that</span>
+        <span class="c1">// the field is here, no matter whether the corresponding</span>
+        <span class="c1">// search field is present or not.</span>
+        <span class="nv">$present</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">required</span><span class="p">(</span><span class="nv">$str</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nv">$present</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="c1">// Still here? Then we fail this test if</span>
-    <span class="c1">// any of the fields are present in $data</span>
-    <span class="c1">// as $fields is the lis</span>
-    <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="p">[];</span>
-
-    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">array_key_exists</span><span class="p">(</span><span class="nv">$field</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nv">$requiredFields</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$field</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$present</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
         <span class="p">}</span>
+
+        <span class="c1">// Still here? Then we fail this test if</span>
+        <span class="c1">// any of the fields are present in $data</span>
+        <span class="c1">// as $fields is the lis</span>
+        <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="p">[];</span>
+
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fields</span> <span class="k">as</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">array_key_exists</span><span class="p">(</span><span class="nv">$field</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nv">$requiredFields</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$field</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Remove any keys with empty values since, that means they</span>
+        <span class="c1">// weren&#39;t truly there, as far as this is concerned.</span>
+        <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$item</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="nv">$item</span><span class="p">]);</span>
+        <span class="p">});</span>
+
+        <span class="k">return</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">);</span>
     <span class="p">}</span>
-
-    <span class="c1">// Remove any keys with empty values since, that means they</span>
-    <span class="c1">// weren&#39;t truly there, as far as this is concerned.</span>
-    <span class="nv">$requiredFields</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$item</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="nv">$item</span><span class="p">]);</span>
-    <span class="p">});</span>
-
-    <span class="k">return</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$requiredFields</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1636,7 +1668,7 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 

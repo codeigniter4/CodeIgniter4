@@ -280,16 +280,24 @@ assumed the request is coming from a Bot, and you can throw a <code class="docut
 from the <code class="docutils literal notranslate"><span class="pre">$globals</span></code> array, like:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;honeypot&#39;</span>
-        <span class="c1">// &#39;csrf&#39;,</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;toolbar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;honeypot&#39;</span><span class="p">,</span>
-    <span class="p">],</span>
-<span class="p">];</span>
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;honeypot&#39;</span><span class="p">,</span>
+            <span class="c1">// &#39;csrf&#39;,</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;toolbar&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;honeypot&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">];</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>A sample Honeypot filter is bundled, as <code class="docutils literal notranslate"><span class="pre">system/Filters/Honeypot.php</span></code>.
@@ -321,7 +329,7 @@ and modify the <code class="docutils literal notranslate"><span class="pre">$ali
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 

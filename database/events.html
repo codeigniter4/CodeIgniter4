@@ -284,12 +284,6 @@ potentially missing indexes, slow queries, etc. An example usage might be:</p>
 
 <span class="c1">// In Config\Events.php</span>
 <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter\Debug\Toolbar\Collectors\Database::collect&#39;</span><span class="p">);</span>
-
-<span class="c1">// Collect the queries so something can be done with them later.</span>
-<span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">collect</span><span class="p">(</span><span class="nx">CodeIgniter\Database\Query</span> <span class="nv">$query</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">static</span><span class="o">::</span><span class="nv">$queries</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$query</span><span class="p">;</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -307,7 +301,7 @@ potentially missing indexes, slow queries, etc. An example usage might be:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 03, 2022.
+      <span class="lastupdated">Last updated on Mar 04, 2022.
       </span></p>
   </div>
 
