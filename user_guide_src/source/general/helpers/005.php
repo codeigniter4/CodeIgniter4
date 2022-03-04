@@ -1,1 +1,3 @@
-<?= anchor('blog/comments', 'Click Here');
+<div>
+<?= anchor('blog/comments', 'Click Here') ?>
+</div>
