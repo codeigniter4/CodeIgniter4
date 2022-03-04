@@ -298,7 +298,16 @@ class Model extends BaseModel
         $builder = $this->builder();
 
         if ($id) {
-            $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+            if (is_array($id) && is_array($this->primaryKey)) {
+                for ($index = 0; $index < count($this->primaryKey); $index++) {
+                    $primary_key = $this->primaryKey[$index];
+                    $value = $id[$primary_key];
+                    $full_column = sprintf("%s.%s", $this->table, $primary_key);
+                    $builder = $builder->whereIn($full_column, array($value));
+                }
+            } else {
+                $builder = $builder->whereIn($this->table . '.' . $this->primaryKey, $id);
+            }
         }
 
         // Must use the set() method to ensure to set the correct escape flag
