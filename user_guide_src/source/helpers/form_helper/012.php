@@ -10,6 +10,6 @@ $data = [
 
 echo form_input($data);
 /*
-Would produce:
-<input type="hidden" name="email" value="john@example.com" id="hiddenemail" class="hiddenemail" />
-*/
+ * Would produce:
+ * <input type="hidden" name="email" value="john@example.com" id="hiddenemail" class="hiddenemail" />
+ */

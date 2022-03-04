@@ -14,6 +14,6 @@ class View extends BaseView
 }
 
 /*
-Tag is replaced by the return value of Some\Class::methodName() static function.
-{+ foo +}
-*/
+ * Tag is replaced by the return value of Some\Class::methodName() static function.
+ * {+ foo +}
+ */

@@ -1,15 +1,15 @@
 <?php
 
 /*
-The data to test:
-[
-    'user_ids' => [
-        1,
-        2,
-        3,
-    ]
-]
-*/
+ * The data to test:
+ * [
+ *     'user_ids' => [
+ *         1,
+ *         2,
+ *         3,
+ *     ]
+ * ]
+ */
 
 // Rule
 $validation->setRules([

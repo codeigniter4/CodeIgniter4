@@ -2,6 +2,6 @@
 
 $builder->truncate();
 /*
-Produce:
-TRUNCATE mytable
-*/
+ * Produce:
+ * TRUNCATE mytable
+ */
