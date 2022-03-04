@@ -8,6 +8,6 @@
         'withShadow' => true,
         'hAlign'     => 'center',
         'vAlign'     => 'bottom',
-        'fontSize'   => 20
+        'fontSize'   => 20,
     ])
     ->save('/path/to/new/image.jpg');

@@ -9,13 +9,13 @@ class AddBlog extends Migration
     public function up()
     {
         $this->forge->addField([
-            'blog_id'          => [
+            'blog_id' => [
                 'type'           => 'INT',
                 'constraint'     => 5,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'blog_title'       => [
+            'blog_title' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '100',
             ],

@@ -2,7 +2,7 @@
 
 $tracks = [
     track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
-    track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes')
+    track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes'),
 ];
 
 echo video('test.mp4', 'Your browser does not support the video tag.', 'controls');
@@ -14,13 +14,14 @@ echo video(
     $tracks
 );
 
-echo video([
-    source('movie.mp4', 'video/mp4', 'class="test"'),
-    source('movie.ogg', 'video/ogg'),
-    source('movie.mov', 'video/quicktime'),
-    source('movie.ogv', 'video/ogv; codecs=dirac, speex')
-],
+echo video(
+    [
+        source('movie.mp4', 'video/mp4', 'class="test"'),
+        source('movie.ogg', 'video/ogg'),
+        source('movie.mov', 'video/quicktime'),
+        source('movie.ogv', 'video/ogv; codecs=dirac, speex'),
+    ],
     'Your browser does not support the video tag.',
     'class="test" controls',
     $tracks
- );
+);

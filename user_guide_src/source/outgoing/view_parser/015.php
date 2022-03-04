@@ -10,9 +10,7 @@ class View extends BaseView
 
     public function __construct()
     {
-        $this->plugins['bar'] = static function (array $params = []) {
-            return $params[0] ?? '';
-        };
+        $this->plugins['bar'] = static fn (array $params = []) => $params[0] ?? '';
 
         parent::__construct();
     }

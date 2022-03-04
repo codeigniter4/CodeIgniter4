@@ -1,7 +1,7 @@
 <?php
 
 if ($db->simpleQuery('YOUR QUERY')) {
-    echo "Success!";
+    echo 'Success!';
 } else {
-    echo "Query failed!";
+    echo 'Query failed!';
 }

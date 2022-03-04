@@ -4,7 +4,6 @@
 $routes->set404Override('App\Errors::show404');
 
 // Will display a custom view
-$routes->set404Override(function ()
-{
+$routes->set404Override(static function () {
     echo view('my_errors/not_found.html');
 });

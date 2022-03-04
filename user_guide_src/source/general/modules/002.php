@@ -13,6 +13,6 @@ class Autoload extends AutoloadConfig
         'path/to/my/constants.php',
         'path/to/my/bootstrap.php',
     ];
-    
+
     // ...
 }

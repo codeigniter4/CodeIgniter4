@@ -27,8 +27,6 @@ class BootstrapPublisher extends Publisher
     /**
      * Use the "publish" method to indicate that this
      * class is ready to be discovered and automated.
-     *
-     * @return boolean
      */
     public function publish(): bool
     {

@@ -8,6 +8,6 @@ echo object(
     'class="test"',
     [
         param('foo', 'bar', 'ref', 'class="test"'),
-        param('hello', 'world', 'ref', 'class="test"')
+        param('hello', 'world', 'ref', 'class="test"'),
     ]
 );

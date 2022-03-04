@@ -32,5 +32,5 @@ $default['failover'] = [
         'encrypt'  => false,
         'compress' => false,
         'strictOn' => false,
-    ]
+    ],
 ];

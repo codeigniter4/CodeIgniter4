@@ -1,4 +1,4 @@
 <?php
 
-$foo = cache('foo');
+$foo   = cache('foo');
 $cache = cache();

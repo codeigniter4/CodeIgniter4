@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use Throwable;
 
 class Migrate extends Controller
 {
@@ -12,7 +13,7 @@ class Migrate extends Controller
 
         try {
             $migrate->latest();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             // Do something with the error here...
         }
     }

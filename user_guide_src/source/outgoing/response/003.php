@@ -2,7 +2,7 @@
 
 $data = [
     'success' => true,
-    'id' => 123,
+    'id'      => 123,
 ];
 
 return $this->response->setJSON($data);

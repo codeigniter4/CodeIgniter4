@@ -7,7 +7,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 
 class TestFoo extends CIUnitTestCase
 {
-    use DatabaseTestTrait, FeatureTestTrait;
+    use DatabaseTestTrait;
+    use FeatureTestTrait;
 
     protected function setUp(): void
     {

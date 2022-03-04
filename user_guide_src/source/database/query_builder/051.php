@@ -1,9 +1,7 @@
 <?php
 
 // With closure
-$builder->havingIn('id', function (BaseBuilder $builder) {
-    return $builder->select('user_id')->from('users_jobs')->where('group_id', 3);
-});
+$builder->havingIn('id', static fn (BaseBuilder $builder) => $builder->select('user_id')->from('users_jobs')->where('group_id', 3));
 // Produces: HAVING "id" IN (SELECT "user_id" FROM "users_jobs" WHERE "group_id" = 3)
 
 // With builder directly

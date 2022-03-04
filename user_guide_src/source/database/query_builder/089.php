@@ -1,3 +1,3 @@
 <?php
 
-$builder->update($data, "id = 4");
+$builder->update($data, 'id = 4');

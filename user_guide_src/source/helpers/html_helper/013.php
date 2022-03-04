@@ -20,9 +20,9 @@ $list = [
             'sphere',
         ],
     ],
-    'moods'  => [
+    'moods' => [
         'happy',
-        'upset'   => [
+        'upset' => [
             'defeated' => [
                 'dejected',
                 'disheartened',
@@ -31,8 +31,8 @@ $list = [
             'annoyed',
             'cross',
             'angry',
-        ]
-    ]
+        ],
+    ],
 ];
 
 echo ul($list, $attributes);

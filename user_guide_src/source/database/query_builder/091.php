@@ -1,16 +1,16 @@
 <?php
 
 $data = [
-   [
-      'title' => 'My title' ,
-      'name'  => 'My Name 2' ,
-      'date'  => 'My date 2',
-   ],
-   [
-      'title' => 'Another title' ,
-      'name'  => 'Another Name 2' ,
-      'date'  => 'Another date 2',
-   ],
+    [
+        'title' => 'My title',
+        'name'  => 'My Name 2',
+        'date'  => 'My date 2',
+    ],
+    [
+        'title' => 'Another title',
+        'name'  => 'Another Name 2',
+        'date'  => 'Another date 2',
+    ],
 ];
 
 $builder->updateBatch($data, 'title');

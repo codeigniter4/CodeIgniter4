@@ -1,6 +1,6 @@
 <?php
 
-$query = $db->query("SELECT * FROM blog");
+$query = $db->query('SELECT * FROM blog');
 
 $data = [
     'blog_title'   => 'My Blog Title',
@@ -9,4 +9,4 @@ $data = [
 ];
 
 echo $parser->setData($data)
-            ->render('blog_template');
+    ->render('blog_template');

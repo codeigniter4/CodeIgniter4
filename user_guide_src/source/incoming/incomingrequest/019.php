@@ -1,3 +1,3 @@
 <?php
 
-echo (string)$header;
+echo (string) $header;

@@ -1,3 +1,3 @@
 <?php
 
-$table->setEmpty("&nbsp;");
+$table->setEmpty('&nbsp;');

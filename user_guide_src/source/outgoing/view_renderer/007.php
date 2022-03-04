@@ -1,3 +1,3 @@
 <?php
 
-$view->setData(['name'=>'George', 'position'=>'Boss']);
+$view->setData(['name' => 'George', 'position' => 'Boss']);

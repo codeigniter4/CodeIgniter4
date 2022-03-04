@@ -5,7 +5,7 @@ $data = [
     'id'      => 'newsletter',
     'value'   => 'accept',
     'checked' => true,
-    'style'   => 'margin:10px'
+    'style'   => 'margin:10px',
 ];
 
 echo form_checkbox($data);

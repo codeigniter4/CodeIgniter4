@@ -1,4 +1,4 @@
 <?php
 
 $response->setHeader('Location', 'http://example.com')
-         ->setHeader('WWW-Authenticate', 'Negotiate');
+    ->setHeader('WWW-Authenticate', 'Negotiate');

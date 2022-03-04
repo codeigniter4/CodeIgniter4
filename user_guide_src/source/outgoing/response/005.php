@@ -1,4 +1,4 @@
 <?php
 
 $response->setHeader('Cache-Control', 'no-cache')
-         ->appendHeader('Cache-Control', 'must-revalidate');
+    ->appendHeader('Cache-Control', 'must-revalidate');

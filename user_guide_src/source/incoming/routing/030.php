@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('admin',' AdminController::index', ['filter' => 'admin-auth']);
+$routes->get('admin', ' AdminController::index', ['filter' => 'admin-auth']);

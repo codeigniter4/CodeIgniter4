@@ -2,5 +2,5 @@
 
 [
     'question' => "Is your name O'reilly?",
-    'answer'   => "No, my name is O'connor."
+    'answer'   => "No, my name is O'connor.",
 ];

@@ -3,7 +3,7 @@
 $data = [
     'title' => $title,
     'name'  => $name,
-    'date'  => $date
+    'date'  => $date,
 ];
 
 $db->table('mytable')->insert($data);

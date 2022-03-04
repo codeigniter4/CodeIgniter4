@@ -2,7 +2,7 @@
 
 $table = new \CodeIgniter\View\Table();
 
-$table->setHeading(array('Name', 'Color', 'Size'));
+$table->setHeading(['Name', 'Color', 'Size']);
 
 $table->addRow(['Fred', 'Blue', 'Small']);
 $table->addRow(['Mary', 'Red', 'Large']);

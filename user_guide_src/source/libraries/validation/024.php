@@ -1,6 +1,7 @@
 <?php
 
-$validation->setRules([
+$validation->setRules(
+    [
         'username' => [
             'label'  => 'Username',
             'rules'  => 'required|is_unique[users.username]',
@@ -14,6 +15,6 @@ $validation->setRules([
             'errors' => [
                 'min_length' => 'Your {field} is too short. You want to get hacked?',
             ],
-        ]
+        ],
     ]
 );

@@ -2,7 +2,7 @@
 
 $attributes = [
     'id'    => 'address_info',
-    'class' => 'address_info'
+    'class' => 'address_info',
 ];
 
 echo form_fieldset('Address Information', $attributes);
@@ -11,7 +11,7 @@ echo form_fieldset_close();
 
 ?>
 
-<!-- Produces: --> 
+<!-- Produces: -->
 <fieldset id="address_info" class="address_info">
     <legend>Address Information</legend>
     <p>form content here</p>

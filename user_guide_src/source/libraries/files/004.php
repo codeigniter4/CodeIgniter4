@@ -1,3 +1,3 @@
 <?php
 
-$size     = $file->getSize(); // 256901
+$size = $file->getSize(); // 256901

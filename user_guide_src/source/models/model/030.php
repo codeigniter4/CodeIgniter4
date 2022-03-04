@@ -1,6 +1,6 @@
 <?php
 
-$fieldName = 'name';
+$fieldName              = 'name';
 $fieldValidationMessage = [
     'required' => 'Your name is required here',
 ];

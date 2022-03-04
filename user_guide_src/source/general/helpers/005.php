@@ -1,1 +1,1 @@
-<?= anchor('blog/comments', 'Click Here') ?>
+<?= anchor('blog/comments', 'Click Here');

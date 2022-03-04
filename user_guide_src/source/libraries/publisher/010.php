@@ -28,6 +28,7 @@ class AuthPublish extends BaseCommand
             ])->merge(false); // Be careful not to overwrite anything
         } catch (Throwable $e) {
             $this->showError($e);
+
             return;
         }
 

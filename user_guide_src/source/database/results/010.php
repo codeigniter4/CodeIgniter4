@@ -1,6 +1,6 @@
 <?php
 
-$query = $db->query("YOUR QUERY");
+$query = $db->query('YOUR QUERY');
 
 while ($row = $query->getUnbufferedRow()) {
     echo $row->title;
