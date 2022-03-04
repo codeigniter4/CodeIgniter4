@@ -11,7 +11,6 @@ class SomeHandler extends BaseCast
         var_dump($params);
         /*
             Output:
-
             array(3) {
               [0]=>
               string(13) "App\SomeClass"

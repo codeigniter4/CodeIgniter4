@@ -11,6 +11,7 @@ $sql = $builder->select(['field1','field2'])
 // ...
 
 $data = $builder->get()->getResultArray();
-
-// Would execute and return an array of results of the following query:
-// SELECT field1, field1 from mytable where field3 = 5;
+/*
+Would execute and return an array of results of the following query:
+SELECT field1, field1 from mytable where field3 = 5;
+*/
