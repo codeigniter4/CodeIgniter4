@@ -10,5 +10,6 @@ class Filters extends BaseConfig
         'foo' => ['before' => ['admin/*'], 'after' => ['users/*']],
         'bar' => ['before' => ['api/*', 'admin/*']],
     ];
+
     // ...
 }

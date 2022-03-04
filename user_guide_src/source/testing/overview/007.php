@@ -7,6 +7,7 @@ trait AuthTrait
         $user = $this->createFakeUser();
         $this->logInUser($user);
     }
+
     // ...
 }
 

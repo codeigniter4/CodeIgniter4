@@ -16,5 +16,6 @@ class Filters extends BaseConfig
             'honeypot',
         ],
     ];
+
     // ...
 }

@@ -10,5 +10,6 @@ class Services extends BaseService
     {
         return new \App\Router\MyRouter();
     }
+
     // ...
 }

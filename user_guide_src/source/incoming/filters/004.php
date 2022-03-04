@@ -12,5 +12,6 @@ class Filters extends BaseConfig
             \App\Filters\ApiAuth::class,
         ],
     ];
+
     // ...
 }

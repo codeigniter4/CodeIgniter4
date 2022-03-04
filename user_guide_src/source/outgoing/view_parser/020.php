@@ -12,5 +12,4 @@ $data = [
 ];
 echo $parser->setData($data)
             ->renderString($template);
-
 // Result: Hello, John Doe (Mr{degree} {/degrees})

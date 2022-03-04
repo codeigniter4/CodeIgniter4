@@ -14,5 +14,6 @@ class Services extends BaseService
 
         return new \App\Libraries\RouteCollection(static::locator(), config('Modules'));
     }
+
     // ...
 }

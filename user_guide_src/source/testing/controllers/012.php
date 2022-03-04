@@ -15,5 +15,6 @@ final class FilterTestCase extends CIUnitTestCase
 
         $this->assertHasFilters('unfiltered/route', 'before');
     }
+
     // ...
 }
