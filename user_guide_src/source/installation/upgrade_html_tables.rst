@@ -27,7 +27,7 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-.. literalinclude:: upgrade_html_tables/001.php
+.. literalinclude:: upgrade_html_tables/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------

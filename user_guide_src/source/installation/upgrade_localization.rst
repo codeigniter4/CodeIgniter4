@@ -32,7 +32,7 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-.. literalinclude:: upgrade_localization/002.php
+.. literalinclude:: upgrade_localization/ci3sample/002.php
 
 CodeIgniter Version 4.x
 -----------------------

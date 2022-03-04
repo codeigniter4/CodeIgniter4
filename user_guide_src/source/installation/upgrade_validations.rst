@@ -73,7 +73,7 @@ Path: **application/views**::
 
 Path: **application/controllers**:
 
-.. literalinclude:: upgrade_validations/002.php
+.. literalinclude:: upgrade_validations/ci3sample/002.php
 
 CodeIgniter Version 4.x
 -----------------------

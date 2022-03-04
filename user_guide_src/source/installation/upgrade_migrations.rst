@@ -53,7 +53,7 @@ CodeIgniter Version 3.x
 
 Path: **application/migrations**:
 
-.. literalinclude:: upgrade_migrations/001.php
+.. literalinclude:: upgrade_migrations/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------

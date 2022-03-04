@@ -36,7 +36,7 @@ CodeIgniter Version 3.x
 
 Path: **application/views**:
 
-.. literalinclude:: upgrade_views/001.php
+.. literalinclude:: upgrade_views/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------

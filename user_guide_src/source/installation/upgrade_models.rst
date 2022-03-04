@@ -42,7 +42,7 @@ CodeIgniter Version 3.x
 
 Path: **application/models**:
 
-.. literalinclude:: upgrade_models/001.php
+.. literalinclude:: upgrade_models/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------
