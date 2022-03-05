@@ -231,27 +231,39 @@ class Model extends BaseModel
      */
     protected function doInsert(array $data)
     {
-        $escape       = $this->escape;
+        $escape = $this->escape;
         $this->escape = [];
 
-        // Require non empty primaryKey when
-        // not using auto-increment feature
-        if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
-            throw DataException::forEmptyPrimaryKey('insert');
+        if (!$this->useAutoIncrement) {
+            if (is_array($this->primaryKey)) {
+                foreach ($this->primaryKey as $primary_key) {
+                    if (empty($data[$primary_key])) {
+                        throw DataException::forEmptyPrimaryKey('insert');
+                    }
+                }
+            } else {
+                if (!is_array($this->primaryKey) && empty($data[$this->primaryKey])) {
+                    throw DataException::forEmptyPrimaryKey('insert');
+                }
+            }
         }
 
         $builder = $this->builder();
 
         // Must use the set() method to ensure to set the correct escape flag
         foreach ($data as $key => $val) {
-            $builder->set($key, $val, $escape[$key] ?? null);
+            $builder->set($key, $val, $escape[$key] ?? NULL);
         }
 
         $result = $builder->insert();
 
         // If insertion succeeded then save the insert ID
         if ($result) {
-            $this->insertID = ! $this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
+            if (is_array($this->primaryKey)) {
+                return FALSE;
+            } else {
+                $this->insertID = !$this->useAutoIncrement ? $data[$this->primaryKey] : $this->db->insertID();
+            }
         }
 
         return $result;
