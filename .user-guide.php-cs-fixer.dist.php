@@ -26,6 +26,7 @@ $finder = Finder::create()
     ->notPath([
         'ci3sample/',
         'libraries/sessions/017.php',
+        'database/query_builder/074.php',
     ]);
 
 $overrides = [
