@@ -2,11 +2,11 @@
 
 $builder->select('*')->from('my_table')
     ->groupStart()
-    ->where('a', 'a')
-    ->orGroupStart()
-    ->where('b', 'b')
-    ->where('c', 'c')
-    ->groupEnd()
+        ->where('a', 'a')
+        ->orGroupStart()
+            ->where('b', 'b')
+            ->where('c', 'c')
+        ->groupEnd()
     ->groupEnd()
     ->where('d', 'd')
     ->get();
