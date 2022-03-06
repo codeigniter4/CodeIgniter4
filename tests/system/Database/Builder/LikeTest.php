@@ -183,4 +183,27 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5775
+     */
+    public function testDBPrefixAndCoulmnWithTablename()
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'db_']);
+        $builder  = new BaseBuilder('test', $this->db);
+
+        $builder->like('test.field', 'string');
+
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "db_test" WHERE "db_test"."field" LIKE '%string%' ESCAPE '!'
+            SQL;
+        $expectedBinds = [
+            'test.field' => [
+                '%string%',
+                true,
+            ],
+        ];
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
 }
