@@ -962,8 +962,9 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param array|string $item
-     * @param bool         $prefixSingle Prefix an item with no segments?
-     * @param bool         $fieldExists  Supplied $item contains a field name?
+     * @param bool         $prefixSingle       Prefix a table name with no segments?
+     * @param bool         $protectIdentifiers Protect table or column names?
+     * @param bool         $fieldExists        Supplied $item contains a column name?
      *
      * @return array|string
      */
