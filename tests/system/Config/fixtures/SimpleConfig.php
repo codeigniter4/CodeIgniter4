@@ -48,4 +48,7 @@ class SimpleConfig extends \CodeIgniter\Config\BaseConfig
     public $one_deep = [
         'under_deep' => null,
     ];
+    public $float    = 12.34;
+    public $int      = 1234;
+    public $password = 'secret';
 }
