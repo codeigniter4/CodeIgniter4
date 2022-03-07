@@ -357,9 +357,14 @@ class RouteCollection implements RouteCollectionInterface
         if ($this->moduleConfig->shouldDiscover('routes')) {
             $files = $this->fileLocator->search('Config/Routes.php');
 
+            $excludes = [
+                APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
+                SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
+            ];
+
             foreach ($files as $file) {
                 // Don't include our main file again...
-                if ($file === APPPATH . 'Config/Routes.php') {
+                if (in_array($file, $excludes, true)) {
                     continue;
                 }
 
