@@ -321,13 +321,13 @@ as <strong>2022-01-31-013057_AddBlog.php</strong>.</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forge</span><span class="o">-&gt;</span><span class="na">addField</span><span class="p">([</span>
-            <span class="s1">&#39;blog_id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;blog_id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
                 <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
                 <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="p">],</span>
-            <span class="s1">&#39;blog_title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;blog_title&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
             <span class="p">],</span>
@@ -373,7 +373,7 @@ To temporarily bypass the foreign key checks while running migrations, use the <
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">disableForeignKeyChecks</span><span class="p">();</span>
 
         <span class="c1">// Migration rules would go here..</span>
-        
+
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">enableForeignKeyChecks</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -443,6 +443,7 @@ to update the schema:</p>
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Controller</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Throwable</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Migrate</span> <span class="k">extends</span> <span class="nx">Controller</span>
 <span class="p">{</span>
@@ -452,7 +453,7 @@ to update the schema:</p>
 
         <span class="k">try</span> <span class="p">{</span>
             <span class="nv">$migrate</span><span class="o">-&gt;</span><span class="na">latest</span><span class="p">();</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">Throwable</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// Do something with the error here...</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -724,7 +725,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

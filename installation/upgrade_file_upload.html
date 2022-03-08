@@ -347,8 +347,8 @@ To store the file you could use <code class="docutils literal notranslate"><span
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">Upload</span> <span class="k">extends</span> <span class="nx">BaseController</span> <span class="p">{</span>
-
+<span class="k">class</span> <span class="nc">Upload</span> <span class="k">extends</span> <span class="nx">BaseController</span>
+<span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39; &#39;</span><span class="p">]);</span>
@@ -359,13 +359,13 @@ To store the file you could use <code class="docutils literal notranslate"><span
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
             <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;uploaded[userfile]|max_size[userfile,100]&#39;</span>
                            <span class="o">.</span> <span class="s1">&#39;|mime_in[userfile,image/png,image/jpg,image/gif]&#39;</span>
-                           <span class="o">.</span> <span class="s1">&#39;|ext_in[userfile,png,jpg,gif]|max_dims[userfile,1024,768]&#39;</span>
+                           <span class="o">.</span> <span class="s1">&#39;|ext_in[userfile,png,jpg,gif]|max_dims[userfile,1024,768]&#39;</span><span class="p">,</span>
         <span class="p">]);</span>
 
         <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$path</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;upload failed&quot;</span><span class="p">]);</span>
+            <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;upload failed&#39;</span><span class="p">]);</span>
         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
             <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;upload_file_path&#39;</span> <span class="o">=&gt;</span> <span class="nv">$path</span><span class="p">];</span>
 
@@ -391,7 +391,7 @@ To store the file you could use <code class="docutils literal notranslate"><span
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

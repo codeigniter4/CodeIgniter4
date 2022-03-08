@@ -294,7 +294,7 @@ keep the best user experience for your users.</p>
 execution is then sent to the error handler which displays the appropriate error page:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s2">&quot;Some message goes here&quot;</span><span class="p">);</span>
+<span class="k">throw</span> <span class="k">new</span> <span class="nx">\Exception</span><span class="p">(</span><span class="s1">&#39;Some message goes here&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you are calling a method that might throw an exception, you can catch that exception using a <code class="docutils literal notranslate"><span class="pre">try/catch</span></code> block:</p>
@@ -303,7 +303,7 @@ execution is then sent to the error handler which displays the appropriate error
 <span class="k">try</span> <span class="p">{</span>
     <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
+    <span class="k">exit</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -452,7 +452,7 @@ redirect code to use instead of the default (<code class="docutils literal notra
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

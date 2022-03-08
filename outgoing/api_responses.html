@@ -500,6 +500,7 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondCreated</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -523,6 +524,7 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondDeleted</span><span class="p">([</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$id</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -546,6 +548,7 @@ meaningful reply to send back to the client, typically 204.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">respondNoContent</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -757,7 +760,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

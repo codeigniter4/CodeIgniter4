@@ -344,7 +344,7 @@ arrays are used:</p>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">();</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">));</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setHeading</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Color&#39;</span><span class="p">,</span> <span class="s1">&#39;Size&#39;</span><span class="p">]);</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Fred&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">]);</span>
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">addRow</span><span class="p">([</span><span class="s1">&#39;Mary&#39;</span><span class="p">,</span> <span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">]);</span>
@@ -361,38 +361,38 @@ specify the design of your layout. Here is the template prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;0&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;0&quot; cellpadding=&quot;4&quot; cellspacing=&quot;0&quot;&gt;&#39;</span><span class="p">,</span>
 
-    <span class="s1">&#39;thead_open&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;&lt;thead&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;thead_close&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/thead&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;thead_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;thead&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;thead_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/thead&gt;&#39;</span><span class="p">,</span>
 
     <span class="s1">&#39;heading_row_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;heading_row_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;heading_cell_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;th&gt;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;heading_cell_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/th&gt;&#39;</span><span class="p">,</span>
 
-    <span class="s1">&#39;tfoot_open&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tfoot&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;tfoot_close&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tfoot&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tfoot_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tfoot&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tfoot_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tfoot&gt;&#39;</span><span class="p">,</span>
 
     <span class="s1">&#39;footing_row_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;footing_row_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;footing_cell_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
     <span class="s1">&#39;footing_cell_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
 
-    <span class="s1">&#39;tbody_open&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tbody&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;tbody_close&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tbody&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tbody_open&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tbody&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tbody_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tbody&gt;&#39;</span><span class="p">,</span>
 
-    <span class="s1">&#39;row_start&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;row_end&#39;</span>            <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_start&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_end&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;row_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;row_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cell_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cell_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
 
-    <span class="s1">&#39;row_alt_start&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;row_alt_end&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_alt_start&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;cell_alt_end&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;row_alt_start&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;row_alt_end&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cell_alt_start&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;td&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cell_alt_end&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span>
 
-    <span class="s1">&#39;table_close&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/table&gt;&#39;</span>
+    <span class="s1">&#39;table_close&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -410,7 +410,7 @@ example, only the table opening tag is being changed:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
+    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -421,7 +421,7 @@ to the Table constructor:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$customSettings</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
+    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\Table</span><span class="p">(</span><span class="nv">$customSettings</span><span class="p">);</span>
@@ -665,7 +665,7 @@ This allows a single array with many elements to be displayed in a table that ha
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span>
+    <span class="s1">&#39;table_open&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setTemplate</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -693,7 +693,7 @@ This allows a single array with many elements to be displayed in a table that ha
 You might, for example, set a non-breaking space:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setEmpty</span><span class="p">(</span><span class="s2">&quot;&amp;nbsp;&quot;</span><span class="p">);</span>
+<span class="nv">$table</span><span class="o">-&gt;</span><span class="na">setEmpty</span><span class="p">(</span><span class="s1">&#39;&amp;nbsp;&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -756,7 +756,7 @@ generated to clear the previous table information.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

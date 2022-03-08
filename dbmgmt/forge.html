@@ -413,30 +413,30 @@ such as integer.</p></li>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;INT&#39;</span><span class="p">,</span>
         <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
         <span class="s1">&#39;unsigned&#39;</span>       <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-        <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+        <span class="s1">&#39;auto_increment&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;title&#39;</span>       <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;unique&#39;</span>         <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;unique&#39;</span>     <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;author&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span><span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;author&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;VARCHAR&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;default&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;King of Town&#39;</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="s1">&#39;description&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;null&#39;</span>           <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="p">],</span>
-    <span class="s1">&#39;status&#39;</span>      <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;type&#39;</span>           <span class="o">=&gt;</span> <span class="s1">&#39;ENUM&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;constraint&#39;</span>     <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;default&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;ENUM&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;constraint&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">,</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span> <span class="s1">&#39;draft&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;default&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;pending&#39;</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
@@ -637,7 +637,7 @@ number of additional fields.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">addColumn</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="nv">$fields</span><span class="p">);</span>
 <span class="c1">// Executes: ALTER TABLE `table_name` ADD `preferences` TEXT</span>
@@ -650,12 +650,12 @@ number of additional fields.</p>
 
 <span class="c1">// Will place the new column after the `another_field` column:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">]</span>
+    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;another_field&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="c1">// Will place the new column at the start of the table definition:</span>
 <span class="nv">$fields</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]</span>
+    <span class="s1">&#39;preferences&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;TEXT&#39;</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">],</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -981,7 +981,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

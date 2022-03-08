@@ -319,7 +319,7 @@ second parameter:</p>
 <p>You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$overwrite</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;File exists. Overwrite?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;n&#39;</span><span class="p">]);</span>
+<span class="nv">$overwrite</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;File exists. Overwrite?&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter:</p>
@@ -354,9 +354,9 @@ second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$fruit</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">promptByKey</span><span class="p">([</span><span class="s1">&#39;These are your choices:&#39;</span><span class="p">,</span> <span class="s1">&#39;Which would you like?&#39;</span><span class="p">],</span> <span class="p">[</span>
-    <span class="s1">&#39;apple&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The red apple&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;apple&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The red apple&#39;</span><span class="p">,</span>
     <span class="s1">&#39;orange&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The plump orange&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;banana&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The ripe banana&#39;</span>
+    <span class="s1">&#39;banana&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The ripe banana&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 <span class="cm">/*</span>
 <span class="cm"> * These are your choices:</span>
@@ -444,7 +444,7 @@ an EOL after printing. This allows you to create multiple outputs on the same ro
 it inside of a <code class="docutils literal notranslate"><span class="pre">write()</span></code> method to create a string of a different color inside:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;fileA </span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s1">&#39;/path/to/file&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">),</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s2">&quot;fileA </span><span class="se">\t</span><span class="s2">&quot;</span> <span class="o">.</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s1">&#39;/path/to/file&#39;</span><span class="p">,</span> <span class="s1">&#39;white&#39;</span><span class="p">),</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>This example would write a single line to the window, with <code class="docutils literal notranslate"><span class="pre">fileA</span></code> in yellow, followed by a tab, and then
@@ -466,7 +466,7 @@ window and not go off screen:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">CLI</span><span class="o">::</span><span class="na">color</span><span class="p">(</span><span class="s2">&quot;task1</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">);</span>
-<span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="s2">&quot;Some long description goes here that might be longer than the current window.&quot;</span><span class="p">);</span>
+<span class="nx">CLI</span><span class="o">::</span><span class="na">wrap</span><span class="p">(</span><span class="s1">&#39;Some long description goes here that might be longer than the current window.&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>By default, the string will wrap at the terminal width. Windows currently doesn’t provide a way to determine
@@ -569,7 +569,7 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 <span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Updated At&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">];</span>
 <span class="nv">$tbody</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;A great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-15 10:35:02&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Another great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-16 13:46:54&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Another great item title&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-11-16 13:46:54&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
 <span class="p">];</span>
 
 <span class="nx">CLI</span><span class="o">::</span><span class="na">table</span><span class="p">(</span><span class="nv">$tbody</span><span class="p">,</span> <span class="nv">$thead</span><span class="p">);</span>
@@ -613,7 +613,7 @@ waiting for a key press.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

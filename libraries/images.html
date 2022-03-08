@@ -530,7 +530,7 @@ indicated by their extension, ignoring <strong>$imageType</strong></p>
 
 <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">image</span><span class="p">(</span><span class="s1">&#39;imagick&#39;</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">withFile</span><span class="p">(</span><span class="s1">&#39;/path/to/image/mypic.png&#39;</span><span class="p">)</span>
-    <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">112</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">flatten</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">112</span><span class="p">)</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -612,7 +612,7 @@ that allow you to specify how the text should be displayed:</p>
         <span class="s1">&#39;withShadow&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
         <span class="s1">&#39;hAlign&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
         <span class="s1">&#39;vAlign&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;fontSize&#39;</span>   <span class="o">=&gt;</span> <span class="mi">20</span>
+        <span class="s1">&#39;fontSize&#39;</span>   <span class="o">=&gt;</span> <span class="mi">20</span><span class="p">,</span>
     <span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="s1">&#39;/path/to/new/image.jpg&#39;</span><span class="p">);</span>
 </pre></div>
@@ -653,7 +653,7 @@ name of one of the installed system fonts that you wish to use, i.e., Calibri.</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

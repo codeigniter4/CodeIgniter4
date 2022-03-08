@@ -327,7 +327,7 @@ location within the directory, like <code class="docutils literal notranslate"><
 <span class="c1">// Create shared instance with a supplied database connection</span>
 <span class="c1">// When no namespace is given, it will search through all namespaces</span>
 <span class="c1">// the system knows about and attempt to located the UserModel class.</span>
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">);</span>
+<span class="nv">$db</span>        <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">);</span>
 <span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$db</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -542,7 +542,7 @@ time specified in the property name.</p>
 of just one:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If no parameters are passed in, will return all rows in that model’s table, effectively acting
@@ -566,7 +566,7 @@ like <code class="docutils literal notranslate"><span class="pre">findAll()</spa
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                   <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+    <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>You can pass in a limit and offset values as the first and second
@@ -581,7 +581,7 @@ parameters, respectively:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-                  <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+    <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
 </pre></div>
 </div>
 <p><strong>withDeleted()</strong></p>
@@ -650,7 +650,7 @@ update command, with the added benefit of validation, events, etc:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$userModel</span>
-    <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">set</span><span class="p">([</span><span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">])</span>
     <span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span>
 </pre></div>
@@ -700,14 +700,14 @@ simplest, they might look like this:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">property_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$key</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$key</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$key</span><span class="p">};</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">property_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$key</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$key</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$key</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -739,7 +739,7 @@ model’s <code class="docutils literal notranslate"><span class="pre">save()</s
 <span class="nv">$job</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
 
 <span class="c1">// Make some changes</span>
-<span class="nv">$job</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s2">&quot;Foobar&quot;</span><span class="p">;</span>
+<span class="nv">$job</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s1">&#39;Foobar&#39;</span><span class="p">;</span>
 
 <span class="c1">// Save the changes</span>
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$job</span><span class="p">);</span>
@@ -765,7 +765,7 @@ date and time. You can force a permanent delete by setting the second parameter 
 <p>An array of primary keys can be passed in as the first parameter to delete multiple records at once:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>If no parameters are passed in, will act like the Query Builder’s delete method, requiring a where call
@@ -828,7 +828,7 @@ be applied. If you have custom error message that you want to use, place them in
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
+<span class="nv">$fieldName</span>  <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
 <span class="nv">$fieldRules</span> <span class="o">=</span> <span class="s1">&#39;required|alpha_numeric_space|min_length[3]&#39;</span><span class="p">;</span>
 
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationRule</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldRules</span><span class="p">);</span>
@@ -852,7 +852,7 @@ be applied. If you have custom error message that you want to use, place them in
 
 <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|valid_email|is_unique[users.email]&#39;</span><span class="p">,</span>
         <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;We really need your email.&#39;</span><span class="p">,</span>
@@ -880,7 +880,7 @@ be applied. If you have custom error message that you want to use, place them in
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
+<span class="nv">$fieldName</span>              <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
 <span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your name is required here&#39;</span><span class="p">,</span>
 <span class="p">];</span>
@@ -1002,8 +1002,8 @@ that has an id matching the placeholder’s value. Assuming that the form POST d
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$_POST</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo@example.com&#39;</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo@example.com&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -1049,8 +1049,8 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
-      <span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-      <span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -1075,8 +1075,8 @@ very elegant use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span>
-                   <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span><span class="p">)</span>
-                   <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition important">
@@ -1134,7 +1134,7 @@ parameter is a Closure that will be called for each row of data.</p>
 <p>This is best used during cronjobs, data exports, or other large tasks.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">chunk</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">chunk</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// do something.</span>
     <span class="c1">// $data is a single row of data.</span>
 <span class="p">});</span>
@@ -1368,7 +1368,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

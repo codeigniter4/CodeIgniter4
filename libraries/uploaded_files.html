@@ -420,11 +420,10 @@ this code and save it to your <strong>app/Controllers/</strong> directory:</p>
             <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;uploaded_flleinfo&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">File</span><span class="p">(</span><span class="nv">$filepath</span><span class="p">)];</span>
 
             <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The file has already been moved.&#39;</span><span class="p">];</span>
-
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
         <span class="p">}</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The file has already been moved.&#39;</span><span class="p">];</span>
+
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -553,7 +552,7 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$imagefile</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFiles</span><span class="p">())</span> <span class="p">{</span>
-    <span class="k">foreach</span><span class="p">(</span><span class="nv">$imagefile</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$img</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$imagefile</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]</span> <span class="k">as</span> <span class="nv">$img</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$img</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">hasMoved</span><span class="p">())</span> <span class="p">{</span>
             <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
             <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">move</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads&#39;</span><span class="p">,</span> <span class="nv">$newName</span><span class="p">);</span>
@@ -747,7 +746,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

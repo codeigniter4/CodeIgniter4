@@ -415,7 +415,7 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;http://example.com//index.php&quot;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;http://example.com//index.php&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">reduce_double_slashes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in &quot;http://example.com/index.php&quot;</span>
 </pre></div>
 </div>
@@ -442,8 +442,8 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$str</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O\&#39;reilly?&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O\&#39;connor.&quot;</span>
+    <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O</span><span class="se">\\</span><span class="s2">&#39;reilly?&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O</span><span class="se">\\</span><span class="s2">&#39;connor.&quot;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$str</span> <span class="o">=</span> <span class="nx">strip_slashes</span><span class="p">(</span><span class="nv">$str</span><span class="p">);</span>
@@ -454,7 +454,7 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 
 <span class="p">[</span>
     <span class="s1">&#39;question&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Is your name O&#39;reilly?&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span>
+    <span class="s1">&#39;answer&#39;</span>   <span class="o">=&gt;</span> <span class="s2">&quot;No, my name is O&#39;connor.&quot;</span><span class="p">,</span>
 <span class="p">];</span>
 </pre></div>
 </div>
@@ -488,16 +488,16 @@ alias for <code class="docutils literal notranslate"><span class="pre">stripslas
 after each other. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Fred, Bill,, Joe, Jimmy&quot;</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Fred, Bill,, Joe, Jimmy&#39;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
 <p>If the third parameter is set to true it will remove occurrences of the
 character at the beginning and the end of the string. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;,Fred, Bill,, Joe, Jimmy,&quot;</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;,Fred, Bill,, Joe, Jimmy,&#39;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">reduce_multiples</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span> <span class="c1">// results in &quot;Fred, Bill, Joe, Jimmy&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -523,7 +523,7 @@ entities. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">quotes_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joe&amp;#39;s &amp;quot;dinner&amp;quot;&quot;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">quotes_to_entities</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in &quot;Joe&amp;#39;s &amp;quot;dinner&amp;quot;&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -548,7 +548,7 @@ entities. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Joe&#39;s </span><span class="se">\&quot;</span><span class="s2">dinner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">;</span>
-<span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_quotes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">//results in &quot;Joes dinner&quot;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="nx">strip_quotes</span><span class="p">(</span><span class="nv">$string</span><span class="p">);</span> <span class="c1">// results in &quot;Joes dinner&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -574,7 +574,7 @@ entities. Example:</p>
 <p>Truncates a string to the number of <em>words</em> specified. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Here is a nice text string consisting of eleven words.&#39;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">word_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
 <span class="c1">// Returns:  Here is a nice</span>
 </pre></div>
@@ -607,7 +607,7 @@ more or less than what you specify.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string consisting of eleven words.&quot;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Here is a nice text string consisting of eleven words.&#39;</span><span class="p">;</span>
 <span class="nv">$string</span> <span class="o">=</span> <span class="nx">character_limiter</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
 <span class="c1">// Returns:  Here is a nice text string</span>
 </pre></div>
@@ -790,8 +790,8 @@ opening/closing HTML tags you would like the phrase wrapped in.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a nice text string about nothing in particular.&quot;</span><span class="p">;</span>
-<span class="k">echo</span> <span class="nx">highlight_phrase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s2">&quot;nice text&quot;</span><span class="p">,</span> <span class="s1">&#39;&lt;span style=&quot;color:#990000;&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Here is a nice text string about nothing in particular.&#39;</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nx">highlight_phrase</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="s1">&#39;nice text&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;span style=&quot;color:#990000;&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code prints:</p>
@@ -835,7 +835,7 @@ complete words.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$string</span> <span class="o">=</span> <span class="s2">&quot;Here is a simple string of text that will help us demonstrate this function.&quot;</span><span class="p">;</span>
+<span class="nv">$string</span> <span class="o">=</span> <span class="s1">&#39;Here is a simple string of text that will help us demonstrate this function.&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">word_wrap</span><span class="p">(</span><span class="nv">$string</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
@@ -955,7 +955,7 @@ at the end.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

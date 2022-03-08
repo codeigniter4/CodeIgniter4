@@ -489,7 +489,7 @@ logged in user:</p>
 <p>Ensure that an event you expected to be triggered actually was:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$arg</span><span class="p">)</span> <span class="k">use</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
+<span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$arg</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="o">&amp;</span><span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$arg</span><span class="p">;</span>
 <span class="p">});</span>
 
@@ -508,7 +508,7 @@ logged in user:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span> <span class="c1">// in case you want to check the actual body</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s2">&quot;Set-Cookie: foo=bar&quot;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s1">&#39;Set-Cookie: foo=bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
@@ -523,7 +523,7 @@ in PHPunit</a>.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span> <span class="c1">// in case you want to check the actual body</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s2">&quot;Set-Cookie: banana&quot;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s1">&#39;Set-Cookie: banana&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
@@ -711,7 +711,7 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

@@ -282,7 +282,7 @@
 loop, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
@@ -296,7 +296,7 @@ loop, like this:</p>
 as an array of arrays:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
@@ -310,7 +310,7 @@ as an array of arrays:</p>
 instantiate for each result object</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM users;&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM users;&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResult</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$user</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1">// access attributes</span>
@@ -325,7 +325,7 @@ array when no result is produced. Typically you’ll use this in a foreach
 loop, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getResultArray</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
@@ -343,7 +343,7 @@ one row, it returns only the first row. The result is returned as an
 <strong>object</strong>. Here’s a usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getRow</span><span class="p">();</span>
 
@@ -365,8 +365,8 @@ digit in the first parameter:</p>
 to instantiate the row with:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM users LIMIT 1;&quot;</span><span class="p">);</span>
-<span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getRow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM users LIMIT 1;&#39;</span><span class="p">);</span>
+<span class="nv">$row</span>   <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getRow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">);</span>
 
 <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">;</span> <span class="c1">// access attributes</span>
 <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">reverse_name</span><span class="p">();</span> <span class="c1">// or methods defined on the &#39;User&#39; class</span>
@@ -377,7 +377,7 @@ to instantiate the row with:</p>
 Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getRowArray</span><span class="p">();</span>
 
@@ -427,7 +427,7 @@ result in memory as <code class="docutils literal notranslate"><span class="pre"
 it returns the current row and moves the internal data pointer ahead.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="k">while</span> <span class="p">(</span><span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getUnbufferedRow</span><span class="p">())</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nv">$row</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">;</span>
@@ -445,14 +445,13 @@ be aware of the tradeoffs associated with it.</p>
 
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">resultMode</span> <span class="o">=</span> <span class="nx">MYSQLI_USE_RESULT</span><span class="p">;</span> <span class="c1">// for unbuffered results</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
-<span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nx">WRITEPATH</span><span class="o">.</span><span class="s1">&#39;data.csv&#39;</span><span class="p">);</span>
+<span class="nv">$file</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Files\File</span><span class="p">(</span><span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;data.csv&#39;</span><span class="p">);</span>
 
 <span class="nv">$csv</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">openFile</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">);</span>
 
-<span class="k">while</span> <span class="p">(</span><span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getUnbufferedRow</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">))</span>
-<span class="p">{</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getUnbufferedRow</span><span class="p">(</span><span class="s1">&#39;array&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="nv">$csv</span><span class="o">-&gt;</span><span class="na">fputcsv</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -511,8 +510,8 @@ then you should provide a <code class="docutils literal notranslate"><span class
 
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$name</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nv">$name</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$name</span><span class="p">}))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$name</span><span class="p">};</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -527,7 +526,7 @@ The only parameter is the name of the class to instantiate.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="nv">$rows</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getCustomResultObject</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">);</span>
 
@@ -544,7 +543,7 @@ number of the results. The second parameter is the class name to instantiate.</p
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;YOUR QUERY&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">);</span>
 
 <span class="nv">$row</span> <span class="o">=</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">getCustomRowObject</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;User&#39;</span><span class="p">);</span>
 
@@ -1024,7 +1023,7 @@ field meta-data.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

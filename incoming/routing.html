@@ -550,7 +550,7 @@ executed when the user visits that URI. This is handy for quickly executing smal
 a simple view:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nv">$rss</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RSSFeeder</span><span class="p">();</span>
 
     <span class="k">return</span> <span class="nv">$rss</span><span class="o">-&gt;</span><span class="na">feed</span><span class="p">(</span><span class="s1">&#39;general&#39;</span><span class="p">);</span>
@@ -601,7 +601,7 @@ appears prior to the routes defined inside of the group. This allows you to redu
 extensive set of routes that all share the opening string, like when building an admin area:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::index&#39;</span><span class="p">);</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Blog::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
@@ -611,7 +611,7 @@ extensive set of routes that all share the opening string, like when building an
 <p>If you need to assign options to a group, like a <a class="reference internal" href="#assigning-namespace"><span class="std std-ref">Assigning Namespace</span></a>, do it before the callback:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\API\v1&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -621,7 +621,7 @@ extensive set of routes that all share the opening string, like when building an
 run the filter before or after the controller. This is especially handy during authentication or api logging:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;api&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;api-auth&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -630,8 +630,8 @@ run the filter before or after the controller. This is especially handy during a
 <p>It is possible to nest groups within groups for finer organization if you need it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
         <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin\Users::list&#39;</span><span class="p">);</span>
     <span class="p">});</span>
 <span class="p">});</span>
@@ -664,7 +664,7 @@ This can be done with the <code class="docutils literal notranslate"><span class
 routes defined within this closure are only accessible from the given environment:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">environment</span><span class="p">(</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">environment</span><span class="p">(</span><span class="s1">&#39;development&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;builder&#39;</span><span class="p">,</span> <span class="s1">&#39;Tools\Builder::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -686,7 +686,7 @@ should be passed to the route are passed in next:</p>
 
 <span class="cp">?&gt;</span>
 
-<span class="cm">&lt;!-- Generate the relative URL to link to user ID 15, gallery 12: --&gt;</span> 
+<span class="cm">&lt;!-- Generate the relative URL to link to user ID 15, gallery 12: --&gt;</span>
 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">route_to</span><span class="p">(</span><span class="s1">&#39;App\Controllers\Galleries::showUserGallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 <span class="cm">&lt;!-- Result: &#39;/users/15/gallery/12&#39; --&gt;</span>
 </pre></div>
@@ -705,7 +705,7 @@ with the name of the route:</p>
 
 <span class="cp">?&gt;</span>
 
-<span class="cm">&lt;!-- Generate the relative URL to link to user ID 15, gallery 12: --&gt;</span> 
+<span class="cm">&lt;!-- Generate the relative URL to link to user ID 15, gallery 12: --&gt;</span>
 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">route_to</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>View Gallery<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 <span class="cm">&lt;!-- Result: &#39;/users/15/gallery/12&#39; --&gt;</span>
 </pre></div>
@@ -769,7 +769,7 @@ can modify the generated routes, or further restrict them. The <code class="docu
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">([</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;put&#39;</span><span class="p">],</span> <span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">map</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="k">function</span> <span class="p">(){});</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{});</span>
 </pre></div>
 </div>
 <section id="applying-filters">
@@ -794,7 +794,7 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 <p>You specify an alias defined in <strong>app/Config/Filters.php</strong> for the filter value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;admin-auth&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>You may also supply arguments to be passed to the alias filter’s <code class="docutils literal notranslate"><span class="pre">before()</span></code> and <code class="docutils literal notranslate"><span class="pre">after()</span></code> methods:</p>
@@ -807,7 +807,7 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 <p>You specify a filter classname for the filter value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p><strong>Multiple filters</strong></p>
@@ -818,7 +818,7 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 <p>You specify an array for the filter value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin-auth&#39;</span><span class="p">,</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39; AdminController::index&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;filter&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;admin-auth&#39;</span><span class="p">,</span> <span class="nx">\App\Filters\SomeFilter</span><span class="o">::</span><span class="na">class</span><span class="p">]]);</span>
 </pre></div>
 </div>
 </section>
@@ -1025,8 +1025,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="s1">&#39;App\Errors::show404&#39;</span><span class="p">);</span>
 
 <span class="c1">// Will display a custom view</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span>
-<span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">set404Override</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;my_errors/not_found.html&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -1131,7 +1130,7 @@ But <code class="docutils literal notranslate"><span class="pre">[/...]</span></
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

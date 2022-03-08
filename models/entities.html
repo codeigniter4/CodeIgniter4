@@ -376,7 +376,7 @@ instances of our User Entity class instead of an object or array like normal.</p
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
 
 <span class="c1">// Create</span>
-<span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
+<span class="nv">$user</span>           <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Entities\User</span><span class="p">();</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
 <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">email</span>    <span class="o">=</span> <span class="s1">&#39;foo@example.com&#39;</span><span class="p">;</span>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$user</span><span class="p">);</span>
@@ -714,7 +714,7 @@ Let’s say the class will be located in the <strong>app/Entities/Cast</strong> 
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">set</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span>
@@ -858,7 +858,7 @@ attribute to check:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

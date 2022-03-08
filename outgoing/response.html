@@ -316,7 +316,7 @@ as the second parameter of the <code class="docutils literal notranslate"><span 
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;success&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="mi">123</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setJSON</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -335,7 +335,7 @@ prematurely, causing errors, and makes testing possible.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Location&#39;</span><span class="p">,</span> <span class="s1">&#39;http://example.com&#39;</span><span class="p">)</span>
-         <span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Negotiate&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">,</span> <span class="s1">&#39;Negotiate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the header exists and can have more than one value, you may use the <code class="docutils literal notranslate"><span class="pre">appendHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">prependHeader()</span></code>
@@ -344,7 +344,7 @@ of the header, while the second is the value to append or prepend.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;no-cache&#39;</span><span class="p">)</span>
-         <span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;must-revalidate&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">appendHeader</span><span class="p">(</span><span class="s1">&#39;Cache-Control&#39;</span><span class="p">,</span> <span class="s1">&#39;must-revalidate&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Headers can be removed from the response with the <code class="docutils literal notranslate"><span class="pre">removeHeader()</span></code> method, which takes the header name as the only
@@ -372,6 +372,7 @@ handler for that type - it can use it.</p>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;Here is some text!&#39;</span><span class="p">;</span>
 <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;mytext.txt&#39;</span><span class="p">;</span>
+
 <span class="k">return</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">download</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -411,7 +412,7 @@ to set the Cache values to what you need, through the <code class="docutils lite
 <span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;max-age&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
     <span class="s1">&#39;s-maxage&#39;</span> <span class="o">=&gt;</span> <span class="mi">900</span><span class="p">,</span>
-    <span class="s1">&#39;etag&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;abcde&#39;</span>
+    <span class="s1">&#39;etag&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;abcde&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setCache</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
 </pre></div>
@@ -517,7 +518,7 @@ that youtube.com was allowed, and then provide several allowed but reported sour
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://youtube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">reportOnly</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://metube.com&#39;</span><span class="p">);</span> <span class="c1">// allowed but reported</span>
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://ourtube.com&#39;</span><span class="p">,</span><span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">addChildSrc</span><span class="p">(</span><span class="s1">&#39;https://ourtube.com&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// allowed</span>
 </pre></div>
 </div>
 </section>
@@ -644,7 +645,7 @@ will be thrown:</p>
 for a custom status code, you can pass the reason phrase as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="s2">&quot;Tardis initiated&quot;</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="s1">&#39;Tardis initiated&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -854,15 +855,15 @@ parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$cookie</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;The Cookie Name&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;value&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;The Value&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;expire&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;86500&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;domain&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;.some-domain.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;path&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;prefix&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;myprefix_&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;secure&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;The Cookie Name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;The Value&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;expire&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;86500&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;domain&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;.some-domain.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;path&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;prefix&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;myprefix_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;secure&#39;</span>   <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
     <span class="s1">&#39;httponly&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-    <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Lax&#39;</span>
+    <span class="s1">&#39;samesite&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Lax&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
@@ -1015,7 +1016,7 @@ request only.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

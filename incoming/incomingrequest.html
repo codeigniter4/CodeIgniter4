@@ -385,7 +385,7 @@ use data without having to test whether an item exists first. In other words, no
 like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$something</span> <span class="o">=</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">])</span> <span class="o">?</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">:</span> <span class="k">null</span><span class="p">;</span>
+<span class="nv">$something</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">??</span> <span class="k">null</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>With CodeIgniter’s built-in methods you can simply do this:</p>
@@ -541,13 +541,13 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Accept-Encoding: gzip, deflate, sdch</span>
-<span class="k">echo</span> <span class="s1">&#39;Accept-Encoding: &#39;</span><span class="o">.</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;accept-encoding&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s1">&#39;Accept-Encoding: &#39;</span> <span class="o">.</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeaderLine</span><span class="p">(</span><span class="s1">&#39;accept-encoding&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If you need the entire header, with the name and values in a single string, simply cast the header as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span><span class="nv">$header</span><span class="p">;</span>
+<span class="k">echo</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="nv">$header</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -1035,7 +1035,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

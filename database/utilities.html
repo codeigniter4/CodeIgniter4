@@ -274,18 +274,16 @@
 <h2><a class="toc-backref" href="#id1">Get XML FROM Result</a><a class="headerlink" href="#get-xml-from-result" title="Permalink to this headline"></a></h2>
 <p><strong>getXMLFromResult()</strong></p>
 <p>This method returns the xml result from database result. You can do like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>&lt;?php
 
-<span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="k">class</span> <span class="nc">extends</span> <span class="nx">\CodeIgniter\Model</span> <span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
-<span class="p">};</span>
-<span class="nv">$db</span> <span class="o">=</span> <span class="nx">\Closure</span><span class="o">::</span><span class="na">bind</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$model</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">db</span><span class="p">;</span>
-<span class="p">},</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$model</span><span class="p">)(</span><span class="nv">$model</span><span class="p">);</span>
+$model                    = new class () extends \CodeIgniter\Model {
+    protected $table      = &#39;foo&#39;;
+    protected $primaryKey = &#39;id&#39;;
+};
+$db = \Closure::bind(static fn ($model) =&gt; $model-&gt;db, null, $model)($model);
 
-<span class="nv">$util</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nx">\CodeIgniter\Database\Database</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">loadUtils</span><span class="p">(</span><span class="nv">$db</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nv">$util</span><span class="o">-&gt;</span><span class="na">getXMLFromResult</span><span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
+$util = (new \CodeIgniter\Database\Database())-&gt;loadUtils($db);
+echo $util-&gt;getXMLFromResult($model-&gt;get());
 </pre></div>
 </div>
 <p>and it will get the following xml result:</p>
@@ -312,7 +310,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

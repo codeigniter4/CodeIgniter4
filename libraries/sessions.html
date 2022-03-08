@@ -486,7 +486,7 @@ supports this syntax:</p>
 
 <span class="c1">// returns false if the &#39;some_name&#39; item doesn&#39;t exist or is null,</span>
 <span class="c1">// true otherwise:</span>
-<span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;some_name&#39;</span><span class="p">]))</span> <span class="p">{</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -504,7 +504,7 @@ supports this syntax:</p>
 For instance, if the ‘hobbies’ key contains an array of hobbies, you can add a new value onto the array like so:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sport&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;tennis&#39;</span><span class="p">]);</span>
+<span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sport&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;tennis&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </section>
@@ -641,8 +641,8 @@ you want them all to have the same expiry time or not:</p>
 <span class="c1">// &#39;item&#39; will be erased after 300 seconds, while &#39;item2&#39;</span>
 <span class="c1">// will do so after only 240 seconds</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">markAsTempdata</span><span class="p">([</span>
-    <span class="s1">&#39;item&#39;</span>    <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
-    <span class="s1">&#39;item2&#39;</span>    <span class="o">=&gt;</span> <span class="mi">240</span><span class="p">,</span>
+    <span class="s1">&#39;item&#39;</span>  <span class="o">=&gt;</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s1">&#39;item2&#39;</span> <span class="o">=&gt;</span> <span class="mi">240</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -1184,7 +1184,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

@@ -376,7 +376,7 @@ like this:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>View parameters are passed to <code class="docutils literal notranslate"><span class="pre">setData()</span></code> as an associative
@@ -482,7 +482,7 @@ corresponding to your variable pair data. Consider this example:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The value for the pseudo-variable <code class="docutils literal notranslate"><span class="pre">blog_entries</span></code> is a sequential
@@ -493,7 +493,7 @@ multi-dimensional array, you can simply use the database <code class="docutils l
 method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM blog&quot;</span><span class="p">);</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM blog&#39;</span><span class="p">);</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;blog_title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Title&#39;</span><span class="p">,</span>
@@ -502,7 +502,7 @@ method:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>If the array you are trying to loop over contains objects instead of arrays,
@@ -530,7 +530,7 @@ an associative array of values, like a record from a database:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The value for the pseudo-variable <code class="docutils literal notranslate"><span class="pre">blog_entry</span></code> is an associative
@@ -591,10 +591,10 @@ data pairs into the inner substitution.</p>
     <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cascadeData&#39;</span><span class="o">=&gt;</span><span class="k">false</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cascadeData&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 <span class="c1">// Result: {name} lives in Red City on Mars.</span>
 
-<span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cascadeData&#39;</span><span class="o">=&gt;</span><span class="k">true</span><span class="p">]);</span>
+<span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cascadeData&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">]);</span>
 <span class="c1">// Result: George lives in Red City on Mars.</span>
 </pre></div>
 </div>
@@ -619,7 +619,7 @@ blocks must be closed with an <code class="docutils literal notranslate"><span c
 </pre></div>
 </div>
 <p>This simple block is converted to the following during parsing:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$role</span><span class="o">==</span><span class="s1">&#39;admin&#39;</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$role</span> <span class="o">===</span> <span class="s1">&#39;admin&#39;</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
     <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Welcome, Admin!<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 <span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -999,9 +999,7 @@ used within the template file. The value is any valid PHP callable, including st
 
     <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plugins</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-        <span class="p">};</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plugins</span><span class="p">[</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[])</span> <span class="o">=&gt;</span> <span class="nv">$params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
 
         <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">();</span>
     <span class="p">}</span>
@@ -1063,13 +1061,13 @@ template, they are ignored:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;Hello, {firstname} {lastname}&#39;</span><span class="p">;</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nv">$data</span>     <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span>
     <span class="s1">&#39;firstname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span>
+    <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 <span class="c1">// Result: Hello, John Doe</span>
 </pre></div>
 </div>
@@ -1078,13 +1076,13 @@ template, the original pseudo-variable is shown in the result:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;Hello, {firstname} {initials} {lastname}&#39;</span><span class="p">;</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nv">$data</span>     <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;title&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span>
     <span class="s1">&#39;firstname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
     <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 <span class="c1">// Result: Hello, John {initials} Doe</span>
 </pre></div>
 </div>
@@ -1094,7 +1092,7 @@ pair tag, but the closing variable pair tag is not rendered properly:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})&#39;</span><span class="p">;</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nv">$data</span>     <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;degrees&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Mr&#39;</span><span class="p">,</span>
     <span class="s1">&#39;firstname&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span>
     <span class="s1">&#39;lastname&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
@@ -1104,7 +1102,7 @@ pair tag, but the closing variable pair tag is not rendered properly:</p>
     <span class="p">],</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
 <span class="c1">// Result: Hello, John Doe (Mr{degree} {/degrees})</span>
 </pre></div>
 </div>
@@ -1140,23 +1138,23 @@ of in the view.</p>
 using a view fragment:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$temp</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="nv">$temp</span>      <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
 <span class="nv">$template1</span> <span class="o">=</span> <span class="s1">&#39;&lt;li&gt;&lt;a href=&quot;{link}&quot;&gt;{title}&lt;/a&gt;&lt;/li&gt;&#39;</span><span class="p">;</span>
-<span class="nv">$data1</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nv">$data1</span>     <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;First Link&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/first&#39;</span><span class="p">],</span>
     <span class="p">[</span><span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Second Link&#39;</span><span class="p">,</span> <span class="s1">&#39;link&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/second&#39;</span><span class="p">],</span>
 <span class="p">];</span>
 
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$data1</span> <span class="k">as</span> <span class="nv">$menuItem</span><span class="p">){</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$data1</span> <span class="k">as</span> <span class="nv">$menuItem</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$temp</span> <span class="o">.=</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$menuItem</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template1</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="nv">$template2</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul&gt;{menuitems}&lt;/ul&gt;&#39;</span><span class="p">;</span>
-<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nv">$data</span>      <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;menuitems&#39;</span> <span class="o">=&gt;</span> <span class="nv">$temp</span><span class="p">,</span>
 <span class="p">];</span>
 <span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template2</span><span class="p">);</span>
+    <span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template2</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Result:</p>
@@ -1287,7 +1285,7 @@ If ‘raw’, no escaping will happen.</p>
 <p>Sets a single piece of view data:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span><span class="s1">&#39;html&#39;</span><span class="p">);</span>
+<span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setVar</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Supported escape contexts: html, css, js, url, attr or raw.
@@ -1314,7 +1312,7 @@ If ‘raw’, no escaping will happen.</p>
 <p>Override the substitution field delimiters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setDelimiters</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span><span class="s1">&#39;]&#39;</span><span class="p">);</span>
+<span class="nv">$renderer</span><span class="o">-&gt;</span><span class="na">setDelimiters</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1336,7 +1334,7 @@ If ‘raw’, no escaping will happen.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

@@ -326,7 +326,7 @@ directory in the main project root:</p>
         <span class="s1">&#39;Config&#39;</span>      <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Acme&#39;</span>        <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;acme&#39;</span><span class="p">,</span>
     <span class="p">];</span>
-    
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -378,7 +378,7 @@ your classes. All we need to do is provide the list of paths to those files and 
         <span class="s1">&#39;path/to/my/constants.php&#39;</span><span class="p">,</span>
         <span class="s1">&#39;path/to/my/bootstrap.php&#39;</span><span class="p">,</span>
     <span class="p">];</span>
-    
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -412,7 +412,7 @@ file types, including:</p>
         <span class="s1">&#39;Config&#39;</span>      <span class="o">=&gt;</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Acme\Blog&#39;</span>   <span class="o">=&gt;</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;acme/Blog&#39;</span><span class="p">,</span> <span class="c1">// Change</span>
     <span class="p">];</span>
-    
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -443,7 +443,7 @@ by editing the <code class="docutils literal notranslate"><span class="pre">$dis
 <span class="k">class</span> <span class="nc">Modules</span> <span class="k">extends</span> <span class="nx">BaseModules</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$discoverInComposer</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-    
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -496,7 +496,7 @@ but must be specified within the Routes file itself:</p>
 <p>To reduce the amount of typing needed here, the <strong>group</strong> routing feature is helpful:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\Blog\Controllers&#39;</span><span class="p">],</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">group</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;namespace&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\Blog\Controllers&#39;</span><span class="p">],</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$routes</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Blog::index&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -594,7 +594,7 @@ file follows the same directory structures as the main application directory.</p
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

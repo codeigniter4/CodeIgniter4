@@ -299,7 +299,8 @@ are called if you implement your own methods.</p>
 
 <span class="k">class</span> <span class="nc">TestFoo</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
-    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">,</span> <span class="nx">FeatureTestTrait</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
+    <span class="k">use</span> <span class="nx">FeatureTestTrait</span><span class="p">;</span>
 
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
@@ -333,7 +334,7 @@ populated, while a <strong>post</strong> request would have the <strong>$_POST</
 <span class="c1">// Submit a form</span>
 <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">call</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Fred Flintstone&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;flintyfred@example.com&#39;</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;flintyfred@example.com&#39;</span><span class="p">,</span>
 <span class="p">]);</span>
 </pre></div>
 </div>
@@ -455,7 +456,7 @@ how to use this class to perform additional assertions and verification in your 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

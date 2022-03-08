@@ -471,7 +471,7 @@ the page specified by <code class="docutils literal notranslate"><span class="pr
 for complete control over all attributes and values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">];</span>
+<span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="nv">$script</span><span class="p">);</span>
 <span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
@@ -547,9 +547,9 @@ multi-dimensional arrays. Example:</p>
             <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">],</span>
-    <span class="s1">&#39;moods&#39;</span>  <span class="o">=&gt;</span> <span class="p">[</span>
+    <span class="s1">&#39;moods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
         <span class="s1">&#39;happy&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;upset&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;upset&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;defeated&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;dejected&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;disheartened&#39;</span><span class="p">,</span>
@@ -558,8 +558,8 @@ multi-dimensional arrays. Example:</p>
             <span class="s1">&#39;annoyed&#39;</span><span class="p">,</span>
             <span class="s1">&#39;cross&#39;</span><span class="p">,</span>
             <span class="s1">&#39;angry&#39;</span><span class="p">,</span>
-        <span class="p">]</span>
-    <span class="p">]</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">ul</span><span class="p">(</span><span class="nv">$list</span><span class="p">,</span> <span class="nv">$attributes</span><span class="p">);</span>
@@ -658,7 +658,7 @@ source arrays. Example:</p>
 
 <span class="nv">$tracks</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">),</span>
-    <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_yes.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian Yes&#39;</span><span class="p">)</span>
+    <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_yes.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian Yes&#39;</span><span class="p">),</span>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">video</span><span class="p">(</span><span class="s1">&#39;test.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span> <span class="s1">&#39;controls&#39;</span><span class="p">);</span>
@@ -670,16 +670,17 @@ source arrays. Example:</p>
     <span class="nv">$tracks</span>
 <span class="p">);</span>
 
-<span class="k">echo</span> <span class="nx">video</span><span class="p">([</span>
-    <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
-    <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogg&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogg&#39;</span><span class="p">),</span>
-    <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">),</span>
-    <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogv&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogv; codecs=dirac, speex&#39;</span><span class="p">)</span>
-<span class="p">],</span>
+<span class="k">echo</span> <span class="nx">video</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogg&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogg&#39;</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">),</span>
+        <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.ogv&#39;</span><span class="p">,</span> <span class="s1">&#39;video/ogv; codecs=dirac, speex&#39;</span><span class="p">),</span>
+    <span class="p">],</span>
     <span class="s1">&#39;Your browser does not support the video tag.&#39;</span><span class="p">,</span>
     <span class="s1">&#39;class=&quot;test&quot; controls&#39;</span><span class="p">,</span>
     <span class="nv">$tracks</span>
- <span class="p">);</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p>The above code will produce this:</p>
@@ -817,7 +818,7 @@ object data. Example:</p>
     <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">,</span>
     <span class="p">[</span>
         <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
-        <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">)</span>
+        <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="s1">&#39;ref&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">),</span>
     <span class="p">]</span>
 <span class="p">);</span>
 </pre></div>
@@ -1027,7 +1028,7 @@ pulled from <strong>app/Config/DocTypes.php</strong>, or they could be over-ridd
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

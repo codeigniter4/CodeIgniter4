@@ -309,14 +309,14 @@ name:</p>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>             <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                 <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)/edit&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>      <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>   <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">put</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">patch</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -336,7 +336,7 @@ generate update and delete methods that work with HTML forms:</p>
 
 <span class="c1">// The following equivalent routes are created:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)/delete&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>        <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <section id="change-the-controller-used">
@@ -345,7 +345,7 @@ generate update and delete methods that work with HTML forms:</p>
 the controller that should be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">resource</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Would create routes like:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Gallery::index&#39;</span><span class="p">);</span>
@@ -430,15 +430,15 @@ Its usage is similar to the resource routing:</p>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">);</span>
 
 <span class="c1">// Equivalent to the following:</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span>                <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/create&#39;</span><span class="p">,</span>            <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                   <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>   <span class="c1">// alias</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span>                    <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/show/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span>         <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>  <span class="c1">// alias</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/edit/(:segment)&#39;</span><span class="p">,</span>    <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/new&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::new&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::create&#39;</span><span class="p">);</span>   <span class="c1">// alias</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/show/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::show/$1&#39;</span><span class="p">);</span>  <span class="c1">// alias</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/edit/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::edit/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/update/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::update/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/remove/(:segment)&#39;</span><span class="p">,</span>  <span class="s1">&#39;Photos::remove/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos/remove/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::remove/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">post</span><span class="p">(</span><span class="s1">&#39;photos/delete/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Photos::delete/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -461,7 +461,7 @@ controller. You need to distinguish them, for instance:</p>
 the controller that should be used:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">presenter</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;App\Gallery&#39;</span><span class="p">]);</span>
 
 <span class="c1">// Would create routes like:</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;photos&#39;</span><span class="p">,</span> <span class="s1">&#39;App\Gallery::index&#39;</span><span class="p">);</span>
@@ -514,7 +514,6 @@ implement those methods that you want handled:</p>
 
 <span class="k">class</span> <span class="nc">Photos</span> <span class="k">extends</span> <span class="nx">ResourcePresenter</span>
 <span class="p">{</span>
-
     <span class="k">protected</span> <span class="nv">$modelName</span> <span class="o">=</span> <span class="s1">&#39;App\Models\Photos&#39;</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
@@ -657,7 +656,7 @@ and <cite>presenter()</cite> with their corresponding Controller functions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

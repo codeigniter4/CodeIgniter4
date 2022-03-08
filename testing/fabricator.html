@@ -409,13 +409,13 @@ You can check the locale of an existing fabricator using its <code class="docuti
 <p>You might get back something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Maynard&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;king.alford@example.org&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;201-886-0269 x3767&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+<span class="p">[</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Maynard&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;king.alford@example.org&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;201-886-0269 x3767&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">);</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>You can also get a lot of them back by supplying a count:</p>
@@ -439,16 +439,16 @@ to model callbacks, database formatting, and special keys like primary and times
 from <code class="docutils literal notranslate"><span class="pre">create()</span></code> can differ from <code class="docutils literal notranslate"><span class="pre">make()</span></code>. You might get back something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">array</span><span class="p">(</span>
+<span class="p">[</span>
     <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s1">&#39;first&#39;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;Rachel&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;bradley72@gmail.com&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>      <span class="o">=&gt;</span> <span class="s2">&quot;741-241-2356&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span>     <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;first&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Rachel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;bradley72@gmail.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;741-241-2356&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-    <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;2020-05-08 14:52:10&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;2020-05-08 14:52:10&quot;</span><span class="p">,</span>
-<span class="p">);</span>
+    <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2020-05-08 14:52:10&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2020-05-08 14:52:10&#39;</span><span class="p">,</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>Similar to <code class="docutils literal notranslate"><span class="pre">make()</span></code> you can supply a count to insert and return an array of objects:</p>
@@ -483,21 +483,21 @@ you can use <code class="docutils literal notranslate"><span class="pre">setOver
 <p>Now any data generated with <code class="docutils literal notranslate"><span class="pre">make()</span></code> or <code class="docutils literal notranslate"><span class="pre">create()</span></code> will always use “Bobby” for the <code class="docutils literal notranslate"><span class="pre">first</span></code> field:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;latta.kindel@company.org&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;251-806-2169&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+<span class="p">[</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;latta.kindel@company.org&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;251-806-2169&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
-<span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;melissa.strike@fabricon.us&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;525-214-2656 x23546&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+<span class="p">[</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;melissa.strike@fabricon.us&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;525-214-2656 x23546&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">);</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> can take a second parameter to indicate whether this should be a persistent
@@ -512,21 +512,21 @@ override or only for a single action:</p>
 <p>Notice after the first return the fabricator stops using the overrides:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Bobby&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;belingadon142@example.org&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;741-857-1933 x1351&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+<span class="p">[</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Bobby&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;belingadon142@example.org&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;741-857-1933 x1351&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">);</span>
+<span class="p">];</span>
 
-<span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;Hans&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;hoppifur@metraxalon.com&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;487-235-7006&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;http://lorempixel.com/800/400/&quot;</span><span class="p">,</span>
+<span class="p">[</span>
+    <span class="s1">&#39;first&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Hans&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;hoppifur@metraxalon.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phone&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;487-235-7006&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://lorempixel.com/800/400/&#39;</span><span class="p">,</span>
     <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-<span class="p">);</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>If no second parameter is supplied then passed values will persist by default.</p>
@@ -611,7 +611,7 @@ you deleted a fake item but wanted to track the change.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

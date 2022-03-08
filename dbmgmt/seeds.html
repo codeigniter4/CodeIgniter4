@@ -284,11 +284,11 @@ stored within the <strong>app/Database/Seeds</strong> directory. The name of the
     <span class="p">{</span>
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;darth@theempire.com&#39;</span>
+            <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;darth@theempire.com&#39;</span><span class="p">,</span>
         <span class="p">];</span>
 
         <span class="c1">// Simple Queries</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">&quot;INSERT INTO users (username, email) VALUES(:username:, :email:)&quot;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;INSERT INTO users (username, email) VALUES(:username:, :email:)&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 
         <span class="c1">// Using Query Builder</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
@@ -382,7 +382,7 @@ a dedicated controller:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

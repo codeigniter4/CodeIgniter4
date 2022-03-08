@@ -308,14 +308,14 @@ of the functionality described here:</p>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
 
         <span class="c1">// Do something here....</span>
     <span class="p">}</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">tearDown</span><span class="p">();</span>
 
@@ -468,7 +468,7 @@ array with the data to insert into the table.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 

@@ -338,9 +338,9 @@ fetchable results.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">simpleQuery</span><span class="p">(</span><span class="s1">&#39;YOUR QUERY&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s2">&quot;Success!&quot;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;Success!&#39;</span><span class="p">;</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s2">&quot;Query failed!&quot;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s1">&#39;Query failed!&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -415,7 +415,7 @@ that it can escape only string data. It also automatically adds
 single quotes around the data so you don’t have to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO table (title) VALUES(&quot;</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&quot;)&quot;</span><span class="p">;</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO table (title) VALUES(&#39;</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -435,7 +435,7 @@ strings are to be used in LIKE conditions so that LIKE wildcards
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$search</span> <span class="o">=</span> <span class="s1">&#39;20% raise&#39;</span><span class="p">;</span>
-<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT id FROM table WHERE column LIKE &#39;%&quot;</span> <span class="o">.</span>
+<span class="nv">$sql</span>    <span class="o">=</span> <span class="s2">&quot;SELECT id FROM table WHERE column LIKE &#39;%&quot;</span> <span class="o">.</span>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escapeLikeString</span><span class="p">(</span><span class="nv">$search</span><span class="p">)</span> <span class="o">.</span> <span class="s2">&quot;%&#39; ESCAPE &#39;!&#39;&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -454,7 +454,7 @@ condition for you, and so you’ll have to manually do that.</p>
 put the queries together for you. Consider the following example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id = ? AND status = ? AND author = ?&quot;</span><span class="p">;</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;SELECT * FROM some_table WHERE id = ? AND status = ? AND author = ?&#39;</span><span class="p">;</span>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span> <span class="s1">&#39;Rick&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -463,7 +463,7 @@ values in the array in the second parameter of the query function.</p>
 <p>Binding also work with arrays, which will be transformed to IN sets:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?&quot;</span><span class="p">;</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;SELECT * FROM some_table WHERE id IN ? AND status = ? AND author = ?&#39;</span><span class="p">;</span>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span> <span class="s1">&#39;Rick&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
@@ -481,7 +481,7 @@ you can name the bindings, allowing the keys of the values passed in to match
 placeholders in the query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:&quot;</span><span class="p">;</span>
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:&#39;</span><span class="p">;</span>
 <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">,</span> <span class="p">[</span>
     <span class="s1">&#39;id&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
     <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;live&#39;</span><span class="p">,</span>
@@ -527,11 +527,11 @@ run a query. The query is not actually run, and the values don’t matter since 
 as placeholders. This returns a PreparedQuery object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
         <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span>
+        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
     <span class="p">]);</span>
 <span class="p">});</span>
 </pre></div>
@@ -542,8 +542,8 @@ value placeholders:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\Query</span><span class="p">;</span>
 
-<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&quot;</span><span class="p">;</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&#39;</span><span class="p">;</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
 <span class="p">});</span>
@@ -555,8 +555,8 @@ array through in the second parameter:</p>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Database\Query</span><span class="p">;</span>
 
-<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&quot;</span><span class="p">;</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO user (name, email, country) VALUES (?, ?, ?)&#39;</span><span class="p">;</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">Query</span><span class="p">(</span><span class="nv">$db</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">setQuery</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
 <span class="p">},</span> <span class="nv">$options</span><span class="p">);</span>
@@ -572,11 +572,11 @@ query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Prepare the Query</span>
-<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
+<span class="nv">$pQuery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([</span>
         <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
         <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span>
+        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;US&#39;</span><span class="p">,</span>
     <span class="p">]);</span>
 <span class="p">});</span>
 
@@ -713,7 +713,7 @@ parameter is the value you want it replaced with:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 04, 2022.
+      <span class="lastupdated">Last updated on Mar 08, 2022.
       </span></p>
   </div>
 
