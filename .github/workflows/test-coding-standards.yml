@@ -56,3 +56,6 @@ jobs:
 
       - name: Run lint on `system/`, `tests`, `utils/`, and root PHP files
         run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --using-cache=no --diff
+
+      - name: Run lint on `user_guide_src/source/`
+        run: vendor/bin/php-cs-fixer fix --verbose --ansi --dry-run --config=.user-guide.php-cs-fixer.dist.php --using-cache=no --diff
