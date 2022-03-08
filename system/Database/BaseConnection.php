@@ -962,8 +962,9 @@ abstract class BaseConnection implements ConnectionInterface
      * the correct identifiers.
      *
      * @param array|string $item
-     * @param bool         $prefixSingle Prefix an item with no segments?
-     * @param bool         $fieldExists  Supplied $item contains a field name?
+     * @param bool         $prefixSingle       Prefix a table name with no segments?
+     * @param bool         $protectIdentifiers Protect table or column names?
+     * @param bool         $fieldExists        Supplied $item contains a column name?
      *
      * @return array|string
      */
@@ -1021,8 +1022,7 @@ abstract class BaseConnection implements ConnectionInterface
             //
             // NOTE: The ! empty() condition prevents this method
             // from breaking when QB isn't enabled.
-            $firstSegment = trim($parts[0], $this->escapeChar);
-            if (! empty($this->aliasedTables) && in_array($firstSegment, $this->aliasedTables, true)) {
+            if (! empty($this->aliasedTables) && in_array($parts[0], $this->aliasedTables, true)) {
                 if ($protectIdentifiers === true) {
                     foreach ($parts as $key => $val) {
                         if (! in_array($val, $this->reservedIdentifiers, true)) {

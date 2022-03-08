@@ -1051,7 +1051,7 @@ class BaseBuilder
                 $bind = $this->setBind($k, "%{$v}%", $escape);
             }
 
-            $likeStatement = $this->_like_statement($prefix, $this->db->protectIdentifiers($k, false, $escape), $not, $bind, $insensitiveSearch);
+            $likeStatement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
 
             // some platforms require an escape sequence definition for LIKE wildcards
             if ($escape === true && $this->db->likeEscapeStr !== '') {
@@ -1073,7 +1073,7 @@ class BaseBuilder
     protected function _like_statement(?string $prefix, string $column, ?string $not, string $bind, bool $insensitiveSearch = false): string
     {
         if ($insensitiveSearch === true) {
-            return "{$prefix} LOWER({$column}) {$not} LIKE :{$bind}:";
+            return "{$prefix} LOWER(" . $this->db->escapeIdentifiers($column) . ") {$not} LIKE :{$bind}:";
         }
 
         return "{$prefix} {$column} {$not} LIKE :{$bind}:";
