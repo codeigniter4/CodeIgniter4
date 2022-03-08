@@ -1,3 +1,3 @@
 <?php
 
-$userModel->delete([1,2,3]);
+$userModel->delete([1, 2, 3]);

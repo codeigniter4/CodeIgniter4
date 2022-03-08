@@ -1,3 +1,3 @@
 <?php
 
-$renderer->setDelimiters('[',']');
+$renderer->setDelimiters('[', ']');

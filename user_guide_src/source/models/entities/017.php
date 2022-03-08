@@ -9,7 +9,7 @@ class CastBase64 extends BaseCast
 {
     public static function get($value, array $params = [])
     {
-        return base64_decode($value);
+        return base64_decode($value, true);
     }
 
     public static function set($value, array $params = [])

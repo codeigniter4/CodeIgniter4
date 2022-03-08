@@ -8,4 +8,4 @@ return [
 ];
 
 // Displays "I have 3 apples."
-echo lang('Tests.apples', [ 3 ]);
+echo lang('Tests.apples', [3]);

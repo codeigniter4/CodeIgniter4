@@ -1,3 +1,3 @@
 <?php
 
-$view->setVar('name','Joe','html');
+$view->setVar('name', 'Joe', 'html');

@@ -1,5 +1,5 @@
 <?php
 
 $view->setVar('one', $one)
-     ->setVar('two', $two)
-     ->render('myView');
+    ->setVar('two', $two)
+    ->render('myView');

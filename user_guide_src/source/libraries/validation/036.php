@@ -28,9 +28,7 @@ class MyRules
 
         // Remove any keys with empty values since, that means they
         // weren't truly there, as far as this is concerned.
-        $requiredFields = array_filter($requiredFields, static function ($item) use ($data) {
-            return ! empty($data[$item]);
-        });
+        $requiredFields = array_filter($requiredFields, static fn ($item) => ! empty($data[$item]));
 
         return empty($requiredFields);
     }

@@ -39,10 +39,9 @@ class Upload extends BaseController
             $data = ['uploaded_flleinfo' => new File($filepath)];
 
             return view('upload_success', $data);
-        } else {
-            $data = ['errors' => 'The file has already been moved.'];
-
-            return view('upload_form', $data);
         }
+        $data = ['errors' => 'The file has already been moved.'];
+
+        return view('upload_form', $data);
     }
 }

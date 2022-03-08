@@ -3,8 +3,7 @@
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Publisher\Publisher;
 
-foreach (Publisher::discover() as $publisher)
-{
+foreach (Publisher::discover() as $publisher) {
     $result = $publisher->publish();
 
     if ($result === false) {

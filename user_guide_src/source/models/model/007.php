@@ -1,3 +1,3 @@
 <?php
 
-$users = $userModel->find([1,2,3]);
+$users = $userModel->find([1, 2, 3]);

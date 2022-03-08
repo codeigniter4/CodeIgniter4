@@ -1,3 +1,3 @@
 <?php
 
-$session->push('hobbies', ['sport'=>'tennis']);
+$session->push('hobbies', ['sport' => 'tennis']);

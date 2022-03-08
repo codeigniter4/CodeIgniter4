@@ -1,9 +1,9 @@
 <?php
 
 // Note that the second parameter of the ``get_compiled_select`` method is false
-$sql = $builder->select(['field1','field2'])
-               ->where('field3',5)
-               ->getCompiledSelect(false);
+$sql = $builder->select(['field1', 'field2'])
+    ->where('field3', 5)
+    ->getCompiledSelect(false);
 
 // ...
 // Do something crazy with the SQL code... like add it to a cron script for

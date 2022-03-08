@@ -1,4 +1,4 @@
 <?php
 
-$query  = $db->query("YOUR QUERY");
+$query  = $db->query('YOUR QUERY');
 $fields = $query->fieldData();

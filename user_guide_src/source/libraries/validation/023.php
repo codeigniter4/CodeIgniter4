@@ -1,8 +1,9 @@
 <?php
 
-$validation->setRules([
+$validation->setRules(
+    [
         'username' => 'required|is_unique[users.username]',
-        'password' => 'required|min_length[10]'
+        'password' => 'required|min_length[10]',
     ],
     [   // Errors
         'username' => [

@@ -1,6 +1,6 @@
 <?php
 
-$query = $db->query("SELECT * FROM users;");
+$query = $db->query('SELECT * FROM users;');
 
 foreach ($query->getResult('User') as $user) {
     echo $user->name; // access attributes

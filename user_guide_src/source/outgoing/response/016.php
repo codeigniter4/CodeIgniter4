@@ -1,3 +1,3 @@
 <?php
 
-$response->setStatusCode(230, "Tardis initiated");
+$response->setStatusCode(230, 'Tardis initiated');

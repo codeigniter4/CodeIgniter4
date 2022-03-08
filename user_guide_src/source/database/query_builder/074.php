@@ -9,7 +9,7 @@ $builder->select('*')->from('my_table')
         ->groupEnd()
     ->groupEnd()
     ->where('d', 'd')
-->get();
+    ->get();
 /*
  * Generates:
  * SELECT * FROM (`my_table`) WHERE ( `a` = 'a' OR ( `b` = 'b' AND `c` = 'c' ) ) AND `d` = 'd'

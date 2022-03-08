@@ -9,14 +9,14 @@ class MyTests extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         // Do something here....
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 

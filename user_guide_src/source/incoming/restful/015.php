@@ -6,7 +6,6 @@ use CodeIgniter\RESTful\ResourcePresenter;
 
 class Photos extends ResourcePresenter
 {
-
     protected $modelName = 'App\Models\Photos';
 
     public function index()

@@ -1,7 +1,7 @@
 <?php
 
 $template = 'Hello, {firstname} {lastname} ({degrees}{degree} {/degrees})';
-$data = [
+$data     = [
     'degrees'   => 'Mr',
     'firstname' => 'John',
     'lastname'  => 'Doe',
@@ -11,5 +11,5 @@ $data = [
     ],
 ];
 echo $parser->setData($data)
-            ->renderString($template);
+    ->renderString($template);
 // Result: Hello, John Doe (Mr{degree} {/degrees})

@@ -4,5 +4,5 @@ $request = new \CodeIgniter\HTTP\IncomingRequest(new \Config\App(), new URI('htt
 $request->setLocale($locale);
 
 $results = $this->withRequest($request)
-                ->controller(\App\Controllers\ForumController::class)
-                ->execute('showCategories');
+    ->controller(\App\Controllers\ForumController::class)
+    ->execute('showCategories');

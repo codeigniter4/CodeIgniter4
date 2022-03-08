@@ -1,6 +1,6 @@
 <?php
 
 $_POST = [
-    'id' => 4,
+    'id'    => 4,
     'email' => 'foo@example.com',
 ];

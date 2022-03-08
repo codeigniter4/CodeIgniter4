@@ -1,6 +1,7 @@
 <?php
 
-$validation->setRules([
+$validation->setRules(
+    [
         'username' => [
             'label'  => 'Rules.username',
             'rules'  => 'required|is_unique[users.username]',

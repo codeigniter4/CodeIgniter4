@@ -1,5 +1,5 @@
 <?php
 
-$routes->group('api', ['filter' => 'api-auth'], function ($routes) {
+$routes->group('api', ['filter' => 'api-auth'], static function ($routes) {
     $routes->resource('users');
 });

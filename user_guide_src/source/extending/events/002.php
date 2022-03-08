@@ -11,7 +11,6 @@ Events::on('pre_system', [$user, 'some_method']);
 Events::on('pre_system', 'SomeClass::someMethod');
 
 // Use a Closure
-Events::on('pre_system', function (...$params)
-{
+Events::on('pre_system', static function (...$params) {
     // ...
 });

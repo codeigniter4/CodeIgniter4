@@ -1,9 +1,7 @@
 <?php
 
 // With closure
-$builder->whereIn('id', function (BaseBuilder $builder) {
-    return $builder->select('job_id')->from('users_jobs')->where('user_id', 3);
-});
+$builder->whereIn('id', static fn (BaseBuilder $builder) => $builder->select('job_id')->from('users_jobs')->where('user_id', 3));
 // Produces: WHERE "id" IN (SELECT "job_id" FROM "users_jobs" WHERE "user_id" = 3)
 
 // With builder directly

@@ -1,4 +1,4 @@
 <?php
 
-$address['city']    = "Berlin";
-$address['country'] = "Germany";
+$address['city']    = 'Berlin';
+$address['country'] = 'Germany';

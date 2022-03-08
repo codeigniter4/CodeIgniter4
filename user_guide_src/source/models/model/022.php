@@ -4,7 +4,7 @@
 $job = $model->find(15);
 
 // Make some changes
-$job->name = "Foobar";
+$job->name = 'Foobar';
 
 // Save the changes
 $model->save($job);

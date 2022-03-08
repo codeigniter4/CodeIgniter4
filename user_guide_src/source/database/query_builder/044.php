@@ -1,4 +1,4 @@
 <?php
 
-$builder->groupBy("title");
+$builder->groupBy('title');
 // Produces: GROUP BY title

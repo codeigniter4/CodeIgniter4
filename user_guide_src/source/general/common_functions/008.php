@@ -1,4 +1,4 @@
 <?php
 
-$logger = service('logger');
-$renderer = service('renderer', APPPATH.'views/');
+$logger   = service('logger');
+$renderer = service('renderer', APPPATH . 'views/');

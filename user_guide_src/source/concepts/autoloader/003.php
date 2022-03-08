@@ -1,5 +1,5 @@
 <?php
 
 $classmap = [
-    'Markdown' => APPPATH . 'third_party/markdown.php'
+    'Markdown' => APPPATH . 'third_party/markdown.php',
 ];

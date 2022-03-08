@@ -1,5 +1,5 @@
 <?php
 
 $model->protect(false)
-      ->insert($data)
-      ->protect(true);
+    ->insert($data)
+    ->protect(true);

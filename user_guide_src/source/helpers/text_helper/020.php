@@ -1,6 +1,6 @@
 <?php
 
-$string = "Here is a simple string of text that will help us demonstrate this function.";
+$string = 'Here is a simple string of text that will help us demonstrate this function.';
 echo word_wrap($string, 25);
 /*
  * Would produce:

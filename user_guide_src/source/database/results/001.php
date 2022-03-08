@@ -1,6 +1,6 @@
 <?php
 
-$query = $db->query("YOUR QUERY");
+$query = $db->query('YOUR QUERY');
 
 foreach ($query->getResult() as $row) {
     echo $row->title;
