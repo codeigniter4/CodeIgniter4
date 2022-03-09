@@ -19,7 +19,7 @@ who would like to significantly alter the CodeIgniter core.**
 System Class List
 =================
 
-The following is a list of the core system files that are invoked every time CodeIgniter runs:
+The following is a list of the core system classes that are invoked every time CodeIgniter runs:
 
 *  ``CodeIgniter\Autoloader\Autoloader``
 *  ``CodeIgniter\CodeIgniter``
@@ -48,7 +48,7 @@ Replacing Core Classes
 ======================
 
 To use one of your own system classes instead of a default one, ensure that the :doc:`Autoloader <../concepts/autoloader>`
-can find your class, that your new class extends the appropriate interface, and modify the appropriate
+can find your class, that your new class implements the appropriate interface, and modify the appropriate
 :doc:`Service <../concepts/services>` to load your class in place of the core class.
 
 For example, if you have a new ``App\Libraries\RouteCollection`` class that you would like to use in place of
