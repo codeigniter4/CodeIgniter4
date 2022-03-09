@@ -8,6 +8,10 @@ advantage of preloaded components and any additional functionality you provide:
 
 .. literalinclude:: basecontroller/001.php
 
+.. contents::
+    :local:
+    :depth: 2
+
 Preloading Components
 =====================
 

@@ -11,6 +11,10 @@ Events work on a *publish/subscribe* pattern, where an event, is triggered at so
 Other scripts can "subscribe" to that event by registering with the Events class to let it know they want to perform an
 action when that event is triggered.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Enabling Events
 ===============
 
