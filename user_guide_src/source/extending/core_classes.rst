@@ -21,13 +21,16 @@ System Class List
 
 The following is a list of the core system files that are invoked every time CodeIgniter runs:
 
-* Config\\Services
 * CodeIgniter\\Autoloader\\Autoloader
+* CodeIgniter\\CodeIgniter
 * CodeIgniter\\Config\\DotEnv
+* CodeIgniter\\Config\\Services
 * CodeIgniter\\Controller
 * CodeIgniter\\Debug\\Exceptions
 * CodeIgniter\\Debug\\Timer
 * CodeIgniter\\Events\\Events
+* CodeIgniter\\Filters\\Filters
+* CodeIgniter\\HTTP\\ContentSecurityPolicy
 * CodeIgniter\\HTTP\\CLIRequest (if launched from command line only)
 * CodeIgniter\\HTTP\\IncomingRequest (if launched over HTTP)
 * CodeIgniter\\HTTP\\Request
@@ -39,9 +42,7 @@ The following is a list of the core system files that are invoked every time Cod
 * CodeIgniter\\Log\\Handlers\\FileHandler
 * CodeIgniter\\Router\\RouteCollection
 * CodeIgniter\\Router\\Router
-* CodeIgniter\\Security\\Security
 * CodeIgniter\\View\\View
-* CodeIgniter\\View\\Escaper
 
 Replacing Core Classes
 ======================
