@@ -274,37 +274,45 @@ who would like to significantly alter the CodeIgniter core.</strong></p>
 <p>Messing with a core system class has a lot of implications, so make sure you know what you are doing before
 attempting it.</p>
 </div>
-<section id="system-class-list">
-<h2>System Class List<a class="headerlink" href="#system-class-list" title="Permalink to this headline"></a></h2>
-<p>The following is a list of the core system files that are invoked every time CodeIgniter runs:</p>
+<div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p>Config\Services</p></li>
-<li><p>CodeIgniter\Autoloader\Autoloader</p></li>
-<li><p>CodeIgniter\Config\DotEnv</p></li>
-<li><p>CodeIgniter\Controller</p></li>
-<li><p>CodeIgniter\Debug\Exceptions</p></li>
-<li><p>CodeIgniter\Debug\Timer</p></li>
-<li><p>CodeIgniter\Events\Events</p></li>
-<li><p>CodeIgniter\HTTP\CLIRequest (if launched from command line only)</p></li>
-<li><p>CodeIgniter\HTTP\IncomingRequest (if launched over HTTP)</p></li>
-<li><p>CodeIgniter\HTTP\Request</p></li>
-<li><p>CodeIgniter\HTTP\Response</p></li>
-<li><p>CodeIgniter\HTTP\Message</p></li>
-<li><p>CodeIgniter\HTTP\URI</p></li>
-<li><p>CodeIgniter\Log\Logger</p></li>
-<li><p>CodeIgniter\Log\Handlers\BaseHandler</p></li>
-<li><p>CodeIgniter\Log\Handlers\FileHandler</p></li>
-<li><p>CodeIgniter\Router\RouteCollection</p></li>
-<li><p>CodeIgniter\Router\Router</p></li>
-<li><p>CodeIgniter\Security\Security</p></li>
-<li><p>CodeIgniter\View\View</p></li>
-<li><p>CodeIgniter\View\Escaper</p></li>
+<li><p><a class="reference internal" href="#system-class-list" id="id1">System Class List</a></p></li>
+<li><p><a class="reference internal" href="#replacing-core-classes" id="id2">Replacing Core Classes</a></p></li>
+<li><p><a class="reference internal" href="#extending-core-classes" id="id3">Extending Core Classes</a></p></li>
+</ul>
+</div>
+<section id="system-class-list">
+<h2><a class="toc-backref" href="#id1">System Class List</a><a class="headerlink" href="#system-class-list" title="Permalink to this headline"></a></h2>
+<p>The following is a list of the core system classes that are invoked every time CodeIgniter runs:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Autoloader\Autoloader</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\DotEnv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\Services</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Timer</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\Filters</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\ContentSecurityPolicy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\CLIRequest</span></code> (if launched from command line only)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\IncomingRequest</span></code> (if launched over HTTP)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\URI</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\Logger</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\Handlers\BaseHandler</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\Handlers\FileHandler</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\View</span></code></p></li>
 </ul>
 </section>
 <section id="replacing-core-classes">
-<h2>Replacing Core Classes<a class="headerlink" href="#replacing-core-classes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Replacing Core Classes</a><a class="headerlink" href="#replacing-core-classes" title="Permalink to this headline"></a></h2>
 <p>To use one of your own system classes instead of a default one, ensure that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a>
-can find your class, that your new class extends the appropriate interface, and modify the appropriate
+can find your class, that your new class implements the appropriate interface, and modify the appropriate
 <a class="reference internal" href="../concepts/services.html"><span class="doc">Service</span></a> to load your class in place of the core class.</p>
 <p>For example, if you have a new <code class="docutils literal notranslate"><span class="pre">App\Libraries\RouteCollection</span></code> class that you would like to use in place of
 the core system class, you would create your class like this:</p>
@@ -344,14 +352,14 @@ the core system class, you would create your class like this:</p>
 </div>
 </section>
 <section id="extending-core-classes">
-<h2>Extending Core Classes<a class="headerlink" href="#extending-core-classes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Extending Core Classes</a><a class="headerlink" href="#extending-core-classes" title="Permalink to this headline"></a></h2>
 <p>If all you need to is add some functionality to an existing library - perhaps add a method or two - then it’s overkill
 to recreate the entire library. In this case, it’s better to simply extend the class. Extending the class is nearly
 identical to replacing a class with one exception:</p>
 <ul class="simple">
 <li><p>The class declaration must extend the parent class.</p></li>
 </ul>
-<p>For example, to extend the native RouteCollection class, you would declare your class with:</p>
+<p>For example, to extend the native <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code> class, you would declare your class with:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Libraries</span><span class="p">;</span>
@@ -399,7 +407,7 @@ instead of the native ones (this is known as “method overriding”). This allo
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 08, 2022.
+      <span class="lastupdated">Last updated on Mar 09, 2022.
       </span></p>
   </div>
 
