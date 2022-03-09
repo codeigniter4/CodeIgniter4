@@ -21,28 +21,28 @@ System Class List
 
 The following is a list of the core system files that are invoked every time CodeIgniter runs:
 
-* CodeIgniter\\Autoloader\\Autoloader
-* CodeIgniter\\CodeIgniter
-* CodeIgniter\\Config\\DotEnv
-* CodeIgniter\\Config\\Services
-* CodeIgniter\\Controller
-* CodeIgniter\\Debug\\Exceptions
-* CodeIgniter\\Debug\\Timer
-* CodeIgniter\\Events\\Events
-* CodeIgniter\\Filters\\Filters
-* CodeIgniter\\HTTP\\ContentSecurityPolicy
-* CodeIgniter\\HTTP\\CLIRequest (if launched from command line only)
-* CodeIgniter\\HTTP\\IncomingRequest (if launched over HTTP)
-* CodeIgniter\\HTTP\\Request
-* CodeIgniter\\HTTP\\Response
-* CodeIgniter\\HTTP\\Message
-* CodeIgniter\\HTTP\\URI
-* CodeIgniter\\Log\\Logger
-* CodeIgniter\\Log\\Handlers\\BaseHandler
-* CodeIgniter\\Log\\Handlers\\FileHandler
-* CodeIgniter\\Router\\RouteCollection
-* CodeIgniter\\Router\\Router
-* CodeIgniter\\View\\View
+*  ``CodeIgniter\Autoloader\Autoloader``
+*  ``CodeIgniter\CodeIgniter``
+*  ``CodeIgniter\Config\DotEnv``
+*  ``CodeIgniter\Config\Services``
+*  ``CodeIgniter\Controller``
+*  ``CodeIgniter\Debug\Exceptions``
+*  ``CodeIgniter\Debug\Timer``
+*  ``CodeIgniter\Events\Events``
+*  ``CodeIgniter\Filters\Filters``
+*  ``CodeIgniter\HTTP\ContentSecurityPolicy``
+*  ``CodeIgniter\HTTP\CLIRequest`` (if launched from command line only)
+*  ``CodeIgniter\HTTP\IncomingRequest`` (if launched over HTTP)
+*  ``CodeIgniter\HTTP\Request``
+*  ``CodeIgniter\HTTP\Response``
+*  ``CodeIgniter\HTTP\Message``
+*  ``CodeIgniter\HTTP\URI``
+*  ``CodeIgniter\Log\Logger``
+*  ``CodeIgniter\Log\Handlers\BaseHandler``
+*  ``CodeIgniter\Log\Handlers\FileHandler``
+*  ``CodeIgniter\Router\RouteCollection``
+*  ``CodeIgniter\Router\Router``
+*  ``CodeIgniter\View\View``
 
 Replacing Core Classes
 ======================
@@ -69,7 +69,7 @@ identical to replacing a class with one exception:
 
 * The class declaration must extend the parent class.
 
-For example, to extend the native RouteCollection class, you would declare your class with:
+For example, to extend the native ``RouteCollection`` class, you would declare your class with:
 
 .. literalinclude:: core_classes/003.php
 
