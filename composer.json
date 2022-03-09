@@ -62,10 +62,12 @@
         "analyze": "phpstan analyse",
         "test": "phpunit",
         "cs": [
+            "php-cs-fixer fix --verbose --dry-run --diff --config=.user-guide.php-cs-fixer.dist.php",
             "php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php",
             "php-cs-fixer fix --verbose --dry-run --diff"
         ],
         "cs-fix": [
+            "php-cs-fixer fix --verbose --diff --config=.user-guide.php-cs-fixer.dist.php",
             "php-cs-fixer fix --verbose --diff --config=.no-header.php-cs-fixer.dist.php",
             "php-cs-fixer fix --verbose --diff"
         ]
