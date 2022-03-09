@@ -12,6 +12,10 @@ who would like to significantly alter the CodeIgniter core.**
 .. note:: Messing with a core system class has a lot of implications, so make sure you know what you are doing before
     attempting it.
 
+.. contents::
+    :local:
+    :depth: 2
+
 System Class List
 =================
 
