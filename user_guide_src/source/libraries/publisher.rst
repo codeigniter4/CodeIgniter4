@@ -80,6 +80,7 @@ In order to prevent modules from injecting malicious code into your projects, ``
 that defines which directories and file patterns are allowed as destinations. By default, files may only be published
 to your project (to prevent access to the rest of the filesystem), and the **public/** folder (``FCPATH``) will only
 receive files with the following extensions:
+
 * Web assets: css, scss, js, map
 * Non-executable web files: htm, html, xml, json, webmanifest
 * Fonts: tff, eot, woff
