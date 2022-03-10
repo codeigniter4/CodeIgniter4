@@ -84,7 +84,7 @@ receive files with the following extensions:
 * Web assets: css, scss, js, map
 * Non-executable web files: htm, html, xml, json, webmanifest
 * Fonts: tff, eot, woff
-* Images: gif, jpg, jpeg, tiff, png, webp, bmp, ico, svg
+* Images: gif, jpg, jpeg, tif, tiff, png, webp, bmp, ico, svg
 
 If you need to add or adjust the security for your project then alter the ``$restrictions`` property of ``Config\Publisher`` in **app/Config/Publisher.php**.
 
