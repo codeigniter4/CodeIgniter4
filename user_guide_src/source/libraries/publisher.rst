@@ -86,7 +86,7 @@ receive files with the following extensions:
 * Fonts: tff, eot, woff
 * Images: gif, jpg, jpeg, tiff, png, webp, bmp, ico, svg
 
-If you need to add or adjust the security for your project then alter the ``$restrictions`` property of ``Config\Publisher``.
+If you need to add or adjust the security for your project then alter the ``$restrictions`` property of ``Config\Publisher`` in **app/Config/Publisher.php**.
 
 ********
 Examples
