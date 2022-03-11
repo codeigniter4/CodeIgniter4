@@ -25,7 +25,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 final class PublisherRestrictionsTest extends CIUnitTestCase
 {
     /**
-     * @see Tests\Support\Config\Registrars::Publisher()
+     * @see \Tests\Support\Config\Registrar::Publisher()
      */
     public function testRegistrarsNotAllowed()
     {
