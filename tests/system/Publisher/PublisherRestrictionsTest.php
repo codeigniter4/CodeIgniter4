@@ -69,11 +69,11 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
 
     public function fileProvider()
     {
-        yield 'php' => ['index.php'];
-
-        yield 'exe' => ['cat.exe'];
-
-        yield 'flat' => ['banana'];
+        yield from [
+            'php'  => ['index.php'],
+            'exe'  => ['cat.exe'],
+            'flat' => ['banana'],
+        ];
     }
 
     /**
