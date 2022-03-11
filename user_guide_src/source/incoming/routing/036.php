@@ -1,4 +1,3 @@
 <?php
 
-// Limit to media.example.com
-$routes->get('from', 'to', ['subdomain' => 'media']);
+$routes->get('admin', ' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);

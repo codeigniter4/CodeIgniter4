@@ -1,3 +1,3 @@
 <?php
 
-$file->move(WRITEPATH . 'uploads');
+$path = $this->request->getFile('userfile')->store();

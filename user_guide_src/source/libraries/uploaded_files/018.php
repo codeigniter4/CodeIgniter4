@@ -1,5 +1,5 @@
 <?php
 
-$type = $file->getClientMimeType();
-
-echo $type; // image/png
+if ($file->isValid() && ! $file->hasMoved()) {
+    $file->move($path);
+}

@@ -1,14 +1,10 @@
 <?php
 
-$routes->add('from', 'to', $options);
-$routes->get('from', 'to', $options);
-$routes->post('from', 'to', $options);
-$routes->put('from', 'to', $options);
-$routes->head('from', 'to', $options);
-$routes->options('from', 'to', $options);
-$routes->delete('from', 'to', $options);
-$routes->patch('from', 'to', $options);
-$routes->match(['get', 'put'], 'from', 'to', $options);
-$routes->resource('photos', $options);
-$routes->map($array, $options);
-$routes->group('name', $options, static function () {});
+// The route is defined as:
+$routes->get('users/(:num)/gallery(:any)', 'App\Controllers\Galleries::showUserGallery/$1/$2');
+
+?>
+
+<!-- Generate the relative URL to link to user ID 15, gallery 12: -->
+<a href="<?= route_to('App\Controllers\Galleries::showUserGallery', 15, 12) ?>">View Gallery</a>
+<!-- Result: '/users/15/gallery/12' -->

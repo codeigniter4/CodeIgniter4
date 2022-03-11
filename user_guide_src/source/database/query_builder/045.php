@@ -1,4 +1,4 @@
 <?php
 
-$builder->groupBy(['title', 'date']);
-// Produces: GROUP BY title, date
+$builder->groupBy('title');
+// Produces: GROUP BY title

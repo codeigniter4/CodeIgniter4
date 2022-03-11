@@ -1,4 +1,4 @@
 <?php
 
-$session->keepFlashdata('item');
-$session->keepFlashdata(['item1', 'item2', 'item3']);
+// 'item' will be erased after 300 seconds
+$session->markAsTempdata('item', 300);

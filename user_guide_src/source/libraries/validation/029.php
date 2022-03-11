@@ -1,7 +1,12 @@
-<div class="alert alert-danger" role="alert">
-    <ul>
-    <?php foreach ($errors as $error): ?>
-        <li><?= esc($error) ?></li>
-    <?php endforeach ?>
-    </ul>
-</div>
+<?php
+
+/*
+ * For errors:
+ * [
+ *     'foo.0.bar'   => 'Error',
+ *     'foo.baz.bar' => 'Error',
+ * ]
+ */
+
+// returns true
+$validation->hasError('foo.*.bar');

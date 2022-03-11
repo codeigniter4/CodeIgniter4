@@ -1,3 +1,3 @@
 <?php
 
-echo $builder->countAll(); // Produces an integer, like 25
+echo $builder->countAllResults(false); // Produces an integer, like 17

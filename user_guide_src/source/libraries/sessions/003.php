@@ -1,3 +1,3 @@
 <?php
 
-$session = session();
+session_write_close();

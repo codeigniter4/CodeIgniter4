@@ -1,3 +1,8 @@
 <?php
 
-$routes->get('/', 'Home::index');
+namespace App\Controllers;
+
+class Helloworld extends BaseController
+{
+    // ...
+}

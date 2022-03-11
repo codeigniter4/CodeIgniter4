@@ -2,24 +2,16 @@
 
 namespace App\Controllers;
 
-class StoreController extends BaseController
+class Products extends BaseController
 {
-    public function product(int $id)
+    public function _remap($method, ...$params)
     {
-        $data = [
-            'id'   => $id,
-            'name' => $this->request->getVar('name'),
-        ];
+        $method = 'process_' . $method;
 
-        $rule = [
-            'id'   => 'integer',
-            'name' => 'required|max_length[255]',
-        ];
-
-        if (! $this->validateData($data, $rule)) {
-            // ...
+        if (method_exists($this, $method)) {
+            return $this->{$method}(...$params);
         }
 
-        // ...
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
     }
 }

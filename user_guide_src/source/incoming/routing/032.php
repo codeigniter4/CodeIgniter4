@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('admin', ' AdminController::index', ['filter' => \App\Filters\SomeFilter::class]);
+$routes->cli('migrate', 'App\Database::migrate');

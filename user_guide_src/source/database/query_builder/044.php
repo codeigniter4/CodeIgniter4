@@ -1,4 +1,5 @@
 <?php
 
-$builder->groupBy('title');
-// Produces: GROUP BY title
+$builder->like('title', 'match');
+$builder->orNotLike('body', 'match');
+// WHERE `title` LIKE '%match% OR  `body` NOT LIKE '%match%' ESCAPE '!'

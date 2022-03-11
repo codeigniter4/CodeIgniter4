@@ -1,3 +1,3 @@
 <?php
 
-$session->markAsFlashdata('item');
+$session->markAsFlashdata(['item', 'item2']);

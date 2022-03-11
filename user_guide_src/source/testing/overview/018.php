@@ -6,9 +6,19 @@ final class SomeTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
-        parent::setUp();
+        CITestStreamFilter::$buffer = '';
+        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+    }
 
-        $model = new MockUserModel();
-        Factories::injectMock('models', 'App\Models\UserModel', $model);
+    protected function tearDown(): void
+    {
+        stream_filter_remove($this->stream_filter);
+    }
+
+    public function testSomeOutput(): void
+    {
+        CLI::write('first.');
+        $expected = "first.\n";
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 }

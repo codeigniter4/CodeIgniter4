@@ -1,3 +1,4 @@
 <?php
 
-$session->remove('some_name');
+$array_items = ['username', 'email'];
+$session->remove($array_items);

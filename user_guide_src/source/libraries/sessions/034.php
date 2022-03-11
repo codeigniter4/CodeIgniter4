@@ -1,3 +1,3 @@
 <?php
 
-$session->getTempdata('item');
+$session->getTempdata();

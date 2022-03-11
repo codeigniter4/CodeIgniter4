@@ -1,3 +1,3 @@
 <?php
 
-$routes->setDefaultMethod('listAll');
+$routes->setPrioritize(false);

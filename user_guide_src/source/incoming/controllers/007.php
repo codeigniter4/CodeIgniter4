@@ -4,9 +4,8 @@ namespace App\Controllers;
 
 class Products extends BaseController
 {
-    public function shoes($sandals, $id)
+    protected function utility()
     {
-        echo $sandals;
-        echo $id;
+        // some code
     }
 }

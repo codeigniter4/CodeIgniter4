@@ -1,11 +1,5 @@
 <?php
 
-$name = $_SESSION['name'];
-
+$userData = $_SESSION;
 // or:
-
-$name = $session->name;
-
-// or:
-
-$name = $session->get('name');
+$userData = $session->get();

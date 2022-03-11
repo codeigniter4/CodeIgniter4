@@ -1,9 +1,5 @@
 <?php
 
-$response->setCookie('foo', 'bar');
-
-ob_start();
-$this->response->send();
-$output = ob_get_clean(); // in case you want to check the actual body
-
-$this->assertHeaderNotEmitted('Set-Cookie: banana');
+$timer = new Timer();
+$timer->start('longjohn', strtotime('-11 minutes'));
+$this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));

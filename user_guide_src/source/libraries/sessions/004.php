@@ -1,3 +1,3 @@
 <?php
 
-session_write_close();
+$item = $_SESSION['item'];

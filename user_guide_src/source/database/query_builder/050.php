@@ -1,5 +1,4 @@
 <?php
 
-$groups = [1, 2, 3];
-$builder->havingIn('group_id', $groups);
-// Produces: HAVING group_id IN (1, 2, 3)
+$builder->having('user_id', 45); // Produces: HAVING `user_id` = 45 in some databases such as MySQL
+$builder->having('user_id', 45, false); // Produces: HAVING user_id = 45

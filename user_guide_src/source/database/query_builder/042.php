@@ -1,3 +1,4 @@
 <?php
 
-$builder->notLike('title', 'match'); // WHERE `title` NOT LIKE '%match% ESCAPE '!'
+$builder->like('title', 'match'); $builder->orLike('body', $match);
+// WHERE `title` LIKE '%match%' ESCAPE '!' OR  `body` LIKE '%match%' ESCAPE '!'

@@ -1,5 +1,4 @@
 <?php
 
-$name  = $builder->db->escape('Joe');
-$where = "name={$name} AND status='boss' OR status='active'";
+$where = "name='Joe' AND status='boss' OR status='active'";
 $builder->where($where);

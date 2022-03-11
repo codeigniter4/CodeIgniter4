@@ -1,3 +1,11 @@
 <?php
 
-$item = session('item');
+$name = $_SESSION['name'];
+
+// or:
+
+$name = $session->name;
+
+// or:
+
+$name = $session->get('name');

@@ -1,8 +1,17 @@
 <?php
 
-/*
- * Folder and file structure:
- * \<NamespaceName>(\<SubNamespaceNames>)*\<ClassName>
- */
+namespace App\Controllers;
 
-$routes->get('helloworld', '\App\Controllers\HelloWorld::index');
+class UserController extends BaseController
+{
+    public function updateUser(int $userID)
+    {
+        if (! $this->validate('userRules')) {
+            return view('users/update', [
+                'errors' => $this->validator->getErrors(),
+            ]);
+        }
+
+        // do something here if successful...
+    }
+}

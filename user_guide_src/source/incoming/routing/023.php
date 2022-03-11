@@ -1,7 +1,6 @@
 <?php
 
-$routes->group('', ['namespace' => 'Myth\Auth\Controllers'], static function ($routes) {
-    $routes->get('login', 'AuthController::login', ['as' => 'login']);
-    $routes->post('login', 'AuthController::attemptLogin');
-    $routes->get('logout', 'AuthController::logout');
+$routes->group('admin', static function ($routes) {
+    $routes->get('users', 'Admin\Users::index');
+    $routes->get('blog', 'Admin\Blog::index');
 });

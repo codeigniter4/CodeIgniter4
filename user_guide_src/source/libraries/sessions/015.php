@@ -1,3 +1,3 @@
 <?php
 
-$session->has('some_name');
+$session->push('hobbies', ['sport' => 'tennis']);

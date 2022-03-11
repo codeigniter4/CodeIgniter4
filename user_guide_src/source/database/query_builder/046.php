@@ -1,5 +1,4 @@
 <?php
 
-$builder->distinct();
-$builder->get();
-// Produces: SELECT DISTINCT * FROM mytable
+$builder->groupBy(['title', 'date']);
+// Produces: GROUP BY title, date

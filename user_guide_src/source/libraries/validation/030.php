@@ -1,6 +1,7 @@
-<?php
-
-$errors = [
-    'username' => 'The username field must be unique.',
-    'email'    => 'You must provide a valid email address.',
-];
+<div class="alert alert-danger" role="alert">
+    <ul>
+    <?php foreach ($errors as $error): ?>
+        <li><?= esc($error) ?></li>
+    <?php endforeach ?>
+    </ul>
+</div>

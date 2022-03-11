@@ -6,9 +6,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class OneOfMyModelsTest extends CIUnitTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        helper('text');
-    }
+    protected $setUpMethods = [
+        'mockEmail',
+        'mockSession',
+    ];
+    protected $tearDownMethods = [];
 }

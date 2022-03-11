@@ -1,4 +1,12 @@
 <?php
 
-// example.com routes to app/Controllers/Welcome.php
-$routes->setDefaultController('Welcome');
+// First you need to enable sorting.
+$routes->setPrioritize();
+
+// App\Config\Routes
+$routes->get('(.*)', 'Posts::index', ['priority' => 1]);
+
+// Modules\Acme\Config\Routes
+$routes->get('admin', 'Admin::index');
+
+// The "admin" route will now be processed before the wildcard router.

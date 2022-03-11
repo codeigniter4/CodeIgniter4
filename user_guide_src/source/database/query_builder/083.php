@@ -1,6 +1,5 @@
 <?php
 
 $builder->set('name', $name);
-$builder->set('title', $title);
-$builder->set('status', $status);
 $builder->insert();
+// Produces: INSERT INTO mytable (`name`) VALUES ('{$name}')

@@ -1,7 +1,6 @@
 <?php
 
-$builder = $db->table('users');
-$builder->select('title, content, date');
-$builder->from('mytable');
-$query = $builder->get();
-// Produces: SELECT title, content, date FROM users, mytable
+$subquery = $db->table('countries')->select('name')->where('id', 1);
+$builder  = $db->table('users')->select('name')->selectSubquery($subquery, 'country');
+$query    = $builder->get();
+// Produces: SELECT `name`, (SELECT `name` FROM `countries` WHERE `id` = 1) AS `country` FROM `users`

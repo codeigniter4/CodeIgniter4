@@ -1,7 +1,8 @@
 <?php
 
-$routes->get('feed', static function () {
-    $rss = new RSSFeeder();
+use App\Controllers\Product;
 
-    return $rss->feed('general');
-});
+$routes->get('product/(:num)/(:num)', [[Product::class, 'index'], '$2/$1']);
+
+// The above code is the same as the following:
+$routes->get('product/(:num)/(:num)', 'Product::index/$2/$1');

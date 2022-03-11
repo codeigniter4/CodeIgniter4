@@ -1,10 +1,12 @@
 <?php
 
-$data = [
-    'title' => 'My title',
-    'name'  => 'My Name',
-    'date'  => 'My date',
-];
+class Myclass
+{
+    public $title   = 'My Title';
+    public $content = 'My Content';
+    public $date    = 'My Date';
+}
 
-$builder->ignore(true)->insert($data);
-// Produces: INSERT OR IGNORE INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date')
+$object = new Myclass();
+$builder->insert($object);
+// Produces: INSERT INTO mytable (title, content, date) VALUES ('My Title', 'My Content', 'My Date')

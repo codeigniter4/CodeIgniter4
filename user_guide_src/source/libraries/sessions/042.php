@@ -6,7 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
-    public $sessionDiver    = 'CodeIgniter\Session\Handlers\RedisHandler';
-    public $sessionSavePath = 'tcp://localhost:6379';
+    public $sessionDriver   = 'CodeIgniter\Session\Handlers\MemcachedHandler';
+    public $sessionSavePath = 'localhost:11211';
     // ...
 }

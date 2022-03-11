@@ -1,17 +1,8 @@
 <?php
 
-namespace App\Controllers;
+/*
+ * Folder and file structure:
+ * \<NamespaceName>(\<SubNamespaceNames>)*\<ClassName>
+ */
 
-class Products extends BaseController
-{
-    public function _remap($method, ...$params)
-    {
-        $method = 'process_' . $method;
-
-        if (method_exists($this, $method)) {
-            return $this->{$method}(...$params);
-        }
-
-        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-    }
-}
+$routes->get('helloworld', '\App\Controllers\HelloWorld::index');

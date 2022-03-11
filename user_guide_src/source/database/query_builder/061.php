@@ -1,5 +1,5 @@
 <?php
 
-$array = ['title' => $match, 'page1' => $match, 'page2' => $match];
-$builder->havingLike($array);
-// HAVING `title` LIKE '%match%' ESCAPE '!' AND  `page1` LIKE '%match%' ESCAPE '!' AND  `page2` LIKE '%match%' ESCAPE '!'
+$builder->havingLike('title', 'match', 'before'); // Produces: HAVING `title` LIKE '%match' ESCAPE '!'
+$builder->havingLike('title', 'match', 'after');  // Produces: HAVING `title` LIKE 'match%' ESCAPE '!'
+$builder->havingLike('title', 'match', 'both');   // Produces: HAVING `title` LIKE '%match%' ESCAPE '!'

@@ -2,10 +2,7 @@
 
 namespace App\Controllers;
 
-class Products extends BaseController
+class helloworld extends BaseController
 {
-    public function _remap()
-    {
-        // Some code here...
-    }
+    // ...
 }
