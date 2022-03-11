@@ -49,6 +49,6 @@ CodeIgniter Version 4.x
 
 Path: **app/Models**:
 
-.. literalinclude:: upgrade_models/002.php
+.. literalinclude:: upgrade_models/001.php
 
 To insert data you can just directly call the ``$model->insert()`` method because this method is built-in since CI4.

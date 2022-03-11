@@ -60,7 +60,7 @@ CodeIgniter Version 4.x
 
 Path: **app/Database/Migrations**:
 
-.. literalinclude:: upgrade_migrations/002.php
+.. literalinclude:: upgrade_migrations/001.php
 
 Search & Replace
 ================

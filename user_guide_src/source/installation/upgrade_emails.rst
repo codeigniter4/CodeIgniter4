@@ -33,4 +33,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_emails/002.php
+.. literalinclude:: upgrade_emails/001.php

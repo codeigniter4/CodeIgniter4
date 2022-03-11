@@ -30,4 +30,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_responses/002.php
+.. literalinclude:: upgrade_responses/001.php

@@ -31,4 +31,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_encryption/002.php
+.. literalinclude:: upgrade_encryption/001.php

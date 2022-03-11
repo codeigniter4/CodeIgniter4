@@ -47,4 +47,4 @@ CodeIgniter Version 4.x
 
 Path: **app/Config**:
 
-.. literalinclude:: upgrade_configuration/002.php
+.. literalinclude:: upgrade_configuration/001.php

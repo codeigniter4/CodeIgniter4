@@ -50,4 +50,4 @@ CodeIgniter Version 4.x
 
 Path: **app/Controllers**:
 
-.. literalinclude:: upgrade_controllers/002.php
+.. literalinclude:: upgrade_controllers/001.php
