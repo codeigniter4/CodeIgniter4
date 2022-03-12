@@ -96,7 +96,7 @@ class Timer
             $timer['end'] = microtime(true);
         }
 
-        return (float) number_format($timer['end'] - $timer['start'], $decimals);
+        return (float) number_format($timer['end'] - $timer['start'], $decimals, '.', '');
     }
 
     /**
