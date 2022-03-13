@@ -32,4 +32,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_file_upload/002.php
+.. literalinclude:: upgrade_file_upload/001.php

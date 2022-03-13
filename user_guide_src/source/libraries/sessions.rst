@@ -37,7 +37,7 @@ Alternatively, you can use the helper function that will use the default
 configuration options. This version is a little friendlier to read,
 but does not take any configuration options.
 
-.. literalinclude:: sessions/003.php
+.. literalinclude:: sessions/002.php
 
 How do Sessions work?
 =====================
@@ -89,7 +89,7 @@ have the session open, while you've already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.
 
-.. literalinclude:: sessions/004.php
+.. literalinclude:: sessions/003.php
 
 What is Session Data?
 =====================
@@ -115,25 +115,25 @@ Retrieving Session Data
 Any piece of information from the session array is available through the
 ``$_SESSION`` superglobal:
 
-.. literalinclude:: sessions/005.php
+.. literalinclude:: sessions/004.php
 
 Or through the conventional accessor method:
 
-.. literalinclude:: sessions/006.php
+.. literalinclude:: sessions/005.php
 
 Or through the magic getter:
 
-.. literalinclude:: sessions/007.php
+.. literalinclude:: sessions/006.php
 
 Or even through the session helper method:
 
-.. literalinclude:: sessions/008.php
+.. literalinclude:: sessions/007.php
 
 Where ``item`` is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored 'name' item to the ``$name``
 variable, you will do this:
 
-.. literalinclude:: sessions/009.php
+.. literalinclude:: sessions/008.php
 
 .. note:: The ``get()`` method returns null if the item you are trying
     to access does not exist.
@@ -141,7 +141,7 @@ variable, you will do this:
 If you want to retrieve all of the existing userdata, you can simply
 omit the item key (magic getter only works for single property values):
 
-.. literalinclude:: sessions/010.php
+.. literalinclude:: sessions/009.php
 
 Adding Session Data
 ===================
@@ -158,26 +158,26 @@ The former userdata method is deprecated,
 but you can pass an array containing your new session data to the
 ``set()`` method:
 
-.. literalinclude:: sessions/011.php
+.. literalinclude:: sessions/010.php
 
 Where ``$array`` is an associative array containing your new data. Here's
 an example:
 
-.. literalinclude:: sessions/012.php
+.. literalinclude:: sessions/011.php
 
 If you want to add session data one value at a time, ``set()`` also
 supports this syntax:
 
-.. literalinclude:: sessions/013.php
+.. literalinclude:: sessions/012.php
 
 If you want to verify that a session value exists, simply check with
 ``isset()``:
 
-.. literalinclude:: sessions/014.php
+.. literalinclude:: sessions/013.php
 
 Or you can call ``has()``:
 
-.. literalinclude:: sessions/015.php
+.. literalinclude:: sessions/014.php
 
 Pushing new value to session data
 =================================
@@ -185,7 +185,7 @@ Pushing new value to session data
 The push method is used to push a new value onto a session value that is an array.
 For instance, if the 'hobbies' key contains an array of hobbies, you can add a new value onto the array like so:
 
-.. literalinclude:: sessions/016.php
+.. literalinclude:: sessions/015.php
 
 Removing Session Data
 =====================
@@ -193,18 +193,18 @@ Removing Session Data
 Just as with any other variable, unsetting a value in ``$_SESSION`` can be
 done through ``unset()``:
 
-.. literalinclude:: sessions/017.php
+.. literalinclude:: sessions/016.php
 
 Also, just as ``set()`` can be used to add information to a
 session, ``remove()`` can be used to remove it, by passing the
 session key. For example, if you wanted to remove 'some_name' from your
 session data array:
 
-.. literalinclude:: sessions/018.php
+.. literalinclude:: sessions/017.php
 
 This method also accepts an array of item keys to unset:
 
-.. literalinclude:: sessions/019.php
+.. literalinclude:: sessions/018.php
 
 Flashdata
 =========
@@ -220,20 +220,20 @@ managed inside the CodeIgniter session handler.
 
 To mark an existing item as "flashdata":
 
-.. literalinclude:: sessions/020.php
+.. literalinclude:: sessions/019.php
 
 If you want to mark multiple items as flashdata, simply pass the keys as an
 array:
 
-.. literalinclude:: sessions/021.php
+.. literalinclude:: sessions/020.php
 
 To add flashdata:
 
-.. literalinclude:: sessions/022.php
+.. literalinclude:: sessions/021.php
 
 Or alternatively, using the ``setFlashdata()`` method:
 
-.. literalinclude:: sessions/023.php
+.. literalinclude:: sessions/022.php
 
 You can also pass an array to ``setFlashdata()``, in the same manner as
 ``set()``.
@@ -241,7 +241,7 @@ You can also pass an array to ``setFlashdata()``, in the same manner as
 Reading flashdata variables is the same as reading regular session data
 through ``$_SESSION``:
 
-.. literalinclude:: sessions/024.php
+.. literalinclude:: sessions/023.php
 
 .. important:: The ``get()`` method WILL return flashdata items when
     retrieving a single item by key. It will not return flashdata when
@@ -250,11 +250,11 @@ through ``$_SESSION``:
 However, if you want to be sure that you're reading "flashdata" (and not
 any other kind), you can also use the ``getFlashdata()`` method:
 
-.. literalinclude:: sessions/025.php
+.. literalinclude:: sessions/024.php
 
 Or to get an array with all flashdata, simply omit the key parameter:
 
-.. literalinclude:: sessions/026.php
+.. literalinclude:: sessions/025.php
 
 .. note:: The ``getFlashdata()`` method returns null if the item cannot be
     found.
@@ -263,7 +263,7 @@ If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the ``keepFlashdata()`` method.
 You can either pass a single item or an array of flashdata items to keep.
 
-.. literalinclude:: sessions/027.php
+.. literalinclude:: sessions/026.php
 
 Tempdata
 ========
@@ -278,24 +278,24 @@ CodeIgniter session handler.
 To mark an existing item as "tempdata", simply pass its key and expiry time
 (in seconds!) to the ``markAsTempdata()`` method:
 
-.. literalinclude:: sessions/028.php
+.. literalinclude:: sessions/027.php
 
 You can mark multiple items as tempdata in two ways, depending on whether
 you want them all to have the same expiry time or not:
 
-.. literalinclude:: sessions/029.php
+.. literalinclude:: sessions/028.php
 
 To add tempdata:
 
-.. literalinclude:: sessions/030.php
+.. literalinclude:: sessions/029.php
 
 Or alternatively, using the ``setTempdata()`` method:
 
-.. literalinclude:: sessions/031.php
+.. literalinclude:: sessions/030.php
 
 You can also pass an array to ``setTempdata()``:
 
-.. literalinclude:: sessions/032.php
+.. literalinclude:: sessions/031.php
 
 .. note:: If the expiration is omitted or set to 0, the default
     time-to-live value of 300 seconds (or 5 minutes) will be used.
@@ -303,7 +303,7 @@ You can also pass an array to ``setTempdata()``:
 To read a tempdata variable, again you can just access it through the
 ``$_SESSION`` superglobal array:
 
-.. literalinclude:: sessions/033.php
+.. literalinclude:: sessions/032.php
 
 .. important:: The ``get()`` method WILL return tempdata items when
     retrieving a single item by key. It will not return tempdata when
@@ -312,11 +312,11 @@ To read a tempdata variable, again you can just access it through the
 Or if you want to be sure that you're reading "tempdata" (and not any
 other kind), you can also use the ``getTempdata()`` method:
 
-.. literalinclude:: sessions/034.php
+.. literalinclude:: sessions/033.php
 
 And of course, if you want to retrieve all existing tempdata:
 
-.. literalinclude:: sessions/035.php
+.. literalinclude:: sessions/034.php
 
 .. note:: The ``getTempdata()`` method returns null if the item cannot be
     found.
@@ -324,14 +324,14 @@ And of course, if you want to retrieve all existing tempdata:
 If you need to remove a tempdata value before it expires, you can directly
 unset it from the ``$_SESSION`` array:
 
-.. literalinclude:: sessions/036.php
+.. literalinclude:: sessions/035.php
 
 However, this won't remove the marker that makes this specific item to be
 tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you'd want to use
 ``removeTempdata()``:
 
-.. literalinclude:: sessions/037.php
+.. literalinclude:: sessions/036.php
 
 Destroying a Session
 ====================
@@ -341,7 +341,7 @@ simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>
 function, or the library's ``destroy()`` method. Both will work in exactly the
 same way:
 
-.. literalinclude:: sessions/038.php
+.. literalinclude:: sessions/037.php
 
 .. note:: This must be the last session-related operation that you do
     during the same request. All session data (including flashdata and
@@ -352,7 +352,7 @@ You may also use the ``stop()`` method to completely kill the session
 by removing the old session_id, destroying all data, and destroying
 the cookie that contained the session id:
 
-.. literalinclude:: sessions/039.php
+.. literalinclude:: sessions/038.php
 
 Accessing session metadata
 ==========================
@@ -527,7 +527,7 @@ table that we already mentioned and then set it as your
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this:
 
-.. literalinclude:: sessions/040.php
+.. literalinclude:: sessions/039.php
 
 And then of course, create the database table ...
 
@@ -567,7 +567,7 @@ setting**. The examples below work both on MySQL and PostgreSQL::
 You can choose the Database group to use by adding a new line to the
 **app/Config/App.php** file with the name of the group to use:
 
-.. literalinclude:: sessions/041.php
+.. literalinclude:: sessions/040.php
 
 If you'd rather not do all of this by hand, you can use the ``session:migration`` command
 from the cli to generate a migration file for you::
@@ -620,7 +620,7 @@ link you to it:
 For the most common case however, a simple ``host:port`` pair should be
 sufficient:
 
-.. literalinclude:: sessions/042.php
+.. literalinclude:: sessions/041.php
 
 MemcachedHandler Driver
 =======================
@@ -647,7 +647,7 @@ considered as it may result in loss of sessions.
 The ``$sessionSavePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:
 
-.. literalinclude:: sessions/043.php
+.. literalinclude:: sessions/042.php
 
 Bonus Tip
 ---------
@@ -659,4 +659,4 @@ to note that we haven't tested if that is reliable.
 If you want to experiment with this feature (on your own risk), simply
 separate the multiple server paths with commas:
 
-.. literalinclude:: sessions/044.php
+.. literalinclude:: sessions/043.php

@@ -1,3 +1,3 @@
 <?php
 
-$files = $this->request->getFileMultiple('images');
+$name = $file->getName();

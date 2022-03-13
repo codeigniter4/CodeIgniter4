@@ -51,4 +51,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_database/002.php
+.. literalinclude:: upgrade_database/001.php

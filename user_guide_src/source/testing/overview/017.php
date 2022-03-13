@@ -4,13 +4,11 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class SomeTest extends CIUnitTestCase
 {
-    public function testSomething()
+    protected function setUp(): void
     {
-        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
-            ->setMethods(['request'])
-            ->getMock();
-        Services::injectMock('curlrequest', $curlrequest);
+        parent::setUp();
 
-        // Do normal testing here....
+        $model = new MockUserModel();
+        Factories::injectMock('models', 'App\Models\UserModel', $model);
     }
 }

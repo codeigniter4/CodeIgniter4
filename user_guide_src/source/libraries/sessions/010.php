@@ -1,5 +1,3 @@
 <?php
 
-$userData = $_SESSION;
-// or:
-$userData = $session->get();
+$session->set($array);

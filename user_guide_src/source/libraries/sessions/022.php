@@ -1,4 +1,3 @@
 <?php
 
-$_SESSION['item'] = 'value';
-$session->markAsFlashdata('item');
+$session->setFlashdata('item', 'value');

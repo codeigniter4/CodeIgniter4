@@ -2,10 +2,7 @@
 
 namespace App\Controllers;
 
-class Helloworld extends BaseController
+class MyController extends BaseController
 {
-    public function index()
-    {
-        echo 'Hello World!';
-    }
+    protected $helpers = ['url', 'form'];
 }

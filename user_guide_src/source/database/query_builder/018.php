@@ -1,10 +1,6 @@
 <?php
 
-$builder = $db->table('blogs');
-$builder->select('*');
-$builder->join('comments', 'comments.id = blogs.id');
-$query = $builder->get();
-/*
- * Produces:
- * SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
- */
+$subquery = $db->table('users')->select('id, name');
+$builder  = $db->newQuery()->fromSubquery($subquery, 't');
+$query    = $builder->get();
+// Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS `t`

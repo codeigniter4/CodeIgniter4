@@ -1,3 +1,9 @@
 <?php
 
-$session->set($array);
+$newdata = [
+    'username'  => 'johndoe',
+    'email'     => 'johndoe@some-site.com',
+    'logged_in' => true,
+];
+
+$session->set($newdata);

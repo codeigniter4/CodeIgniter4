@@ -1,3 +1,3 @@
 <?php
 
-unset($_SESSION['item']);
+$session->removeTempdata('item');

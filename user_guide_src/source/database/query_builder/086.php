@@ -1,12 +1,10 @@
 <?php
 
-class Myclass
-{
-    public $title   = 'My Title';
-    public $content = 'My Content';
-    public $date    = 'My Date';
-}
+$array = [
+    'name'   => $name,
+    'title'  => $title,
+    'status' => $status,
+];
 
-$object = new Myclass();
-$builder->set($object);
+$builder->set($array);
 $builder->insert();

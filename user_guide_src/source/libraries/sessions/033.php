@@ -1,3 +1,3 @@
 <?php
 
-$item = $_SESSION['item'];
+$session->getTempdata('item');

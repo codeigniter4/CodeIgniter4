@@ -1,3 +1,4 @@
 <?php
 
-$session->setTempdata('item', 'value', 300);
+$tempdata = ['newuser' => true, 'message' => 'Thanks for joining!'];
+$session->setTempdata($tempdata, null, $expire);

@@ -176,7 +176,7 @@ With the simplest usage, a single file might be submitted like::
 
 Which would return a simple file instance like:
 
-.. literalinclude:: uploaded_files/007.php
+.. literalinclude:: uploaded_files/004.php
 
 Array notation
 --------------
@@ -187,7 +187,7 @@ If you used an array notation for the name, the input would look something like:
 
 For get the file instance:
 
-.. literalinclude:: uploaded_files/008.php
+.. literalinclude:: uploaded_files/005.php
 
 Multiple files
 ==============
@@ -198,7 +198,7 @@ Multiple files
 
 In controller:
 
-.. literalinclude:: uploaded_files/009.php
+.. literalinclude:: uploaded_files/006.php
 
 where the ``images`` is a loop from the form field name.
 
@@ -206,11 +206,11 @@ If there are multiple files with the same name you can use ``getFile()`` to retr
 
 In controller:
 
-.. literalinclude:: uploaded_files/010.php
+.. literalinclude:: uploaded_files/007.php
 
 You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name:
 
-.. literalinclude:: uploaded_files/011.php
+.. literalinclude:: uploaded_files/008.php
 
 Another example::
 
@@ -219,7 +219,7 @@ Another example::
 
 In controller:
 
-.. literalinclude:: uploaded_files/012.php
+.. literalinclude:: uploaded_files/009.php
 
 .. note:: Using ``getFiles()`` is more appropriate.
 
@@ -237,7 +237,7 @@ Verify a File
 
 You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method:
 
-.. literalinclude:: uploaded_files/013.php
+.. literalinclude:: uploaded_files/010.php
 
 As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error
 message with the ``getError()`` and ``getErrorString()`` methods. The following errors can be discovered through
@@ -260,19 +260,19 @@ You can retrieve the original filename provided by the client with the ``getName
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
 the moved file:
 
-.. literalinclude:: uploaded_files/014.php
+.. literalinclude:: uploaded_files/011.php
 
 **getClientName()**
 
 Always returns the original name of the uploaded file as sent by the client, even if the file has been moved:
 
-.. literalinclude:: uploaded_files/015.php
+.. literalinclude:: uploaded_files/012.php
 
 **getTempName()**
 
 To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method:
 
-.. literalinclude:: uploaded_files/016.php
+.. literalinclude:: uploaded_files/013.php
 
 Other File Info
 ===============
@@ -281,7 +281,7 @@ Other File Info
 
 Returns the original file extension, based on the file name that was uploaded:
 
-.. literalinclude:: uploaded_files/017.php
+.. literalinclude:: uploaded_files/014.php
 
 .. warning:: This is NOT a trusted source. For a trusted version, use ``guessExtension()`` instead.
 
@@ -290,7 +290,7 @@ Returns the original file extension, based on the file name that was uploaded:
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
 version, use ``getMimeType()`` instead:
 
-.. literalinclude:: uploaded_files/018.php
+.. literalinclude:: uploaded_files/015.php
 
 Moving Files
 ============
@@ -298,16 +298,16 @@ Moving Files
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
 the file to as the first parameter:
 
-.. literalinclude:: uploaded_files/019.php
+.. literalinclude:: uploaded_files/016.php
 
 By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
 
-.. literalinclude:: uploaded_files/020.php
+.. literalinclude:: uploaded_files/017.php
 
 Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
 the ``hasMoved()`` method, which returns a boolean:
 
-.. literalinclude:: uploaded_files/021.php
+.. literalinclude:: uploaded_files/018.php
 
 Moving an uploaded file can fail, with an HTTPException, under several circumstances:
 
@@ -327,12 +327,12 @@ With the simplest usage, a single file might be submitted like::
 By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
 and random file name will be created. Returns a file path:
 
-.. literalinclude:: uploaded_files/022.php
+.. literalinclude:: uploaded_files/019.php
 
 You can specify a directory to move the file to as the first parameter. A new filename by
 passing it as the second parameter:
 
-.. literalinclude:: uploaded_files/023.php
+.. literalinclude:: uploaded_files/020.php
 
 Moving an uploaded file can fail, with an ``HTTPException``, under several circumstances:
 

@@ -1,3 +1,3 @@
 <?php
 
-$item = $_SESSION['item'];
+$item = $session->get('item');

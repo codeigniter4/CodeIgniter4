@@ -1,9 +1,20 @@
 <?php
 
-class MyRules
+namespace Config;
+
+use CodeIgniter\Validation\CreditCardRules;
+use CodeIgniter\Validation\FileRules;
+use CodeIgniter\Validation\FormatRules;
+use CodeIgniter\Validation\Rules;
+
+class Validation
 {
-    public function even(string $str): bool
-    {
-        return (int) $str % 2 === 0;
-    }
+    public $ruleSets = [
+        Rules::class,
+        FormatRules::class,
+        FileRules::class,
+        CreditCardRules::class,
+    ];
+
+    // ...
 }

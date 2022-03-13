@@ -1,3 +1,3 @@
 <?php
 
-$session->setFlashdata('item', 'value');
+$item = $_SESSION['item'];

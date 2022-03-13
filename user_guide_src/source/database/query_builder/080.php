@@ -1,17 +1,7 @@
 <?php
 
-$data = [
-    [
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date',
-    ],
-    [
-        'title' => 'Another title',
-        'name'  => 'Another Name',
-        'date'  => 'Another date',
-    ],
-];
+echo $builder->set('title', 'My Title')->getCompiledInsert(false);
+// Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
 
-$builder->insertBatch($data);
-// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'),  ('Another title', 'Another name', 'Another date')
+echo $builder->set('content', 'My Content')->getCompiledInsert();
+// Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')

@@ -1,3 +1,3 @@
 <?php
 
-$session->getFlashdata('item');
+$session->getFlashdata();

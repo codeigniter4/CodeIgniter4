@@ -32,4 +32,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_view_parser/002.php
+.. literalinclude:: upgrade_view_parser/001.php

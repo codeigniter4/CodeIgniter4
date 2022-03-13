@@ -1,4 +1,4 @@
 <?php
 
-$builder->where('name', $name);
-// Produces: WHERE name = 'Joe'
+$builder->join('comments', 'comments.id = blogs.id', 'left');
+// Produces: LEFT JOIN comments ON comments.id = blogs.id

@@ -1,9 +1,16 @@
 <?php
 
-// Create an instance of the class to test
-$obj = new Foo();
+use CodeIgniter\Test\CIUnitTestCase;
 
-// Set the value
-$this->setPrivateProperty($obj, 'baz', 'oops!');
+final class SomeTest extends CIUnitTestCase
+{
+    public function testSomething()
+    {
+        $curlrequest = $this->getMockBuilder('CodeIgniter\HTTP\CURLRequest')
+            ->setMethods(['request'])
+            ->getMock();
+        Services::injectMock('curlrequest', $curlrequest);
 
-// Do normal testing...
+        // Do normal testing here....
+    }
+}

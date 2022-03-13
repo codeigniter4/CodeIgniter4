@@ -1,5 +1,7 @@
 <?php
 
-$routes->group('api', ['namespace' => 'App\API\v1'], static function ($routes) {
-    $routes->resource('users');
+$routes->get('feed', static function () {
+    $rss = new RSSFeeder();
+
+    return $rss->feed('general');
 });

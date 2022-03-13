@@ -1,7 +1,4 @@
 <?php
 
-$builder->truncate();
-/*
- * Produce:
- * TRUNCATE mytable
- */
+$builder->emptyTable('mytable');
+// Produces: DELETE FROM mytable

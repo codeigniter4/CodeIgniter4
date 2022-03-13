@@ -1,3 +1,11 @@
 <?php
 
-$routes->setDefaultController('Helloworld');
+namespace App\Controllers;
+
+class Helloworld extends BaseController
+{
+    public function index()
+    {
+        echo 'Hello World!';
+    }
+}

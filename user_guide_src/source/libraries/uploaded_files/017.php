@@ -1,3 +1,4 @@
 <?php
 
-$ext = $file->getClientExtension();
+$newName = $file->getRandomName();
+$file->move(WRITEPATH . 'uploads', $newName);

@@ -1,3 +1,3 @@
 <?php
 
-$routes->get('from', 'to', ['hostname' => 'accounts.example.com']);
+$routes->post('users/delete/(:segment)', 'AdminController::index', ['filter' => 'admin-auth:dual,noreturn']);

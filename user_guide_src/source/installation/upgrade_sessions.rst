@@ -36,4 +36,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_sessions/002.php
+.. literalinclude:: upgrade_sessions/001.php

@@ -37,4 +37,4 @@ CodeIgniter Version 3.x
 CodeIgniter Version 4.x
 -----------------------
 
-.. literalinclude:: upgrade_localization/003.php
+.. literalinclude:: upgrade_localization/002.php

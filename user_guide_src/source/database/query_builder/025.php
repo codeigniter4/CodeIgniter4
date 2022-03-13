@@ -1,4 +1,4 @@
 <?php
 
-$where = "name='Joe' AND status='boss' OR status='active'";
-$builder->where($where);
+$array = ['name !=' => $name, 'id <' => $id, 'date >' => $date];
+$builder->where($array);

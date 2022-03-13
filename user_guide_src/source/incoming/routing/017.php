@@ -1,8 +1,4 @@
 <?php
 
-$multipleRoutes = [
-    'product/(:num)'      => 'Catalog::productLookupById',
-    'product/(:alphanum)' => 'Catalog::productLookupByName',
-];
-
-$routes->map($multipleRoutes);
+$routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
+$routes->get('users/(:uuid)', 'Users::show/$1');

@@ -36,4 +36,4 @@ CodeIgniter Version 4.x
 -----------------------
 Path: **app/Config/Routes.php**:
 
-.. literalinclude:: upgrade_routing/002.php
+.. literalinclude:: upgrade_routing/001.php

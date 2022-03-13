@@ -1,3 +1,5 @@
 <?php
 
-$session->removeTempdata('item');
+session_destroy();
+// or
+$session->destroy();

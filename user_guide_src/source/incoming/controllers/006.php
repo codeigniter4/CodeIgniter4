@@ -2,15 +2,24 @@
 
 namespace App\Controllers;
 
-class Helloworld extends BaseController
+class StoreController extends BaseController
 {
-    public function index()
+    public function product(int $id)
     {
-        echo 'Hello World!';
-    }
+        $data = [
+            'id'   => $id,
+            'name' => $this->request->getVar('name'),
+        ];
 
-    public function comment()
-    {
-        echo 'I am not flat!';
+        $rule = [
+            'id'   => 'integer',
+            'name' => 'required|max_length[255]',
+        ];
+
+        if (! $this->validateData($data, $rule)) {
+            // ...
+        }
+
+        // ...
     }
 }

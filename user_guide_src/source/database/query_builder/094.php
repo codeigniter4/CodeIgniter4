@@ -1,4 +1,9 @@
 <?php
 
-$builder->emptyTable('mytable');
-// Produces: DELETE FROM mytable
+$builder->where('id', $id);
+$builder->delete();
+/*
+ * Produces:
+ * DELETE FROM mytable
+ * WHERE id = $id
+ */

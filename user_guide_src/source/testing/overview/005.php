@@ -6,9 +6,12 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 final class OneOfMyModelsTest extends CIUnitTestCase
 {
-    protected $setUpMethods = [
-        'mockEmail',
-        'mockSession',
+    protected $tearDownMethods = [
+        'purgeRows',
     ];
-    protected $tearDownMethods = [];
+
+    protected function purgeRows()
+    {
+        $this->model->purgeDeleted();
+    }
 }

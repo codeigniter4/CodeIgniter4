@@ -1,9 +1,9 @@
 <?php
 
-$config = new LoggerConfig();
-$logger = new Logger($config);
+Events::on('foo', static function ($arg) use (&$result) {
+    $result = $arg;
+});
 
-// ... do something that you expect a log entry from
-$logger->log('error', "That's no moon");
+Events::trigger('foo', 'bar');
 
-$this->assertLogged('error', "That's no moon");
+$this->assertEventTriggered('foo');

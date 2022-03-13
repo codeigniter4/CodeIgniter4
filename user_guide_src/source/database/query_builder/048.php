@@ -1,4 +1,4 @@
 <?php
 
-$builder->having(['title =' => 'My Title', 'id <' => $id]);
-// Produces: HAVING title = 'My Title', id < 45
+$builder->having('user_id = 45'); // Produces: HAVING user_id = 45
+$builder->having('user_id', 45); // Produces: HAVING user_id = 45

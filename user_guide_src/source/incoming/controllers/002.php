@@ -1,8 +1,5 @@
 <?php
 
-namespace App\Controllers;
-
-class Helloworld extends BaseController
-{
-    // ...
+if (! $this->request->isSecure()) {
+    $this->forceHTTPS();
 }

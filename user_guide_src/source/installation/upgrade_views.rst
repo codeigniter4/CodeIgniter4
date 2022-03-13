@@ -43,4 +43,4 @@ CodeIgniter Version 4.x
 
 Path: **app/Views**:
 
-.. literalinclude:: upgrade_views/002.php
+.. literalinclude:: upgrade_views/001.php

@@ -1,7 +1,11 @@
 <?php
 
-echo $builder->set('title', 'My Title')->getCompiledInsert(false);
-// Produces string: INSERT INTO mytable (`title`) VALUES ('My Title')
+$data = [
+    'title' => 'My title',
+    'name'  => 'My Name',
+    'date'  => 'My date',
+];
 
-echo $builder->set('content', 'My Content')->getCompiledInsert();
-// Produces string: INSERT INTO mytable (`title`, `content`) VALUES ('My Title', 'My Content')
+$sql = $builder->set($data)->getCompiledInsert();
+echo $sql;
+// Produces string: INSERT INTO mytable (`title`, `name`, `date`) VALUES ('My title', 'My name', 'My date')

@@ -1,5 +1,8 @@
 <?php
 
-$routes->group('api', ['filter' => 'api-auth'], static function ($routes) {
-    $routes->resource('users');
-});
+$multipleRoutes = [
+    'product/(:num)'      => 'Catalog::productLookupById',
+    'product/(:alphanum)' => 'Catalog::productLookupByName',
+];
+
+$routes->map($multipleRoutes);

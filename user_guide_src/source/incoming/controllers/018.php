@@ -2,16 +2,14 @@
 
 namespace App\Controllers;
 
-class UserController extends BaseController
+class Products extends BaseController
 {
-    public function updateUser(int $userID)
+    public function _remap($method)
     {
-        if (! $this->validate('userRules')) {
-            return view('users/update', [
-                'errors' => $this->validator->getErrors(),
-            ]);
+        if ($method === 'some_method') {
+            return $this->{$method}();
         }
 
-        // do something here if successful...
+        return $this->default_method();
     }
 }

@@ -1,7 +1,5 @@
 <?php
 
-$builder->orderBy('title', 'RANDOM');
-// Produces: ORDER BY RAND()
-
-$builder->orderBy(42, 'RANDOM');
-// Produces: ORDER BY RAND(42)
+$builder->orderBy('title', 'DESC');
+$builder->orderBy('name', 'ASC');
+// Produces: ORDER BY `title` DESC, `name` ASC

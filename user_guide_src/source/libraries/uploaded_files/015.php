@@ -1,3 +1,5 @@
 <?php
 
-$originalName = $file->getClientName();
+$type = $file->getClientMimeType();
+
+echo $type; // image/png

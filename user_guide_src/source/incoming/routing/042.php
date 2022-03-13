@@ -1,9 +1,6 @@
 <?php
 
-$routes->setDefaultNamespace('App');
+$routes->get('users/(:num)', 'users/show/$1', ['offset' => 1]);
 
-// Controller is \App\Users
-$routes->get('users', 'Users::index');
-
-// Controller is \App\Admin\Users
-$routes->get('users', 'Admin\Users::index');
+// Creates:
+$routes['users/(:num)'] = 'users/show/$2';

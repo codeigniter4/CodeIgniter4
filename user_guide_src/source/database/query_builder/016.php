@@ -1,6 +1,7 @@
 <?php
 
-$subquery = $db->table('users');
-$builder  = $db->table('jobs')->fromSubquery($subquery, 'alias');
-$query    = $builder->get();
-// Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS `alias`
+$builder = $db->table('users');
+$builder->select('title, content, date');
+$builder->from('mytable');
+$query = $builder->get();
+// Produces: SELECT title, content, date FROM users, mytable

@@ -484,7 +484,7 @@ You can check to see if an error exists with the ``hasError()`` method. The only
 
 When specifying a field with a wildcard, all errors matching the mask will be checked:
 
-.. literalinclude:: validation/028.2.php
+.. literalinclude:: validation/029.php
 
 Customizing Error Display
 *************************
@@ -500,12 +500,12 @@ The first step is to create custom views. These can be placed anywhere that the 
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
 a new view at **/app/Views/_errors_list.php**:
 
-.. literalinclude:: validation/029.php
+.. literalinclude:: validation/030.php
 
 An array named ``$errors`` is available within the view that contains a list of the errors, where the key is
 the name of the field that had the error, and the value is the error message, like this:
 
-.. literalinclude:: validation/030.php
+.. literalinclude:: validation/031.php
 
 There are actually two types of views that you can create. The first has an array of all of the errors, and is what
 we just looked at. The other type is simpler, and only contains a single variable, ``$error`` that contains the
@@ -520,7 +520,7 @@ Once you have your views created, you need to let the Validation library know ab
 Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
 short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
-.. literalinclude:: validation/031.php
+.. literalinclude:: validation/032.php
 
 Specifying the Template
 =======================
@@ -541,7 +541,7 @@ Rules are stored within simple, namespaced classes. They can be stored any locat
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
 add the new file to the ``$ruleSets`` array:
 
-.. literalinclude:: validation/032.php
+.. literalinclude:: validation/033.php
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
@@ -549,17 +549,17 @@ shown above. The primary benefit here is that it provides some extra navigation 
 Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
 a boolean true or false value signifying true if it passed the test or false if it did not:
 
-.. literalinclude:: validation/033.php
+.. literalinclude:: validation/034.php
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
 within errors. In custom rules, you may provide error messages by accepting a ``$error`` variable by reference in the
 second parameter:
 
-.. literalinclude:: validation/034.php
+.. literalinclude:: validation/035.php
 
 Your new custom rule could now be used just like any other rule:
 
-.. literalinclude:: validation/035.php
+.. literalinclude:: validation/036.php
 
 Allowing Parameters
 ===================
@@ -568,7 +568,7 @@ If your method needs to work with parameters, the function will need a minimum o
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
 for rules like ``require_with`` that needs to check the value of another submitted field to base its result on:
 
-.. literalinclude:: validation/036.php
+.. literalinclude:: validation/037.php
 
 Custom errors can be returned as the fourth parameter, just as described above.
 
@@ -580,7 +580,7 @@ The following is a list of all the native rules that are available to use:
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
-.. literalinclude:: validation/037.php
+.. literalinclude:: validation/038.php
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example

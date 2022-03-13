@@ -1,16 +1,12 @@
 <?php
 
-$data = [
-    'title' => $title,
-    'name'  => $name,
-    'date'  => $date,
-];
+class Myclass
+{
+    public $title   = 'My Title';
+    public $content = 'My Content';
+    public $date    = 'My Date';
+}
 
-$builder->where('id', $id);
-$builder->update($data);
-/*
- * Produces:
- * UPDATE mytable
- * SET title = '{$title}', name = '{$name}', date = '{$date}'
- * WHERE id = $id
- */
+$object = new Myclass();
+$builder->set($object);
+$builder->insert();

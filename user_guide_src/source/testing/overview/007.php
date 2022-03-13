@@ -1,21 +1,9 @@
 <?php
 
-trait AuthTrait
-{
-    protected function setUpAuthTrait()
-    {
-        $user = $this->createFakeUser();
-        $this->logInUser($user);
-    }
+$config = new LoggerConfig();
+$logger = new Logger($config);
 
-    // ...
-}
+// ... do something that you expect a log entry from
+$logger->log('error', "That's no moon");
 
-use CodeIgniter\Test\CIUnitTestCase;
-
-final class AuthenticationFeatureTest extends CIUnitTestCase
-{
-    use AuthTrait;
-
-    // ...
-}
+$this->assertLogged('error', "That's no moon");
