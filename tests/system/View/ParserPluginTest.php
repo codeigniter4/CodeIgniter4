@@ -42,7 +42,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testCurrentURL()
     {
-        helper('url');
         $template = '{+ current_url +}';
 
         $this->assertSame(current_url(), $this->parser->renderString($template));
@@ -50,7 +49,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testPreviousURL()
     {
-        helper('url');
         $template = '{+ previous_url +}';
 
         // Ensure a previous URL exists to work with.
@@ -61,7 +59,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testMailto()
     {
-        helper('url');
         $template = '{+ mailto email=foo@example.com title=Silly +}';
 
         $this->assertSame(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
@@ -72,7 +69,6 @@ final class ParserPluginTest extends CIUnitTestCase
      */
     public function testMailtoWithDashAndParenthesis()
     {
-        helper('url');
         $template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
 
         $this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
@@ -80,7 +76,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testSafeMailto()
     {
-        helper('url');
         $template = '{+ safe_mailto email=foo@example.com title=Silly +}';
 
         $this->assertSame(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
