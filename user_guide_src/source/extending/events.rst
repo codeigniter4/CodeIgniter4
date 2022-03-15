@@ -24,13 +24,13 @@ Defining an Event
 =================
 
 Most events are defined within the **app/Config/Events.php** file. You can subscribe an action to an event with
-the Events class' ``on()`` method. The first parameter is the name of the event to subscribe to. The second parameter is
+the ``Events`` class' ``on()`` method. The first parameter is the name of the event to subscribe to. The second parameter is
 a callable that will be run when that event is triggered:
 
 .. literalinclude:: events/001.php
 
-In this example, whenever the **pre_controller** event is executed, an instance of ``MyClass`` is created and the
-``MyFunction`` method is run. Note that the second parameter can be *any* form of
+In this example, whenever the ``pre_system`` event is executed, an instance of ``MyClass`` is created and the
+``myFunction()`` method is run. Note that the second parameter can be *any* form of
 `callable <https://www.php.net/manual/en/function.is-callable.php>`_ that PHP recognizes:
 
 .. literalinclude:: events/002.php
