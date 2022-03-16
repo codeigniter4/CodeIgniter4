@@ -229,6 +229,16 @@ final class PagerTest extends CIUnitTestCase
         $this->assertSame(2, $this->pager->getCurrentPage('foo'));
     }
 
+    public function testGetCurrentPageFromSegment()
+    {
+        $this->createPager('/page/2');
+
+        $this->pager->setPath('foo');
+        $this->pager->setSegment(2);
+
+        $this->assertSame(2, $this->pager->getCurrentPage());
+    }
+
     public function testGetTotalPagesDefaultsToOne()
     {
         $this->assertSame(1, $this->pager->getPageCount());
