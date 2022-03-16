@@ -34,8 +34,6 @@ final class UserAgentTest extends CIUnitTestCase
         $_SERVER['HTTP_USER_AGENT'] = $this->_user_agent;
 
         $this->agent = new UserAgent();
-
-        helper('url');
     }
 
     public function testMobile()

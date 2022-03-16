@@ -30,13 +30,6 @@ final class CurrentUrlTest extends CIUnitTestCase
 {
     private App $config;
 
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        helper('url');
-    }
-
     protected function setUp(): void
     {
         parent::setUp();

@@ -35,8 +35,6 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        // URL is needed by the HTML Helper.
-        helper('url');
         helper('html');
 
         $this->tracks = [
