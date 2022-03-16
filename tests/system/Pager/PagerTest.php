@@ -42,9 +42,9 @@ final class PagerTest extends CIUnitTestCase
         $this->createPager('/');
     }
 
-    private function createPager(string $path): void
+    private function createPager(string $requestUri): void
     {
-        $_SERVER['REQUEST_URI'] = $path;
+        $_SERVER['REQUEST_URI'] = $requestUri;
         $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_GET                   = [];
 
@@ -55,7 +55,7 @@ final class PagerTest extends CIUnitTestCase
 
         $request = new IncomingRequest(
             $config,
-            new URI($config->baseURL . ltrim($path, '/')),
+            new URI($config->baseURL . ltrim($requestUri, '/')),
             'php://input',
             new UserAgent()
         );
