@@ -45,10 +45,12 @@ final class PagerTest extends CIUnitTestCase
     private function createPager(string $path): void
     {
         $_SERVER['REQUEST_URI'] = $path;
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_GET                   = [];
 
-        $config          = new App();
-        $config->baseURL = 'http://example.com/';
+        $config            = new App();
+        $config->baseURL   = 'http://example.com/';
+        $config->indexPage = '';
         Factories::injectMock('config', 'App', $config);
 
         $request = new IncomingRequest(
@@ -159,11 +161,11 @@ final class PagerTest extends CIUnitTestCase
 
         $this->pager->store('default', 3, 25, 100);
 
-        $this->assertSame('http://example.com/index.php/?page=2&foo=bar', $this->pager->getPreviousPageURI());
-        $this->assertSame('http://example.com/index.php/?page=4&foo=bar', $this->pager->getNextPageURI());
-        $this->assertSame('http://example.com/index.php/?page=5&foo=bar', $this->pager->getPageURI(5));
+        $this->assertSame('http://example.com/?page=2&foo=bar', $this->pager->getPreviousPageURI());
+        $this->assertSame('http://example.com/?page=4&foo=bar', $this->pager->getNextPageURI());
+        $this->assertSame('http://example.com/?page=5&foo=bar', $this->pager->getPageURI(5));
         $this->assertSame(
-            'http://example.com/index.php/?foo=bar&page=5',
+            'http://example.com/?foo=bar&page=5',
             $this->pager->only(['foo'])->getPageURI(5)
         );
     }
