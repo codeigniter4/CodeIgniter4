@@ -333,6 +333,10 @@ class FormatRules
      */
     public function valid_date(?string $str = null, ?string $format = null): bool
     {
+        if ($str === null) {
+            return false;
+        }
+
         if (empty($format)) {
             return strtotime($str) !== false;
         }
