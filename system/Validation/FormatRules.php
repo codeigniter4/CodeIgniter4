@@ -333,7 +333,7 @@ class FormatRules
      */
     public function valid_date(?string $str = null, ?string $format = null): bool
     {
-        if (($str === null)) {
+        if ($str === null) {
             return false;
         }
 
