@@ -36,13 +36,18 @@ final class PagerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_SERVER['REQUEST_URI'] = '/';
+        $this->createPager('/');
+    }
+
+    private function createPager(string $path): void
+    {
+        $_SERVER['REQUEST_URI'] = $path;
         $_GET                   = [];
 
         $config          = new App();
         $config->baseURL = 'http://example.com/';
         $request         = Services::request($config);
-        $request->uri    = new URI($config->baseURL);
+        $request->uri    = new URI($config->baseURL . ltrim($path, '/'));
 
         Services::injectMock('request', $request);
 
