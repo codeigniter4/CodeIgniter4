@@ -11,7 +11,10 @@
 
 namespace CodeIgniter\Pager;
 
+use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Pager\Exceptions\PagerException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -36,18 +39,31 @@ final class PagerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $_SERVER['HTTP_HOST']   = 'example.com';
-        $_SERVER['REQUEST_URI'] = '/';
+        $this->createPager('/');
+    }
+
+    private function createPager(string $requestUri): void
+    {
+        $_SERVER['REQUEST_URI'] = $requestUri;
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_GET                   = [];
 
-        $config          = new App();
-        $config->baseURL = 'http://example.com/';
-        $request         = Services::request($config);
-        $request->uri    = new URI('http://example.com');
+        $config            = new App();
+        $config->baseURL   = 'http://example.com/';
+        $config->indexPage = '';
+        Factories::injectMock('config', 'App', $config);
+
+        $request = new IncomingRequest(
+            $config,
+            new URI($config->baseURL . ltrim($requestUri, '/')),
+            'php://input',
+            new UserAgent()
+        );
+        $request = $request->withMethod('GET');
+        Services::injectMock('request', $request);
 
         Services::injectMock('request', $request);
 
-        $_GET         = [];
         $this->config = new Pager();
         $this->pager  = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
     }
@@ -145,11 +161,11 @@ final class PagerTest extends CIUnitTestCase
 
         $this->pager->store('default', 3, 25, 100);
 
-        $this->assertSame('http://example.com/index.php?page=2&foo=bar', $this->pager->getPreviousPageURI());
-        $this->assertSame('http://example.com/index.php?page=4&foo=bar', $this->pager->getNextPageURI());
-        $this->assertSame('http://example.com/index.php?page=5&foo=bar', $this->pager->getPageURI(5));
+        $this->assertSame('http://example.com/?page=2&foo=bar', $this->pager->getPreviousPageURI());
+        $this->assertSame('http://example.com/?page=4&foo=bar', $this->pager->getNextPageURI());
+        $this->assertSame('http://example.com/?page=5&foo=bar', $this->pager->getPageURI(5));
         $this->assertSame(
-            'http://example.com/index.php?foo=bar&page=5',
+            'http://example.com/?foo=bar&page=5',
             $this->pager->only(['foo'])->getPageURI(5)
         );
     }
@@ -211,6 +227,16 @@ final class PagerTest extends CIUnitTestCase
         $_GET['page_foo'] = 2;
 
         $this->assertSame(2, $this->pager->getCurrentPage('foo'));
+    }
+
+    public function testGetCurrentPageFromSegment()
+    {
+        $this->createPager('/page/2');
+
+        $this->pager->setPath('foo');
+        $this->pager->setSegment(2);
+
+        $this->assertSame(2, $this->pager->getCurrentPage());
     }
 
     public function testGetTotalPagesDefaultsToOne()
