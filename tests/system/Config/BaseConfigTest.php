@@ -117,6 +117,9 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->onedeep_value);
         // array property name with underscore and key with underscore
         $this->assertSame('foo', $config->one_deep['under_deep']);
+
+        // The default property value is null but has type
+        $this->assertSame(20, $config->size);
     }
 
     public function testPrefixedValues()
