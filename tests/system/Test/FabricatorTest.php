@@ -26,10 +26,8 @@ final class FabricatorTest extends CIUnitTestCase
 {
     /**
      * Default formatters to use for UserModel. Should match detected version.
-     *
-     * @var array
      */
-    protected $formatters = [
+    protected array $formatters = [
         'name'       => 'name',
         'email'      => 'email',
         'country'    => 'country',
@@ -363,7 +361,7 @@ final class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->make();
 
-        $this->assertInstanceOf('stdClass', $result);
+        $this->assertInstanceOf(stdClass::class, $result);
     }
 
     public function testMakeReturnsExpectedCount()
@@ -383,7 +381,7 @@ final class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->create(null, true);
 
-        $this->assertInstanceOf('stdClass', $result);
+        $this->assertInstanceOf(stdClass::class, $result);
     }
 
     public function testCreateMockReturnsExpectedCount()

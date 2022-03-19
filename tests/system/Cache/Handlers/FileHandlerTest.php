@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\CLI\CLI;
 use Config\Cache;
 
@@ -76,7 +77,7 @@ final class FileHandlerTest extends AbstractHandlerTest
 
     public function testNewWithNonWritablePath()
     {
-        $this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+        $this->expectException(CacheException::class);
 
         chmod($this->config->file['storePath'], 0444);
         new FileHandler($this->config);

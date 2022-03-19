@@ -326,7 +326,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * @var string
      */
-    protected $queryClass = 'CodeIgniter\\Database\\Query';
+    protected $queryClass = Query::class;
 
     /**
      * Saves our connection settings.

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
@@ -177,7 +178,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
         $builder->update(null, null, null);
@@ -266,7 +267,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
         $builder->updateBatch(null, 'id');
@@ -276,7 +277,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must specify an index to match on for batch updates.');
 
         $builder->updateBatch([]);
@@ -286,7 +287,7 @@ final class UpdateTest extends CIUnitTestCase
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('updateBatch() called with no data');
 
         $builder->updateBatch([], 'id');

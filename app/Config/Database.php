@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Database\Config;
+use SQLite3;
 
 /**
  * Database Configuration
@@ -62,7 +63,7 @@ class Database extends Config
         'username' => '',
         'password' => '',
         'database' => ':memory:',
-        'DBDriver' => 'SQLite3',
+        'DBDriver' => SQLite3::class,
         'DBPrefix' => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),

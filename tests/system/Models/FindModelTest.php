@@ -13,6 +13,7 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
+use stdClass;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
@@ -295,7 +296,7 @@ final class FindModelTest extends LiveModelTestCase
         ]);
 
         $record = $this->model->first();
-        $this->assertInstanceOf('stdClass', $record);
+        $this->assertInstanceOf(stdClass::class, $record);
         $this->assertSame('foo', $record->key);
     }
 

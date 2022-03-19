@@ -12,6 +12,7 @@
 namespace CodeIgniter\Format;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use RuntimeException;
 
 /**
  * @internal
@@ -67,7 +68,7 @@ final class JSONFormatterTest extends CIUnitTestCase
 
     public function testJSONError()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
 
         $data     = ["\xB1\x31"];
         $expected = 'Boom';

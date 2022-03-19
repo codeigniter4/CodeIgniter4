@@ -382,7 +382,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->eighth = 'March 12, 2017';
 
-        $this->assertInstanceOf('DateTime', $entity->eighth);
+        $this->assertInstanceOf(DateTime::class, $entity->eighth);
         $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 

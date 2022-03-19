@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Files;
 
+use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
@@ -85,7 +86,7 @@ final class FileTest extends CIUnitTestCase
 
     public function testThrowsExceptionIfNotAFile()
     {
-        $this->expectException('CodeIgniter\Files\Exceptions\FileNotFoundException');
+        $this->expectException(FileNotFoundException::class);
 
         new File(SYSTEMPATH . 'Commoner.php', true);
     }

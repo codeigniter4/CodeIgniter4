@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -26,11 +27,7 @@ use Tests\Support\Filters\Customfilter;
  */
 final class CodeIgniterTest extends CIUnitTestCase
 {
-    /**
-     * @var CodeIgniter
-     */
-    protected $codeigniter;
-
+    protected CodeIgniter $codeigniter;
     protected $routes;
 
     protected function setUp(): void
@@ -218,7 +215,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $response = Services::response(null, false);
 
-        $this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testRoutesIsEmpty()

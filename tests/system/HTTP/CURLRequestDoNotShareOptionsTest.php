@@ -25,10 +25,7 @@ use CURLFile;
  */
 final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
-    /**
-     * @var MockCURLRequest
-     */
-    protected $request;
+    protected MockCURLRequest $request;
 
     protected function setUp(): void
     {
@@ -96,7 +93,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 
         $response = $this->request->setOutput($output)->send('get', 'http://example.com');
 
-        $this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame($output, $response->getBody());
     }
 

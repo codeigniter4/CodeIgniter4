@@ -11,12 +11,14 @@
 
 namespace CodeIgniter\Database\Live\SQLite;
 
+use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use SQLite3;
 
 /**
  * @group DatabaseLive
@@ -34,27 +36,21 @@ final class AlterTableTest extends CIUnitTestCase
      */
     protected $migrate = false;
 
-    /**
-     * @var Table
-     */
-    protected $table;
+    protected Table $table;
 
     /**
      * @var Connection
      */
     protected $db;
 
-    /**
-     * @var Forge
-     */
-    protected $forge;
+    protected Forge $forge;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $config = [
-            'DBDriver' => 'SQLite3',
+            'DBDriver' => SQLite3::class,
             'database' => 'database.db',
         ];
 
@@ -77,7 +73,7 @@ final class AlterTableTest extends CIUnitTestCase
 
     public function testFromTableThrowsOnNoTable()
     {
-        $this->expectException('CodeIgniter\Database\Exceptions\DataException');
+        $this->expectException(DataException::class);
         $this->expectExceptionMessage('Table `foo` was not found in the current database.');
 
         $this->table->fromTable('foo');

@@ -399,7 +399,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     protected function injectSessionMock()
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\FileHandler',
+            'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
             'sessionSavePath'          => null,

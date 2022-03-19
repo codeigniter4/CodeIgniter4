@@ -20,10 +20,7 @@ use Config\Modules;
  */
 final class FileLocatorTest extends CIUnitTestCase
 {
-    /**
-     * @var FileLocator
-     */
-    protected $locator;
+    protected FileLocator $locator;
 
     protected function setUp(): void
     {

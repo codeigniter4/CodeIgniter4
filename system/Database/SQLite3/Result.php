@@ -122,14 +122,14 @@ class Result extends BaseResult
      *
      * @return bool|object
      */
-    protected function fetchObject(string $className = 'stdClass')
+    protected function fetchObject(string $className = stdClass::class)
     {
         // No native support for fetching rows as objects
         if (($row = $this->fetchAssoc()) === false) {
             return false;
         }
 
-        if ($className === 'stdClass') {
+        if ($className === stdClass::class) {
             return (object) $row;
         }
 

@@ -13,6 +13,7 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
+use SQLite3;
 
 /**
  * @internal
@@ -21,7 +22,7 @@ final class ConfigTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    protected $group = [
+    protected array $group = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'first',
@@ -40,13 +41,13 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-    protected $dsnGroup = [
+    protected array $dsnGroup = [
         'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
         'hostname' => '',
         'username' => '',
         'password' => '',
         'database' => '',
-        'DBDriver' => 'SQLite3',
+        'DBDriver' => SQLite3::class,
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -59,13 +60,13 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-    protected $dsnGroupPostgre = [
+    protected array $dsnGroupPostgre = [
         'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
         'hostname' => '',
         'username' => '',
         'password' => '',
         'database' => '',
-        'DBDriver' => 'SQLite3',
+        'DBDriver' => SQLite3::class,
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -78,7 +79,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 5432,
     ];
-    protected $dsnGroupPostgreNative = [
+    protected array $dsnGroupPostgreNative = [
         'DSN'      => 'pgsql:host=localhost;port=5432;dbname=database_name',
         'hostname' => '',
         'username' => '',

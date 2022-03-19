@@ -98,7 +98,7 @@ class Result extends BaseResult implements ResultInterface
     {
         $row = oci_fetch_object($this->resultID);
 
-        if ($className === 'stdClass' || ! $row) {
+        if ($className === stdClass::class || ! $row) {
             return $row;
         }
         if (is_subclass_of($className, Entity::class)) {

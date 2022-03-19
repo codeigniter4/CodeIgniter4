@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Entity\Entity;
+use stdClass;
 
 /**
  * Class BaseResult
@@ -508,5 +509,5 @@ abstract class BaseResult implements ResultInterface
      *
      * @return object
      */
-    abstract protected function fetchObject(string $className = 'stdClass');
+    abstract protected function fetchObject(string $className = stdClass::class);
 }

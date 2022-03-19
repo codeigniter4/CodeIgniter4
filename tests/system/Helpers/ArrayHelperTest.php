@@ -12,6 +12,8 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use ErrorException;
+use ValueError;
 
 /**
  * @internal
@@ -295,9 +297,9 @@ final class ArrayHelperTest extends CIUnitTestCase
     {
         // PHP 8 changes this error type
         if (version_compare(PHP_VERSION, '8.0', '<')) {
-            $this->expectException('ErrorException');
+            $this->expectException(ErrorException::class);
         } else {
-            $this->expectException('ValueError');
+            $this->expectException(ValueError::class);
         }
 
         $this->expectExceptionMessage('Array sizes are inconsistent');

@@ -57,7 +57,7 @@ class Language
     {
         $this->locale = $locale;
 
-        if (class_exists('MessageFormatter')) {
+        if (class_exists(MessageFormatter::class)) {
             $this->intlSupport = true;
         }
     }

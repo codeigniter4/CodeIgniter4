@@ -29,7 +29,7 @@ final class DeleteTest extends CIUnitTestCase
 
     public function testDeleteThrowExceptionWithNoCriteria()
     {
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
 
         $this->db->table('job')->delete();
     }

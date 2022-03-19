@@ -13,6 +13,7 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Model;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -34,10 +35,7 @@ use Tests\Support\Models\UserModel;
  */
 final class ResourcePresenterTest extends CIUnitTestCase
 {
-    /**
-     * @var CodeIgniter
-     */
-    protected $codeigniter;
+    protected CodeIgniter $codeigniter;
 
     /**
      * @var RouteCollection
@@ -247,7 +245,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         $resource = new MockResourcePresenter();
         $resource->setModel('\Tests\Support\Models\UserModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
         $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
     }
 
@@ -256,7 +254,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $resource = new MockResourcePresenter();
         $model    = new UserModel();
         $resource->setModel($model);
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
 
         // Note that the leading backslash is missing if we build it this way
         $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
@@ -266,12 +264,12 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         $resource = new MockResourcePresenter();
         $resource->setModel('\Tests\Support\Models\UserModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
         $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
 
         $model = new EntityModel();
         $resource->setModel($model);
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
         $this->assertSame('Tests\Support\Models\EntityModel', $resource->getModelName());
     }
 
@@ -279,11 +277,11 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         $resource = new MockResourcePresenter();
         $resource->setModel('\Tests\Support\Models\UserModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
         $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
 
         $resource->setModel('\Tests\Support\Models\EntityModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
         $this->assertSame('\Tests\Support\Models\EntityModel', $resource->getModelName());
     }
 }

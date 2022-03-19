@@ -15,6 +15,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use InvalidArgumentException;
 use UnnamespacedClass;
 
 /**
@@ -22,12 +23,8 @@ use UnnamespacedClass;
  */
 final class AutoloaderTest extends CIUnitTestCase
 {
-    /**
-     * @var Autoloader
-     */
-    protected $loader;
-
-    protected $filesPath = SUPPORTPATH . 'Autoloader/';
+    protected Autoloader $loader;
+    protected string $filesPath = SUPPORTPATH . 'Autoloader/';
 
     protected function setUp(): void
     {
@@ -58,7 +55,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testInitializeWithInvalidArguments()
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Config array must contain either the 'psr4' key or the 'classmap' key.");
 
         $config                      = new Autoload();

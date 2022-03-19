@@ -14,6 +14,7 @@ namespace CodeIgniter\Language;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLanguage;
 use Config\Services;
+use MessageFormatter;
 use Tests\Support\Language\SecondMockLanguage;
 
 /**
@@ -96,7 +97,7 @@ final class LanguageTest extends CIUnitTestCase
     public function testGetLineFormatsMessage()
     {
         // No intl extension? then we can't test this - go away....
-        if (! class_exists('MessageFormatter')) {
+        if (! class_exists(MessageFormatter::class)) {
             $this->markTestSkipped('No intl support.');
         }
 
@@ -110,7 +111,7 @@ final class LanguageTest extends CIUnitTestCase
     public function testGetLineArrayFormatsMessages()
     {
         // No intl extension? Then we can't test this - go away...
-        if (! class_exists('MessageFormatter')) {
+        if (! class_exists(MessageFormatter::class)) {
             $this->markTestSkipped('No intl support.');
         }
 

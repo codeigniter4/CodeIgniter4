@@ -18,6 +18,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use InvalidArgumentException;
 use RuntimeException;
+use SQLite3;
 
 /**
  * @group DatabaseLive
@@ -56,7 +57,7 @@ final class ForgeTest extends CIUnitTestCase
         $dbName = 'test_forge_database_exist';
 
         $databaseCreateIfNotExists = $this->forge->createDatabase($dbName, true);
-        if ($this->db->DBDriver !== 'SQLite3') {
+        if ($this->db->DBDriver !== SQLite3::class) {
             $this->forge->dropDatabase($dbName);
         }
 
@@ -72,7 +73,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->createDatabase($dbName);
         $databaseExists = $this->forge->createDatabase($dbName, true);
-        if ($this->db->DBDriver !== 'SQLite3') {
+        if ($this->db->DBDriver !== SQLite3::class) {
             $this->forge->dropDatabase($dbName);
         }
 
@@ -84,7 +85,7 @@ final class ForgeTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support drop database.');
         }
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $this->markTestSkipped('SQLite3 requires file path to drop database');
         }
 
@@ -97,7 +98,7 @@ final class ForgeTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->forge, 'createDatabaseStr', false);
 
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $databaseCreated = $this->forge->createDatabase('test_forge_database');
             $this->assertTrue($databaseCreated);
         } else {
@@ -112,7 +113,7 @@ final class ForgeTest extends CIUnitTestCase
     {
         $this->setPrivateProperty($this->forge, 'dropDatabaseStr', false);
 
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $this->markTestSkipped('SQLite3 requires file path to drop database');
         } else {
             $this->expectException(DatabaseException::class);
@@ -175,7 +176,7 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
         } elseif ($this->db->DBDriver === 'Postgre') {
             $this->assertSame(strtolower($fieldsData[0]->type), 'bigint');
-        } elseif ($this->db->DBDriver === 'SQLite3') {
+        } elseif ($this->db->DBDriver === SQLite3::class) {
             $this->assertSame(strtolower($fieldsData[0]->type), 'integer');
         } elseif ($this->db->DBDriver === 'OCI8') {
             $this->assertSame(strtolower($fieldsData[0]->type), 'number');
@@ -191,7 +192,7 @@ final class ForgeTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'OCI8') {
             $this->markTestSkipped('OCI8 does not support comments on tables or columns.');
         }
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $this->markTestSkipped('SQLite3 does not support comments on tables or columns.');
         }
 
@@ -213,7 +214,7 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateTableWithArrayFieldConstraints()
     {
-        if (in_array($this->db->DBDriver, ['MySQLi', 'SQLite3'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', SQLite3::class], true)) {
             $this->forge->dropTable('forge_array_constraint', true);
             $this->forge->addField([
                 'status' => [
@@ -231,7 +232,7 @@ final class ForgeTest extends CIUnitTestCase
 
             $this->assertSame('status', $fields[0]->name);
 
-            if ($this->db->DBDriver === 'SQLite3') {
+            if ($this->db->DBDriver === SQLite3::class) {
                 // SQLite3 converts array constraints to TEXT CHECK(...)
                 $this->assertSame('TEXT', $fields[0]->type);
             } else {
@@ -431,7 +432,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $foreignKeyData = $this->db->getForeignKeyData($tableName);
 
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $this->assertSame($foreignKeyData[0]->constraint_name, 'users_id to db_forge_test_users.id');
             $this->assertSame($foreignKeyData[0]->sequence, 0);
         } elseif ($this->db->DBDriver === 'OCI8') {
@@ -553,7 +554,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $foreignKeyData = $this->db->getForeignKeyData($forgeTestInvoicesTableName);
 
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $this->assertSame('users_id to db_forge_test_users.id', $foreignKeyData[0]->constraint_name);
             $this->assertSame(0, $foreignKeyData[0]->sequence);
             $this->assertSame('users_second_id to db_forge_test_users.second_id', $foreignKeyData[1]->constraint_name);
@@ -843,7 +844,7 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame(32, (int) $fieldsData[0]->max_length);
             $this->assertNull($fieldsData[1]->default);
             $this->assertSame(255, (int) $fieldsData[1]->max_length);
-        } elseif ($this->db->DBDriver === 'SQLite3') {
+        } elseif ($this->db->DBDriver === SQLite3::class) {
             $this->assertSame('integer', strtolower($fieldsData[0]->type));
             $this->assertSame('varchar', strtolower($fieldsData[1]->type));
             $this->assertNull($fieldsData[1]->default);
@@ -868,7 +869,7 @@ final class ForgeTest extends CIUnitTestCase
     public function testCompositeKey()
     {
         // SQLite3 uses auto increment different
-        $uniqueOrAuto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
+        $uniqueOrAuto = $this->db->DBDriver === SQLite3::class ? 'unique' : 'auto_increment';
 
         $this->forge->addField([
             'id' => [
@@ -916,7 +917,7 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
             $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
             $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
-        } elseif ($this->db->DBDriver === 'SQLite3') {
+        } elseif ($this->db->DBDriver === SQLite3::class) {
             $this->assertSame($keys['sqlite_autoindex_db_forge_test_1_1']->name, 'sqlite_autoindex_db_forge_test_1_1');
             $this->assertSame($keys['sqlite_autoindex_db_forge_test_1_1']->fields, ['id']);
             $this->assertSame($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
@@ -1054,7 +1055,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->assertFalse($this->db->tableExists('dropTest'));
 
-        if ($this->db->DBDriver === 'SQLite3') {
+        if ($this->db->DBDriver === SQLite3::class) {
             $this->assertCount(0, $this->db->getIndexData('droptest'));
         }
     }

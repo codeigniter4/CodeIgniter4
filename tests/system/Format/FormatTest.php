@@ -12,6 +12,7 @@
 namespace CodeIgniter\Format;
 
 use CodeIgniter\Format\Exceptions\FormatException;
+use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
@@ -19,10 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class FormatTest extends CIUnitTestCase
 {
-    /**
-     * @var Format
-     */
-    protected $format;
+    protected Format $format;
 
     protected function setUp(): void
     {
@@ -66,7 +64,7 @@ final class FormatTest extends CIUnitTestCase
     {
         $this->format->getConfig()->formatters = array_merge(
             $this->format->getConfig()->formatters,
-            ['text/xml' => 'CodeIgniter\HTTP\URI']
+            ['text/xml' => URI::class]
         );
 
         $this->expectException(FormatException::class);

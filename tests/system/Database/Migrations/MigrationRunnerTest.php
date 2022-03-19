@@ -22,6 +22,7 @@ use Config\Database;
 use Config\Migrations;
 use Config\Services;
 use org\bovigo\vfs\vfsStream;
+use SQLite3;
 
 /**
  * @group DatabaseLive
@@ -74,7 +75,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
         $this->assertInstanceOf(BaseConnection::class, $db);
         $this->assertSame(
-            ($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '') . $dbConfig->tests['database'],
+            ($dbConfig->tests['DBDriver'] === SQLite3::class ? WRITEPATH : '') . $dbConfig->tests['database'],
             $this->getPrivateProperty($db, 'database')
         );
         $this->assertSame($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));
@@ -254,7 +255,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testMigrationThrowsDisabledException()
     {
-        $this->expectException('CodeIgniter\Exceptions\ConfigException');
+        $this->expectException(ConfigException::class);
         $this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
 
         $config          = $this->config;
