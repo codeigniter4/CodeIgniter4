@@ -21,7 +21,7 @@ use Config\Services;
  */
 final class EncryptionTest extends CIUnitTestCase
 {
-    protected \CodeIgniter\Encryption\Encryption $encryption;
+    protected Encryption $encryption;
 
     protected function setUp(): void
     {

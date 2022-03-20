@@ -21,7 +21,7 @@ use Config\Encryption as EncryptionConfig;
  */
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
-    protected \CodeIgniter\Encryption\Encryption $encryption;
+    protected Encryption $encryption;
 
     protected function setUp(): void
     {
