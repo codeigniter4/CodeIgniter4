@@ -416,10 +416,7 @@ class Router implements RouterInterface
 
                     return true;
                 }
-                // Are we using the default method for back-references?
 
-                // Support resource route when function with subdirectory
-                // ex: $routes->resource('Admin/Admins');
                 if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false && strpos($routeKey, '/') !== false) {
                     $replacekey = str_replace('/(.*)', '', $routeKey);
                     $handler    = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
