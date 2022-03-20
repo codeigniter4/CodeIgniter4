@@ -386,8 +386,9 @@ string to a file, such as an image or stylesheet. For example:</p>
 <dd class="field-odd"><p>string|\CodeIgniter\HTTP\URI</p>
 </dd>
 </dl>
-<p>Returns the full URL (including segments) of the page being currently
-viewed.</p>
+<p>Returns the full URL (including segments) of the page being currently viewed.
+However for security reasons, it is created based on the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> settings,
+and not intended to match the browser URL.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Calling this function is the same as doing this:</p>
@@ -925,7 +926,7 @@ any other applicable characters in the URL:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 19, 2022.
+      <span class="lastupdated">Last updated on Mar 20, 2022.
       </span></p>
   </div>
 
