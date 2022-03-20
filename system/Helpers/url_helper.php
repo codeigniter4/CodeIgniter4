@@ -109,7 +109,7 @@ if (! function_exists('base_url')) {
 
 if (! function_exists('current_url')) {
     /**
-     * Returns the current full URL based on the IncomingRequest.
+     * Returns the current full URL based on the Config\App settings and IncomingRequest.
      * String returns ignore query and fragment parts.
      *
      * @param bool                 $returnObject True to return an object instead of a string

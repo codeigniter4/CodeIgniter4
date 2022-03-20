@@ -88,8 +88,9 @@ The following functions are available:
     :returns: The current URL
     :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
-    Returns the full URL (including segments) of the page being currently
-    viewed.
+    Returns the full URL (including segments) of the page being currently viewed.
+    However for security reasons, it is created based on the ``Config\App`` settings,
+    and not intended to match the browser URL.
 
     .. note:: Calling this function is the same as doing this:
 
