@@ -13,7 +13,6 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\I18n\Time;
-use InvalidArgumentException;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
@@ -102,7 +101,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
     public function testUndefinedTypeInTransformDataToArray(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid type "whatever" used upon transforming data to array.');
 
         $this->createModel(JobModel::class);

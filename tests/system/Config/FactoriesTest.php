@@ -189,7 +189,7 @@ final class FactoriesTest extends CIUnitTestCase
 
         $result = Factories::widgets('Banana');
 
-        $this->assertInstanceOf(stdClass::class, $result);
+        $this->assertInstanceOf('stdClass', $result);
     }
 
     public function testRespectsComponentAlias()
@@ -210,7 +210,7 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testRespectsInstanceOf()
     {
-        Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
+        Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
         $result = Factories::widgets('SomeWidget');
         $this->assertInstanceOf(SomeWidget::class, $result);
@@ -223,13 +223,13 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::injectMock('widgets', 'SomeWidget', new OtherWidget());
 
-        $result = Factories::widgets('SomeWidget', ['instanceOf' => stdClass::class]);
+        $result = Factories::widgets('SomeWidget', ['instanceOf' => 'stdClass']);
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
     public function testPrioritizesParameterOptions()
     {
-        Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
+        Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
         $result = Factories::widgets('OtherWidget', ['instanceOf' => null]);
         $this->assertInstanceOf(OtherWidget::class, $result);

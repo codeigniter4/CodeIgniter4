@@ -12,7 +12,6 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use InvalidArgumentException;
 use stdClass;
 use Tests\Support\Cache\RestrictiveHandler;
 
@@ -28,7 +27,7 @@ final class BaseHandlerTest extends CIUnitTestCase
      */
     public function testValidateKeyInvalidType($input)
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Cache key must be a string');
 
         BaseHandler::validateKey($input);
@@ -49,7 +48,7 @@ final class BaseHandlerTest extends CIUnitTestCase
     {
         config('Cache')->reservedCharacters = 'b';
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Cache key contains reserved characters b');
 
         BaseHandler::validateKey('banana');

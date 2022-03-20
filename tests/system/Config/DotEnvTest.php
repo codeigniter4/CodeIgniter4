@@ -12,7 +12,6 @@
 namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -116,7 +115,7 @@ final class DotEnvTest extends CIUnitTestCase
         $file = 'unreadable.env';
         $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
         chmod($path, 0000);
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage("The .env file is not readable: {$path}");
         $dotenv = new DotEnv($this->fixturesFolder, $file);
         $dotenv->load();
@@ -136,7 +135,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     public function testSpacedValuesWithoutQuotesThrowsException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('.env values containing spaces must be surrounded by quotes.');
 
         $dotenv = new DotEnv($this->fixturesFolder, 'spaced-wrong.env');

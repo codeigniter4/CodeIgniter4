@@ -105,7 +105,7 @@ class Result extends BaseResult
      *
      * @return bool|Entity|object
      */
-    protected function fetchObject(string $className = stdClass::class)
+    protected function fetchObject(string $className = 'stdClass')
     {
         if (is_subclass_of($className, Entity::class)) {
             return empty($data = $this->fetchAssoc()) ? false : (new $className())->setAttributes($data);

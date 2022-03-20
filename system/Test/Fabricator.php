@@ -17,7 +17,6 @@ use Faker\Factory;
 use Faker\Generator;
 use InvalidArgumentException;
 use RuntimeException;
-use stdClass;
 
 /**
  * Fabricator
@@ -410,7 +409,7 @@ class Fabricator
     {
         if ($className === null) {
             if ($this->model->returnType === 'object' || $this->model->returnType === 'array') {
-                $className = stdClass::class;
+                $className = 'stdClass';
             } else {
                 $className = $this->model->returnType;
             }

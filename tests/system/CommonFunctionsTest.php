@@ -29,7 +29,6 @@ use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Logger;
 use Config\Modules;
-use InvalidArgumentException;
 use Kint;
 use stdClass;
 use Tests\Support\Models\JobModel;
@@ -167,7 +166,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testEscapeBadContext()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         esc(['width' => '800', 'height' => '600'], 'bogus');
     }
 

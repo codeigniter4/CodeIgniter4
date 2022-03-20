@@ -14,7 +14,6 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Database;
 use Faker\Generator;
-use InvalidArgumentException;
 
 /**
  * @internal
@@ -23,7 +22,7 @@ final class DatabaseSeederTest extends CIUnitTestCase
 {
     public function testInstantiateNoSeedPath()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
 
         $config            = new Database();
         $config->filesPath = '';
@@ -32,7 +31,7 @@ final class DatabaseSeederTest extends CIUnitTestCase
 
     public function testInstantiateNotDirSeedPath()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
 
         $config            = new Database();
         $config->filesPath = APPPATH . 'Foo';
@@ -49,7 +48,7 @@ final class DatabaseSeederTest extends CIUnitTestCase
 
     public function testCallOnEmptySeeder()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
 
         $seeder = new Seeder(new Database());
         $seeder->call('');

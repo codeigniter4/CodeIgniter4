@@ -15,7 +15,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
-use InvalidArgumentException;
 use UnnamespacedClass;
 
 /**
@@ -55,7 +54,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testInitializeWithInvalidArguments()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage("Config array must contain either the 'psr4' key or the 'classmap' key.");
 
         $config                      = new Autoload();

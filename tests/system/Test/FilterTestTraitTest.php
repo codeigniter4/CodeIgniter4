@@ -11,10 +11,8 @@
 
 namespace CodeIgniter\Test;
 
-use Closure;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\HTTP\RequestInterface;
-use InvalidArgumentException;
 use Tests\Support\Filters\Customfilter;
 
 /**
@@ -52,12 +50,12 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $caller = $this->getFilterCaller('test-customfilter', 'before');
 
         $this->assertIsCallable($caller);
-        $this->assertInstanceOf(Closure::class, $caller);
+        $this->assertInstanceOf('Closure', $caller);
     }
 
     public function testGetCallerInvalidPosition()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid filter position passed: banana');
 
         $this->getFilterCaller('test-customfilter', 'banana');
