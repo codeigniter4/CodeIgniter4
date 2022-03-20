@@ -21,7 +21,7 @@ use Config\Encryption as EncryptionConfig;
  */
 final class SodiumHandlerTest extends CIUnitTestCase
 {
-    protected \CodeIgniter\Encryption\Encryption $encryption;
+    protected Encryption $encryption;
     protected \Config\Encryption $config;
 
     protected function setUp(): void
