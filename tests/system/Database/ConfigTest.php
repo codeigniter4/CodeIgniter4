@@ -13,7 +13,6 @@ namespace CodeIgniter\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
-use SQLite3;
 
 /**
  * @internal
@@ -47,7 +46,7 @@ final class ConfigTest extends CIUnitTestCase
         'username' => '',
         'password' => '',
         'database' => '',
-        'DBDriver' => SQLite3::class,
+        'DBDriver' => 'SQLite3',
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -66,7 +65,7 @@ final class ConfigTest extends CIUnitTestCase
         'username' => '',
         'password' => '',
         'database' => '',
-        'DBDriver' => SQLite3::class,
+        'DBDriver' => 'SQLite3',
         'DBPrefix' => 't_',
         'pConnect' => false,
         'DBDebug'  => (ENVIRONMENT !== 'production'),

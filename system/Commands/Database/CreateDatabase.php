@@ -16,7 +16,6 @@ use CodeIgniter\CLI\CLI;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Database\SQLite3\Connection;
 use Config\Database;
-use SQLite3;
 use Throwable;
 
 /**
@@ -107,7 +106,7 @@ class CreateDatabase extends BaseCommand
                     $name = str_replace(['.db', '.sqlite'], '', $name) . ".{$ext}";
                 }
 
-                $config->{$group}['DBDriver'] = SQLite3::class;
+                $config->{$group}['DBDriver'] = 'SQLite3';
                 $config->{$group}['database'] = $name;
 
                 if ($name !== ':memory:') {

@@ -28,7 +28,7 @@ class Connection extends BaseConnection
      *
      * @var string
      */
-    public $DBDriver = SQLite3::class;
+    public $DBDriver = 'SQLite3';
 
     /**
      * Identifier escape character

@@ -15,7 +15,6 @@ use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use SQLite3;
 
 /**
  * @group DatabaseLive
@@ -81,7 +80,7 @@ final class DbUtilsTest extends CIUnitTestCase
             $databases = $util->listDatabases();
 
             $this->assertContains($this->db->getDatabase(), $databases);
-        } elseif ($this->db->DBDriver === SQLite3::class) {
+        } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 
@@ -97,7 +96,7 @@ final class DbUtilsTest extends CIUnitTestCase
             $exist = $util->databaseExists($this->db->getDatabase());
 
             $this->assertTrue($exist);
-        } elseif ($this->db->DBDriver === SQLite3::class) {
+        } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
 

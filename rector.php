@@ -111,6 +111,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
             // expected Qualified name
             __DIR__ . '/tests/system/Autoloader/FileLocatorTest.php',
+
+            // SQLite3 as string
+            __DIR__ . '/app/Config/Database.php',
+            __DIR__ . '/system/Commands/Database/CreateDatabase.php',
+            __DIR__ . '/system/Database/SQLite3/Connection.php',
+            __DIR__ . '/tests/system/Database/ConfigTest.php',
+            __DIR__ . '/tests/system/Database/Live/DbUtilsTest.php',
+            __DIR__ . '/tests/system/Database/Live/ForgeTest.php',
+            __DIR__ . '/tests/system/Database/Live/GetTest.php',
+            __DIR__ . '/tests/system/Database/Live/SQLite/AlterTableTest.php',
+            __DIR__ . '/tests/system/Database/Migrations/MigrationRunnerTest.php',
         ],
 
         // sometime too detail

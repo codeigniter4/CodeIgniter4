@@ -18,7 +18,6 @@ use CodeIgniter\Database\SQLite3\Table;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
-use SQLite3;
 
 /**
  * @group DatabaseLive
@@ -50,7 +49,7 @@ final class AlterTableTest extends CIUnitTestCase
         parent::setUp();
 
         $config = [
-            'DBDriver' => SQLite3::class,
+            'DBDriver' => 'SQLite3',
             'database' => 'database.db',
         ];
 

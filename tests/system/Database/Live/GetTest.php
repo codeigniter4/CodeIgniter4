@@ -14,7 +14,6 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use SQLite3;
 
 /**
  * @group DatabaseLive
@@ -92,7 +91,7 @@ final class GetTest extends CIUnitTestCase
 
         $typeTest = $this->db->table('type_test')->get()->getFieldData();
 
-        if ($this->db->DBDriver === SQLite3::class) {
+        if ($this->db->DBDriver === 'SQLite3') {
             $this->assertSame('integer', $typeTest[0]->type_name); // INTEGER AUTO INC
             $this->assertSame('text', $typeTest[1]->type_name);  // VARCHAR
             $this->assertSame('text', $typeTest[2]->type_name);  // CHAR
@@ -173,7 +172,7 @@ final class GetTest extends CIUnitTestCase
     {
         $data = $this->db->table('job')->get();
 
-        if ($this->db->DBDriver === SQLite3::class) {
+        if ($this->db->DBDriver === 'SQLite3') {
             $this->expectException(DatabaseException::class);
             $this->expectExceptionMessage('SQLite3 doesn\'t support seeking to other offset.');
         } elseif ($this->db->DBDriver === 'OCI8') {
