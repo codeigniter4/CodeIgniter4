@@ -69,10 +69,6 @@ final class RouterTest extends CIUnitTestCase
         $this->request->setMethod('get');
     }
 
-    protected function tearDown(): void
-    {
-    }
-
     public function testEmptyURIMatchesDefaults()
     {
         $router = new Router($this->collection, $this->request);
