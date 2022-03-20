@@ -420,6 +420,12 @@ class Router implements RouterInterface
                 if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
                     // Using back-references
 
+                    // Checks dynamic controller
+                    [$controller, ] = explode('::', $handler);
+                    if (strpos($controller, '$') !== false) {
+                        throw RouterException::forDynamicController($handler);
+                    }
+
                     if (strpos($routeKey, '/') !== false) {
                         $replacekey = str_replace('/(.*)', '', $routeKey);
                         $handler    = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
