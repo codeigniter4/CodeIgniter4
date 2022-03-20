@@ -59,7 +59,7 @@ final class RouterTest extends CIUnitTestCase
             'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
             'closure/(:num)/(:alpha)'                         => static fn ($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
-            'Admin/Admins'                                    => 'App\Admin\Admins::list_all',
+            'admin/admins'                                    => 'App\Admin\Admins::list_all',
             '/some/slash'                                     => 'App\Slash::index',
             'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
         ];
@@ -398,7 +398,7 @@ final class RouterTest extends CIUnitTestCase
     {
         $router = new Router($this->collection, $this->request);
 
-        $router->handle('Admin/Admins');
+        $router->handle('admin/admins');
 
         $this->assertSame('\App\Admin\Admins', $router->controllerName());
         $this->assertSame('list_all', $router->methodName());
