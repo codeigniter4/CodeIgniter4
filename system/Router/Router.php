@@ -417,12 +417,16 @@ class Router implements RouterInterface
                     return true;
                 }
 
-                if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false && strpos($routeKey, '/') !== false) {
-                    $replacekey = str_replace('/(.*)', '', $routeKey);
-                    $handler    = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
-                    $handler    = str_replace($replacekey, str_replace('/', '\\', $replacekey), $handler);
-                } elseif (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
-                    $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
+                if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
+                    // Using back-references
+
+                    if (strpos($routeKey, '/') !== false) {
+                        $replacekey = str_replace('/(.*)', '', $routeKey);
+                        $handler    = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
+                        $handler    = str_replace($replacekey, str_replace('/', '\\', $replacekey), $handler);
+                    } else {
+                        $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
+                    }
                 } elseif (strpos($handler, '/') !== false) {
                     [$controller, $method] = explode('::', $handler);
 
