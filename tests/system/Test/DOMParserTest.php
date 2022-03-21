@@ -11,8 +11,6 @@
 
 namespace CodeIgniter\Test;
 
-use InvalidArgumentException;
-
 /**
  * @internal
  */
@@ -396,7 +394,7 @@ final class DOMParserTest extends CIUnitTestCase
 
         $filename = APPPATH . 'bogus.html';
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $dom->withFile($filename);
     }
 

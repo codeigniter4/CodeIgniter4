@@ -16,7 +16,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
-use InvalidArgumentException;
 use LogicException;
 
 /**
@@ -274,7 +273,7 @@ final class CookieTest extends CIUnitTestCase
         $this->assertArrayHasKey('path', $cookie);
         $this->assertSame($cookie['path'], $cookie->getPath());
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $cookie['expiry'];
     }
 

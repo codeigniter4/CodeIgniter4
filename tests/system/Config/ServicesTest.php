@@ -43,6 +43,7 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
+use RuntimeException;
 use Tests\Support\Config\Services;
 
 /**
@@ -69,7 +70,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testCanReplaceFrameworkServices()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Service originated from Tests\Support\Config\Services');
 
         Services::uri('testCanReplaceFrameworkServices');

@@ -254,7 +254,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testMigrationThrowsDisabledException()
     {
-        $this->expectException('CodeIgniter\Exceptions\ConfigException');
+        $this->expectException(ConfigException::class);
         $this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
 
         $config          = $this->config;

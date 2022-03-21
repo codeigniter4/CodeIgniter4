@@ -12,8 +12,6 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Database\ModelFactory;
-use InvalidArgumentException;
-use stdClass;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
@@ -26,10 +24,8 @@ final class FabricatorTest extends CIUnitTestCase
 {
     /**
      * Default formatters to use for UserModel. Should match detected version.
-     *
-     * @var array
      */
-    protected $formatters = [
+    protected array $formatters = [
         'name'       => 'name',
         'email'      => 'email',
         'country'    => 'country',
@@ -61,7 +57,7 @@ final class FabricatorTest extends CIUnitTestCase
 
     public function testConstructorWithInvalid()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage(lang('Fabricator.invalidModel'));
 
         new Fabricator('SillyRabbit\Models\AreForKids');
@@ -315,7 +311,7 @@ final class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeObject();
 
-        $this->assertInstanceOf(stdClass::class, $result);
+        $this->assertInstanceOf('stdClass', $result);
     }
 
     public function testMakeObjectReturnsStdClassForObjectReturnType()
@@ -324,7 +320,7 @@ final class FabricatorTest extends CIUnitTestCase
 
         $result = $fabricator->makeObject();
 
-        $this->assertInstanceOf(stdClass::class, $result);
+        $this->assertInstanceOf('stdClass', $result);
     }
 
     public function testMakeObjectUsesOverrides()

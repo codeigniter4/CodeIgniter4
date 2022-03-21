@@ -22,12 +22,8 @@ use UnnamespacedClass;
  */
 final class AutoloaderTest extends CIUnitTestCase
 {
-    /**
-     * @var Autoloader
-     */
-    protected $loader;
-
-    protected $filesPath = SUPPORTPATH . 'Autoloader/';
+    protected Autoloader $loader;
+    protected string $filesPath = SUPPORTPATH . 'Autoloader/';
 
     protected function setUp(): void
     {

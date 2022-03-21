@@ -16,7 +16,6 @@ use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
-use InvalidArgumentException;
 use RuntimeException;
 
 /**
@@ -297,7 +296,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->addField('id');
         $this->forge->addField('name varchar(100) NULL');
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('A table name is required for that operation.');
 
         $this->forge->createTable('');
@@ -315,7 +314,7 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCreateTableWithStringFieldException()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Field information is required for that operation.');
 
         $this->forge->dropTable('forge_test_table', true);
@@ -351,7 +350,7 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->createTable('forge_test_table');
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('A table name is required for that operation.');
 
         $this->forge->renameTable('forge_test_table', '');

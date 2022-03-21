@@ -332,7 +332,7 @@ class BaseService
                 foreach ($files as $file) {
                     $classname = $locator->getClassname($file);
 
-                    if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true)) {
+                    if (! in_array($classname, [Services::class], true)) {
                         static::$services[] = new $classname();
                     }
                 }
@@ -369,7 +369,7 @@ class BaseService
                 foreach ($files as $file) {
                     $classname = $locator->getClassname($file);
 
-                    if ($classname !== 'CodeIgniter\\Config\\Services') {
+                    if ($classname !== Services::class) {
                         self::$serviceNames[] = $classname;
                         static::$services[]   = new $classname();
                     }

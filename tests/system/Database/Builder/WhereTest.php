@@ -14,7 +14,6 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
-use InvalidArgumentException;
 use stdClass;
 
 /**
@@ -267,7 +266,7 @@ final class WhereTest extends CIUnitTestCase
      */
     public function testWhereInvalidKeyThrowInvalidArgumentException($key)
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $builder = $this->db->table('jobs');
 
         $builder->whereIn($key, ['Politician', 'Accountant']);
@@ -289,7 +288,7 @@ final class WhereTest extends CIUnitTestCase
      */
     public function testWhereInEmptyValuesThrowInvalidArgumentException($values)
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $builder = $this->db->table('jobs');
 
         $builder->whereIn('name', $values);

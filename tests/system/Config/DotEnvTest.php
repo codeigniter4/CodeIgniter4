@@ -115,7 +115,7 @@ final class DotEnvTest extends CIUnitTestCase
         $file = 'unreadable.env';
         $path = rtrim($this->fixturesFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
         chmod($path, 0000);
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage("The .env file is not readable: {$path}");
         $dotenv = new DotEnv($this->fixturesFolder, $file);
         $dotenv->load();

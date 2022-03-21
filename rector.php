@@ -84,8 +84,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         RemoveUnusedPrivateMethodRector::class => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
-            // Rector bug?
-            __DIR__ . '/system/CodeIgniter.php',
         ],
 
         // call on purpose for nothing happen check
@@ -103,9 +101,17 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             __DIR__ . '/system/Session/Handlers',
         ],
 
-        // may cause load view files directly when detecting class that
-        // make warning
-        StringClassNameToClassConstantRector::class,
+        StringClassNameToClassConstantRector::class => [
+            // may cause load view files directly when detecting namespaced string
+            // due to internal PHPStan issue
+            __DIR__ . '/app/Config/Pager.php',
+            __DIR__ . '/app/Config/Validation.php',
+            __DIR__ . '/tests/system/Validation/StrictRules/ValidationTest.php',
+            __DIR__ . '/tests/system/Validation/ValidationTest.php',
+
+            // expected Qualified name
+            __DIR__ . '/tests/system/Autoloader/FileLocatorTest.php',
+        ],
 
         // sometime too detail
         CountOnNullRector::class,
@@ -147,4 +153,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $services->set(SimplifyEmptyArrayCheckRector::class);
     $services->set(NormalizeNamespaceByPSR4ComposerAutoloadRector::class);
+    $services->set(StringClassNameToClassConstantRector::class)
+        ->configure([
+            'Error',
+            'Exception',
+            'InvalidArgumentException',
+            'Closure',
+            'stdClass',
+            'SQLite3',
+        ]);
 };

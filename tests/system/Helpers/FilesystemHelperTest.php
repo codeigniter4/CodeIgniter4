@@ -12,7 +12,6 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
@@ -525,13 +524,13 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testRealPathURL()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         set_realpath('http://somewhere.com/overtherainbow');
     }
 
     public function testRealPathInvalid()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         set_realpath(SUPPORTPATH . 'root/../', true);
     }
 

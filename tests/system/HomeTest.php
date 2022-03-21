@@ -13,6 +13,7 @@ namespace CodeIgniter;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\FeatureTestTrait;
+use CodeIgniter\Test\TestResponse;
 
 /**
  * @internal
@@ -32,7 +33,7 @@ final class HomeTest extends CIUnitTestCase
         ]);
 
         $response = $this->get('home');
-        $this->assertInstanceOf('CodeIgniter\Test\TestResponse', $response);
+        $this->assertInstanceOf(TestResponse::class, $response);
         $this->assertTrue($response->isOK());
     }
 }

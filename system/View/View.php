@@ -13,6 +13,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Debug\Toolbar\Collectors\Views;
+use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
 use Config\Toolbar;
@@ -235,7 +236,7 @@ class View implements RendererInterface
         $this->logPerformance($this->renderVars['start'], microtime(true), $this->renderVars['view']);
 
         if (($this->debug && (! isset($options['debug']) || $options['debug'] === true))
-            && in_array('CodeIgniter\Filters\DebugToolbar', service('filters')->getFiltersClass()['after'], true)
+            && in_array(DebugToolbar::class, service('filters')->getFiltersClass()['after'], true)
         ) {
             $toolbarCollectors = config(Toolbar::class)->collectors;
 

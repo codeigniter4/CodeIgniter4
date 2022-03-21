@@ -29,11 +29,7 @@ final class ResponseTraitTest extends CIUnitTestCase
 {
     protected $request;
     protected $response;
-
-    /**
-     * @var FormatterInterface|null
-     */
-    protected $formatter;
+    protected ?FormatterInterface $formatter = null;
 
     protected function setUp(): void
     {
@@ -505,7 +501,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         $this->formatter = new XMLFormatter();
         $controller      = $this->makeController();
 
-        $this->assertInstanceOf('CodeIgniter\Format\XMLFormatter', $this->formatter);
+        $this->assertInstanceOf(XMLFormatter::class, $this->formatter);
 
         $this->invoke($controller, 'respondCreated', [['id' => 3], 'A Custom Reason']);
 

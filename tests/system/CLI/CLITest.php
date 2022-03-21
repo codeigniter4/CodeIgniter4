@@ -14,6 +14,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use ReflectionProperty;
+use RuntimeException;
 
 /**
  * @internal
@@ -100,7 +101,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testColorExceptionForeground()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid foreground color: Foreground');
 
         CLI::color('test', 'Foreground');
@@ -108,7 +109,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testColorExceptionBackground()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid background color: Background');
 
         CLI::color('test', 'white', 'Background');

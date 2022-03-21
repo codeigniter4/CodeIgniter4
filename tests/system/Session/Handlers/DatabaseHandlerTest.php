@@ -40,7 +40,7 @@ final class DatabaseHandlerTest extends CIUnitTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\DatabaseHandler',
+            'sessionDriver'            => DatabaseHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
             'sessionSavePath'          => 'ci_sessions',

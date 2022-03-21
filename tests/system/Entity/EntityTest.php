@@ -19,7 +19,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use ReflectionException;
-use stdClass;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
@@ -372,7 +371,7 @@ final class EntityTest extends CIUnitTestCase
         $entity->sixth = $data;
 
         $this->assertIsObject($entity->sixth);
-        $this->assertInstanceOf(stdClass::class, $entity->sixth);
+        $this->assertInstanceOf('stdClass', $entity->sixth);
         $this->assertSame($data, (array) $entity->sixth);
     }
 
@@ -382,7 +381,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->eighth = 'March 12, 2017';
 
-        $this->assertInstanceOf('DateTime', $entity->eighth);
+        $this->assertInstanceOf(DateTime::class, $entity->eighth);
         $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 
@@ -516,7 +515,7 @@ final class EntityTest extends CIUnitTestCase
         $check = $this->getPrivateProperty($entity, 'attributes')['tenth'];
         $this->assertSame('{"foo":"bar"}', $check);
 
-        $this->assertInstanceOf(stdClass::class, $entity->tenth);
+        $this->assertInstanceOf('stdClass', $entity->tenth);
         $this->assertSame(['foo' => 'bar'], (array) $entity->tenth);
     }
 

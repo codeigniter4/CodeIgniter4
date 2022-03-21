@@ -14,7 +14,6 @@ namespace CodeIgniter\Database\OCI8;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Entity;
-use stdClass;
 
 /**
  * Result for OCI8
@@ -94,7 +93,7 @@ class Result extends BaseResult implements ResultInterface
      *
      * @return bool|Entity|object
      */
-    protected function fetchObject(string $className = stdClass::class)
+    protected function fetchObject(string $className = 'stdClass')
     {
         $row = oci_fetch_object($this->resultID);
 
