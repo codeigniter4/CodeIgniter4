@@ -303,6 +303,10 @@ Miscellaneous Functions
 
     .. literalinclude:: common_functions/005.php
 
+    .. note:: ``redirect()->back()`` is not the same as browser "back" button.
+        It takes a visitor to "the last page viewed during the Session" when the Session is available.
+        If the Session hasn’t been loaded, or is otherwise unavailable, then a sanitized version of HTTP_REFERER will be used.
+
     When passing an argument into the function, it is treated as a named/reverse-routed route, not a relative/full URI,
     treating it the same as using ``redirect()->route()``:
 
