@@ -421,10 +421,13 @@ and not intended to match the browser URL.</p>
 </dd>
 </dl>
 <p>Returns the full URL (including segments) of the page the user was previously on.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
 store previously visited pages in the session if it’s available. This ensures that we always
 use a known and trusted source. If the session hasn’t been loaded, or is otherwise unavailable,
 then a sanitized version of HTTP_REFERER will be used.</p>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -926,7 +929,7 @@ any other applicable characters in the URL:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 20, 2022.
+      <span class="lastupdated">Last updated on Mar 21, 2022.
       </span></p>
   </div>
 
