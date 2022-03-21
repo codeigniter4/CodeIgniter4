@@ -371,6 +371,12 @@ class BaseBuilder
             $escape = $this->db->protectIdentifiers;
         }
 
+        if ($select instanceof RawSql) {
+            $this->QBSelect[] = $select;
+
+            return $this;
+        }
+
         foreach ($select as $val) {
             $val = trim($val);
 
@@ -2339,6 +2345,8 @@ class BaseBuilder
 
             if (empty($this->QBSelect)) {
                 $sql .= '*';
+            } elseif ($this->QBSelect[0] instanceof RawSql) {
+                $sql .= (string) $this->QBSelect[0];
             } else {
                 // Cycle through the "select" portion of the query and prep each column name.
                 // The reason we protect identifiers here rather than in the select() function
