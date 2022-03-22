@@ -44,10 +44,10 @@ You can check the HTTP method that this request represents with the ``method()``
 .. literalinclude:: incomingrequest/005.php
 
 By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
-uppercase version by wrapping the call in ``str_to_upper()``::
+uppercase version by wrapping the call in ``strtoupper()``::
 
     // Returns 'GET'
-    $method = str_to_upper($request->getMethod());
+    $method = strtoupper($request->getMethod());
 
 You can also check if the request was made through and HTTPS connection with the ``isSecure()`` method:
 
