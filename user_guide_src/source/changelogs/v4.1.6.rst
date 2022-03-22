@@ -37,6 +37,7 @@ Validation changes
 Enhancements
 ************
 
+- Full support for PHP 8.1.
 - Database pane on debug toolbar now displays location where Query was called from. Also displays full backtrace.
 - :ref:`Subqueries <query-builder-where-subquery>` in QueryBuilder can now be an instance of the BaseBuilder class.
 - Kint was updated from ^3.3 to ^4.0.
