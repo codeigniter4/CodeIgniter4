@@ -14,6 +14,7 @@ namespace CodeIgniter\Session\Handlers\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
+use Config\Database as DatabaseConfig;
 
 /**
  * @internal
