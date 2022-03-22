@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
 
@@ -31,7 +32,7 @@ final class MySQLiHandlerTest extends AbstactHandlerTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\DatabaseHandler',
+            'sessionDriver'            => DatabaseHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
             'sessionSavePath'          => 'ci_sessions',
