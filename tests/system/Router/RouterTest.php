@@ -14,6 +14,7 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Tests\Support\Filters\Customfilter;
@@ -59,18 +60,15 @@ final class RouterTest extends CIUnitTestCase
             'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
             'closure/(:num)/(:alpha)'                         => static fn ($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
-            'Admin/Admins'                                    => 'App\Admin\Admins::list_all',
+            'admin/admins'                                    => 'App\Admin\Admins::list_all',
             '/some/slash'                                     => 'App\Slash::index',
             'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
+            '(:segment)/(:segment)/(:segment)'                => '$2::$3/$1',
         ];
 
         $this->collection->map($routes);
         $this->request = Services::request();
         $this->request->setMethod('get');
-    }
-
-    protected function tearDown(): void
-    {
     }
 
     public function testEmptyURIMatchesDefaults()
@@ -398,7 +396,7 @@ final class RouterTest extends CIUnitTestCase
     {
         $router = new Router($this->collection, $this->request);
 
-        $router->handle('Admin/Admins');
+        $router->handle('admin/admins');
 
         $this->assertSame('\App\Admin\Admins', $router->controllerName());
         $this->assertSame('list_all', $router->methodName());
@@ -412,6 +410,16 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Slash', $router->controllerName());
         $this->assertSame('index', $router->methodName());
+    }
+
+    public function testRouteWithDynamicController()
+    {
+        $this->expectException(RouterException::class);
+        $this->expectExceptionMessage('A dynamic controller is not allowed for security reasons. Route handler: \$2::$3/$1');
+
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('en/zoo/bar');
     }
 
     // options need to be declared separately, to not confuse PHPCBF
