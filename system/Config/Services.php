@@ -47,6 +47,9 @@ use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Security\Security;
+use CodeIgniter\Session\Handlers\Database\MySQLiHandler;
+use CodeIgniter\Session\Handlers\Database\PostgreHandler;
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
@@ -58,6 +61,7 @@ use CodeIgniter\View\View;
 use Config\App;
 use Config\Cache;
 use Config\ContentSecurityPolicy as CSPConfig;
+use Config\Database;
 use Config\Email as EmailConfig;
 use Config\Encryption as EncryptionConfig;
 use Config\Exceptions as ExceptionsConfig;
@@ -585,7 +589,21 @@ class Services extends BaseService
         $logger = AppServices::logger();
 
         $driverName = $config->sessionDriver;
-        $driver     = new $driverName($config, AppServices::request()->getIPAddress());
+
+        if ($driverName === DatabaseHandler::class) {
+            $DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+            $db      = Database::connect($DBGroup);
+
+            $driver = $db->getPlatform();
+
+            if ($driver === 'MySQLi') {
+                $driverName = MySQLiHandler::class;
+            } elseif ($driver === 'Postgre') {
+                $driverName = PostgreHandler::class;
+            }
+        }
+
+        $driver = new $driverName($config, AppServices::request()->getIPAddress());
         $driver->setLogger($logger);
 
         $session = new Session($driver, $config);

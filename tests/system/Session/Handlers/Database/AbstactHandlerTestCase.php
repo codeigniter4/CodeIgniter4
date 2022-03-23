@@ -9,18 +9,17 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Session\Handlers;
+namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
-use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
 
 /**
  * @internal
  */
-final class DatabaseHandlerTest extends CIUnitTestCase
+abstract class AbstactHandlerTestCase extends CIUnitTestCase
 {
     use DatabaseTestTrait;
     use ReflectionHelper;
@@ -37,32 +36,7 @@ final class DatabaseHandlerTest extends CIUnitTestCase
         }
     }
 
-    protected function getInstance($options = [])
-    {
-        $defaults = [
-            'sessionDriver'            => DatabaseHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => 'ci_sessions',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
-        ];
-
-        $config    = array_merge($defaults, $options);
-        $appConfig = new AppConfig();
-
-        foreach ($config as $key => $c) {
-            $appConfig->{$key} = $c;
-        }
-
-        return new DatabaseHandler($appConfig, '127.0.0.1');
-    }
+    abstract protected function getInstance($options = []);
 
     public function testOpen()
     {
