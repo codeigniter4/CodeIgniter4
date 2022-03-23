@@ -76,6 +76,10 @@ class Commands
     /**
      * Discovers all commands in the framework and within user code,
      * and collects instances of them to work with.
+     *
+     * @TODO this approach (find qualified classname from path) causes error,
+     *      when using Composer autoloader.
+     *      See https://github.com/codeigniter4/CodeIgniter4/issues/5818
      */
     public function discoverCommands()
     {
