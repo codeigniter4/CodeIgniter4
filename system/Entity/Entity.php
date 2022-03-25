@@ -11,18 +11,8 @@
 
 namespace CodeIgniter\Entity;
 
-use CodeIgniter\Entity\Cast\ArrayCast;
-use CodeIgniter\Entity\Cast\BooleanCast;
 use CodeIgniter\Entity\Cast\CastInterface;
-use CodeIgniter\Entity\Cast\CSVCast;
 use CodeIgniter\Entity\Cast\DatetimeCast;
-use CodeIgniter\Entity\Cast\FloatCast;
-use CodeIgniter\Entity\Cast\IntegerCast;
-use CodeIgniter\Entity\Cast\JsonCast;
-use CodeIgniter\Entity\Cast\ObjectCast;
-use CodeIgniter\Entity\Cast\StringCast;
-use CodeIgniter\Entity\Cast\TimestampCast;
-use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
 use Exception;
@@ -64,28 +54,6 @@ class Entity implements JsonSerializable
      * @var array<string, string>
      */
     protected $castHandlers = [];
-
-    /**
-     * Default convert handlers
-     *
-     * @var array<string, string>
-     */
-    private array $defaultCastHandlers = [
-        'array'     => ArrayCast::class,
-        'bool'      => BooleanCast::class,
-        'boolean'   => BooleanCast::class,
-        'csv'       => CSVCast::class,
-        'datetime'  => DatetimeCast::class,
-        'double'    => FloatCast::class,
-        'float'     => FloatCast::class,
-        'int'       => IntegerCast::class,
-        'integer'   => IntegerCast::class,
-        'json'      => JsonCast::class,
-        'object'    => ObjectCast::class,
-        'string'    => StringCast::class,
-        'timestamp' => TimestampCast::class,
-        'uri'       => URICast::class,
-    ];
 
     /**
      * Holds the current values of all class vars.
@@ -373,7 +341,7 @@ class Entity implements JsonSerializable
 
         $type = trim($type, '[]');
 
-        $handlers = array_merge($this->defaultCastHandlers, $this->castHandlers);
+        $handlers = array_merge(config('Entity')->castHandlers, $this->castHandlers);
 
         if (empty($handlers[$type])) {
             return $value;
