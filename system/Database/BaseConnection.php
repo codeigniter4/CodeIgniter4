@@ -342,6 +342,13 @@ abstract class BaseConnection implements ConnectionInterface
         if (class_exists($queryClass)) {
             $this->queryClass = $queryClass;
         }
+
+        if ($this->failover !== []) {
+            // If there is a failover database, connect now to do failover.
+            // Otherwise, Query Builder creates SQL statement with the main database config
+            // (DBPrefix) even when the main database is down.
+            $this->initialize();
+        }
     }
 
     /**
