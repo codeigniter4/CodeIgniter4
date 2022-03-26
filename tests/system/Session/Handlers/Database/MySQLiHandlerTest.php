@@ -18,7 +18,7 @@ use Config\Database as DatabaseConfig;
 /**
  * @internal
  */
-final class MySQLiHandlerTest extends AbstactHandlerTestCase
+final class MySQLiHandlerTest extends AbstractHandlerTestCase
 {
     protected function setUp(): void
     {

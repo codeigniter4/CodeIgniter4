@@ -18,7 +18,7 @@ use Config\Database as DatabaseConfig;
 /**
  * @internal
  */
-final class PostgreHandlerTest extends AbstactHandlerTestCase
+final class PostgreHandlerTest extends AbstractHandlerTestCase
 {
     protected function setUp(): void
     {
