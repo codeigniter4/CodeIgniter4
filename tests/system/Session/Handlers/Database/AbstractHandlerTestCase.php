@@ -19,7 +19,7 @@ use Config\Database as DatabaseConfig;
 /**
  * @internal
  */
-abstract class AbstactHandlerTestCase extends CIUnitTestCase
+abstract class AbstractHandlerTestCase extends CIUnitTestCase
 {
     use DatabaseTestTrait;
     use ReflectionHelper;
