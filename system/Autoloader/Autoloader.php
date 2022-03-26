@@ -312,6 +312,7 @@ class Autoloader
         $paths    = $composer->getPrefixesPsr4();
         $classes  = $composer->getClassMap();
 
+        $composer->unregister();
         unset($composer);
 
         // Get rid of CodeIgniter so we don't have duplicates
