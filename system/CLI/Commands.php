@@ -102,7 +102,7 @@ class Commands
         foreach ($files as $file) {
             $className = $locator->findQualifiedNameFromPath($file);
 
-            if (empty($className) || ! class_exists($className)) {
+            if ($className === false) {
                 continue;
             }
 
