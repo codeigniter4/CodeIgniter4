@@ -13,6 +13,9 @@ BREAKING
 ********
 
 - The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
+- The ``CodeIgniter\CodeIgniter`` class has a new property ``$context`` and it must have the correct context at runtime. So the following files have been changed:
+    - ``public/index.php``
+    - ``spark``
 
 Enhancements
 ************
