@@ -48,11 +48,6 @@ class CommandRunner extends Controller
      */
     public function _remap($method, $params)
     {
-        // The first param is usually empty, so scrap it.
-        if (empty($params[0])) {
-            array_shift($params);
-        }
-
         return $this->index($params);
     }
 
