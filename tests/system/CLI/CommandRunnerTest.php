@@ -123,7 +123,7 @@ final class CommandRunnerTest extends CIUnitTestCase
      */
     public function testRemapEmptyFirstParams()
     {
-        self::$runner->_remap('anyvalue', null, 'list');
+        self::$runner->_remap('anyvalue', [null, 'list']);
         $result = CITestStreamFilter::$buffer;
 
         // make sure the result looks like a command list

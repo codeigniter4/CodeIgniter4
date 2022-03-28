@@ -40,13 +40,13 @@ class CommandRunner extends Controller
      * so we have the chance to look for a Command first.
      *
      * @param string $method
-     * @param array  ...$params
+     * @param array  $params
      *
      * @throws ReflectionException
      *
      * @return mixed
      */
-    public function _remap($method, ...$params)
+    public function _remap($method, $params)
     {
         // The first param is usually empty, so scrap it.
         if (empty($params[0])) {

@@ -884,14 +884,16 @@ class CodeIgniter
             /** @var CLIRequest $request */
             $request = $this->request;
             $params  = $request->getArgs();
+
+            $output = $class->_remap($this->method, $params);
         } else {
             // This is a Web request or PHP CLI request
             $params = $this->router->params();
-        }
 
-        $output = method_exists($class, '_remap')
-            ? $class->_remap($this->method, ...$params)
-            : $class->{$this->method}(...$params);
+            $output = method_exists($class, '_remap')
+                ? $class->_remap($this->method, ...$params)
+                : $class->{$this->method}(...$params);
+        }
 
         $this->benchmark->stop('controller');
 
