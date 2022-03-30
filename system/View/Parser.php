@@ -60,6 +60,16 @@ class Parser extends View
     protected $dataContexts = [];
 
     /**
+     * Whether to use Parser conditionals (if, else, and elseif).
+     *
+     * This setting is for compatibility with templates that works on CodeIgniter3.
+     * If you have JavaScript code in templates, Parser may raise error
+     * when there are strings that can be interpreted as conditionals.
+     * In that case, set this false.
+     */
+    protected bool $enableConditionals = true;
+
+    /**
      * Constructor
      *
      * @param string          $viewPath
@@ -71,6 +81,8 @@ class Parser extends View
     {
         // Ensure user plugins override core plugins.
         $this->plugins = $config->plugins ?? [];
+
+        $this->enableConditionals = $config->enableConditionals ?? $this->enableConditionals;
 
         parent::__construct($config, $viewPath, $loader, $debug, $logger);
     }
@@ -223,8 +235,10 @@ class Parser extends View
         $template = $this->parseComments($template);
         $template = $this->extractNoparse($template);
 
-        // Replace any conditional code here so we don't have to parse as much
-        $template = $this->parseConditionals($template);
+        if ($this->enableConditionals) {
+            // Replace any conditional code here so we don't have to parse as much
+            $template = $this->parseConditionals($template);
+        }
 
         // Handle any plugins before normal data, so that
         // it can potentially modify any template between its tags.

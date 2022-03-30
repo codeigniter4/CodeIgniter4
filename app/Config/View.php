@@ -44,6 +44,16 @@ class View extends BaseView
     public $plugins = [];
 
     /**
+     * Whether to use Parser conditionals (if, else, and elseif).
+     *
+     * This setting is for compatibility with templates that works on CodeIgniter3.
+     * If you have JavaScript code in templates, Parser may raise error
+     * when there are strings that can be interpreted as conditionals.
+     * In that case, set this false.
+     */
+    public bool $enableConditionals = true;
+
+    /**
      * View Decorators are class methods that will be run in sequence to
      * have a chance to alter the generated output just prior to caching
      * the results.
