@@ -289,7 +289,7 @@ class Parser extends View
          */
         foreach ($matches as $match) {
             // Loop over each piece of $data, replacing
-            // it's contents so that we know what to replace in parse()
+            // its contents so that we know what to replace in parse()
             $str = '';  // holds the new contents for this tag pair.
 
             foreach ($data as $row) {
