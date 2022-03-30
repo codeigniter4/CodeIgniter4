@@ -338,8 +338,7 @@ class Parser extends View
                 $str .= $out;
             }
 
-            // Escape | character from filters as it's handled as OR in regex
-            $escapedMatch = preg_replace('/(?<!\\\\)\\|/', '\\|', $match[0]);
+            $escapedMatch = preg_quote($match[0], '#');
 
             $replace['#' . $escapedMatch . '#s'] = $str;
         }
@@ -471,15 +470,7 @@ class Parser extends View
      */
     protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
     {
-        // Any dollar signs in the pattern will be misinterpreted, so slash them
-        $pattern = addcslashes($pattern, '$');
         $content = (string) $content;
-
-        // Flesh out the main pattern from the delimiters and escape the hash
-        // See https://regex101.com/r/IKdUlk/1
-        if (preg_match('/^(#)(.+)(#(m?s)?)$/s', $pattern, $parts)) {
-            $pattern = $parts[1] . addcslashes($parts[2], '#') . $parts[3];
-        }
 
         // Replace the content in the template
         return preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
