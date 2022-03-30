@@ -16,6 +16,7 @@ BREAKING
 - The ``CodeIgniter\CodeIgniter`` class has a new property ``$context`` and it must have the correct context at runtime. So the following files have been changed:
     - ``public/index.php``
     - ``spark``
+- The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
 
 Enhancements
 ************

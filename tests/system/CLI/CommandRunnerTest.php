@@ -117,16 +117,4 @@ final class CommandRunnerTest extends CIUnitTestCase
         // make sure the result looks like a command list
         $this->assertStringContainsString('Command "bogus" not found', CITestStreamFilter::$buffer);
     }
-
-    /**
-     * @TODO When the first param is empty? Use case?
-     */
-    public function testRemapEmptyFirstParams()
-    {
-        self::$runner->_remap('anyvalue', null, 'list');
-        $result = CITestStreamFilter::$buffer;
-
-        // make sure the result looks like a command list
-        $this->assertStringContainsString('Lists the available commands.', $result);
-    }
 }
