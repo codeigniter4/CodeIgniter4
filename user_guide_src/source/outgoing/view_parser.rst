@@ -290,6 +290,31 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 .. warning:: In the background, conditionals are parsed using an ``eval()``, so you must ensure that you take
     care with the user data that is used within conditionals, or you could open your application up to security risks.
 
+Changing the Conditional Delimiters
+-----------------------------------
+
+If you have JavaScript code like the following in your templates, the Parser raises a syntax error because there are strings that can be interpreted as a conditional::
+
+    <script type="text/javascript">
+        var f = function() {
+            if (hasAlert) {
+                alert('{message}');
+            }
+        }
+    </script>
+
+In that case, you can change the delimiters for conditionals with the ``setConditionalDelimiters()`` method to avoid misinterpretations:
+
+.. literalinclude:: view_parser/027.php
+
+In this case, you will write code in your template::
+
+    {% if $role=='admin' %}
+        <h1>Welcome, Admin</h1>
+    {% else %}
+        <h1>Welcome, User</h1>
+    {% endif %}
+
 Escaping Data
 =============
 
