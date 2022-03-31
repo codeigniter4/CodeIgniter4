@@ -356,7 +356,7 @@ class BaseBuilder
     /**
      * Generates the SELECT portion of the query
      *
-     * @param array|string $select
+     * @param array|RawSql|string $select
      *
      * @return $this
      */
@@ -649,8 +649,8 @@ class BaseBuilder
      * Generates the WHERE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param array|RawSql|string $key
+     * @param mixed               $value
      *
      * @return $this
      */
@@ -665,9 +665,9 @@ class BaseBuilder
      * Generates the WHERE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed $key
-     * @param mixed $value
-     * @param bool  $escape
+     * @param array|RawSql|string $key
+     * @param mixed               $value
+     * @param bool                $escape
      *
      * @return $this
      */
@@ -682,15 +682,20 @@ class BaseBuilder
      * @used-by having()
      * @used-by orHaving()
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param array|RawSql|string $key
+     * @param mixed               $value
      *
      * @return $this
      */
     protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', ?bool $escape = null)
     {
-        if (! is_array($key)) {
-            $key = [$key => $value];
+        if ($key instanceof RawSql) {
+            $keyValue = [(string) $key => $key];
+            $escape   = false;
+        } elseif (! is_array($key)) {
+            $keyValue = [$key => $value];
+        } else {
+            $keyValue = $key;
         }
 
         // If the escape value was not set will base it on the global setting
@@ -698,10 +703,13 @@ class BaseBuilder
             $escape = $this->db->protectIdentifiers;
         }
 
-        foreach ($key as $k => $v) {
+        foreach ($keyValue as $k => $v) {
             $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
 
-            if ($v !== null) {
+            if ($v instanceof RawSql) {
+                $k  = '';
+                $op = '';
+            } elseif ($v !== null) {
                 $op = $this->getOperator($k, true);
 
                 if (! empty($op)) {
@@ -737,10 +745,17 @@ class BaseBuilder
                 $op = '';
             }
 
-            $this->{$qbKey}[] = [
-                'condition' => $prefix . $k . $op . $v,
-                'escape'    => $escape,
-            ];
+            if ($v instanceof RawSql) {
+                $this->{$qbKey}[] = [
+                    'condition' => $v->with($prefix . $k . $op . $v),
+                    'escape'    => $escape,
+                ];
+            } else {
+                $this->{$qbKey}[] = [
+                    'condition' => $prefix . $k . $op . $v,
+                    'escape'    => $escape,
+                ];
+            }
         }
 
         return $this;
@@ -1275,8 +1290,8 @@ class BaseBuilder
     /**
      * Separates multiple calls with 'AND'.
      *
-     * @param array|string $key
-     * @param mixed        $value
+     * @param array|RawSql|string $key
+     * @param mixed               $value
      *
      * @return $this
      */
@@ -1288,8 +1303,8 @@ class BaseBuilder
     /**
      * Separates multiple calls with 'OR'.
      *
-     * @param array|string $key
-     * @param mixed        $value
+     * @param array|RawSql|string $key
+     * @param mixed               $value
      *
      * @return $this
      */
