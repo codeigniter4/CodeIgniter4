@@ -30,7 +30,7 @@ displays the CodeIgniter welcome page.
 
 The ``Pages`` class is extending the ``BaseController`` class that extends the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
-methods and variables defined in the ``CodeIgniter\Controller`` class
+methods and properties defined in the ``CodeIgniter\Controller`` class
 (**system/Controller.php**).
 
 The **controller is what will become the center of every request** to
