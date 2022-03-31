@@ -38,6 +38,16 @@ class Parser extends View
     public $rightDelimiter = '}';
 
     /**
+     * Left delimiter characters for conditionals
+     */
+    protected string $leftConditionalDelimiter = '{';
+
+    /**
+     * Right delimiter characters for conditionals
+     */
+    protected string $rightConditionalDelimiter = '}';
+
+    /**
      * Stores extracted noparse blocks.
      *
      * @var array
@@ -405,7 +415,14 @@ class Parser extends View
      */
     protected function parseConditionals(string $template): string
     {
-        $pattern = '/\{\s*(if|elseif)\s*((?:\()?(.*?)(?:\))?)\s*\}/ms';
+        $leftDelimiter  = preg_quote($this->leftConditionalDelimiter, '/');
+        $rightDelimiter = preg_quote($this->rightConditionalDelimiter, '/');
+
+        $pattern = '/'
+            . $leftDelimiter
+            . '\s*(if|elseif)\s*((?:\()?(.*?)(?:\))?)\s*'
+            . $rightDelimiter
+            . '/ms';
 
         /*
          * For each match:
@@ -424,8 +441,16 @@ class Parser extends View
             $template  = str_replace($match[0], $statement, $template);
         }
 
-        $template = preg_replace('/\{\s*else\s*\}/ms', '<?php else: ?>', $template);
-        $template = preg_replace('/\{\s*endif\s*\}/ms', '<?php endif; ?>', $template);
+        $template = preg_replace(
+            '/' . $leftDelimiter . '\s*else\s*' . $rightDelimiter . '/ms',
+            '<?php else: ?>',
+            $template
+        );
+        $template = preg_replace(
+            '/' . $leftDelimiter . '\s*endif\s*' . $rightDelimiter . '/ms',
+            '<?php endif; ?>',
+            $template
+        );
 
         // Parse the PHP itself, or insert an error so they can debug
         ob_start();
@@ -457,6 +482,20 @@ class Parser extends View
     {
         $this->leftDelimiter  = $leftDelimiter;
         $this->rightDelimiter = $rightDelimiter;
+
+        return $this;
+    }
+
+    /**
+     * Over-ride the substitution conditional delimiters.
+     *
+     * @param string $leftDelimiter
+     * @param string $rightDelimiter
+     */
+    public function setConditionalDelimiters($leftDelimiter = '{', $rightDelimiter = '}'): RendererInterface
+    {
+        $this->leftConditionalDelimiter  = $leftDelimiter;
+        $this->rightConditionalDelimiter = $rightDelimiter;
 
         return $this;
     }
