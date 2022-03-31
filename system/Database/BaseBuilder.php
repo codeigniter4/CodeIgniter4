@@ -932,7 +932,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -945,7 +945,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -958,7 +958,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -971,7 +971,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -984,7 +984,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -997,7 +997,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'AND'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -1010,7 +1010,7 @@ class BaseBuilder
      * Generates a %LIKE% portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -1023,7 +1023,7 @@ class BaseBuilder
      * Generates a NOT LIKE portion of the query.
      * Separates multiple calls with 'OR'.
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
@@ -1042,20 +1042,54 @@ class BaseBuilder
      * @used-by notHavingLike()
      * @used-by orNotHavingLike()
      *
-     * @param mixed $field
+     * @param array|RawSql|string $field
      *
      * @return $this
      */
     protected function _like($field, string $match = '', string $type = 'AND ', string $side = 'both', string $not = '', ?bool $escape = null, bool $insensitiveSearch = false, string $clause = 'QBWhere')
     {
-        if (! is_array($field)) {
-            $field = [$field => $match];
-        }
-
         $escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
         $side   = strtolower($side);
 
-        foreach ($field as $k => $v) {
+        if ($field instanceof RawSql) {
+            $k                 = (string) $field;
+            $v                 = $match;
+            $insensitiveSearch = false;
+
+            $prefix = empty($this->{$clause}) ? $this->groupGetType('') : $this->groupGetType($type);
+
+            if ($side === 'none') {
+                $bind = $this->setBind($field->getBindingKey(), $v, $escape);
+            } elseif ($side === 'before') {
+                $bind = $this->setBind($field->getBindingKey(), "%{$v}", $escape);
+            } elseif ($side === 'after') {
+                $bind = $this->setBind($field->getBindingKey(), "{$v}%", $escape);
+            } else {
+                $bind = $this->setBind($field->getBindingKey(), "%{$v}%", $escape);
+            }
+
+            $likeStatement = $this->_like_statement($prefix, $k, $not, $bind, $insensitiveSearch);
+
+            // some platforms require an escape sequence definition for LIKE wildcards
+            if ($escape === true && $this->db->likeEscapeStr !== '') {
+                $likeStatement .= sprintf($this->db->likeEscapeStr, $this->db->likeEscapeChar);
+            }
+
+            $this->{$clause}[] = [
+                'condition' => $field->with($likeStatement),
+                'escape'    => $escape,
+            ];
+
+            return $this;
+        }
+
+        if (! is_array($field)) {
+            $keyValue = [$field => $match];
+        } else {
+            $keyValue = $field;
+        }
+
+        foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch === true) {
                 $v = strtolower($v);
             }
@@ -2427,6 +2461,12 @@ class BaseBuilder
             foreach ($this->{$qbKey} as &$qbkey) {
                 // Is this condition already compiled?
                 if (is_string($qbkey)) {
+                    continue;
+                }
+
+                if ($qbkey['condition'] instanceof RawSql) {
+                    $qbkey = $qbkey['condition'];
+
                     continue;
                 }
 
