@@ -67,6 +67,7 @@ final class RoutesTest extends CIUnitTestCase
         $routes->setDefaultNamespace('App\Controllers');
         $routes->resetRoutes();
         $routes->get('/', 'Home::index', ['filter' => 'csrf']);
+        $routes->setAutoRoute(true);
 
         command('routes');
 

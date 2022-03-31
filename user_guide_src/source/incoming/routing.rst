@@ -76,23 +76,23 @@ Examples
 
 Here are a few basic routing examples.
 
-A URL containing the word **journals** in the first segment will be remapped to the ``\App\Controllers\Blogs`` class,
+A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
 and the default method, which is usually ``index()``:
 
 .. literalinclude:: routing/006.php
 
-A URL containing the segments **blog/joe** will be remapped to the ``\App\Controllers\Blogs`` class and the ``users`` method.
+A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
 The ID will be set to ``34``:
 
 .. literalinclude:: routing/007.php
 
-A URL with **product** as the first segment, and anything in the second will be remapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookup`` method:
+A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookup()`` method:
 
 .. literalinclude:: routing/008.php
 
-A URL with **product** as the first segment, and a number in the second will be remapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookupByID`` method passing in the match as a variable to the method:
+A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookupByID()`` method passing in the match as a variable to the method:
 
 .. literalinclude:: routing/009.php
 
@@ -312,7 +312,7 @@ available from the command line:
 
 .. literalinclude:: routing/032.php
 
-.. warning:: If you don't disable auto-routing and place the command file in **app/Controllers**,
+.. warning:: If you enable auto-routing and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 Global Options
@@ -465,31 +465,6 @@ then you can change this value to save typing:
 
 .. literalinclude:: routing/046.php
 
-Default Controller
-==================
-
-When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
-
-.. literalinclude:: routing/047.php
-
-The default controller is also used when no matching route has been found, and the URI would point to a directory
-in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
-**app/Controllers/Admin/Home.php**, it would be used.
-
-Default Method
-==============
-
-This works similar to the default controller setting, but is used to determine the default method that is used
-when a controller is found that matches the URI, but no segment exists for the method. The default value is
-``index``.
-
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
-
-.. literalinclude:: routing/048.php
-
 Translate URI Dashes
 ====================
 
@@ -504,8 +479,12 @@ dash isn't a valid class or method name character and would cause a fatal error 
 Use Defined Routes Only
 =======================
 
+Since v4.2.0, the auto-routing is disabled by default.
+
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods as described in :ref:`auto-routing`. You can disable this automatic matching, and restrict routes
+controllers and methods when :ref:`auto-routing` is enabled.
+
+You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
 .. literalinclude:: routing/050.php
@@ -540,6 +519,21 @@ It is recommended that all routes are defined in the **app/Config/Routes.php** f
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
 
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    the auto-routing feature. It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
+
+.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+
+Enable Auto Routing
+===================
+
+Since v4.2.0, the auto-routing is disabled by default.
+
+To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+
+    $routes->setAutoRoute(true);
+
 URI Segments
 ============
 
@@ -559,14 +553,41 @@ In the above example, CodeIgniter would attempt to find a controller named **Hel
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
 We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is enabled by default.
-
-.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature. See :ref:`use-defined-routes-only`.
-
-.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+and executes the corresponding controller method. The auto-routing is disabled by default.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+
+Configuration Options
+=====================
+
+These options are available at the top of **app/Config/Routes.php**.
+
+Default Controller
+------------------
+
+When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
+the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
+which matches the controller at **app/Controllers/Home.php**:
+
+.. literalinclude:: routing/047.php
+
+The default controller is also used when no matching route has been found, and the URI would point to a directory
+in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
+**app/Controllers/Admin/Home.php**, it would be used.
+
+See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+
+Default Method
+--------------
+
+This works similar to the default controller setting, but is used to determine the default method that is used
+when a controller is found that matches the URI, but no segment exists for the method. The default value is
+``index``.
+
+In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
+``Products::listAll()`` method would be executed:
+
+.. literalinclude:: routing/048.php
 
 Confirming Routes
 *****************

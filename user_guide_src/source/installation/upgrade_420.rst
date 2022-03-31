@@ -49,7 +49,8 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
-*
+* ``app/Config/Routes.php``
+    * To make the default configuration more secure, auto-routing has been changed to disabled by default.
 
 All Changes
 ===========

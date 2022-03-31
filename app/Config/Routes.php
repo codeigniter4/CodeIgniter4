@@ -21,7 +21,10 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+// The auto-routing is very dangerous. It is easy to create vulnerable apps
+// where controller filters or CSRF protection are bypassed.
+// It is recommended that you do not set it to `true`.
+//$routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------

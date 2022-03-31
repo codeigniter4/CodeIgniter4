@@ -9,20 +9,6 @@ The first thing you're going to do is set up a **controller** to handle
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.
 
-For example, when a call is made to::
-
-    http://example.com/news/latest/10
-
-We might imagine that there is a controller named "news". The method
-being called on news would be "latest". The news method's job could be to
-grab 10 news items, and render them on the page. Very often in MVC,
-you'll see URL patterns that match::
-
-    http://example.com/[controller-class]/[controller-method]/[arguments]
-
-As URL schemes become more complex, this may change. But for now, this
-is all we will need to know.
-
 Let's Make our First Controller
 *******************************
 
@@ -126,6 +112,45 @@ view.
     throw errors on case-sensitive platforms. You can read more about it
     :doc:`here </outgoing/views>`.
 
+Routing
+*******
+
+We have made the controller. The next thing is to set routing rules.
+Routing associates a URI with a controller's method.
+
+Let's do that. Open the routing file located at
+**app/Config/Routes.php** and look for the "Route Definitions"
+section of the configuration file.
+
+The only uncommented line there to start with should be:
+
+.. literalinclude:: static_pages/003.php
+
+This directive says that any incoming request without any content
+specified should be handled by the ``index()`` method inside the ``Home`` controller.
+
+Add the following lines, **after** the route directive for '/'.
+
+.. literalinclude:: static_pages/004.php
+   :lines: 2-
+
+CodeIgniter reads its routing rules from top to bottom and routes the
+request to the first matching rule. Each rule is a regular expression
+(left-side) mapped to a controller and method name separated by slashes
+(right-side). When a request comes in, CodeIgniter looks for the first
+match, and calls the appropriate controller and method, possibly with
+arguments.
+
+More information about routing can be found in the URI Routing
+:doc:`documentation </incoming/routing>`.
+
+Here, the second rule in the ``$routes`` object matches GET request
+to the URI path ``/pages`` maps the ``index()`` method of the ``Pages`` class.
+
+The third rule in the ``$routes`` object matches GET request to **any** URI path
+using the wildcard string ``(:any)``, and passes the parameter to the
+``view()`` method of the ``Pages`` class.
+
 Running the App
 ***************
 
@@ -141,6 +166,14 @@ From the command line, at the root of your project::
 will start a web server, accessible on port 8080. If you set the location field
 in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
 
+Now visit ``localhost:8080/home``. Did it get routed correctly to the ``view()``
+method in the ``Pages`` controller? Awesome!
+
+You should see something like the following:
+
+.. image:: ../images/tutorial1.png
+    :align: center
+
 You can now try several URLs in the browser location field, to see what the ``Pages``
 controller you made above produces...
 
@@ -150,73 +183,18 @@ controller you made above produces...
     +---------------------------------+-----------------------------------------------------------------+
     | URL                             | Will show                                                       |
     +=================================+=================================================================+
-    | localhost:8080/pages            | the results from the `index` method inside our `Pages`          |
-    |                                 | controller, which is to display the CodeIgniter "welcome" page, |
-    |                                 | because "index" is the default controller method                |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/index      | the CodeIgniter "welcome" page, because we explicitly asked for |
-    |                                 | the "index" method                                              |
+    | localhost:8080/pages            | the results from the ``index()`` method inside our ``Pages``    |
+    |                                 | controller, which is to display the CodeIgniter "welcome" page. |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
     |                                 | "page" parameter to the ``view()`` method.                      |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
-    |                                 | asked for it                                                    |
+    |                                 | asked for it.                                                   |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
-    |                                 | asked for it                                                    |
+    |                                 | asked for it.                                                   |
     +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
-    |                                 | `app/Views/pages/shop.php`                                      |
+    |                                 | **app/Views/pages/shop.php**.                                   |
     +---------------------------------+-----------------------------------------------------------------+
-
-Routing
-*******
-
-The controller is now functioning!
-
-Using custom routing rules, you have the power to map any URI to any
-controller and method, and break free from the normal convention::
-
-    http://example.com/[controller-class]/[controller-method]/[arguments]
-
-Let's do that. Open the routing file located at
-**app/Config/Routes.php** and look for the "Route Definitions"
-section of the configuration file.
-
-The only uncommented line there to start with should be:
-
-.. literalinclude:: static_pages/003.php
-
-This directive says that any incoming request without any content
-specified should be handled by the ``index()`` method inside the ``Home`` controller.
-
-Add the following line, **after** the route directive for '/'.
-
-.. literalinclude:: static_pages/004.php
-
-CodeIgniter reads its routing rules from top to bottom and routes the
-request to the first matching rule. Each rule is a regular expression
-(left-side) mapped to a controller and method name separated by slashes
-(right-side). When a request comes in, CodeIgniter looks for the first
-match, and calls the appropriate controller and method, possibly with
-arguments.
-
-More information about routing can be found in the URI Routing
-:doc:`documentation </incoming/routing>`.
-
-Here, the second rule in the ``$routes`` object matches **any** request
-using the wildcard string ``(:any)``. and passes the parameter to the
-``view()`` method of the ``Pages`` class.
-
-Now visit ``localhost:8080/home``. Did it get routed correctly to the ``view()``
-method in the pages controller? Awesome!
-
-You should see something like the following:
-
-.. image:: ../images/tutorial1.png
-    :align: center
-
-.. note:: When manually specifying routes, it is recommended to disable
-    auto-routing by setting ``$routes->setAutoRoute(false);`` in the **Routes.php** file.
-    This ensures that only routes you define can be accessed.
