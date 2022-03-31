@@ -273,19 +273,6 @@ development environment.</p>
 <p>The first thing you’re going to do is set up a <strong>controller</strong> to handle
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.</p>
-<p>For example, when a call is made to:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">latest</span><span class="o">/</span><span class="mi">10</span>
-</pre></div>
-</div>
-<p>We might imagine that there is a controller named “news”. The method
-being called on news would be “latest”. The news method’s job could be to
-grab 10 news items, and render them on the page. Very often in MVC,
-you’ll see URL patterns that match:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="p">[</span><span class="nx">controller</span><span class="o">-</span><span class="nx">class</span><span class="p">]</span><span class="o">/</span><span class="p">[</span><span class="nx">controller</span><span class="o">-</span><span class="nx">method</span><span class="p">]</span><span class="o">/</span><span class="p">[</span><span class="nx">arguments</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>As URL schemes become more complex, this may change. But for now, this
-is all we will need to know.</p>
 <section id="let-s-make-our-first-controller">
 <h2>Let’s Make our First Controller<a class="headerlink" href="#let-s-make-our-first-controller" title="Permalink to this headline"></a></h2>
 <p>Create a file at <strong>app/Controllers/Pages.php</strong> with the following
@@ -419,6 +406,46 @@ throw errors on case-sensitive platforms. You can read more about it
 <a class="reference internal" href="../outgoing/views.html"><span class="doc">here</span></a>.</p>
 </div>
 </section>
+<section id="routing">
+<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
+<p>We have made the controller. The next thing is to set routing rules.
+Routing associates a URI with a controller’s method.</p>
+<p>Let’s do that. Open the routing file located at
+<strong>app/Config/Routes.php</strong> and look for the “Route Definitions”
+section of the configuration file.</p>
+<p>The only uncommented line there to start with should be:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// ...</span>
+
+<span class="c1">// We get a performance increase by specifying the default</span>
+<span class="c1">// route since we don&#39;t have to scan directories.</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
+
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>This directive says that any incoming request without any content
+specified should be handled by the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method inside the <code class="docutils literal notranslate"><span class="pre">Home</span></code> controller.</p>
+<p>Add the following lines, <strong>after</strong> the route directive for ‘/’.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>CodeIgniter reads its routing rules from top to bottom and routes the
+request to the first matching rule. Each rule is a regular expression
+(left-side) mapped to a controller and method name separated by slashes
+(right-side). When a request comes in, CodeIgniter looks for the first
+match, and calls the appropriate controller and method, possibly with
+arguments.</p>
+<p>More information about routing can be found in the URI Routing
+<a class="reference internal" href="../incoming/routing.html"><span class="doc">documentation</span></a>.</p>
+<p>Here, the second rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches GET request
+to the URI path <code class="docutils literal notranslate"><span class="pre">/pages</span></code> maps the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
+<p>The third rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches GET request to <strong>any</strong> URI path
+using the wildcard string <code class="docutils literal notranslate"><span class="pre">(:any)</span></code>, and passes the parameter to the
+<code class="docutils literal notranslate"><span class="pre">view()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
+</section>
 <section id="running-the-app">
 <h2>Running the App<a class="headerlink" href="#running-the-app" title="Permalink to this headline"></a></h2>
 <p>Ready to test? You cannot run the app using PHP’s built-in server,
@@ -431,6 +458,10 @@ as part of a URL. CodeIgniter has its own command that you can use though.</p>
 </div>
 <p>will start a web server, accessible on port 8080. If you set the location field
 in your browser to <code class="docutils literal notranslate"><span class="pre">localhost:8080</span></code>, you should see the CodeIgniter welcome page.</p>
+<p>Now visit <code class="docutils literal notranslate"><span class="pre">localhost:8080/home</span></code>. Did it get routed correctly to the <code class="docutils literal notranslate"><span class="pre">view()</span></code>
+method in the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller? Awesome!</p>
+<p>You should see something like the following:</p>
+<img alt="../_images/tutorial1.png" class="align-center" src="../_images/tutorial1.png" />
 <p>You can now try several URLs in the browser location field, to see what the <code class="docutils literal notranslate"><span class="pre">Pages</span></code>
 controller you made above produces…</p>
 <table class="colwidths-given docutils align-default">
@@ -445,79 +476,27 @@ controller you made above produces…</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>localhost:8080/pages</p></td>
-<td><p>the results from the <cite>index</cite> method inside our <cite>Pages</cite>
-controller, which is to display the CodeIgniter “welcome” page,
-because “index” is the default controller method</p></td>
+<td><p>the results from the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method inside our <code class="docutils literal notranslate"><span class="pre">Pages</span></code>
+controller, which is to display the CodeIgniter “welcome” page.</p></td>
 </tr>
-<tr class="row-odd"><td><p>localhost:8080/pages/index</p></td>
-<td><p>the CodeIgniter “welcome” page, because we explicitly asked for
-the “index” method</p></td>
-</tr>
-<tr class="row-even"><td><p>localhost:8080/pages/view</p></td>
+<tr class="row-odd"><td><p>localhost:8080/pages/view</p></td>
 <td><p>the “home” page that you made above, because it is the default
 “page” parameter to the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method.</p></td>
 </tr>
-<tr class="row-odd"><td><p>localhost:8080/pages/view/home</p></td>
+<tr class="row-even"><td><p>localhost:8080/pages/view/home</p></td>
 <td><p>show the “home” page that you made above, because we explicitly
-asked for it</p></td>
+asked for it.</p></td>
 </tr>
-<tr class="row-even"><td><p>localhost:8080/pages/view/about</p></td>
+<tr class="row-odd"><td><p>localhost:8080/pages/view/about</p></td>
 <td><p>the “about” page that you made above, because we explicitly
-asked for it</p></td>
+asked for it.</p></td>
 </tr>
-<tr class="row-odd"><td><p>localhost:8080/pages/view/shop</p></td>
+<tr class="row-even"><td><p>localhost:8080/pages/view/shop</p></td>
 <td><p>a “404 - File Not Found” error page, because there is no
-<cite>app/Views/pages/shop.php</cite></p></td>
+<strong>app/Views/pages/shop.php</strong>.</p></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="routing">
-<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
-<p>The controller is now functioning!</p>
-<p>Using custom routing rules, you have the power to map any URI to any
-controller and method, and break free from the normal convention:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="p">[</span><span class="nx">controller</span><span class="o">-</span><span class="nx">class</span><span class="p">]</span><span class="o">/</span><span class="p">[</span><span class="nx">controller</span><span class="o">-</span><span class="nx">method</span><span class="p">]</span><span class="o">/</span><span class="p">[</span><span class="nx">arguments</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Let’s do that. Open the routing file located at
-<strong>app/Config/Routes.php</strong> and look for the “Route Definitions”
-section of the configuration file.</p>
-<p>The only uncommented line there to start with should be:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;Home::index&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>This directive says that any incoming request without any content
-specified should be handled by the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method inside the <code class="docutils literal notranslate"><span class="pre">Home</span></code> controller.</p>
-<p>Add the following line, <strong>after</strong> the route directive for ‘/’.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>CodeIgniter reads its routing rules from top to bottom and routes the
-request to the first matching rule. Each rule is a regular expression
-(left-side) mapped to a controller and method name separated by slashes
-(right-side). When a request comes in, CodeIgniter looks for the first
-match, and calls the appropriate controller and method, possibly with
-arguments.</p>
-<p>More information about routing can be found in the URI Routing
-<a class="reference internal" href="../incoming/routing.html"><span class="doc">documentation</span></a>.</p>
-<p>Here, the second rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches <strong>any</strong> request
-using the wildcard string <code class="docutils literal notranslate"><span class="pre">(:any)</span></code>. and passes the parameter to the
-<code class="docutils literal notranslate"><span class="pre">view()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
-<p>Now visit <code class="docutils literal notranslate"><span class="pre">localhost:8080/home</span></code>. Did it get routed correctly to the <code class="docutils literal notranslate"><span class="pre">view()</span></code>
-method in the pages controller? Awesome!</p>
-<p>You should see something like the following:</p>
-<img alt="../_images/tutorial1.png" class="align-center" src="../_images/tutorial1.png" />
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>When manually specifying routes, it is recommended to disable
-auto-routing by setting <code class="docutils literal notranslate"><span class="pre">$routes-&gt;setAutoRoute(false);</span></code> in the <strong>Routes.php</strong> file.
-This ensures that only routes you define can be accessed.</p>
-</div>
 </section>
 </section>
 
@@ -533,7 +512,7 @@ This ensures that only routes you define can be accessed.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 30, 2022.
+      <span class="lastupdated">Last updated on Mar 31, 2022.
       </span></p>
   </div>
 

@@ -530,17 +530,21 @@ The only thing left to do is create the corresponding view at
 </section>
 <section id="routing">
 <h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
-<p>Because of the wildcard routing rule created earlier, you need an extra
-route to view the controller that you just made. Modify your routing file
+<p>Modify your routing file
 (<strong>app/Config/Routes.php</strong>) so it looks as follows.
 This makes sure the requests reach the <code class="docutils literal notranslate"><span class="pre">News</span></code> controller instead of
 going directly to the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller. The first line routes URI’s
 with a slug to the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">News</span></code> controller.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// ...</span>
+
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;News::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::index&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+
+<span class="c1">// ...</span>
 </pre></div>
 </div>
 <p>Point your browser to your “news” page, i.e., <code class="docutils literal notranslate"><span class="pre">localhost:8080/news</span></code>,
@@ -562,7 +566,7 @@ to display just the one article.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 30, 2022.
+      <span class="lastupdated">Last updated on Mar 31, 2022.
       </span></p>
   </div>
 

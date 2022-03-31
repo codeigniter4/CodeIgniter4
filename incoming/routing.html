@@ -289,17 +289,17 @@
 <li><p><a class="reference internal" href="#routes-configuration-options" id="id24">Routes Configuration Options</a></p>
 <ul>
 <li><p><a class="reference internal" href="#default-namespace" id="id25">Default Namespace</a></p></li>
-<li><p><a class="reference internal" href="#default-controller" id="id26">Default Controller</a></p></li>
-<li><p><a class="reference internal" href="#default-method" id="id27">Default Method</a></p></li>
-<li><p><a class="reference internal" href="#translate-uri-dashes" id="id28">Translate URI Dashes</a></p></li>
-<li><p><a class="reference internal" href="#use-defined-routes-only" id="id29">Use Defined Routes Only</a></p></li>
-<li><p><a class="reference internal" href="#override" id="id30">404 Override</a></p></li>
-<li><p><a class="reference internal" href="#route-processing-by-priority" id="id31">Route processing by priority</a></p></li>
+<li><p><a class="reference internal" href="#translate-uri-dashes" id="id26">Translate URI Dashes</a></p></li>
+<li><p><a class="reference internal" href="#use-defined-routes-only" id="id27">Use Defined Routes Only</a></p></li>
+<li><p><a class="reference internal" href="#override" id="id28">404 Override</a></p></li>
+<li><p><a class="reference internal" href="#route-processing-by-priority" id="id29">Route processing by priority</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#auto-routing" id="id32">Auto Routing</a></p>
+<li><p><a class="reference internal" href="#auto-routing" id="id30">Auto Routing</a></p>
 <ul>
-<li><p><a class="reference internal" href="#uri-segments" id="id33">URI Segments</a></p></li>
+<li><p><a class="reference internal" href="#enable-auto-routing" id="id31">Enable Auto Routing</a></p></li>
+<li><p><a class="reference internal" href="#uri-segments" id="id32">URI Segments</a></p></li>
+<li><p><a class="reference internal" href="#configuration-options" id="id33">Configuration Options</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#confirming-routes" id="id34">Confirming Routes</a></p></li>
@@ -405,29 +405,29 @@ in <a class="reference internal" href="../outgoing/localization.html"><span clas
 <section id="examples">
 <h3><a class="toc-backref" href="#id10">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
 <p>Here are a few basic routing examples.</p>
-<p>A URL containing the word <strong>journals</strong> in the first segment will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class,
+<p>A URL containing the word <strong>journals</strong> in the first segment will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class,
 and the default method, which is usually <code class="docutils literal notranslate"><span class="pre">index()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;journals&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>A URL containing the segments <strong>blog/joe</strong> will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class and the <code class="docutils literal notranslate"><span class="pre">users</span></code> method.
+<p>A URL containing the segments <strong>blog/joe</strong> will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class and the <code class="docutils literal notranslate"><span class="pre">users()</span></code> method.
 The ID will be set to <code class="docutils literal notranslate"><span class="pre">34</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog/joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs::users/34&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>A URL with <strong>product</strong> as the first segment, and anything in the second will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
-and the <code class="docutils literal notranslate"><span class="pre">productLookup</span></code> method:</p>
+<p>A URL with <strong>product</strong> as the first segment, and anything in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
+and the <code class="docutils literal notranslate"><span class="pre">productLookup()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>A URL with <strong>product</strong> as the first segment, and a number in the second will be remapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
-and the <code class="docutils literal notranslate"><span class="pre">productLookupByID</span></code> method passing in the match as a variable to the method:</p>
+<p>A URL with <strong>product</strong> as the first segment, and a number in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
+and the <code class="docutils literal notranslate"><span class="pre">productLookupByID()</span></code> method passing in the match as a variable to the method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookupByID/$1&#39;</span><span class="p">);</span>
@@ -748,7 +748,7 @@ available from the command line:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you don’t disable auto-routing and place the command file in <strong>app/Controllers</strong>,
+<p>If you enable auto-routing and place the command file in <strong>app/Controllers</strong>,
 anyone could access the command with the help of auto-routing via HTTP.</p>
 </div>
 </section>
@@ -959,36 +959,8 @@ then you can change this value to save typing:</p>
 </pre></div>
 </div>
 </section>
-<section id="default-controller">
-<h3><a class="toc-backref" href="#id26">Default Controller</a><a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h3>
-<p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
-which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>The default controller is also used when no matching route has been found, and the URI would point to a directory
-in the controllers directory. For example, if the user visits <strong>example.com/admin</strong>, if a controller was found at
-<strong>app/Controllers/Admin/Home.php</strong>, it would be used.</p>
-</section>
-<section id="default-method">
-<h3><a class="toc-backref" href="#id27">Default Method</a><a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h3>
-<p>This works similar to the default controller setting, but is used to determine the default method that is used
-when a controller is found that matches the URI, but no segment exists for the method. The default value is
-<code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
-<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
-<code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-</section>
 <section id="translate-uri-dashes">
-<h3><a class="toc-backref" href="#id28">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id26">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
 <p>This option enables you to automatically replace dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
@@ -999,9 +971,11 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 </div>
 </section>
 <section id="use-defined-routes-only">
-<span id="id5"></span><h3><a class="toc-backref" href="#id29">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
+<span id="id5"></span><h3><a class="toc-backref" href="#id27">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
+<p>Since v4.2.0, the auto-routing is disabled by default.</p>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods as described in <a class="reference internal" href="#auto-routing"><span class="std std-ref">Auto Routing</span></a>. You can disable this automatic matching, and restrict routes
+controllers and methods when <a class="reference internal" href="#auto-routing"><span class="std std-ref">Auto Routing</span></a> is enabled.</p>
+<p>You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1015,7 +989,7 @@ requests. If the URI is accessible by the GET method, the CSRF protection will n
 </div>
 </section>
 <section id="override">
-<h3><a class="toc-backref" href="#id30">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id28">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline"></a></h3>
 <p>When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> method. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
@@ -1032,7 +1006,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 </div>
 </section>
 <section id="route-processing-by-priority">
-<h3><a class="toc-backref" href="#id31">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id29">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
 <p>Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see <a class="reference internal" href="#routing-priority"><span class="std std-ref">Route processing queue</span></a>:</p>
@@ -1048,12 +1022,30 @@ For an example use of lowering the priority see <a class="reference internal" hr
 </section>
 </section>
 <section id="auto-routing">
-<span id="id6"></span><h2><a class="toc-backref" href="#id32">Auto Routing</a><a class="headerlink" href="#auto-routing" title="Permalink to this headline"></a></h2>
+<span id="id6"></span><h2><a class="toc-backref" href="#id30">Auto Routing</a><a class="headerlink" href="#auto-routing" title="Permalink to this headline"></a></h2>
 <p>It is recommended that all routes are defined in the <strong>app/Config/Routes.php</strong> file.
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To prevent misconfiguration and miscoding, we recommend that you do not use
+the auto-routing feature. It is easy to create vulnerable apps where controller filters
+or CSRF protection are bypassed.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The auto-routing routes a HTTP request with <strong>any</strong> HTTP method to a controller method.</p>
+</div>
+<section id="enable-auto-routing">
+<h3><a class="toc-backref" href="#id31">Enable Auto Routing</a><a class="headerlink" href="#enable-auto-routing" title="Permalink to this headline"></a></h3>
+<p>Since v4.2.0, the auto-routing is disabled by default.</p>
+<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 <section id="uri-segments">
-<h3><a class="toc-backref" href="#id33">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id32">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h3>
 <p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
 </pre></div>
@@ -1070,17 +1062,41 @@ and execute the corresponding controller methods.</p>
 <p>In the above example, CodeIgniter would attempt to find a controller named <strong>Helloworld.php</strong>
 and executes <code class="docutils literal notranslate"><span class="pre">index()</span></code> method with passing <code class="docutils literal notranslate"><span class="pre">'1'</span></code> as the first argument.</p>
 <p>We call this “<strong>Auto Routes</strong>”. CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is enabled by default.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To prevent misconfiguration and miscoding, we recommend that you disable
-the auto-routing feature. See <a class="reference internal" href="#use-defined-routes-only"><span class="std std-ref">Use Defined Routes Only</span></a>.</p>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>The auto-routing routes a HTTP request with <strong>any</strong> HTTP method to a controller method.</p>
-</div>
+and executes the corresponding controller method. The auto-routing is disabled by default.</p>
 <p>See <a class="reference internal" href="controllers.html#controller-auto-routing"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
+</section>
+<section id="configuration-options">
+<h3><a class="toc-backref" href="#id33">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Permalink to this headline"></a></h3>
+<p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
+<section id="default-controller">
+<h4>Default Controller<a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h4>
+<p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
+the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
+which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The default controller is also used when no matching route has been found, and the URI would point to a directory
+in the controllers directory. For example, if the user visits <strong>example.com/admin</strong>, if a controller was found at
+<strong>app/Controllers/Admin/Home.php</strong>, it would be used.</p>
+<p>See <a class="reference internal" href="controllers.html#controller-auto-routing"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
+</section>
+<section id="default-method">
+<h4>Default Method<a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h4>
+<p>This works similar to the default controller setting, but is used to determine the default method that is used
+when a controller is found that matches the URI, but no segment exists for the method. The default value is
+<code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
+<code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="confirming-routes">
@@ -1130,7 +1146,7 @@ But <code class="docutils literal notranslate"><span class="pre">[/...]</span></
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 30, 2022.
+      <span class="lastupdated">Last updated on Mar 31, 2022.
       </span></p>
   </div>
 

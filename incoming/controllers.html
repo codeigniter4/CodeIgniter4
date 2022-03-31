@@ -476,11 +476,12 @@ if you were to define a method like this for the <code class="docutils literal n
 <span id="controller-auto-routing"></span><h2><a class="toc-backref" href="#id9">Auto Routing</a><a class="headerlink" href="#auto-routing" title="Permalink to this headline"></a></h2>
 <p>This section describes the functionality of the auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
-without route definitions. The auto-routing is enabled by default.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>To prevent misconfiguration and miscoding, we recommend that you disable
-the auto-routing feature. See <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">Use Defined Routes Only</span></a>.</p>
+without route definitions. The auto-routing is disabled by default.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To prevent misconfiguration and miscoding, we recommend that you do not use
+the auto-routing feature. It is easy to create vulnerable apps where controller filters
+or CSRF protection are bypassed.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -646,7 +647,7 @@ method as parameters.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If you are using the <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a>
-feature, the segments passed to your method will be the re-routed
+feature, the segments passed to your method will be the defined
 ones.</p>
 </div>
 </section>
@@ -708,7 +709,7 @@ it will not be routed to CodeIgniter.</p>
 called if the URL contains <em>only</em> the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
 your <strong>app/Config/Routes.php</strong> file.</p>
-<p>CodeIgniter also permits you to remap your URIs using its <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
+<p>CodeIgniter also permits you to map your URIs using its <a class="reference internal" href="routing.html"><span class="doc">URI Routing</span></a> feature.</p>
 </section>
 </section>
 <section id="remapping-method-calls">
@@ -800,7 +801,7 @@ to emulate CodeIgniter’s default behavior.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 30, 2022.
+      <span class="lastupdated">Last updated on Mar 31, 2022.
       </span></p>
   </div>
 

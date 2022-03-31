@@ -333,6 +333,7 @@
 <li><p>The process of sending cookies has been moved to the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class. Now the <code class="docutils literal notranslate"><span class="pre">Session</span></code> class doesn’t send cookies, set them to the Response.</p></li>
 <li><p>Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See <a class="reference internal" href="../libraries/validation.html#validation-getting-all-errors"><span class="std std-ref">Getting All Errors</span></a>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Validation::getError()</span></code> when using a wildcard will return all found errors matching the mask as a string.</p></li>
+<li><p>To make the default configuration more secure, auto-routing has been changed to disabled by default.</p></li>
 </ul>
 </section>
 <section id="deprecations">
@@ -363,7 +364,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Mar 30, 2022.
+      <span class="lastupdated">Last updated on Mar 31, 2022.
       </span></p>
   </div>
 
