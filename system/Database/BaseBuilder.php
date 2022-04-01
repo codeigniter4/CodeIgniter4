@@ -1083,11 +1083,7 @@ class BaseBuilder
             return $this;
         }
 
-        if (! is_array($field)) {
-            $keyValue = [$field => $match];
-        } else {
-            $keyValue = $field;
-        }
+        $keyValue = ! is_array($field) ? [$field => $match] : $field;
 
         foreach ($keyValue as $k => $v) {
             if ($insensitiveSearch === true) {
