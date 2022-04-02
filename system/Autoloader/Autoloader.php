@@ -106,7 +106,8 @@ class Autoloader
 
         // Should we load through Composer's namespaces, also?
         if ($modules->discoverInComposer) {
-            $this->discoverComposerNamespaces();
+            $this->loadComposerClassmap();
+            $this->loadComposerNamespaces();
         }
 
         return $this;
@@ -296,10 +297,7 @@ class Autoloader
         return trim($filename, '.-_');
     }
 
-    /**
-     * Locates autoload information from Composer, if available.
-     */
-    protected function discoverComposerNamespaces()
+    protected function loadComposerNamespaces()
     {
         if (! is_file(COMPOSER_PATH)) {
             return;
@@ -310,7 +308,6 @@ class Autoloader
          */
         $composer = include COMPOSER_PATH;
         $paths    = $composer->getPrefixesPsr4();
-        $classes  = $composer->getClassMap();
 
         unset($composer);
 
@@ -327,6 +324,23 @@ class Autoloader
         }
 
         $this->prefixes = array_merge($this->prefixes, $newPaths);
+    }
+
+    protected function loadComposerClassmap(): void
+    {
+        if (! is_file(COMPOSER_PATH)) {
+            return;
+        }
+
+        /**
+         * @var ClassLoader $composer
+         */
+        $composer = include COMPOSER_PATH;
+
+        $classes = $composer->getClassMap();
+
+        unset($composer);
+
         $this->classmap = array_merge($this->classmap, $classes);
     }
 }
