@@ -110,9 +110,10 @@ class Autoloader
              */
             $composer = include COMPOSER_PATH;
 
+            $this->loadComposerClassmap($composer);
+
             // Should we load through Composer's namespaces, also?
             if ($modules->discoverInComposer) {
-                $this->loadComposerClassmap($composer);
                 $this->loadComposerNamespaces($composer);
             }
 
