@@ -17,6 +17,7 @@ BREAKING
     - ``public/index.php``
     - ``spark``
 - The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
+- The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
 
 Enhancements
 ************
@@ -55,6 +56,7 @@ Deprecations
 - ``CodeIgniter\Log\Logger::cleanFilenames()`` and ``CodeIgniter\Test\TestLogger::cleanup()`` are both deprecated. Use the ``clean_path()`` function instead.
 - ``CodeIgniter\Router\Router::setDefaultController()`` is deprecated.
 - The constant ``SPARKED`` in **spark** is deprecated. Use the ``$context`` property in ``CodeIgniter\CodeIgniter`` instead.
+- ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()`` is deprecated, and no longer used.
 
 Bugs Fixed
 **********
