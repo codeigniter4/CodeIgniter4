@@ -104,10 +104,19 @@ class Autoloader
             $this->files = $config->files;
         }
 
-        // Should we load through Composer's namespaces, also?
-        if ($modules->discoverInComposer) {
-            $this->loadComposerClassmap();
-            $this->loadComposerNamespaces();
+        if (is_file(COMPOSER_PATH)) {
+            /**
+             * @var ClassLoader $composer
+             */
+            $composer = include COMPOSER_PATH;
+
+            // Should we load through Composer's namespaces, also?
+            if ($modules->discoverInComposer) {
+                $this->loadComposerClassmap($composer);
+                $this->loadComposerNamespaces($composer);
+            }
+
+            unset($composer);
         }
 
         return $this;
@@ -297,19 +306,9 @@ class Autoloader
         return trim($filename, '.-_');
     }
 
-    protected function loadComposerNamespaces()
+    protected function loadComposerNamespaces(ClassLoader $composer): void
     {
-        if (! is_file(COMPOSER_PATH)) {
-            return;
-        }
-
-        /**
-         * @var ClassLoader $composer
-         */
-        $composer = include COMPOSER_PATH;
-        $paths    = $composer->getPrefixesPsr4();
-
-        unset($composer);
+        $paths = $composer->getPrefixesPsr4();
 
         // Get rid of CodeIgniter so we don't have duplicates
         if (isset($paths['CodeIgniter\\'])) {
@@ -326,20 +325,9 @@ class Autoloader
         $this->prefixes = array_merge($this->prefixes, $newPaths);
     }
 
-    protected function loadComposerClassmap(): void
+    protected function loadComposerClassmap(ClassLoader $composer): void
     {
-        if (! is_file(COMPOSER_PATH)) {
-            return;
-        }
-
-        /**
-         * @var ClassLoader $composer
-         */
-        $composer = include COMPOSER_PATH;
-
         $classes = $composer->getClassMap();
-
-        unset($composer);
 
         $this->classmap = array_merge($this->classmap, $classes);
     }
