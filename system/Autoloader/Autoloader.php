@@ -105,22 +105,27 @@ class Autoloader
         }
 
         if (is_file(COMPOSER_PATH)) {
-            /**
-             * @var ClassLoader $composer
-             */
-            $composer = include COMPOSER_PATH;
-
-            $this->loadComposerClassmap($composer);
-
-            // Should we load through Composer's namespaces, also?
-            if ($modules->discoverInComposer) {
-                $this->loadComposerNamespaces($composer);
-            }
-
-            unset($composer);
+            $this->loadComposerInfo($modules);
         }
 
         return $this;
+    }
+
+    protected function loadComposerInfo(Modules $modules): void
+    {
+        /**
+         * @var ClassLoader $composer
+         */
+        $composer = include COMPOSER_PATH;
+
+        $this->loadComposerClassmap($composer);
+
+        // Should we load through Composer's namespaces, also?
+        if ($modules->discoverInComposer) {
+            $this->loadComposerNamespaces($composer);
+        }
+
+        unset($composer);
     }
 
     /**
