@@ -337,4 +337,40 @@ class Autoloader
 
         $this->classmap = array_merge($this->classmap, $classes);
     }
+
+    /**
+     * Locates autoload information from Composer, if available.
+     *
+     * @deprecated No longer used.
+     */
+    protected function discoverComposerNamespaces()
+    {
+        if (! is_file(COMPOSER_PATH)) {
+            return;
+        }
+
+        /**
+         * @var ClassLoader $composer
+         */
+        $composer = include COMPOSER_PATH;
+        $paths    = $composer->getPrefixesPsr4();
+        $classes  = $composer->getClassMap();
+
+        unset($composer);
+
+        // Get rid of CodeIgniter so we don't have duplicates
+        if (isset($paths['CodeIgniter\\'])) {
+            unset($paths['CodeIgniter\\']);
+        }
+
+        $newPaths = [];
+
+        foreach ($paths as $key => $value) {
+            // Composer stores namespaces with trailing slash. We don't.
+            $newPaths[rtrim($key, '\\ ')] = $value;
+        }
+
+        $this->prefixes = array_merge($this->prefixes, $newPaths);
+        $this->classmap = array_merge($this->classmap, $classes);
+    }
 }
