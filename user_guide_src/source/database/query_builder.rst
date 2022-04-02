@@ -804,7 +804,7 @@ Generates a **DELETE** SQL string and runs the query.
 .. literalinclude:: query_builder/093.php
 
 The first parameter is the where clause.
-You can also use the ``where()`` or ``or_where()`` methods instead of passing
+You can also use the ``where()`` or ``orWhere()`` methods instead of passing
 the data to the first parameter of the method:
 
 .. literalinclude:: query_builder/094.php
