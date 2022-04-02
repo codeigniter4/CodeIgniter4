@@ -111,7 +111,7 @@ class Autoloader
         return $this;
     }
 
-    protected function loadComposerInfo(Modules $modules): void
+    private function loadComposerInfo(Modules $modules): void
     {
         /**
          * @var ClassLoader $composer
@@ -312,7 +312,7 @@ class Autoloader
         return trim($filename, '.-_');
     }
 
-    protected function loadComposerNamespaces(ClassLoader $composer): void
+    private function loadComposerNamespaces(ClassLoader $composer): void
     {
         $paths = $composer->getPrefixesPsr4();
 
@@ -331,7 +331,7 @@ class Autoloader
         $this->prefixes = array_merge($this->prefixes, $newPaths);
     }
 
-    protected function loadComposerClassmap(ClassLoader $composer): void
+    private function loadComposerClassmap(ClassLoader $composer): void
     {
         $classes = $composer->getClassMap();
 
