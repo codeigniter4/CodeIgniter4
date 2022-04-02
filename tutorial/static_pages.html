@@ -309,7 +309,7 @@ it’s called a method.</p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class is extending the <code class="docutils literal notranslate"><span class="pre">BaseController</span></code> class that extends the
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> class. This means that the new Pages class can access the
-methods and variables defined in the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> class
+methods and properties defined in the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> class
 (<strong>system/Controller.php</strong>).</p>
 <p>The <strong>controller is what will become the center of every request</strong> to
 your web application. Like any PHP class, you refer to
@@ -373,9 +373,9 @@ in the <code class="docutils literal notranslate"><span class="pre">Pages</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ucfirst</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span> <span class="c1">// Capitalize the first letter</span>
 
-        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
-        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;pages/&#39;</span> <span class="o">.</span> <span class="nv">$page</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
-        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;pages/&#39;</span> <span class="o">.</span> <span class="nv">$page</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
