@@ -938,4 +938,53 @@ final class ParserTest extends CIUnitTestCase
         $expected = '<h1>Hello World</h1>';
         $this->assertSame($expected, $this->parser->render('Simpler.html'));
     }
+
+    public function testChangedConditionalDelimitersTrue()
+    {
+        $this->parser->setConditionalDelimiters('{%', '%}');
+
+        $data = [
+            'doit'     => true,
+            'dontdoit' => false,
+        ];
+        $this->parser->setData($data);
+
+        $template = '{% if $doit %}Howdy{% endif %}{% if $dontdoit === false %}Welcome{% endif %}';
+        $output   = $this->parser->renderString($template);
+
+        $this->assertSame('HowdyWelcome', $output);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5831
+     */
+    public function testChangeConditionalDelimitersWorkWithJavaScriptCode()
+    {
+        $this->parser->setConditionalDelimiters('{%', '%}');
+
+        $data = [
+            'message' => 'Warning!',
+        ];
+        $this->parser->setData($data);
+
+        $template = <<<'EOL'
+            <script type="text/javascript">
+             var f = function() {
+                 if (true) {
+                     alert('{message}');
+                 }
+             }
+            </script>
+            EOL;
+        $expected = <<<'EOL'
+            <script type="text/javascript">
+             var f = function() {
+                 if (true) {
+                     alert('Warning!');
+                 }
+             }
+            </script>
+            EOL;
+        $this->assertSame($expected, $this->parser->renderString($template));
+    }
 }
