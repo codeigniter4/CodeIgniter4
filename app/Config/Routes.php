@@ -11,7 +11,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
     require SYSTEMPATH . 'Config/Routes.php';
 }
 
-/*
+/**
  * --------------------------------------------------------------------
  * Router Setup
  * --------------------------------------------------------------------
@@ -26,7 +26,7 @@ $routes->set404Override();
 // It is recommended that you do not set it to `true`.
 //$routes->setAutoRoute(false);
 
-/*
+/**
  * --------------------------------------------------------------------
  * Route Definitions
  * --------------------------------------------------------------------
@@ -36,7 +36,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-/*
+/**
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------
