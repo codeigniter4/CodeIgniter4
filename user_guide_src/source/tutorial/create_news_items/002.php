@@ -18,11 +18,11 @@ class News extends BaseController
                 'body'  => $this->request->getPost('body'),
             ]);
 
-            echo view('news/success');
-        } else {
-            echo view('templates/header', ['title' => 'Create a news item']);
-            echo view('news/create');
-            echo view('templates/footer');
+            return view('news/success');
         }
+
+        return view('templates/header', ['title' => 'Create a news item'])
+            . view('news/create')
+            . view('templates/footer');
     }
 }
