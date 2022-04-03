@@ -51,9 +51,6 @@ If you visit your site using the URL you did earlier you should see your new vie
 
     example.com/index.php/blog/
 
-.. note:: While all of the examples show echo the view directly, you can also return the output from the view, instead,
-    and it will be appended to any captured output.
-
 Loading Multiple Views
 ======================
 

@@ -15,6 +15,6 @@ class UserController extends Controller
             'pager' => $model->pager,
         ];
 
-        echo view('users/index', $data);
+        return view('users/index', $data);
     }
 }

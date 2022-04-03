@@ -8,6 +8,6 @@ class Blog extends Controller
 {
     public function index()
     {
-        echo view('blog_view');
+        return view('blog_view');
     }
 }

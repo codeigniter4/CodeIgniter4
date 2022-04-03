@@ -550,7 +550,8 @@ An example with the iteration controlled in the view::
             ['title' => 'Second Link', 'link' => '/second'],
         ]
     ];
-    echo $parser->setData($data)->renderString($template);
+
+    return $parser->setData($data)->renderString($template);
 
 Result::
 

@@ -8,6 +8,6 @@ class Tools extends Controller
 {
     public function message($to = 'World')
     {
-        echo "Hello {$to}!" . PHP_EOL;
+        return "Hello {$to}!" . PHP_EOL;
     }
 }

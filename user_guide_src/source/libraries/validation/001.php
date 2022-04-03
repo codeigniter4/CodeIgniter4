@@ -11,11 +11,11 @@ class Form extends Controller
         helper(['form', 'url']);
 
         if (! $this->validate([])) {
-            echo view('Signup', [
+            return view('Signup', [
                 'validation' => $this->validator,
             ]);
-        } else {
-            echo view('Success');
         }
+
+        return view('Success');
     }
 }
