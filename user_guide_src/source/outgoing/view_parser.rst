@@ -57,11 +57,11 @@ Then you can use any of the three standard rendering methods that it provides:
 ``setData()``. You will also be able to specify delimiters directly,
 through the ``setDelimiters()`` method.
 
-Using the ``Parser``, your view templates are processed only by the Parser
-itself, and not like a conventional view PHP script. PHP code in such a script
-is ignored by the parser, and only substitutions are performed.
+.. important:: Using the ``Parser``, your view templates are processed only by the Parser
+    itself, and not like a conventional view PHP script. PHP code in such a script
+    is ignored by the parser, and only substitutions are performed.
 
-This is purposeful: view files with no PHP.
+    This is purposeful: view files with no PHP.
 
 What It Does
 ============
