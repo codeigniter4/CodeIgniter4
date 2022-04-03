@@ -250,7 +250,7 @@ This example gives different results, depending on cascading:
 Preventing Parsing
 ==================
 
-You can specify portions of the page to not be parsed with the ``{noparse}{/noparse}`` tag pair. Anything in this
+You can specify portions of the page to not be parsed with the ``{noparse}`` ``{/noparse}`` tag pair. Anything in this
 section will stay exactly as it is, with no variable substitution, looping, etc, happening to the markup between the brackets.
 
 ::
