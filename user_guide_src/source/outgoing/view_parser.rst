@@ -458,7 +458,7 @@ While plugins will often consist of tag pairs, like shown above, they can also b
 Opening tags can also contain parameters that can customize how the plugin works. The parameters are represented as
 key/value pairs::
 
-    {+ foo bar=2 baz="x y" }
+    {+ foo bar=2 baz="x y" +}
 
 Parameters can also be single values::
 
