@@ -491,7 +491,7 @@ Registering a Plugin
 --------------------
 
 At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
-**app/Config/View.php**, under the **$plugins** array. The key is the name of the plugin that is
+**app/Config/View.php**, under the ``$plugins`` array. The key is the name of the plugin that is
 used within the template file. The value is any valid PHP callable, including static class methods:
 
 .. literalinclude:: view_parser/014.php
