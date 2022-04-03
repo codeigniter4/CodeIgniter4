@@ -24,7 +24,7 @@ displays the CodeIgniter welcome page.
 
 .. note:: There are two ``view()`` functions referred to in this tutorial.
     One is the class method created with ``public function view($page = 'home')``
-    and ``echo view('welcome_message')`` for displaying a view.
+    and ``return view('welcome_message')`` for displaying a view.
     Both are *technically* a function. But when you create a function in a class,
     it's called a method.
 
