@@ -50,7 +50,7 @@ the slug from our title in the model. Create a new view at
 
 There are probably only three things here that look unfamiliar.
 
-The ``<?= session()->getFlashdata('error') ?>`` function is used to report
+The ``session()->getFlashdata('error')`` function is used to report
 errors related to CSRF protection.
 
 The ``service('validation')->listErrors()`` function is used to report
