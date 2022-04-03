@@ -336,7 +336,7 @@ Filters
 
 Any single variable substitution can have one or more filters applied to it to modify the way it is presented. These
 are not intended to drastically change the output, but provide ways to reuse the same variable data but with different
-presentations. The **esc** filter discussed above is one example. Dates are another common use case, where you might
+presentations. The ``esc`` filter discussed above is one example. Dates are another common use case, where you might
 need to format the same data differently in several sections on the same page.
 
 Filters are commands that come after the pseudo-variable name, and are separated by the pipe symbol, ``|``::
