@@ -289,6 +289,7 @@
 </dl>
 </li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CLI\CommandRunner::_remap()</span></code> has been changed to fix a bug.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Autoloader\Autoloader::initialize()</span></code> has changed the behavior to fix a bug. It used to use Composer classmap only when <code class="docutils literal notranslate"><span class="pre">$modules-&gt;discoverInComposer</span></code> is true. Now it always uses the Composer classmap if Composer is available.</p></li>
 </ul>
 </section>
 <section id="enhancements">
@@ -345,6 +346,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Log\Logger::cleanFilenames()</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\TestLogger::cleanup()</span></code> are both deprecated. Use the <code class="docutils literal notranslate"><span class="pre">clean_path()</span></code> function instead.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\Router::setDefaultController()</span></code> is deprecated.</p></li>
 <li><p>The constant <code class="docutils literal notranslate"><span class="pre">SPARKED</span></code> in <strong>spark</strong> is deprecated. Use the <code class="docutils literal notranslate"><span class="pre">$context</span></code> property in <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter</span></code> instead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()</span></code> is deprecated, and no longer used.</p></li>
 </ul>
 </section>
 <section id="bugs-fixed">
@@ -365,7 +367,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 02, 2022.
+      <span class="lastupdated">Last updated on Apr 03, 2022.
       </span></p>
   </div>
 
