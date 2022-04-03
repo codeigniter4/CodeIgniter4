@@ -20,4 +20,5 @@ CodeIgniter within a few days.
 If you still have questions about the framework or your own CodeIgniter
 code, you can:
 
--  Check out our `forums <http://forum.codeigniter.com/>`_
+-  Check out our `Forum <https://forum.codeigniter.com/>`_
+-  Check out our `Slack <https://codeigniterchat.slack.com/>`_
