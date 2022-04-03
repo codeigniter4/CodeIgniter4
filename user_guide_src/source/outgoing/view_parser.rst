@@ -53,9 +53,9 @@ can instantiate it directly:
 .. literalinclude:: view_parser/002.php
 
 Then you can use any of the three standard rendering methods that it provides:
-``render(viewpath, options, save)``, ``setVar(name, value, context)`` and
-``setData(data, context)``. You will also be able to specify delimiters directly,
-through the ``setDelimiters(left, right)`` method.
+``render()``, ``setVar()`` and
+``setData()``. You will also be able to specify delimiters directly,
+through the ``setDelimiters()`` method.
 
 Using the ``Parser``, your view templates are processed only by the Parser
 itself, and not like a conventional view PHP script. PHP code in such a script
