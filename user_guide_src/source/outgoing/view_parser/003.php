@@ -5,5 +5,4 @@ $data = [
     'blog_heading' => 'My Blog Heading',
 ];
 
-echo $parser->setData($data)
-    ->render('blog_template');
+echo $parser->setData($data)->render('blog_template');

@@ -6,6 +6,5 @@ $data     = [
     'firstname' => 'John',
     'lastname'  => 'Doe',
 ];
-echo $parser->setData($data)
-    ->renderString($template);
+echo $parser->setData($data)->renderString($template);
 // Result: Hello, John Doe
