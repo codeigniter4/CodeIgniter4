@@ -595,8 +595,6 @@ Class Reference
             - ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
             - ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
             - ``saveData`` - true if the view data parameter should be retained for subsequent calls
-            - ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
-            - ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
         Any conditional substitutions are performed first, then remaining
         substitutions are performed for each data pair.
