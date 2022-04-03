@@ -60,8 +60,8 @@ The ``csrf_field()`` function creates a hidden input with a CSRF token that help
 
 Go back to your ``News`` controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
-passed the validation rules. You'll use the :doc:`form
-validation <../libraries/validation>` library to do this.
+passed the validation rules.
+You'll use the :ref:`validation method in Controller <controller-validate>` to do this.
 
 .. literalinclude:: create_news_items/002.php
 
