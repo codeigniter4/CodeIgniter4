@@ -652,3 +652,14 @@ Class Reference
         Override the substitution field delimiters:
 
         .. literalinclude:: view_parser/026.php
+
+    .. php:method:: setConditionalDelimiters($leftDelimiter = '{', $rightDelimiter = '}')
+
+        :param  string  $leftDelimiter: Left delimiter for conditionals
+        :param  string  $rightDelimiter: right delimiter for conditionals
+        :returns: The Renderer, for method chaining
+        :rtype: CodeIgniter\\View\\RendererInterface.
+
+        Override the conditional delimiters:
+
+        .. literalinclude:: view_parser/027.php
