@@ -40,7 +40,7 @@ error-resistant.
 .. note:: It is recommended to only create services within controllers. Other files, like models and libraries should have the dependencies either passed into the constructor or through a setter method.
 
 Convenience Functions
----------------------
+=====================
 
 Two functions have been provided for getting a service. These functions are always available.
 
@@ -110,7 +110,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 .. literalinclude:: services/010.php
 
 Service Discovery
------------------
+=================
 
 CodeIgniter can automatically discover any Config\\Services.php files you may have created within any defined namespaces.
 This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
