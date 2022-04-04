@@ -1,3 +1,3 @@
 <?php
 
-$renderer = \Config\Services::renderer('/shared/views');
+$renderer = \Config\Services::renderer('/shared/views/');
