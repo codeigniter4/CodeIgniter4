@@ -123,15 +123,20 @@ Now open your view file and change the text to variables that correspond to the 
 
 Then load the page at the URL you've been using and you should see the variables replaced.
 
-The data passed in is only available during one call to `view`. If you call the function multiple times
-in a single request, you will have to pass the desired data to each view. This keeps any data from "bleeding" into
-other views, potentially causing issues. If you would prefer the data to persist, you can pass the `saveData` option
-into the `$option` array in the third parameter.
+The saveData Option
+-------------------
+
+The data passed in is retained for subsequent calls to ``view()``. If you call the function multiple times
+in a single request, you will not have to pass the desired data to each ``view()``.
+
+But this might not keep any data from "bleeding" into
+other views, potentially causing issues. If you would prefer to clean the data after one call, you can pass the ``saveData`` option
+into the ``$option`` array in the third parameter.
 
 .. literalinclude:: views/010.php
 
-Additionally, if you would like the default functionality of the view function to be that it does save the data
-between calls, you can set ``$saveData`` to **true** in **app/Config/Views.php**.
+Additionally, if you would like the default functionality of the view function to be that it does clear the data
+between calls, you can set ``$saveData`` to **false** in **app/Config/Views.php**.
 
 Creating Loops
 ==============
