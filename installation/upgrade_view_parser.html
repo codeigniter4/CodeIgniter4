@@ -297,7 +297,7 @@
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic simple">
 <li><p>Wherever you use the View Parser Library replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('parser');</span></code> with <code class="docutils literal notranslate"><span class="pre">$parser</span> <span class="pre">=</span> <span class="pre">service('parser');</span></code>.</p></li>
-<li><p>You have to change the render part in your controller from <code class="docutils literal notranslate"><span class="pre">$this-&gt;parser-&gt;parse('blog_template',</span> <span class="pre">$data);</span></code> to <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$parser-&gt;setData($data)-&gt;render('blog_template');</span></code>.</p></li>
+<li><p>You have to change the render part in your controller from <code class="docutils literal notranslate"><span class="pre">$this-&gt;parser-&gt;parse('blog_template',</span> <span class="pre">$data);</span></code> to <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">$parser-&gt;setData($data)-&gt;render('blog_template');</span></code>.</p></li>
 </ol>
 </section>
 <section id="code-example">
@@ -329,7 +329,7 @@
     <span class="s1">&#39;blog_heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Heading&#39;</span><span class="p">,</span>
 <span class="p">];</span>
 
-<span class="k">echo</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
+<span class="k">return</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>

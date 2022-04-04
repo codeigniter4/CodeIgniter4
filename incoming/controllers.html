@@ -509,7 +509,7 @@ controllers. You can extend this class in any new controller.</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -605,12 +605,12 @@ controller gets called.</strong></p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">comment</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">echo</span> <span class="s1">&#39;I am not flat!&#39;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s1">&#39;I am not flat!&#39;</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -638,8 +638,8 @@ method as parameters.</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">shoes</span><span class="p">(</span><span class="nv">$sandals</span><span class="p">,</span> <span class="nv">$id</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">echo</span> <span class="nv">$sandals</span><span class="p">;</span>
-        <span class="k">echo</span> <span class="nv">$id</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nv">$sandals</span>
+            <span class="o">.</span> <span class="nv">$id</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

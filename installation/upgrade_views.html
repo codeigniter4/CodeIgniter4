@@ -290,7 +290,7 @@
 <h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Your views look much like before, but they are invoked differently … instead of CI3’s
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view(x);</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view(x);</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view(x);</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">view(x);</span></code>.</p></li>
 <li><p>CI4 supports <em>View Cells</em> to build your response in pieces, and <em>View Layouts</em> for page layout.</p></li>
 <li><p>The template parser is still there, and substantially enhanced.</p></li>
 </ul>
@@ -301,7 +301,7 @@
 <li><p>First, move all views  to the folder <strong>app/Views</strong></p></li>
 <li><dl class="simple">
 <dt>Change the loading syntax of views in every script where you load views:</dt><dd><ul class="simple">
-<li><p>from <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view('directory_name/file_name')</span></code> to <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view('directory_name/file_name');</span></code></p></li>
+<li><p>from <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view('directory_name/file_name')</span></code> to <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">view('directory_name/file_name');</span></code></p></li>
 <li><p>from <code class="docutils literal notranslate"><span class="pre">$content</span> <span class="pre">=</span> <span class="pre">$this-&gt;load-&gt;view('file',</span> <span class="pre">$data,</span> <span class="pre">TRUE);</span></code> to <code class="docutils literal notranslate"><span class="pre">$content</span> <span class="pre">=</span> <span class="pre">view('file',</span> <span class="pre">$data);</span></code></p></li>
 </ul>
 </dd>

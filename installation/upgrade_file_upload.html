@@ -351,7 +351,7 @@ To store the file you could use <code class="docutils literal notranslate"><span
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39; &#39;</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39; &#39;</span><span class="p">]);</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">do_upload</span><span class="p">()</span>
@@ -365,12 +365,11 @@ To store the file you could use <code class="docutils literal notranslate"><span
         <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$path</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;upload failed&#39;</span><span class="p">]);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;upload_file_path&#39;</span> <span class="o">=&gt;</span> <span class="nv">$path</span><span class="p">];</span>
-
-            <span class="k">echo</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;upload failed&#39;</span><span class="p">]);</span>
         <span class="p">}</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;upload_file_path&#39;</span> <span class="o">=&gt;</span> <span class="nv">$path</span><span class="p">];</span>
+
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
