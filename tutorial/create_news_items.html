@@ -323,15 +323,15 @@ the slug from our title in the model. Create a new view at
 </pre></div>
 </div>
 <p>There are probably only three things here that look unfamiliar.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">&lt;?=</span> <span class="pre">session()-&gt;getFlashdata('error')</span> <span class="pre">?&gt;</span></code> function is used to report
+<p>The <code class="docutils literal notranslate"><span class="pre">session()-&gt;getFlashdata('error')</span></code> function is used to report
 errors related to CSRF protection.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">service('validation')-&gt;listErrors()</span></code> function is used to report
 errors related to form validation.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">csrf_field()</span></code> function creates a hidden input with a CSRF token that helps protect against some common attacks.</p>
 <p>Go back to your <code class="docutils literal notranslate"><span class="pre">News</span></code> controller. You’re going to do two things here,
 check whether the form was submitted and whether the submitted data
-passed the validation rules. You’ll use the <a class="reference internal" href="../libraries/validation.html"><span class="doc">form
-validation</span></a> library to do this.</p>
+passed the validation rules.
+You’ll use the <a class="reference internal" href="../incoming/controllers.html#controller-validate"><span class="std std-ref">validation method in Controller</span></a> to do this.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>

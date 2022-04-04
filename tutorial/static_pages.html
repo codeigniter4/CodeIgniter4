@@ -303,7 +303,7 @@ displays the CodeIgniter welcome page.</p>
 <p class="admonition-title">Note</p>
 <p>There are two <code class="docutils literal notranslate"><span class="pre">view()</span></code> functions referred to in this tutorial.
 One is the class method created with <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">function</span> <span class="pre">view($page</span> <span class="pre">=</span> <span class="pre">'home')</span></code>
-and <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view('welcome_message')</span></code> for displaying a view.
+and <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">view('welcome_message')</span></code> for displaying a view.
 Both are <em>technically</em> a function. But when you create a function in a class,
 it’s called a method.</p>
 </div>
@@ -374,8 +374,8 @@ in the <code class="docutils literal notranslate"><span class="pre">Pages</span>
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ucfirst</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span> <span class="c1">// Capitalize the first letter</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;pages/&#39;</span> <span class="o">.</span> <span class="nv">$page</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;pages/&#39;</span> <span class="o">.</span> <span class="nv">$page</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

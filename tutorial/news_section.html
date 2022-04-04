@@ -344,7 +344,7 @@ library. This will make the database class available through the
 <p>Now that the database and a model have been set up, you’ll need a method
 to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter -
-<a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> - is used. This makes it
+<a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a> - is used in the <code class="docutils literal notranslate"><span class="pre">CodeIgnite\Model</span></code>. This makes it
 possible to write your ‘queries’ once and make them work on <a class="reference internal" href="../intro/requirements.html"><span class="doc">all
 supported database systems</span></a>. The Model class
 also allows you to easily work with the Query Builder and provides
@@ -441,8 +441,8 @@ the views. Modify the <code class="docutils literal notranslate"><span class="pr
         <span class="p">];</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/overview&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/overview&#39;</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -513,8 +513,8 @@ add some code to the controller and create a new view. Go back to the
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/view&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/view&#39;</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
