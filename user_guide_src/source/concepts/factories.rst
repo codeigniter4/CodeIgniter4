@@ -35,6 +35,25 @@ you get back the instance as before:
 
 .. literalinclude:: factories/003.php
 
+Convenience Functions
+=====================
+
+Two functions for short cut of the Factories have been provided. These functions are always available.
+
+config()
+--------
+
+The first is ``config()`` which returns a new instance of a Config class. The only required parameter is the class name:
+
+.. literalinclude:: factories/008.php
+
+model()
+--------
+
+The second function, ``model()`` returns a new instance of a Model class. The only required parameter is the class name:
+
+.. literalinclude:: factories/009.php
+
 Factory Parameters
 ==================
 
