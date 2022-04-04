@@ -48,13 +48,26 @@ error-resistant.
 
 .. note:: It is recommended to only create services within controllers. Other files, like models and libraries should have the dependencies either passed into the constructor or through a setter method.
 
+How to Get a Service
+********************
+
+As many CodeIgniter classes are provided as services, you can get them like the following:
+
+.. literalinclude:: services/013.php
+
+The ``$typography`` is an instance of the Typography class, and if you call ``\Config\Services::typography()`` again, you will get the exactly same instance.
+
+If you want to get a new instance of the Typography class, you need to pass ``false`` to the argument ``$getShared``:
+
+.. literalinclude:: services/014.php
+
 Convenience Functions
-*********************
+=====================
 
 Two functions have been provided for getting a service. These functions are always available.
 
 service()
-=========
+---------
 
 The first is ``service()`` which returns a new instance of the requested service. The only
 required parameter is the service name. This is the same as the method name within the Services
@@ -68,7 +81,7 @@ If the creation method requires additional parameters, they can be passed after 
 .. literalinclude:: services/004.php
 
 single_service()
-================
+----------------
 
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class:
