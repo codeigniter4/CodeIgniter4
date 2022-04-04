@@ -9,8 +9,13 @@ Factories
 Introduction
 ============
 
-Like ``Services``, ``Factories`` are an extension of autoloading that helps keep your code
-concise yet optimal, without having to pass around object instances between classes. At its
+What is Factories?
+------------------
+
+Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
+concise yet optimal, without having to pass around object instances between classes.
+
+At its
 simplest, Factories provide a common way to create a class instance and access it from
 anywhere. This is a great way to reuse object states and reduce memory load from keeping
 multiple instances loaded across your app.
