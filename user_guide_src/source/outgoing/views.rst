@@ -101,7 +101,7 @@ along ``cache_name`` and the cache ID you wish to use:
 Adding Dynamic Data to the View
 ===============================
 
-Data is passed from the controller to the view by way of an array in the second parameter of the view function.
+Data is passed from the controller to the view by way of an array in the second parameter of the ``view()`` function.
 Here's an example:
 
 .. literalinclude:: views/008.php
@@ -135,7 +135,7 @@ into the ``$option`` array in the third parameter.
 
 .. literalinclude:: views/010.php
 
-Additionally, if you would like the default functionality of the view function to be that it does clear the data
+Additionally, if you would like the default functionality of the ``view()`` function to be that it does clear the data
 between calls, you can set ``$saveData`` to **false** in **app/Config/Views.php**.
 
 Creating Loops
