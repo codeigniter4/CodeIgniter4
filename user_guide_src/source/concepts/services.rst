@@ -75,7 +75,7 @@ create a new class that implements the ``RouterCollectionInterface``:
 
 .. literalinclude:: services/006.php
 
-Finally, modify **/app/Config/Services.php** to create a new instance of ``MyRouter``
+Finally, modify **app/Config/Services.php** to create a new instance of ``MyRouter``
 instead of ``CodeIgniter\Router\RouterCollection``:
 
 .. literalinclude:: services/007.php
@@ -87,7 +87,7 @@ In some instances, you will want the option to pass a setting to the class durin
 Since the services file is a very simple class, it is easy to make this work.
 
 A good example is the ``renderer`` service. By default, we want this class to be able
-to find the views at ``APPPATH.views/``. We want the developer to have the option of
+to find the views at ``APPPATH . views/``. We want the developer to have the option of
 changing that path, though, if their needs require it. So the class accepts the ``$viewPath``
 as a constructor parameter. The service method looks like this:
 
@@ -112,19 +112,19 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 Service Discovery
 =================
 
-CodeIgniter can automatically discover any Config\\Services.php files you may have created within any defined namespaces.
+CodeIgniter can automatically discover any **Config/Services.php** files you may have created within any defined namespaces.
 This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
 meet these requirements:
 
-- Its namespace must be defined in ``Config\Autoload.php``
-- Inside the namespace, the file must be found at ``Config\Services.php``
+- Its namespace must be defined in **app/Config/Autoload.php**
+- Inside the namespace, the file must be found at **Config/Services.php**
 - It must extend ``CodeIgniter\Config\BaseService``
 
 A small example should clarify this.
 
-Imagine that you've created a new directory, ``Blog`` in your root directory. This will hold a **blog module** with controllers,
+Imagine that you've created a new directory, **Blog** in your project root directory. This will hold a **Blog module** with controllers,
 models, etc, and you'd like to make some of the classes available as a service. The first step is to create a new file:
-``Blog\Config\Services.php``. The skeleton of the file should be:
+**Blog/Config/Services.php**. The skeleton of the file should be:
 
 .. literalinclude:: services/011.php
 
