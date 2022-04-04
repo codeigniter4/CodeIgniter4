@@ -9,9 +9,18 @@ Services
 Introduction
 ============
 
+What is Services?
+-----------------
+
+The **Services** in CodeIgniter 4 provide the functionality to create and share new class instances.
+It is implemented as the ``Config\Services`` class.
+
 All of the core classes within CodeIgniter are provided as "services". This simply means that, instead
 of hard-coding a class name to load, the classes to call are defined within a very simple
 configuration file. This file acts as a type of factory to create new instances of the required class.
+
+Why use Services?
+-----------------
 
 A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class:
