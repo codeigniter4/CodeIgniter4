@@ -44,6 +44,9 @@ Convenience Functions
 
 Two functions have been provided for getting a service. These functions are always available.
 
+service()
+---------
+
 The first is ``service()`` which returns a new instance of the requested service. The only
 required parameter is the service name. This is the same as the method name within the Services
 file always returns a SHARED instance of the class, so calling the function multiple times should
@@ -54,6 +57,9 @@ always return the same instance:
 If the creation method requires additional parameters, they can be passed after the service name:
 
 .. literalinclude:: services/004.php
+
+single_service()
+----------------
 
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class:
