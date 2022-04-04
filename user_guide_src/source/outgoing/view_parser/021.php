@@ -15,5 +15,4 @@ $template2 = '<ul>{menuitems}</ul>';
 $data      = [
     'menuitems' => $temp,
 ];
-echo $parser->setData($data)
-    ->renderString($template2);
+echo $parser->setData($data)->renderString($template2);

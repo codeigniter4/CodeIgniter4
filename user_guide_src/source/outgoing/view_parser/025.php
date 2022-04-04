@@ -1,3 +1,3 @@
 <?php
 
-$renderer->setVar('name', 'Joe', 'html');
+$parser->setVar('name', 'Joe', 'html');
