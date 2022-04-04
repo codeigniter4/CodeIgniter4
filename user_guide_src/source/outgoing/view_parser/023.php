@@ -1,3 +1,3 @@
 <?php
 
-echo $parser->render('myview');
+return $parser->render('myview');

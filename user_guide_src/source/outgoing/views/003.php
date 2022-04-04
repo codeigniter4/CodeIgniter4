@@ -12,9 +12,9 @@ class Page extends Controller
             'page_title' => 'Your title',
         ];
 
-        echo view('header');
-        echo view('menu');
-        echo view('content', $data);
-        echo view('footer');
+        return view('header')
+            . view('menu')
+            . view('content', $data)
+            . view('footer');
     }
 }

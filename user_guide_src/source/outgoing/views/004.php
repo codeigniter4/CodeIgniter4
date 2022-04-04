@@ -1,3 +1,3 @@
 <?php
 
-echo view('directory_name/file_name');
+return view('directory_name/file_name');

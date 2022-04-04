@@ -6,7 +6,7 @@ class Upload extends BaseController
 {
     public function index()
     {
-        echo view('upload_form', ['error' => ' ']);
+        return view('upload_form', ['error' => ' ']);
     }
 
     public function do_upload()
@@ -20,11 +20,10 @@ class Upload extends BaseController
         $file = $this->request->getFile('userfile');
 
         if (! $path = $file->store()) {
-            echo view('upload_form', ['error' => 'upload failed']);
-        } else {
-            $data = ['upload_file_path' => $path];
-
-            echo view('upload_success', $data);
+            return view('upload_form', ['error' => 'upload failed']);
         }
+        $data = ['upload_file_path' => $path];
+
+        return view('upload_success', $data);
     }
 }

@@ -14,6 +14,6 @@ class Blog extends Controller
             'heading'   => 'My Real Heading',
         ];
 
-        echo view('blog_view', $data);
+        return view('blog_view', $data);
     }
 }
