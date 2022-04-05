@@ -71,7 +71,7 @@ you get back the instance as before:
 Convenience Functions
 =====================
 
-Two functions for short cut of the Factories have been provided. These functions are always available.
+Two shortcut functions for Factories have been provided. These functions are always available.
 
 config()
 --------
