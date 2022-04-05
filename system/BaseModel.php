@@ -1137,7 +1137,19 @@ abstract class BaseModel
         if (empty($this->allowedFields)) {
             throw DataException::forInvalidAllowedFields(static::class);
         }
-
+        // Convert the mapping relationship in $datamap to the database column.
+        // So we can use camel case or other name in update data.
+        if($this->returnType != 'array') {
+            $entity = new $this->returnType;
+            if(isset($entity->datamap)) {
+                foreach ($entity->datamap as $key=>$val) {
+                    if(array_key_exists($key, $data)) {
+                        $data[$val] = $data[$key];
+                        unset($data[$key]);
+                    }
+                }
+            }
+        }
         foreach (array_keys($data) as $key) {
             if (! in_array($key, $this->allowedFields, true)) {
                 unset($data[$key]);
