@@ -145,7 +145,7 @@ your **app/Config/Factory.php** file might look like this:
 
 .. literalinclude:: factories/005.php
 
-This would prevent conflict of an unrelated third-party module which happened to have an
+This would prevent conflict of an third-party module which happened to have an
 unrelated ``Filters`` path in its namespace.
 
 setOptions Method
