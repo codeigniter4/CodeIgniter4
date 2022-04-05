@@ -21,10 +21,10 @@ Available Functions
 
 The following functions are available:
 
-.. php:function:: directory_map($source_dir[, $directory_depth = 0[, $hidden = false]])
+.. php:function:: directory_map($sourceDir[, $directoryDepth = 0[, $hidden = false]])
 
-    :param    string  $source_dir: Path to the source directory
-    :param    int   $directory_depth: Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
+    :param    string  $sourceDir: Path to the source directory
+    :param    int   $directoryDepth: Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)
     :param    bool    $hidden: Whether to include hidden paths
     :returns:    An array of files
     :rtype:    array
@@ -167,10 +167,10 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/010.php
 
-.. php:function:: get_dir_file_info($source_dir, $top_level_only)
+.. php:function:: get_dir_file_info($sourceDir[, $topLevelOnly = true])
 
-    :param    string    $source_dir: Directory path
-    :param    bool    $top_level_only: Whether to look only at the specified directory (excluding sub-directories)
+    :param    string    $sourceDir: Directory path
+    :param    bool    $topLevelOnly: Whether to look only at the specified directory (excluding sub-directories)
     :returns:    An array containing info on the supplied directory's contents
     :rtype:    array
 
@@ -183,10 +183,10 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/011.php
 
-.. php:function:: get_file_info($file[, $returned_values = ['name', 'server_path', 'size', 'date']])
+.. php:function:: get_file_info($file[, $returnedValues = ['name', 'server_path', 'size', 'date']])
 
     :param    string        $file: File path
-    :param    array|string  $returned_values: What type of info to return to be passed as array or comma separated string
+    :param    array|string  $returnedValues: What type of info to return to be passed as array or comma separated string
     :returns:    An array containing info on the specified file or false on failure
     :rtype:    array
 
@@ -194,8 +194,8 @@ The following functions are available:
     information attributes for a file. Second parameter allows you to explicitly declare what
     information you want returned.
 
-    Valid ``$returned_values`` options are: `name`, `size`, `date`, `readable`, `writeable`,
-    `executable` and `fileperms`.
+    Valid ``$returnedValues`` options are: ``name``, ``size``, ``date``, ``readable``, ``writeable``,
+    ``executable`` and ``fileperms``.
 
 .. php:function:: symbolic_permissions($perms)
 
@@ -230,10 +230,10 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/014.php
 
-.. php:function:: set_realpath($path[, $check_existence = false])
+.. php:function:: set_realpath($path[, $checkExistence = false])
 
     :param    string    $path: Path
-    :param    bool    $check_existence: Whether to check if the path actually exists
+    :param    bool    $checkExistence: Whether to check if the path actually exists
     :returns:    An absolute path
     :rtype:    string
 
