@@ -140,7 +140,7 @@ Configurations
 
 To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component. For example,
-if you wanted to ensure that all **Filters** used by your app were valid framework instances,
+if you want to ensure that each ``Filter`` used by your app is an actual framework,
 your **app/Config/Factory.php** file might look like this:
 
 .. literalinclude:: factories/005.php
