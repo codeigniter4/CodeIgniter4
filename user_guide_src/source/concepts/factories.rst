@@ -57,7 +57,7 @@ If you have only ``Blog\Models\UserModel``, the instance will be returned.
 But if you have both ``App\Models\UserModel`` and ``Blog\Models\UserModel``,
 The instance of ``App\Models\UserModel`` will be returned.
 
-If you want to get ``Blog\Models\UserModel``, you need the option ``preferApp``:
+If you want to get ``Blog\Models\UserModel``, you need to disable the option ``preferApp``:
 
 .. literalinclude:: factories/010.php
 
