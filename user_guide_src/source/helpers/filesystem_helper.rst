@@ -150,11 +150,12 @@ The following functions are available:
 
     .. note:: The files must be writable or owned by the system in order to be deleted.
 
-.. php:function:: get_filenames($source_dir[, $include_path = false])
+.. php:function:: get_filenames($sourceDir[, $includePath = false[, $hidden = false[, $includeDir = true]]])
 
-    :param    string    $source_dir: Directory path
-    :param    bool|null    $include_path: Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path
+    :param    string    $sourceDir: Directory path
+    :param    bool|null    $includePath: Whether to include the path as part of the filename; false for no path, null for the path relative to ``$sourceDir``, true for the full path
     :param    bool    $hidden: Whether to include hidden files (files beginning with a period)
+    :param    bool    $includeDir: Whether to include directories
     :returns:    An array of file names
     :rtype:    array
 
