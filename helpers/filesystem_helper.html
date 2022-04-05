@@ -286,12 +286,12 @@ directories.</p>
 <p>The following functions are available:</p>
 <dl class="function">
 <dt id="directory_map">
-<code class="sig-name descname">directory_map</code><span class="sig-paren">(</span><em class="sig-param">$source_dir</em><span class="optional">[</span>, <em class="sig-param">$directory_depth = 0</em><span class="optional">[</span>, <em class="sig-param">$hidden = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_map" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">directory_map</code><span class="sig-paren">(</span><em class="sig-param">$sourceDir</em><span class="optional">[</span>, <em class="sig-param">$directoryDepth = 0</em><span class="optional">[</span>, <em class="sig-param">$hidden = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#directory_map" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$source_dir</strong> (<em>string</em>) – Path to the source directory</p></li>
-<li><p><strong>$directory_depth</strong> (<em>int</em>) – Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</p></li>
+<li><p><strong>$sourceDir</strong> (<em>string</em>) – Path to the source directory</p></li>
+<li><p><strong>$directoryDepth</strong> (<em>int</em>) – Depth of directories to traverse (0 = fully recursive, 1 = current dir, etc)</p></li>
 <li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden paths</p></li>
 </ul>
 </dd>
@@ -518,12 +518,12 @@ a full file path.</p>
 
 <dl class="function">
 <dt id="get_dir_file_info">
-<code class="sig-name descname">get_dir_file_info</code><span class="sig-paren">(</span><em class="sig-param">$source_dir</em>, <em class="sig-param">$top_level_only</em><span class="sig-paren">)</span><a class="headerlink" href="#get_dir_file_info" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">get_dir_file_info</code><span class="sig-paren">(</span><em class="sig-param">$sourceDir</em><span class="optional">[</span>, <em class="sig-param">$topLevelOnly = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_dir_file_info" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$source_dir</strong> (<em>string</em>) – Directory path</p></li>
-<li><p><strong>$top_level_only</strong> (<em>bool</em>) – Whether to look only at the specified directory (excluding sub-directories)</p></li>
+<li><p><strong>$sourceDir</strong> (<em>string</em>) – Directory path</p></li>
+<li><p><strong>$topLevelOnly</strong> (<em>bool</em>) – Whether to look only at the specified directory (excluding sub-directories)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -547,12 +547,12 @@ operation.</p>
 
 <dl class="function">
 <dt id="get_file_info">
-<code class="sig-name descname">get_file_info</code><span class="sig-paren">(</span><em class="sig-param">$file[, $returned_values = ['name', 'server_path', 'size', 'date']]</em><span class="sig-paren">)</span><a class="headerlink" href="#get_file_info" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">get_file_info</code><span class="sig-paren">(</span><em class="sig-param">$file[, $returnedValues = ['name', 'server_path', 'size', 'date']]</em><span class="sig-paren">)</span><a class="headerlink" href="#get_file_info" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$file</strong> (<em>string</em>) – File path</p></li>
-<li><p><strong>$returned_values</strong> (<em>array|string</em>) – What type of info to return to be passed as array or comma separated string</p></li>
+<li><p><strong>$returnedValues</strong> (<em>array|string</em>) – What type of info to return to be passed as array or comma separated string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -565,8 +565,8 @@ operation.</p>
 <p>Given a file and path, returns (optionally) the <em>name</em>, <em>path</em>, <em>size</em> and <em>date modified</em>
 information attributes for a file. Second parameter allows you to explicitly declare what
 information you want returned.</p>
-<p>Valid <code class="docutils literal notranslate"><span class="pre">$returned_values</span></code> options are: <cite>name</cite>, <cite>size</cite>, <cite>date</cite>, <cite>readable</cite>, <cite>writeable</cite>,
-<cite>executable</cite> and <cite>fileperms</cite>.</p>
+<p>Valid <code class="docutils literal notranslate"><span class="pre">$returnedValues</span></code> options are: <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">readable</span></code>, <code class="docutils literal notranslate"><span class="pre">writeable</span></code>,
+<code class="docutils literal notranslate"><span class="pre">executable</span></code> and <code class="docutils literal notranslate"><span class="pre">fileperms</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -646,12 +646,12 @@ a three character octal notation of file permissions.</p>
 
 <dl class="function">
 <dt id="set_realpath">
-<code class="sig-name descname">set_realpath</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$check_existence = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">set_realpath</code><span class="sig-paren">(</span><em class="sig-param">$path</em><span class="optional">[</span>, <em class="sig-param">$checkExistence = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set_realpath" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$path</strong> (<em>string</em>) – Path</p></li>
-<li><p><strong>$check_existence</strong> (<em>bool</em>) – Whether to check if the path actually exists</p></li>
+<li><p><strong>$checkExistence</strong> (<em>bool</em>) – Whether to check if the path actually exists</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -699,7 +699,7 @@ cause an error to be triggered if the path cannot be resolved.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 04, 2022.
+      <span class="lastupdated">Last updated on Apr 05, 2022.
       </span></p>
   </div>
 
