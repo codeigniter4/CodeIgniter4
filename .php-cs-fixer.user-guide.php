@@ -37,7 +37,7 @@ $overrides = [
 ];
 
 $options = [
-    'cacheFile'    => 'build/.user-guide.php-cs-fixer.cache',
+    'cacheFile'    => 'build/.php-cs-fixer.user-guide.cache',
     'finder'       => $finder,
     'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [
