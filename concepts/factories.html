@@ -266,32 +266,60 @@
 <h1>Factories<a class="headerlink" href="#factories" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#introduction" id="id2">Introduction</a></p></li>
-<li><p><a class="reference internal" href="#factory-parameters" id="id3">Factory Parameters</a></p></li>
-<li><p><a class="reference internal" href="#factories-options" id="id4">Factories Options</a></p></li>
-<li><p><a class="reference internal" href="#factories-behavior" id="id5">Factories Behavior</a></p>
+<li><p><a class="reference internal" href="#introduction" id="id2">Introduction</a></p>
 <ul>
-<li><p><a class="reference internal" href="#configurations" id="id6">Configurations</a></p></li>
-<li><p><a class="reference internal" href="#setoptions-method" id="id7">setOptions Method</a></p></li>
-<li><p><a class="reference internal" href="#parameter-options" id="id8">Parameter Options</a></p></li>
+<li><p><a class="reference internal" href="#what-are-factories" id="id3">What are Factories?</a></p></li>
+<li><p><a class="reference internal" href="#differences-from-services" id="id4">Differences from Services</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id5">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#convenience-functions" id="id6">Convenience Functions</a></p>
+<ul>
+<li><p><a class="reference internal" href="#config" id="id7">config()</a></p></li>
+<li><p><a class="reference internal" href="#model" id="id8">model()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#factory-parameters" id="id9">Factory Parameters</a></p></li>
+<li><p><a class="reference internal" href="#factories-options" id="id10">Factories Options</a></p></li>
+<li><p><a class="reference internal" href="#factories-behavior" id="id11">Factories Behavior</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configurations" id="id12">Configurations</a></p></li>
+<li><p><a class="reference internal" href="#setoptions-method" id="id13">setOptions Method</a></p></li>
+<li><p><a class="reference internal" href="#parameter-options" id="id14">Parameter Options</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="introduction">
 <h2><a class="toc-backref" href="#id2">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
-<p>Like <code class="docutils literal notranslate"><span class="pre">Services</span></code>, <code class="docutils literal notranslate"><span class="pre">Factories</span></code> are an extension of autoloading that helps keep your code
-concise yet optimal, without having to pass around object instances between classes. At its
+<section id="what-are-factories">
+<h3><a class="toc-backref" href="#id3">What are Factories?</a><a class="headerlink" href="#what-are-factories" title="Permalink to this headline"></a></h3>
+<p>Like <a class="reference internal" href="services.html"><span class="doc">Services</span></a>, <strong>Factories</strong> are an extension of autoloading that helps keep your code
+concise yet optimal, without having to pass around object instances between classes.</p>
+<p>At its
 simplest, Factories provide a common way to create a class instance and access it from
 anywhere. This is a great way to reuse object states and reduce memory load from keeping
 multiple instances loaded across your app.</p>
-<p>Anything can be loaded by Factories, but the best examples are those classes that are used
+<p>Any class can be loaded by Factories, but the best examples are those classes that are used
 to work on or transmit common data. The framework itself uses Factories internally, e.g., to
 make sure the correct configuration is loaded when using the <code class="docutils literal notranslate"><span class="pre">Config</span></code> class.</p>
-<p>Take a look at <code class="docutils literal notranslate"><span class="pre">Models</span></code> as an example. You can access the Factory specific to <code class="docutils literal notranslate"><span class="pre">Models</span></code>
-by using the magic static method of the Factories class, <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code>. Because of
-the common path structure for namespaces and folders, Factories know that the model files
-and classes are found within <strong>Models</strong>, so you can request a model by its shorthand base name:</p>
+</section>
+<section id="differences-from-services">
+<h3><a class="toc-backref" href="#id4">Differences from Services</a><a class="headerlink" href="#differences-from-services" title="Permalink to this headline"></a></h3>
+<p>Factories require a concrete class name to instantiate and do not have code to create instances.</p>
+<p>So, Factories are not good for creating a complex instance that needs many dependencies,
+and you cannot change the class of the instance to be returned.</p>
+<p>On the other hand, Services have code to create instances, so it can create a complex instance
+that needs other services or class instances. When you get a service, Services require a service name,
+not a class name, so the returned instance can be changed without changing the client code.</p>
+</section>
+<section id="example">
+<h3><a class="toc-backref" href="#id5">Example</a><a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<p>Take a look at <strong>Models</strong> as an example. You can access the Factory specific to Models
+by using the magic static method of the Factories class, <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code>.</p>
+<p>By default, Factories first searches in the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace for the path corresponding to the magic static method name.
+<code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> searches the path <strong>Models/</strong>.</p>
+<p>In the following code, if you have <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code>, the instance will be returned:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
@@ -302,10 +330,20 @@ and classes are found within <strong>Models</strong>, so you can request a model
 <p>Or you could also request a specific class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$widgets</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Some\Namespace\Models\WidgetModel&#39;</span><span class="p">);</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Next time you ask for the same class anywhere in your code, <code class="docutils literal notranslate"><span class="pre">Factories</span></code> will be sure
+<p>If you have only <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, the instance will be returned.
+But if you have both <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> and <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>,
+the instance of <code class="docutils literal notranslate"><span class="pre">App\Models\UserModel</span></code> will be returned.</p>
+<p>If you want to get <code class="docutils literal notranslate"><span class="pre">Blog\Models\UserModel</span></code>, you need to disable the option <code class="docutils literal notranslate"><span class="pre">preferApp</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$widgets</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;Blog\Models\UserModel&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;preferApp&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="#factories-options"><span class="std std-ref">Factories Options</span></a> for the details.</p>
+<p>Next time you ask for the same class anywhere in your code, Factories will be sure
 you get back the instance as before:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -313,7 +351,7 @@ you get back the instance as before:</p>
 <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">someFunction</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="nv">$widgets</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;WidgetModel&#39;</span><span class="p">);</span>
+        <span class="nv">$users</span> <span class="o">=</span> <span class="nx">Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
 
         <span class="c1">// ...</span>
     <span class="p">}</span>
@@ -321,8 +359,37 @@ you get back the instance as before:</p>
 </pre></div>
 </div>
 </section>
+</section>
+<section id="convenience-functions">
+<h2><a class="toc-backref" href="#id6">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h2>
+<p>Two shortcut functions for Factories have been provided. These functions are always available.</p>
+<section id="config">
+<h3><a class="toc-backref" href="#id7">config()</a><a class="headerlink" href="#config" title="Permalink to this headline"></a></h3>
+<p>The first is <code class="docutils literal notranslate"><span class="pre">config()</span></code> which returns a new instance of a Config class. The only required parameter is the class name:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$appConfig</span> <span class="o">=</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
+
+<span class="c1">// The code above is the same as the code below.</span>
+<span class="nv">$appConfig</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Config\Factories</span><span class="o">::</span><span class="na">config</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="model">
+<h3><a class="toc-backref" href="#id8">model()</a><a class="headerlink" href="#model" title="Permalink to this headline"></a></h3>
+<p>The second function, <code class="docutils literal notranslate"><span class="pre">model()</span></code> returns a new instance of a Model class. The only required parameter is the class name:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+
+<span class="c1">// The code above is the same as the code below.</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Config\Factories</span><span class="o">::</span><span class="na">models</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="factory-parameters">
-<h2><a class="toc-backref" href="#id3">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Factory Parameters</a><a class="headerlink" href="#factory-parameters" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code> takes as a second parameter an array of option values (described below).
 These directives will override the default options configured for each component.</p>
 <p>Any more parameters passed at the same time will be forwarded on to the class
@@ -339,7 +406,7 @@ to access user records always go through that connection:</p>
 class instance that uses the alternate database connection.</p>
 </section>
 <section id="factories-options">
-<span id="id1"></span><h2><a class="toc-backref" href="#id4">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id10">Factories Options</a><a class="headerlink" href="#factories-options" title="Permalink to this headline"></a></h2>
 <p>The default behavior might not work for every component. For example, say your component
 name and its path do not align, or you need to limit instances to a certain type of class.
 Each component takes a set of options to direct discovery and instantiation.</p>
@@ -391,19 +458,20 @@ overrides other explicit class requests.</p></td>
 </table>
 </section>
 <section id="factories-behavior">
-<h2><a class="toc-backref" href="#id5">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Factories Behavior</a><a class="headerlink" href="#factories-behavior" title="Permalink to this headline"></a></h2>
 <p>Options can be applied in one of three ways (listed in ascending priority):</p>
 <ul class="simple">
-<li><p>A configuration class <code class="docutils literal notranslate"><span class="pre">Config\Factory</span></code> with a <code class="docutils literal notranslate"><span class="pre">$component</span></code> property.</p></li>
+<li><p>A configuration class <code class="docutils literal notranslate"><span class="pre">Config\Factory</span></code> with a property that matches the name of a component.</p></li>
 <li><p>The static method <code class="docutils literal notranslate"><span class="pre">Factories::setOptions()</span></code>.</p></li>
 <li><p>Passing options directly at call time with a parameter.</p></li>
 </ul>
 <section id="configurations">
-<h3><a class="toc-backref" href="#id6">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Configurations</a><a class="headerlink" href="#configurations" title="Permalink to this headline"></a></h3>
 <p>To set default component options, create a new Config files at <strong>app/Config/Factory.php</strong>
-that supplies options as an array property that matches the name of the component. For example,
-if you wanted to ensure that all Filters used by your app were valid framework instances,
-your <strong>Factory.php</strong> file might look like this:</p>
+that supplies options as an array property that matches the name of the component.</p>
+<p>For example, if you want to create <strong>Filters</strong> by Factories, the component name wll be <code class="docutils literal notranslate"><span class="pre">filters</span></code>.
+And if you want to ensure that each filter is an instance of a class which implements CodeIgniter’s <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>,
+your <strong>app/Config/Factory.php</strong> file might look like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -419,11 +487,13 @@ your <strong>Factory.php</strong> file might look like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This would prevent conflict of an unrelated third-party module which happened to have an
-unrelated “Filters” path in its namespace.</p>
+<p>Now you can create a filter with code like <code class="docutils literal notranslate"><span class="pre">Factories::filters('SomeFilter')</span></code>,
+and the returned instance will surely be a CodeIgniter’s filter.</p>
+<p>This would prevent conflict of an third-party module which happened to have an
+unrelated <code class="docutils literal notranslate"><span class="pre">Filters</span></code> path in its namespace.</p>
 </section>
 <section id="setoptions-method">
-<h3><a class="toc-backref" href="#id7">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">setOptions Method</a><a class="headerlink" href="#setoptions-method" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class has a static method to allow runtime option configuration: simply
 supply the desired array of options using the <code class="docutils literal notranslate"><span class="pre">setOptions()</span></code> method and they will be
 merged with the default values and stored for the next call:</p>
@@ -437,7 +507,7 @@ merged with the default values and stored for the next call:</p>
 </div>
 </section>
 <section id="parameter-options">
-<h3><a class="toc-backref" href="#id8">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Parameter Options</a><a class="headerlink" href="#parameter-options" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Factories</span></code>’s magic static call takes as a second parameter an array of option values.
 These directives will override the stored options configured for each component and can be
 used at call time to get exactly what you need. The input should be an array with option
