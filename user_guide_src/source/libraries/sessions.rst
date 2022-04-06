@@ -569,10 +569,10 @@ You can choose the Database group to use by adding a new line to the
 
 .. literalinclude:: sessions/040.php
 
-If you'd rather not do all of this by hand, you can use the ``session:migration`` command
+If you'd rather not do all of this by hand, you can use the ``make:migration --session`` command
 from the cli to generate a migration file for you::
 
-  > php spark session:migration
+  > php spark make:migration --session
   > php spark migrate
 
 This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
