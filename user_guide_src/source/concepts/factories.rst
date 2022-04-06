@@ -10,7 +10,7 @@ Introduction
 ============
 
 What are Factories?
-------------------
+-------------------
 
 Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
 concise yet optimal, without having to pass around object instances between classes.
