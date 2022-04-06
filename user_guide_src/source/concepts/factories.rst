@@ -9,7 +9,7 @@ Factories
 Introduction
 ============
 
-What is Factories?
+What are Factories?
 ------------------
 
 Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
