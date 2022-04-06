@@ -488,13 +488,14 @@ root path will be deleted as well.</p>
 
 <dl class="function">
 <dt id="get_filenames">
-<code class="sig-name descname">get_filenames</code><span class="sig-paren">(</span><em class="sig-param">$source_dir</em><span class="optional">[</span>, <em class="sig-param">$include_path = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_filenames" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">get_filenames</code><span class="sig-paren">(</span><em class="sig-param">$sourceDir</em><span class="optional">[</span>, <em class="sig-param">$includePath = false</em><span class="optional">[</span>, <em class="sig-param">$hidden = false</em><span class="optional">[</span>, <em class="sig-param">$includeDir = true</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_filenames" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$source_dir</strong> (<em>string</em>) – Directory path</p></li>
-<li><p><strong>$include_path</strong> (<em>bool|null</em>) – Whether to include the path as part of the filename; false for no path, null for the path relative to $source_dir, true for the full path</p></li>
+<li><p><strong>$sourceDir</strong> (<em>string</em>) – Directory path</p></li>
+<li><p><strong>$includePath</strong> (<em>bool|null</em>) – Whether to include the path as part of the filename; false for no path, null for the path relative to <code class="docutils literal notranslate"><span class="pre">$sourceDir</span></code>, true for the full path</p></li>
 <li><p><strong>$hidden</strong> (<em>bool</em>) – Whether to include hidden files (files beginning with a period)</p></li>
+<li><p><strong>$includeDir</strong> (<em>bool</em>) – Whether to include directories in the array output</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
