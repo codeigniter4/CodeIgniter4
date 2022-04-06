@@ -37,6 +37,7 @@ Enhancements
 - Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
     - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
 - Added support for webp files to **app/Config/Mimes.php**.
+- Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
 
 Changes
 *******
