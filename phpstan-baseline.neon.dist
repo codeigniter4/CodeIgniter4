@@ -26,11 +26,6 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Method CodeIgniter\\\\Validation\\\\ValidationInterface\\:\\:run\\(\\) invoked with 3 parameters, 0\\-2 required\\.$#"
-			count: 1
-			path: system/BaseModel.php
-
-		-
 			message: "#^Property Config\\\\Cache\\:\\:\\$backupHandler \\(string\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/CacheFactory.php

@@ -1344,7 +1344,9 @@ abstract class BaseModel
             return true;
         }
 
-        return $this->validation->setRules($rules, $this->validationMessages)->run($data, null, $this->DBGroup);
+        $this->validation->reset()->setRules($rules, $this->validationMessages);
+
+        return $this->validation->run($data, null, $this->DBGroup);
     }
 
     /**

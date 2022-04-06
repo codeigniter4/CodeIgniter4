@@ -55,6 +55,29 @@ final class ValidationModelTest extends LiveModelTestCase
         $this->assertSame('You forgot to name the baby.', $errors['name']);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5859
+     */
+    public function testValidationTwice(): void
+    {
+        $data = [
+            'name'        => null,
+            'description' => 'some great marketing stuff',
+        ];
+
+        $this->assertFalse($this->model->insert($data));
+
+        $errors = $this->model->errors();
+        $this->assertSame('You forgot to name the baby.', $errors['name']);
+
+        $data = [
+            'name'        => 'some name',
+            'description' => 'some great marketing stuff',
+        ];
+
+        $this->assertIsInt($this->model->insert($data));
+    }
+
     public function testValidationWithSetValidationRule(): void
     {
         $data = [
