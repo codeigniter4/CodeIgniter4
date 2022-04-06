@@ -139,11 +139,16 @@ Configurations
 --------------
 
 To set default component options, create a new Config files at **app/Config/Factory.php**
-that supplies options as an array property that matches the name of the component. For example,
-if you want to ensure that each ``Filter`` used by your app is an actual framework,
+that supplies options as an array property that matches the name of the component.
+
+For example, if you want to create **Filters** by Factories, the component name wll be ``filters``.
+And if you want to ensure that each filter is an instance of a class which implements CodeIgniter's ``FilterInterface``,
 your **app/Config/Factory.php** file might look like this:
 
 .. literalinclude:: factories/005.php
+
+Now you can create a filter with code like ``Factories::filters('SomeFilter')``,
+and the returned instance will surely be a CodeIgniter's filter.
 
 This would prevent conflict of an third-party module which happened to have an
 unrelated ``Filters`` path in its namespace.
