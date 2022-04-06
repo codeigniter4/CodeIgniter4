@@ -27,10 +27,10 @@ make sure the correct configuration is loaded when using the ``Config`` class.
 Differences from Services
 -------------------------
 
-Factories require a concrete class name to instantiate, and do not have code to create instances.
+Factories require a concrete class name to instantiate and do not have code to create instances.
 
-So Factories are not good for creating complex instance that needs many dependencies,
-and cannot change the class of the instance to be returned.
+So, Factories are not good for creating a complex instance that needs many dependencies,
+and you cannot change the class of the instance to be returned.
 
 On the other hand, Services have code to create instances, so it can create a complex instance
 that needs other services or class instances. When you get a service, Services require a service name,
