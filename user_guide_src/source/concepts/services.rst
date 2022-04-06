@@ -115,7 +115,7 @@ In some instances, you will want the option to pass a setting to the class durin
 Since the services file is a very simple class, it is easy to make this work.
 
 A good example is the ``renderer`` service. By default, we want this class to be able
-to find the views at ``APPPATH . views/``. We want the developer to have the option of
+to find the views at ``APPPATH . 'views/'``. We want the developer to have the option of
 changing that path, though, if their needs require it. So the class accepts the ``$viewPath``
 as a constructor parameter. The service method looks like this:
 
