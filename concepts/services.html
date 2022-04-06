@@ -268,23 +268,36 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p>
 <ul>
-<li><p><a class="reference internal" href="#convenience-functions" id="id2">Convenience Functions</a></p></li>
+<li><p><a class="reference internal" href="#what-is-services" id="id2">What is Services?</a></p></li>
+<li><p><a class="reference internal" href="#why-use-services" id="id3">Why use Services?</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#defining-services" id="id3">Defining Services</a></p>
+<li><p><a class="reference internal" href="#how-to-get-a-service" id="id4">How to Get a Service</a></p>
 <ul>
-<li><p><a class="reference internal" href="#allowing-parameters" id="id4">Allowing Parameters</a></p></li>
-<li><p><a class="reference internal" href="#shared-classes" id="id5">Shared Classes</a></p></li>
-<li><p><a class="reference internal" href="#service-discovery" id="id6">Service Discovery</a></p></li>
+<li><p><a class="reference internal" href="#convenience-functions" id="id5">Convenience Functions</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#defining-services" id="id6">Defining Services</a></p>
+<ul>
+<li><p><a class="reference internal" href="#allowing-parameters" id="id7">Allowing Parameters</a></p></li>
+<li><p><a class="reference internal" href="#shared-classes" id="id8">Shared Classes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#service-discovery" id="id9">Service Discovery</a></p></li>
 </ul>
 </div>
 <section id="introduction">
 <h2><a class="toc-backref" href="#id1">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<section id="what-is-services">
+<h3><a class="toc-backref" href="#id2">What is Services?</a><a class="headerlink" href="#what-is-services" title="Permalink to this headline"></a></h3>
+<p>The <strong>Services</strong> in CodeIgniter 4 provide the functionality to create and share new class instances.
+It is implemented as the <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> class.</p>
 <p>All of the core classes within CodeIgniter are provided as “services”. This simply means that, instead
 of hard-coding a class name to load, the classes to call are defined within a very simple
 configuration file. This file acts as a type of factory to create new instances of the required class.</p>
+</section>
+<section id="why-use-services">
+<h3><a class="toc-backref" href="#id3">Why use Services?</a><a class="headerlink" href="#why-use-services" title="Permalink to this headline"></a></h3>
 <p>A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -315,9 +328,28 @@ error-resistant.</p>
 <p class="admonition-title">Note</p>
 <p>It is recommended to only create services within controllers. Other files, like models and libraries should have the dependencies either passed into the constructor or through a setter method.</p>
 </div>
+</section>
+</section>
+<section id="how-to-get-a-service">
+<h2><a class="toc-backref" href="#id4">How to Get a Service</a><a class="headerlink" href="#how-to-get-a-service" title="Permalink to this headline"></a></h2>
+<p>As many CodeIgniter classes are provided as services, you can get them like the following:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">$typography</span></code> is an instance of the Typography class, and if you call <code class="docutils literal notranslate"><span class="pre">\Config\Services::typography()</span></code> again, you will get the exactly same instance.</p>
+<p>If you want to get a new instance of the Typography class, you need to pass <code class="docutils literal notranslate"><span class="pre">false</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">$getShared</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
 <section id="convenience-functions">
-<h3><a class="toc-backref" href="#id2">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h3>
 <p>Two functions have been provided for getting a service. These functions are always available.</p>
+<section id="service">
+<h4>service()<a class="headerlink" href="#service" title="Permalink to this headline"></a></h4>
 <p>The first is <code class="docutils literal notranslate"><span class="pre">service()</span></code> which returns a new instance of the requested service. The only
 required parameter is the service name. This is the same as the method name within the Services
 file always returns a SHARED instance of the class, so calling the function multiple times should
@@ -325,25 +357,38 @@ always return the same instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$logger</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+
+<span class="c1">// The code above is the same as the code below.</span>
+<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">logger</span><span class="p">();</span>
 </pre></div>
 </div>
 <p>If the creation method requires additional parameters, they can be passed after the service name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span><span class="p">,</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
+
+<span class="c1">// The code above is the same as the code below.</span>
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+<section id="single-service">
+<h4>single_service()<a class="headerlink" href="#single-service" title="Permalink to this headline"></a></h4>
 <p>The second function, <code class="docutils literal notranslate"><span class="pre">single_service()</span></code> works just like <code class="docutils literal notranslate"><span class="pre">service()</span></code> but returns a new instance of
 the class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$logger</span> <span class="o">=</span> <span class="nx">single_service</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
+
+<span class="c1">// The code above is the same as the code below.</span>
+<span class="nv">$logger</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">logger</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 </section>
+</section>
 <section id="defining-services">
-<h2><a class="toc-backref" href="#id3">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this headline"></a></h2>
 <p>To make services work well, you have to be able to rely on each class having a constant API, or
 <a class="reference external" href="https://www.php.net/manual/en/language.oop5.interfaces.php">interface</a>, to use. Almost all of
 CodeIgniter’s classes provide an interface that they adhere to. When you want to extend or replace
@@ -364,7 +409,7 @@ create a new class that implements the <code class="docutils literal notranslate
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Finally, modify <strong>/app/Config/Services.php</strong> to create a new instance of <code class="docutils literal notranslate"><span class="pre">MyRouter</span></code>
+<p>Finally, modify <strong>app/Config/Services.php</strong> to create a new instance of <code class="docutils literal notranslate"><span class="pre">MyRouter</span></code>
 instead of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouterCollection</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -384,11 +429,11 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
 </pre></div>
 </div>
 <section id="allowing-parameters">
-<h3><a class="toc-backref" href="#id4">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h3>
 <p>In some instances, you will want the option to pass a setting to the class during instantiation.
 Since the services file is a very simple class, it is easy to make this work.</p>
 <p>A good example is the <code class="docutils literal notranslate"><span class="pre">renderer</span></code> service. By default, we want this class to be able
-to find the views at <code class="docutils literal notranslate"><span class="pre">APPPATH.views/</span></code>. We want the developer to have the option of
+to find the views at <code class="docutils literal notranslate"><span class="pre">APPPATH</span> <span class="pre">.</span> <span class="pre">'views/'</span></code>. We want the developer to have the option of
 changing that path, though, if their needs require it. So the class accepts the <code class="docutils literal notranslate"><span class="pre">$viewPath</span></code>
 as a constructor parameter. The service method looks like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -412,12 +457,12 @@ as a constructor parameter. The service method looks like this:</p>
 the path it uses:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">&#39;/shared/views&#39;</span><span class="p">);</span>
+<span class="nv">$renderer</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">renderer</span><span class="p">(</span><span class="s1">&#39;/shared/views/&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="shared-classes">
-<h3><a class="toc-backref" href="#id5">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this headline"></a></h3>
 <p>There are occasions where you need to require that only a single instance of a service
 is created. This is easily handled with the <code class="docutils literal notranslate"><span class="pre">getSharedInstance()</span></code> method that is called from within the
 factory method. This handles checking if an instance has been created and saved
@@ -445,20 +490,21 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 </pre></div>
 </div>
 </section>
+</section>
 <section id="service-discovery">
-<h3><a class="toc-backref" href="#id6">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this headline"></a></h3>
-<p>CodeIgniter can automatically discover any Config\Services.php files you may have created within any defined namespaces.
+<h2><a class="toc-backref" href="#id9">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this headline"></a></h2>
+<p>CodeIgniter can automatically discover any <strong>Config/Services.php</strong> files you may have created within any defined namespaces.
 This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
 meet these requirements:</p>
 <ul class="simple">
-<li><p>Its namespace must be defined in <code class="docutils literal notranslate"><span class="pre">Config\Autoload.php</span></code></p></li>
-<li><p>Inside the namespace, the file must be found at <code class="docutils literal notranslate"><span class="pre">Config\Services.php</span></code></p></li>
+<li><p>Its namespace must be defined in <strong>app/Config/Autoload.php</strong></p></li>
+<li><p>Inside the namespace, the file must be found at <strong>Config/Services.php</strong></p></li>
 <li><p>It must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code></p></li>
 </ul>
 <p>A small example should clarify this.</p>
-<p>Imagine that you’ve created a new directory, <code class="docutils literal notranslate"><span class="pre">Blog</span></code> in your root directory. This will hold a <strong>blog module</strong> with controllers,
+<p>Imagine that you’ve created a new directory, <strong>Blog</strong> in your project root directory. This will hold a <strong>Blog module</strong> with controllers,
 models, etc, and you’d like to make some of the classes available as a service. The first step is to create a new file:
-<code class="docutils literal notranslate"><span class="pre">Blog\Config\Services.php</span></code>. The skeleton of the file should be:</p>
+<strong>Blog/Config/Services.php</strong>. The skeleton of the file should be:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Blog\Config</span><span class="p">;</span>
@@ -478,14 +524,13 @@ models, etc, and you’d like to make some of the classes available as a service
 would simply use the framework’s <code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> class to grab your service:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">Config\Services</span><span class="o">::</span><span class="na">postManager</span><span class="p">();</span>
+<span class="nv">$postManager</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">postManager</span><span class="p">();</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If multiple Services files have the same method name, the first one found will be the instance returned.</p>
 </div>
-</section>
 </section>
 </section>
 
@@ -501,7 +546,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 05, 2022.
+      <span class="lastupdated">Last updated on Apr 06, 2022.
       </span></p>
   </div>
 
