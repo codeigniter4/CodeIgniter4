@@ -7,11 +7,20 @@ Services
     :depth: 2
 
 Introduction
-============
+************
+
+What is Services?
+=================
+
+The **Services** in CodeIgniter 4 provide the functionality to create and share new class instances.
+It is implemented as the ``Config\Services`` class.
 
 All of the core classes within CodeIgniter are provided as "services". This simply means that, instead
 of hard-coding a class name to load, the classes to call are defined within a very simple
 configuration file. This file acts as a type of factory to create new instances of the required class.
+
+Why use Services?
+=================
 
 A quick example will probably make things clearer, so imagine that you need to pull in an instance
 of the Timer class. The simplest method would simply be to create a new instance of that class:
@@ -39,10 +48,26 @@ error-resistant.
 
 .. note:: It is recommended to only create services within controllers. Other files, like models and libraries should have the dependencies either passed into the constructor or through a setter method.
 
+How to Get a Service
+********************
+
+As many CodeIgniter classes are provided as services, you can get them like the following:
+
+.. literalinclude:: services/013.php
+
+The ``$typography`` is an instance of the Typography class, and if you call ``\Config\Services::typography()`` again, you will get the exactly same instance.
+
+If you want to get a new instance of the Typography class, you need to pass ``false`` to the argument ``$getShared``:
+
+.. literalinclude:: services/014.php
+
 Convenience Functions
----------------------
+=====================
 
 Two functions have been provided for getting a service. These functions are always available.
+
+service()
+---------
 
 The first is ``service()`` which returns a new instance of the requested service. The only
 required parameter is the service name. This is the same as the method name within the Services
@@ -55,13 +80,16 @@ If the creation method requires additional parameters, they can be passed after 
 
 .. literalinclude:: services/004.php
 
+single_service()
+----------------
+
 The second function, ``single_service()`` works just like ``service()`` but returns a new instance of
 the class:
 
 .. literalinclude:: services/005.php
 
 Defining Services
-=================
+*****************
 
 To make services work well, you have to be able to rely on each class having a constant API, or
 `interface <https://www.php.net/manual/en/language.oop5.interfaces.php>`_, to use. Almost all of
@@ -75,19 +103,19 @@ create a new class that implements the ``RouterCollectionInterface``:
 
 .. literalinclude:: services/006.php
 
-Finally, modify **/app/Config/Services.php** to create a new instance of ``MyRouter``
+Finally, modify **app/Config/Services.php** to create a new instance of ``MyRouter``
 instead of ``CodeIgniter\Router\RouterCollection``:
 
 .. literalinclude:: services/007.php
 
 Allowing Parameters
--------------------
+===================
 
 In some instances, you will want the option to pass a setting to the class during instantiation.
 Since the services file is a very simple class, it is easy to make this work.
 
 A good example is the ``renderer`` service. By default, we want this class to be able
-to find the views at ``APPPATH.views/``. We want the developer to have the option of
+to find the views at ``APPPATH . 'views/'``. We want the developer to have the option of
 changing that path, though, if their needs require it. So the class accepts the ``$viewPath``
 as a constructor parameter. The service method looks like this:
 
@@ -99,7 +127,7 @@ the path it uses:
 .. literalinclude:: services/009.php
 
 Shared Classes
------------------
+==============
 
 There are occasions where you need to require that only a single instance of a service
 is created. This is easily handled with the ``getSharedInstance()`` method that is called from within the
@@ -110,21 +138,21 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 .. literalinclude:: services/010.php
 
 Service Discovery
------------------
+*****************
 
-CodeIgniter can automatically discover any Config\\Services.php files you may have created within any defined namespaces.
+CodeIgniter can automatically discover any **Config/Services.php** files you may have created within any defined namespaces.
 This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
 meet these requirements:
 
-- Its namespace must be defined in ``Config\Autoload.php``
-- Inside the namespace, the file must be found at ``Config\Services.php``
+- Its namespace must be defined in **app/Config/Autoload.php**
+- Inside the namespace, the file must be found at **Config/Services.php**
 - It must extend ``CodeIgniter\Config\BaseService``
 
 A small example should clarify this.
 
-Imagine that you've created a new directory, ``Blog`` in your root directory. This will hold a **blog module** with controllers,
+Imagine that you've created a new directory, **Blog** in your project root directory. This will hold a **Blog module** with controllers,
 models, etc, and you'd like to make some of the classes available as a service. The first step is to create a new file:
-``Blog\Config\Services.php``. The skeleton of the file should be:
+**Blog/Config/Services.php**. The skeleton of the file should be:
 
 .. literalinclude:: services/011.php
 
