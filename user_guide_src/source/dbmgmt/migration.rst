@@ -162,8 +162,13 @@ You can use (refresh) with the following options:
 Displays a list of all migrations and the date and time they ran, or '--' if they have not been run::
 
   > php spark migrate:status
-  Filename               Migrated On
-  First_migration.php    2016-04-25 04:44:22
+  +----------------------+-------------------+-----------------------+---------+---------------------+-------+
+  | Namespace            | Version           | Filename              | Group   | Migrated On         | Batch |
+  +----------------------+-------------------+-----------------------+---------+---------------------+-------+
+  | App                  | 2022-04-06-234508 | CreateCiSessionsTable | default | 2022-04-06 18:45:14 | 2     |
+  | CodeIgniter\Settings | 2021-07-04-041948 | CreateSettingsTable   | default | 2022-04-06 01:23:08 | 1     |
+  | CodeIgniter\Settings | 2021-11-14-143905 | AddContextColumn      | default | 2022-04-06 01:23:08 | 1     |
+  +----------------------+-------------------+-----------------------+---------+---------------------+-------+
 
 You can use (status) with the following options:
 
