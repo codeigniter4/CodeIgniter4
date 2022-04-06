@@ -131,7 +131,7 @@ Factories Behavior
 
 Options can be applied in one of three ways (listed in ascending priority):
 
-* A configuration class ``Config\Factory`` with a ``$component`` property.
+* A configuration class ``Config\Factory`` with a property that matches the name of a component.
 * The static method ``Factories::setOptions()``.
 * Passing options directly at call time with a parameter.
 
