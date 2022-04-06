@@ -155,7 +155,7 @@ The following functions are available:
     :param    string    $sourceDir: Directory path
     :param    bool|null    $includePath: Whether to include the path as part of the filename; false for no path, null for the path relative to ``$sourceDir``, true for the full path
     :param    bool    $hidden: Whether to include hidden files (files beginning with a period)
-    :param    bool    $includeDir: Whether to include directories
+    :param    bool    $includeDir: Whether to include directories in the array output
     :returns:    An array of file names
     :rtype:    array
 
