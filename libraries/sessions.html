@@ -1041,9 +1041,9 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">session:migration</span></code> command
+<p>If you’d rather not do all of this by hand, you can use the <code class="docutils literal notranslate"><span class="pre">make:migration</span> <span class="pre">--session</span></code> command
 from the cli to generate a migration file for you:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">session</span><span class="o">:</span><span class="nx">migration</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">migration</span> <span class="o">--</span><span class="nx">session</span>
 <span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
 </pre></div>
 </div>
@@ -1184,7 +1184,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 06, 2022.
+      <span class="lastupdated">Last updated on Apr 07, 2022.
       </span></p>
   </div>
 

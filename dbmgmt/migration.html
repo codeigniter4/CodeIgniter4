@@ -510,8 +510,13 @@ to minimize any potential conflicts between the main application and any modules
 <p><strong>status</strong></p>
 <p>Displays a list of all migrations and the date and time they ran, or ‘–’ if they have not been run:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span><span class="o">:</span><span class="nx">status</span>
-<span class="nx">Filename</span>               <span class="nx">Migrated</span> <span class="nx">On</span>
-<span class="nx">First_migration</span><span class="o">.</span><span class="nx">php</span>    <span class="mi">2016</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">25</span> <span class="mo">04</span><span class="o">:</span><span class="mi">44</span><span class="o">:</span><span class="mi">22</span>
+<span class="o">+----------------------+-------------------+-----------------------+---------+---------------------+-------+</span>
+<span class="o">|</span> <span class="k">Namespace</span>            <span class="o">|</span> <span class="nx">Version</span>           <span class="o">|</span> <span class="nx">Filename</span>              <span class="o">|</span> <span class="nx">Group</span>   <span class="o">|</span> <span class="nx">Migrated</span> <span class="nx">On</span>         <span class="o">|</span> <span class="nx">Batch</span> <span class="o">|</span>
+<span class="o">+----------------------+-------------------+-----------------------+---------+---------------------+-------+</span>
+<span class="o">|</span> <span class="nx">App</span>                  <span class="o">|</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mo">06</span><span class="o">-</span><span class="mi">234508</span> <span class="o">|</span> <span class="nx">CreateCiSessionsTable</span> <span class="o">|</span> <span class="k">default</span> <span class="o">|</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mo">06</span> <span class="mi">18</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mi">14</span> <span class="o">|</span> <span class="mi">2</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="nx">CodeIgniter\Settings</span> <span class="o">|</span> <span class="mi">2021</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mo">041</span><span class="mi">948</span> <span class="o">|</span> <span class="nx">CreateSettingsTable</span>   <span class="o">|</span> <span class="k">default</span> <span class="o">|</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mo">06</span> <span class="mo">01</span><span class="o">:</span><span class="mi">23</span><span class="o">:</span><span class="mi">08</span> <span class="o">|</span> <span class="mi">1</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="nx">CodeIgniter\Settings</span> <span class="o">|</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="mi">143905</span> <span class="o">|</span> <span class="nx">AddContextColumn</span>      <span class="o">|</span> <span class="k">default</span> <span class="o">|</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mo">06</span> <span class="mo">01</span><span class="o">:</span><span class="mi">23</span><span class="o">:</span><span class="mi">08</span> <span class="o">|</span> <span class="mi">1</span>     <span class="o">|</span>
+<span class="o">+----------------------+-------------------+-----------------------+---------+---------------------+-------+</span>
 </pre></div>
 </div>
 <p>You can use (status) with the following options:</p>
@@ -725,7 +730,7 @@ have not yet been run, and runs them in order of their version (namespaces inter
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 06, 2022.
+      <span class="lastupdated">Last updated on Apr 07, 2022.
       </span></p>
   </div>
 
