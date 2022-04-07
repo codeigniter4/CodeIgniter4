@@ -7,6 +7,10 @@ services:
 		class: Utils\PHPStan\CheckFrameworkExceptionInstantiationViaNamedConstructorRule
 		tags:
 			- phpstan.rules.rule
+	-
+		class: PhpParser\NodeVisitor\NodeConnectingVisitor
+		tags:
+			- phpstan.parser.richParserNodeVisitor
 
 includes:
 	- phpstan-baseline.neon.dist
