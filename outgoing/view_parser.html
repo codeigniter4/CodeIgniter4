@@ -399,7 +399,7 @@ file</span></a>, Where <em>blog_template</em> is the name of your view file.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">cache_name</span></code> - the ID used to save/retrieve a cached view result; defaults to the viewpath;
 ignored for renderString()</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">saveData</span></code> - true if the view data parameters should be retained for subsequent calls;
-default is <strong>false</strong></p></li>
+default is <strong>true</strong></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> - true if pseudo-variable settings should be passed on to nested
 substitutions; default is <strong>true</strong></p></li>
 </ul>
@@ -1201,7 +1201,7 @@ using a view fragment:</p>
 <code class="sig-name descname">CodeIgniter\View\Parser</code></dt>
 <dd><dl class="method">
 <dt id="render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#render" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1238,7 +1238,7 @@ substitutions are performed for each data pair.</p>
 
 <dl class="method">
 <dt id="renderString">
-<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition"></a></dt>
+<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$template</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#renderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
