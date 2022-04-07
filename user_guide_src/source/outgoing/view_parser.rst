@@ -106,7 +106,7 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
 -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
     ignored for renderString()
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls;
-    default is **false**
+    default is **true**
 -   ``cascadeData`` - true if pseudo-variable settings should be passed on to nested
     substitutions; default is **true**
 
@@ -578,7 +578,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\Parser
 
-    .. php:method:: render($view[, $options[, $saveData = false]])
+    .. php:method:: render($view[, $options[, $saveData]])
 
         :param  string  $view: File name of the view source
         :param  array   $options: Array of options, as key/value pairs
@@ -600,7 +600,7 @@ Class Reference
         Any conditional substitutions are performed first, then remaining
         substitutions are performed for each data pair.
 
-    .. php:method:: renderString($template[, $options[, $saveData = false]])
+    .. php:method:: renderString($template[, $options[, $saveData]])
 
         :param  string  $template: View source provided as a string
         :param  array   $options: Array of options, as key/value pairs
