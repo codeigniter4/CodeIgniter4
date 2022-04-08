@@ -125,6 +125,8 @@ class Router implements RouterInterface
         $this->method     = $this->collection->getDefaultMethod();
 
         $this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
+
+        $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
     }
 
     /**
@@ -135,8 +137,6 @@ class Router implements RouterInterface
      */
     public function handle(?string $uri = null)
     {
-        $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
-
         // If we cannot find a URI to match against, then
         // everything runs off of its default settings.
         if ($uri === null || $uri === '') {
