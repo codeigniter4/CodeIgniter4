@@ -149,7 +149,14 @@ class AutoRouter
         // Ensure the controller stores the fully-qualified class name
         // We have to check for a length over 1, since by default it will be '\'
         if (strpos($this->controller, '\\') === false && strlen($this->defaultNamespace) > 1) {
-            $this->controller = '\\' . ltrim(str_replace('/', '\\', $this->defaultNamespace . $this->directory . $controllerName), '\\');
+            $this->controller = '\\' . ltrim(
+                str_replace(
+                    '/',
+                    '\\',
+                    $this->defaultNamespace . $this->directory . $controllerName
+                ),
+                '\\'
+            );
         }
 
         return [$this->directory, $this->controllerName(), $this->methodName(), $this->params];
@@ -189,7 +196,11 @@ class AutoRouter
         $c = count($segments);
 
         while ($c-- > 0) {
-            $segmentConvert = ucfirst($this->translateURIDashes === true ? str_replace('-', '_', $segments[0]) : $segments[0]);
+            $segmentConvert = ucfirst(
+                $this->translateURIDashes === true
+                    ? str_replace('-', '_', $segments[0])
+                    : $segments[0]
+            );
             // as soon as we encounter any segment that is not PSR-4 compliant, stop searching
             if (! $this->isValidSegment($segmentConvert)) {
                 return $segments;
