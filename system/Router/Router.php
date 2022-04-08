@@ -114,6 +114,11 @@ class Router implements RouterInterface
     protected $filtersInfo = [];
 
     /**
+     * @var AutoRouter|null
+     */
+    protected $autoRouter;
+
+    /**
      * Stores a reference to the RouteCollection object.
      */
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
@@ -127,6 +132,13 @@ class Router implements RouterInterface
         $this->collection->setHTTPVerb($request->getMethod() ?? strtolower($_SERVER['REQUEST_METHOD']));
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
+
+        $this->autoRouter = new AutoRouter(
+            $this->collection,
+            $this->collection->getDefaultNamespace(),
+            $this->translateURIDashes,
+            $this->collection->getHTTPVerb()
+        );
     }
 
     /**
@@ -264,10 +276,12 @@ class Router implements RouterInterface
      * if any. Relative to APPPATH.'Controllers'.
      *
      * Only used when auto-routing is turned on.
+     *
+     * @deprecated Moved to AutoRouter class.
      */
     public function directory(): string
     {
-        return ! empty($this->directory) ? $this->directory : '';
+        return $this->autoRouter->directory();
     }
 
     /**
@@ -309,10 +323,12 @@ class Router implements RouterInterface
     /**
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
+     *
+     * @deprecated Moved to AutoRouter class.
      */
     public function setTranslateURIDashes(bool $val = false): self
     {
-        $this->translateURIDashes = $val;
+        $this->autoRouter->setTranslateURIDashes($val);
 
         return $this;
     }
@@ -467,78 +483,15 @@ class Router implements RouterInterface
     }
 
     /**
+     * Checks Auto Routs.
+     *
      * Attempts to match a URI path against Controllers and directories
      * found in APPPATH/Controllers, to find a matching route.
      */
     public function autoRoute(string $uri)
     {
-        $segments = explode('/', $uri);
-
-        // WARNING: Directories get shifted out of the segments array.
-        $segments = $this->scanControllers($segments);
-
-        // If we don't have any segments left - use the default controller;
-        // If not empty, then the first segment should be the controller
-        if (! empty($segments)) {
-            $this->controller = ucfirst(array_shift($segments));
-        }
-
-        $controllerName = $this->controllerName();
-        if (! $this->isValidSegment($controllerName)) {
-            throw new PageNotFoundException($this->controller . ' is not a valid controller name');
-        }
-
-        // Use the method name if it exists.
-        // If it doesn't, no biggie - the default method name
-        // has already been set.
-        if (! empty($segments)) {
-            $this->method = array_shift($segments) ?: $this->method;
-        }
-
-        // Prevent access to initController method
-        if (strtolower($this->method) === 'initcontroller') {
-            throw PageNotFoundException::forPageNotFound();
-        }
-
-        if (! empty($segments)) {
-            $this->params = $segments;
-        }
-
-        $defaultNamespace = $this->collection->getDefaultNamespace();
-        if ($this->collection->getHTTPVerb() !== 'cli') {
-            $controller = '\\' . $defaultNamespace;
-
-            $controller .= $this->directory ? str_replace('/', '\\', $this->directory) : '';
-            $controller .= $controllerName;
-
-            $controller = strtolower($controller);
-            $methodName = strtolower($this->methodName());
-
-            foreach ($this->collection->getRoutes('cli') as $route) {
-                if (is_string($route)) {
-                    $route = strtolower($route);
-                    if (strpos($route, $controller . '::' . $methodName) === 0) {
-                        throw new PageNotFoundException();
-                    }
-
-                    if ($route === $controller) {
-                        throw new PageNotFoundException();
-                    }
-                }
-            }
-        }
-
-        // Load the file so that it's available for CodeIgniter.
-        $file = APPPATH . 'Controllers/' . $this->directory . $controllerName . '.php';
-        if (is_file($file)) {
-            include_once $file;
-        }
-
-        // Ensure the controller stores the fully-qualified class name
-        // We have to check for a length over 1, since by default it will be '\'
-        if (strpos($this->controller, '\\') === false && strlen($defaultNamespace) > 1) {
-            $this->controller = '\\' . ltrim(str_replace('/', '\\', $defaultNamespace . $this->directory . $controllerName), '\\');
-        }
+        [$this->directory, $this->controller, $this->method, $this->params]
+            = $this->autoRouter->getRoute($uri);
     }
 
     /**
@@ -563,6 +516,8 @@ class Router implements RouterInterface
      * @param array $segments URI segments
      *
      * @return array returns an array of remaining uri segments that don't map onto a directory
+     *
+     * @deprecated Not used. Moved to AutoRouter class.
      */
     protected function scanControllers(array $segments): array
     {
@@ -607,6 +562,8 @@ class Router implements RouterInterface
      * Sets the sub-directory that the controller is in.
      *
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
+     *
+     * @deprecated Moved to AutoRouter class.
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
@@ -616,27 +573,15 @@ class Router implements RouterInterface
             return;
         }
 
-        if ($validate) {
-            $segments = explode('/', trim($dir, '/'));
-
-            foreach ($segments as $segment) {
-                if (! $this->isValidSegment($segment)) {
-                    return;
-                }
-            }
-        }
-
-        if ($append !== true || empty($this->directory)) {
-            $this->directory = trim($dir, '/') . '/';
-        } else {
-            $this->directory .= trim($dir, '/') . '/';
-        }
+        $this->autoRouter->setDirectory($dir, $append, $validate);
     }
 
     /**
      * Returns true if the supplied $segment string represents a valid PSR-4 compliant namespace/directory segment
      *
      * regex comes from https://www.php.net/manual/en/language.variables.basics.php
+     *
+     * @deprecated Moved to AutoRouter class.
      */
     private function isValidSegment(string $segment): bool
     {
