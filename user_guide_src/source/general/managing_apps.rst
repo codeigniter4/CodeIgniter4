@@ -25,7 +25,7 @@ your main **app/Config/Paths.php** and set a *full server path* in the
 You will need to modify two additional files in your project root, so that
 they can find the **Paths** configuration file:
 
-- **/spark** runs command line apps; the path is specified on or about line 35:
+- **/spark** runs command line apps; the path is specified on or about line 49:
 
   .. literalinclude:: managing_apps/002.php
 
