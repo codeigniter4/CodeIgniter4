@@ -1,3 +1,3 @@
 <?php
 
-$response->request('GET', 'http://example.com', ['debug' => true]);
+$client->request('GET', 'http://example.com', ['debug' => true]);
