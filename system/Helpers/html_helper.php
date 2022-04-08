@@ -207,11 +207,12 @@ if (! function_exists('script_tag')) {
                     $script .= 'src="' . slash_item('baseURL') . $v . '" ';
                 }
             } else {
-                $script .= $k . '="' . $v . '" ';
+                // for attributes without values, like async or defer, use NULL.
+                $script .= $k . (is_null($v) ? ' ' : '="' . $v . '" ');
             }
         }
 
-        return $script . 'type="text/javascript"' . '></script>';
+        return $script . 'type="text/javascript"></script>';
     }
 }
 
