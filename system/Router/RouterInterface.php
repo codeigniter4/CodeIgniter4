@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use Closure;
 use CodeIgniter\HTTP\Request;
 
 /**
@@ -20,33 +21,29 @@ interface RouterInterface
 {
     /**
      * Stores a reference to the RouteCollection object.
-     *
-     * @param Request $request
      */
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null);
 
     /**
-     * Scans the URI and attempts to match the current URI to the
-     * one of the defined routes in the RouteCollection.
+     * Finds the controller method corresponding to the URI.
      *
      * @param string $uri
      *
-     * @return mixed
+     * @return Closure|string Controller classname or Closure
      */
     public function handle(?string $uri = null);
 
     /**
      * Returns the name of the matched controller.
      *
-     * @return mixed
+     * @return Closure|string Controller classname or Closure
      */
     public function controllerName();
 
     /**
-     * Returns the name of the method to run in the
-     * chosen container.
+     * Returns the name of the method in the controller to run.
      *
-     * @return mixed
+     * @return string
      */
     public function methodName();
 
@@ -55,19 +52,19 @@ interface RouterInterface
      * during the parsing process as an array, ready to send to
      * instance->method(...$params).
      *
-     * @return mixed
+     * @return array
      */
     public function params();
 
     /**
      * Sets the value that should be used to match the index.php file. Defaults
-     * to index.php but this allows you to modify it in case your are using
+     * to index.php but this allows you to modify it in case you are using
      * something like mod_rewrite to remove the page. This allows you to set
      * it a blank.
      *
      * @param string $page
      *
-     * @return mixed
+     * @return RouterInterface
      */
     public function setIndexPage($page);
 }

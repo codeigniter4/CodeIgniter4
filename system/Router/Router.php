@@ -115,8 +115,6 @@ class Router implements RouterInterface
 
     /**
      * Stores a reference to the RouteCollection object.
-     *
-     * @param Request $request
      */
     public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
     {
@@ -132,7 +130,7 @@ class Router implements RouterInterface
      * @throws PageNotFoundException
      * @throws RedirectException
      *
-     * @return mixed|string
+     * @return Closure|string Controller classname or Closure
      */
     public function handle(?string $uri = null)
     {
@@ -204,7 +202,7 @@ class Router implements RouterInterface
     /**
      * Returns the name of the matched controller.
      *
-     * @return Closure|string
+     * @return Closure|string Controller classname or Closure
      */
     public function controllerName()
     {
