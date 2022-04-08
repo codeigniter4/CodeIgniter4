@@ -16,7 +16,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 /**
  * Router for Auto-Routing
  */
-class AutoRouter
+class AutoRouter implements AutoRouterInterface
 {
     /**
      * List of controllers registered for the CLI verb that should not be accessed in the web.
@@ -263,6 +263,8 @@ class AutoRouter
     /**
      * Returns the name of the sub-directory the controller is in,
      * if any. Relative to APPPATH.'Controllers'.
+     *
+     * @deprecated This method is not necessary.
      */
     public function directory(): string
     {

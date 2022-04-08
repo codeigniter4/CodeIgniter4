@@ -677,7 +677,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#"
-			count: 2
+			count: 3
 			path: system/Router/Router.php
 
 		-
@@ -719,6 +719,11 @@ parameters:
 			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 1
 			path: system/Router/Router.php
+
+		-
+			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: system/Router/AutoRouterImproved.php
 
 		-
 			message: "#^Property Config\\\\App\\:\\:\\$CSRF[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"

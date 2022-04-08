@@ -113,7 +113,7 @@ class Router implements RouterInterface
      */
     protected $filtersInfo = [];
 
-    protected ?AutoRouter $autoRouter = null;
+    protected ?AutoRouterInterface $autoRouter = null;
 
     /**
      * Stores a reference to the RouteCollection object.
@@ -131,14 +131,24 @@ class Router implements RouterInterface
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
         if ($this->collection->shouldAutoRoute()) {
-            $this->autoRouter = new AutoRouter(
-                $this->collection->getRegisteredControllers('cli'),
-                $this->collection->getDefaultNamespace(),
-                $this->collection->getDefaultController(),
-                $this->collection->getDefaultMethod(),
-                $this->translateURIDashes,
-                $this->collection->getHTTPVerb()
-            );
+            $autoRoutesImproved = config('Feature')->autoRoutesImproved ?? false;
+            if ($autoRoutesImproved) {
+                $this->autoRouter = new AutoRouterImproved(
+                    $this->collection,
+                    $this->collection->getDefaultNamespace(),
+                    $this->translateURIDashes,
+                    $this->collection->getHTTPVerb()
+                );
+            } else {
+                $this->autoRouter = new AutoRouter(
+                    $this->collection->getRegisteredControllers('cli'),
+                    $this->collection->getDefaultNamespace(),
+                    $this->collection->getDefaultController(),
+                    $this->collection->getDefaultMethod(),
+                    $this->translateURIDashes,
+                    $this->collection->getHTTPVerb()
+                );
+            }
         }
     }
 
@@ -280,11 +290,11 @@ class Router implements RouterInterface
      */
     public function directory(): string
     {
-        if ($this->autoRouter === null) {
-            return '';
+        if ($this->autoRouter instanceof AutoRouter) {
+            return $this->autoRouter->directory();
         }
 
-        return $this->autoRouter->directory();
+        return '';
     }
 
     /**
@@ -327,15 +337,15 @@ class Router implements RouterInterface
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
      *
-     * @deprecated Moved to AutoRouter class.
+     * @deprecated This method should be removed.
      */
     public function setTranslateURIDashes(bool $val = false): self
     {
-        if ($this->autoRouter === null) {
+        if ($this->autoRouter instanceof AutoRouter) {
+            $this->autoRouter->setTranslateURIDashes($val);
+
             return $this;
         }
-
-        $this->autoRouter->setTranslateURIDashes($val);
 
         return $this;
     }
@@ -580,7 +590,7 @@ class Router implements RouterInterface
      *
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      *
-     * @deprecated Moved to AutoRouter class.
+     * @deprecated This method should be removed.
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
@@ -590,11 +600,11 @@ class Router implements RouterInterface
             return;
         }
 
-        if ($this->autoRouter === null) {
+        if ($this->autoRouter instanceof AutoRouter) {
+            $this->autoRouter->setDirectory($dir, $append, $validate);
+
             return;
         }
-
-        $this->autoRouter->setDirectory($dir, $append, $validate);
     }
 
     /**
