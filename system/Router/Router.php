@@ -120,6 +120,7 @@ class Router implements RouterInterface
     {
         $this->collection = $routes;
 
+        // These are only for auto-routing
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
@@ -137,7 +138,7 @@ class Router implements RouterInterface
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
         // If we cannot find a URI to match against, then
-        // everything runs off of it's default settings.
+        // everything runs off of its default settings.
         if ($uri === null || $uri === '') {
             return strpos($this->controller, '\\') === false
                 ? $this->collection->getDefaultNamespace() . $this->controller
@@ -151,6 +152,7 @@ class Router implements RouterInterface
         $this->filterInfo  = null;
         $this->filtersInfo = [];
 
+        // Checks defined routes
         if ($this->checkRoutes($uri)) {
             if ($this->collection->isFiltered($this->matchedRoute[0])) {
                 $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
@@ -172,6 +174,7 @@ class Router implements RouterInterface
             throw new PageNotFoundException("Can't find a route for '{$uri}'.");
         }
 
+        // Checks auto routes
         $this->autoRoute($uri);
 
         return $this->controllerName();
@@ -336,6 +339,8 @@ class Router implements RouterInterface
     }
 
     /**
+     * Checks Defined Routs.
+     *
      * Compares the uri string against the routes that the
      * RouteCollection class defined for us, attempting to find a match.
      * This method will modify $this->controller, etal as needed.
