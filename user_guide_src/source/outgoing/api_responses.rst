@@ -60,7 +60,7 @@ Class Reference
 ***************
 .. php:method:: setResponseFormat($format)
 
-    :param string $format The type of response to return, either ``json`` or ``xml``
+    :param string $format: The type of response to return, either ``json`` or ``xml``
 
     This defines the format to be used when formatting arrays in responses. If you provide a ``null`` value for
     ``$format``, it will be automatically determined through content negotiation.
