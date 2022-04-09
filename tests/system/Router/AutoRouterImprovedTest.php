@@ -60,6 +60,21 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
+    public function testAutoRouteFindsDefaultControllerAndMethodPost()
+    {
+        $this->collection->setDefaultController('Test');
+
+        $router = $this->createNewAutoRouter('post');
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('/');
+
+        $this->assertNull($directory);
+        $this->assertSame('\CodeIgniter\Router\Controllers\Test', $controller);
+        $this->assertSame('postIndex', $method);
+        $this->assertSame([], $params);
+    }
+
     public function testAutoRouteFindsControllerWithFileAndMethod()
     {
         $router = $this->createNewAutoRouter();
