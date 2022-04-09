@@ -1,3 +1,3 @@
 <?php
 
-$response->request('GET', 'http://example.com', ['timeout' => 5]);
+$client->request('GET', 'http://example.com', ['timeout' => 5]);
