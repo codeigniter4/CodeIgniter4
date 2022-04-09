@@ -25,6 +25,10 @@ them one by one.
 
 **Do read the user guide** before embarking on a project conversion!
 
+.. contents::
+    :local:
+    :depth: 2
+
 General Adjustments
 ===================
 
