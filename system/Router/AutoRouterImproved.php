@@ -12,6 +12,8 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * New Secure Router for Auto-Routing
@@ -163,7 +165,10 @@ class AutoRouterImproved implements AutoRouterInterface
             foreach ($this->collection->getRoutes('cli') as $route) {
                 if (is_string($route)) {
                     $route = strtolower($route);
-                    if (strpos($route, $controller . '::' . $methodName) === 0) {
+                    if (strpos(
+                            $route,
+                            $controller . '::' . $methodName
+                        ) === 0) {
                         throw new PageNotFoundException();
                     }
 
@@ -174,7 +179,33 @@ class AutoRouterImproved implements AutoRouterInterface
             }
         }
 
+        // Check parameters
+        try {
+            $this->checkParameters($uri);
+        } catch (ReflectionException $e) {
+            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        }
+
         return [$this->directory, $this->controller, $this->method, $this->params];
+    }
+
+    private function checkParameters(string $uri)
+    {
+        $refClass  = new ReflectionClass($this->controller);
+        $refMethod = $refClass->getMethod($this->method);
+        $refParams = $refMethod->getParameters();
+
+        if (! $refMethod->isPublic()) {
+            throw PageNotFoundException::forMethodNotFound($this->method);
+        }
+
+        if (count($refParams) < count($this->params)) {
+            throw new PageNotFoundException(
+                'The param count in the URI are greater than the controller method params.'
+                . ' Handler:' . $this->controller . '::' . $this->method
+                . ', URI:' . $uri
+            );
+        }
     }
 
     /**

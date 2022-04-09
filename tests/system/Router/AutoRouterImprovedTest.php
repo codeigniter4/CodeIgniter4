@@ -35,13 +35,13 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->collection      = new RouteCollection(Services::locator(), $moduleConfig);
     }
 
-    private function createNewAutoRouter(): AutoRouterImproved
+    private function createNewAutoRouter(string $httpVerb = 'get'): AutoRouterImproved
     {
         return new AutoRouterImproved(
             $this->collection,
             'CodeIgniter\Router\Controllers',
             true,
-            'get'
+            $httpVerb
         );
     }
 
@@ -71,6 +71,31 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame('\CodeIgniter\Router\Controllers\MyController', $controller);
         $this->assertSame('getSomeMethod', $method);
         $this->assertSame([], $params);
+    }
+
+    public function testFindsControllerAndMethodAndParam()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('myController/someMethod/a');
+
+        $this->assertNull($directory);
+        $this->assertSame('\CodeIgniter\Router\Controllers\MyController', $controller);
+        $this->assertSame('getSomeMethod', $method);
+        $this->assertSame(['a'], $params);
+    }
+
+    public function testUriParamCountIsGreaterThanMethodParams()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'Handler:\CodeIgniter\Router\Controllers\MyController::getSomeMethod, URI:myController/someMethod/a/b'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('myController/someMethod/a/b');
     }
 
     public function testAutoRouteFindsControllerWithFile()

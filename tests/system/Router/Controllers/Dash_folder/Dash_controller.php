@@ -15,4 +15,11 @@ use App\Controllers\BaseController;
 
 class Dash_controller extends BaseController
 {
+    public function getSomemethod()
+    {
+    }
+
+    public function getDash_method()
+    {
+    }
 }

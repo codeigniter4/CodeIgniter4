@@ -9,20 +9,13 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Controllers;
+namespace CodeIgniter\Router\Controllers\Dash_folder;
 
 use App\Controllers\BaseController;
 
-/**
- * @internal
- */
-final class Test extends BaseController
+class Home extends BaseController
 {
     public function getIndex()
-    {
-    }
-
-    public function postIndex()
     {
     }
 }

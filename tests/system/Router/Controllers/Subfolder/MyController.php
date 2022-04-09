@@ -15,4 +15,7 @@ use App\Controllers\BaseController;
 
 class MyController extends BaseController
 {
+    public function getSomeMethod()
+    {
+    }
 }
