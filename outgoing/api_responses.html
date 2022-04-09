@@ -406,7 +406,13 @@ JSON data will be sent back to the client.</p>
 <dl class="method">
 <dt id="setResponseFormat">
 <code class="sig-name descname">setResponseFormat</code><span class="sig-paren">(</span><em class="sig-param">$format</em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition"></a></dt>
-<dd><p>:param string $format The type of response to return, either <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">xml</span></code></p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$format</strong> (<em>string</em>) – The type of response to return, either <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">xml</span></code></p></li>
+</ul>
+</dd>
+</dl>
 <p>This defines the format to be used when formatting arrays in responses. If you provide a <code class="docutils literal notranslate"><span class="pre">null</span></code> value for
 <code class="docutils literal notranslate"><span class="pre">$format</span></code>, it will be automatically determined through content negotiation.</p>
 </dd></dl>
@@ -760,7 +766,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 08, 2022.
+      <span class="lastupdated">Last updated on Apr 09, 2022.
       </span></p>
   </div>
 
