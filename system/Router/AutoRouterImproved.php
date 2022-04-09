@@ -127,7 +127,9 @@ class AutoRouterImproved implements AutoRouterInterface
             strtolower($baseControllerName) === strtolower($this->defaultController)
             && strtolower($controllerSegment) === strtolower($this->defaultController)
         ) {
-            throw PageNotFoundException::forPageNotFound();
+            throw new PageNotFoundException(
+                'Cannot access the default controller "' . $baseControllerName . '" with the controller name URI path.'
+            );
         }
 
         // Use the method name if it exists.
@@ -139,7 +141,9 @@ class AutoRouterImproved implements AutoRouterInterface
 
             // Prevent access to default method path
             if (strtolower($this->method) === strtolower($this->defaultMethod)) {
-                throw PageNotFoundException::forPageNotFound();
+                throw new PageNotFoundException(
+                    'Cannot access the default method "' . $this->method . '" with the method name URI path.'
+                );
             }
         }
 
@@ -164,16 +168,20 @@ class AutoRouterImproved implements AutoRouterInterface
 
             foreach ($this->collection->getRoutes('cli') as $route) {
                 if (is_string($route)) {
-                    $route = strtolower($route);
+                    $routeLowerCase = strtolower($route);
                     if (strpos(
-                            $route,
-                            $controller . '::' . $methodName
-                        ) === 0) {
-                        throw new PageNotFoundException();
+                        $routeLowerCase,
+                        $controller . '::' . $methodName
+                    ) === 0) {
+                        throw new PageNotFoundException(
+                            'Cannot access CLI Route Handler: ' . $route
+                        );
                     }
 
-                    if ($route === $controller) {
-                        throw new PageNotFoundException();
+                    if ($routeLowerCase === $controller) {
+                        throw new PageNotFoundException(
+                            'Cannot access CLI Route Handler: ' . $route
+                        );
                     }
                 }
             }
