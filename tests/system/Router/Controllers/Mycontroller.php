@@ -9,13 +9,17 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Router\Controllers\Dash_folder;
+namespace CodeIgniter\Router\Controllers;
 
 use App\Controllers\BaseController;
 
-class MyController extends BaseController
+class Mycontroller extends BaseController
 {
-    public function getSomemethod()
+    public function getIndex()
+    {
+    }
+
+    public function getSomemethod($first = '')
     {
     }
 }

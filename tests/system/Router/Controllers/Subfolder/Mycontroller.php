@@ -13,9 +13,9 @@ namespace CodeIgniter\Router\Controllers\Subfolder;
 
 use App\Controllers\BaseController;
 
-class MyController extends BaseController
+class Mycontroller extends BaseController
 {
-    public function getSomeMethod()
+    public function getSomemethod()
     {
     }
 }
