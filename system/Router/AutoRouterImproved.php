@@ -162,6 +162,23 @@ class AutoRouterImproved implements AutoRouterInterface
         );
 
         // Ensure routes registered via $routes->cli() are not accessible via web.
+        $this->protectDefinedCliRoutes();
+
+        // Check _remao()
+        $this->checkRemap();
+
+        // Check parameters
+        try {
+            $this->checkParameters($uri);
+        } catch (ReflectionException $e) {
+            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
+        }
+
+        return [$this->directory, $this->controller, $this->method, $this->params];
+    }
+
+    private function protectDefinedCliRoutes()
+    {
         if ($this->httpVerb !== 'cli') {
             $controller = strtolower($this->controller);
             $methodName = strtolower($this->method);
@@ -186,18 +203,6 @@ class AutoRouterImproved implements AutoRouterInterface
                 }
             }
         }
-
-        // Check _remao()
-        $this->checkRemap();
-
-        // Check parameters
-        try {
-            $this->checkParameters($uri);
-        } catch (ReflectionException $e) {
-            throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
-        }
-
-        return [$this->directory, $this->controller, $this->method, $this->params];
     }
 
     private function checkParameters(string $uri)
