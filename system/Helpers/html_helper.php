@@ -208,7 +208,7 @@ if (! function_exists('script_tag')) {
                 }
             } else {
                 // for attributes without values, like async or defer, use NULL.
-                $script .= $k . (is_null($v) ? ' ' : '="' . $v . '" ');
+                $script .= $k . (null === $v ? ' ' : '="' . $v . '" ');
             }
         }
 
