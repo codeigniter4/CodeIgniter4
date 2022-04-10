@@ -13,10 +13,7 @@ namespace CodeIgniter\Router\Controllers;
 
 use App\Controllers\BaseController;
 
-/**
- * @internal
- */
-final class Test extends BaseController
+class Index extends BaseController
 {
     public function getIndex()
     {

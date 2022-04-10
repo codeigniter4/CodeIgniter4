@@ -47,7 +47,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
     public function testAutoRouteFindsDefaultControllerAndMethodGet()
     {
-        $this->collection->setDefaultController('Test');
+        $this->collection->setDefaultController('Index');
 
         $router = $this->createNewAutoRouter();
 
@@ -55,14 +55,14 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('/');
 
         $this->assertNull($directory);
-        $this->assertSame('\CodeIgniter\Router\Controllers\Test', $controller);
+        $this->assertSame('\CodeIgniter\Router\Controllers\Index', $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
     }
 
     public function testAutoRouteFindsDefaultControllerAndMethodPost()
     {
-        $this->collection->setDefaultController('Test');
+        $this->collection->setDefaultController('Index');
 
         $router = $this->createNewAutoRouter('post');
 
@@ -70,7 +70,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('/');
 
         $this->assertNull($directory);
-        $this->assertSame('\CodeIgniter\Router\Controllers\Test', $controller);
+        $this->assertSame('\CodeIgniter\Router\Controllers\Index', $controller);
         $this->assertSame('postIndex', $method);
         $this->assertSame([], $params);
     }
@@ -245,6 +245,6 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router = $this->createNewAutoRouter();
 
-        $router->getRoute('test/index');
+        $router->getRoute('mycontroller/index');
     }
 }
