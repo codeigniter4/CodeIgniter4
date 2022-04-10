@@ -271,11 +271,8 @@ should be returned for which response types.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#example-usage" id="id1">Example Usage</a></p></li>
-<li><p><a class="reference internal" href="#handling-response-types" id="id2">Handling Response Types</a></p>
-<ul>
+<li><p><a class="reference internal" href="#handling-response-types" id="id2">Handling Response Types</a></p></li>
 <li><p><a class="reference internal" href="#class-reference" id="id3">Class Reference</a></p></li>
-</ul>
-</li>
 </ul>
 </div>
 <section id="example-usage">
@@ -401,8 +398,9 @@ support both JSON and XML:</p>
 <p>So, if your request asks for JSON formatted data in an <strong>Accept</strong> header, the data array you pass any of the
 <code class="docutils literal notranslate"><span class="pre">respond*</span></code> or <code class="docutils literal notranslate"><span class="pre">fail*</span></code> methods will be formatted by the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Format\JSONFormatter</span></code> class. The resulting
 JSON data will be sent back to the client.</p>
+</section>
 <section id="class-reference">
-<h3><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="method">
 <dt id="setResponseFormat">
 <code class="sig-name descname">setResponseFormat</code><span class="sig-paren">(</span><em class="sig-param">$format</em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition"></a></dt>
@@ -752,7 +750,6 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
 </section>
 </section>
-</section>
 
 
            </div>
@@ -766,7 +763,7 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 09, 2022.
+      <span class="lastupdated">Last updated on Apr 10, 2022.
       </span></p>
   </div>
 
