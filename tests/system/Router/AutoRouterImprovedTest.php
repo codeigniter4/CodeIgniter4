@@ -247,4 +247,16 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $router->getRoute('mycontroller/index');
     }
+
+    public function testRejectsControllerWithRemapMethod()
+    {
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage(
+            'AutoRouterImproved does not support `_remap()` method. Controller:\CodeIgniter\Router\Controllers\Remap'
+        );
+
+        $router = $this->createNewAutoRouter();
+
+        $router->getRoute('remap/test');
+    }
 }

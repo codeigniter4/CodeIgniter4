@@ -187,6 +187,9 @@ class AutoRouterImproved implements AutoRouterInterface
             }
         }
 
+        // Check _remao()
+        $this->checkRemap();
+
         // Check parameters
         try {
             $this->checkParameters($uri);
@@ -213,6 +216,21 @@ class AutoRouterImproved implements AutoRouterInterface
                 . ' Handler:' . $this->controller . '::' . $this->method
                 . ', URI:' . $uri
             );
+        }
+    }
+
+    private function checkRemap()
+    {
+        try {
+            $refClass  = new ReflectionClass($this->controller);
+            $refMethod = $refClass->getMethod('_remap');
+
+            throw new PageNotFoundException(
+                'AutoRouterImproved does not support `_remap()` method.'
+                . ' Controller:' . $this->controller
+            );
+        } catch (ReflectionException $e) {
+            // Do nothing.
         }
     }
 
