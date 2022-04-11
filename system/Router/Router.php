@@ -278,8 +278,6 @@ class Router implements RouterInterface
      * if any. Relative to APPPATH.'Controllers'.
      *
      * Only used when auto-routing is turned on.
-     *
-     * @deprecated Moved to AutoRouter class.
      */
     public function directory(): string
     {
