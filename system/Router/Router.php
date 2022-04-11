@@ -113,10 +113,7 @@ class Router implements RouterInterface
      */
     protected $filtersInfo = [];
 
-    /**
-     * @var AutoRouter|null
-     */
-    protected $autoRouter;
+    protected ?AutoRouter $autoRouter;
 
     /**
      * Stores a reference to the RouteCollection object.
