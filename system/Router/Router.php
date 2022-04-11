@@ -134,8 +134,10 @@ class Router implements RouterInterface
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
         $this->autoRouter = new AutoRouter(
-            $this->collection,
+            $this->collection->getRegisteredControllers('cli'),
             $this->collection->getDefaultNamespace(),
+            $this->collection->getDefaultController(),
+            $this->collection->getDefaultMethod(),
             $this->translateURIDashes,
             $this->collection->getHTTPVerb()
         );

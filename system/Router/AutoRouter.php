@@ -19,9 +19,9 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 class AutoRouter
 {
     /**
-     * A RouteCollection instance.
+     * Controller list that can't be accessible.
      */
-    protected RouteCollectionInterface $collection;
+    protected array $protectedControllers;
 
     /**
      * Sub-directory that contains the requested controller class.
@@ -61,18 +61,20 @@ class AutoRouter
     protected string $defaultNamespace;
 
     public function __construct(
-        RouteCollectionInterface $routes,
+        array $protectedControllers,
         string $defaultNamespace,
+        string $defaultController,
+        string $defaultMethod,
         bool $translateURIDashes,
         string $httpVerb
     ) {
-        $this->collection         = $routes;
-        $this->defaultNamespace   = $defaultNamespace;
-        $this->translateURIDashes = $translateURIDashes;
-        $this->httpVerb           = $httpVerb;
+        $this->protectedControllers = $protectedControllers;
+        $this->defaultNamespace     = $defaultNamespace;
+        $this->translateURIDashes   = $translateURIDashes;
+        $this->httpVerb             = $httpVerb;
 
-        $this->controller = $this->collection->getDefaultController();
-        $this->method     = $this->collection->getDefaultMethod();
+        $this->controller = $defaultController;
+        $this->method     = $defaultMethod;
     }
 
     /**
@@ -126,15 +128,12 @@ class AutoRouter
             $controller = strtolower($controller);
             $methodName = strtolower($this->methodName());
 
-            foreach ($this->collection->getRoutes('cli') as $route) {
-                if (is_string($route)) {
-                    $route = strtolower($route);
-                    if (strpos($route, $controller . '::' . $methodName) === 0) {
-                        throw new PageNotFoundException();
-                    }
-
-                    if ($route === $controller) {
-                        throw new PageNotFoundException();
+            foreach ($this->protectedControllers as $controllerInRoute) {
+                if (is_string($controllerInRoute)) {
+                    if (strtolower($controllerInRoute) === $controller) {
+                        throw new PageNotFoundException(
+                            'Cannot access the controller in a CLI Route. Controller: ' . $controllerInRoute
+                        );
                     }
                 }
             }

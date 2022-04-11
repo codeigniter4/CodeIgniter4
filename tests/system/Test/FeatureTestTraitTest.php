@@ -13,11 +13,10 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
+use Config\Services;
 
 /**
- * @group                       DatabaseLive
- * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
+ * @group DatabaseLive
  *
  * @internal
  */
@@ -30,6 +29,13 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         parent::setUp();
 
         $this->skipEvents();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->resetServices();
     }
 
     public function testCallGet()
@@ -253,10 +259,15 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 'Hello::index',
                 'Hello',
             ],
-            'parameterized cli' => [
+            'parameterized param cli' => [
                 'hello/(:any)',
                 'Hello::index/$1',
                 'Hello/index/samsonasik',
+            ],
+            'parameterized method cli' => [
+                'hello/(:segment)',
+                'Hello::$1',
+                'Hello/index',
             ],
             'default method index' => [
                 'hello',
@@ -281,8 +292,11 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
     {
         $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage('Cannot access the controller in a CLI Route.');
 
-        require_once SUPPORTPATH . 'Controllers/Hello.php';
+        $collection = Services::routes();
+        $collection->setAutoRoute(true);
+        $collection->setDefaultNamespace('Tests\Support\Controllers');
 
         $this->withRoutes([
             [
