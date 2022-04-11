@@ -113,7 +113,7 @@ class Router implements RouterInterface
      */
     protected $filtersInfo = [];
 
-    protected ?AutoRouter $autoRouter;
+    protected ?AutoRouter $autoRouter = null;
 
     /**
      * Stores a reference to the RouteCollection object.
@@ -130,14 +130,16 @@ class Router implements RouterInterface
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
-        $this->autoRouter = new AutoRouter(
-            $this->collection->getRegisteredControllers('cli'),
-            $this->collection->getDefaultNamespace(),
-            $this->collection->getDefaultController(),
-            $this->collection->getDefaultMethod(),
-            $this->translateURIDashes,
-            $this->collection->getHTTPVerb()
-        );
+        if ($this->collection->shouldAutoRoute()) {
+            $this->autoRouter = new AutoRouter(
+                $this->collection->getRegisteredControllers('cli'),
+                $this->collection->getDefaultNamespace(),
+                $this->collection->getDefaultController(),
+                $this->collection->getDefaultMethod(),
+                $this->translateURIDashes,
+                $this->collection->getHTTPVerb()
+            );
+        }
     }
 
     /**
@@ -278,6 +280,10 @@ class Router implements RouterInterface
      */
     public function directory(): string
     {
+        if ($this->autoRouter === null) {
+            return '';
+        }
+
         return $this->autoRouter->directory();
     }
 
@@ -325,6 +331,10 @@ class Router implements RouterInterface
      */
     public function setTranslateURIDashes(bool $val = false): self
     {
+        if ($this->autoRouter === null) {
+            return $this;
+        }
+
         $this->autoRouter->setTranslateURIDashes($val);
 
         return $this;
@@ -567,6 +577,10 @@ class Router implements RouterInterface
         if (empty($dir)) {
             $this->directory = null;
 
+            return;
+        }
+
+        if ($this->autoRouter === null) {
             return;
         }
 
