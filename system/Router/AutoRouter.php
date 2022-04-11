@@ -197,9 +197,7 @@ class AutoRouter
 
         while ($c-- > 0) {
             $segmentConvert = ucfirst(
-                $this->translateURIDashes === true
-                    ? str_replace('-', '_', $segments[0])
-                    : $segments[0]
+                $this->translateURIDashes ? str_replace('-', '_', $segments[0]) : $segments[0]
             );
             // as soon as we encounter any segment that is not PSR-4 compliant, stop searching
             if (! $this->isValidSegment($segmentConvert)) {
