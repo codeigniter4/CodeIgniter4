@@ -40,11 +40,6 @@ class AutoRouter
     protected string $method;
 
     /**
-     * An array of params to the controller method.
-     */
-    protected array $params = [];
-
-    /**
      * Whether dashes in URI's should be converted
      * to underscores when determining method names.
      */
@@ -114,8 +109,11 @@ class AutoRouter
             throw PageNotFoundException::forPageNotFound();
         }
 
+        /** @var array $params An array of params to the controller method. */
+        $params = [];
+
         if (! empty($segments)) {
-            $this->params = $segments;
+            $params = $segments;
         }
 
         // Ensure routes registered via $routes->cli() are not accessible via web.
@@ -158,7 +156,7 @@ class AutoRouter
             );
         }
 
-        return [$this->directory, $this->controllerName(), $this->methodName(), $this->params];
+        return [$this->directory, $this->controllerName(), $this->methodName(), $params];
     }
 
     /**
