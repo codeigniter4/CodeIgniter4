@@ -127,13 +127,16 @@ class AutoRouter
             $methodName = strtolower($this->methodName());
 
             foreach ($this->protectedControllers as $controllerInRoute) {
-                if (is_string($controllerInRoute)) {
-                    if (strtolower($controllerInRoute) === $controller) {
-                        throw new PageNotFoundException(
-                            'Cannot access the controller in a CLI Route. Controller: ' . $controllerInRoute
-                        );
-                    }
+                if (! is_string($controllerInRoute)) {
+                    continue;
                 }
+                if (strtolower($controllerInRoute) !== $controller) {
+                    continue;
+                }
+
+                throw new PageNotFoundException(
+                    'Cannot access the controller in a CLI Route. Controller: ' . $controllerInRoute
+                );
             }
         }
 
