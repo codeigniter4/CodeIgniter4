@@ -15,4 +15,11 @@ use App\Controllers\BaseController;
 
 class Home extends BaseController
 {
+    public function getIndex()
+    {
+    }
+
+    public function postIndex()
+    {
+    }
 }

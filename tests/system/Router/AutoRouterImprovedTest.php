@@ -40,8 +40,8 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         return new AutoRouterImproved(
             [],
             'CodeIgniter\Router\Controllers',
-            'Home',
-            'index',
+            $this->collection->getDefaultController(),
+            $this->collection->getDefaultMethod(),
             true,
             $httpVerb
         );
