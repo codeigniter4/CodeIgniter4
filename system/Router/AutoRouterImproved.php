@@ -169,7 +169,7 @@ class AutoRouterImproved implements AutoRouterInterface
         );
 
         // Ensure routes registered via $routes->cli() are not accessible via web.
-        $this->protectDefinedCliRoutes();
+        $this->protectDefinedRoutes();
 
         // Check _remao()
         $this->checkRemap();
@@ -184,7 +184,7 @@ class AutoRouterImproved implements AutoRouterInterface
         return [$this->directory, $this->controller, $this->method, $this->params];
     }
 
-    private function protectDefinedCliRoutes()
+    private function protectDefinedRoutes()
     {
         if ($this->httpVerb !== 'cli') {
             $controller = strtolower($this->controller);
