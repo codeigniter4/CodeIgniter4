@@ -61,6 +61,7 @@ final class RouterTest extends CIUnitTestCase
             'closure/(:num)/(:alpha)'                         => static fn ($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
             'admin/admins'                                    => 'App\Admin\Admins::list_all',
+            'admin/admins/edit/(:any)'                        => 'App/Admin/Admins::edit_show/$1',
             '/some/slash'                                     => 'App\Slash::index',
             'objects/(:segment)/sort/(:segment)/([A-Z]{3,7})' => 'AdminList::objectsSortCreate/$1/$2/$3',
             '(:segment)/(:segment)/(:segment)'                => '$2::$3/$1',
@@ -400,6 +401,17 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\App\Admin\Admins', $router->controllerName());
         $this->assertSame('list_all', $router->methodName());
+    }
+
+    public function testRouteWithSlashInControllerName()
+    {
+        $this->expectExceptionMessage(
+            'The namespace delimiter is a backslash (\), not a slash (/). Route handler: \App/Admin/Admins::edit_show/$1'
+        );
+
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('admin/admins/edit/1');
     }
 
     public function testRouteWithLeadingSlash()
