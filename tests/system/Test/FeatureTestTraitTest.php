@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
 use Config\Services;
@@ -34,6 +35,8 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
+
+        Events::simulate(false);
 
         $this->resetServices();
     }
