@@ -604,8 +604,6 @@ class Router implements RouterInterface
 
         if ($this->autoRouter instanceof AutoRouter) {
             $this->autoRouter->setDirectory($dir, $append, $validate);
-
-            return;
         }
     }
 

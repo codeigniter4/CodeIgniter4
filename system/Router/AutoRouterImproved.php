@@ -188,7 +188,6 @@ class AutoRouterImproved implements AutoRouterInterface
     {
         if ($this->httpVerb !== 'cli') {
             $controller = strtolower($this->controller);
-            $methodName = strtolower($this->method);
 
             foreach ($this->protectedControllers as $controllerInRoutes) {
                 $routeLowerCase = strtolower($controllerInRoutes);
@@ -224,8 +223,8 @@ class AutoRouterImproved implements AutoRouterInterface
     private function checkRemap()
     {
         try {
-            $refClass  = new ReflectionClass($this->controller);
-            $refMethod = $refClass->getMethod('_remap');
+            $refClass = new ReflectionClass($this->controller);
+            $refClass->getMethod('_remap');
 
             throw new PageNotFoundException(
                 'AutoRouterImproved does not support `_remap()` method.'
