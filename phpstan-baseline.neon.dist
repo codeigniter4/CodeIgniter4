@@ -706,8 +706,8 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRegisteredControllers\\(\\)\\.$#"
-			count: 1
+			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRegisteredControllers\\(.*\\)\\.$#"
+			count: 2
 			path: system/Router/Router.php
 
 		-
@@ -719,11 +719,6 @@ parameters:
 			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 1
 			path: system/Router/Router.php
-
-		-
-			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: system/Router/AutoRouterImproved.php
 
 		-
 			message: "#^Property Config\\\\App\\:\\:\\$CSRF[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
