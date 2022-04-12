@@ -220,6 +220,26 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5825
+     */
+    public function testParseLoopVariableWithParentheses()
+    {
+        $data = [
+            'title'  => 'Super Heroes',
+            'powers' => [
+                ['name' => 'Tom'],
+                ['name' => 'Dick'],
+                ['name' => 'Henry'],
+            ],
+        ];
+
+        $template = "{title}\n{powers}({name}) {/powers}";
+
+        $this->parser->setData($data);
+        $this->assertSame("Super Heroes\n(Tom) (Dick) (Henry) ", $this->parser->renderString($template));
+    }
+
     public function testParseLoopObjectProperties()
     {
         $obj1 = new stdClass();
