@@ -134,8 +134,10 @@ class Router implements RouterInterface
             $autoRoutesImproved = config('Feature')->autoRoutesImproved ?? false;
             if ($autoRoutesImproved) {
                 $this->autoRouter = new AutoRouterImproved(
-                    $this->collection,
+                    $this->collection->getRegisteredControllers('*'),
                     $this->collection->getDefaultNamespace(),
+                    $this->collection->getDefaultController(),
+                    $this->collection->getDefaultMethod(),
                     $this->translateURIDashes,
                     $this->collection->getHTTPVerb()
                 );

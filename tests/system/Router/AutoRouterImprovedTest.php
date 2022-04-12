@@ -38,8 +38,10 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
     private function createNewAutoRouter(string $httpVerb = 'get'): AutoRouterImproved
     {
         return new AutoRouterImproved(
-            $this->collection,
+            [],
             'CodeIgniter\Router\Controllers',
+            'Home',
+            'index',
             true,
             $httpVerb
         );

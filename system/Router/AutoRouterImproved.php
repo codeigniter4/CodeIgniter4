@@ -21,9 +21,11 @@ use ReflectionException;
 class AutoRouterImproved implements AutoRouterInterface
 {
     /**
-     * A RouteCollection instance.
+     * Controller list that can't be accessible.
+     *
+     * @var class-string[]
      */
-    protected RouteCollectionInterface $collection;
+    protected array $protectedControllers;
 
     /**
      * Sub-directory that contains the requested controller class.
@@ -76,19 +78,24 @@ class AutoRouterImproved implements AutoRouterInterface
      */
     protected string $defaultMethod;
 
+    /**
+     * @param class-string[] $protectedControllers
+     * @param string         $defaultController    Short classname
+     */
     public function __construct(
-        RouteCollectionInterface $routes,
+        array $protectedControllers,
         string $namespace,
+        string $defaultController,
+        string $defaultMethod,
         bool $translateURIDashes,
         string $httpVerb
     ) {
-        $this->collection         = $routes;
-        $this->namespace          = rtrim($namespace, '\\') . '\\';
-        $this->translateURIDashes = $translateURIDashes;
-        $this->httpVerb           = $httpVerb;
-
-        $this->defaultController = $this->collection->getDefaultController();
-        $this->defaultMethod     = $httpVerb . ucfirst($this->collection->getDefaultMethod());
+        $this->protectedControllers = $protectedControllers;
+        $this->namespace            = rtrim($namespace, '\\') . '\\';
+        $this->translateURIDashes   = $translateURIDashes;
+        $this->httpVerb             = $httpVerb;
+        $this->defaultController    = $defaultController;
+        $this->defaultMethod        = $httpVerb . ucfirst($defaultMethod);
 
         // Set the default values
         $this->controller = $this->defaultController;
@@ -183,23 +190,13 @@ class AutoRouterImproved implements AutoRouterInterface
             $controller = strtolower($this->controller);
             $methodName = strtolower($this->method);
 
-            foreach ($this->collection->getRoutes('cli') as $route) {
-                if (is_string($route)) {
-                    $routeLowerCase = strtolower($route);
-                    if (strpos(
-                        $routeLowerCase,
-                        $controller . '::' . $methodName
-                    ) === 0) {
-                        throw new PageNotFoundException(
-                            'Cannot access CLI Route Handler: ' . $route
-                        );
-                    }
+            foreach ($this->protectedControllers as $controllerInRoutes) {
+                $routeLowerCase = strtolower($controllerInRoutes);
 
-                    if ($routeLowerCase === $controller) {
-                        throw new PageNotFoundException(
-                            'Cannot access CLI Route Handler: ' . $route
-                        );
-                    }
+                if ($routeLowerCase === $controller) {
+                    throw new PageNotFoundException(
+                        'Cannot access CLI Route Handler: ' . $controllerInRoutes
+                    );
                 }
             }
         }
