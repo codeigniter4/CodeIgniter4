@@ -184,7 +184,7 @@ class AutoRouterImproved implements AutoRouterInterface
         return [$this->directory, $this->controller, $this->method, $this->params];
     }
 
-    private function protectDefinedRoutes()
+    private function protectDefinedRoutes(): void
     {
         if ($this->httpVerb !== 'cli') {
             $controller = strtolower($this->controller);
@@ -201,7 +201,7 @@ class AutoRouterImproved implements AutoRouterInterface
         }
     }
 
-    private function checkParameters(string $uri)
+    private function checkParameters(string $uri): void
     {
         $refClass  = new ReflectionClass($this->controller);
         $refMethod = $refClass->getMethod($this->method);
@@ -220,7 +220,7 @@ class AutoRouterImproved implements AutoRouterInterface
         }
     }
 
-    private function checkRemap()
+    private function checkRemap(): void
     {
         try {
             $refClass = new ReflectionClass($this->controller);
@@ -298,7 +298,7 @@ class AutoRouterImproved implements AutoRouterInterface
      *
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
      */
-    private function setSubNamespace(?string $namespace = null, bool $append = false, bool $validate = true)
+    private function setSubNamespace(?string $namespace = null, bool $append = false, bool $validate = true): void
     {
         if ($validate) {
             $segments = explode('/', trim($namespace, '/'));
