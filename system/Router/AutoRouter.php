@@ -20,6 +20,8 @@ class AutoRouter implements AutoRouterInterface
 {
     /**
      * List of controllers registered for the CLI verb that should not be accessed in the web.
+     *
+     * @var class-string[]
      */
     protected array $protectedControllers;
 
