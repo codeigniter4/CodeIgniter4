@@ -70,6 +70,12 @@ Others
     - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
+- Added new Command for CLI.
+  - ``db:table`` - You can now see the names of all the tables in the database you are currently connected, field names or other metadata, like the column type, max length and ... each table, and the information in that table in the terminal.
+    - ``db:table --show``
+    - ``db:table my_table``
+    - ``db:table my_table --metadata``
+    - ``db:table my_table --limit-row 50 --limit-fields-value 20 --desc``
 
 Changes
 *******
