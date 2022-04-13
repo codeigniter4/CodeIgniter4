@@ -1064,7 +1064,7 @@ Class Reference
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 
-        :param string $select: The SELECT portion of a query
+        :param array|RawSql|string $select: The SELECT portion of a query
         :param bool $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -1165,7 +1165,7 @@ Class Reference
 
     .. php:method:: where($key[, $value = null[, $escape = null]])
 
-        :param mixed $key: Name of field to compare, or associative array
+        :param array|RawSql|string $key: Name of field to compare, or associative array
         :param mixed $value: If a single key, compared to this value
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
@@ -1260,7 +1260,7 @@ Class Reference
 
     .. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-        :param string $field: Field name
+        :param array|RawSql|string $field: Field name
         :param string $match: Text portion to match
         :param string $side: Which side of the expression to put the '%' wildcard on
         :param bool    $escape: Whether to escape values and identifiers
