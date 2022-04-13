@@ -497,9 +497,7 @@ class CLI
 
             // No colored string found. Invalid strings with no `\033[0;??`.
             if ($coloredStrings === []) {
-                $newText .= self::getColoredText($text, $foreground, $background, $format);
-
-                return $newText;
+                return $newText . self::getColoredText($text, $foreground, $background, $format);
             }
 
             $nonColoredText = preg_replace(
@@ -540,9 +538,7 @@ class CLI
             $string .= "\033[4m";
         }
 
-        $string .= $text . "\033[0m";
-
-        return $string;
+        return $string . ($text . "\033[0m");
     }
 
     /**
