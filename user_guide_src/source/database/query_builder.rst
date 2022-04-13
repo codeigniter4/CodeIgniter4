@@ -117,6 +117,17 @@ escaping of fields may break them.
 
 .. literalinclude:: query_builder/009.php
 
+.. _query-builder-select-rawsql:
+
+RawSql
+^^^^^^
+
+Since v4.2.0, ``$builder->select()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+.. literalinclude:: query_builder/099.php
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 $builder->selectMax()
 ---------------------
 
@@ -283,9 +294,20 @@ methods:
 
         .. literalinclude:: query_builder/027.php
 
+.. _query-builder-where-rawsql:
+
+5. RawSql
+^^^^^^^^^
+
+    Since v4.2.0, ``$builder->where()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+    .. literalinclude:: query_builder/100.php
+
+    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 .. _query-builder-where-subquery:
 
-5. Subqueries
+6. Subqueries
 ^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/028.php
@@ -386,6 +408,17 @@ searches.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
        .. literalinclude:: query_builder/041.php
+
+.. _query-builder-like-rawsql:
+
+3. RawSql
+^^^^^^^^^
+
+    Since v4.2.0, ``$builder->like()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+    .. literalinclude:: query_builder/101.php
+
+    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 $builder->orLike()
 ------------------
