@@ -242,7 +242,8 @@ methods:
 .. note:: ``$builder->where()`` accepts an optional third parameter. If you set it to
     ``false``, CodeIgniter will not try to protect your field or table names.
 
-#. **Simple key/value method:**
+1. Simple key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/021.php
 
@@ -253,14 +254,16 @@ methods:
 
     .. literalinclude:: query_builder/022.php
 
-#. **Custom key/value method:**
+2. Custom key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     You can include an operator in the first parameter in order to
     control the comparison:
 
     .. literalinclude:: query_builder/023.php
 
-#. **Associative array method:**
+3. Associative array method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/024.php
 
@@ -268,7 +271,8 @@ methods:
 
     .. literalinclude:: query_builder/025.php
 
-#. **Custom string:**
+4. Custom string
+^^^^^^^^^^^^^^^^
 
     You can write your own clauses manually:
 
@@ -281,7 +285,8 @@ methods:
 
 .. _query-builder-where-subquery:
 
-5. **Subqueries:**
+5. Subqueries
+^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/028.php
 
@@ -361,7 +366,8 @@ searches.
         otherwise, will force the values to be lowercase, i.e., ``WHERE LOWER(column) LIKE '%search%'``. This
         may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
-#. **Simple key/value method:**
+1. Simple key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/038.php
 
@@ -376,7 +382,8 @@ searches.
 
     .. literalinclude:: query_builder/040.php
 
-#. **Associative array method:**
+2. Associative array method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
        .. literalinclude:: query_builder/041.php
 
@@ -506,7 +513,8 @@ searches.
     otherwise, will force the values to be lowercase, i.e., ``HAVING LOWER(column) LIKE '%search%'``. This
     may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
-#. **Simple key/value method:**
+1. Simple key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/059.php
 
@@ -521,7 +529,8 @@ searches.
 
     .. literalinclude:: query_builder/061.php
 
-#. **Associative array method:**
+2. Associative array method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
        .. literalinclude:: query_builder/062.php
 
