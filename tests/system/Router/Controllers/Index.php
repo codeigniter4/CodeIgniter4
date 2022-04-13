@@ -11,9 +11,9 @@
 
 namespace CodeIgniter\Router\Controllers;
 
-use App\Controllers\BaseController;
+use CodeIgniter\Controller;
 
-class Index extends BaseController
+class Index extends Controller
 {
     public function getIndex()
     {

@@ -11,9 +11,9 @@
 
 namespace CodeIgniter\Router\Controllers\Dash_folder;
 
-use App\Controllers\BaseController;
+use CodeIgniter\Controller;
 
-class Home extends BaseController
+class Home extends Controller
 {
     public function getIndex()
     {

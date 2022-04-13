@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Router\Controllers;
 
-use App\Controllers\BaseController;
+use CodeIgniter\Controller;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class Remap extends BaseController
+class Remap extends Controller
 {
     public function _remap(string $method, ...$params): string
     {

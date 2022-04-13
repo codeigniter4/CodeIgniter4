@@ -11,9 +11,9 @@
 
 namespace CodeIgniter\Router\Controllers\Dash_folder;
 
-use App\Controllers\BaseController;
+use CodeIgniter\Controller;
 
-class Dash_controller extends BaseController
+class Dash_controller extends Controller
 {
     public function getSomemethod()
     {
