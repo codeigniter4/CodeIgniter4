@@ -159,6 +159,14 @@ final class CLITest extends CIUnitTestCase
         );
     }
 
+    public function testColorEmtpyString()
+    {
+        $this->assertSame(
+            '',
+            CLI::color('', 'white', 'green', 'underline')
+        );
+    }
+
     public function testPrint()
     {
         CLI::print('test');
