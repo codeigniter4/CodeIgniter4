@@ -58,7 +58,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('/');
 
         $this->assertNull($directory);
-        $this->assertSame(Index::class, $controller);
+        $this->assertSame('\\' . Index::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
     }
@@ -73,7 +73,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('/');
 
         $this->assertNull($directory);
-        $this->assertSame(Index::class, $controller);
+        $this->assertSame('\\' . Index::class, $controller);
         $this->assertSame('postIndex', $method);
         $this->assertSame([], $params);
     }
@@ -86,7 +86,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('mycontroller/somemethod');
 
         $this->assertNull($directory);
-        $this->assertSame(Mycontroller::class, $controller);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
     }
@@ -99,7 +99,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('mycontroller/somemethod/a');
 
         $this->assertNull($directory);
-        $this->assertSame(Mycontroller::class, $controller);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame(['a'], $params);
     }
@@ -124,7 +124,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('mycontroller');
 
         $this->assertNull($directory);
-        $this->assertSame(Mycontroller::class, $controller);
+        $this->assertSame('\\' . Mycontroller::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
     }
@@ -137,7 +137,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('subfolder/mycontroller/somemethod');
 
         $this->assertSame('Subfolder/', $directory);
-        $this->assertSame(\CodeIgniter\Router\Controllers\Subfolder\Mycontroller::class, $controller);
+        $this->assertSame('\\' . \CodeIgniter\Router\Controllers\Subfolder\Mycontroller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
     }
@@ -151,7 +151,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
 
         $this->assertSame('Dash_folder/', $directory);
         $this->assertSame(
-            \CodeIgniter\Router\Controllers\Dash_folder\Mycontroller::class,
+            '\\' . \CodeIgniter\Router\Controllers\Dash_folder\Mycontroller::class,
             $controller
         );
         $this->assertSame('getSomemethod', $method);
@@ -166,7 +166,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('dash-folder/dash-controller/somemethod');
 
         $this->assertSame('Dash_folder/', $directory);
-        $this->assertSame(Dash_controller::class, $controller);
+        $this->assertSame('\\' . Dash_controller::class, $controller);
         $this->assertSame('getSomemethod', $method);
         $this->assertSame([], $params);
     }
@@ -179,7 +179,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('dash-folder/dash-controller/dash-method');
 
         $this->assertSame('Dash_folder/', $directory);
-        $this->assertSame(Dash_controller::class, $controller);
+        $this->assertSame('\\' . Dash_controller::class, $controller);
         $this->assertSame('getDash_method', $method);
         $this->assertSame([], $params);
     }
@@ -192,7 +192,7 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
             = $router->getRoute('dash-folder');
 
         $this->assertSame('Dash_folder/', $directory);
-        $this->assertSame(Home::class, $controller);
+        $this->assertSame('\\' . Home::class, $controller);
         $this->assertSame('getIndex', $method);
         $this->assertSame([], $params);
     }
