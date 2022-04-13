@@ -1116,7 +1116,7 @@ Class Reference
 
         Adds a ``SELECT COUNT(field)`` clause to a query.
 
-.. php:method:: selectSubquery(BaseBuilder $subquery, string $as)
+    .. php:method:: selectSubquery(BaseBuilder $subquery, string $as)
 
         :param string $subquery: Instance of BaseBuilder
         :param string $as: Alias for the resulting value name
