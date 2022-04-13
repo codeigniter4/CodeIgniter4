@@ -108,7 +108,7 @@ Preference          Default Value          Options                      Descript
 =================== ====================== ============================ =======================================================================
 **userAgent**       CodeIgniter            None                         The "user agent".
 **protocol**        mail                   mail, sendmail, or smtp      The mail sending protocol.
-**mailpath**        /usr/sbin/sendmail     None                         The server path to Sendmail.
+**mailPath**        /usr/sbin/sendmail     None                         The server path to Sendmail.
 **SMTPHost**        No Default             None                         SMTP Server Address.
 **SMTPUser**        No Default             None                         SMTP Username.
 **SMTPPass**        No Default             None                         SMTP Password.
