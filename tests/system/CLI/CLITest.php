@@ -122,6 +122,7 @@ final class CLITest extends CIUnitTestCase
 
         CLI::init(); // force re-check on env
         $this->assertSame('test', CLI::color('test', 'white', 'green'));
+
         putenv($nocolor ? "NO_COLOR={$nocolor}" : 'NO_COLOR');
     }
 
@@ -132,6 +133,7 @@ final class CLITest extends CIUnitTestCase
 
         CLI::init(); // force re-check on env
         $this->assertSame("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
+
         putenv($termProgram ? "TERM_PROGRAM={$termProgram}" : 'TERM_PROGRAM');
     }
 
@@ -190,14 +192,30 @@ final class CLITest extends CIUnitTestCase
     public function testWriteForegroundWithColorBefore()
     {
         CLI::write(CLI::color('green', 'green') . ' red', 'red');
-        $expected = "\033[0;31m\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
+
+        $expected = "\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteForegroundWithColorAfter()
     {
         CLI::write('red ' . CLI::color('green', 'green'), 'red');
-        $expected = "\033[0;31mred \033[0;32mgreen\033[0m" . PHP_EOL;
+
+        $expected = "\033[0;31mred \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5892
+     */
+    public function testWriteForegroundWithColorTwice()
+    {
+        CLI::write(
+            CLI::color('green', 'green') . ' red ' . CLI::color('green', 'green'),
+            'red'
+        );
+
+        $expected = "\033[0;32mgreen\033[0m\033[0;31m red \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
