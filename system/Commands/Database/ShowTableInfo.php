@@ -11,9 +11,9 @@
 
 namespace CodeIgniter\Commands\Database;
 
-use Config\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Config\Database;
 
 /**
  * Get table data if it exists in the database.
@@ -64,7 +64,7 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        "--show" => "Retrieves list the names of all database tables.",
+        '--show' => 'Retrieves list the names of all database tables.',
     ];
 
     /**
@@ -85,6 +85,7 @@ class ShowTableInfo extends BaseCommand
         if (CLI::getOption('show')) {
             CLI::write('list the names of all database tables : ', 'black', 'yellow');
             CLI::write(implode(' , ', $getTables), 'black', 'blue');
+            
             return CLI::newLine();
         }
 
@@ -94,16 +95,16 @@ class ShowTableInfo extends BaseCommand
             CLI::write("Data of table {$tableName} : ", 'black', 'yellow');
             $thead = $db->getFieldNames($tableName);
             $tbody = $db->table($tableName)->get()->getResultArray();
+
             return CLI::table($tbody, $thead);
         }
-                 
+         
+        
         $tableKey = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
         CLI::write("Data of table {$getTables[$tableKey]} : ", 'black', 'yellow');
         $thead = $db->getFieldNames($getTables[$tableKey]);
         $tbody = $db->table($getTables[$tableKey])->get()->getResultArray();
 
         return CLI::table($tbody, $thead);
-        
-            
     }
 }
