@@ -63,11 +63,11 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        "--show" => "Retrieves list the names of all database tables."
+        "--show" => "Retrieves list the names of all database tables.",
     ];
 
     /**
-     * get table info. 
+     * get table info
      */
     public function run(array $params)
     {
@@ -97,9 +97,9 @@ class ShowTableInfo extends BaseCommand
         }
                  
         $table_key = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
-        CLI::write("Data of table $getTables[$table_key] : ", 'black', 'yellow');
-        $thead     = $db->getFieldNames($getTables[$table_key]);
-        $tbody     = $db->table($getTables[$table_key])->get()->getResultArray();
+        CLI::write("Data of table {$getTables[$table_key]} : ", 'black', 'yellow');
+        $thead = $db->getFieldNames($getTables[$table_key]);
+        $tbody = $db->table($getTables[$table_key])->get()->getResultArray();
 
         return CLI::table($tbody, $thead);
         
