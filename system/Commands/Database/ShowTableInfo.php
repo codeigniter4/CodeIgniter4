@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Database;
 
+use Config\Database;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
@@ -73,7 +74,7 @@ class ShowTableInfo extends BaseCommand
     {
         
         // Connect to database
-        $db        = \Config\Database::connect();
+        $db        = Database::connect();
         $getTables = $db->listTables();
         // The database does not have a table.
         if ($getTables === []) {
@@ -87,19 +88,19 @@ class ShowTableInfo extends BaseCommand
             return CLI::newLine();
         }
 
-        $table_name = array_shift($params);
+        $tableName = array_shift($params);
         // table name correct.
-        if (in_array($table_name, $getTables, true)) {
-            CLI::write("Data of table {$table_name} : ", 'black', 'yellow');
-            $thead = $db->getFieldNames($table_name);
-            $tbody = $db->table($table_name)->get()->getResultArray();
+        if (in_array($tableName, $getTables, true)) {
+            CLI::write("Data of table {$tableName} : ", 'black', 'yellow');
+            $thead = $db->getFieldNames($tableName);
+            $tbody = $db->table($tableName)->get()->getResultArray();
             return CLI::table($tbody, $thead);
         }
                  
-        $table_key = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
-        CLI::write("Data of table {$getTables[$table_key]} : ", 'black', 'yellow');
-        $thead = $db->getFieldNames($getTables[$table_key]);
-        $tbody = $db->table($getTables[$table_key])->get()->getResultArray();
+        $tableKey = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
+        CLI::write("Data of table {$getTables[$tableKey]} : ", 'black', 'yellow');
+        $thead = $db->getFieldNames($getTables[$tableKey]);
+        $tbody = $db->table($getTables[$tableKey])->get()->getResultArray();
 
         return CLI::table($tbody, $thead);
         
