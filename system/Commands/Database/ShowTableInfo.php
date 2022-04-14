@@ -15,7 +15,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Creates a new database.
+ * Get table data if it exists in the database.
  */
 class ShowTableInfo extends BaseCommand
 {
@@ -62,35 +62,47 @@ class ShowTableInfo extends BaseCommand
      *
      * @var array<string, string>
      */
-    protected $options = [];
+    protected $options = [
+        "--show" => "Retrieves list the names of all database tables."
+    ];
 
     /**
-     * get table info 
+     * get table info. 
      */
     public function run(array $params)
     {
         
         // Connect to database
-        $db = \Config\Database::connect();
+        $db        = \Config\Database::connect();
         $getTables = $db->listTables();
+        // The database does not have a table.
+        if ($getTables === []) {
+            return CLI::error('Database has no tables!', 'light_gray', 'red');
+        }
 
-        if($getTables === []){
-        return CLI::error('Database has no tables!', 'light_gray', 'red');
+        // show all tables name
+        if (CLI::getOption('show')) {
+            CLI::write('list the names of all database tables : ', 'black', 'yellow');
+            CLI::write(implode(' , ', $getTables), 'black', 'blue');
+            return CLI::newLine();
         }
 
         $table_name = array_shift($params);
         // table name correct.
-        if(in_array($table_name, $getTables)){
-            CLI::write("Data of table $table_name : ", 'black', 'yellow');
+        if (in_array($table_name, $getTables, true)) {
+            CLI::write("Data of table {$table_name} : ", 'black', 'yellow');
             $thead = $db->getFieldNames($table_name);
             $tbody = $db->table($table_name)->get()->getResultArray();
             return CLI::table($tbody, $thead);
-        }else{          
-        $table_key = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'],$getTables);
-            $thead = $db->getFieldNames($getTables[$table_key]);
-            $tbody = $db->table($getTables[$table_key])->get()->getResultArray();
-            return CLI::table($tbody, $thead);
         }
+                 
+        $table_key = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
+        CLI::write("Data of table $getTables[$table_key] : ", 'black', 'yellow');
+        $thead     = $db->getFieldNames($getTables[$table_key]);
+        $tbody     = $db->table($getTables[$table_key])->get()->getResultArray();
+
+        return CLI::table($tbody, $thead);
+        
             
     }
 }
