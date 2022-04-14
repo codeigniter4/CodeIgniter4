@@ -72,7 +72,6 @@ class ShowTableInfo extends BaseCommand
      */
     public function run(array $params)
     {
-        
         // Connect to database
         $db        = Database::connect();
         $getTables = $db->listTables();
@@ -99,7 +98,6 @@ class ShowTableInfo extends BaseCommand
             return CLI::table($tbody, $thead);
         }
          
-        
         $tableKey = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
         CLI::write("Data of table {$getTables[$tableKey]} : ", 'black', 'yellow');
         $thead = $db->getFieldNames($getTables[$tableKey]);
