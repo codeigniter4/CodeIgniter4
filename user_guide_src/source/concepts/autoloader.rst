@@ -2,6 +2,10 @@
 Autoloading Files
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Every application consists of a large number of classes in many different locations.
 The framework provides classes for core functionality. Your application will have a
 number of libraries, models, and other entities to make it work. You might have third-party
@@ -13,8 +17,6 @@ CodeIgniter provides a very flexible autoloader that can be used with very littl
 It can locate individual namespaced classes that adhere to
 `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ autoloading
 directory structures.
-
-For performance improvement, the core CodeIgniter components have been added to the classmap.
 
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
@@ -41,9 +43,8 @@ those classes can be found in:
 
 .. literalinclude:: autoloader/001.php
 
-The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
-to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
-not ``My\App``. The value is the location to the directory the classes can be found in. They should
+The key of each row is the namespace itself. This does not need a trailing back slash.
+The value is the location to the directory the classes can be found in. They should
 have a trailing slash.
 
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
@@ -75,7 +76,7 @@ Composer Support
 
 Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
 ``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify
-the value defined in ``Config\Constants.php``.
+the value defined in **app/Config/Constants.php**.
 
 .. note:: If the same namespace is defined in both CodeIgniter and Composer, CodeIgniter's autoloader will be
     the first one to get a chance to locate the file.
