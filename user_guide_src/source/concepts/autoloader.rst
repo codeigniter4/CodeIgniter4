@@ -43,9 +43,8 @@ those classes can be found in:
 
 .. literalinclude:: autoloader/001.php
 
-The key of each row is the namespace itself. This does not need a trailing slash. If you use double-quotes
-to define the array, be sure to escape the backward slash. That means that it would be ``My\\App``,
-not ``My\App``. The value is the location to the directory the classes can be found in. They should
+The key of each row is the namespace itself. This does not need a trailing slash.
+The value is the location to the directory the classes can be found in. They should
 have a trailing slash.
 
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
