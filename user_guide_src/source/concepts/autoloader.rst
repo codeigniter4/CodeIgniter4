@@ -18,8 +18,6 @@ It can locate individual namespaced classes that adhere to
 `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ autoloading
 directory structures.
 
-For performance improvement, the core CodeIgniter components have been added to the classmap.
-
 The autoloader works great by itself, but can also work with other autoloaders, like
 `Composer <https://getcomposer.org>`_, or even your own custom autoloaders, if needed.
 Because they're all registered through
