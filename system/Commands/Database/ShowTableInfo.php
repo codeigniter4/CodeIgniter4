@@ -47,7 +47,7 @@ class ShowTableInfo extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'db:table <table_name>';
+    protected $usage = 'db:table <table_name> [options]';
 
     /**
      * The Command's arguments
@@ -84,7 +84,7 @@ class ShowTableInfo extends BaseCommand
         if (CLI::getOption('show')) {
             CLI::write('list the names of all database tables : ', 'black', 'yellow');
             CLI::write(implode(' , ', $getTables), 'black', 'blue');
-            
+
             return CLI::newLine();
         }
 
@@ -97,7 +97,7 @@ class ShowTableInfo extends BaseCommand
 
             return CLI::table($tbody, $thead);
         }
-         
+
         $tableKey = CLI::promptByKey(['These are your tables List :', 'Which table do you want see info?'], $getTables);
         CLI::write("Data of table {$getTables[$tableKey]} : ", 'black', 'yellow');
         $thead = $db->getFieldNames($getTables[$tableKey]);
