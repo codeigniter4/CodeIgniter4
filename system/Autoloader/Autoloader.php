@@ -328,7 +328,7 @@ class Autoloader
             $newPaths[rtrim($key, '\\ ')] = $value;
         }
 
-        $this->prefixes = array_merge($this->prefixes, $newPaths);
+        $this->addNamespace($newPaths);
     }
 
     private function loadComposerClassmap(ClassLoader $composer): void
