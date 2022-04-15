@@ -2,6 +2,10 @@
 Autoloading Files
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Every application consists of a large number of classes in many different locations.
 The framework provides classes for core functionality. Your application will have a
 number of libraries, models, and other entities to make it work. You might have third-party
