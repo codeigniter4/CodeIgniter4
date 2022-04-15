@@ -146,7 +146,7 @@ For security reasons be sure to declare any new utility methods as ``protected``
 
 .. literalinclude:: controllers/008.php
 
-Then save the file to your **/app/Controllers/** directory.
+Then save the file to your **app/Controllers/** directory.
 
 .. important:: The file must be called **Helloworld.php**, with a capital ``H``.
 
