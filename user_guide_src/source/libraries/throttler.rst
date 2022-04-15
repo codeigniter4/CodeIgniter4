@@ -64,7 +64,7 @@ Applying the Filter
 
 We don't necessarily need to throttle every page on the site. For many web applications, this makes the most sense
 to apply only to POST requests, though API's might want to limit every request made by a user. In order to apply
-this to incoming requests, you need to edit **/app/Config/Filters.php** and first add an alias to the
+this to incoming requests, you need to edit **app/Config/Filters.php** and first add an alias to the
 filter:
 
 .. literalinclude:: throttler/003.php

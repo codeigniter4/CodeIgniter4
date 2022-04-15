@@ -28,7 +28,7 @@ beginning of the framework's execution.
 Configuration
 =============
 
-Initial configuration is done in **/app/Config/Autoload.php**. This file contains two primary
+Initial configuration is done in **app/Config/Autoload.php**. This file contains two primary
 arrays: one for the classmap, and one for PSR-4 compatible namespaces.
 
 Namespaces
@@ -48,7 +48,7 @@ have a trailing slash.
 
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
-You may change this namespace by editing the **/app/Config/Constants.php** file and setting the
+You may change this namespace by editing the **app/Config/Constants.php** file and setting the
 new namespace value under the ``APP_NAMESPACE`` setting:
 
 .. literalinclude:: autoloader/002.php

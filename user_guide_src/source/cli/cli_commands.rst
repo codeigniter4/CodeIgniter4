@@ -88,7 +88,7 @@ File Location
 =============
 
 Commands must be stored within a directory named **Commands**. However, that directory can be located anywhere
-that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **/app/Commands**, or
+that the :doc:`Autoloader </concepts/autoloader>` can locate it. This could be in **app/Commands**, or
 a directory that you keep commands in to use in all of your project development, like **Acme/Commands**.
 
 .. note:: When the commands are executed, the full CodeIgniter CLI environment has been loaded, making it
@@ -98,7 +98,7 @@ An Example Command
 ==================
 
 Let's step through an example command whose only function is to report basic information about the application
-itself, for demonstration purposes. Start by creating a new file at **/app/Commands/AppInfo.php**. It
+itself, for demonstration purposes. Start by creating a new file at **app/Commands/AppInfo.php**. It
 should contain the following code:
 
 .. literalinclude:: cli_commands/002.php
