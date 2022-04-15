@@ -269,6 +269,22 @@ manage one application, which you will build in your <strong>app</strong>
 directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When you installed CodeIgniter v4.1.9 or before, and if there are <code class="docutils literal notranslate"><span class="pre">App\\</span></code> and <code class="docutils literal notranslate"><span class="pre">Config\\</span></code> namespaces in your <code class="docutils literal notranslate"><span class="pre">/composer.json</span></code>’s <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code> like the following, you need to remove these lines, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">dump-autolod</span></code>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
+    ...
+    &quot;autoload&quot;: {
+        &quot;psr-4&quot;: {
+            &quot;App\\&quot;: &quot;app&quot;,             &lt;-- Remove this line
+            &quot;Config\\&quot;: &quot;app/Config&quot;    &lt;-- Remove this line
+        }
+    },
+    ...
+}
+</pre></div>
+</div>
+</div>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#renaming-or-relocating-the-application-directory" id="id1">Renaming or Relocating the Application Directory</a></p></li>
@@ -276,7 +292,7 @@ rename or relocate your application directory.</p>
 </ul>
 </div>
 <section id="renaming-or-relocating-the-application-directory">
-<h2><a class="toc-backref" href="#id1">Renaming or Relocating the Application Directory</a><a class="headerlink" href="#renaming-or-relocating-the-application-directory" title="Permalink to this headline"></a></h2>
+<span id="renaming-app-directory"></span><h2><a class="toc-backref" href="#id1">Renaming or Relocating the Application Directory</a><a class="headerlink" href="#renaming-or-relocating-the-application-directory" title="Permalink to this headline"></a></h2>
 <p>If you would like to rename your application directory or even move
 it to a different location on your server, other than your project root, open
 your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</em> in the
@@ -287,6 +303,8 @@ your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</
 
 <span class="k">class</span> <span class="nc">Paths</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="nv">$appDirectory</span> <span class="o">=</span> <span class="s1">&#39;/path/to/your/app&#39;</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
@@ -322,36 +340,68 @@ several different applications, simply put all of the directories located
 inside your application directory into their own (sub)-directory.</p>
 <p>For example, let’s say you want to create two applications, named <strong>foo</strong>
 and <strong>bar</strong>. You could structure your application project directories like this:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/foo
-    /app
-    /public
-    /tests
-    /writable
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>foo/
+    app/
+    public/
+    tests/
+    writable/
+    env
+    phpunit.xml.dist
     spark
-/bar
-    /app
-    /public
-    /tests
-    /writable
+bar/
+    app/
+    public/
+    tests/
+    writable/
+    env
+    phpunit.xml.dist
     spark
-/codeigniter
-    /system
+vendor/
+    autoload.php
+    codeigniter4/framework/
+composer.json
+composer.lock
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you install CodeIgniter from the Zip file, the directory structure would be following:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>foo/
+bar/
+codeigniter4/system/
+</pre></div>
+</div>
+</div>
 <p>This would have two apps, <strong>foo</strong> and <strong>bar</strong>, both having standard application directories
-and a <strong>public</strong> folder, and sharing a common <strong>codeigniter</strong> framework.</p>
-<p>The <strong>index.php</strong> inside each application would refer to its own configuration,
-<code class="docutils literal notranslate"><span class="pre">../app/Config/Paths.php</span></code>, and the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> variable in <strong>app/Config/Paths.php</strong> inside each
-of those would be set to refer to the shared common <strong>system</strong> folder.</p>
-<p>If either of the applications had a command-line component, then you would also
-modify <strong>spark</strong> inside each application’s project folder, as directed above.</p>
-<p>When you use Composer autoloader, fix the <code class="docutils literal notranslate"><span class="pre">COMPOSER_PATH</span></code> constant in <strong>app/Config/Constants.php</strong> inside each
+and a <strong>public</strong> folder, and sharing a common <strong>codeigniter4/framework</strong>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> variable in <strong>app/Config/Paths.php</strong> inside each
+of those would be set to refer to the shared common <strong>codeigniter4/framework</strong> folder:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Paths</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="nv">$systemDirectory</span> <span class="o">=</span> <span class="no">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/../../../vendor/codeigniter4/framework/system&#39;</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you install CodeIgniter from the Zip file, the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> would be <code class="docutils literal notranslate"><span class="pre">__DIR__</span> <span class="pre">.</span> <span class="pre">'/../../../codeigniter4/system'</span></code>.</p>
+</div>
+<p>And modify the <code class="docutils literal notranslate"><span class="pre">COMPOSER_PATH</span></code> constant in <strong>app/Config/Constants.php</strong> inside each
 of those:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">)</span> <span class="o">||</span> <span class="nb">define</span><span class="p">(</span><span class="s1">&#39;COMPOSER_PATH&#39;</span><span class="p">,</span> <span class="nx">ROOTPATH</span> <span class="o">.</span> <span class="s1">&#39;../vendor/autoload.php&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>Only when you change the Application Directory, see <a class="reference internal" href="#renaming-app-directory"><span class="std std-ref">Renaming or Relocating the Application Directory</span></a> and modify the paths in the <strong>index.php</strong> and <strong>spark</strong>.</p>
 </section>
 </section>
 
