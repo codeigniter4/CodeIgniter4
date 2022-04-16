@@ -18,7 +18,7 @@ If running under OS X or Linux, you can create a symbolic link to make running t
 
 	> ln -s ./vendor/bin/phpunit ./phpunit
 
-You also need to install [XDebug](https://xdebug.org/index.php) in order
+You also need to install [XDebug](https://xdebug.org/docs/install) in order
 for code coverage to be calculated successfully.
 
 ## Setting Up
