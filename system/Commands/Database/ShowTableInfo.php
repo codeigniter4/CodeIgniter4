@@ -55,7 +55,7 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $arguments = [
-        'table_name' => 'The table name for show info',
+        'table_name' => 'The table name for show information.',
     ];
 
     /**
