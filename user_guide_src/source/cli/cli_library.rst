@@ -15,7 +15,7 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
     :depth: 2
 
 Initializing the Class
-======================
+**********************
 
 You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
 need to ensure your controller can locate it via a ``use`` statement above your class:
@@ -25,7 +25,7 @@ need to ensure your controller can locate it via a ``use`` statement above your 
 The class is automatically initialized when the file is loaded the first time.
 
 Getting Input from the User
-===========================
+***************************
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
@@ -66,7 +66,7 @@ Named keys are also possible:
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
 Providing Feedback
-==================
+******************
 
 **write()**
 
