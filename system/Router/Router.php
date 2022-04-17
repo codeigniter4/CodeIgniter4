@@ -25,7 +25,7 @@ class Router implements RouterInterface
     /**
      * A RouteCollection instance.
      *
-     * @var RouteCollectionInterface
+     * @var RouteCollection
      */
     protected $collection;
 

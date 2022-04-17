@@ -11,7 +11,7 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
-use CodeIgniter\View\RendererInterface;
+use CodeIgniter\View\View;
 use Config\Services;
 
 /**
@@ -62,7 +62,7 @@ class Views extends BaseCollector
     /**
      * Instance of the Renderer service
      *
-     * @var RendererInterface
+     * @var View
      */
     protected $viewer;
 
