@@ -533,7 +533,7 @@ class CLI
             $string .= "\033[4m";
         }
 
-        return $string . ($text . "\033[0m");
+        return $string . $text . "\033[0m";
     }
 
     /**
