@@ -485,7 +485,6 @@ class CLI
             throw CLIException::forInvalidColor('background', $background);
         }
 
-        // Reset text
         $newText = '';
 
         // Detect if color method was already in use with this text
