@@ -128,6 +128,8 @@ print "Done" on the same line:
 
 .. literalinclude:: cli_library/012.php
 
+.. _cli-library-color:
+
 color()
 =======
 
