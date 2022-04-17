@@ -20,7 +20,7 @@ use CodeIgniter\Router\Exceptions\RouterException;
 /**
  * Request router.
  */
-class Router implements RouterInterface
+class Router
 {
     /**
      * A RouteCollection instance.
@@ -118,7 +118,7 @@ class Router implements RouterInterface
     /**
      * Stores a reference to the RouteCollection object.
      */
-    public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
+    public function __construct(RouteCollection $routes, ?Request $request = null)
     {
         $this->collection = $routes;
 

@@ -44,7 +44,6 @@ use CodeIgniter\Language\Language;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Security\Security;
 use CodeIgniter\Session\Handlers\Database\MySQLiHandler;
@@ -597,7 +596,7 @@ class Services extends BaseService
      *
      * @return Router
      */
-    public static function router(?RouteCollectionInterface $routes = null, ?Request $request = null, bool $getShared = true)
+    public static function router(?RouteCollection $routes = null, ?Request $request = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('router', $routes, $request);
