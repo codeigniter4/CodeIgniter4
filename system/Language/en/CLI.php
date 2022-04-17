@@ -30,7 +30,7 @@ return [
         ],
         'commandType'      => 'Command type',
         'databaseGroup'    => 'Database group',
-        'fileCreate'       => 'File created: {0}',
+        'fileCreate'       => 'File created: {0}, Path: {1}',
         'fileError'        => 'Error while creating file: {0}',
         'fileExist'        => 'File exists: {0}',
         'fileOverwrite'    => 'File overwritten: {0}',

@@ -157,7 +157,7 @@ trait GeneratorTrait
             return;
         }
 
-        CLI::write(lang('CLI.generator.fileCreate', [clean_path($path)]), 'green');
+        CLI::write(lang('CLI.generator.fileCreate', [clean_path($path), $path]), 'green');
         CLI::newLine();
     }
 
