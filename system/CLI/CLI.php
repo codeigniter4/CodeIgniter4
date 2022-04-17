@@ -469,11 +469,7 @@ class CLI
      */
     public static function color(string $text, string $foreground, ?string $background = null, ?string $format = null): string
     {
-        if (! static::$isColored) {
-            return $text;
-        }
-
-        if ($text === '') {
+        if (! static::$isColored || $text === '') {
             return $text;
         }
 
