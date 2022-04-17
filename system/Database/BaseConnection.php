@@ -914,7 +914,7 @@ abstract class BaseConnection implements ConnectionInterface
 
         $this->pretend(false);
 
-        if ($sql instanceof QueryInterface) {
+        if ($sql instanceof Query) {
             $sql = $sql->getOriginalQuery();
         }
 
