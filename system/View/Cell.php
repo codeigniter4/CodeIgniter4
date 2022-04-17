@@ -75,7 +75,7 @@ class Cell
             ? $cacheName
             : str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
 
-        if (! empty($this->cache) && $output = $this->cache->get($cacheName)) {
+        if ($output = $this->cache->get($cacheName)) {
             return $output;
         }
 
@@ -129,7 +129,7 @@ class Cell
             $output = $instance->{$method}(...array_values($fireArgs));
         }
         // Can we cache it?
-        if (! empty($this->cache) && $ttl !== 0) {
+        if ($ttl !== 0) {
             $this->cache->save($cacheName, $output, $ttl);
         }
 
