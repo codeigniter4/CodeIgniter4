@@ -64,7 +64,7 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '--show' => 'Retrieves list the names of all database tables.',
+        '--show' => 'List the names of all database tables.',
     ];
 
     /**
