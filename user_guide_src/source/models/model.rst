@@ -80,13 +80,15 @@ what table to use and how we can find the required records:
 
 .. literalinclude:: model/005.php
 
-**$table**
+$table
+------
 
 Specifies the database table that this model primarily works with. This only applies to the
 built-in CRUD methods. You are not restricted to using only this table in your own
 queries.
 
-**$primaryKey**
+$primaryKey
+-----------
 
 This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
@@ -95,7 +97,8 @@ is used with methods like ``find()`` to know what column to match the specified 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
 
-**$useAutoIncrement**
+$useAutoIncrement
+-----------------
 
 Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
 then you are responsible for providing primary key value for every record in the table. This
@@ -106,7 +109,8 @@ default value is ``true``.
     key in the database to ``unique``. This way you will make sure that all of Model's features
     will still work the same as before.
 
-**$returnType**
+$returnType
+-----------
 
 The Model's CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
@@ -114,7 +118,8 @@ the type of data that is returned. Valid values are '**array**' (the default), '
 qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
 method.
 
-**$useSoftDeletes**
+$useSoftDeletes
+---------------
 
 If true, then any ``delete()`` method calls will set ``deleted_at`` in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
@@ -126,66 +131,81 @@ This requires either a DATETIME or INTEGER field in the database as per the mode
 ``$dateFormat`` setting. The default field name is ``deleted_at`` however this name can be
 configured to any name of your choice by using ``$deletedField`` property.
 
-**$allowedFields**
+$allowedFields
+--------------
 
 This array should be updated with the field names that can be set during ``save()``, ``insert()``, or
 ``update()`` methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
-**$useTimestamps**
+$useTimestamps
+--------------
 
 This boolean value determines whether the current date is automatically added to all inserts
 and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
 requires that the table have columns named **created_at** and **updated_at** in the appropriate
 data type.
 
-**$createdField**
+$createdField
+-------------
 
 Specifies which database field to use for data record create timestamp.
 Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled).
 
-**$updatedField**
+$updatedField
+-------------
 
 Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
-**$dateFormat**
+$dateFormat
+-----------
 
 This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
 valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
-**useTimestamps** with an invalid or missing dateFormat will cause an exception.
+useTimestamps with an invalid or missing dateFormat will cause an exception.
 
-**$validationRules**
+$validationRules
+----------------
 
 Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.
 
-**$validationMessages**
+$validationMessages
+-------------------
 
 Contains an array of custom error messages that should be used during validation, as
 described in :ref:`validation-custom-errors`. Described in more detail below.
 
-**$skipValidation**
+$skipValidation
+---------------
 
 Whether validation should be skipped during all **inserts** and **updates**. The default
 value is false, meaning that data will always attempt to be validated. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
 
-**$beforeInsert**
-**$afterInsert**
-**$beforeUpdate**
-**$afterUpdate**
-**$afterFind**
-**$afterDelete**
+$beforeInsert
+-------------
+$afterInsert
+------------
+$beforeUpdate
+-------------
+$afterUpdate
+------------
+$afterFind
+----------
+$afterDelete
+------------
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
-**$allowCallbacks**
+$allowCallbacks
+---------------
 
 Whether the callbacks defined above should be used.
 
@@ -198,7 +218,8 @@ Finding Data
 Several functions are provided for doing basic CRUD work on your tables, including ``find()``,
 ``insert()``, ``update()``, ``delete()`` and more.
 
-**find()**
+find()
+------
 
 Returns a single row where the primary key matches the value passed in as the first parameter:
 
@@ -214,7 +235,8 @@ of just one:
 If no parameters are passed in, will return all rows in that model's table, effectively acting
 like ``findAll()``, though less explicit.
 
-**findColumn()**
+findColumn()
+------------
 
 Returns null or an indexed array of column values:
 
@@ -222,7 +244,8 @@ Returns null or an indexed array of column values:
 
 ``$column_name`` should be a name of single column else you will get the DataException.
 
-**findAll()**
+findAll()
+---------
 
 Returns all results:
 
@@ -237,20 +260,23 @@ parameters, respectively:
 
 .. literalinclude:: model/011.php
 
-**first()**
+first()
+-------
 
 Returns the first row in the result set. This is best used in combination with the query builder.
 
 .. literalinclude:: model/012.php
 
-**withDeleted()**
+withDeleted()
+-------------
 
 If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where 'deleted_at IS NOT NULL'.
 To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 
 .. literalinclude:: model/013.php
 
-**onlyDeleted()**
+onlyDeleted()
+-------------
 
 Whereas ``withDeleted()`` will return both deleted and not-deleted rows, this method modifies
 the next **find*()** methods to return only soft deleted rows:
@@ -260,7 +286,8 @@ the next **find*()** methods to return only soft deleted rows:
 Saving Data
 ===========
 
-**insert()**
+insert()
+--------
 
 An associative array of data is passed into this method as the only parameter to create a new
 row of data in the database. The array's keys must match the name of the columns in a ``$table``, while
@@ -268,7 +295,8 @@ the array's values are the values to save for that key:
 
 .. literalinclude:: model/015.php
 
-**update()**
+update()
+--------
 
 Updates an existing record in the database. The first parameter is the ``$primaryKey`` of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
@@ -285,7 +313,8 @@ update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
 
-**save()**
+save()
+------
 
 This is a wrapper around the ``insert()`` and ``update()`` methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the **primary key** value:
@@ -318,7 +347,8 @@ model's ``save()`` method to inspect the class, grab any public and private prop
 Deleting Data
 =============
 
-**delete()**
+delete()
+--------
 
 Takes a primary key value as the first parameter and deletes the matching record from the model's table:
 
@@ -336,7 +366,8 @@ previously:
 
 .. literalinclude:: model/025.php
 
-**purgeDeleted()**
+purgeDeleted()
+--------------
 
 Cleans out the database table by permanently removing all rows that have 'deleted_at IS NOT NULL'.
 
@@ -510,13 +541,15 @@ provides methods that allow you to do just that.
 .. note:: These methods only change the return type for the next **find*()** method call. After that,
     it is reset to its default value.
 
-**asArray()**
+asArray()
+---------
 
 Returns data from the next **find*()** method as associative arrays:
 
 .. literalinclude:: model/047.php
 
-**asObject()**
+asObject()
+----------
 
 Returns data from the next **find*()** method as standard objects or custom class intances:
 
