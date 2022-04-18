@@ -69,9 +69,8 @@ class ShowTableInfo extends BaseCommand
 
     public function run(array $params)
     {
-        // Connect to database
-        $db        = Database::connect();
-        $getTables = $db->listTables();
+        $db     = Database::connect();
+        $tables = $db->listTables();
         // The database does not have a table
         if ($getTables === []) {
             return CLI::error('Database has no tables!', 'light_gray', 'red');
