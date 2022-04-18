@@ -67,9 +67,6 @@ class ShowTableInfo extends BaseCommand
         '--show' => 'List the names of all database tables.',
     ];
 
-    /**
-     * get table info
-     */
     public function run(array $params)
     {
         // Connect to database
