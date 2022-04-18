@@ -1510,6 +1510,13 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
+     * Returns platform-specific SQL to disable foreign key checks.
+     *
+     * @return string
+     */
+    abstract protected function _disableForeignKeyChecks();
+
+    /**
      * Enables foreign key checks temporarily.
      */
     public function enableForeignKeyChecks()
@@ -1518,6 +1525,13 @@ abstract class BaseConnection implements ConnectionInterface
 
         return $this->query($sql);
     }
+
+    /**
+     * Returns platform-specific SQL to enable foreign key checks.
+     *
+     * @return string
+     */
+    abstract protected function _enableForeignKeyChecks();
 
     /**
      * Allows the engine to be set into a mode where queries are not
