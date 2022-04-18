@@ -342,9 +342,9 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @throws ReflectionException
      *
-     * @return Request
+     * @return IncomingRequest
      */
-    protected function populateGlobals(string $method, Request $request, ?array $params = null)
+    protected function populateGlobals(string $method, IncomingRequest $request, ?array $params = null)
     {
         // $params should set the query vars if present,
         // otherwise set it from the URL.
@@ -371,8 +371,10 @@ class FeatureTestCase extends CIUnitTestCase
      *
      * @param array|null $params The parameters to be formatted and put in the body. If this is empty, it will get the
      *                           what has been loaded into the request global of the request class.
+     *
+     * @return IncomingRequest
      */
-    protected function setRequestBody(Request $request, ?array $params = null): Request
+    protected function setRequestBody(IncomingRequest $request, ?array $params = null): Request
     {
         if (isset($this->requestBody) && $this->requestBody !== '') {
             $request->setBody($this->requestBody);
