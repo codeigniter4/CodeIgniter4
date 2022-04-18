@@ -156,8 +156,8 @@ class Model extends BaseModel
 
     /**
      * Fetches the row of database from $this->table with a primary key
-     * matching $id. This methods works only with dbCalls
-     * This methods works only with dbCalls
+     * matching $id.
+     * This method works only with dbCalls
      *
      * @param bool                  $singleton Single or multiple results
      * @param array|int|string|null $id        One primary key or an array of primary keys
@@ -189,7 +189,7 @@ class Model extends BaseModel
 
     /**
      * Fetches the column of database from $this->table
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param string $columnName Column Name
      *
@@ -203,7 +203,7 @@ class Model extends BaseModel
     /**
      * Works with the current Query Builder instance to return
      * all results, while optionally limiting them.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param int $limit  Limit
      * @param int $offset Offset
@@ -226,7 +226,7 @@ class Model extends BaseModel
     /**
      * Returns the first row of the result set. Will take any previous
      * Query Builder calls into account when determining the result set.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @return array|object|null
      */
@@ -251,7 +251,7 @@ class Model extends BaseModel
 
     /**
      * Inserts data into the current table.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array $data Data
      *
@@ -314,7 +314,7 @@ class Model extends BaseModel
 
     /**
      * Compiles batch insert strings and runs the queries, validating each row prior.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array|null $set       An associative array of insert values
      * @param bool|null  $escape    Whether to escape values
@@ -340,7 +340,7 @@ class Model extends BaseModel
 
     /**
      * Updates a single record in $this->table.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array|int|string|null $id
      * @param array|null            $data
@@ -366,7 +366,7 @@ class Model extends BaseModel
 
     /**
      * Compiles an update string and runs the query
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
@@ -385,7 +385,7 @@ class Model extends BaseModel
     /**
      * Deletes a single record from $this->table where $id matches
      * the table's primaryKey
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
@@ -430,7 +430,7 @@ class Model extends BaseModel
     /**
      * Permanently deletes all rows that have been marked as deleted
      * through soft deletes (deleted = 1)
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @return bool|mixed
      */
@@ -444,7 +444,7 @@ class Model extends BaseModel
     /**
      * Works with the find* methods to return only the rows that
      * have been deleted.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      */
     protected function doOnlyDeleted()
     {
@@ -453,7 +453,7 @@ class Model extends BaseModel
 
     /**
      * Compiles a replace into string and runs the query
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
@@ -469,7 +469,7 @@ class Model extends BaseModel
      * Grabs the last error(s) that occurred from the Database connection.
      * The return array should be in the following format:
      *  ['source' => 'message']
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @return array<string,string>
      */
@@ -523,7 +523,7 @@ class Model extends BaseModel
      * Loops over records in batches, allowing you to operate on them.
      * Works with $this->builder to get the Compiled select to
      * determine the rows to operate on.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @throws DataException
      */
