@@ -7,7 +7,7 @@ Using CodeIgniter's Model
     :depth: 2
 
 Models
-======
+******
 
 The CodeIgniter's Model provides convenience features and additional functionality
 that people commonly use to make working with a **single table** in your database more convenient.
@@ -17,7 +17,7 @@ methods for much of the standard ways you would need to interact with a database
 updating records, deleting records, and more.
 
 Accessing Models
-================
+****************
 
 Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
 location within the directory, like ``namespace App\Models``.
@@ -27,7 +27,7 @@ You can access models within your classes by creating a new instance or using th
 .. literalinclude:: model/001.php
 
 CodeIgniter's Model
-===================
+*******************
 
 CodeIgniter does provide a model class that provides a few nice features, including:
 
@@ -41,7 +41,7 @@ This class provides a solid base from which to build your own models, allowing y
 rapidly build out your application's model layer.
 
 Creating Your Model
-===================
+*******************
 
 To take advantage of CodeIgniter's model, you would simply create a new model class
 that extends ``CodeIgniter\Model``:
@@ -58,7 +58,7 @@ extra steps without repeating the constructor parameters, for example extending 
 .. literalinclude:: model/003.php
 
 Connecting to the Database
---------------------------
+==========================
 
 When the class is first instantiated, if no database connection instance is passed to the constructor,
 it will automatically connect to the default database group, as set in the configuration. You can
@@ -72,7 +72,7 @@ You would replace "group_name" with the name of a defined database group from th
 configuration file.
 
 Configuring Your Model
-----------------------
+======================
 
 The model class has a few configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
@@ -190,10 +190,10 @@ time specified in the property name.
 Whether the callbacks defined above should be used.
 
 Working With Data
-=================
+*****************
 
 Finding Data
-------------
+============
 
 Several functions are provided for doing basic CRUD work on your tables, including ``find()``,
 ``insert()``, ``update()``, ``delete()`` and more.
@@ -258,7 +258,7 @@ the next **find*()** methods to return only soft deleted rows:
 .. literalinclude:: model/014.php
 
 Saving Data
------------
+===========
 
 **insert()**
 
@@ -316,7 +316,7 @@ model's ``save()`` method to inspect the class, grab any public and private prop
     that provides several handy features that make developing Entities simpler.
 
 Deleting Data
--------------
+=============
 
 **delete()**
 
@@ -343,7 +343,7 @@ Cleans out the database table by permanently removing all rows that have 'delete
 .. literalinclude:: model/026.php
 
 Validating Data
----------------
+===============
 
 For many people, validating data in the model is the preferred way to ensure the data is kept to a single
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
@@ -416,7 +416,7 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 .. literalinclude:: model/034.php
 
 Retrieving Validation Rules
----------------------------
+===========================
 
 You can retrieve a model's validation rules by accessing its ``validationRules``
 property:
@@ -435,7 +435,7 @@ value an array of fieldnames of interest:
 .. literalinclude:: model/037.php
 
 Validation Placeholders
------------------------
+=======================
 
 The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
@@ -459,7 +459,7 @@ This can also be used to create more dynamic rules at runtime, as long as you ta
 keys passed in don't conflict with your form data.
 
 Protecting Fields
------------------
+=================
 
 To help protect against Mass Assignment Attacks, the Model class **requires** that you list all of the field names
 that can be changed during inserts and updates in the ``$allowedFields`` class property. Any data provided
@@ -474,7 +474,7 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 .. literalinclude:: model/042.php
 
 Working With Query Builder
---------------------------
+==========================
 
 You can get access to a shared instance of the Query Builder for that model's database connection any time you
 need it:
@@ -501,7 +501,7 @@ very elegant use:
     .. literalinclude:: model/046.php
 
 Runtime Return Type Changes
-----------------------------
+===========================
 
 You can specify the format that data should be returned as when using the **find*()** methods as the class property,
 ``$returnType``. There may be times that you would like the data back in a different format, though. The Model
@@ -523,7 +523,7 @@ Returns data from the next **find*()** method as standard objects or custom clas
 .. literalinclude:: model/048.php
 
 Processing Large Amounts of Data
---------------------------------
+================================
 
 Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
 To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
@@ -535,7 +535,7 @@ This is best used during cronjobs, data exports, or other large tasks.
 .. literalinclude:: model/049.php
 
 Model Events
-============
+************
 
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
@@ -543,7 +543,7 @@ points in the model's execution can be affected, each through a class property: 
 ``$beforeUpdate``, ``$afterUpdate``, ``$afterFind``, and ``$afterDelete``.
 
 Defining Callbacks
-------------------
+==================
 
 You specify the callbacks by first creating a new class method in your model to use. This class will always
 receive a ``$data`` array as its only parameter. The exact contents of the ``$data`` array will vary between events, but
@@ -555,7 +555,7 @@ must return the original $data array so other callbacks have the full informatio
 .. literalinclude:: model/050.php
 
 Specifying Callbacks To Run
----------------------------
+===========================
 
 You specify when to run the callbacks by adding the method name to the appropriate class property (``$beforeInsert``, ``$afterUpdate``,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
@@ -572,7 +572,7 @@ You may also change this setting temporarily for a single model call sing the ``
 .. literalinclude:: model/053.php
 
 Event Parameters
-----------------
+================
 
 Since the exact data passed to each callback varies a bit, here are the details on what is in the ``$data`` parameter
 passed to each event:
@@ -607,7 +607,7 @@ afterDelete       **id** = primary key of row being deleted.
 ================ =========================================================================================================
 
 Modifying Find* Data
---------------------
+====================
 
 The ``beforeFind`` and ``afterFind`` methods can both return a modified set of data to override the normal response
 from the model. For ``afterFind`` any changes made to ``data`` in the return array will automatically be passed back
@@ -617,7 +617,7 @@ boolean, ``returnData``:
 .. literalinclude:: model/054.php
 
 Manual Model Creation
-=====================
+*********************
 
 You do not need to extend any special class to create a model for your application. All you need is to get an
 instance of the database connection and you're good to go. This allows you to bypass the features CodeIgniter's
