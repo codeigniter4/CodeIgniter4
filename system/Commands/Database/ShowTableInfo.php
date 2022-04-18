@@ -40,7 +40,7 @@ class ShowTableInfo extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Retrieves the selected table information.';
+    protected $description = 'Retrieves information on the selected table.';
 
     /**
      * the Command's usage
