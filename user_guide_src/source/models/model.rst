@@ -7,7 +7,7 @@ Using CodeIgniter's Model
     :depth: 2
 
 Models
-======
+******
 
 The CodeIgniter's Model provides convenience features and additional functionality
 that people commonly use to make working with a **single table** in your database more convenient.
@@ -17,7 +17,7 @@ methods for much of the standard ways you would need to interact with a database
 updating records, deleting records, and more.
 
 Accessing Models
-================
+****************
 
 Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
 location within the directory, like ``namespace App\Models``.
@@ -27,7 +27,7 @@ You can access models within your classes by creating a new instance or using th
 .. literalinclude:: model/001.php
 
 CodeIgniter's Model
-===================
+*******************
 
 CodeIgniter does provide a model class that provides a few nice features, including:
 
@@ -41,7 +41,7 @@ This class provides a solid base from which to build your own models, allowing y
 rapidly build out your application's model layer.
 
 Creating Your Model
-===================
+*******************
 
 To take advantage of CodeIgniter's model, you would simply create a new model class
 that extends ``CodeIgniter\Model``:
@@ -58,7 +58,7 @@ extra steps without repeating the constructor parameters, for example extending 
 .. literalinclude:: model/003.php
 
 Connecting to the Database
---------------------------
+==========================
 
 When the class is first instantiated, if no database connection instance is passed to the constructor,
 it will automatically connect to the default database group, as set in the configuration. You can
@@ -72,7 +72,7 @@ You would replace "group_name" with the name of a defined database group from th
 configuration file.
 
 Configuring Your Model
-----------------------
+======================
 
 The model class has a few configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
@@ -80,13 +80,15 @@ what table to use and how we can find the required records:
 
 .. literalinclude:: model/005.php
 
-**$table**
+$table
+------
 
 Specifies the database table that this model primarily works with. This only applies to the
 built-in CRUD methods. You are not restricted to using only this table in your own
 queries.
 
-**$primaryKey**
+$primaryKey
+-----------
 
 This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
@@ -95,7 +97,8 @@ is used with methods like ``find()`` to know what column to match the specified 
 .. note:: All Models must have a primaryKey specified to allow all of the features to work
     as expected.
 
-**$useAutoIncrement**
+$useAutoIncrement
+-----------------
 
 Specifies if the table uses an auto-increment feature for ``$primaryKey``. If set to ``false``
 then you are responsible for providing primary key value for every record in the table. This
@@ -106,7 +109,8 @@ default value is ``true``.
     key in the database to ``unique``. This way you will make sure that all of Model's features
     will still work the same as before.
 
-**$returnType**
+$returnType
+-----------
 
 The Model's CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
@@ -114,7 +118,8 @@ the type of data that is returned. Valid values are '**array**' (the default), '
 qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
 method.
 
-**$useSoftDeletes**
+$useSoftDeletes
+---------------
 
 If true, then any ``delete()`` method calls will set ``deleted_at`` in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
@@ -126,79 +131,95 @@ This requires either a DATETIME or INTEGER field in the database as per the mode
 ``$dateFormat`` setting. The default field name is ``deleted_at`` however this name can be
 configured to any name of your choice by using ``$deletedField`` property.
 
-**$allowedFields**
+$allowedFields
+--------------
 
 This array should be updated with the field names that can be set during ``save()``, ``insert()``, or
 ``update()`` methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
-**$useTimestamps**
+$useTimestamps
+--------------
 
 This boolean value determines whether the current date is automatically added to all inserts
 and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
 requires that the table have columns named **created_at** and **updated_at** in the appropriate
 data type.
 
-**$createdField**
+$createdField
+-------------
 
 Specifies which database field to use for data record create timestamp.
 Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled).
 
-**$updatedField**
+$updatedField
+-------------
 
 Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
-**$dateFormat**
+$dateFormat
+-----------
 
 This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
 valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
-**useTimestamps** with an invalid or missing dateFormat will cause an exception.
+useTimestamps with an invalid or missing dateFormat will cause an exception.
 
-**$validationRules**
+$validationRules
+----------------
 
 Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.
 
-**$validationMessages**
+$validationMessages
+-------------------
 
 Contains an array of custom error messages that should be used during validation, as
 described in :ref:`validation-custom-errors`. Described in more detail below.
 
-**$skipValidation**
+$skipValidation
+---------------
 
 Whether validation should be skipped during all **inserts** and **updates**. The default
 value is false, meaning that data will always attempt to be validated. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
 
-**$beforeInsert**
-**$afterInsert**
-**$beforeUpdate**
-**$afterUpdate**
-**$afterFind**
-**$afterDelete**
+$beforeInsert
+-------------
+$afterInsert
+------------
+$beforeUpdate
+-------------
+$afterUpdate
+------------
+$afterFind
+----------
+$afterDelete
+------------
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
-**$allowCallbacks**
+$allowCallbacks
+---------------
 
 Whether the callbacks defined above should be used.
 
 Working With Data
-=================
+*****************
 
 Finding Data
-------------
+============
 
 Several functions are provided for doing basic CRUD work on your tables, including ``find()``,
 ``insert()``, ``update()``, ``delete()`` and more.
 
-**find()**
+find()
+------
 
 Returns a single row where the primary key matches the value passed in as the first parameter:
 
@@ -214,7 +235,8 @@ of just one:
 If no parameters are passed in, will return all rows in that model's table, effectively acting
 like ``findAll()``, though less explicit.
 
-**findColumn()**
+findColumn()
+------------
 
 Returns null or an indexed array of column values:
 
@@ -222,7 +244,8 @@ Returns null or an indexed array of column values:
 
 ``$column_name`` should be a name of single column else you will get the DataException.
 
-**findAll()**
+findAll()
+---------
 
 Returns all results:
 
@@ -237,20 +260,23 @@ parameters, respectively:
 
 .. literalinclude:: model/011.php
 
-**first()**
+first()
+-------
 
 Returns the first row in the result set. This is best used in combination with the query builder.
 
 .. literalinclude:: model/012.php
 
-**withDeleted()**
+withDeleted()
+-------------
 
 If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where 'deleted_at IS NOT NULL'.
 To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 
 .. literalinclude:: model/013.php
 
-**onlyDeleted()**
+onlyDeleted()
+-------------
 
 Whereas ``withDeleted()`` will return both deleted and not-deleted rows, this method modifies
 the next **find*()** methods to return only soft deleted rows:
@@ -258,9 +284,10 @@ the next **find*()** methods to return only soft deleted rows:
 .. literalinclude:: model/014.php
 
 Saving Data
------------
+===========
 
-**insert()**
+insert()
+--------
 
 An associative array of data is passed into this method as the only parameter to create a new
 row of data in the database. The array's keys must match the name of the columns in a ``$table``, while
@@ -268,7 +295,8 @@ the array's values are the values to save for that key:
 
 .. literalinclude:: model/015.php
 
-**update()**
+update()
+--------
 
 Updates an existing record in the database. The first parameter is the ``$primaryKey`` of the record to update.
 An associative array of data is passed into this method as the second parameter. The array's keys must match the name
@@ -285,7 +313,8 @@ update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
 
-**save()**
+save()
+------
 
 This is a wrapper around the ``insert()`` and ``update()`` methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the **primary key** value:
@@ -316,9 +345,10 @@ model's ``save()`` method to inspect the class, grab any public and private prop
     that provides several handy features that make developing Entities simpler.
 
 Deleting Data
--------------
+=============
 
-**delete()**
+delete()
+--------
 
 Takes a primary key value as the first parameter and deletes the matching record from the model's table:
 
@@ -336,14 +366,15 @@ previously:
 
 .. literalinclude:: model/025.php
 
-**purgeDeleted()**
+purgeDeleted()
+--------------
 
 Cleans out the database table by permanently removing all rows that have 'deleted_at IS NOT NULL'.
 
 .. literalinclude:: model/026.php
 
 Validating Data
----------------
+===============
 
 For many people, validating data in the model is the preferred way to ensure the data is kept to a single
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
@@ -416,7 +447,7 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 .. literalinclude:: model/034.php
 
 Retrieving Validation Rules
----------------------------
+===========================
 
 You can retrieve a model's validation rules by accessing its ``validationRules``
 property:
@@ -435,7 +466,7 @@ value an array of fieldnames of interest:
 .. literalinclude:: model/037.php
 
 Validation Placeholders
------------------------
+=======================
 
 The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
@@ -459,7 +490,7 @@ This can also be used to create more dynamic rules at runtime, as long as you ta
 keys passed in don't conflict with your form data.
 
 Protecting Fields
------------------
+=================
 
 To help protect against Mass Assignment Attacks, the Model class **requires** that you list all of the field names
 that can be changed during inserts and updates in the ``$allowedFields`` class property. Any data provided
@@ -474,7 +505,7 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 .. literalinclude:: model/042.php
 
 Working With Query Builder
---------------------------
+==========================
 
 You can get access to a shared instance of the Query Builder for that model's database connection any time you
 need it:
@@ -501,7 +532,7 @@ very elegant use:
     .. literalinclude:: model/046.php
 
 Runtime Return Type Changes
-----------------------------
+===========================
 
 You can specify the format that data should be returned as when using the **find*()** methods as the class property,
 ``$returnType``. There may be times that you would like the data back in a different format, though. The Model
@@ -510,20 +541,22 @@ provides methods that allow you to do just that.
 .. note:: These methods only change the return type for the next **find*()** method call. After that,
     it is reset to its default value.
 
-**asArray()**
+asArray()
+---------
 
 Returns data from the next **find*()** method as associative arrays:
 
 .. literalinclude:: model/047.php
 
-**asObject()**
+asObject()
+----------
 
 Returns data from the next **find*()** method as standard objects or custom class intances:
 
 .. literalinclude:: model/048.php
 
 Processing Large Amounts of Data
---------------------------------
+================================
 
 Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
 To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
@@ -535,7 +568,7 @@ This is best used during cronjobs, data exports, or other large tasks.
 .. literalinclude:: model/049.php
 
 Model Events
-============
+************
 
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
@@ -543,7 +576,7 @@ points in the model's execution can be affected, each through a class property: 
 ``$beforeUpdate``, ``$afterUpdate``, ``$afterFind``, and ``$afterDelete``.
 
 Defining Callbacks
-------------------
+==================
 
 You specify the callbacks by first creating a new class method in your model to use. This class will always
 receive a ``$data`` array as its only parameter. The exact contents of the ``$data`` array will vary between events, but
@@ -555,7 +588,7 @@ must return the original $data array so other callbacks have the full informatio
 .. literalinclude:: model/050.php
 
 Specifying Callbacks To Run
----------------------------
+===========================
 
 You specify when to run the callbacks by adding the method name to the appropriate class property (``$beforeInsert``, ``$afterUpdate``,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
@@ -572,7 +605,7 @@ You may also change this setting temporarily for a single model call sing the ``
 .. literalinclude:: model/053.php
 
 Event Parameters
-----------------
+================
 
 Since the exact data passed to each callback varies a bit, here are the details on what is in the ``$data`` parameter
 passed to each event:
@@ -607,7 +640,7 @@ afterDelete       **id** = primary key of row being deleted.
 ================ =========================================================================================================
 
 Modifying Find* Data
---------------------
+====================
 
 The ``beforeFind`` and ``afterFind`` methods can both return a modified set of data to override the normal response
 from the model. For ``afterFind`` any changes made to ``data`` in the return array will automatically be passed back
@@ -617,7 +650,7 @@ boolean, ``returnData``:
 .. literalinclude:: model/054.php
 
 Manual Model Creation
-=====================
+*********************
 
 You do not need to extend any special class to create a model for your application. All you need is to get an
 instance of the database connection and you're good to go. This allows you to bypass the features CodeIgniter's
