@@ -275,8 +275,25 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#initializing-the-class" id="id1">Initializing the Class</a></p></li>
-<li><p><a class="reference internal" href="#getting-input-from-the-user" id="id2">Getting Input from the User</a></p></li>
-<li><p><a class="reference internal" href="#providing-feedback" id="id3">Providing Feedback</a></p></li>
+<li><p><a class="reference internal" href="#getting-input-from-the-user" id="id2">Getting Input from the User</a></p>
+<ul>
+<li><p><a class="reference internal" href="#promptbykey" id="id3">promptByKey()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#providing-feedback" id="id4">Providing Feedback</a></p>
+<ul>
+<li><p><a class="reference internal" href="#write" id="id5">write()</a></p></li>
+<li><p><a class="reference internal" href="#print" id="id6">print()</a></p></li>
+<li><p><a class="reference internal" href="#color" id="id7">color()</a></p></li>
+<li><p><a class="reference internal" href="#error" id="id8">error()</a></p></li>
+<li><p><a class="reference internal" href="#wrap" id="id9">wrap()</a></p></li>
+<li><p><a class="reference internal" href="#newline" id="id10">newLine()</a></p></li>
+<li><p><a class="reference internal" href="#clearscreen" id="id11">clearScreen()</a></p></li>
+<li><p><a class="reference internal" href="#showprogress" id="id12">showProgress()</a></p></li>
+<li><p><a class="reference internal" href="#table" id="id13">table()</a></p></li>
+<li><p><a class="reference internal" href="#wait" id="id14">wait()</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="initializing-the-class">
@@ -334,7 +351,8 @@ second parameter:</p>
 <span class="nv">$email</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your email?&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="s1">&#39;valid_email&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p><strong>promptByKey()</strong></p>
+<section id="promptbykey">
+<h3><a class="toc-backref" href="#id3">promptByKey()</a><a class="headerlink" href="#promptbykey" title="Permalink to this headline"></a></h3>
 <p>Predefined answers (options) for prompt sometimes need to be described or are too complex to select via their value.
 <code class="docutils literal notranslate"><span class="pre">promptByKey()</span></code> allows the user to select an option by its key instead of its value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -370,9 +388,11 @@ second parameter:</p>
 </div>
 <p>Finally, you can pass <a class="reference internal" href="../libraries/validation.html#validation"><span class="std std-ref">validation</span></a> rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.</p>
 </section>
+</section>
 <section id="providing-feedback">
-<h2><a class="toc-backref" href="#id3">Providing Feedback</a><a class="headerlink" href="#providing-feedback" title="Permalink to this headline"></a></h2>
-<p><strong>write()</strong></p>
+<h2><a class="toc-backref" href="#id4">Providing Feedback</a><a class="headerlink" href="#providing-feedback" title="Permalink to this headline"></a></h2>
+<section id="write">
+<h3><a class="toc-backref" href="#id5">write()</a><a class="headerlink" href="#write" title="Permalink to this headline"></a></h3>
 <p>Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
 or a complex table of information that wraps to the user’s terminal window. At the core of this is the <code class="docutils literal notranslate"><span class="pre">write()</span></code>
 method which takes the string to output as the first parameter:</p>
@@ -425,7 +445,9 @@ even set background colors by passing the color name in as the third parameter:<
 <li><p>light_gray</p></li>
 <li><p>magenta</p></li>
 </ul>
-<p><strong>print()</strong></p>
+</section>
+<section id="print">
+<h3><a class="toc-backref" href="#id6">print()</a><a class="headerlink" href="#print" title="Permalink to this headline"></a></h3>
 <p>Print functions identically to the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method, except that it does not force a newline either before or after.
 Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
@@ -437,7 +459,9 @@ print “Done” on the same line:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>color()</strong></p>
+</section>
+<section id="color">
+<span id="cli-library-color"></span><h3><a class="toc-backref" href="#id7">color()</a><a class="headerlink" href="#color" title="Permalink to this headline"></a></h3>
 <p>While the <code class="docutils literal notranslate"><span class="pre">write()</span></code> command will write a single line to the terminal, ending it with a EOL character, you can
 use the <code class="docutils literal notranslate"><span class="pre">color()</span></code> method to make a string fragment that can be used in the same way, except that it will not force
 an EOL after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use
@@ -449,7 +473,9 @@ it inside of a <code class="docutils literal notranslate"><span class="pre">writ
 </div>
 <p>This example would write a single line to the window, with <code class="docutils literal notranslate"><span class="pre">fileA</span></code> in yellow, followed by a tab, and then
 <code class="docutils literal notranslate"><span class="pre">/path/to/file</span></code> in white text.</p>
-<p><strong>error()</strong></p>
+</section>
+<section id="error">
+<h3><a class="toc-backref" href="#id8">error()</a><a class="headerlink" href="#error" title="Permalink to this headline"></a></h3>
 <p>If you need to output errors, you should use the appropriately named <code class="docutils literal notranslate"><span class="pre">error()</span></code> method. This writes light-red text
 to STDERR, instead of STDOUT, like <code class="docutils literal notranslate"><span class="pre">write()</span></code> and <code class="docutils literal notranslate"><span class="pre">color()</span></code> do. This can be useful if you have scripts watching
 for errors so they don’t have to sift through all of the information, only the actual error messages. You use it
@@ -459,7 +485,9 @@ exactly as you would the <code class="docutils literal notranslate"><span class=
 <span class="nx">CLI</span><span class="o">::</span><span class="na">error</span><span class="p">(</span><span class="s1">&#39;Cannot write to file: &#39;</span> <span class="o">.</span> <span class="nv">$file</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>wrap()</strong></p>
+</section>
+<section id="wrap">
+<h3><a class="toc-backref" href="#id9">wrap()</a><a class="headerlink" href="#wrap" title="Permalink to this headline"></a></h3>
 <p>This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
 This might be useful when displaying a list of options with descriptions that you want to wrap in the current
 window and not go off screen:</p>
@@ -523,14 +551,18 @@ task1abc   Lorem Ipsum has been the
            text ever since the
 </pre></div>
 </div>
-<p><strong>newLine()</strong></p>
+</section>
+<section id="newline">
+<h3><a class="toc-backref" href="#id10">newLine()</a><a class="headerlink" href="#newline" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">newLine()</span></code> method displays a blank line to the user. It does not take any parameters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">CLI</span><span class="o">::</span><span class="na">newLine</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>clearScreen()</strong></p>
+</section>
+<section id="clearscreen">
+<h3><a class="toc-backref" href="#id11">clearScreen()</a><a class="headerlink" href="#clearscreen" title="Permalink to this headline"></a></h3>
 <p>You can clear the current terminal window with the <code class="docutils literal notranslate"><span class="pre">clearScreen()</span></code> method. In most versions of Windows, this will
 simply insert 40 blank lines since Windows doesn’t support this feature. Windows 10 bash integration should change
 this:</p>
@@ -539,7 +571,9 @@ this:</p>
 <span class="nx">CLI</span><span class="o">::</span><span class="na">clearScreen</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>showProgress()</strong></p>
+</section>
+<section id="showprogress">
+<h3><a class="toc-backref" href="#id12">showProgress()</a><a class="headerlink" href="#showprogress" title="Permalink to this headline"></a></h3>
 <p>If you have a long-running task that you would like to keep the user updated with the progress, you can use the
 <code class="docutils literal notranslate"><span class="pre">showProgress()</span></code> method which displays something like the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[####......] 40% Complete
@@ -563,7 +597,9 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 <span class="nx">CLI</span><span class="o">::</span><span class="na">showProgress</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>table()</strong></p>
+</section>
+<section id="table">
+<h3><a class="toc-backref" href="#id13">table()</a><a class="headerlink" href="#table" title="Permalink to this headline"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$thead</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Updated At&#39;</span><span class="p">,</span> <span class="s1">&#39;Active&#39;</span><span class="p">];</span>
@@ -583,7 +619,9 @@ pass <code class="docutils literal notranslate"><span class="pre">false</span></
 +----+--------------------------+---------------------+--------+
 </pre></div>
 </div>
-<p><strong>wait()</strong></p>
+</section>
+<section id="wait">
+<h3><a class="toc-backref" href="#id14">wait()</a><a class="headerlink" href="#wait" title="Permalink to this headline"></a></h3>
 <p>Waits a certain number of seconds, optionally showing a wait message and
 waiting for a key press.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -600,6 +638,7 @@ waiting for a key press.</p>
 </div>
 </section>
 </section>
+</section>
 
 
            </div>
@@ -613,7 +652,7 @@ waiting for a key press.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 16, 2022.
+      <span class="lastupdated">Last updated on Apr 18, 2022.
       </span></p>
   </div>
 
