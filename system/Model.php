@@ -197,7 +197,9 @@ class Model extends BaseModel
      */
     protected function doFindColumn(string $columnName)
     {
-        return $this->select($columnName)->asArray()->find();
+        $this->select($columnName);
+
+        return $this->asArray()->find();
     }
 
     /**
