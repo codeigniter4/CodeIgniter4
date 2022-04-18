@@ -269,6 +269,16 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, script_tag($target));
     }
 
+    /**
+     * This test has probably no real-world value but may help detecting
+     * a change in the default behaviour.
+     */
+    public function testScriptTagWithoutAnyArg()
+    {
+        $expected = '<script src="http://example.com/" type="text/javascript"></script>';
+        $this->assertSame($expected, script_tag());
+    }
+
     public function testLinkTag()
     {
         $target   = 'css/mystyles.css';

@@ -189,8 +189,8 @@ if (! function_exists('script_tag')) {
      *
      * Generates link to a JS file
      *
-     * @param mixed $src       Script source or an array
-     * @param bool  $indexPage Should indexPage be added to the JS path
+     * @param array|string $src       Script source or an array of attributes
+     * @param bool         $indexPage Should indexPage be added to the JS path
      */
     function script_tag($src = '', bool $indexPage = false): string
     {

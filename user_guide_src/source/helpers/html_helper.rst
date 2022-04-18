@@ -104,8 +104,8 @@ The following functions are available:
 
 .. php:function:: script_tag([$src = ''[, $indexPage = false]])
 
-    :param  mixed  $src: The source name of a JavaScript file
-    :param  bool    $indexPage: Whether to treat ``$src`` as a routed URI string
+    :param  array|string  $src: The source name or URL of a JavaScript file, or an associative array specifying the attributes
+    :param  bool          $indexPage: Whether to treat ``$src`` as a routed URI string
     :returns:   HTML script tag
     :rtype: string
 
