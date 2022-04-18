@@ -441,11 +441,14 @@ what table to use and how we can find the required records:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>$table</strong></p>
+<section id="table">
+<h4>$table<a class="headerlink" href="#table" title="Permalink to this headline"></a></h4>
 <p>Specifies the database table that this model primarily works with. This only applies to the
 built-in CRUD methods. You are not restricted to using only this table in your own
 queries.</p>
-<p><strong>$primaryKey</strong></p>
+</section>
+<section id="primarykey">
+<h4>$primaryKey<a class="headerlink" href="#primarykey" title="Permalink to this headline"></a></h4>
 <p>This is the name of the column that uniquely identifies the records in this table. This
 does not necessarily have to match the primary key that is specified in the database, but
 is used with methods like <code class="docutils literal notranslate"><span class="pre">find()</span></code> to know what column to match the specified value to.</p>
@@ -454,7 +457,9 @@ is used with methods like <code class="docutils literal notranslate"><span class
 <p>All Models must have a primaryKey specified to allow all of the features to work
 as expected.</p>
 </div>
-<p><strong>$useAutoIncrement</strong></p>
+</section>
+<section id="useautoincrement">
+<h4>$useAutoIncrement<a class="headerlink" href="#useautoincrement" title="Permalink to this headline"></a></h4>
 <p>Specifies if the table uses an auto-increment feature for <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code>. If set to <code class="docutils literal notranslate"><span class="pre">false</span></code>
 then you are responsible for providing primary key value for every record in the table. This
 feature may be handy when we want to implement 1:1 relation or use UUIDs for our model. The
@@ -465,13 +470,17 @@ default value is <code class="docutils literal notranslate"><span class="pre">tr
 key in the database to <code class="docutils literal notranslate"><span class="pre">unique</span></code>. This way you will make sure that all of Model’s features
 will still work the same as before.</p>
 </div>
-<p><strong>$returnType</strong></p>
+</section>
+<section id="returntype">
+<h4>$returnType<a class="headerlink" href="#returntype" title="Permalink to this headline"></a></h4>
 <p>The Model’s CRUD methods will take a step of work away from you and automatically return
 the resulting data, instead of the Result object. This setting allows you to define
 the type of data that is returned. Valid values are ‘<strong>array</strong>’ (the default), ‘<strong>object</strong>’, or the <strong>fully
 qualified name of a class</strong> that can be used with the Result object’s <code class="docutils literal notranslate"><span class="pre">getCustomResultObject()</span></code>
 method.</p>
-<p><strong>$useSoftDeletes</strong></p>
+</section>
+<section id="usesoftdeletes">
+<h4>$useSoftDeletes<a class="headerlink" href="#usesoftdeletes" title="Permalink to this headline"></a></h4>
 <p>If true, then any <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method calls will set <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> in the database, instead of
 actually deleting the row. This can preserve data when it might be referenced elsewhere, or
 can maintain a “recycle bin” of objects that can be restored, or even simply preserve it as
@@ -480,49 +489,80 @@ the <code class="docutils literal notranslate"><span class="pre">withDeleted()</
 <p>This requires either a DATETIME or INTEGER field in the database as per the model’s
 <code class="docutils literal notranslate"><span class="pre">$dateFormat</span></code> setting. The default field name is <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> however this name can be
 configured to any name of your choice by using <code class="docutils literal notranslate"><span class="pre">$deletedField</span></code> property.</p>
-<p><strong>$allowedFields</strong></p>
+</section>
+<section id="allowedfields">
+<h4>$allowedFields<a class="headerlink" href="#allowedfields" title="Permalink to this headline"></a></h4>
 <p>This array should be updated with the field names that can be set during <code class="docutils literal notranslate"><span class="pre">save()</span></code>, <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, or
 <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.</p>
-<p><strong>$useTimestamps</strong></p>
+</section>
+<section id="usetimestamps">
+<h4>$useTimestamps<a class="headerlink" href="#usetimestamps" title="Permalink to this headline"></a></h4>
 <p>This boolean value determines whether the current date is automatically added to all inserts
 and updates. If true, will set the current time in the format specified by <code class="docutils literal notranslate"><span class="pre">$dateFormat</span></code>. This
 requires that the table have columns named <strong>created_at</strong> and <strong>updated_at</strong> in the appropriate
 data type.</p>
-<p><strong>$createdField</strong></p>
+</section>
+<section id="createdfield">
+<h4>$createdField<a class="headerlink" href="#createdfield" title="Permalink to this headline"></a></h4>
 <p>Specifies which database field to use for data record create timestamp.
 Leave it empty to avoid updating it (even if <code class="docutils literal notranslate"><span class="pre">$useTimestamps</span></code> is enabled).</p>
-<p><strong>$updatedField</strong></p>
+</section>
+<section id="updatedfield">
+<h4>$updatedField<a class="headerlink" href="#updatedfield" title="Permalink to this headline"></a></h4>
 <p>Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even <code class="docutils literal notranslate"><span class="pre">$useTimestamps</span></code> is enabled).</p>
-<p><strong>$dateFormat</strong></p>
+</section>
+<section id="dateformat">
+<h4>$dateFormat<a class="headerlink" href="#dateformat" title="Permalink to this headline"></a></h4>
 <p>This value works with <code class="docutils literal notranslate"><span class="pre">$useTimestamps</span></code> and <code class="docutils literal notranslate"><span class="pre">$useSoftDeletes</span></code> to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
 valid options are: <code class="docutils literal notranslate"><span class="pre">'datetime'</span></code>, <code class="docutils literal notranslate"><span class="pre">'date'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'int'</span></code> (a PHP timestamp). Using <strong>useSoftDeletes</strong> or
-<strong>useTimestamps</strong> with an invalid or missing dateFormat will cause an exception.</p>
-<p><strong>$validationRules</strong></p>
+useTimestamps with an invalid or missing dateFormat will cause an exception.</p>
+</section>
+<section id="validationrules">
+<h4>$validationRules<a class="headerlink" href="#validationrules" title="Permalink to this headline"></a></h4>
 <p>Contains either an array of validation rules as described in <a class="reference internal" href="../libraries/validation.html#validation-array"><span class="std std-ref">How to save your rules</span></a>
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.</p>
-<p><strong>$validationMessages</strong></p>
+</section>
+<section id="validationmessages">
+<h4>$validationMessages<a class="headerlink" href="#validationmessages" title="Permalink to this headline"></a></h4>
 <p>Contains an array of custom error messages that should be used during validation, as
 described in <a class="reference internal" href="../libraries/validation.html#validation-custom-errors"><span class="std std-ref">Setting Custom Error Messages</span></a>. Described in more detail below.</p>
-<p><strong>$skipValidation</strong></p>
+</section>
+<section id="skipvalidation">
+<h4>$skipValidation<a class="headerlink" href="#skipvalidation" title="Permalink to this headline"></a></h4>
 <p>Whether validation should be skipped during all <strong>inserts</strong> and <strong>updates</strong>. The default
 value is false, meaning that data will always attempt to be validated. This is
 primarily used by the <code class="docutils literal notranslate"><span class="pre">skipValidation()</span></code> method, but may be changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> so
 this model will never validate.</p>
-<p><strong>$beforeInsert</strong>
-<strong>$afterInsert</strong>
-<strong>$beforeUpdate</strong>
-<strong>$afterUpdate</strong>
-<strong>$afterFind</strong>
-<strong>$afterDelete</strong></p>
+</section>
+<section id="beforeinsert">
+<h4>$beforeInsert<a class="headerlink" href="#beforeinsert" title="Permalink to this headline"></a></h4>
+</section>
+<section id="afterinsert">
+<h4>$afterInsert<a class="headerlink" href="#afterinsert" title="Permalink to this headline"></a></h4>
+</section>
+<section id="beforeupdate">
+<h4>$beforeUpdate<a class="headerlink" href="#beforeupdate" title="Permalink to this headline"></a></h4>
+</section>
+<section id="afterupdate">
+<h4>$afterUpdate<a class="headerlink" href="#afterupdate" title="Permalink to this headline"></a></h4>
+</section>
+<section id="afterfind">
+<h4>$afterFind<a class="headerlink" href="#afterfind" title="Permalink to this headline"></a></h4>
+</section>
+<section id="afterdelete">
+<h4>$afterDelete<a class="headerlink" href="#afterdelete" title="Permalink to this headline"></a></h4>
 <p>These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.</p>
-<p><strong>$allowCallbacks</strong></p>
+</section>
+<section id="allowcallbacks">
+<h4>$allowCallbacks<a class="headerlink" href="#allowcallbacks" title="Permalink to this headline"></a></h4>
 <p>Whether the callbacks defined above should be used.</p>
+</section>
 </section>
 </section>
 <section id="working-with-data">
@@ -531,7 +571,8 @@ time specified in the property name.</p>
 <h3><a class="toc-backref" href="#id8">Finding Data</a><a class="headerlink" href="#finding-data" title="Permalink to this headline"></a></h3>
 <p>Several functions are provided for doing basic CRUD work on your tables, including <code class="docutils literal notranslate"><span class="pre">find()</span></code>,
 <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, <code class="docutils literal notranslate"><span class="pre">delete()</span></code> and more.</p>
-<p><strong>find()</strong></p>
+<section id="find">
+<h4>find()<a class="headerlink" href="#find" title="Permalink to this headline"></a></h4>
 <p>Returns a single row where the primary key matches the value passed in as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -548,7 +589,9 @@ of just one:</p>
 </div>
 <p>If no parameters are passed in, will return all rows in that model’s table, effectively acting
 like <code class="docutils literal notranslate"><span class="pre">findAll()</span></code>, though less explicit.</p>
-<p><strong>findColumn()</strong></p>
+</section>
+<section id="findcolumn">
+<h4>findColumn()<a class="headerlink" href="#findcolumn" title="Permalink to this headline"></a></h4>
 <p>Returns null or an indexed array of column values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -556,7 +599,9 @@ like <code class="docutils literal notranslate"><span class="pre">findAll()</spa
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">$column_name</span></code> should be a name of single column else you will get the DataException.</p>
-<p><strong>findAll()</strong></p>
+</section>
+<section id="findall">
+<h4>findAll()<a class="headerlink" href="#findall" title="Permalink to this headline"></a></h4>
 <p>Returns all results:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -577,7 +622,9 @@ parameters, respectively:</p>
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>first()</strong></p>
+</section>
+<section id="first">
+<h4>first()<a class="headerlink" href="#first" title="Permalink to this headline"></a></h4>
 <p>Returns the first row in the result set. This is best used in combination with the query builder.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -585,7 +632,9 @@ parameters, respectively:</p>
     <span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>withDeleted()</strong></p>
+</section>
+<section id="withdeleted">
+<h4>withDeleted()<a class="headerlink" href="#withdeleted" title="Permalink to this headline"></a></h4>
 <p>If <code class="docutils literal notranslate"><span class="pre">$useSoftDeletes</span></code> is true, then the <strong>find*()</strong> methods will not return any rows where ‘deleted_at IS NOT NULL’.
 To temporarily override this, you can use the <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> method prior to calling the <strong>find*()</strong> method.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -597,7 +646,9 @@ To temporarily override this, you can use the <code class="docutils literal notr
 <span class="nv">$allUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">withDeleted</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>onlyDeleted()</strong></p>
+</section>
+<section id="onlydeleted">
+<h4>onlyDeleted()<a class="headerlink" href="#onlydeleted" title="Permalink to this headline"></a></h4>
 <p>Whereas <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> will return both deleted and not-deleted rows, this method modifies
 the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -606,9 +657,11 @@ the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="saving-data">
 <h3><a class="toc-backref" href="#id9">Saving Data</a><a class="headerlink" href="#saving-data" title="Permalink to this headline"></a></h3>
-<p><strong>insert()</strong></p>
+<section id="insert">
+<h4>insert()<a class="headerlink" href="#insert" title="Permalink to this headline"></a></h4>
 <p>An associative array of data is passed into this method as the only parameter to create a new
 row of data in the database. The array’s keys must match the name of the columns in a <code class="docutils literal notranslate"><span class="pre">$table</span></code>, while
 the array’s values are the values to save for that key:</p>
@@ -622,7 +675,9 @@ the array’s values are the values to save for that key:</p>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>update()</strong></p>
+</section>
+<section id="update">
+<h4>update()<a class="headerlink" href="#update" title="Permalink to this headline"></a></h4>
 <p>Updates an existing record in the database. The first parameter is the <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code> of the record to update.
 An associative array of data is passed into this method as the second parameter. The array’s keys must match the name
 of the columns in a <code class="docutils literal notranslate"><span class="pre">$table</span></code>, while the array’s values are the values to save for that key:</p>
@@ -656,7 +711,9 @@ update command, with the added benefit of validation, events, etc:</p>
     <span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>save()</strong></p>
+</section>
+<section id="save">
+<h4>save()<a class="headerlink" href="#save" title="Permalink to this headline"></a></h4>
 <p>This is a wrapper around the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the <strong>primary key</strong> value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -752,9 +809,11 @@ model’s <code class="docutils literal notranslate"><span class="pre">save()</s
 that provides several handy features that make developing Entities simpler.</p>
 </div>
 </section>
+</section>
 <section id="deleting-data">
 <h3><a class="toc-backref" href="#id10">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h3>
-<p><strong>delete()</strong></p>
+<section id="delete">
+<h4>delete()<a class="headerlink" href="#delete" title="Permalink to this headline"></a></h4>
 <p>Takes a primary key value as the first parameter and deletes the matching record from the model’s table:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -776,13 +835,16 @@ previously:</p>
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>purgeDeleted()</strong></p>
+</section>
+<section id="purgedeleted">
+<h4>purgeDeleted()<a class="headerlink" href="#purgedeleted" title="Permalink to this headline"></a></h4>
 <p>Cleans out the database table by permanently removing all rows that have ‘deleted_at IS NOT NULL’.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="validating-data">
 <h3><a class="toc-backref" href="#id11">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this headline"></a></h3>
@@ -1107,14 +1169,17 @@ provides methods that allow you to do just that.</p>
 <p>These methods only change the return type for the next <strong>find*()</strong> method call. After that,
 it is reset to its default value.</p>
 </div>
-<p><strong>asArray()</strong></p>
+<section id="asarray">
+<h4>asArray()<a class="headerlink" href="#asarray" title="Permalink to this headline"></a></h4>
 <p>Returns data from the next <strong>find*()</strong> method as associative arrays:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>asObject()</strong></p>
+</section>
+<section id="asobject">
+<h4>asObject()<a class="headerlink" href="#asobject" title="Permalink to this headline"></a></h4>
 <p>Returns data from the next <strong>find*()</strong> method as standard objects or custom class intances:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1125,6 +1190,7 @@ it is reset to its default value.</p>
 <span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="processing-large-amounts-of-data">
 <h3><a class="toc-backref" href="#id17">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this headline"></a></h3>
