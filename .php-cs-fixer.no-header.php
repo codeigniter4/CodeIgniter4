@@ -33,7 +33,7 @@ $finder = Finder::create()
 $overrides = [];
 
 $options = [
-    'cacheFile'    => 'build/.no-header.php-cs-fixer.cache',
+    'cacheFile'    => 'build/.php-cs-fixer.no-header.cache',
     'finder'       => $finder,
     'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [

@@ -24,13 +24,13 @@ displays the CodeIgniter welcome page.
 
 .. note:: There are two ``view()`` functions referred to in this tutorial.
     One is the class method created with ``public function view($page = 'home')``
-    and ``echo view('welcome_message')`` for displaying a view.
+    and ``return view('welcome_message')`` for displaying a view.
     Both are *technically* a function. But when you create a function in a class,
     it's called a method.
 
 The ``Pages`` class is extending the ``BaseController`` class that extends the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
-methods and variables defined in the ``CodeIgniter\Controller`` class
+methods and properties defined in the ``CodeIgniter\Controller`` class
 (**system/Controller.php**).
 
 The **controller is what will become the center of every request** to

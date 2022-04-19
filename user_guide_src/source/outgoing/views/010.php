@@ -6,4 +6,4 @@ $data = [
     'message' => 'My Message',
 ];
 
-echo view('blog_view', $data, ['saveData' => true]);
+return view('blog_view', $data, ['saveData' => false]);

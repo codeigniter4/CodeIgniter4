@@ -69,9 +69,18 @@ to optional packages, with their own repository.
 
 ## Contributing
 
-We **are** accepting contributions from the community!
+We **are** accepting contributions from the community! It doesn't matter whether you can code, write documentation, or help find bugs, 
+all contributions are welcome. 
 
 Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/README.md).
+
+CodeIgniter has had thousands on contributions from people since its creation. This project would not be what it is without them. 
+
+<a href="https://github.com/codeigniter4/CodeIgniter4/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=codeigniter4/CodeIgniter4" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
 
 ## Server Requirements
 

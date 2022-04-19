@@ -61,6 +61,8 @@ modify this by passing the duration (in seconds) as the first parameter:
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including ``YEAR``, ``MONTH``, and more.
 
+.. _controller-validate:
+
 Validating data
 ***************
 
@@ -144,7 +146,7 @@ For security reasons be sure to declare any new utility methods as ``protected``
 
 .. literalinclude:: controllers/008.php
 
-Then save the file to your **/app/Controllers/** directory.
+Then save the file to your **app/Controllers/** directory.
 
 .. important:: The file must be called **Helloworld.php**, with a capital ``H``.
 

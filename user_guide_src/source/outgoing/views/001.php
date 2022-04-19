@@ -1,3 +1,3 @@
 <?php
 
-echo view('name');
+return view('name');

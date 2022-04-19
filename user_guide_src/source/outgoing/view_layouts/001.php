@@ -6,6 +6,6 @@ class MyController extends BaseController
 {
     public function index()
     {
-        echo view('some_view');
+        return view('some_view');
     }
 }

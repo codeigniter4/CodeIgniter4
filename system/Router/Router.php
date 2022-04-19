@@ -426,6 +426,11 @@ class Router implements RouterInterface
                         throw RouterException::forDynamicController($handler);
                     }
 
+                    // Checks `/` in controller name
+                    if (strpos($controller, '/') !== false) {
+                        throw RouterException::forInvalidControllerName($handler);
+                    }
+
                     if (strpos($routeKey, '/') !== false) {
                         $replacekey = str_replace('/(.*)', '', $routeKey);
                         $handler    = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);

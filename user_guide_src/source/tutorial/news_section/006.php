@@ -18,8 +18,8 @@ class News extends BaseController
 
         $data['title'] = $data['news']['title'];
 
-        echo view('templates/header', $data);
-        echo view('news/view', $data);
-        echo view('templates/footer', $data);
+        return view('templates/header', $data)
+            . view('news/view')
+            . view('templates/footer');
     }
 }

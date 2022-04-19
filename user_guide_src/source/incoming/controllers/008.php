@@ -6,6 +6,6 @@ class Helloworld extends BaseController
 {
     public function index()
     {
-        echo 'Hello World!';
+        return 'Hello World!';
     }
 }

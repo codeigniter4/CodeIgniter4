@@ -11,6 +11,6 @@ class Blog extends Controller
         $data['title']   = 'My Real Title';
         $data['heading'] = 'My Real Heading';
 
-        echo view('blog_view', $data);
+        return view('blog_view', $data);
     }
 }

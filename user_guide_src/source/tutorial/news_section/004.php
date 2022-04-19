@@ -15,8 +15,8 @@ class News extends BaseController
             'title' => 'News archive',
         ];
 
-        echo view('templates/header', $data);
-        echo view('news/overview', $data);
-        echo view('templates/footer', $data);
+        return view('templates/header', $data)
+            . view('news/overview')
+            . view('templates/footer');
     }
 }

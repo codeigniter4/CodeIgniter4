@@ -220,6 +220,26 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5825
+     */
+    public function testParseLoopVariableWithParentheses()
+    {
+        $data = [
+            'title'  => 'Super Heroes',
+            'powers' => [
+                ['name' => 'Tom'],
+                ['name' => 'Dick'],
+                ['name' => 'Henry'],
+            ],
+        ];
+
+        $template = "{title}\n{powers}({name}) {/powers}";
+
+        $this->parser->setData($data);
+        $this->assertSame("Super Heroes\n(Tom) (Dick) (Henry) ", $this->parser->renderString($template));
+    }
+
     public function testParseLoopObjectProperties()
     {
         $obj1 = new stdClass();
@@ -937,5 +957,54 @@ final class ParserTest extends CIUnitTestCase
         $this->parser->setData(['testString' => 'Hello World']);
         $expected = '<h1>Hello World</h1>';
         $this->assertSame($expected, $this->parser->render('Simpler.html'));
+    }
+
+    public function testChangedConditionalDelimitersTrue()
+    {
+        $this->parser->setConditionalDelimiters('{%', '%}');
+
+        $data = [
+            'doit'     => true,
+            'dontdoit' => false,
+        ];
+        $this->parser->setData($data);
+
+        $template = '{% if $doit %}Howdy{% endif %}{% if $dontdoit === false %}Welcome{% endif %}';
+        $output   = $this->parser->renderString($template);
+
+        $this->assertSame('HowdyWelcome', $output);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5831
+     */
+    public function testChangeConditionalDelimitersWorkWithJavaScriptCode()
+    {
+        $this->parser->setConditionalDelimiters('{%', '%}');
+
+        $data = [
+            'message' => 'Warning!',
+        ];
+        $this->parser->setData($data);
+
+        $template = <<<'EOL'
+            <script type="text/javascript">
+             var f = function() {
+                 if (true) {
+                     alert('{message}');
+                 }
+             }
+            </script>
+            EOL;
+        $expected = <<<'EOL'
+            <script type="text/javascript">
+             var f = function() {
+                 if (true) {
+                     alert('Warning!');
+                 }
+             }
+            </script>
+            EOL;
+        $this->assertSame($expected, $this->parser->renderString($template));
     }
 }

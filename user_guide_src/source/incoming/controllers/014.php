@@ -6,7 +6,7 @@ class Products extends BaseController
 {
     public function shoes($sandals, $id)
     {
-        echo $sandals;
-        echo $id;
+        return $sandals
+            . $id;
     }
 }

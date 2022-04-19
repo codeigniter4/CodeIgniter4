@@ -1,3 +1,3 @@
 <?php
 
-$widgets = Factories::models('Some\Namespace\Models\WidgetModel');
+$users = Factories::models('Blog\Models\UserModel');

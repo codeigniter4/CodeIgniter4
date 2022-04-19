@@ -37,11 +37,11 @@ Views get the data to display from the controllers, who pass it to the views as 
 with simple ``echo`` calls. You can also display other views within a view, making it pretty simple to display a
 common header or footer on every page.
 
-Views are generally stored in **/app/Views**, but can quickly become unwieldy if not organized in some fashion.
+Views are generally stored in **app/Views**, but can quickly become unwieldy if not organized in some fashion.
 CodeIgniter does not enforce any type of organization, but a good rule of thumb would be to create a new directory in
 the **Views** directory for each controller. Then, name views by the method name. This makes them very easy to find later
 on. For example, a user's profile might be displayed in a controller named ``User``, and a method named ``profile``.
-You might store the view file for this method in **/app/Views/User/Profile.php**.
+You might store the view file for this method in **app/Views/User/Profile.php**.
 
 That type of organization works great as a base habit to get into. At times you might need to organize it differently.
 That's not a problem. As long as CodeIgniter can find the file, it can display it.
@@ -61,7 +61,7 @@ it's saved to meet company standards, or formatting a column in a certain way be
 By keeping these business requirements in the model, you won't repeat code throughout several controllers and accidentally
 miss updating an area.
 
-Models are typically stored in **/app/Models**, though they can use a namespace to be grouped however you need.
+Models are typically stored in **app/Models**, though they can use a namespace to be grouped however you need.
 
 :doc:`Find out more about models </models/model>`
 
@@ -77,7 +77,7 @@ The other responsibility of the controller is to handle everything that pertains
 authentication, web safety, encoding, etc. In short, the controller is where you make sure that people are allowed to
 be there, and they get the data they need in a format they can use.
 
-Controllers are typically stored in **/app/Controllers**, though they can use a namespace to be grouped however
+Controllers are typically stored in **app/Controllers**, though they can use a namespace to be grouped however
 you need.
 
 :doc:`Find out more about controllers </incoming/controllers>`

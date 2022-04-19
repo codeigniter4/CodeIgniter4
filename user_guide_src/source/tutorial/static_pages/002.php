@@ -13,8 +13,8 @@ class Pages extends BaseController
 
         $data['title'] = ucfirst($page); // Capitalize the first letter
 
-        echo view('templates/header', $data);
-        echo view('pages/' . $page, $data);
-        echo view('templates/footer', $data);
+        return view('templates/header', $data)
+            . view('pages/' . $page)
+            . view('templates/footer');
     }
 }

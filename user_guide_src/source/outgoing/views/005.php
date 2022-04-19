@@ -1,3 +1,3 @@
 <?php
 
-echo view('Example\Blog\Views\blog_view');
+return view('Example\Blog\Views\blog_view');

@@ -25,19 +25,26 @@ them one by one.
 
 **Do read the user guide** before embarking on a project conversion!
 
-General Adjustments
-===================
+.. contents::
+    :local:
+    :depth: 2
 
-**Downloads**
+General Adjustments
+*******************
+
+Downloads
+=========
 
 - CI4 is still available as a ready-to-run zip or tarball.
 - It can also be installed using Composer.
 
-**Namespaces**
+Namespaces
+==========
 
 - CI4 is built for PHP 7.4+, and everything in the framework is namespaced, except for the helpers.
 
-**Application Structure**
+Application Structure
+=====================
 
 - The **application** folder is renamed as **app** and the framework still has **system** folders,
   with the same interpretation as before.
@@ -48,7 +55,8 @@ General Adjustments
 - There is no longer a nested **application/core** folder, as we have
   a different mechanism for extending framework components (see below).
 
-**Model, View and Controller**
+Model, View and Controller
+==========================
 
 - CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
   are one of the most important things you have to handle.
@@ -71,7 +79,8 @@ General Adjustments
     upgrade_views
     upgrade_controllers
 
-**Class loading**
+Class Loading
+=============
 
 - There is no longer a CodeIgniter "superobject", with framework component
   references magically injected as properties of your controller.
@@ -83,27 +92,31 @@ General Adjustments
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
 
-**Libraries**
+Libraries
+=========
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
 - Instead of CI3's ``$this->load->library(x);`` you can now use
   ``$this->x = new X();``, following namespaced conventions for your component.
 
-**Helpers**
+Helpers
+=======
 
 - Helpers are pretty much the same as before, though some have been simplified.
 - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
 
-**Events**
+Events
+======
 
 - Hooks have been replaced by Events.
 - Instead of CI3's ``$hook['post_controller_constructor']`` you now use
   ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``, with the namespace ``CodeIgniter\Events\Events;``.
 - Events are always enabled, and are available globally.
 
-**Extending the framework**
+Extending the Framework
+=======================
 
 - You don't need a **core** folder to hold ``MY_...`` framework
   component extensions or replacements.
@@ -114,7 +127,7 @@ General Adjustments
   your components instead of the default ones.
 
 Upgrading Libraries
-===================
+*******************
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
 - Instead of CI3's ``$this->load->library(x);`` you can now use ``$this->x = new X();``,

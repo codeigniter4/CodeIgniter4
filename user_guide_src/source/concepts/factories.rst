@@ -9,20 +9,43 @@ Factories
 Introduction
 ============
 
-Like ``Services``, ``Factories`` are an extension of autoloading that helps keep your code
-concise yet optimal, without having to pass around object instances between classes. At its
+What are Factories?
+-------------------
+
+Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
+concise yet optimal, without having to pass around object instances between classes.
+
+At its
 simplest, Factories provide a common way to create a class instance and access it from
 anywhere. This is a great way to reuse object states and reduce memory load from keeping
 multiple instances loaded across your app.
 
-Anything can be loaded by Factories, but the best examples are those classes that are used
+Any class can be loaded by Factories, but the best examples are those classes that are used
 to work on or transmit common data. The framework itself uses Factories internally, e.g., to
 make sure the correct configuration is loaded when using the ``Config`` class.
 
-Take a look at ``Models`` as an example. You can access the Factory specific to ``Models``
-by using the magic static method of the Factories class, ``Factories::models()``. Because of
-the common path structure for namespaces and folders, Factories know that the model files
-and classes are found within **Models**, so you can request a model by its shorthand base name:
+Differences from Services
+-------------------------
+
+Factories require a concrete class name to instantiate and do not have code to create instances.
+
+So, Factories are not good for creating a complex instance that needs many dependencies,
+and you cannot change the class of the instance to be returned.
+
+On the other hand, Services have code to create instances, so it can create a complex instance
+that needs other services or class instances. When you get a service, Services require a service name,
+not a class name, so the returned instance can be changed without changing the client code.
+
+Example
+-------
+
+Take a look at **Models** as an example. You can access the Factory specific to Models
+by using the magic static method of the Factories class, ``Factories::models()``.
+
+By default, Factories first searches in the ``App`` namespace for the path corresponding to the magic static method name.
+``Factories::models()`` searches the path **Models/**.
+
+In the following code, if you have ``App\Models\UserModel``, the instance will be returned:
 
 .. literalinclude:: factories/001.php
 
@@ -30,10 +53,39 @@ Or you could also request a specific class:
 
 .. literalinclude:: factories/002.php
 
-Next time you ask for the same class anywhere in your code, ``Factories`` will be sure
+If you have only ``Blog\Models\UserModel``, the instance will be returned.
+But if you have both ``App\Models\UserModel`` and ``Blog\Models\UserModel``,
+the instance of ``App\Models\UserModel`` will be returned.
+
+If you want to get ``Blog\Models\UserModel``, you need to disable the option ``preferApp``:
+
+.. literalinclude:: factories/010.php
+
+See :ref:`factories-options` for the details.
+
+Next time you ask for the same class anywhere in your code, Factories will be sure
 you get back the instance as before:
 
 .. literalinclude:: factories/003.php
+
+Convenience Functions
+=====================
+
+Two shortcut functions for Factories have been provided. These functions are always available.
+
+config()
+--------
+
+The first is ``config()`` which returns a new instance of a Config class. The only required parameter is the class name:
+
+.. literalinclude:: factories/008.php
+
+model()
+--------
+
+The second function, ``model()`` returns a new instance of a Model class. The only required parameter is the class name:
+
+.. literalinclude:: factories/009.php
 
 Factory Parameters
 ==================
@@ -79,7 +131,7 @@ Factories Behavior
 
 Options can be applied in one of three ways (listed in ascending priority):
 
-* A configuration class ``Config\Factory`` with a ``$component`` property.
+* A configuration class ``Config\Factory`` with a property that matches the name of a component.
 * The static method ``Factories::setOptions()``.
 * Passing options directly at call time with a parameter.
 
@@ -87,14 +139,19 @@ Configurations
 --------------
 
 To set default component options, create a new Config files at **app/Config/Factory.php**
-that supplies options as an array property that matches the name of the component. For example,
-if you wanted to ensure that all Filters used by your app were valid framework instances,
-your **Factory.php** file might look like this:
+that supplies options as an array property that matches the name of the component.
+
+For example, if you want to create **Filters** by Factories, the component name wll be ``filters``.
+And if you want to ensure that each filter is an instance of a class which implements CodeIgniter's ``FilterInterface``,
+your **app/Config/Factory.php** file might look like this:
 
 .. literalinclude:: factories/005.php
 
-This would prevent conflict of an unrelated third-party module which happened to have an
-unrelated "Filters" path in its namespace.
+Now you can create a filter with code like ``Factories::filters('SomeFilter')``,
+and the returned instance will surely be a CodeIgniter's filter.
+
+This would prevent conflict of an third-party module which happened to have an
+unrelated ``Filters`` path in its namespace.
 
 setOptions Method
 -----------------

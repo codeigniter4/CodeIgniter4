@@ -9,7 +9,7 @@ the required settings are public properties.
 Unlike many other frameworks, CodeIgniter configurable items aren't contained in
 a single file. Instead, each class that needs configurable items will have a
 configuration file with the same name as the class that uses it. You will find
-the application configuration files in the **/app/Config** folder.
+the application configuration files in the **app/Config** folder.
 
 .. contents::
     :local:
@@ -33,7 +33,7 @@ All configuration object properties are public, so you access the settings like 
 .. literalinclude:: configuration/003.php
 
 If no namespace is provided, it will look for the file in all defined namespaces
-as well as **/app/Config/**.
+as well as **app/Config/**.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
@@ -48,7 +48,7 @@ Creating Configuration Files
 ============================
 
 When you need a new configuration, first you create a new file at your desired location.
-The default file location (recommended for most cases) is **/app/Config**.
+The default file location (recommended for most cases) is **app/Config**.
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 

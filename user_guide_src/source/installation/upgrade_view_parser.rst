@@ -19,7 +19,7 @@ What has been changed
 Upgrade Guide
 =============
 1. Wherever you use the View Parser Library replace ``$this->load->library('parser');`` with ``$parser = service('parser');``.
-2. You have to change the render part in your controller from ``$this->parser->parse('blog_template', $data);`` to ``echo $parser->setData($data)->render('blog_template');``.
+2. You have to change the render part in your controller from ``$this->parser->parse('blog_template', $data);`` to ``return $parser->setData($data)->render('blog_template');``.
 
 Code Example
 ============

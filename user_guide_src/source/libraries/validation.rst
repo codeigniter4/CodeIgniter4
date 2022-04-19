@@ -498,7 +498,7 @@ Creating the Views
 
 The first step is to create custom views. These can be placed anywhere that the ``view()`` method can locate them,
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
-a new view at **/app/Views/_errors_list.php**:
+a new view at **app/Views/_errors_list.php**:
 
 .. literalinclude:: validation/030.php
 

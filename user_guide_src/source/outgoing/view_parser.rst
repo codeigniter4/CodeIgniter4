@@ -53,15 +53,15 @@ can instantiate it directly:
 .. literalinclude:: view_parser/002.php
 
 Then you can use any of the three standard rendering methods that it provides:
-``render(viewpath, options, save)``, ``setVar(name, value, context)`` and
-``setData(data, context)``. You will also be able to specify delimiters directly,
-through the ``setDelimiters(left, right)`` method.
+``render()``, ``setVar()`` and
+``setData()``. You will also be able to specify delimiters directly,
+through the ``setDelimiters()`` method.
 
-Using the ``Parser``, your view templates are processed only by the Parser
-itself, and not like a conventional view PHP script. PHP code in such a script
-is ignored by the parser, and only substitutions are performed.
+.. important:: Using the ``Parser``, your view templates are processed only by the Parser
+    itself, and not like a conventional view PHP script. PHP code in such a script
+    is ignored by the parser, and only substitutions are performed.
 
-This is purposeful: view files with no PHP.
+    This is purposeful: view files with no PHP.
 
 What It Does
 ============
@@ -106,7 +106,7 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods.
 -   ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath;
     ignored for renderString()
 -   ``saveData`` - true if the view data parameters should be retained for subsequent calls;
-    default is **false**
+    default is **true**
 -   ``cascadeData`` - true if pseudo-variable settings should be passed on to nested
     substitutions; default is **true**
 
@@ -250,7 +250,7 @@ This example gives different results, depending on cascading:
 Preventing Parsing
 ==================
 
-You can specify portions of the page to not be parsed with the ``{noparse}{/noparse}`` tag pair. Anything in this
+You can specify portions of the page to not be parsed with the ``{noparse}`` ``{/noparse}`` tag pair. Anything in this
 section will stay exactly as it is, with no variable substitution, looping, etc, happening to the markup between the brackets.
 
 ::
@@ -290,6 +290,31 @@ of the comparison operators you would normally, like ``==``, ``===``, ``!==``, `
 .. warning:: In the background, conditionals are parsed using an ``eval()``, so you must ensure that you take
     care with the user data that is used within conditionals, or you could open your application up to security risks.
 
+Changing the Conditional Delimiters
+-----------------------------------
+
+If you have JavaScript code like the following in your templates, the Parser raises a syntax error because there are strings that can be interpreted as a conditional::
+
+    <script type="text/javascript">
+        var f = function() {
+            if (hasAlert) {
+                alert('{message}');
+            }
+        }
+    </script>
+
+In that case, you can change the delimiters for conditionals with the ``setConditionalDelimiters()`` method to avoid misinterpretations:
+
+.. literalinclude:: view_parser/027.php
+
+In this case, you will write code in your template::
+
+    {% if $role=='admin' %}
+        <h1>Welcome, Admin</h1>
+    {% else %}
+        <h1>Welcome, User</h1>
+    {% endif %}
+
 Escaping Data
 =============
 
@@ -311,7 +336,7 @@ Filters
 
 Any single variable substitution can have one or more filters applied to it to modify the way it is presented. These
 are not intended to drastically change the output, but provide ways to reuse the same variable data but with different
-presentations. The **esc** filter discussed above is one example. Dates are another common use case, where you might
+presentations. The ``esc`` filter discussed above is one example. Dates are another common use case, where you might
 need to format the same data differently in several sections on the same page.
 
 Filters are commands that come after the pseudo-variable name, and are separated by the pipe symbol, ``|``::
@@ -433,7 +458,7 @@ While plugins will often consist of tag pairs, like shown above, they can also b
 Opening tags can also contain parameters that can customize how the plugin works. The parameters are represented as
 key/value pairs::
 
-    {+ foo bar=2 baz="x y" }
+    {+ foo bar=2 baz="x y" +}
 
 Parameters can also be single values::
 
@@ -466,7 +491,7 @@ Registering a Plugin
 --------------------
 
 At its simplest, all you need to do to register a new plugin and make it ready for use is to add it to the
-**app/Config/View.php**, under the **$plugins** array. The key is the name of the plugin that is
+**app/Config/View.php**, under the ``$plugins`` array. The key is the name of the plugin that is
 used within the template file. The value is any valid PHP callable, including static class methods:
 
 .. literalinclude:: view_parser/014.php
@@ -525,8 +550,8 @@ An example with the iteration controlled in the view::
             ['title' => 'Second Link', 'link' => '/second'],
         ]
     ];
-    echo $parser->setData($data)
-                ->renderString($template);
+
+    return $parser->setData($data)->renderString($template);
 
 Result::
 
@@ -553,7 +578,7 @@ Class Reference
 
 .. php:class:: CodeIgniter\\View\\Parser
 
-    .. php:method:: render($view[, $options[, $saveData = false]])
+    .. php:method:: render($view[, $options[, $saveData]])
 
         :param  string  $view: File name of the view source
         :param  array   $options: Array of options, as key/value pairs
@@ -571,13 +596,11 @@ Class Reference
             - ``cache_name`` - the ID used to save/retrieve a cached view result; defaults to the viewpath
             - ``cascadeData`` - true if the data pairs in effect when a nested or loop substitution occurs should be propagated
             - ``saveData`` - true if the view data parameter should be retained for subsequent calls
-            - ``leftDelimiter`` - the left delimiter to use in pseudo-variable syntax
-            - ``rightDelimiter`` - the right delimiter to use in pseudo-variable syntax
 
         Any conditional substitutions are performed first, then remaining
         substitutions are performed for each data pair.
 
-    .. php:method:: renderString($template[, $options[, $saveData = false]])
+    .. php:method:: renderString($template[, $options[, $saveData]])
 
         :param  string  $template: View source provided as a string
         :param  array   $options: Array of options, as key/value pairs
@@ -630,3 +653,14 @@ Class Reference
         Override the substitution field delimiters:
 
         .. literalinclude:: view_parser/026.php
+
+    .. php:method:: setConditionalDelimiters($leftDelimiter = '{', $rightDelimiter = '}')
+
+        :param  string  $leftDelimiter: Left delimiter for conditionals
+        :param  string  $rightDelimiter: right delimiter for conditionals
+        :returns: The Renderer, for method chaining
+        :rtype: CodeIgniter\\View\\RendererInterface.
+
+        Override the conditional delimiters:
+
+        .. literalinclude:: view_parser/027.php

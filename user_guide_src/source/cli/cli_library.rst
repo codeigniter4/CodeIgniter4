@@ -15,7 +15,7 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
     :depth: 2
 
 Initializing the Class
-======================
+**********************
 
 You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
 need to ensure your controller can locate it via a ``use`` statement above your class:
@@ -25,7 +25,7 @@ need to ensure your controller can locate it via a ``use`` statement above your 
 The class is automatically initialized when the file is loaded the first time.
 
 Getting Input from the User
-===========================
+***************************
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
@@ -52,7 +52,8 @@ Validation rules can also be written in the array syntax:
 
 .. literalinclude:: cli_library/006.php
 
-**promptByKey()**
+promptByKey()
+=============
 
 Predefined answers (options) for prompt sometimes need to be described or are too complex to select via their value.
 ``promptByKey()`` allows the user to select an option by its key instead of its value:
@@ -66,9 +67,10 @@ Named keys are also possible:
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
 Providing Feedback
-==================
+******************
 
-**write()**
+write()
+=======
 
 Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
 or a complex table of information that wraps to the user's terminal window. At the core of this is the ``write()``
@@ -116,7 +118,8 @@ And a smaller number are available as background colors:
 * light_gray
 * magenta
 
-**print()**
+print()
+=======
 
 Print functions identically to the ``write()`` method, except that it does not force a newline either before or after.
 Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
@@ -125,7 +128,10 @@ print "Done" on the same line:
 
 .. literalinclude:: cli_library/012.php
 
-**color()**
+.. _cli-library-color:
+
+color()
+=======
 
 While the ``write()`` command will write a single line to the terminal, ending it with a EOL character, you can
 use the ``color()`` method to make a string fragment that can be used in the same way, except that it will not force
@@ -137,7 +143,8 @@ it inside of a ``write()`` method to create a string of a different color inside
 This example would write a single line to the window, with ``fileA`` in yellow, followed by a tab, and then
 ``/path/to/file`` in white text.
 
-**error()**
+error()
+=======
 
 If you need to output errors, you should use the appropriately named ``error()`` method. This writes light-red text
 to STDERR, instead of STDOUT, like ``write()`` and ``color()`` do. This can be useful if you have scripts watching
@@ -146,7 +153,8 @@ exactly as you would the ``write()`` method:
 
 .. literalinclude:: cli_library/014.php
 
-**wrap()**
+wrap()
+======
 
 This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
 This might be useful when displaying a list of options with descriptions that you want to wrap in the current
@@ -179,13 +187,15 @@ Would create something like this:
                industry's standard dummy
                text ever since the
 
-**newLine()**
+newLine()
+=========
 
 The ``newLine()`` method displays a blank line to the user. It does not take any parameters:
 
 .. literalinclude:: cli_library/018.php
 
-**clearScreen()**
+clearScreen()
+=============
 
 You can clear the current terminal window with the ``clearScreen()`` method. In most versions of Windows, this will
 simply insert 40 blank lines since Windows doesn't support this feature. Windows 10 bash integration should change
@@ -193,7 +203,8 @@ this:
 
 .. literalinclude:: cli_library/019.php
 
-**showProgress()**
+showProgress()
+==============
 
 If you have a long-running task that you would like to keep the user updated with the progress, you can use the
 ``showProgress()`` method which displays something like the following:
@@ -210,7 +221,8 @@ pass ``false`` as the first parameter and the progress bar will be removed.
 
 .. literalinclude:: cli_library/020.php
 
-**table()**
+table()
+=======
 
 .. literalinclude:: cli_library/021.php
 
@@ -223,7 +235,8 @@ pass ``false`` as the first parameter and the progress bar will be removed.
     | 8  | Another great item title | 2017-11-16 13:46:54 | 0      |
     +----+--------------------------+---------------------+--------+
 
-**wait()**
+wait()
+======
 
 Waits a certain number of seconds, optionally showing a wait message and
 waiting for a key press.

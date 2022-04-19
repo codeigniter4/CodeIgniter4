@@ -9,5 +9,4 @@ $data = [
     ],
 ];
 
-echo $parser->setData($data)
-    ->render('blog_template');
+return $parser->setData($data)->render('blog_template');

@@ -21,10 +21,10 @@
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
-        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan": "^1.5.6",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1",
-        "rector/rector": "0.12.19"
+        "rector/rector": "0.12.21"
     },
     "suggest": {
         "ext-fileinfo": "Improves mime type detection for files"
@@ -62,14 +62,14 @@
         "analyze": "phpstan analyse",
         "test": "phpunit",
         "cs": [
-            "php-cs-fixer fix --verbose --dry-run --diff --config=.user-guide.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --dry-run --diff"
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff"
         ],
         "cs-fix": [
-            "php-cs-fixer fix --verbose --diff --config=.user-guide.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --diff --config=.no-header.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --diff"
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --diff"
         ]
     },
     "scripts-descriptions": {

@@ -8,8 +8,8 @@ class UserModel
 {
     protected $db;
 
-    public function __construct(ConnectionInterface &$db)
+    public function __construct(ConnectionInterface $db)
     {
-        $this->db = &$db;
+        $this->db = $db;
     }
 }

@@ -88,7 +88,7 @@ final class AutoloaderTest extends CIUnitTestCase
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass('App\Controllers\Home');
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, realpath($actual) ?: $actual);
     }
 
     public function testServiceAutoLoader()
@@ -99,7 +99,7 @@ final class AutoloaderTest extends CIUnitTestCase
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass('App\Controllers\Home');
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, realpath($actual) ?: $actual);
     }
 
     public function testExistingFile()
@@ -231,6 +231,23 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $namespaces = $this->loader->getNamespace();
         $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testComposerNamespaceDoesNotOverwriteConfigAutoloadPsr4()
+    {
+        $config       = new Autoload();
+        $config->psr4 = [
+            'Psr\Log' => '/Config/Autoload/Psr/Log/',
+        ];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+
+        $this->loader = new Autoloader();
+        $this->loader->initialize($config, $modules);
+
+        $namespaces = $this->loader->getNamespace();
+        $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
+        $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
     }
 
     public function testFindsComposerRoutesWithComposerPathNotFound()

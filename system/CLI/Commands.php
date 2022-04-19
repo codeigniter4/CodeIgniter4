@@ -76,10 +76,6 @@ class Commands
     /**
      * Discovers all commands in the framework and within user code,
      * and collects instances of them to work with.
-     *
-     * @TODO this approach (find qualified classname from path) causes error,
-     *      when using Composer autoloader.
-     *      See https://github.com/codeigniter4/CodeIgniter4/issues/5818
      */
     public function discoverCommands()
     {
@@ -100,9 +96,9 @@ class Commands
         // Loop over each file checking to see if a command with that
         // alias exists in the class.
         foreach ($files as $file) {
-            $className = $locator->findQualifiedNameFromPath($file);
+            $className = $locator->getClassname($file);
 
-            if (empty($className) || ! class_exists($className)) {
+            if ($className === '' || ! class_exists($className)) {
                 continue;
             }
 
