@@ -19,7 +19,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 class AutoRouter
 {
     /**
-     * Controller list that can't be accessible.
+     * List of controllers registered for the CLI verb that should not be accessed in the web.
      */
     protected array $protectedControllers;
 
