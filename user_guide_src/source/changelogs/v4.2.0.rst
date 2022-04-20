@@ -19,6 +19,7 @@ BREAKING
 - The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
 - The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
 - The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
+- To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto routing.
 
 Enhancements
 ************
