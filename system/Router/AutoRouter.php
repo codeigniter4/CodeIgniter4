@@ -124,7 +124,6 @@ class AutoRouter
             $controller .= $controllerName;
 
             $controller = strtolower($controller);
-            $methodName = strtolower($this->methodName());
 
             foreach ($this->protectedControllers as $controllerInRoute) {
                 if (! is_string($controllerInRoute)) {
