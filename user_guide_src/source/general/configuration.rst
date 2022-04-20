@@ -68,8 +68,8 @@ Environment Variables and CodeIgniter
 
 CodeIgniter makes it simple and painless to set Environment Variables by using a "dotenv" file. The term comes from the file name, which starts with a dot before the text "env".
 
-CodeIgniter expects **.env** to be at the root of your project alongside the ``system``
-and ``app`` directories. There is a template file distributed with CodeIgniter that's
+CodeIgniter expects **.env** to be at the root of your project alongside the
+``app`` directories. There is a template file distributed with CodeIgniter that's
 located at the project root named **env** (Notice there's no dot (**.**) at the start?).
 It has a large collection of variables your project might use that have been assigned
 empty, dummy, or default values. You can use this file as a starting place for your
@@ -221,7 +221,7 @@ Configuring multiple environments is easily accomplished by using a separate **.
 
 The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.
 
-In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``system`` and ``app`` directories.
+In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``app`` directories.
 
 Do not track **.env** files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.
 
