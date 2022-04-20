@@ -27,8 +27,6 @@ class Feature extends BaseConfig
 
     /**
      * Use improved new auto routing, instead of the traditional auto routing.
-     *
-     * @var bool
      */
     public bool $autoRoutesImproved = false;
 }
