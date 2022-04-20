@@ -382,7 +382,7 @@ class Model extends BaseModel
     protected function doPurgeDeleted()
     {
         return $this->builder()
-            ->where($this->table . '.' . $this->deletedField . ' IS NOT NULL')
+            ->where($this->table . '.' . $this->deletedField . ' > 0')
             ->delete();
     }
 
@@ -393,7 +393,7 @@ class Model extends BaseModel
      */
     protected function doOnlyDeleted()
     {
-        $this->builder()->where($this->table . '.' . $this->deletedField . ' IS NOT NULL');
+        $this->builder()->where($this->table . '.' . $this->deletedField . ' > 0');
     }
 
     /**
