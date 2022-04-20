@@ -432,7 +432,10 @@ class CodeIgniter
             return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
         }
 
-        if ($possibleResponse instanceof IncomingRequest) {
+        if (
+            $possibleResponse instanceof IncomingRequest
+            || $possibleResponse instanceof CLIRequest
+        ) {
             $this->request = $possibleResponse;
         }
 
