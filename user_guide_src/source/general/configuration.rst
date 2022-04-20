@@ -64,7 +64,7 @@ One of today's best practices for application setup is to use Environment Variab
 Environment Variables should also be used for anything private such as passwords, API keys, or other sensitive data.
 
 Environment Variables and CodeIgniter
-*************************************
+=====================================
 
 CodeIgniter makes it simple and painless to set Environment Variables by using a "dotenv" file. The term comes from the file name, which starts with a dot before the text "env".
 
@@ -94,7 +94,7 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 .. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 
 Nesting Variables
-*****************
+=================
 
 To save on typing, you can reuse variables that you've already specified in the file by wrapping the
 variable name within ``${...}``:
@@ -106,7 +106,7 @@ variable name within ``${...}``:
     TMP_DIR="${BASE_DIR}/tmp"
 
 Namespaced Variables
-********************
+====================
 
 There will be times when you will have several variables with the same name.
 The system needs a way of knowing what the correct setting should be.
@@ -168,7 +168,7 @@ Some environments do not permit variable name with dots. In such case, you could
     app_CSPEnabled = true
 
 Environment Variables as Replacements for Data
-**********************************************
+==============================================
 
 It is very important to always remember that environment variables contained in your **.env** are
 **only replacements for existing data**. This means that you cannot expect to fill your **.env** with all
@@ -183,7 +183,7 @@ Simply put, you cannot just put ``app.myNewConfig = foo`` in your **.env** and e
 to magically have that property and value at run time.
 
 Treating Environment Variables as Arrays
-****************************************
+========================================
 
 A namespaced environment variable can be further treated as an array.
 If the prefix matches the configuration class, then the remainder of the
