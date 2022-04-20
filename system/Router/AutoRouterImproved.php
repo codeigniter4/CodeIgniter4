@@ -21,7 +21,7 @@ use ReflectionException;
 class AutoRouterImproved implements AutoRouterInterface
 {
     /**
-     * Controller list that can't be accessible.
+     * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
      *
      * @var class-string[]
      */
