@@ -18,65 +18,65 @@ use ReflectionException;
 /**
  * New Secure Router for Auto-Routing
  */
-class AutoRouterImproved implements AutoRouterInterface
+final class AutoRouterImproved implements AutoRouterInterface
 {
     /**
      * List of controllers in Defined Routes that should not be accessed via this Auto-Routing.
      *
      * @var class-string[]
      */
-    protected array $protectedControllers;
+    private array $protectedControllers;
 
     /**
      * Sub-directory that contains the requested controller class.
      */
-    protected ?string $directory = null;
+    private ?string $directory = null;
 
     /**
      * Sub-namespace that contains the requested controller class.
      */
-    protected ?string $subNamespace = null;
+    private ?string $subNamespace = null;
 
     /**
      * The name of the controller class.
      */
-    protected string $controller;
+    private string $controller;
 
     /**
      * The name of the method to use.
      */
-    protected string $method;
+    private string $method;
 
     /**
      * An array of params to the controller method.
      */
-    protected array $params = [];
+    private array $params = [];
 
     /**
      * Whether dashes in URI's should be converted
      * to underscores when determining method names.
      */
-    protected bool $translateURIDashes;
+    private bool $translateURIDashes;
 
     /**
      * HTTP verb for the request.
      */
-    protected string $httpVerb;
+    private string $httpVerb;
 
     /**
      * The namespace for controllers.
      */
-    protected string $namespace;
+    private string $namespace;
 
     /**
      * The name of the default controller class.
      */
-    protected string $defaultController;
+    private string $defaultController;
 
     /**
      * The name of the default method
      */
-    protected string $defaultMethod;
+    private string $defaultMethod;
 
     /**
      * @param class-string[] $protectedControllers
