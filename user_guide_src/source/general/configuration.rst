@@ -16,7 +16,7 @@ the application configuration files in the **app/Config** folder.
     :depth: 2
 
 Working With Configuration Files
-================================
+********************************
 
 You can access configuration files for your classes in several different ways.
 
@@ -45,7 +45,7 @@ that is not web-accessible while keeping it under **/app** for easy access
 during development.
 
 Creating Configuration Files
-============================
+****************************
 
 When you need a new configuration, first you create a new file at your desired location.
 The default file location (recommended for most cases) is **app/Config**.
@@ -57,14 +57,14 @@ Define the class and fill it with public properties that represent your settings
 .. literalinclude:: configuration/004.php
 
 Environment Variables
-=====================
+*********************
 
 One of today's best practices for application setup is to use Environment Variables. One reason for this is that Environment Variables are easy to change between deploys without changing any code. Configuration can change a lot across deploys, but code does not. For instance, multiple environments, such as the developer's local machine and the production server, usually need different configuration values for each particular setup.
 
 Environment Variables should also be used for anything private such as passwords, API keys, or other sensitive data.
 
 Environment Variables and CodeIgniter
-=====================================
+*************************************
 
 CodeIgniter makes it simple and painless to set Environment Variables by using a "dotenv" file. The term comes from the file name, which starts with a dot before the text "env".
 
@@ -94,7 +94,7 @@ overwritten. The loaded Environment variables are accessed using any of the foll
 .. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 
 Nesting Variables
-=================
+*****************
 
 To save on typing, you can reuse variables that you've already specified in the file by wrapping the
 variable name within ``${...}``:
@@ -106,7 +106,7 @@ variable name within ``${...}``:
     TMP_DIR="${BASE_DIR}/tmp"
 
 Namespaced Variables
-====================
+********************
 
 There will be times when you will have several variables with the same name.
 The system needs a way of knowing what the correct setting should be.
@@ -130,7 +130,7 @@ prefix followed by a dot (.), and then the variable name itself.
     BackEnd.db = admin
 
 Configuration Classes and Environment Variables
-===============================================
+***********************************************
 
 When you instantiate a configuration class, any *namespaced* environment variables
 are considered for merging into the configuration object's properties.
@@ -168,7 +168,7 @@ Some environments do not permit variable name with dots. In such case, you could
     app_CSPEnabled = true
 
 Environment Variables as Replacements for Data
-==============================================
+**********************************************
 
 It is very important to always remember that environment variables contained in your **.env** are
 **only replacements for existing data**. This means that you cannot expect to fill your **.env** with all
@@ -183,7 +183,7 @@ Simply put, you cannot just put ``app.myNewConfig = foo`` in your **.env** and e
 to magically have that property and value at run time.
 
 Treating Environment Variables as Arrays
-========================================
+****************************************
 
 A namespaced environment variable can be further treated as an array.
 If the prefix matches the configuration class, then the remainder of the
@@ -215,7 +215,7 @@ held the following then the result would be the same as above.
     address.country = "Germany"
 
 Handling Different Environments
-===============================
+*******************************
 
 Configuring multiple environments is easily accomplished by using a separate **.env** file with values modified to meet that environment's needs.
 
@@ -228,7 +228,7 @@ Do not track **.env** files with your version control system. If you do, and the
 .. _registrars:
 
 Registrars
-==========
+**********
 
 "Registrars" are any other classes which might provide additional configuration properties.
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
@@ -237,7 +237,7 @@ There are two ways to implement a Registrar: implicit and explicit.
 .. note:: Values from **.env** always take priority over Registrars.
 
 Implicit Registrars
--------------------
+===================
 
 Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
 is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
@@ -253,7 +253,7 @@ of the target config file. Existing values are merged, and Registrar properties 
 overwrite priority.
 
 Explicit Registrars
--------------------
+===================
 
 A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,
