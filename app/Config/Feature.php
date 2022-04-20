@@ -30,5 +30,5 @@ class Feature extends BaseConfig
      *
      * @var bool
      */
-    public $autoRoutesImproved = false;
+    public bool $autoRoutesImproved = false;
 }
