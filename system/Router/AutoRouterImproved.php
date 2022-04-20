@@ -186,17 +186,15 @@ class AutoRouterImproved implements AutoRouterInterface
 
     private function protectDefinedRoutes(): void
     {
-        if ($this->httpVerb !== 'cli') {
-            $controller = strtolower($this->controller);
+        $controller = strtolower($this->controller);
 
-            foreach ($this->protectedControllers as $controllerInRoutes) {
-                $routeLowerCase = strtolower($controllerInRoutes);
+        foreach ($this->protectedControllers as $controllerInRoutes) {
+            $routeLowerCase = strtolower($controllerInRoutes);
 
-                if ($routeLowerCase === $controller) {
-                    throw new PageNotFoundException(
-                        'Cannot access CLI Route Handler: ' . $controllerInRoutes
-                    );
-                }
+            if ($routeLowerCase === $controller) {
+                throw new PageNotFoundException(
+                    'Cannot access the controller in Defined Routes. Controller: ' . $controllerInRoutes
+                );
             }
         }
     }
