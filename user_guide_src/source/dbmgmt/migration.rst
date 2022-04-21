@@ -81,7 +81,7 @@ Namespaces
 The migration library can automatically scan all namespaces you have defined within
 **app/Config/Autoload.php** or loaded from an external source like Composer, using
 the ``$psr4`` property for matching directory names. It will include all migrations
-it finds in Database/Migrations.
+it finds in **Database/Migrations**.
 
 Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
