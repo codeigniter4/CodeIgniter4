@@ -54,19 +54,19 @@ $migrate
 
 This boolean value determines whether the database migration runs before test.
 By default, the database is always migrated to the latest available state as defined by ``$namespace``.
-If false, migration never runs. If you want to disable migration, set false.
+If ``false``, migration never runs. If you want to disable migration, set ``false``.
 
 $migrateOnce
 ^^^^^^^^^^^^
 
 This boolean value determines whether the database migration runs only once. If you want
-to run migration once before the first test, set true. If not present or false, migration
+to run migration once before the first test, set ``true``. If not present or ``false``, migration
 runs before each test.
 
 $refresh
 ^^^^^^^^
 
-This boolean value determines whether the database is completely refreshed before test. If true,
+This boolean value determines whether the database is completely refreshed before test. If ``true``,
 all migrations are rolled back to version 0.
 
 $namespace
@@ -91,7 +91,7 @@ $seedOnce
 ^^^^^^^^^
 
 This boolean value determines whether the database seeding runs only once. If you want
-to run database seeding once before the first test, set true. If not present or false, database seeding
+to run database seeding once before the first test, set ``true``. If not present or ``false``, database seeding
 runs before each test.
 
 $basePath
