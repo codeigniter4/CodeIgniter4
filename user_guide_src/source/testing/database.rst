@@ -46,41 +46,48 @@ by adding a couple of class properties to your test.
 
 .. literalinclude:: database/003.php
 
-**$migrate**
+$migrate
+--------
 
 This boolean value determines whether the database migration runs before test.
 By default, the database is always migrated to the latest available state as defined by ``$namespace``.
 If false, migration never runs. If you want to disable migration, set false.
 
-**$migrateOnce**
+$migrateOnce
+------------
 
 This boolean value determines whether the database migration runs only once. If you want
 to run migration once before the first test, set true. If not present or false, migration
 runs before each test.
 
-**$refresh**
+$refresh
+--------
 
 This boolean value determines whether the database is completely refreshed before test. If true,
 all migrations are rolled back to version 0.
 
-**$seed**
+$seed
+-----
 
 If present and not empty, this specifies the name of a Seed file that is used to populate the database with
 test data prior to test running.
 
-**$seedOnce**
+$seedOnce
+---------
 
 This boolean value determines whether the database seeding runs only once. If you want
 to run database seeding once before the first test, set true. If not present or false, database seeding
 runs before each test.
 
-**$basePath**
+$basePath
+---------
 
 By default, CodeIgniter will look in **tests/_support/Database/Seeds** to locate the seeds that it should run during testing.
 You can change this directory by specifying the ``$basePath`` property. This should not include the **Seeds** directory,
 but the path to the single directory that holds the sub-directory.
 
-**$namespace**
+$namespace
+----------
 
 By default, CodeIgniter will look in **tests/_support/Database/Migrations** to locate the migrations
 that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` properties.
@@ -92,46 +99,54 @@ Helper Methods
 
 The **DatabaseTestTrait** class provides several helper methods to aid in testing your database.
 
-**regressDatabase()**
+regressDatabase()
+=================
 
 Called during ``$refresh`` described above, this method is available if you need to reset the database manually.
 
-**migrateDatabase()**
+migrateDatabase()
+=================
 
 Called during ``setUp``, this method is available if you need to run migrations manually.
 
-**seed($name)**
+seed($name)
+===========
 
 Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
 must be present within the path specified in ``$basePath``.
 
-**dontSeeInDatabase($table, $criteria)**
+dontSeeInDatabase($table, $criteria)
+====================================
 
 Asserts that a row with criteria matching the key/value pairs in ``$criteria`` DOES NOT exist in the database.
 
 .. literalinclude:: database/004.php
 
-**seeInDatabase($table, $criteria)**
+seeInDatabase($table, $criteria)
+================================
 
 Asserts that a row with criteria matching the key/value pairs in ``$criteria`` DOES exist in the database.
 
 .. literalinclude:: database/005.php
 
-**grabFromDatabase($table, $column, $criteria)**
+grabFromDatabase($table, $column, $criteria)
+============================================
 
 Returns the value of ``$column`` from the specified table where the row matches ``$criteria``. If more than one
 row is found, it will only test against the first one.
 
 .. literalinclude:: database/006.php
 
-**hasInDatabase($table, $data)**
+hasInDatabase($table, $data)
+============================
 
 Inserts a new row into the database. This row is removed after the current test runs. ``$data`` is an associative
 array with the data to insert into the table.
 
 .. literalinclude:: database/007.php
 
-**seeNumRecords($expected, $table, $criteria)**
+seeNumRecords($expected, $table, $criteria)
+===========================================
 
 Asserts that a number of matching rows are found in the database that match ``$criteria``.
 
