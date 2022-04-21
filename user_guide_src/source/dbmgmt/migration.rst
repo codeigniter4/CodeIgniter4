@@ -253,13 +253,15 @@ Class Reference
 
     .. php:method:: setNamespace($namespace)
 
-        :param  string  $namespace: application namespace.
+        :param  string|null  $namespace: application namespace. ``null`` is all namespaces.
         :returns:   The current MigrationRunner instance
         :rtype:     CodeIgniter\\Database\\MigrationRunner
 
         Sets the namespace the library should look for migration files:
 
         .. literalinclude:: migration/007.php
+
+        .. note:: If you set ``null``, it looks for migration files in all namespaces.
 
     .. php:method:: setGroup($group)
 
