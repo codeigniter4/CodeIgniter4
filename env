@@ -21,6 +21,8 @@
 #--------------------------------------------------------------------
 
 # app.baseURL = ''
+# If you have trouble with `.`, you could also use `_`.
+# app_baseURL = ''
 # app.forceGlobalSecureRequests = false
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
