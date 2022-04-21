@@ -46,53 +46,59 @@ by adding a couple of class properties to your test.
 
 .. literalinclude:: database/003.php
 
+Migrations
+----------
+
 $migrate
---------
+^^^^^^^^
 
 This boolean value determines whether the database migration runs before test.
 By default, the database is always migrated to the latest available state as defined by ``$namespace``.
 If false, migration never runs. If you want to disable migration, set false.
 
 $migrateOnce
-------------
+^^^^^^^^^^^^
 
 This boolean value determines whether the database migration runs only once. If you want
 to run migration once before the first test, set true. If not present or false, migration
 runs before each test.
 
 $refresh
---------
+^^^^^^^^
 
 This boolean value determines whether the database is completely refreshed before test. If true,
 all migrations are rolled back to version 0.
 
-$seed
+$namespace
+^^^^^^^^^^
+
+By default, CodeIgniter will look in **tests/_support/Database/Migrations** to locate the migrations
+that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` properties.
+This should not include the **Database\\Migrations** sub-namespace but just the base namespace.
+To run migrations from all available namespaces set this property to ``null``.
+
+Seeds
 -----
+
+$seed
+^^^^^
 
 If present and not empty, this specifies the name of a Seed file that is used to populate the database with
 test data prior to test running.
 
 $seedOnce
----------
+^^^^^^^^^
 
 This boolean value determines whether the database seeding runs only once. If you want
 to run database seeding once before the first test, set true. If not present or false, database seeding
 runs before each test.
 
 $basePath
----------
+^^^^^^^^^
 
 By default, CodeIgniter will look in **tests/_support/Database/Seeds** to locate the seeds that it should run during testing.
 You can change this directory by specifying the ``$basePath`` property. This should not include the **Seeds** directory,
 but the path to the single directory that holds the sub-directory.
-
-$namespace
-----------
-
-By default, CodeIgniter will look in **tests/_support/Database/Migrations** to locate the migrations
-that it should run during testing. You can change this location by specifying a new namespace in the ``$namespace`` properties.
-This should not include the **Database\\Migrations** sub-namespace but just the base namespace.
-To run migrations from all available namespaces set this property to ``null``.
 
 Helper Methods
 **************
