@@ -142,7 +142,7 @@ grabFromDatabase($table, $column, $criteria)
 --------------------------------------------
 
 Returns the value of ``$column`` from the specified table where the row matches ``$criteria``. If more than one
-row is found, it will only test against the first one.
+row is found, it will only return the first one.
 
 Assertions
 ==========
