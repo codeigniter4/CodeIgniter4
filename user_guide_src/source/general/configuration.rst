@@ -129,6 +129,19 @@ prefix followed by a dot (.), and then the variable name itself.
     backend.db = admin
     BackEnd.db = admin
 
+.. _env-var-namespace-separator:
+
+Namespace Separator
+-------------------
+
+Some environments, e.g., Docker, CloudFormation, do not permit variable name with dots (``.``). In such case, since v4.1.5, you could also use underscores (``_``) as a seperator.
+
+::
+
+    // namespaced variables with underscore
+    app_forceGlobalSecureRequests = true
+    app_CSPEnabled = true
+
 Configuration Classes and Environment Variables
 ***********************************************
 
@@ -158,14 +171,12 @@ the value from **.env** replaces the configuration file value.
     app.forceGlobalSecureRequests = true
     app.CSPEnabled = true
 
-.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
-
-Some environments do not permit variable name with dots. In such case, you could also use ``_`` as a seperator.
-
-::
+Since v4.1.5, you can also write with underscores::
 
     app_forceGlobalSecureRequests = true
     app_CSPEnabled = true
+
+.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
 
 Environment Variables as Replacements for Data
 ==============================================
