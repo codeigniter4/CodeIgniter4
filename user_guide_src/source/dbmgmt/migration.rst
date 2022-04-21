@@ -19,7 +19,7 @@ include migrations from all namespaces.
     :depth: 2
 
 ********************
-Migration file names
+Migration File Names
 ********************
 
 Each Migration is run in numeric order forward or backwards depending on the
