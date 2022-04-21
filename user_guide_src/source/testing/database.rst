@@ -114,7 +114,7 @@ Called during ``$refresh`` described above, this method is available if you need
 migrateDatabase()
 =================
 
-Called during ``setUp``, this method is available if you need to run migrations manually.
+Called during ``setUp()``, this method is available if you need to run migrations manually.
 
 seed($name)
 ===========
