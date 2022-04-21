@@ -1,13 +1,13 @@
-=====================
+#####################
 Testing Your Database
-=====================
+#####################
 
 .. contents::
     :local:
     :depth: 2
 
 The Test Class
-==============
+**************
 
 In order to take advantage of the built-in database tools that CodeIgniter provides for testing, your
 tests must extend ``CIUnitTestCase`` and use the ``DatabaseTestTrait``:
@@ -21,7 +21,7 @@ of the functionality described here:
 .. literalinclude:: database/002.php
 
 Setting Up a Test Database
-==========================
+**************************
 
 When running database tests, you need to provide a database that can be used during testing. Instead of
 using the PHPUnit built-in database features, the framework provides tools specific to CodeIgniter. The first
@@ -38,7 +38,7 @@ correct information::
     database.tests.database = '';
 
 Migrations and Seeds
---------------------
+====================
 
 When running tests, you need to ensure that your database has the correct schema set up and that
 it is in a known state for every test. You can use migrations and seeds to set up your database,
@@ -88,7 +88,7 @@ This should not include the **Database\\Migrations** sub-namespace but just the 
 To run migrations from all available namespaces set this property to ``null``.
 
 Helper Methods
-==============
+**************
 
 The **DatabaseTestTrait** class provides several helper methods to aid in testing your database.
 
