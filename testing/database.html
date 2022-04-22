@@ -272,7 +272,13 @@
 <li><p><a class="reference internal" href="#migrations-and-seeds" id="id3">Migrations and Seeds</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#helper-methods" id="id4">Helper Methods</a></p></li>
+<li><p><a class="reference internal" href="#helper-methods" id="id4">Helper Methods</a></p>
+<ul>
+<li><p><a class="reference internal" href="#changing-database-state" id="id5">Changing Database State</a></p></li>
+<li><p><a class="reference internal" href="#getting-data-from-database" id="id6">Getting Data from Database</a></p></li>
+<li><p><a class="reference internal" href="#assertions" id="id7">Assertions</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="the-test-class">
@@ -356,82 +362,98 @@ by adding a couple of class properties to your test.</p>
 <span class="p">{</span>
     <span class="k">use</span> <span class="nx">DatabaseTestTrait</span><span class="p">;</span>
 
-    <span class="k">protected</span> <span class="nv">$refresh</span>  <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="c1">// For Migrations</span>
+    <span class="k">protected</span> <span class="nv">$migrate</span>     <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$migrateOnce</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$refresh</span>     <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$namespace</span>   <span class="o">=</span> <span class="s1">&#39;Tests\Support&#39;</span><span class="p">;</span>
+
+    <span class="c1">// For Seeds</span>
+    <span class="k">protected</span> <span class="nv">$seedOnce</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$seed</span>     <span class="o">=</span> <span class="s1">&#39;TestSeeder&#39;</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$basePath</span> <span class="o">=</span> <span class="s1">&#39;path/to/database/files&#39;</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>$migrate</strong></p>
+<section id="migrations">
+<h4>Migrations<a class="headerlink" href="#migrations" title="Permalink to this headline"></a></h4>
+<section id="migrate">
+<h5>$migrate<a class="headerlink" href="#migrate" title="Permalink to this headline"></a></h5>
 <p>This boolean value determines whether the database migration runs before test.
 By default, the database is always migrated to the latest available state as defined by <code class="docutils literal notranslate"><span class="pre">$namespace</span></code>.
-If false, migration never runs. If you want to disable migration, set false.</p>
-<p><strong>$migrateOnce</strong></p>
+If <code class="docutils literal notranslate"><span class="pre">false</span></code>, migration never runs. If you want to disable migration, set <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</section>
+<section id="migrateonce">
+<h5>$migrateOnce<a class="headerlink" href="#migrateonce" title="Permalink to this headline"></a></h5>
 <p>This boolean value determines whether the database migration runs only once. If you want
-to run migration once before the first test, set true. If not present or false, migration
+to run migration once before the first test, set <code class="docutils literal notranslate"><span class="pre">true</span></code>. If not present or <code class="docutils literal notranslate"><span class="pre">false</span></code>, migration
 runs before each test.</p>
-<p><strong>$refresh</strong></p>
-<p>This boolean value determines whether the database is completely refreshed before test. If true,
+</section>
+<section id="refresh">
+<h5>$refresh<a class="headerlink" href="#refresh" title="Permalink to this headline"></a></h5>
+<p>This boolean value determines whether the database is completely refreshed before test. If <code class="docutils literal notranslate"><span class="pre">true</span></code>,
 all migrations are rolled back to version 0.</p>
-<p><strong>$seed</strong></p>
+</section>
+<section id="namespace">
+<h5>$namespace<a class="headerlink" href="#namespace" title="Permalink to this headline"></a></h5>
+<p>By default, CodeIgniter will look in <strong>tests/_support/Database/Migrations</strong> to locate the migrations
+that it should run during testing. You can change this location by specifying a new namespace in the <code class="docutils literal notranslate"><span class="pre">$namespace</span></code> properties.
+This should not include the <strong>Database\Migrations</strong> sub-namespace but just the base namespace.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you set this property to <code class="docutils literal notranslate"><span class="pre">null</span></code>, it runs migrations from all available namespaces like <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">migrate</span> <span class="pre">--all</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="seeds">
+<h4>Seeds<a class="headerlink" href="#seeds" title="Permalink to this headline"></a></h4>
+<section id="seed">
+<h5>$seed<a class="headerlink" href="#seed" title="Permalink to this headline"></a></h5>
 <p>If present and not empty, this specifies the name of a Seed file that is used to populate the database with
 test data prior to test running.</p>
-<p><strong>$seedOnce</strong></p>
+</section>
+<section id="seedonce">
+<h5>$seedOnce<a class="headerlink" href="#seedonce" title="Permalink to this headline"></a></h5>
 <p>This boolean value determines whether the database seeding runs only once. If you want
-to run database seeding once before the first test, set true. If not present or false, database seeding
+to run database seeding once before the first test, set <code class="docutils literal notranslate"><span class="pre">true</span></code>. If not present or <code class="docutils literal notranslate"><span class="pre">false</span></code>, database seeding
 runs before each test.</p>
-<p><strong>$basePath</strong></p>
+</section>
+<section id="basepath">
+<h5>$basePath<a class="headerlink" href="#basepath" title="Permalink to this headline"></a></h5>
 <p>By default, CodeIgniter will look in <strong>tests/_support/Database/Seeds</strong> to locate the seeds that it should run during testing.
 You can change this directory by specifying the <code class="docutils literal notranslate"><span class="pre">$basePath</span></code> property. This should not include the <strong>Seeds</strong> directory,
 but the path to the single directory that holds the sub-directory.</p>
-<p><strong>$namespace</strong></p>
-<p>By default, CodeIgniter will look in <strong>tests/_support/Database/Migrations</strong> to locate the migrations
-that it should run during testing. You can change this location by specifying a new namespace in the <code class="docutils literal notranslate"><span class="pre">$namespace</span></code> properties.
-This should not include the <strong>Database\Migrations</strong> sub-namespace but just the base namespace.
-To run migrations from all available namespaces set this property to <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</section>
+</section>
 </section>
 </section>
 <section id="helper-methods">
 <h2><a class="toc-backref" href="#id4">Helper Methods</a><a class="headerlink" href="#helper-methods" title="Permalink to this headline"></a></h2>
 <p>The <strong>DatabaseTestTrait</strong> class provides several helper methods to aid in testing your database.</p>
-<p><strong>regressDatabase()</strong></p>
+<section id="changing-database-state">
+<h3><a class="toc-backref" href="#id5">Changing Database State</a><a class="headerlink" href="#changing-database-state" title="Permalink to this headline"></a></h3>
+<section id="regressdatabase">
+<h4>regressDatabase()<a class="headerlink" href="#regressdatabase" title="Permalink to this headline"></a></h4>
 <p>Called during <code class="docutils literal notranslate"><span class="pre">$refresh</span></code> described above, this method is available if you need to reset the database manually.</p>
-<p><strong>migrateDatabase()</strong></p>
-<p>Called during <code class="docutils literal notranslate"><span class="pre">setUp</span></code>, this method is available if you need to run migrations manually.</p>
-<p><strong>seed($name)</strong></p>
+</section>
+<section id="migratedatabase">
+<h4>migrateDatabase()<a class="headerlink" href="#migratedatabase" title="Permalink to this headline"></a></h4>
+<p>Called during <code class="docutils literal notranslate"><span class="pre">setUp()</span></code>, this method is available if you need to run migrations manually.</p>
+</section>
+<section id="seed-name">
+<h4>seed($name)<a class="headerlink" href="#seed-name" title="Permalink to this headline"></a></h4>
 <p>Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
 must be present within the path specified in <code class="docutils literal notranslate"><span class="pre">$basePath</span></code>.</p>
-<p><strong>dontSeeInDatabase($table, $criteria)</strong></p>
-<p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES NOT exist in the database.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
-</pre></div>
-</div>
-<p><strong>seeInDatabase($table, $criteria)</strong></p>
-<p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES exist in the database.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">];</span>
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
-</pre></div>
-</div>
-<p><strong>grabFromDatabase($table, $column, $criteria)</strong></p>
-<p>Returns the value of <code class="docutils literal notranslate"><span class="pre">$column</span></code> from the specified table where the row matches <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>. If more than one
-row is found, it will only test against the first one.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$username</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">grabFromDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
-<p><strong>hasInDatabase($table, $data)</strong></p>
+</section>
+<section id="hasindatabase-table-data">
+<h4>hasInDatabase($table, $data)<a class="headerlink" href="#hasindatabase-table-data" title="Permalink to this headline"></a></h4>
 <p>Inserts a new row into the database. This row is removed after the current test runs. <code class="docutils literal notranslate"><span class="pre">$data</span></code> is an associative
 array with the data to insert into the table.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -443,7 +465,46 @@ array with the data to insert into the table.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">hasInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>seeNumRecords($expected, $table, $criteria)</strong></p>
+</section>
+</section>
+<section id="getting-data-from-database">
+<h3><a class="toc-backref" href="#id6">Getting Data from Database</a><a class="headerlink" href="#getting-data-from-database" title="Permalink to this headline"></a></h3>
+<section id="grabfromdatabase-table-column-criteria">
+<h4>grabFromDatabase($table, $column, $criteria)<a class="headerlink" href="#grabfromdatabase-table-column-criteria" title="Permalink to this headline"></a></h4>
+<p>Returns the value of <code class="docutils literal notranslate"><span class="pre">$column</span></code> from the specified table where the row matches <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>. If more than one
+row is found, it will only return the first one.</p>
+</section>
+</section>
+<section id="assertions">
+<h3><a class="toc-backref" href="#id7">Assertions</a><a class="headerlink" href="#assertions" title="Permalink to this headline"></a></h3>
+<section id="dontseeindatabase-table-criteria">
+<h4>dontSeeInDatabase($table, $criteria)<a class="headerlink" href="#dontseeindatabase-table-criteria" title="Permalink to this headline"></a></h4>
+<p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES NOT exist in the database.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dontSeeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="seeindatabase-table-criteria">
+<h4>seeInDatabase($table, $criteria)<a class="headerlink" href="#seeindatabase-table-criteria" title="Permalink to this headline"></a></h4>
+<p>Asserts that a row with criteria matching the key/value pairs in <code class="docutils literal notranslate"><span class="pre">$criteria</span></code> DOES exist in the database.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$criteria</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;email&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeInDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="seenumrecords-expected-table-criteria">
+<h4>seeNumRecords($expected, $table, $criteria)<a class="headerlink" href="#seenumrecords-expected-table-criteria" title="Permalink to this headline"></a></h4>
 <p>Asserts that a number of matching rows are found in the database that match <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -453,6 +514,8 @@ array with the data to insert into the table.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">seeNumRecords</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="nv">$criteria</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+</section>
 </section>
 </section>
 
@@ -468,7 +531,7 @@ array with the data to insert into the table.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 21, 2022.
+      <span class="lastupdated">Last updated on Apr 22, 2022.
       </span></p>
   </div>
 
