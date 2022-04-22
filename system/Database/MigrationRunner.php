@@ -40,7 +40,8 @@ class MigrationRunner
     protected $table;
 
     /**
-     * The Namespace  where migrations can be found.
+     * The Namespace where migrations can be found.
+     * `null` is all namespaces.
      *
      * @var string|null
      */
