@@ -116,11 +116,6 @@ parameters:
 			path: system/CodeIgniter.php
 
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
 			message: "#^Binary operation \"\\+\" between array\\<string, class\\-string\\>\\|false and non\\-empty\\-array\\<string, string\\> results in an error\\.$#"
 			count: 1
 			path: system/Common.php
