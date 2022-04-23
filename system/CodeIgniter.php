@@ -80,7 +80,7 @@ class CodeIgniter
     /**
      * Current request.
      *
-     * @var CLIRequest|IncomingRequest|Request
+     * @var CLIRequest|IncomingRequest|Request|null
      */
     protected $request;
 
