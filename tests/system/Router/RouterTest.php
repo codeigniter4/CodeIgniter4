@@ -14,6 +14,7 @@ namespace CodeIgniter\Router;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -836,5 +837,42 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertNull($internal);
         $this->assertSame('', $router->directory());
+    }
+
+    /**
+     * @dataProvider provideRedirectCase
+     */
+    public function testRedirectRoute(
+        string $route,
+        string $redirectFrom,
+        string $redirectTo,
+        string $url,
+        string $expectedPath,
+        string $alias
+    ) {
+        $collection = clone $this->collection;
+        $collection->resetRoutes();
+
+        $collection->get($route, 'Controller::method', ['as' => $alias]);
+        $collection->addRedirect($redirectFrom, $redirectTo);
+
+        $this->expectException(RedirectException::class);
+        $this->expectExceptionMessage($expectedPath);
+
+        $router = new Router($collection, $this->request);
+        $router->handle($url);
+    }
+
+    public function provideRedirectCase(): array
+    {
+        // [$route, $redirectFrom, $redirectTo, $url, $expectedPath, $alias]
+        return [
+            ['posts', 'articles', 'posts', '/articles', 'posts', 'alias'],
+            ['posts', 'articles', 'alias', '/articles', 'posts', 'alias'],
+            ['post/(:num)', 'article/(:num)', 'post/$1', '/article/1', 'post/1', 'alias'],
+            ['post/(:num)', 'article/(:num)', 'alias', '/article/1', 'post/1', 'alias'],
+            ['post/(:num)/comment/(:any)', 'article/(:num)/(:any)', 'post/$1/comment/$2', '/article/1/2', 'post/1/comment/2', 'alias'],
+            ['post/(:segment)/comment/(:any)', 'article/(:num)/(:any)', 'alias', '/article/1/2', 'post/1/comment/2', 'alias'],
+        ];
     }
 }

@@ -412,7 +412,17 @@ class Router implements RouterInterface
             if (preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
                 // Is this route supposed to redirect to another?
                 if ($this->collection->isRedirect($routeKey)) {
-                    throw new RedirectException(is_array($handler) ? key($handler) : $handler, $this->collection->getRedirectCode($routeKey));
+                    // replacing matched route groups with references: post/([0-9]+) -> post/$1
+                    $redirectTo = preg_replace_callback('/(\([^\(]+\))/', static function () {
+                        static $i = 1;
+
+                        return '$' . $i++;
+                    }, is_array($handler) ? key($handler) : $handler);
+
+                    throw new RedirectException(
+                        preg_replace('#^' . $routeKey . '$#u', $redirectTo, $uri),
+                        $this->collection->getRedirectCode($routeKey)
+                    );
                 }
                 // Store our locale so CodeIgniter object can
                 // assign it to the Request.
