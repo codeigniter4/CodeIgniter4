@@ -452,16 +452,12 @@ class RouteCollection implements RouteCollectionInterface
         // we might need to do.
         $this->discoverRoutes();
 
-        $routes     = [];
-        $collection = [];
+        $routes = [];
 
         if (isset($this->routes[$verb])) {
             // Keep current verb's routes at the beginning, so they're matched
             // before any of the generic, "add" routes.
-            if (isset($this->routes['*'])) {
-                $extraRules = array_diff_key($this->routes['*'], $this->routes[$verb]);
-                $collection = array_merge($this->routes[$verb], $extraRules);
-            }
+            $collection = $this->routes[$verb] + ($this->routes['*'] ?? []);
 
             foreach ($collection as $r) {
                 $key          = key($r['route']);
