@@ -166,8 +166,8 @@ class ShowTableInfo extends BaseCommand
         }
 
         $limitFieldsValue = (int) CLI::getOption('limit-fields-value');
+
         if (in_array($limitFieldsValue, [null, true, 0, 1], true)) {
-            // Default Value
             $limitFieldsValue = 15;
         }
 
