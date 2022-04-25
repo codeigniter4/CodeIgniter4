@@ -136,7 +136,7 @@ class ShowTableInfo extends BaseCommand
         CLI::table($tbody, $thead);
     }
 
-    protected function makeTbodyForShowAllTables(array $tables): array
+    private function makeTbodyForShowAllTables(array $tables): array
     {
         foreach ($tables  as $id => $tableName) {
             $db = $this->db->query("SELECT * FROM {$tableName}");
