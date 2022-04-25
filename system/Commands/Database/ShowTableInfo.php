@@ -162,7 +162,6 @@ class ShowTableInfo extends BaseCommand
         $limitRows = (int) CLI::getOption('limit-rows');
 
         if (in_array($limitRows, [null, true, 0, 1], true)) {
-            // Default Value
             $limitRows = 10;
         }
 
