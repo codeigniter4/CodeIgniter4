@@ -5,16 +5,21 @@ Release Date: January 31, 2021
 
 **4.1.0 release of CodeIgniter4**
 
-Changes:
+.. contents::
+    :local:
+    :depth: 2
 
-- Dropped support for PHP 7.2
-
-Removed:
+BREAKING
+********
 
 - ``Autoloader::loadLegacy()`` method was previously used for migration of non-namespaced classes in transition to CodeIgniter v4. Since ``4.1.0``, this support was removed.
 
-Bugs Fixed:
+Changes
+*******
 
-Deprecations:
+- Dropped support for PHP 7.2
 
-- Deprecated ``Model::fillPlaceholders(array $rules, array $data)`` method, use ``fillPlaceholders(array $rules, array $data)`` from Validation instead.
+Deprecations
+************
+
+- Deprecated ``Model::fillPlaceholders()`` method, use ``Validation::fillPlaceholders()`` instead.

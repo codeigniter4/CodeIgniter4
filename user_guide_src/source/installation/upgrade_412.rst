@@ -2,6 +2,16 @@
 Upgrading from 4.1.1 to 4.1.2
 #############################
 
+Please refer to the upgrade instructions corresponding to your installation method.
+
+- :ref:`Composer Installation App Starter Upgrading <app-starter-upgrading>`
+- :ref:`Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading <adding-codeigniter4-upgrading>`
+- :ref:`Manual Installation Upgrading <installing-manual-upgrading>`
+
+.. contents::
+    :local:
+    :depth: 2
+
 **current_url() and indexPage**
 
 Due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()``,
