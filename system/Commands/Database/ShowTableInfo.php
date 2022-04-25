@@ -200,7 +200,7 @@ class ShowTableInfo extends BaseCommand
         CLI::write("List of metadata information in table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
-        $thead = ['filde name', 'type', 'max_length', 'nullable', 'default', 'primary_key'];
+        $thead = ['field name', 'type', 'max_length', 'nullable', 'default', 'primary_key'];
 
         $fields = $this->db->getFieldData($tableName);
 
