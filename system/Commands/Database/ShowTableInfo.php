@@ -197,7 +197,7 @@ class ShowTableInfo extends BaseCommand
     protected function showFieldMetaData(string $tableName): void
     {
         CLI::newLine();
-        CLI::write("List of meta data information in Table \"{$tableName}\" : ", 'black', 'yellow');
+        CLI::write("List of metadata information in table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
         $thead = ['filde name', 'type', 'max_length', 'nullable', 'default', 'primary_key'];
