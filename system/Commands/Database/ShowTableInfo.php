@@ -132,9 +132,7 @@ class ShowTableInfo extends BaseCommand
         CLI::newLine();
 
         $thead = $this->db->getFieldNames($tables[$tableName]);
-
         $tbody = $this->makeTableRows($tables[$tableName]);
-
         CLI::table($tbody, $thead);
     }
 
