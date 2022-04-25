@@ -12,11 +12,10 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
+Breaking Changes
+****************
+
 **Legacy Autoloading**
 
-`Autoloader::loadLegacy()` method was originally for transition to CodeIgniter v4. Since `4.1.0`,
-this support was removed and this method should not be used.
-
-**Model::fillPlaceholders**
-
-Replace any use of this method with its equivalent version from Validation instead.
+``Autoloader::loadLegacy()`` method was originally for transition to CodeIgniter v4. Since 4.1.0,
+this support was removed. All classes must be namespaced.
