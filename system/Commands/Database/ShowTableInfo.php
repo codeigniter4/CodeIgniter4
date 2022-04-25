@@ -87,7 +87,7 @@ class ShowTableInfo extends BaseCommand
         }
 
         if (CLI::getOption('show')) {
-            CLI::write('The following is a list of the names of all database tables : ', 'black', 'yellow');
+            CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
             CLI::newLine();
 
             $thead = ['#ID', 'table name', 'number of rows', 'number of field'];
