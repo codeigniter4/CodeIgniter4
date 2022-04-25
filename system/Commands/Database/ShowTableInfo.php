@@ -157,7 +157,7 @@ class ShowTableInfo extends BaseCommand
         return $tbody;
     }
 
-    protected function makeTableRows(string $tableName): array
+    private function makeTableRows(string $tableName): array
     {
         $limitRows = (int) CLI::getOption('limit-rows');
         if (in_array($limitRows, [null, true, 0, 1], true)) {
