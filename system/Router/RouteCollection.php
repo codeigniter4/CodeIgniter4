@@ -105,6 +105,16 @@ class RouteCollection implements RouteCollectionInterface
      * An array of all routes and their mappings.
      *
      * @var array
+     *
+     * [
+     *     verb => [
+     *         routeName => [
+     *             'route' => [
+     *                 routeKey => handler,
+     *             ]
+     *         ]
+     *     ],
+     * ]
      */
     protected $routes = [
         '*'       => [],
@@ -442,16 +452,12 @@ class RouteCollection implements RouteCollectionInterface
         // we might need to do.
         $this->discoverRoutes();
 
-        $routes     = [];
-        $collection = [];
+        $routes = [];
 
         if (isset($this->routes[$verb])) {
             // Keep current verb's routes at the beginning, so they're matched
             // before any of the generic, "add" routes.
-            if (isset($this->routes['*'])) {
-                $extraRules = array_diff_key($this->routes['*'], $this->routes[$verb]);
-                $collection = array_merge($this->routes[$verb], $extraRules);
-            }
+            $collection = $this->routes[$verb] + ($this->routes['*'] ?? []);
 
             foreach ($collection as $r) {
                 $key          = key($r['route']);
@@ -1402,5 +1408,46 @@ class RouteCollection implements RouteCollectionInterface
         $this->prioritize = $enabled;
 
         return $this;
+    }
+
+    /**
+     * Get all controllers in Route Handlers
+     *
+     * @param string|null $verb HTTP verb. `'*'` returns all controllers in any verb.
+     */
+    public function getRegisteredControllers(?string $verb = '*'): array
+    {
+        $routes = [];
+
+        if ($verb === '*') {
+            $rawRoutes = [];
+
+            foreach ($this->defaultHTTPMethods as $tmpVerb) {
+                $rawRoutes = array_merge($rawRoutes, $this->routes[$tmpVerb]);
+            }
+
+            foreach ($rawRoutes as $route) {
+                $key     = key($route['route']);
+                $handler = $route['route'][$key];
+
+                $routes[$key] = $handler;
+            }
+        } else {
+            $routes = $this->getRoutes($verb);
+        }
+
+        $controllers = [];
+
+        foreach ($routes as $handler) {
+            if (! is_string($handler)) {
+                continue;
+            }
+
+            [$controller] = explode('::', $handler, 2);
+
+            $controllers[] = $controller;
+        }
+
+        return array_unique($controllers);
     }
 }

@@ -7,7 +7,10 @@ Server Requirements
 installed.
 
 The following PHP extensions should be enabled on your server:
-``php-json``, ``php-mysqlnd``, ``php-xml``
+
+  - ``php-json``
+  - ``php-mysqlnd`` (if you use MySQL)
+  - ``php-xml``
 
 In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need
 `libcurl <https://www.php.net/manual/en/curl.requirements.php>`_ installed.
@@ -15,7 +18,7 @@ In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need
 A database is required for most web application programming.
 Currently supported databases are:
 
-  - MySQL (5.1+) via the *MySQLi* driver
+  - MySQL via the *MySQLi* driver (version 5.1 and above only)
   - PostgreSQL via the *Postgre* driver
   - SQLite3 via the *SQLite3* driver
   - MSSQL via the *SQLSRV* driver (version 2005 and above only)

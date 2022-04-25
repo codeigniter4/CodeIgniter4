@@ -1,3 +1,3 @@
 <?php
 
-$response->request('GET', 'http://example.com', ['user_agent' => 'CodeIgniter Framework v4']);
+$client->request('GET', 'http://example.com', ['user_agent' => 'CodeIgniter Framework v4']);

@@ -56,11 +56,13 @@ So, if your request asks for JSON formatted data in an **Accept** header, the da
 ``respond*`` or ``fail*`` methods will be formatted by the ``CodeIgniter\Format\JSONFormatter`` class. The resulting
 JSON data will be sent back to the client.
 
+***************
 Class Reference
 ***************
+
 .. php:method:: setResponseFormat($format)
 
-    :param string $format The type of response to return, either ``json`` or ``xml``
+    :param string $format: The type of response to return, either ``json`` or ``xml``
 
     This defines the format to be used when formatting arrays in responses. If you provide a ``null`` value for
     ``$format``, it will be automatically determined through content negotiation.

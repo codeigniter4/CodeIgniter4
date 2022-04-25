@@ -19,7 +19,7 @@ include migrations from all namespaces.
     :depth: 2
 
 ********************
-Migration file names
+Migration File Names
 ********************
 
 Each Migration is run in numeric order forward or backwards depending on the
@@ -81,7 +81,7 @@ Namespaces
 The migration library can automatically scan all namespaces you have defined within
 **app/Config/Autoload.php** or loaded from an external source like Composer, using
 the ``$psr4`` property for matching directory names. It will include all migrations
-it finds in Database/Migrations.
+it finds in **Database/Migrations**.
 
 Each namespace has its own version sequence, this will help you upgrade and downgrade each module (namespace) without affecting other namespaces.
 
@@ -253,13 +253,15 @@ Class Reference
 
     .. php:method:: setNamespace($namespace)
 
-        :param  string  $namespace: application namespace.
+        :param  string|null  $namespace: application namespace. ``null`` is all namespaces.
         :returns:   The current MigrationRunner instance
         :rtype:     CodeIgniter\\Database\\MigrationRunner
 
         Sets the namespace the library should look for migration files:
 
         .. literalinclude:: migration/007.php
+
+        .. note:: If you set ``null``, it looks for migration files in all namespaces.
 
     .. php:method:: setGroup($group)
 

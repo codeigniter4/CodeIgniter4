@@ -9,14 +9,14 @@ the required settings are public properties.
 Unlike many other frameworks, CodeIgniter configurable items aren't contained in
 a single file. Instead, each class that needs configurable items will have a
 configuration file with the same name as the class that uses it. You will find
-the application configuration files in the **/app/Config** folder.
+the application configuration files in the **app/Config** folder.
 
 .. contents::
     :local:
     :depth: 2
 
 Working With Configuration Files
-================================
+********************************
 
 You can access configuration files for your classes in several different ways.
 
@@ -33,7 +33,7 @@ All configuration object properties are public, so you access the settings like 
 .. literalinclude:: configuration/003.php
 
 If no namespace is provided, it will look for the file in all defined namespaces
-as well as **/app/Config/**.
+as well as **app/Config/**.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
@@ -45,10 +45,10 @@ that is not web-accessible while keeping it under **/app** for easy access
 during development.
 
 Creating Configuration Files
-============================
+****************************
 
 When you need a new configuration, first you create a new file at your desired location.
-The default file location (recommended for most cases) is **/app/Config**.
+The default file location (recommended for most cases) is **app/Config**.
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
@@ -57,7 +57,7 @@ Define the class and fill it with public properties that represent your settings
 .. literalinclude:: configuration/004.php
 
 Environment Variables
-=====================
+*********************
 
 One of today's best practices for application setup is to use Environment Variables. One reason for this is that Environment Variables are easy to change between deploys without changing any code. Configuration can change a lot across deploys, but code does not. For instance, multiple environments, such as the developer's local machine and the production server, usually need different configuration values for each particular setup.
 
@@ -68,8 +68,8 @@ Environment Variables and CodeIgniter
 
 CodeIgniter makes it simple and painless to set Environment Variables by using a "dotenv" file. The term comes from the file name, which starts with a dot before the text "env".
 
-CodeIgniter expects **.env** to be at the root of your project alongside the ``system``
-and ``app`` directories. There is a template file distributed with CodeIgniter that's
+CodeIgniter expects **.env** to be at the root of your project alongside the
+``app`` directories. There is a template file distributed with CodeIgniter that's
 located at the project root named **env** (Notice there's no dot (**.**) at the start?).
 It has a large collection of variables your project might use that have been assigned
 empty, dummy, or default values. You can use this file as a starting place for your
@@ -129,8 +129,21 @@ prefix followed by a dot (.), and then the variable name itself.
     backend.db = admin
     BackEnd.db = admin
 
+.. _env-var-namespace-separator:
+
+Namespace Separator
+-------------------
+
+Some environments, e.g., Docker, CloudFormation, do not permit variable name with dots (``.``). In such case, since v4.1.5, you could also use underscores (``_``) as a seperator.
+
+::
+
+    // namespaced variables with underscore
+    app_forceGlobalSecureRequests = true
+    app_CSPEnabled = true
+
 Configuration Classes and Environment Variables
-===============================================
+***********************************************
 
 When you instantiate a configuration class, any *namespaced* environment variables
 are considered for merging into the configuration object's properties.
@@ -158,14 +171,12 @@ the value from **.env** replaces the configuration file value.
     app.forceGlobalSecureRequests = true
     app.CSPEnabled = true
 
-.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
-
-Some environments do not permit variable name with dots. In such case, you could also use ``_`` as a seperator.
-
-::
+Since v4.1.5, you can also write with underscores::
 
     app_forceGlobalSecureRequests = true
     app_CSPEnabled = true
+
+.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
 
 Environment Variables as Replacements for Data
 ==============================================
@@ -215,20 +226,20 @@ held the following then the result would be the same as above.
     address.country = "Germany"
 
 Handling Different Environments
-===============================
+*******************************
 
 Configuring multiple environments is easily accomplished by using a separate **.env** file with values modified to meet that environment's needs.
 
 The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.
 
-In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``system`` and ``app`` directories.
+In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``app`` directories.
 
 Do not track **.env** files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.
 
 .. _registrars:
 
 Registrars
-==========
+**********
 
 "Registrars" are any other classes which might provide additional configuration properties.
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
@@ -237,7 +248,7 @@ There are two ways to implement a Registrar: implicit and explicit.
 .. note:: Values from **.env** always take priority over Registrars.
 
 Implicit Registrars
--------------------
+===================
 
 Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
 is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
@@ -253,7 +264,7 @@ of the target config file. Existing values are merged, and Registrar properties 
 overwrite priority.
 
 Explicit Registrars
--------------------
+===================
 
 A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,

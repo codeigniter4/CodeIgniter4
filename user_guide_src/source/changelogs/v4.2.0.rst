@@ -18,6 +18,8 @@ BREAKING
     - ``spark``
 - The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
 - The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
+- The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
+- To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto routing.
 
 Enhancements
 ************
@@ -27,7 +29,7 @@ Enhancements
     - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement
     - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
     - See :ref:`content-security-policy` for details.
-- New View Decorators allow modifying the generated HTML prior to caching.
+- New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
 - Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
 - Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
@@ -39,6 +41,8 @@ Enhancements
 - Added support for webp files to **app/Config/Mimes.php**.
 - Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
 - HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag`.
+- RouteCollection::addRedirect() can now use placeholders.
+
 
 Changes
 *******

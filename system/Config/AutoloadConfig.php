@@ -12,6 +12,9 @@
 namespace CodeIgniter\Config;
 
 use Laminas\Escaper\Escaper;
+use Laminas\Escaper\Exception\ExceptionInterface;
+use Laminas\Escaper\Exception\InvalidArgumentException as EscaperInvalidArgumentException;
+use Laminas\Escaper\Exception\RuntimeException;
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerAwareInterface;
@@ -103,15 +106,18 @@ class AutoloadConfig
      * @var array<string, string>
      */
     protected $coreClassmap = [
-        AbstractLogger::class           => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
-        InvalidArgumentException::class => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
-        LoggerAwareInterface::class     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
-        LoggerAwareTrait::class         => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
-        LoggerInterface::class          => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
-        LoggerTrait::class              => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
-        LogLevel::class                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
-        NullLogger::class               => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
-        Escaper::class                  => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
+        AbstractLogger::class                  => SYSTEMPATH . 'ThirdParty/PSR/Log/AbstractLogger.php',
+        InvalidArgumentException::class        => SYSTEMPATH . 'ThirdParty/PSR/Log/InvalidArgumentException.php',
+        LoggerAwareInterface::class            => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareInterface.php',
+        LoggerAwareTrait::class                => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerAwareTrait.php',
+        LoggerInterface::class                 => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerInterface.php',
+        LoggerTrait::class                     => SYSTEMPATH . 'ThirdParty/PSR/Log/LoggerTrait.php',
+        LogLevel::class                        => SYSTEMPATH . 'ThirdParty/PSR/Log/LogLevel.php',
+        NullLogger::class                      => SYSTEMPATH . 'ThirdParty/PSR/Log/NullLogger.php',
+        ExceptionInterface::class              => SYSTEMPATH . 'ThirdParty/Escaper/Exception/ExceptionInterface.php',
+        EscaperInvalidArgumentException::class => SYSTEMPATH . 'ThirdParty/Escaper/Exception/InvalidArgumentException.php',
+        RuntimeException::class                => SYSTEMPATH . 'ThirdParty/Escaper/Exception/RuntimeException.php',
+        Escaper::class                         => SYSTEMPATH . 'ThirdParty/Escaper/Escaper.php',
     ];
 
     /**

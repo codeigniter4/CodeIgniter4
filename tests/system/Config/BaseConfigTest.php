@@ -55,6 +55,25 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame(18, $config->golf);
     }
 
+    public function testUseDefaultValueTypeIntAndFloatValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
+
+        $this->assertSame(0.0, $config->float);
+        $this->assertSame(999, $config->int);
+    }
+
+    public function testUseDefaultValueTypeStringValue()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
+
+        $this->assertSame('123456', $config->password);
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
@@ -98,6 +117,9 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->onedeep_value);
         // array property name with underscore and key with underscore
         $this->assertSame('foo', $config->one_deep['under_deep']);
+
+        // The default property value is null but has type
+        $this->assertSame(20, $config->size);
     }
 
     public function testPrefixedValues()

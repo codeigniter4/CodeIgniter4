@@ -80,7 +80,7 @@ class CodeIgniter
     /**
      * Current request.
      *
-     * @var CLIRequest|IncomingRequest|Request
+     * @var CLIRequest|IncomingRequest|Request|null
      */
     protected $request;
 
@@ -792,6 +792,8 @@ class CodeIgniter
     /**
      * Determines the path to use for us to try to route to, based
      * on user input (setPath), or the CLI/IncomingRequest path.
+     *
+     * @return string
      */
     protected function determinePath()
     {
