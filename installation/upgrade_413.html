@@ -265,13 +265,24 @@
              
   <section id="upgrading-from-4-1-2-to-4-1-3">
 <h1>Upgrading from 4.1.2 to 4.1.3<a class="headerlink" href="#upgrading-from-4-1-2-to-4-1-3" title="Permalink to this headline"></a></h1>
+<p>Please refer to the upgrade instructions corresponding to your installation method.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
+<li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
+<li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
+</ul>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#project-files" id="id1">Project Files</a></p></li>
+</ul>
+</div>
 <p><strong>Cache TTL</strong></p>
 <p>There is a new value in <strong>app/Config/Cache.php</strong>: <code class="docutils literal notranslate"><span class="pre">$ttl</span></code>. This is not used by framework
 handlers where 60 seconds is hard-coded, but may be useful to projects and modules.
 In a future release this value will replace the hard-coded version, so either leave this as
 <code class="docutils literal notranslate"><span class="pre">60</span></code> or stop relying on the hard-coded version.</p>
 <section id="project-files">
-<h2>Project Files<a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Only a few files in the project space (root, app, public, writable) received updates. Due to
 these files being outside of the system scope they will not be changed without your intervention.
 The following files received changes and it is recommended that you merge the updated versions with your application:</p>
