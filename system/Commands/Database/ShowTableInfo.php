@@ -66,7 +66,7 @@ class ShowTableInfo extends BaseCommand
     protected $options = [
         '--show'               => 'List the names of all database tables.',
         '--metadata'           => 'Retrieves list of containing field information.',
-        '--desc'               => 'Sort direction DESC of the tables Rows.',
+        '--desc'               => 'Sort the table rows in DESC order.',
         '--limit-rows'         => 'Limit the number of rows. [Default = 10]',
         '--limit-fields-value' => 'Custom length Limit of field values. [Default = 15]',
     ];
