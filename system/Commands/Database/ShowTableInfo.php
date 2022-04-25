@@ -146,7 +146,6 @@ class ShowTableInfo extends BaseCommand
                 $tableName,
                 $db->getNumRows(),
                 $db->getFieldCount(),
-
             ];
         }
 
