@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Mailer;
@@ -23,24 +23,18 @@ use Config\Mailer;
  */
 interface MailerInterface
 {
-	/**
-	 * Stores the Mailer config.
-	 *
-	 * @param Mailer $config
-	 */
-	public function __construct(Mailer $config);
+    /**
+     * Stores the Mailer config.
+     */
+    public function __construct(Mailer $config);
 
-	/**
-	 * Whether this handler is supported on this system.
-	 *
-	 * @return boolean
-	 */
-	public function isSupported(): bool;
+    /**
+     * Whether this handler is supported on this system.
+     */
+    public function isSupported(): bool;
 
-	/**
-	 * Sends an Email.
-	 *
-	 * @param Email $email
-	 */
-	public function send(Email $email);
+    /**
+     * Sends an Email.
+     */
+    public function send(Email $email);
 }

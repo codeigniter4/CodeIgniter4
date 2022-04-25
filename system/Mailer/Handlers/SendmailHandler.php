@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This file is part of the CodeIgniter 4 framework.
+ * This file is part of CodeIgniter 4 framework.
  *
  * (c) CodeIgniter Foundation <admin@codeigniter.com>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  */
 
 namespace CodeIgniter\Mailer\Handlers;
@@ -16,67 +16,58 @@ use CodeIgniter\Mailer\Exceptions\MailerException;
 
 class SendmailHandler extends BaseHandler
 {
-	/**
-	 * Whether this handler is supported on this system.
-	 *
-	 * @return boolean
-	 */
-	public function isSupported(): bool
-	{
-		return true;
-	}
+    /**
+     * Whether this handler is supported on this system.
+     */
+    public function isSupported(): bool
+    {
+        return true;
+    }
 
-	/**
-	 * Spools an Email to the server.
-	 *
-	 * @param Email $email
-	 *
-	 * @return boolean
-	 */
-	protected function spool(Email $email)
-	{
-	}
+    /**
+     * Spools an Email to the server.
+     *
+     * @return bool
+     */
+    protected function spool(Email $email)
+    {
+    }
 
-	//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-/* WIP */
+    // WIP
 
-	/**
-	 * Send using Sendmail
-	 *
-	 * @return boolean
-	 */
-	protected function sendWithSendmail()
-	{
-		// _validate_email_for_shell() below accepts by reference,
-		// so this needs to be assigned to a variable
-		$from = $this->cleanEmail($this->headers['From']);
-		if ($this->validateEmailForShell($from))
-		{
-			$from = '-f ' . $from;
-		}
-		else
-		{
-			$from = '';
-		}
+    /**
+     * Send using Sendmail
+     *
+     * @return bool
+     */
+    protected function sendWithSendmail()
+    {
+        // _validate_email_for_shell() below accepts by reference,
+        // so this needs to be assigned to a variable
+        $from = $this->cleanEmail($this->headers['From']);
+        if ($this->validateEmailForShell($from)) {
+            $from = '-f ' . $from;
+        } else {
+            $from = '';
+        }
 
-		// is popen() enabled?
-		if (! function_usable('popen') || false === ($fp = @popen($this->mailPath . ' -oi ' . $from . ' -t', 'w')))
-		{
-			// server probably has popen disabled, so nothing we can do to get a verbose error.
-			return false;
-		}
+        // is popen() enabled?
+        if (! function_usable('popen') || false === ($fp = @popen($this->mailPath . ' -oi ' . $from . ' -t', 'w'))) {
+            // server probably has popen disabled, so nothing we can do to get a verbose error.
+            return false;
+        }
 
-		fputs($fp, $this->headerStr);
-		fputs($fp, $this->finalBody);
+        fwrite($fp, $this->headerStr);
+        fwrite($fp, $this->finalBody);
 
-		$status = pclose($fp);
+        $status = pclose($fp);
 
-		if ($status !== 0)
-		{
-			throw MailerException::forNosocket($status);
-		}
+        if ($status !== 0) {
+            throw MailerException::forNosocket($status);
+        }
 
-		return true;
-	}
+        return true;
+    }
 }
