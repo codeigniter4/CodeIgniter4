@@ -228,6 +228,6 @@ class ShowTableInfo extends BaseCommand
             return CLI::color('Yes', 'green');
         }
 
-        return CLI::color('No!', 'red');
+        return CLI::color('No', 'red');
     }
 }
