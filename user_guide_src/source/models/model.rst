@@ -295,6 +295,8 @@ the array's values are the values to save for that key:
 
 .. literalinclude:: model/015.php
 
+You can retrieve the last inserted row's primary key using the ``getInsertID()`` method.
+
 update()
 --------
 
