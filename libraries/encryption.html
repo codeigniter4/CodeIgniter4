@@ -390,7 +390,7 @@ you can use the Encryption library’s <code class="docutils literal notranslate
 <span class="nv">$key</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">();</span>
 
 <span class="c1">// for the SodiumHandler, you can use either:</span>
-<span class="nv">$key</span> <span class="o">=</span> <span class="nx">sodium_crypto_secretbox_keygen</span><span class="p">();</span>
+<span class="nv">$key</span> <span class="o">=</span> <span class="nb">sodium_crypto_secretbox_keygen</span><span class="p">();</span>
 <span class="nv">$key</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Encryption\Encryption</span><span class="o">::</span><span class="na">createKey</span><span class="p">(</span><span class="nx">SODIUM_CRYPTO_SECRETBOX_KEYBYTES</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -694,7 +694,7 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 23, 2022.
+      <span class="lastupdated">Last updated on Apr 25, 2022.
       </span></p>
   </div>
 

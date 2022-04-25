@@ -446,7 +446,7 @@ for complete control over all attributes and values:</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$src</strong> (<em>mixed</em>) – The source name of a JavaScript file</p></li>
+<li><p><strong>$src</strong> (<em>array|string</em>) – The source name or URL of a JavaScript file, or an associative array specifying the attributes</p></li>
 <li><p><strong>$indexPage</strong> (<em>bool</em>) – Whether to treat <code class="docutils literal notranslate"><span class="pre">$src</span></code> as a routed URI string</p></li>
 </ul>
 </dd>
@@ -471,10 +471,10 @@ the page specified by <code class="docutils literal notranslate"><span class="pr
 for complete control over all attributes and values:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">];</span>
+<span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">,</span> <span class="s1">&#39;defer&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="nv">$script</span><span class="p">);</span>
-<span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
+<span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; defer type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1028,7 +1028,7 @@ pulled from <strong>app/Config/DocTypes.php</strong>, or they could be over-ridd
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 23, 2022.
+      <span class="lastupdated">Last updated on Apr 25, 2022.
       </span></p>
   </div>
 

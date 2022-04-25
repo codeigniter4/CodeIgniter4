@@ -328,6 +328,7 @@
 </li>
 <li><p>Added support for webp files to <strong>app/Config/Mimes.php</strong>.</p></li>
 <li><p>Added 4th parameter <code class="docutils literal notranslate"><span class="pre">$includeDir</span></code> to <code class="docutils literal notranslate"><span class="pre">get_filenames()</span></code>. See <a class="reference internal" href="../helpers/filesystem_helper.html#get_filenames" title="get_filenames"><code class="xref php php-func docutils literal notranslate"><span class="pre">get_filenames</span></code></a>.</p></li>
+<li><p>HTML helper <code class="docutils literal notranslate"><span class="pre">script_tag()</span></code> now uses <code class="docutils literal notranslate"><span class="pre">null</span></code> values to write boolean attributes in minimized form: <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">src=&quot;...&quot;</span> <span class="pre">defer</span> <span class="pre">/&gt;</span></code>. See the sample code for <a class="reference internal" href="../helpers/html_helper.html#script_tag" title="script_tag"><code class="xref php php-func docutils literal notranslate"><span class="pre">script_tag</span></code></a>.</p></li>
 <li><p>RouteCollection::addRedirect() can now use placeholders.</p></li>
 </ul>
 </section>
@@ -371,7 +372,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Apr 23, 2022.
+      <span class="lastupdated">Last updated on Apr 25, 2022.
       </span></p>
   </div>
 
