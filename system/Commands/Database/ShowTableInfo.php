@@ -194,7 +194,7 @@ class ShowTableInfo extends BaseCommand
         return $tbody;
     }
 
-    protected function showFieldMetaData(string $tableName): void
+    private function showFieldMetaData(string $tableName): void
     {
         CLI::newLine();
         CLI::write("List of metadata information in table \"{$tableName}\":", 'black', 'yellow');
@@ -222,7 +222,7 @@ class ShowTableInfo extends BaseCommand
         CLI::table($tbody, $thead);
     }
 
-    protected function setYesOrNo(bool $fieldValue): string
+    private function setYesOrNo(bool $fieldValue): string
     {
         if ($fieldValue) {
             return CLI::color('Yes', 'green');
