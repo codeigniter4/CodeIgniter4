@@ -90,8 +90,7 @@ class ShowTableInfo extends BaseCommand
             CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
             CLI::newLine();
 
-            $thead = ['#ID', 'table name', 'number of rows', 'number of field'];
-
+            $thead = ['ID', 'Table name', 'Number of rows', 'Number of fields'];
             $tbody = $this->makeTbodyForShowAllTables($tables);
 
             CLI::table($tbody, $thead);
