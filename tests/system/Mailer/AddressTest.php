@@ -3,6 +3,8 @@
 namespace CodeIgniter\Mailer;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Mailer\Exceptions\MailerException;
+use Config\Mailer;
 
 class AddressTest extends CIUnitTestCase
 {
@@ -13,7 +15,7 @@ class AddressTest extends CIUnitTestCase
 	{
 		if (is_null($emailResult))
 		{
-			$this->expectException('InvalidArgumentException');
+			$this->expectException(MailerException::class);
 			$this->expectExceptionMessage(lang('Mailer.invalidAddress', [$email]));
 		}
 
@@ -84,7 +86,7 @@ class AddressTest extends CIUnitTestCase
 	{
 		if (is_null($emailResult))
 		{
-			$this->expectException('InvalidArgumentException');
+			$this->expectException(MailerException::class);
 			$this->expectExceptionMessage(lang('Mailer.invalidAddress', ['']));
 		}
 
@@ -134,4 +136,62 @@ class AddressTest extends CIUnitTestCase
 			],
 		];
 	}
+
+    /**
+     * @dataProvider userProvider
+     */
+    public function testMerge(string $email, ?string $name, string $expected)
+    {
+        $this->assertEquals($expected, Address::merge($email, $name));
+    }
+
+    /**
+     * @dataProvider userProvider
+     */
+    public function testStringify(string $email, ?string $name, string $expected)
+    {
+        $address = new Address($email, $name);
+        $this->assertEquals($expected, (string)$address);
+    }
+
+    public function userProvider()
+    {
+        return [
+            'emailOnly' => [
+                'leia@alderaan.org',
+                null,
+                'leia@alderaan.org'
+            ],
+            'emailOnlySpace' => [
+                ' leia@alderaan.org ',
+                null,
+                'leia@alderaan.org'
+            ],
+            'spaceName' => [
+                ' leia@alderaan.org ',
+                ' ',
+                'leia@alderaan.org'
+            ],
+            'simpleName' => [
+                'leia@alderaan.org',
+                'Leia',
+                '"Leia" <leia@alderaan.org>'
+            ],
+            'simpleNameSpaced' => [
+                'leia@alderaan.org',
+                ' Leia ',
+                '"Leia" <leia@alderaan.org>'
+            ],
+            'simpleEmailSpaced' => [
+                ' leia@alderaan.org ',
+                ' Leia ',
+                '"Leia" <leia@alderaan.org>'
+            ],
+            'quotedName' => [
+                'leia@alderaan.org',
+                'Princess Leia',
+                '"Princess Leia" <leia@alderaan.org>'
+            ],
+        ];
+    }
 }

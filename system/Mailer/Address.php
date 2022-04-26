@@ -31,6 +31,22 @@ class Address
     protected $name;
 
     /**
+     * Validates the email and stores the values.
+     *
+     * @throws MailerException
+     */
+    final public function __construct(string $email, ?string $name = null)
+    {
+        $this->email = trim($email);
+
+        if (! service('validation')->check($this->email, 'required|valid_email')) {
+            throw MailerException::forInvalidAddress($email);
+        }
+
+        $this->name = isset($name) ? trim($name, self::TRIM) : null;
+    }
+
+    /**
      * Creates a new Address from a simple or full email address string.
      *
      * @return static
@@ -90,36 +106,20 @@ class Address
      */
     final public static function merge(string $email, ?string $name = null): string
     {
+        $email = trim($email);
+
         if (null === $name) {
-            return trim($email);
+            return $email;
         }
 
-        // Enclose the email in angle brackets
-        $email = '<' . $email . '>';
-
         // If there is no name then finish
-        if ('' === $name = trim($name, self::TRIM)) {
+        $name = trim($name, self::TRIM);
+        if ($name === '') {
             return $email;
         }
 
         // Wrap the name in quotes and prepend it to the email
-        return '"' . $name . '" ' . $email;
-    }
-
-    /**
-     * Validates the email and stores the values.
-     *
-     * @throws MailerException
-     */
-    final public function __construct(string $email, ?string $name = null)
-    {
-        $this->email = trim($email);
-
-        if (! service('validation')->check($this->email, 'required|valid_email')) {
-            throw MailerException::forInvalidAddress($email);
-        }
-
-        $this->name = isset($name) ? trim($name, self::TRIM) : null;
+        return '"' . $name . '" <' . $email . '>';
     }
 
     public function getEmail(): string
