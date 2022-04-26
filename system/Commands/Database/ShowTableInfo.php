@@ -73,6 +73,7 @@ class ShowTableInfo extends BaseCommand
 
     private $db         = '';
     private $sortIsDESC = false;
+    private array $tbody;
 
     public function run(array $params)
     {
@@ -84,7 +85,7 @@ class ShowTableInfo extends BaseCommand
 
         if ($tables === []) {
             CLI::error('Database has no tables!', 'light_gray', 'red');
-            CLI:newLine();
+            CLI::newLine();
 
             return;
         }
@@ -93,10 +94,10 @@ class ShowTableInfo extends BaseCommand
             CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
             CLI::newLine();
 
-            $thead = ['ID', 'Table name', 'Number of rows', 'Number of fields'];
-            $tbody = $this->makeTbodyForShowAllTables($tables);
+            $thead       = ['ID', 'Table name', 'Number of rows', 'Number of fields'];
+            $this->tbody = $this->makeTbodyForShowAllTables($tables);
 
-            CLI::table($tbody, $thead);
+            CLI::table($this->tbody, $thead);
             CLI::newLine();
 
             return;
@@ -115,9 +116,9 @@ class ShowTableInfo extends BaseCommand
             CLI::write("Data of table \"{$tableName}\":", 'black', 'yellow');
             CLI::newLine();
 
-            $thead = $this->db->getFieldNames($tableName);
-            $tbody = $this->makeTableRows($tableName);
-            CLI::table($tbody, $thead);
+            $thead       = $this->db->getFieldNames($tableName);
+            $this->tbody = $this->makeTableRows($tableName);
+            CLI::table($this->tbody, $thead);
 
             return;
         }
@@ -134,9 +135,9 @@ class ShowTableInfo extends BaseCommand
         CLI::write("Data of table \"{$tables[$tableName]}\":", 'black', 'yellow');
         CLI::newLine();
 
-        $thead = $this->db->getFieldNames($tables[$tableName]);
-        $tbody = $this->makeTableRows($tables[$tableName]);
-        CLI::table($tbody, $thead);
+        $thead       = $this->db->getFieldNames($tables[$tableName]);
+        $this->tbody = $this->makeTableRows($tables[$tableName]);
+        CLI::table($this->tbody, $thead);
     }
 
     private function makeTbodyForShowAllTables(array $tables): array
@@ -144,7 +145,7 @@ class ShowTableInfo extends BaseCommand
         foreach ($tables  as $id => $tableName) {
             $db = $this->db->query("SELECT * FROM {$tableName}");
 
-            $tbody[] = [
+            $this->tbody[] = [
                 $id + 1,
                 $tableName,
                 $db->getNumRows(),
@@ -153,10 +154,10 @@ class ShowTableInfo extends BaseCommand
         }
 
         if ($this->sortIsDESC) {
-            krsort($tbody);
+            krsort($this->tbody);
         }
 
-        return $tbody;
+        return $this->tbody;
     }
 
     private function makeTableRows(string $tableName): array
@@ -173,7 +174,7 @@ class ShowTableInfo extends BaseCommand
             $limitFieldsValue = 15;
         }
 
-        $tbody = [];
+        $this->tbody = [];
 
         $customQueryForEachField = '';
 
@@ -186,14 +187,14 @@ class ShowTableInfo extends BaseCommand
         $rows = $this->db->query('SELECT * ' . $customQueryForEachField . " FROM {$tableName} LIMIT {$limitRows}")->getResultArray();
 
         foreach ($rows as $row) {
-            $tbody[] = $row;
+            $this->tbody[] = $row;
         }
 
         if ($this->sortIsDESC) {
-            krsort($tbody);
+            krsort($this->tbody);
         }
 
-        return $tbody;
+        return $this->tbody;
     }
 
     private function showFieldMetaData(string $tableName): void
@@ -207,7 +208,7 @@ class ShowTableInfo extends BaseCommand
         $fields = $this->db->getFieldData($tableName);
 
         foreach ($fields as $row) {
-            $tbody[] = [
+            $this->tbody[] = [
                 $row->name,
                 $row->type,
                 $row->max_length,
@@ -218,10 +219,10 @@ class ShowTableInfo extends BaseCommand
         }
 
         if ($this->sortIsDESC) {
-            krsort($tbody);
+            krsort($this->tbody);
         }
 
-        CLI::table($tbody, $thead);
+        CLI::table($this->tbody, $thead);
     }
 
     private function setYesOrNo(bool $fieldValue): string
