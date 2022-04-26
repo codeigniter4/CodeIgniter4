@@ -71,7 +71,7 @@ class ShowTableInfo extends BaseCommand
         '--limit-fields-value' => 'Custom length Limit of field values. [Default = 15]',
     ];
 
-    private string $db         = '';
+    private $db;
     private bool $sortIsDESC = false;
 
     public function run(array $params)
