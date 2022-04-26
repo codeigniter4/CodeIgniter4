@@ -19,10 +19,32 @@ BREAKING
 - The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
 - The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
 - The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
-- To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto routing.
+- To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto-routing.
 
 Enhancements
 ************
+
+New Improved Auto Routing
+=========================
+
+Added an optional new more secure auto router. These are the changes from the traditional auto-routing:
+
+- A controller method needs HTTP verb prefix like ``getIndex()``, ``postCreate()``.
+    - Developers always know HTTP method, so requests by unexpected HTTP method does not happen.
+- The Default Controller (``Home`` by default) and the Default Method (``index`` by default) must be omitted in the URI.
+    - It restricts one-to-one correspondence between controller methods and URIs.
+    - E.g. by default, you can access ``/``, but ``/home`` and ``/home/index`` will be 404.
+- It checks method parameter count.
+    - If there are more parameters in the URI than the method parameters, it results in 404.
+- It does not support ``_remap()`` method.
+    - It restricts one-to-one correspondence between controller methods and URIs.
+- Can't access controllers in Defined Routes.
+    - It completely separates controllers accessible via **Auto Routes** from those accessible via **Defined Routes**.
+
+See :ref:`auto-routing-improved` for the details.
+
+Others
+======
 
 - Content Security Policy (CSP) enhancements
     - Added the configs ``$scriptNonceTag`` and ``$styleNonceTag`` in  ``Config\ContentSecurityPolicy`` to customize the CSP placeholders (``{csp-script-nonce}`` and ``{csp-style-nonce}``)

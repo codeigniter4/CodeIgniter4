@@ -11,6 +11,14 @@ What is URI Routing?
 
 URI Routing associates a URI with a controller's method.
 
+CodeIgniter has two kinds of routing. One is **Defined Route Routing**, and the other is **Auto Routing**.
+With Defined Route Routing, you can define routes manually. It allows flexible URL.
+Auto Routing automatically routes HTTP requests based on conventions and execute the corresponding controller methods. There is no need to define routes manually.
+
+First, let's look at Defined Route Routing. If you want to use Auto Routing, see :ref:`auto-routing-improved`.
+
+.. _defined-route-routing:
+
 Setting Routing Rules
 *********************
 
@@ -482,7 +490,7 @@ Use Defined Routes Only
 Since v4.2.0, the auto-routing is disabled by default.
 
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods when :ref:`auto-routing` is enabled.
+controllers and methods when Auto Routing is enabled.
 
 You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the ``setAutoRoute()`` option to false:
@@ -510,23 +518,115 @@ For an example use of lowering the priority see :ref:`routing-priority`:
 
 .. literalinclude:: routing/052.php
 
-.. _auto-routing:
+.. _auto-routing-improved:
 
-Auto Routing
-************
+Auto Routing (Improved)
+***********************
 
-It is recommended that all routes are defined in the **app/Config/Routes.php** file.
-However, CodeIgniter can also automatically route HTTP requests based on conventions
+Since v4.2.0, the new more secure Auto Routing has been introduced.
+
+When no defined route is found that matches the URI, the system will attempt to match that URI against the controllers and methods when Auto Routing is enabled.
+
+.. important:: For security reasons, if a controller is used in the defined routes, Auto Routing (Improved) does not route to the controller.
+
+Auto Routing can automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
 
-.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
-    the auto-routing feature. It is easy to create vulnerable apps where controller filters
-    or CSRF protection are bypassed.
+.. note:: Auto Routing (Improved) is disabled by default. To use it, see below.
 
-.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+.. _enabled-auto-routing-improved:
 
 Enable Auto Routing
 ===================
+
+To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+
+    $routes->setAutoRoute(true);
+
+And you need to change the property ``$autoRoutesImproved`` to ``true`` in **app/Config/Feature.php**::
+
+    public bool $autoRoutesImproved = true;
+
+URI Segments
+============
+
+The segments in the URL, in following with the Model-View-Controller approach, usually represent::
+
+    example.com/class/method/ID
+
+1. The first segment represents the controller **class** that should be invoked.
+2. The second segment represents the class **method** that should be called.
+3. The third, and any additional segments, represent the ID and any variables that will be passed to the controller.
+
+Consider this URI::
+
+    example.com/index.php/helloworld/hello/1
+
+In the above example, when you send a HTTP request with **GET** method,
+Auto Routing would attempt to find a controller named ``App\Controllers\Helloworld``
+and executes ``getHello()`` method with passing ``'1'`` as the first argument.
+
+.. note:: A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
+
+See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
+
+Configuration Options
+=====================
+
+These options are available at the top of **app/Config/Routes.php**.
+
+Default Controller
+------------------
+
+When a user visits the root of your site (i.e., **example.com**) the controller to use is determined by the value set by
+the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
+which matches the controller at **app/Controllers/Home.php**:
+
+.. literalinclude:: routing/047.php
+
+The default controller is also used when no matching route has been found, and the URI would point to a directory
+in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
+**app/Controllers/Admin/Home.php**, it would be used.
+
+.. note:: You cannot access the default controller with the URI of the controller name.
+    When the default controller is ``Home``, you can access **example.com/**, but if you access **example.com/home**, it will be not found.
+
+See :ref:`Auto Routing in Controllers <controller-auto-routing-improved>` for more info.
+
+Default Method
+--------------
+
+This works similar to the default controller setting, but is used to determine the default method that is used
+when a controller is found that matches the URI, but no segment exists for the method. The default value is
+``index``.
+
+In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
+``Products::listAll()`` method would be executed:
+
+.. literalinclude:: routing/048.php
+
+.. note:: You cannot access the controller with the URI of the default method name.
+    In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
+
+.. _auto-routing:
+
+Auto Routing (Traditional)
+**************************
+
+Auto Routing (Traditional) is a routing system from CodeIgniter 3.
+It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.
+
+It is recommended that all routes are defined in the **app/Config/Routes.php** file,
+or to use :ref:`auto-routing-improved`,
+
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    Auto Routing (Traditional) feature. It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
+
+.. important:: Auto Routing (Traditional) routes a HTTP request with **any** HTTP method to a controller method.
+
+Enable Auto Routing (Traditional)
+=================================
 
 Since v4.2.0, the auto-routing is disabled by default.
 
@@ -534,8 +634,8 @@ To use it, you need to change the setting ``setAutoRoute()`` option to true in *
 
     $routes->setAutoRoute(true);
 
-URI Segments
-============
+URI Segments (Traditional)
+==========================
 
 The segments in the URL, in following with the Model-View-Controller approach, usually represent::
 
@@ -552,18 +652,15 @@ Consider this URI::
 In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php**
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
-We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is disabled by default.
+See :ref:`Auto Routing (Traditional) in Controllers <controller-auto-routing>` for more info.
 
-See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
-
-Configuration Options
-=====================
+Configuration Options (Traditional)
+===================================
 
 These options are available at the top of **app/Config/Routes.php**.
 
-Default Controller
-------------------
+Default Controller (Traditional)
+--------------------------------
 
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
@@ -577,8 +674,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
 
-Default Method
---------------
+Default Method (Traditional)
+----------------------------
 
 This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
@@ -617,11 +714,11 @@ The output is like the following:
     | auto   | home/index[/...] | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
     +--------+------------------+------------------------------------------+----------------+-----------------------+
 
-The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by auto routing, so it is not defined in **app/Config/Routes.php**.
+The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by auto-routing, so it is not defined in **app/Config/Routes.php**.
 
 The *Route* column shows the URI path to match. The route of a defined route is expressed as a regular expression.
 But ``[/...]`` in the route of an auto route is indicates any number of segments.
 
-.. note:: When auto routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
+.. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
 
 .. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. But the filters defined in **app/Config/Routes.php** are always displayed correctly.

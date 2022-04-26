@@ -109,28 +109,26 @@ then trying to access it using the following URL will not work::
 
     example.com/index.php/helloworld/utility/
 
-.. _controller-auto-routing:
+.. _controller-auto-routing-improved:
 
-Auto Routing
-************
+Auto Routing (Improved)
+************************
 
-This section describes the functionality of the auto-routing.
+Since v4.2.0, the new more secure Auto Routing has been introduced.
+
+This section describes the functionality of the new auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
-without route definitions. The auto-routing is disabled by default.
+without route definitions.
 
-.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
-    the auto-routing feature. It is easy to create vulnerable apps where controller filters
-    or CSRF protection are bypassed.
-
-.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+Since v4.2.0, the auto-routing is disabled by default. To use it, see :ref:`enabled-auto-routing-improved`.
 
 Consider this URI::
 
     example.com/index.php/helloworld/
 
-In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php** and load it.
+In the above example, CodeIgniter would attempt to find a controller named ``App\Controllers\Helloworld`` and load it, when auto-routing is enabled.
 
-**When a controller's name matches the first segment of a URI, it will be loaded.**
+.. note:: When a controller's short name matches the first segment of a URI, it will be loaded.
 
 Let's try it: Hello World!
 ==========================
@@ -142,13 +140,13 @@ also extend the ``CodeIgniter\Controller`` if you do not need the functionality 
 The BaseController provides a convenient place for loading components and performing functions that are needed by all your
 controllers. You can extend this class in any new controller.
 
-For security reasons be sure to declare any new utility methods as ``protected`` or ``private``:
-
-.. literalinclude:: controllers/008.php
+.. literalinclude:: controllers/020.php
 
 Then save the file to your **app/Controllers/** directory.
 
-.. important:: The file must be called **Helloworld.php**, with a capital ``H``.
+.. important:: The file must be called **Helloworld.php**, with a capital ``H``. Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+
+.. important:: A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
 
 Now visit your site using a URL similar to this::
 
@@ -157,8 +155,6 @@ Now visit your site using a URL similar to this::
 If you did it right you should see::
 
     Hello World!
-
-.. important:: Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 This is valid:
 
@@ -179,36 +175,36 @@ class so that it can inherit all its methods.
     The system will attempt to match the URI against Controllers by matching each segment against
     folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
     That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
-    If you want another naming convention you need to manually define it using the
-    :doc:`URI Routing <routing>` feature.
 
     Here is an example based on PSR-4 Autoloader:
 
     .. literalinclude:: controllers/012.php
 
+    If you want another naming convention you need to manually define it using the
+    :ref:`Defined Route Routing <defined-route-routing>`.
+
 Methods
 =======
 
-In the above example, the method name is ``index()``. The ``index()`` method
-is always loaded by default if the **second segment** of the URI is
-empty. Another way to show your "Hello World" message would be this::
-
-    example.com/index.php/helloworld/index/
+In the above example, the method name is ``getIndex()``.
+The method (HTTP verb + ``Index()``) is loaded if the **second segment** of the URI is empty.
 
 **The second segment of the URI determines which method in the
 controller gets called.**
 
 Let's try it. Add a new method to your controller:
 
-.. literalinclude:: controllers/013.php
+.. literalinclude:: controllers/021.php
 
-Now load the following URL to see the comment method::
+Now load the following URL to see the ``getComment()`` method::
 
     example.com/index.php/helloworld/comment/
 
 You should see your new message.
 
-Passing URI Segments to your methods
+.. warning:: For security reasons be sure to declare any new utility methods as ``protected`` or ``private``.
+
+Passing URI Segments to Your Methods
 ====================================
 
 If your URI contains more than two segments they will be passed to your
@@ -220,11 +216,7 @@ For example, let's say you have a URI like this::
 
 Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
-.. literalinclude:: controllers/014.php
-
-.. important:: If you are using the :doc:`URI Routing <routing>`
-    feature, the segments passed to your method will be the defined
-    ones.
+.. literalinclude:: controllers/022.php
 
 Defining a Default Controller
 =============================
@@ -282,7 +274,177 @@ called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
 your **app/Config/Routes.php** file.
 
-CodeIgniter also permits you to map your URIs using its :doc:`URI Routing <routing>` feature.
+CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
+
+.. _controller-auto-routing:
+
+Auto Routing (Traditional)
+**************************
+
+This section describes the functionality of Auto Routing (Traditional) that is a routing system from CodeIgniter 3.
+It automatically routes an HTTP request, and executes the corresponding controller method
+without route definitions. The auto-routing is disabled by default.
+
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    Auto Routing (Traditional). It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
+
+.. important:: Auto Routing (Traditional) routes a HTTP request with **any** HTTP method to a controller method.
+
+Consider this URI::
+
+    example.com/index.php/helloworld/
+
+In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php** and load it.
+
+.. note:: When a controller's short name matches the first segment of a URI, it will be loaded.
+
+Let's try it: Hello World!
+==========================
+
+Let's create a simple controller so you can see it in action. Using your text editor, create a file called **Helloworld.php**,
+and put the following code in it. You will notice that the ``Helloworld`` Controller is extending the ``BaseController``. you can
+also extend the ``CodeIgniter\Controller`` if you do not need the functionality of the BaseController.
+
+The BaseController provides a convenient place for loading components and performing functions that are needed by all your
+controllers. You can extend this class in any new controller.
+
+For security reasons be sure to declare any new utility methods as ``protected`` or ``private``:
+
+.. literalinclude:: controllers/008.php
+
+Then save the file to your **app/Controllers/** directory.
+
+.. important:: The file must be called **Helloworld.php**, with a capital ``H``. Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+
+Now visit your site using a URL similar to this::
+
+    example.com/index.php/helloworld
+
+If you did it right you should see::
+
+    Hello World!
+
+This is valid:
+
+.. literalinclude:: controllers/009.php
+
+This is **not** valid:
+
+.. literalinclude:: controllers/010.php
+
+This is **not** valid:
+
+.. literalinclude:: controllers/011.php
+
+Also, always make sure your controller extends the parent controller
+class so that it can inherit all its methods.
+
+.. note::
+    The system will attempt to match the URI against Controllers by matching each segment against
+    folders/files in **app/Controllers/**, when a match wasn't found against defined routes.
+    That's why your folders/files MUST start with a capital letter and the rest MUST be lowercase.
+
+    Here is an example based on PSR-4 Autoloader:
+
+    .. literalinclude:: controllers/012.php
+
+    If you want another naming convention you need to manually define it using the
+    :ref:`Defined Route Routing <defined-route-routing>`.
+
+Methods
+=======
+
+In the above example, the method name is ``index()``. The ``index()`` method
+is always loaded by default if the **second segment** of the URI is
+empty. Another way to show your "Hello World" message would be this::
+
+    example.com/index.php/helloworld/index/
+
+**The second segment of the URI determines which method in the
+controller gets called.**
+
+Let's try it. Add a new method to your controller:
+
+.. literalinclude:: controllers/013.php
+
+Now load the following URL to see the comment method::
+
+    example.com/index.php/helloworld/comment/
+
+You should see your new message.
+
+Passing URI Segments to Your Methods
+====================================
+
+If your URI contains more than two segments they will be passed to your
+method as parameters.
+
+For example, let's say you have a URI like this::
+
+    example.com/index.php/products/shoes/sandals/123
+
+Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
+
+.. literalinclude:: controllers/014.php
+
+Defining a Default Controller
+=============================
+
+CodeIgniter can be told to load a default controller when a URI is not
+present, as will be the case when only your site root URL is requested. Let's try it
+with the ``Helloworld`` controller.
+
+To specify a default controller open your **app/Config/Routes.php**
+file and set this variable:
+
+.. literalinclude:: controllers/015.php
+
+Where ``Helloworld`` is the name of the controller class you want to be used.
+
+A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
+
+.. literalinclude:: controllers/016.php
+
+If you now browse to your site without specifying any URI segments you'll
+see the "Hello World" message.
+
+.. note:: The line ``$routes->get('/', 'Home::index');`` is an optimization that you will want to use in a "real-world" app. But for demonstration purposes we don't want to use that feature. ``$routes->get()`` is explained in :doc:`URI Routing <routing>`
+
+For more information, please refer to the :ref:`routes-configuration-options` section of the
+:doc:`URI Routing <routing>` documentation.
+
+Organizing Your Controllers into Sub-directories
+================================================
+
+If you are building a large application you might want to hierarchically
+organize or structure your controllers into sub-directories. CodeIgniter
+permits you to do this.
+
+Simply create sub-directories under the main **app/Controllers/**,
+and place your controller classes within them.
+
+.. important:: Folder names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+
+When using this feature the first segment of your URI must
+specify the folder. For example, let's say you have a controller located here::
+
+    app/Controllers/Products/Shoes.php
+
+To call the above controller your URI will look something like this::
+
+    example.com/index.php/products/shoes/show/123
+
+.. note:: You cannot have directories with the same name in **app/Controllers/** and **public/**.
+    This is because if there is a directory, the web server will search for it and
+    it will not be routed to CodeIgniter.
+
+Each of your sub-directories may contain a default controller which will be
+called if the URL contains *only* the sub-directory. Simply put a controller
+in there that matches the name of your default controller as specified in
+your **app/Config/Routes.php** file.
+
+CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
 Remapping Method Calls
 **********************
