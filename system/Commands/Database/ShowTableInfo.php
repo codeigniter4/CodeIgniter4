@@ -71,6 +71,9 @@ class ShowTableInfo extends BaseCommand
         '--limit-fields-value' => 'Custom length Limit of field values. [Default = 15]',
     ];
 
+    private $db         = '';
+    private $sortIsDESC = false;
+
     public function run(array $params)
     {
         $this->db = Database::connect();
