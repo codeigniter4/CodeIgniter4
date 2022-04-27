@@ -1244,4 +1244,41 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->placeholderReplacementResultDetermination();
     }
+
+    public function testNullValueForNotFoundField()
+    {
+        $validator = $this->getMockBuilder(Validation::class)
+            ->setConstructorArgs([(object) $this->config, Services::renderer()])
+            ->onlyMethods(['processRules'])
+            ->getMock();
+
+        $validator->expects($this->exactly(2))
+            ->method('processRules')
+            ->withConsecutive(
+                [
+                    // string $field,
+                    $this->equalTo('users.*.name'),
+                    // ?string $label,
+                    $this->anything(),
+                    // $value,
+                    $this->equalTo(null),
+                    // $rules = null,
+                    $this->anything(),
+                    // ?array $data = null
+                    $this->anything(),
+                ],
+                [
+                    $this->equalTo('country'),
+                    $this->anything(),
+                    $this->equalTo(null),
+                    $this->anything(),
+                    $this->anything(),
+                ],
+            );
+
+        $validator->setRules([
+            'users.*.name' => 'rule',
+            'country'      => 'rule',
+        ])->run(['users' => []]);
+    }
 }
