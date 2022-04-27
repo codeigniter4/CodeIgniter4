@@ -186,11 +186,6 @@ parameters:
 			path: system/Database/MigrationRunner.php
 
 		-
-			message: "#^Cannot access property \\$affected_rows on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
 			message: "#^Cannot access property \\$errno on bool\\|object\\|resource\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Connection.php
@@ -734,11 +729,6 @@ parameters:
 			message: "#^Property Config\\\\Security\\:\\:\\$[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 8
 			path: system/Security/Security.php
-
-		-
-			message: "#^Access to an undefined property Config\\\\App\\:\\:\\$sessionDBGroup\\.$#"
-			count: 1
-			path: system/Session/Handlers/DatabaseHandler.php
 
 		-
 			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
