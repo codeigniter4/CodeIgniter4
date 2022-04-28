@@ -21,10 +21,7 @@ use Config\App;
  */
 final class RequestTest extends CIUnitTestCase
 {
-    /**
-     * @var Request
-     */
-    protected $request;
+    protected Request $request;
 
     protected function setUp(): void
     {

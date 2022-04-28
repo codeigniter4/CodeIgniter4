@@ -13,6 +13,14 @@ namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Exceptions\FilterException;
+use CodeIgniter\Filters\fixtures\GoogleCurious;
+use CodeIgniter\Filters\fixtures\GoogleEmpty;
+use CodeIgniter\Filters\fixtures\GoogleMe;
+use CodeIgniter\Filters\fixtures\GoogleYou;
+use CodeIgniter\Filters\fixtures\InvalidClass;
+use CodeIgniter\Filters\fixtures\Multiple1;
+use CodeIgniter\Filters\fixtures\Multiple2;
+use CodeIgniter\Filters\fixtures\Role;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -457,7 +465,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['invalid' => 'CodeIgniter\Filters\fixtures\InvalidClass'],
+            'aliases' => ['invalid' => InvalidClass::class],
             'globals' => [
                 'before' => ['invalid'],
                 'after'  => [],
@@ -477,7 +485,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+            'aliases' => ['google' => GoogleMe::class],
             'globals' => [
                 'before' => ['google'],
                 'after'  => [],
@@ -497,7 +505,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+            'aliases' => ['google' => GoogleMe::class],
             'globals' => [
                 'before' => [],
                 'after'  => ['google'],
@@ -517,7 +525,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['banana' => 'CodeIgniter\Filters\fixtures\GoogleYou'],
+            'aliases' => ['banana' => GoogleYou::class],
             'globals' => [
                 'before' => ['banana'],
                 'after'  => [],
@@ -539,8 +547,8 @@ final class FiltersTest extends CIUnitTestCase
 
         $config = [
             'aliases' => [
-                'nowhere' => 'CodeIgniter\Filters\fixtures\GoogleEmpty',
-                'banana'  => 'CodeIgniter\Filters\fixtures\GoogleCurious',
+                'nowhere' => GoogleEmpty::class,
+                'banana'  => GoogleCurious::class,
             ],
             'globals' => [
                 'before' => [
@@ -700,7 +708,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+            'aliases' => ['google' => GoogleMe::class],
             'globals' => [
                 'before' => ['google'],
                 'after'  => [],
@@ -754,7 +762,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+            'aliases' => ['google' => GoogleMe::class],
             'globals' => [
                 'before' => [],
                 'after'  => [],
@@ -775,7 +783,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['role' => 'CodeIgniter\Filters\fixtures\Role'],
+            'aliases' => ['role' => Role::class],
             'globals' => [
                 'before' => [],
                 'after'  => [],
@@ -807,7 +815,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['role' => 'CodeIgniter\Filters\fixtures\Role'],
+            'aliases' => ['role' => Role::class],
             'globals' => [
                 'before' => [],
                 'after'  => [],
@@ -839,7 +847,7 @@ final class FiltersTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $config = [
-            'aliases' => ['google' => 'CodeIgniter\Filters\fixtures\GoogleMe'],
+            'aliases' => ['google' => GoogleMe::class],
             'globals' => [
                 'before' => [],
                 'after'  => [],
@@ -1077,8 +1085,8 @@ final class FiltersTest extends CIUnitTestCase
         $config = [
             'aliases' => [
                 'multipleTest' => [
-                    'CodeIgniter\Filters\fixtures\Multiple1',
-                    'CodeIgniter\Filters\fixtures\Multiple2',
+                    Multiple1::class,
+                    Multiple2::class,
                 ],
             ],
             'globals' => [
@@ -1102,8 +1110,8 @@ final class FiltersTest extends CIUnitTestCase
         $config = [
             'aliases' => [
                 'multipleTest' => [
-                    'CodeIgniter\Filters\fixtures\Multiple1',
-                    'CodeIgniter\Filters\fixtures\Multiple2',
+                    Multiple1::class,
+                    Multiple2::class,
                 ],
             ],
             'globals' => [
@@ -1120,8 +1128,8 @@ final class FiltersTest extends CIUnitTestCase
         $expected = [
             'before' => [],
             'after'  => [
-                'CodeIgniter\Filters\fixtures\Multiple1',
-                'CodeIgniter\Filters\fixtures\Multiple2',
+                Multiple1::class,
+                Multiple2::class,
             ],
         ];
         $this->assertSame($expected, $filters->getFiltersClass());

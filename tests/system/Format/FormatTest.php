@@ -32,7 +32,7 @@ final class FormatTest extends CIUnitTestCase
         $config = new \Config\Format();
         $format = new Format($config);
 
-        $this->assertInstanceOf('Config\Format', $format->getConfig());
+        $this->assertInstanceOf(\Config\Format::class, $format->getConfig());
         $this->assertSame($config, $format->getConfig());
     }
 

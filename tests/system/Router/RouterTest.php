@@ -25,10 +25,7 @@ use Tests\Support\Filters\Customfilter;
  */
 final class RouterTest extends CIUnitTestCase
 {
-    /**
-     * @var RouteCollection
-     */
-    protected $collection;
+    protected RouteCollection $collection;
 
     /**
      * vfsStream root directory
@@ -37,10 +34,7 @@ final class RouterTest extends CIUnitTestCase
      */
     protected $root;
 
-    /**
-     * @var IncomingRequest
-     */
-    protected $request;
+    protected IncomingRequest $request;
 
     protected function setUp(): void
     {
@@ -596,7 +590,7 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
-        $this->assertSame('Tests\Support\Filters\Customfilter', $router->getFilter());
+        $this->assertSame(Customfilter::class, $router->getFilter());
     }
 
     public function testRouteWorksWithMultipleFilters()

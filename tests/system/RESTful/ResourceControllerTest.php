@@ -27,6 +27,7 @@ use CodeIgniter\Test\Mock\MockResourceController;
 use Config\App;
 use Psr\Log\NullLogger;
 use Tests\Support\Models\UserModel;
+use Tests\Support\RESTful\Worker;
 
 /**
  * Exercise our ResourceController class.
@@ -58,7 +59,7 @@ final class ResourceControllerTest extends CIUnitTestCase
 
         // Inject mock router.
         $this->routes = Services::routes();
-        $this->routes->resource('work', ['controller' => '\Tests\Support\RESTful\Worker']);
+        $this->routes->resource('work', ['controller' => Worker::class]);
         Services::injectMock('routes', $this->routes);
 
         $config            = new App();
@@ -244,9 +245,9 @@ final class ResourceControllerTest extends CIUnitTestCase
     public function testModelByName()
     {
         $resource = new MockResourceController();
-        $resource->setModel('\Tests\Support\Models\UserModel');
+        $resource->setModel(UserModel::class);
         $this->assertInstanceOf(Model::class, $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
     }
 
     public function testModelByObject()
@@ -257,7 +258,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->assertInstanceOf(Model::class, $resource->getModel());
 
         // Note that the leading backslash is missing if we build it this way
-        $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
     }
 
     public function testFormat()

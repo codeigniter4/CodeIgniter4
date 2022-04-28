@@ -16,6 +16,8 @@ use Encryption;
 use RegistrarConfig;
 use RuntimeException;
 use SimpleConfig;
+use Tests\Support\Config\BadRegistrar;
+use Tests\Support\Config\TestRegistrar;
 
 /**
  * @internal
@@ -236,7 +238,7 @@ final class BaseConfigTest extends CIUnitTestCase
     public function testRegistrars()
     {
         $config              = new RegistrarConfig();
-        $config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
+        $config::$registrars = [TestRegistrar::class];
         $this->setPrivateProperty($config, 'didDiscovery', true);
         $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
         $method();
@@ -255,7 +257,7 @@ final class BaseConfigTest extends CIUnitTestCase
     {
         // Shouldn't change any values.
         $config              = new RegistrarConfig();
-        $config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
+        $config::$registrars = [BadRegistrar::class];
         $this->setPrivateProperty($config, 'didDiscovery', true);
 
         $this->expectException(RuntimeException::class);

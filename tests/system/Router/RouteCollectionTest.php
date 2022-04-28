@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Router;
 
+use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -1505,7 +1506,7 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->get('/', 'Home::index');
 
         // the second rule applies, so overwrites the first
-        $expects = '\App\Controllers\Home';
+        $expects = Home::class;
 
         $this->assertSame($expects, $router->handle('/'));
     }

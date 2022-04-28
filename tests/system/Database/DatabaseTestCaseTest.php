@@ -14,6 +14,8 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
+use Tests\Support\Database\Seeds\AnotherSeeder;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,7 +26,7 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected static $loaded = false;
+    protected static bool $loaded = false;
 
     /**
      * Should the db be refreshed before
@@ -41,8 +43,8 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
      * @var array|string
      */
     protected $seed = [
-        'Tests\Support\Database\Seeds\CITestSeeder',
-        'Tests\Support\Database\Seeds\AnotherSeeder',
+        CITestSeeder::class,
+        AnotherSeeder::class,
     ];
 
     /**

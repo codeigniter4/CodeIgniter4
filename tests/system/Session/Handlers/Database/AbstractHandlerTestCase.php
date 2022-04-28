@@ -15,6 +15,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Database as DatabaseConfig;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @internal
@@ -25,7 +26,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
     use ReflectionHelper;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
     protected function setUp(): void
     {

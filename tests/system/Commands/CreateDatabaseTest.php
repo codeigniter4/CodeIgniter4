@@ -25,11 +25,7 @@ use Config\Database;
 final class CreateDatabaseTest extends CIUnitTestCase
 {
     protected $streamFilter;
-
-    /**
-     * @var BaseConnection
-     */
-    protected $connection;
+    protected BaseConnection $connection;
 
     protected function setUp(): void
     {
