@@ -30,7 +30,7 @@ final class ForgeTest extends CIUnitTestCase
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
-    protected Forge $forge;
+    private Forge $forge;
 
     protected function setUp(): void
     {

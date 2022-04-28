@@ -22,8 +22,8 @@ use Tests\Support\Commands\ParamsReveal;
 final class CommandTest extends CIUnitTestCase
 {
     private $streamFilter;
-    protected $logger;
-    protected $commands;
+    private $logger;
+    private $commands;
 
     protected function setUp(): void
     {

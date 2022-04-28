@@ -27,9 +27,9 @@ use stdClass;
  */
 final class ResponseTraitTest extends CIUnitTestCase
 {
-    protected $request;
-    protected $response;
-    protected ?FormatterInterface $formatter = null;
+    private $request;
+    private $response;
+    private ?FormatterInterface $formatter = null;
 
     protected function setUp(): void
     {

@@ -26,7 +26,7 @@ final class FabricatorTest extends CIUnitTestCase
     /**
      * Default formatters to use for UserModel. Should match detected version.
      */
-    protected array $formatters = [
+    private array $formatters = [
         'name'       => 'name',
         'email'      => 'email',
         'country'    => 'country',

@@ -18,7 +18,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class TypographyTest extends CIUnitTestCase
 {
-    protected $typography;
+    private $typography;
 
     protected function setUp(): void
     {

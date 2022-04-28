@@ -21,7 +21,7 @@ use Config\Services;
  */
 final class ClearCacheTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {

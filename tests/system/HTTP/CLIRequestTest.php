@@ -24,7 +24,7 @@ use Config\App;
  */
 final class CLIRequestTest extends CIUnitTestCase
 {
-    protected CLIRequest $request;
+    private CLIRequest $request;
 
     protected function setUp(): void
     {

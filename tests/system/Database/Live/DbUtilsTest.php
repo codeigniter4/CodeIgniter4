@@ -28,7 +28,7 @@ final class DbUtilsTest extends CIUnitTestCase
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
-    protected static $origDebug;
+    private static $origDebug;
 
     /**
      * This test must run first to store the inital debug value before we tinker with it below

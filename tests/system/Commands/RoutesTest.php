@@ -21,8 +21,6 @@ use Config\Services;
 final class RoutesTest extends CIUnitTestCase
 {
     private $streamFilter;
-    protected $logger;
-    protected $commands;
 
     protected function setUp(): void
     {
@@ -34,9 +32,6 @@ final class RoutesTest extends CIUnitTestCase
 
         $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
         $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
-        $this->logger   = Services::logger();
-        $this->commands = Services::commands();
     }
 
     protected function tearDown(): void

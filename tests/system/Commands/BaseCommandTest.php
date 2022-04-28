@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Commands\AppInfo;
@@ -21,14 +20,12 @@ use Tests\Support\Commands\AppInfo;
  */
 final class BaseCommandTest extends CIUnitTestCase
 {
-    protected $logger;
-    protected $runner;
+    private $logger;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->logger = Services::logger();
-        $this->runner = new CommandRunner();
     }
 
     public function testMagicIssetTrue()

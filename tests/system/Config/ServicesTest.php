@@ -51,8 +51,8 @@ use Tests\Support\Config\Services;
  */
 final class ServicesTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $original;
+    private $config;
+    private $original;
 
     protected function setUp(): void
     {

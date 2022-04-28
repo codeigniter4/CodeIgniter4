@@ -21,7 +21,7 @@ use Config\Services;
  */
 final class EncryptionTest extends CIUnitTestCase
 {
-    protected Encryption $encryption;
+    private Encryption $encryption;
 
     protected function setUp(): void
     {

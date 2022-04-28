@@ -43,6 +43,7 @@ use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -162,7 +163,8 @@ return static function (RectorConfig $rectorConfig): void {
         'stdClass',
         'SQLite3',
     ]);
+    $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
 
     $parameters = $rectorConfig->parameters();
-    $parameters->set(Option::PARALLEL_TIMEOUT_IN_SECONDS, 180);
+    $parameters->set(Option::PARALLEL_TIMEOUT_IN_SECONDS, 240);
 };

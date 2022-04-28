@@ -17,7 +17,6 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Psr\Log\LoggerInterface;
@@ -33,34 +32,31 @@ use Psr\Log\LoggerInterface;
  */
 final class ControllerTest extends CIUnitTestCase
 {
-    protected CodeIgniter $codeigniter;
-
     /**
      * @var Controller
      */
-    protected $controller;
+    private $controller;
 
     /**
      * Current request.
      */
-    protected Request $request;
+    private Request $request;
 
     /**
      * Current response.
      */
-    protected Response $response;
+    private Response $response;
 
-    protected LoggerInterface $logger;
+    private LoggerInterface $logger;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->config      = new App();
-        $this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
-        $this->response    = new Response($this->config);
-        $this->logger      = \Config\Services::logger();
-        $this->codeigniter = new MockCodeIgniter($this->config);
+        $this->config   = new App();
+        $this->request  = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+        $this->response = new Response($this->config);
+        $this->logger   = \Config\Services::logger();
     }
 
     public function testConstructor()

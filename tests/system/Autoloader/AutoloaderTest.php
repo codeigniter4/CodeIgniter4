@@ -23,8 +23,7 @@ use UnnamespacedClass;
  */
 final class AutoloaderTest extends CIUnitTestCase
 {
-    protected Autoloader $loader;
-    protected string $filesPath = SUPPORTPATH . 'Autoloader/';
+    private Autoloader $loader;
 
     protected function setUp(): void
     {

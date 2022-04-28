@@ -23,9 +23,9 @@ use Tests\Support\View\WorldDecorator;
  */
 final class DecoratorsTest extends CIUnitTestCase
 {
-    protected $loader;
-    protected $viewsDir;
-    protected $config;
+    private $loader;
+    private $viewsDir;
+    private $config;
 
     protected function setUp(): void
     {

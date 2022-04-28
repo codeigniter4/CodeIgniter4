@@ -19,8 +19,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class ClearLogsTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-    protected $date;
+    private $streamFilter;
+    private $date;
 
     protected function setUp(): void
     {

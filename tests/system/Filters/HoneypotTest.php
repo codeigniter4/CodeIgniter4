@@ -23,10 +23,10 @@ use Config\Honeypot;
  */
 final class HoneypotTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $honey;
-    protected $request;
-    protected $response;
+    private $config;
+    private $honey;
+    private $request;
+    private $response;
 
     protected function setUp(): void
     {

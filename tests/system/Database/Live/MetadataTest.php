@@ -31,7 +31,7 @@ final class MetadataTest extends CIUnitTestCase
     /**
      * Array of expected tables.
      */
-    protected array $expectedTables;
+    private array $expectedTables;
 
     protected function setUp(): void
     {

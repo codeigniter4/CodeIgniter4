@@ -23,10 +23,10 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class HoneypotTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $honeypot;
-    protected $request;
-    protected $response;
+    private $config;
+    private $honeypot;
+    private $request;
+    private $response;
 
     protected function setUp(): void
     {

@@ -25,16 +25,8 @@ use Tests\Support\Filters\Customfilter;
  */
 final class RouterTest extends CIUnitTestCase
 {
-    protected RouteCollection $collection;
-
-    /**
-     * vfsStream root directory
-     *
-     * @var
-     */
-    protected $root;
-
-    protected IncomingRequest $request;
+    private RouteCollection $collection;
+    private IncomingRequest $request;
 
     protected function setUp(): void
     {

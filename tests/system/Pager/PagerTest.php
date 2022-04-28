@@ -28,8 +28,8 @@ use Config\Services;
  */
 final class PagerTest extends CIUnitTestCase
 {
-    protected ?\CodeIgniter\Pager\Pager $pager = null;
-    protected $config;
+    private ?\CodeIgniter\Pager\Pager $pager = null;
+    private $config;
 
     protected function setUp(): void
     {
