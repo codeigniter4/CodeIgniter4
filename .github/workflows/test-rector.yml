@@ -35,6 +35,11 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.4', '8.0']
+        paths:
+          - app
+          - system
+          - tests
+          - utils/Rector
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -69,4 +74,4 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/rector process --dry-run --no-progress-bar
+        run: vendor/bin/rector process ${{ matrix.paths }} --dry-run --no-progress-bar
