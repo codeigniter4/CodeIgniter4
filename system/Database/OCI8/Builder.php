@@ -132,9 +132,8 @@ class Builder extends BaseBuilder
         $sql .= implode(', ', array_map(static fn ($columnName) => $columnName . ' = "_replace".' . $columnName, $replaceableFields));
 
         $sql .= ' WHEN NOT MATCHED THEN INSERT (' . implode(', ', $replaceableFields) . ') VALUES ';
-        $sql .= ' (' . implode(', ', array_map(static fn ($columnName) => '"_replace".' . $columnName, $replaceableFields)) . ')';
 
-        return $sql;
+        return $sql . (' (' . implode(', ', array_map(static fn ($columnName) => '"_replace".' . $columnName, $replaceableFields)) . ')');
     }
 
     /**
