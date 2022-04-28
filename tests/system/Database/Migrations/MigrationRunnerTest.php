@@ -40,7 +40,6 @@ final class MigrationRunnerTest extends CIUnitTestCase
     // Use specific migration files for this test case.
     protected $namespace = 'Tests\Support\MigrationTestMigrations';
     private $root;
-    private $start;
     private $config;
 
     protected function setUp(): void
@@ -50,7 +49,6 @@ final class MigrationRunnerTest extends CIUnitTestCase
         parent::setUp();
 
         $this->root   = vfsStream::setup('root');
-        $this->start  = $this->root->url() . '/';
         $this->config = new Migrations();
 
         $this->config->enabled = true;

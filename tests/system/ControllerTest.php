@@ -33,8 +33,6 @@ use Psr\Log\LoggerInterface;
  */
 final class ControllerTest extends CIUnitTestCase
 {
-    private CodeIgniter $codeigniter;
-
     /**
      * @var Controller
      */
@@ -60,7 +58,6 @@ final class ControllerTest extends CIUnitTestCase
         $this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
         $this->response    = new Response($this->config);
         $this->logger      = \Config\Services::logger();
-        $this->codeigniter = new MockCodeIgniter($this->config);
     }
 
     public function testConstructor()

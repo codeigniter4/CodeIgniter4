@@ -22,13 +22,11 @@ use Tests\Support\Commands\AppInfo;
 final class BaseCommandTest extends CIUnitTestCase
 {
     private $logger;
-    private $runner;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->logger = Services::logger();
-        $this->runner = new CommandRunner();
     }
 
     public function testMagicIssetTrue()

@@ -24,7 +24,6 @@ use UnnamespacedClass;
 final class AutoloaderTest extends CIUnitTestCase
 {
     private Autoloader $loader;
-    private string $filesPath = SUPPORTPATH . 'Autoloader/';
 
     protected function setUp(): void
     {

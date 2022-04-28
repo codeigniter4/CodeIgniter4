@@ -27,13 +27,6 @@ final class RouterTest extends CIUnitTestCase
 {
     private RouteCollection $collection;
 
-    /**
-     * vfsStream root directory
-     *
-     * @var
-     */
-    private $root;
-
     private IncomingRequest $request;
 
     protected function setUp(): void

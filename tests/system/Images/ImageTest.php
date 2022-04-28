@@ -20,8 +20,6 @@ use org\bovigo\vfs\vfsStream;
  */
 final class ImageTest extends CIUnitTestCase
 {
-    private string $path = 'tests/_support/ci-logo.png';
-
     protected function setUp(): void
     {
         // create virtual file system
