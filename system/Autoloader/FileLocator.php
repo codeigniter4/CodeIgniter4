@@ -212,7 +212,7 @@ class FileLocator
     /**
      * Return the namespace mappings we know about.
      *
-     * @return array|string
+     * @return array<int, array<string, string>>
      */
     protected function getNamespaces()
     {
