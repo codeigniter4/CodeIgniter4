@@ -166,5 +166,5 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
 
     $parameters = $rectorConfig->parameters();
-    $parameters->set(Option::PARALLEL_TIMEOUT_IN_SECONDS, 180);
+    $parameters->set(Option::PARALLEL_TIMEOUT_IN_SECONDS, 240);
 };
