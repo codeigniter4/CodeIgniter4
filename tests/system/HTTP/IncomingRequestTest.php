@@ -13,7 +13,6 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
-use CodeIgniter\HTTP\Request;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
