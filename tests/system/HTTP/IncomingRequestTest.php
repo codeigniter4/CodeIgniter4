@@ -13,6 +13,7 @@ namespace CodeIgniter\HTTP;
 
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 
@@ -23,7 +24,7 @@ use Config\App;
  */
 final class IncomingRequestTest extends CIUnitTestCase
 {
-    protected IncomingRequest $request;
+    protected Request $request;
 
     protected function setUp(): void
     {
