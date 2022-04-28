@@ -6,13 +6,14 @@ It is not intended to be a full description of the test features that you can
 use to test your application. Those details can be found in the documentation.
 
 ## Resources
+
 * [CodeIgniter 4 User Guide on Testing](https://codeigniter4.github.io/userguide/testing/index.html)
-* [PHPUnit docs](https://phpunit.readthedocs.io/en/8.5/index.html)
+* [PHPUnit docs](https://phpunit.de/documentation.html)
 
 ## Requirements
 
 It is recommended to use the latest version of PHPUnit. At the time of this 
-writing we are running version 8.5.13. Support for this has been built into the 
+writing we are running version 9.x. Support for this has been built into the 
 **composer.json** file that ships with CodeIgniter and can easily be installed 
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
