@@ -274,7 +274,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testModelExistsAbsoluteClassname()
     {
-        $this->assertInstanceOf(JobModel::class, model('\Tests\Support\Models\JobModel'));
+        $this->assertInstanceOf(JobModel::class, model(JobModel::class));
     }
 
     /**

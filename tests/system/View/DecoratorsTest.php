@@ -53,7 +53,7 @@ final class DecoratorsTest extends CIUnitTestCase
     public function testThrowsOnInvalidClass()
     {
         $this->expectException(ViewException::class);
-        $this->expectExceptionMessage(lang('View.invalidDecoratorClass', ['Tests\Support\View\BadDecorator']));
+        $this->expectExceptionMessage(lang('View.invalidDecoratorClass', [BadDecorator::class]));
 
         $config             = $this->config;
         $config->decorators = [BadDecorator::class];

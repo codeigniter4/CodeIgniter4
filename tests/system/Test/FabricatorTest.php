@@ -15,6 +15,7 @@ use CodeIgniter\Database\ModelFactory;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\FabricatorModel;
+use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\UserModel;
 
 /**
@@ -97,7 +98,7 @@ final class FabricatorTest extends CIUnitTestCase
     {
         // Inject the wrong model for UserModel to show it is ignored by Fabricator
         $mock = new FabricatorModel();
-        ModelFactory::injectMock('Tests\Support\Models\UserModel', $mock);
+        ModelFactory::injectMock(UserModel::class, $mock);
 
         $fabricator = new Fabricator(UserModel::class);
         $this->assertInstanceOf(UserModel::class, $fabricator->getModel());
@@ -298,7 +299,7 @@ final class FabricatorTest extends CIUnitTestCase
     public function testMakeObjectReturnsProvidedClass()
     {
         $fabricator = new Fabricator(UserModel::class, $this->formatters);
-        $className  = 'Tests\Support\Models\SimpleEntity';
+        $className  = SimpleEntity::class;
 
         $result = $fabricator->makeObject($className);
 

@@ -21,7 +21,7 @@ use Throwable;
  */
 final class BaseConnectionTest extends CIUnitTestCase
 {
-    protected $options = [
+    protected array $options = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'first',
@@ -39,7 +39,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         'strictOn' => true,
         'failover' => [],
     ];
-    protected $failoverOptions = [
+    protected array $failoverOptions = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'failover',

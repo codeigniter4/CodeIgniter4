@@ -33,7 +33,7 @@ final class ModelFactoryTest extends CIUnitTestCase
     public function testCreateSeparateInstances()
     {
         $basenameModel  = ModelFactory::get('JobModel', false);
-        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', false);
+        $namespaceModel = ModelFactory::get(JobModel::class, false);
 
         $this->assertInstanceOf(JobModel::class, $basenameModel);
         $this->assertInstanceOf(JobModel::class, $namespaceModel);
@@ -43,7 +43,7 @@ final class ModelFactoryTest extends CIUnitTestCase
     public function testCreateSharedInstance()
     {
         $basenameModel  = ModelFactory::get('JobModel', true);
-        $namespaceModel = ModelFactory::get('Tests\\Support\\Models\\JobModel', true);
+        $namespaceModel = ModelFactory::get(JobModel::class, true);
 
         $this->assertSame($basenameModel, $namespaceModel);
     }

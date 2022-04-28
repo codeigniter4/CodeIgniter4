@@ -20,15 +20,8 @@ use Config\Services;
  */
 final class ParserPluginTest extends CIUnitTestCase
 {
-    /**
-     * @var Parser
-     */
-    protected $parser;
-
-    /**
-     * @var Validation
-     */
-    protected $validator;
+    protected Parser $parser;
+    protected Validation $validator;
 
     protected function setUp(): void
     {

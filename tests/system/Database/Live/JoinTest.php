@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,7 +25,7 @@ final class JoinTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
     public function testSimpleJoin()
     {

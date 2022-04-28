@@ -15,6 +15,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -26,7 +27,7 @@ final class UpdateTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
     public function testUpdateSetsAllWithoutWhere()
     {

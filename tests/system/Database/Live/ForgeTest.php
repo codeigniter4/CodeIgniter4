@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
 use RuntimeException;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -28,7 +29,7 @@ final class ForgeTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
     protected Forge $forge;
 
     protected function setUp(): void

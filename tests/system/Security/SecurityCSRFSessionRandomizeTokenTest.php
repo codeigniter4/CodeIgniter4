@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
@@ -64,7 +65,7 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     private function createSession($options = []): Session
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\FileHandler',
+            'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
             'sessionSavePath'          => null,

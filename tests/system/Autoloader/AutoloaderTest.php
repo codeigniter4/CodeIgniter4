@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Autoloader;
 
+use App\Controllers\Home;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
@@ -86,7 +87,7 @@ final class AutoloaderTest extends CIUnitTestCase
     {
         $autoloader = Services::autoloader();
         // look for Home controller, as that should be in base repo
-        $actual   = $autoloader->loadClass('App\Controllers\Home');
+        $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
     }
@@ -97,14 +98,14 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
         // look for Home controller, as that should be in base repo
-        $actual   = $autoloader->loadClass('App\Controllers\Home');
+        $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
     }
 
     public function testExistingFile()
     {
-        $actual   = $this->loader->loadClass('App\Controllers\Home');
+        $actual   = $this->loader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
 
@@ -115,7 +116,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testMatchesWithPrecedingSlash()
     {
-        $actual   = $this->loader->loadClass('\App\Controllers\Home');
+        $actual   = $this->loader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }

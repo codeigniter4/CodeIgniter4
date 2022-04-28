@@ -16,6 +16,7 @@ use CodeIgniter\Model;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * LiveModelTestCase should be in testing Model's features that
@@ -33,7 +34,7 @@ abstract class LiveModelTestCase extends CIUnitTestCase
      */
     protected $model;
 
-    protected $seed = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed = CITestSeeder::class;
 
     protected function setUp(): void
     {

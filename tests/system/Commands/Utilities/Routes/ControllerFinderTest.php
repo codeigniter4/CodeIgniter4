@@ -12,6 +12,7 @@
 namespace CodeIgniter\Commands\Utilities\Routes;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Tests\Support\Controllers\Hello;
 
 /**
  * @internal
@@ -26,6 +27,6 @@ final class ControllerFinderTest extends CIUnitTestCase
         $controllers = $finder->find();
 
         $this->assertCount(3, $controllers);
-        $this->assertSame('Tests\Support\Controllers\Hello', $controllers[0]);
+        $this->assertSame(Hello::class, $controllers[0]);
     }
 }

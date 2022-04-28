@@ -74,7 +74,7 @@ final class LoggerTest extends CIUnitTestCase
     {
         $config = new LoggerConfig();
 
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
+        $config->handlers[TestHandler::class]['handles'] = ['critical'];
 
         $logger = new Logger($config);
 

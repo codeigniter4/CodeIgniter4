@@ -21,6 +21,7 @@ use CodeIgniter\Test\Mock\MockResourcePresenter;
 use Config\App;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\RESTful\Worker2;
 
 /**
  * Exercise our core ResourcePresenter class.
@@ -52,7 +53,7 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         // Inject mock router.
         $this->routes = Services::routes();
-        $this->routes->presenter('work', ['controller' => 'Tests\Support\RESTful\Worker2']);
+        $this->routes->presenter('work', ['controller' => Worker2::class]);
         Services::injectMock('routes', $this->routes);
 
         $config            = new App();
@@ -244,9 +245,9 @@ final class ResourcePresenterTest extends CIUnitTestCase
     public function testModelByName()
     {
         $resource = new MockResourcePresenter();
-        $resource->setModel('\Tests\Support\Models\UserModel');
+        $resource->setModel(UserModel::class);
         $this->assertInstanceOf(Model::class, $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
     }
 
     public function testModelByObject()
@@ -257,31 +258,31 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $this->assertInstanceOf(Model::class, $resource->getModel());
 
         // Note that the leading backslash is missing if we build it this way
-        $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
     }
 
     public function testChangeSetModelByObject()
     {
         $resource = new MockResourcePresenter();
-        $resource->setModel('\Tests\Support\Models\UserModel');
+        $resource->setModel(UserModel::class);
         $this->assertInstanceOf(Model::class, $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
 
         $model = new EntityModel();
         $resource->setModel($model);
         $this->assertInstanceOf(Model::class, $resource->getModel());
-        $this->assertSame('Tests\Support\Models\EntityModel', $resource->getModelName());
+        $this->assertSame(EntityModel::class, $resource->getModelName());
     }
 
     public function testChangeSetModelByName()
     {
         $resource = new MockResourcePresenter();
-        $resource->setModel('\Tests\Support\Models\UserModel');
+        $resource->setModel(UserModel::class);
         $this->assertInstanceOf(Model::class, $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
 
-        $resource->setModel('\Tests\Support\Models\EntityModel');
+        $resource->setModel(EntityModel::class);
         $this->assertInstanceOf(Model::class, $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\EntityModel', $resource->getModelName());
+        $this->assertSame(EntityModel::class, $resource->getModelName());
     }
 }

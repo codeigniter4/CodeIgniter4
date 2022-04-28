@@ -93,9 +93,8 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';" . PHP_EOL;
         $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . PHP_EOL;
         $fileContents .= '// return value of FCPATH' . PHP_EOL;
-        $fileContents .= 'echo FCPATH;' . PHP_EOL;
 
-        return $fileContents;
+        return $fileContents . ('echo FCPATH;' . PHP_EOL);
     }
 
     private function readOutput($file)

@@ -23,11 +23,7 @@ final class FileWithVfsTest extends CIUnitTestCase
     protected $root;
     protected $path;
     protected $start;
-
-    /**
-     * @var File
-     */
-    protected $file;
+    protected File $file;
 
     protected function setUp(): void
     {
