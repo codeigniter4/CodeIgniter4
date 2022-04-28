@@ -40,6 +40,10 @@ The entire test suite can be run by simply typing one command-line command from 
 
 	> ./phpunit
 
+If you are using Windows, use the following command.
+
+	> vendor\bin\phpunit
+
 You can limit tests to those within a single test directory by specifying the 
 directory name after phpunit. All core tests are stored under **tests/system**.
 
