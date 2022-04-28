@@ -24,7 +24,7 @@ use Tests\Support\Config\TestRegistrar;
  */
 final class BaseConfigTest extends CIUnitTestCase
 {
-    protected $fixturesFolder;
+    private $fixturesFolder;
 
     protected function setUp(): void
     {

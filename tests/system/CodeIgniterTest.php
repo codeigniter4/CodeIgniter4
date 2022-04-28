@@ -27,7 +27,7 @@ use Tests\Support\Filters\Customfilter;
  */
 final class CodeIgniterTest extends CIUnitTestCase
 {
-    protected CodeIgniter $codeigniter;
+    private CodeIgniter $codeigniter;
     protected $routes;
 
     protected function setUp(): void

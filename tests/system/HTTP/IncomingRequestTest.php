@@ -23,7 +23,7 @@ use Config\App;
  */
 final class IncomingRequestTest extends CIUnitTestCase
 {
-    protected Request $request;
+    private Request $request;
 
     protected function setUp(): void
     {

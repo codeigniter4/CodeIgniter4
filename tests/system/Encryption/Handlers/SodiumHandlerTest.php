@@ -21,8 +21,8 @@ use Config\Encryption as EncryptionConfig;
  */
 final class SodiumHandlerTest extends CIUnitTestCase
 {
-    protected Encryption $encryption;
-    protected EncryptionConfig $config;
+    private Encryption $encryption;
+    private EncryptionConfig $config;
 
     protected function setUp(): void
     {

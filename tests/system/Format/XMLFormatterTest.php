@@ -19,7 +19,7 @@ use DOMDocument;
  */
 final class XMLFormatterTest extends CIUnitTestCase
 {
-    protected $xmlFormatter;
+    private $xmlFormatter;
 
     protected function setUp(): void
     {

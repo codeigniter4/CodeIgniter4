@@ -21,7 +21,7 @@ use Config\Encryption as EncryptionConfig;
  */
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
-    protected Encryption $encryption;
+    private Encryption $encryption;
 
     protected function setUp(): void
     {

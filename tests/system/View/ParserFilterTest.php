@@ -20,9 +20,9 @@ use Config\View;
  */
 final class ParserFilterTest extends CIUnitTestCase
 {
-    protected $loader;
-    protected $viewsDir;
-    protected $config;
+    private $loader;
+    private $viewsDir;
+    private $config;
 
     protected function setUp(): void
     {

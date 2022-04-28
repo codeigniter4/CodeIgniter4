@@ -23,12 +23,12 @@ use PHPUnit\Framework\AssertionFailedError;
  */
 final class TestResponseTest extends CIUnitTestCase
 {
-    protected ?TestResponse $testResponse = null;
+    private ?TestResponse $testResponse = null;
 
     /**
      * @var ResponseInterface
      */
-    protected $response;
+    private $response;
 
     protected function setUp(): void
     {

@@ -19,7 +19,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class GeneratorsTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {

@@ -21,7 +21,7 @@ use org\bovigo\vfs\vfsStream;
  */
 final class DotEnvTest extends CIUnitTestCase
 {
-    protected $fixturesFolder;
+    private $fixturesFolder;
 
     protected function setUp(): void
     {

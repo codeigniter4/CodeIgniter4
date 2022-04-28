@@ -26,9 +26,9 @@ final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $group1;
-    protected $group2;
-    protected $tests;
+    private $group1;
+    private $group2;
+    private $tests;
 
     protected function setUp(): void
     {

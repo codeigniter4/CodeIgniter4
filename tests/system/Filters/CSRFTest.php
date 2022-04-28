@@ -21,9 +21,9 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class CSRFTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $request;
-    protected $response;
+    private $config;
+    private $request;
+    private $response;
 
     protected function setUp(): void
     {

@@ -42,7 +42,7 @@ use Tests\Support\RESTful\Worker;
  */
 final class ResourceControllerTest extends CIUnitTestCase
 {
-    protected CodeIgniter $codeigniter;
+    private CodeIgniter $codeigniter;
 
     /**
      * @var RouteCollection

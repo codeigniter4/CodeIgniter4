@@ -33,24 +33,24 @@ use Psr\Log\LoggerInterface;
  */
 final class ControllerTest extends CIUnitTestCase
 {
-    protected CodeIgniter $codeigniter;
+    private CodeIgniter $codeigniter;
 
     /**
      * @var Controller
      */
-    protected $controller;
+    private $controller;
 
     /**
      * Current request.
      */
-    protected Request $request;
+    private Request $request;
 
     /**
      * Current response.
      */
-    protected Response $response;
+    private Response $response;
 
-    protected LoggerInterface $logger;
+    private LoggerInterface $logger;
 
     protected function setUp(): void
     {

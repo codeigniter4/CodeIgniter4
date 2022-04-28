@@ -39,9 +39,9 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     // Use specific migration files for this test case.
     protected $namespace = 'Tests\Support\MigrationTestMigrations';
-    protected $root;
-    protected $start;
-    protected $config;
+    private $root;
+    private $start;
+    private $config;
 
     protected function setUp(): void
     {

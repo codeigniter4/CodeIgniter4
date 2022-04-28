@@ -36,7 +36,7 @@ use Tests\Support\RESTful\Worker2;
  */
 final class ResourcePresenterTest extends CIUnitTestCase
 {
-    protected CodeIgniter $codeigniter;
+    private CodeIgniter $codeigniter;
 
     /**
      * @var RouteCollection

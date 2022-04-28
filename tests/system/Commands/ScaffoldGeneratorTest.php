@@ -22,7 +22,7 @@ use Config\Services;
  */
 final class ScaffoldGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {

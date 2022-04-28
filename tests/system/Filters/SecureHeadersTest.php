@@ -19,8 +19,8 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class SecureHeadersTest extends CIUnitTestCase
 {
-    protected $request;
-    protected $response;
+    private $request;
+    private $response;
 
     public function testAfter()
     {

@@ -21,8 +21,8 @@ use CodeIgniter\View\Exceptions\ViewException;
  */
 final class CellTest extends CIUnitTestCase
 {
-    protected $cache;
-    protected Cell $cell;
+    private $cache;
+    private Cell $cell;
 
     protected function setUp(): void
     {

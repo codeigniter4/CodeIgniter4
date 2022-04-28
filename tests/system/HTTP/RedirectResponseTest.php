@@ -31,8 +31,8 @@ final class RedirectResponseTest extends CIUnitTestCase
      */
     protected $routes;
 
-    protected $request;
-    protected $config;
+    private $request;
+    private $config;
 
     protected function setUp(): void
     {

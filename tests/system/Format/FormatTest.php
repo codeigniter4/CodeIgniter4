@@ -20,7 +20,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class FormatTest extends CIUnitTestCase
 {
-    protected Format $format;
+    private Format $format;
 
     protected function setUp(): void
     {

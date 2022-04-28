@@ -26,7 +26,7 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected static bool $loaded = false;
+    private static bool $loaded = false;
 
     /**
      * Should the db be refreshed before

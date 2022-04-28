@@ -21,8 +21,8 @@ use Tests\Support\Commands\AppInfo;
  */
 final class BaseCommandTest extends CIUnitTestCase
 {
-    protected $logger;
-    protected $runner;
+    private $logger;
+    private $runner;
 
     protected function setUp(): void
     {

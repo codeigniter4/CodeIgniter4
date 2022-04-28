@@ -19,7 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class MessageTest extends CIUnitTestCase
 {
-    protected ?Message $message;
+    private ?Message $message;
 
     protected function setUp(): void
     {
