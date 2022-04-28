@@ -27,7 +27,7 @@ A number of the tests use a running database.
 In order to set up the database edit the details for the `tests` group in 
 **app/Config/Database.php** or **phpunit.xml**. Make sure that you provide a database engine 
 that is currently running on your machine. More details on a test database setup are in the 
-[Testing Your Database](https://codeigniter.com/user_guide/testing/database.html) section of the documentation.
+[Testing Your Database](https://codeigniter4.github.io/CodeIgniter4/testing/database.html) section of the documentation.
 
 If you want to run the tests without using live database you can 
 exclude `@DatabaseLive` group. Or make a copy of **phpunit.dist.xml** - 
