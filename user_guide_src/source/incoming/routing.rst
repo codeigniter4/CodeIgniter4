@@ -610,23 +610,23 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 
 .. _auto-routing:
 
-Auto Routing (Traditional)
-**************************
+Auto Routing (Legacy)
+*********************
 
-Auto Routing (Traditional) is a routing system from CodeIgniter 3.
+Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.
 
 It is recommended that all routes are defined in the **app/Config/Routes.php** file,
 or to use :ref:`auto-routing-improved`,
 
 .. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
-    Auto Routing (Traditional) feature. It is easy to create vulnerable apps where controller filters
+    Auto Routing (Legacy) feature. It is easy to create vulnerable apps where controller filters
     or CSRF protection are bypassed.
 
-.. important:: Auto Routing (Traditional) routes a HTTP request with **any** HTTP method to a controller method.
+.. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
 
-Enable Auto Routing (Traditional)
-=================================
+Enable Auto Routing (Legacy)
+============================
 
 Since v4.2.0, the auto-routing is disabled by default.
 
@@ -634,8 +634,8 @@ To use it, you need to change the setting ``setAutoRoute()`` option to true in *
 
     $routes->setAutoRoute(true);
 
-URI Segments (Traditional)
-==========================
+URI Segments (Legacy)
+=====================
 
 The segments in the URL, in following with the Model-View-Controller approach, usually represent::
 
@@ -652,15 +652,15 @@ Consider this URI::
 In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php**
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
-See :ref:`Auto Routing (Traditional) in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing>` for more info.
 
-Configuration Options (Traditional)
-===================================
+Configuration Options (Legacy)
+==============================
 
 These options are available at the top of **app/Config/Routes.php**.
 
-Default Controller (Traditional)
---------------------------------
+Default Controller (Legacy)
+---------------------------
 
 When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
@@ -674,8 +674,8 @@ in the controllers directory. For example, if the user visits **example.com/admi
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
 
-Default Method (Traditional)
-----------------------------
+Default Method (Legacy)
+-----------------------
 
 This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is

@@ -27,7 +27,7 @@ Enhancements
 New Improved Auto Routing
 =========================
 
-Added an optional new more secure auto router. These are the changes from the traditional auto-routing:
+Added an optional new more secure auto router. These are the changes from the legacy auto-routing:
 
 - A controller method needs HTTP verb prefix like ``getIndex()``, ``postCreate()``.
     - Developers always know the HTTP method, so requests by an unexpected HTTP method does not pass.

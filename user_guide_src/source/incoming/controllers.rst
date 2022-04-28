@@ -278,18 +278,18 @@ CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Rout
 
 .. _controller-auto-routing:
 
-Auto Routing (Traditional)
-**************************
+Auto Routing (Legacy)
+*********************
 
-This section describes the functionality of Auto Routing (Traditional) that is a routing system from CodeIgniter 3.
+This section describes the functionality of Auto Routing (Legacy) that is a routing system from CodeIgniter 3.
 It automatically routes an HTTP request, and executes the corresponding controller method
 without route definitions. The auto-routing is disabled by default.
 
 .. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
-    Auto Routing (Traditional). It is easy to create vulnerable apps where controller filters
+    Auto Routing (Legacy). It is easy to create vulnerable apps where controller filters
     or CSRF protection are bypassed.
 
-.. important:: Auto Routing (Traditional) routes a HTTP request with **any** HTTP method to a controller method.
+.. important:: Auto Routing (Legacy) routes a HTTP request with **any** HTTP method to a controller method.
 
 Consider this URI::
 
