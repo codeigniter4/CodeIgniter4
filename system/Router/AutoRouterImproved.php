@@ -171,7 +171,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         // Ensure routes registered via $routes->cli() are not accessible via web.
         $this->protectDefinedRoutes();
 
-        // Check _remao()
+        // Check _remap()
         $this->checkRemap();
 
         // Check parameters
