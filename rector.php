@@ -112,6 +112,7 @@ return static function (RectorConfig $rectorConfig): void {
 
             // expected Qualified name
             __DIR__ . '/tests/system/Autoloader/FileLocatorTest.php',
+            __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
         ],
 
         // sometime too detail
