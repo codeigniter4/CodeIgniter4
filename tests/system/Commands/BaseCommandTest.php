@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Commands;
 
-use CodeIgniter\CLI\CommandRunner;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Commands\AppInfo;

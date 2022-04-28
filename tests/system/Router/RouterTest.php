@@ -26,7 +26,6 @@ use Tests\Support\Filters\Customfilter;
 final class RouterTest extends CIUnitTestCase
 {
     private RouteCollection $collection;
-
     private IncomingRequest $request;
 
     protected function setUp(): void
