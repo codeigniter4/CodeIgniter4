@@ -26,7 +26,7 @@ class Feature extends BaseConfig
     public $multipleFilters = false;
 
     /**
-     * Use improved new auto routing, instead of the traditional auto routing.
+     * Use improved new auto routing instead of the default legacy version.
      */
     public bool $autoRoutesImproved = false;
 }
