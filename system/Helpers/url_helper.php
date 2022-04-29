@@ -522,6 +522,9 @@ if (! function_exists('url_to')) {
      * Get the full, absolute URL to a controller method
      * (with additional arguments)
      *
+     * NOTE: This requires the controller/method to
+     * have a route defined in the routes Config file.
+     *
      * @param mixed ...$args
      *
      * @throws RouterException
