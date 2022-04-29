@@ -123,19 +123,22 @@ Additional Assertions
 
 ``CIUnitTestCase`` provides additional unit testing assertions that you might find useful.
 
-**assertLogged($level, $expectedMessage)**
+assertLogged($level, $expectedMessage)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ensure that something you expected to be logged actually was:
 
 .. literalinclude:: overview/007.php
 
-**assertEventTriggered($eventName)**
+assertEventTriggered($eventName)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ensure that an event you expected to be triggered actually was:
 
 .. literalinclude:: overview/008.php
 
-**assertHeaderEmitted($header, $ignoreCase = false)**
+assertHeaderEmitted($header, $ignoreCase = false)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ensure that a header or cookie was actually emitted:
 
@@ -144,7 +147,8 @@ Ensure that a header or cookie was actually emitted:
 Note: the test case with this should be `run as a separate process
 in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
 
-**assertHeaderNotEmitted($header, $ignoreCase = false)**
+assertHeaderNotEmitted($header, $ignoreCase = false)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Ensure that a header or cookie was not emitted:
 
@@ -153,7 +157,8 @@ Ensure that a header or cookie was not emitted:
 Note: the test case with this should be `run as a separate process
 in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
 
-**assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)**
+assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For extended execution time testing, tests that the absolute difference
 between expected and actual time is within the prescribed tolerance:
@@ -162,7 +167,8 @@ between expected and actual time is within the prescribed tolerance:
 
 The above test will allow the actual time to be either 660 or 661 seconds.
 
-**assertCloseEnoughString($expected, $actual, $message = '', $tolerance = 1)**
+assertCloseEnoughString($expected, $actual, $message = '', $tolerance = 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For extended execution time testing, tests that the absolute difference
 between expected and actual time, formatted as strings, is within the prescribed tolerance:
@@ -177,21 +183,24 @@ Accessing Protected/Private Properties
 When testing, you can use the following setter and getter methods to access protected and private methods and
 properties in the classes that you are testing.
 
-**getPrivateMethodInvoker($instance, $method)**
+getPrivateMethodInvoker($instance, $method)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Enables you to call private methods from outside the class. This returns a function that can be called. The first
 parameter is an instance of the class to test. The second parameter is the name of the method you want to call.
 
 .. literalinclude:: overview/013.php
 
-**getPrivateProperty($instance, $property)**
+getPrivateProperty($instance, $property)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Retrieves the value of a private/protected class property from an instance of a class. The first parameter is an
 instance of the class to test. The second parameter is the name of the property.
 
 .. literalinclude:: overview/014.php
 
-**setPrivateProperty($instance, $property, $value)**
+setPrivateProperty($instance, $property, $value)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Set a protected value within a class instance. The first parameter is an instance of the class to test. The second
 parameter is the name of the property to set the value of. The third parameter is the value to set it to:
@@ -206,7 +215,8 @@ your tests to only the code in question, while simulating various responses from
 true when testing controllers and other integration testing. The **Services** class provides the following methods
 to simplify this.
 
-**injectMock()**
+injectMock()
+^^^^^^^^^^^^
 
 This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.
@@ -216,11 +226,13 @@ set properties of a service so that it behaves in a certain way, or replace a se
 The first parameter is the service that you are replacing. The name must match the function name in the Services
 class exactly. The second parameter is the instance to replace it with.
 
-**reset()**
+reset()
+^^^^^^^
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
 
-**resetSingle(string $name)**
+resetSingle(string $name)
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Removes any mock and shared instances for a single service, by its name.
 
