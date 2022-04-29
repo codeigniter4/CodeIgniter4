@@ -40,7 +40,7 @@ tests for this project by typing::
 Phar
 ----
 
-The other option is to download the .phar file from the `PHPUnit <https://phpunit.de/getting-started/phpunit-7.html>`__ site.
+The other option is to download the .phar file from the `PHPUnit <https://phpunit.de/getting-started/phpunit-9.html>`__ site.
 This is a standalone file that should be placed within your project root.
 
 ************************
