@@ -309,7 +309,7 @@ tests for this project by typing:</p>
 </section>
 <section id="phar">
 <h4>Phar<a class="headerlink" href="#phar" title="Permalink to this headline"></a></h4>
-<p>The other option is to download the .phar file from the <a class="reference external" href="https://phpunit.de/getting-started/phpunit-7.html">PHPUnit</a> site.
+<p>The other option is to download the .phar file from the <a class="reference external" href="https://phpunit.de/getting-started/phpunit-9.html">PHPUnit</a> site.
 This is a standalone file that should be placed within your project root.</p>
 </section>
 </section>
@@ -472,7 +472,8 @@ logged in user:</p>
 <section id="additional-assertions">
 <h4>Additional Assertions<a class="headerlink" href="#additional-assertions" title="Permalink to this headline"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides additional unit testing assertions that you might find useful.</p>
-<p><strong>assertLogged($level, $expectedMessage)</strong></p>
+<section id="assertlogged-level-expectedmessage">
+<h5>assertLogged($level, $expectedMessage)<a class="headerlink" href="#assertlogged-level-expectedmessage" title="Permalink to this headline"></a></h5>
 <p>Ensure that something you expected to be logged actually was:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -485,7 +486,9 @@ logged in user:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogged</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertEventTriggered($eventName)</strong></p>
+</section>
+<section id="asserteventtriggered-eventname">
+<h5>assertEventTriggered($eventName)<a class="headerlink" href="#asserteventtriggered-eventname" title="Permalink to this headline"></a></h5>
 <p>Ensure that an event you expected to be triggered actually was:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -498,7 +501,9 @@ logged in user:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEventTriggered</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertHeaderEmitted($header, $ignoreCase = false)</strong></p>
+</section>
+<section id="assertheaderemitted-header-ignorecase-false">
+<h5>assertHeaderEmitted($header, $ignoreCase = false)<a class="headerlink" href="#assertheaderemitted-header-ignorecase-false" title="Permalink to this headline"></a></h5>
 <p>Ensure that a header or cookie was actually emitted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -513,7 +518,9 @@ logged in user:</p>
 </div>
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
-<p><strong>assertHeaderNotEmitted($header, $ignoreCase = false)</strong></p>
+</section>
+<section id="assertheadernotemitted-header-ignorecase-false">
+<h5>assertHeaderNotEmitted($header, $ignoreCase = false)<a class="headerlink" href="#assertheadernotemitted-header-ignorecase-false" title="Permalink to this headline"></a></h5>
 <p>Ensure that a header or cookie was not emitted:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -528,7 +535,9 @@ in PHPunit</a>.</p>
 </div>
 <p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
-<p><strong>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
+</section>
+<section id="assertcloseenough-expected-actual-message-tolerance-1">
+<h5>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)<a class="headerlink" href="#assertcloseenough-expected-actual-message-tolerance-1" title="Permalink to this headline"></a></h5>
 <p>For extended execution time testing, tests that the absolute difference
 between expected and actual time is within the prescribed tolerance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -539,7 +548,9 @@ between expected and actual time is within the prescribed tolerance:</p>
 </pre></div>
 </div>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
-<p><strong>assertCloseEnoughString($expected, $actual, $message = ‘’, $tolerance = 1)</strong></p>
+</section>
+<section id="assertcloseenoughstring-expected-actual-message-tolerance-1">
+<h5>assertCloseEnoughString($expected, $actual, $message = ‘’, $tolerance = 1)<a class="headerlink" href="#assertcloseenoughstring-expected-actual-message-tolerance-1" title="Permalink to this headline"></a></h5>
 <p>For extended execution time testing, tests that the absolute difference
 between expected and actual time, formatted as strings, is within the prescribed tolerance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -551,11 +562,13 @@ between expected and actual time, formatted as strings, is within the prescribed
 </div>
 <p>The above test will allow the actual time to be either 660 or 661 seconds.</p>
 </section>
+</section>
 <section id="accessing-protected-private-properties">
 <h4>Accessing Protected/Private Properties<a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline"></a></h4>
 <p>When testing, you can use the following setter and getter methods to access protected and private methods and
 properties in the classes that you are testing.</p>
-<p><strong>getPrivateMethodInvoker($instance, $method)</strong></p>
+<section id="getprivatemethodinvoker-instance-method">
+<h5>getPrivateMethodInvoker($instance, $method)<a class="headerlink" href="#getprivatemethodinvoker-instance-method" title="Permalink to this headline"></a></h5>
 <p>Enables you to call private methods from outside the class. This returns a function that can be called. The first
 parameter is an instance of the class to test. The second parameter is the name of the method you want to call.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -570,7 +583,9 @@ parameter is an instance of the class to test. The second parameter is the name 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$method</span><span class="p">(</span><span class="s1">&#39;param1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
-<p><strong>getPrivateProperty($instance, $property)</strong></p>
+</section>
+<section id="getprivateproperty-instance-property">
+<h5>getPrivateProperty($instance, $property)<a class="headerlink" href="#getprivateproperty-instance-property" title="Permalink to this headline"></a></h5>
 <p>Retrieves the value of a private/protected class property from an instance of a class. The first parameter is an
 instance of the class to test. The second parameter is the name of the property.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -582,7 +597,9 @@ instance of the class to test. The second parameter is the name of the property.
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getPrivateProperty</span><span class="p">(</span><span class="nv">$obj</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
-<p><strong>setPrivateProperty($instance, $property, $value)</strong></p>
+</section>
+<section id="setprivateproperty-instance-property-value">
+<h5>setPrivateProperty($instance, $property, $value)<a class="headerlink" href="#setprivateproperty-instance-property-value" title="Permalink to this headline"></a></h5>
 <p>Set a protected value within a class instance. The first parameter is an instance of the class to test. The second
 parameter is the name of the property to set the value of. The third parameter is the value to set it to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -598,13 +615,15 @@ parameter is the name of the property to set the value of. The third parameter i
 </div>
 </section>
 </section>
+</section>
 <section id="mocking-services">
 <h3><a class="toc-backref" href="#id7">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline"></a></h3>
 <p>You will often find that you need to mock one of the services defined in <strong>app/Config/Services.php</strong> to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The <strong>Services</strong> class provides the following methods
 to simplify this.</p>
-<p><strong>injectMock()</strong></p>
+<section id="injectmock">
+<h4>injectMock()<a class="headerlink" href="#injectmock" title="Permalink to this headline"></a></h4>
 <p>This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -627,14 +646,19 @@ set properties of a service so that it behaves in a certain way, or replace a se
 </div>
 <p>The first parameter is the service that you are replacing. The name must match the function name in the Services
 class exactly. The second parameter is the instance to replace it with.</p>
-<p><strong>reset()</strong></p>
+</section>
+<section id="reset">
+<h4>reset()<a class="headerlink" href="#reset" title="Permalink to this headline"></a></h4>
 <p>Removes all mocked classes from the Services class, bringing it back to its original state.</p>
-<p><strong>resetSingle(string $name)</strong></p>
+</section>
+<section id="resetsingle-string-name">
+<h4>resetSingle(string $name)<a class="headerlink" href="#resetsingle-string-name" title="Permalink to this headline"></a></h4>
 <p>Removes any mock and shared instances for a single service, by its name.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">Cache</span></code>, <code class="docutils literal notranslate"><span class="pre">Email</span></code> and <code class="docutils literal notranslate"><span class="pre">Session</span></code> services are mocked by default to prevent intrusive testing behavior. To prevent these from mocking remove their method callback from the class property: <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span> <span class="pre">=</span> <span class="pre">['mockEmail',</span> <span class="pre">'mockSession'];</span></code></p>
 </div>
+</section>
 </section>
 <section id="mocking-factory-instances">
 <h3><a class="toc-backref" href="#id8">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline"></a></h3>
