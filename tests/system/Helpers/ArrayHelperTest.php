@@ -45,7 +45,16 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame(23, dot_array_search('foo.bar.baz', $data));
+        $this->assertNull(dot_array_search('foo.bar.baz', $data));
+    }
+
+    public function testArrayDotTooManyLevelsWithWildCard()
+    {
+        $data = [
+            'a' => [],
+        ];
+
+        $this->assertNull(dot_array_search('a.*.c', $data));
     }
 
     /**
