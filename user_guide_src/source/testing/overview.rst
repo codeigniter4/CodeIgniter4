@@ -216,7 +216,7 @@ true when testing controllers and other integration testing. The **Services** cl
 to simplify this.
 
 injectMock()
-^^^^^^^^^^^^
+------------
 
 This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.
@@ -227,12 +227,12 @@ The first parameter is the service that you are replacing. The name must match t
 class exactly. The second parameter is the instance to replace it with.
 
 reset()
-^^^^^^^
+-------
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
 
 resetSingle(string $name)
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 Removes any mock and shared instances for a single service, by its name.
 
