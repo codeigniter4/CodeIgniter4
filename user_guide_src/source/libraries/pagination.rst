@@ -188,12 +188,14 @@ usefulness. It is easiest to demonstrate creating a new view by showing you the 
 
 .. literalinclude:: pagination/012.php
 
-**setSurroundCount()**
+setSurroundCount()
+------------------
 
 In the first line, the ``setSurroundCount()`` method specifies than we want to show two links to either side of
 the current page link. The only parameter that it accepts is the number of links to show.
 
-**hasPrevious()** & **hasNext()**
+hasPrevious() & hasNext()
+-------------------------
 
 These methods return a boolean true if there are more links that can be displayed on either side of the current page,
 based on the value passed to ``setSurroundCount()``. For example, let's say we have 20 pages of data. The current
@@ -201,17 +203,27 @@ page is page 3. If the surrounding count is 2, then the following links would sh
 Since the first link displayed is page one, ``hasPrevious()`` would return **false** since there is no page zero. However,
 ``hasNext()`` would return **true** since there are 15 additional pages of results after page five.
 
-**getPrevious()** & **getNext()**
+getPrevious() & getNext()
+-------------------------
 
-These methods return the URL for the previous or next pages of results on either side of the numbered links. See the
-previous paragraph for a full explanation.
+These methods return the URL for the previous or next pages of results on either side of the numbered links.
 
-**getFirst()** & **getLast()**
+For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
+
+    3  |  4  |  5  |  6  |  7
+
+``getPrevious()`` returns the URL for page 2. ``getNext()`` returns the URL for page 8.
+
+If you want to get page 4 and page 6, use ``getPreviousPage()`` and ``getNextPage()`` instead.
+
+getFirst() & getLast()
+----------------------
 
 Much like ``getPrevious()`` and ``getNext()``, these methods return links to the first and last pages in the
 result set.
 
-**links()**
+links()
+-------
 
 Returns an array of data about all of the numbered links. Each link's array contains the uri for the link, the
 title, which is just the number, and a boolean that tells whether the link is the current/active link or not:
@@ -226,31 +238,43 @@ See following an example with these changes:
 
 .. literalinclude:: pagination/014.php
 
-**hasPreviousPage()** & **hasNextPage()**
+hasPreviousPage() & hasNextPage()
+---------------------------------
 
 This method returns a boolean true if there are links to a page before and after, respectively, the current page being displayed.
 
 Their difference to ``hasPrevious()`` and ``hasNext()`` is that they are based on the current page while ``hasPrevious()`` and ``hasNext()`` are based on the set of links to be displayed before and after the current page based on the value passed in ``setSurroundCount()``.
 
-**getPreviousPage()** & **getNextPage()**
+getPreviousPage() & getNextPage()
+---------------------------------
 
 These methods return a URL for the previous and next pages in relation to the current page being displayed, unlike ``getPrevious()`` and ``getNext()`` that return the URL for the previous or next pages of results on either side of the numbered links. See the previous paragraph for a full explanation.
 
+For example, you have the current page set at 5 and you want to have the links before and after (the surroundCount) to be 2 each, that will give you something like this::
+
+    3  |  4  |  5  |  6  |  7
+
+``getPreviousPage()`` returns the URL for page 4. ``getNextPage()`` returns the URL for page 6.
+
 If you want page numbers instead of URLs, you can use the following methods:
 
-**getPreviousPageNumber()** & **getNextPageNumber()**
+getPreviousPageNumber() & getNextPageNumber()
+---------------------------------------------
 
 These methods return the page number for the previous or next pages in relation to the current page being displayed.
 
-**getFirstPageNumber()** & **getLastPageNumber()**
+getFirstPageNumber() & getLastPageNumber()
+------------------------------------------
 
 These methods return page numbers to the first and last pages in the
 result set.
 
-**getCurrentPageNumber()**
+getCurrentPageNumber()
+----------------------
 
 This method returns the page number of the current page.
 
-**getPageCount()**
+getPageCount()
+--------------
 
 This method returns total number of pages.
