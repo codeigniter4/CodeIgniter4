@@ -23,4 +23,12 @@ class IntegerCast extends BaseCast
     {
         return (int) $value;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function set($value, array $params = []): int
+    {
+        return (int) $value;
+    }
 }

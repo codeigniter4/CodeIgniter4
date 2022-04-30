@@ -23,4 +23,12 @@ class FloatCast extends BaseCast
     {
         return (float) $value;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function set($value, array $params = []): float
+    {
+        return (float) $value;
+    }
 }
