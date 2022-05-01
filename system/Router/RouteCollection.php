@@ -997,6 +997,15 @@ class RouteCollection implements RouteCollectionInterface
             }
         }
 
+        // Add the default namespace if needed.
+        $namespace = trim($this->defaultNamespace, '\\') . '\\';
+        if (
+            substr($search, 0, 1) !== '\\'
+            || substr($search, 0, strlen($namespace)) !== $namespace
+        ) {
+            $search = $namespace . $search;
+        }
+
         // If it's not a named route, then loop over
         // all routes to find a match.
         foreach ($this->routes as $collection) {

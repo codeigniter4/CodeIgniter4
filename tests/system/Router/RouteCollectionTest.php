@@ -849,6 +849,30 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
+    public function testReverseRoutingDefaultNamespaceAppController()
+    {
+        $routes = $this->getCollector();
+        $routes->setDefaultNamespace('App\Controllers');
+
+        $routes->get('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
+
+        $match = $routes->reverseRoute('Galleries::showUserGallery', 15, 12);
+
+        $this->assertSame('/users/15/gallery12', $match);
+    }
+
+    public function testReverseRoutingDefaultNamespaceAppControllerSubNamespace()
+    {
+        $routes = $this->getCollector();
+        $routes->setDefaultNamespace('App\Controllers');
+
+        $routes->get('admin/(:num)/gallery(:any)', 'Admin\Galleries::showUserGallery/$1/$2');
+
+        $match = $routes->reverseRoute('Admin\Galleries::showUserGallery', 15, 12);
+
+        $this->assertSame('/admin/15/gallery12', $match);
+    }
+
     public function testNamedRoutes()
     {
         $routes = $this->getCollector();
