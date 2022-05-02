@@ -27,7 +27,6 @@ use Rector\CodingStyle\Rector\ClassMethod\FuncGetArgsToVariadicParamRector;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
-use Rector\Core\Configuration\Option;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPromotedPropertyRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
@@ -164,7 +163,4 @@ return static function (RectorConfig $rectorConfig): void {
         'SQLite3',
     ]);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
-
-    $parameters = $rectorConfig->parameters();
-    $parameters->set(Option::PARALLEL_TIMEOUT_IN_SECONDS, 240);
 };
