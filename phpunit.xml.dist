@@ -9,7 +9,8 @@
          colors="true"
          failOnRisky="true"
          failOnWarning="true"
-         verbose="true">
+         verbose="true"
+         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
 
     <coverage processUncoveredFiles="true" ignoreDeprecatedCodeUnits="true">
         <include>
