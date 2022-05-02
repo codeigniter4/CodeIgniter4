@@ -289,7 +289,7 @@ class Session implements SessionInterface
         if (empty($this->sessionCookieName)) {
             $this->sessionCookieName = ini_get('session.name');
         } else {
-            ini_set('session.name', $this->sessionCookieName);
+            ini_set('session.name', $this->cookie->getPrefix() . $this->sessionCookieName);
         }
 
         $sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);
