@@ -110,5 +110,4 @@ track of the transaction "depth" and only take action at the outermost layer
 
 .. literalinclude:: transactions/007.php
 
-.. note:: Use this technique ONLY IF you actually know what you are doing.
-
+.. note:: Use this technique carefully in order to keep the commands balanced.
