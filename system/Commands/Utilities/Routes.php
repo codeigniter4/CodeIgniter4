@@ -15,6 +15,7 @@ use Closure;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
+use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector as AutoRouteCollectorImproved;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
 use Config\Services;
@@ -112,19 +113,34 @@ class Routes extends BaseCommand
         }
 
         if ($collection->shouldAutoRoute()) {
-            $autoRouteCollector = new AutoRouteCollector(
-                $collection->getDefaultNamespace(),
-                $collection->getDefaultController(),
-                $collection->getDefaultMethod()
-            );
-            $autoRoutes = $autoRouteCollector->get();
+            $autoRoutesImproved = config('Feature')->autoRoutesImproved ?? false;
 
-            foreach ($autoRoutes as &$routes) {
-                // There is no `auto` method, but it is intentional not to get route filters.
-                $filters = $filterCollector->get('auto', $uriGenerator->get($routes[1]));
+            if ($autoRoutesImproved) {
+                $autoRouteCollector = new AutoRouteCollectorImproved(
+                    $collection->getDefaultNamespace(),
+                    $collection->getDefaultController(),
+                    $collection->getDefaultMethod(),
+                    $methods,
+                    $collection->getRegisteredControllers('*')
+                );
 
-                $routes[] = implode(' ', array_map('class_basename', $filters['before']));
-                $routes[] = implode(' ', array_map('class_basename', $filters['after']));
+                $autoRoutes = $autoRouteCollector->get();
+            } else {
+                $autoRouteCollector = new AutoRouteCollector(
+                    $collection->getDefaultNamespace(),
+                    $collection->getDefaultController(),
+                    $collection->getDefaultMethod()
+                );
+
+                $autoRoutes = $autoRouteCollector->get();
+
+                foreach ($autoRoutes as &$routes) {
+                    // There is no `auto` method, but it is intentional not to get route filters.
+                    $filters = $filterCollector->get('auto', $uriGenerator->get($routes[1]));
+
+                    $routes[] = implode(' ', array_map('class_basename', $filters['before']));
+                    $routes[] = implode(' ', array_map('class_basename', $filters['after']));
+                }
             }
 
             $tbody = [...$tbody, ...$autoRoutes];
