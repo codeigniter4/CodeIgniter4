@@ -103,7 +103,7 @@ Nested Transactions
 
 In CodeIgniter, transactions can be nested in a way such that only the
 outmost or top-level transaction commands are executed. You can include as
-many pairs of ``transStart``/``transComplete`` or ``transBegin``/``transCommit``/``transRollback``
+many pairs of ``transStart()``/``transComplete()`` or ``transBegin()``/``transCommit()``/``transRollback()``
 as you want inside a transaction block and so on. CodeIgniter will keep
 track of the transaction "depth" and only take action at the outermost layer
 (zero depth).
