@@ -644,4 +644,22 @@ final class SessionTest extends CIUnitTestCase
         $this->assertCount(1, $cookies);
         $this->assertSame(0, $cookies[0]->getExpiresTimestamp());
     }
+
+    public function testCookieCreatedHasNameWithPrefix()
+    {
+        $config           = new CookieConfig();
+        $config->prefix = 'test_';
+        Factories::injectMock('config', CookieConfig::class, $config);
+
+        $session = $this->getInstance(['sessionCookieName'=>'ci_session']);
+
+        $session->start();
+
+        $cookies = $session->cookies;
+        $this->assertCount(1, $cookies);
+        $this->assertSame('test_', $cookies[0]->getPrefix());
+        $this->assertSame('ci_session', $cookies[0]->getName());
+        $this->assertSame('test_ci_session', $cookies[0]->getPrefixedName());
+        $this->assertSame('test_ci_session', ini_get('session.name'));
+    }
 }
