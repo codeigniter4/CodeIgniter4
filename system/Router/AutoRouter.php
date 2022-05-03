@@ -16,44 +16,46 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 /**
  * Router for Auto-Routing
  */
-class AutoRouter
+final class AutoRouter implements AutoRouterInterface
 {
     /**
      * List of controllers registered for the CLI verb that should not be accessed in the web.
+     *
+     * @var class-string[]
      */
-    protected array $protectedControllers;
+    private array $protectedControllers;
 
     /**
      * Sub-directory that contains the requested controller class.
      * Primarily used by 'autoRoute'.
      */
-    protected ?string $directory = null;
+    private ?string $directory = null;
 
     /**
      * The name of the controller class.
      */
-    protected string $controller;
+    private string $controller;
 
     /**
      * The name of the method to use.
      */
-    protected string $method;
+    private string $method;
 
     /**
      * Whether dashes in URI's should be converted
      * to underscores when determining method names.
      */
-    protected bool $translateURIDashes;
+    private bool $translateURIDashes;
 
     /**
      * HTTP verb for the request.
      */
-    protected string $httpVerb;
+    private string $httpVerb;
 
     /**
      * Default namespace for controllers.
      */
-    protected string $defaultNamespace;
+    private string $defaultNamespace;
 
     public function __construct(
         array $protectedControllers,
@@ -164,6 +166,8 @@ class AutoRouter
     /**
      * Tells the system whether we should translate URI dashes or not
      * in the URI from a dash to an underscore.
+     *
+     * @deprecated This method should be removed.
      */
     public function setTranslateURIDashes(bool $val = false): self
     {
@@ -179,7 +183,7 @@ class AutoRouter
      *
      * @return array returns an array of remaining uri segments that don't map onto a directory
      */
-    protected function scanControllers(array $segments): array
+    private function scanControllers(array $segments): array
     {
         $segments = array_filter($segments, static fn ($segment) => $segment !== '');
         // numerically reindex the array, removing gaps
@@ -234,6 +238,8 @@ class AutoRouter
      * Sets the sub-directory that the controller is in.
      *
      * @param bool $validate if true, checks to make sure $dir consists of only PSR4 compliant segments
+     *
+     * @deprecated This method should be removed.
      */
     public function setDirectory(?string $dir = null, bool $append = false, bool $validate = true)
     {
@@ -263,6 +269,8 @@ class AutoRouter
     /**
      * Returns the name of the sub-directory the controller is in,
      * if any. Relative to APPPATH.'Controllers'.
+     *
+     * @deprecated This method should be removed.
      */
     public function directory(): string
     {
