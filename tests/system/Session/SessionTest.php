@@ -647,11 +647,11 @@ final class SessionTest extends CIUnitTestCase
 
     public function testCookieCreatedHasNameWithPrefix()
     {
-        $config           = new CookieConfig();
+        $config         = new CookieConfig();
         $config->prefix = 'test_';
         Factories::injectMock('config', CookieConfig::class, $config);
 
-        $session = $this->getInstance(['sessionCookieName'=>'ci_session']);
+        $session = $this->getInstance(['sessionCookieName' => 'ci_session']);
 
         $session->start();
 
