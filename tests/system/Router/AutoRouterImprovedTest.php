@@ -25,7 +25,7 @@ use Config\Modules;
  */
 final class AutoRouterImprovedTest extends CIUnitTestCase
 {
-    protected RouteCollection $collection;
+    private RouteCollection $collection;
 
     protected function setUp(): void
     {
