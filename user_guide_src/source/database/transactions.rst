@@ -110,4 +110,7 @@ track of the transaction "depth" and only take action at the outermost layer
 
 .. literalinclude:: transactions/007.php
 
-.. note:: Use this technique carefully in order to keep the commands balanced.
+.. note:: In case the structure is far more complex, it's your responsibility
+    to ensure that the inner transactions can reach the outermost layer again
+    in order to be fully executed by the database, thus prevents unintended
+    commits/rollbacks.
