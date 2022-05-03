@@ -188,6 +188,7 @@ class Session implements SessionInterface
         $cookie = config('Cookie');
 
         $this->cookie = new Cookie($this->sessionCookieName, '', [
+            'prefix'   => $cookie->prefix ?? $config->cookiePrefix,
             'expires'  => $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration,
             'path'     => $cookie->path ?? $config->cookiePath,
             'domain'   => $cookie->domain ?? $config->cookieDomain,
@@ -289,7 +290,7 @@ class Session implements SessionInterface
         if (empty($this->sessionCookieName)) {
             $this->sessionCookieName = ini_get('session.name');
         } else {
-            ini_set('session.name', $this->cookie->getPrefix() . $this->sessionCookieName);
+            ini_set('session.name', $this->cookie->getPrefixedName());
         }
 
         $sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);
