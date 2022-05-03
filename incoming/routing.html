@@ -295,22 +295,33 @@
 <li><p><a class="reference internal" href="#route-processing-by-priority" id="id29">Route processing by priority</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#auto-routing" id="id30">Auto Routing</a></p>
+<li><p><a class="reference internal" href="#auto-routing-improved" id="id30">Auto Routing (Improved)</a></p>
 <ul>
 <li><p><a class="reference internal" href="#enable-auto-routing" id="id31">Enable Auto Routing</a></p></li>
 <li><p><a class="reference internal" href="#uri-segments" id="id32">URI Segments</a></p></li>
 <li><p><a class="reference internal" href="#configuration-options" id="id33">Configuration Options</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#confirming-routes" id="id34">Confirming Routes</a></p></li>
+<li><p><a class="reference internal" href="#auto-routing-legacy" id="id34">Auto Routing (Legacy)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#enable-auto-routing-legacy" id="id35">Enable Auto Routing (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#uri-segments-legacy" id="id36">URI Segments (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#configuration-options-legacy" id="id37">Configuration Options (Legacy)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#confirming-routes" id="id38">Confirming Routes</a></p></li>
 </ul>
 </div>
 <section id="what-is-uri-routing">
 <h2><a class="toc-backref" href="#id7">What is URI Routing?</a><a class="headerlink" href="#what-is-uri-routing" title="Permalink to this headline"></a></h2>
 <p>URI Routing associates a URI with a controller’s method.</p>
+<p>CodeIgniter has two kinds of routing. One is <strong>Defined Route Routing</strong>, and the other is <strong>Auto Routing</strong>.
+With Defined Route Routing, you can define routes manually. It allows flexible URL.
+Auto Routing automatically routes HTTP requests based on conventions and execute the corresponding controller methods. There is no need to define routes manually.</p>
+<p>First, let’s look at Defined Route Routing. If you want to use Auto Routing, see <a class="reference internal" href="#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>.</p>
 </section>
 <section id="setting-routing-rules">
-<h2><a class="toc-backref" href="#id8">Setting Routing Rules</a><a class="headerlink" href="#setting-routing-rules" title="Permalink to this headline"></a></h2>
+<span id="defined-route-routing"></span><h2><a class="toc-backref" href="#id8">Setting Routing Rules</a><a class="headerlink" href="#setting-routing-rules" title="Permalink to this headline"></a></h2>
 <p>Routing rules are defined in the <strong>app/Config/Routes.php</strong> file. In it you’ll see that
 it creates an instance of the RouteCollection class (<code class="docutils literal notranslate"><span class="pre">$routes</span></code>) that permits you to specify your own routing criteria.
 Routes can be specified using placeholders or Regular Expressions.</p>
@@ -982,7 +993,7 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 <span id="id5"></span><h3><a class="toc-backref" href="#id27">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
 <p>Since v4.2.0, the auto-routing is disabled by default.</p>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods when <a class="reference internal" href="#auto-routing"><span class="std std-ref">Auto Routing</span></a> is enabled.</p>
+controllers and methods when Auto Routing is enabled.</p>
 <p>You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to false:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1029,26 +1040,28 @@ For an example use of lowering the priority see <a class="reference internal" hr
 </div>
 </section>
 </section>
-<section id="auto-routing">
-<span id="id6"></span><h2><a class="toc-backref" href="#id30">Auto Routing</a><a class="headerlink" href="#auto-routing" title="Permalink to this headline"></a></h2>
-<p>It is recommended that all routes are defined in the <strong>app/Config/Routes.php</strong> file.
-However, CodeIgniter can also automatically route HTTP requests based on conventions
-and execute the corresponding controller methods.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To prevent misconfiguration and miscoding, we recommend that you do not use
-the auto-routing feature. It is easy to create vulnerable apps where controller filters
-or CSRF protection are bypassed.</p>
-</div>
+<section id="auto-routing-improved">
+<span id="id6"></span><h2><a class="toc-backref" href="#id30">Auto Routing (Improved)</a><a class="headerlink" href="#auto-routing-improved" title="Permalink to this headline"></a></h2>
+<p>Since v4.2.0, the new more secure Auto Routing has been introduced.</p>
+<p>When no defined route is found that matches the URI, the system will attempt to match that URI against the controllers and methods when Auto Routing is enabled.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>The auto-routing routes a HTTP request with <strong>any</strong> HTTP method to a controller method.</p>
+<p>For security reasons, if a controller is used in the defined routes, Auto Routing (Improved) does not route to the controller.</p>
+</div>
+<p>Auto Routing can automatically route HTTP requests based on conventions
+and execute the corresponding controller methods.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Auto Routing (Improved) is disabled by default. To use it, see below.</p>
 </div>
 <section id="enable-auto-routing">
-<h3><a class="toc-backref" href="#id31">Enable Auto Routing</a><a class="headerlink" href="#enable-auto-routing" title="Permalink to this headline"></a></h3>
-<p>Since v4.2.0, the auto-routing is disabled by default.</p>
+<span id="enabled-auto-routing-improved"></span><h3><a class="toc-backref" href="#id31">Enable Auto Routing</a><a class="headerlink" href="#enable-auto-routing" title="Permalink to this headline"></a></h3>
 <p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>And you need to change the property <code class="docutils literal notranslate"><span class="pre">$autoRoutesImproved</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in <strong>app/Config/Feature.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">bool</span> <span class="nv">$autoRoutesImproved</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -1064,20 +1077,110 @@ or CSRF protection are bypassed.</p>
 <li><p>The third, and any additional segments, represent the ID and any variables that will be passed to the controller.</p></li>
 </ol>
 <p>Consider this URI:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span><span class="nx">index</span><span class="o">/</span><span class="mi">1</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span><span class="nx">hello</span><span class="o">/</span><span class="mi">1</span>
 </pre></div>
 </div>
-<p>In the above example, CodeIgniter would attempt to find a controller named <strong>Helloworld.php</strong>
-and executes <code class="docutils literal notranslate"><span class="pre">index()</span></code> method with passing <code class="docutils literal notranslate"><span class="pre">'1'</span></code> as the first argument.</p>
-<p>We call this “<strong>Auto Routes</strong>”. CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is disabled by default.</p>
-<p>See <a class="reference internal" href="controllers.html#controller-auto-routing"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
+<p>In the above example, when you send a HTTP request with <strong>GET</strong> method,
+Auto Routing would attempt to find a controller named <code class="docutils literal notranslate"><span class="pre">App\Controllers\Helloworld</span></code>
+and executes <code class="docutils literal notranslate"><span class="pre">getHello()</span></code> method with passing <code class="docutils literal notranslate"><span class="pre">'1'</span></code> as the first argument.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (<code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">put</span></code>, etc.) prefix like <code class="docutils literal notranslate"><span class="pre">getIndex()</span></code>, <code class="docutils literal notranslate"><span class="pre">postCreate()</span></code>.</p>
+</div>
+<p>See <a class="reference internal" href="controllers.html#controller-auto-routing-improved"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
 </section>
 <section id="configuration-options">
 <h3><a class="toc-backref" href="#id33">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Permalink to this headline"></a></h3>
 <p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
 <section id="default-controller">
 <h4>Default Controller<a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h4>
+<p>When a user visits the root of your site (i.e., <strong>example.com</strong>) the controller to use is determined by the value set by
+the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
+which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// example.com routes to app/Controllers/Welcome.php</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultController</span><span class="p">(</span><span class="s1">&#39;Welcome&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The default controller is also used when no matching route has been found, and the URI would point to a directory
+in the controllers directory. For example, if the user visits <strong>example.com/admin</strong>, if a controller was found at
+<strong>app/Controllers/Admin/Home.php</strong>, it would be used.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You cannot access the default controller with the URI of the controller name.
+When the default controller is <code class="docutils literal notranslate"><span class="pre">Home</span></code>, you can access <strong>example.com/</strong>, but if you access <strong>example.com/home</strong>, it will be not found.</p>
+</div>
+<p>See <a class="reference internal" href="controllers.html#controller-auto-routing-improved"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
+</section>
+<section id="default-method">
+<h4>Default Method<a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h4>
+<p>This works similar to the default controller setting, but is used to determine the default method that is used
+when a controller is found that matches the URI, but no segment exists for the method. The default value is
+<code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p>In this example, if the user were to visit <strong>example.com/products</strong>, and a <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller existed, the
+<code class="docutils literal notranslate"><span class="pre">Products::listAll()</span></code> method would be executed:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setDefaultMethod</span><span class="p">(</span><span class="s1">&#39;listAll&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You cannot access the controller with the URI of the default method name.
+In the example above, you can access <strong>example.com/products</strong>, but if you access <strong>example.com/products/listall</strong>, it will be not found.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="auto-routing-legacy">
+<span id="auto-routing"></span><h2><a class="toc-backref" href="#id34">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
+<p>Auto Routing (Legacy) is a routing system from CodeIgniter 3.
+It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.</p>
+<p>It is recommended that all routes are defined in the <strong>app/Config/Routes.php</strong> file,
+or to use <a class="reference internal" href="#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>,</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To prevent misconfiguration and miscoding, we recommend that you do not use
+Auto Routing (Legacy) feature. It is easy to create vulnerable apps where controller filters
+or CSRF protection are bypassed.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Auto Routing (Legacy) routes a HTTP request with <strong>any</strong> HTTP method to a controller method.</p>
+</div>
+<section id="enable-auto-routing-legacy">
+<h3><a class="toc-backref" href="#id35">Enable Auto Routing (Legacy)</a><a class="headerlink" href="#enable-auto-routing-legacy" title="Permalink to this headline"></a></h3>
+<p>Since v4.2.0, the auto-routing is disabled by default.</p>
+<p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="uri-segments-legacy">
+<h3><a class="toc-backref" href="#id36">URI Segments (Legacy)</a><a class="headerlink" href="#uri-segments-legacy" title="Permalink to this headline"></a></h3>
+<p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>The first segment represents the controller <strong>class</strong> that should be invoked.</p></li>
+<li><p>The second segment represents the class <strong>method</strong> that should be called.</p></li>
+<li><p>The third, and any additional segments, represent the ID and any variables that will be passed to the controller.</p></li>
+</ol>
+<p>Consider this URI:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">helloworld</span><span class="o">/</span><span class="nx">index</span><span class="o">/</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>In the above example, CodeIgniter would attempt to find a controller named <strong>Helloworld.php</strong>
+and executes <code class="docutils literal notranslate"><span class="pre">index()</span></code> method with passing <code class="docutils literal notranslate"><span class="pre">'1'</span></code> as the first argument.</p>
+<p>See <a class="reference internal" href="controllers.html#controller-auto-routing"><span class="std std-ref">Auto Routing (Legacy) in Controllers</span></a> for more info.</p>
+</section>
+<section id="configuration-options-legacy">
+<h3><a class="toc-backref" href="#id37">Configuration Options (Legacy)</a><a class="headerlink" href="#configuration-options-legacy" title="Permalink to this headline"></a></h3>
+<p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
+<section id="default-controller-legacy">
+<h4>Default Controller (Legacy)<a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h4>
 <p>When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
 the <code class="docutils literal notranslate"><span class="pre">setDefaultController()</span></code> method, unless a route exists for it explicitly. The default value for this is <code class="docutils literal notranslate"><span class="pre">Home</span></code>
 which matches the controller at <strong>app/Controllers/Home.php</strong>:</p>
@@ -1092,8 +1195,8 @@ in the controllers directory. For example, if the user visits <strong>example.co
 <strong>app/Controllers/Admin/Home.php</strong>, it would be used.</p>
 <p>See <a class="reference internal" href="controllers.html#controller-auto-routing"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
 </section>
-<section id="default-method">
-<h4>Default Method<a class="headerlink" href="#default-method" title="Permalink to this headline"></a></h4>
+<section id="default-method-legacy">
+<h4>Default Method (Legacy)<a class="headerlink" href="#default-method-legacy" title="Permalink to this headline"></a></h4>
 <p>This works similar to the default controller setting, but is used to determine the default method that is used
 when a controller is found that matches the URI, but no segment exists for the method. The default value is
 <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
@@ -1108,7 +1211,7 @@ when a controller is found that matches the URI, but no segment exists for the m
 </section>
 </section>
 <section id="confirming-routes">
-<h2><a class="toc-backref" href="#id34">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id38">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has the following <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">command</span></a> to display all routes.</p>
 <p id="spark-routes"><strong>routes</strong></p>
 <p>Displays all routes and filters:</p>
@@ -1128,12 +1231,12 @@ when a controller is found that matches the URI, but no segment exists for the m
 +--------+------------------+------------------------------------------+----------------+-----------------------+
 </pre></div>
 </div>
-<p>The <em>Method</em> column shows the HTTP method that the route is listening for. <code class="docutils literal notranslate"><span class="pre">auto</span></code> means that the route is discovered by auto routing, so it is not defined in <strong>app/Config/Routes.php</strong>.</p>
+<p>The <em>Method</em> column shows the HTTP method that the route is listening for. <code class="docutils literal notranslate"><span class="pre">auto</span></code> means that the route is discovered by auto-routing, so it is not defined in <strong>app/Config/Routes.php</strong>.</p>
 <p>The <em>Route</em> column shows the URI path to match. The route of a defined route is expressed as a regular expression.
 But <code class="docutils literal notranslate"><span class="pre">[/...]</span></code> in the route of an auto route is indicates any number of segments.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When auto routing is enabled, if you have the route <code class="docutils literal notranslate"><span class="pre">home</span></code>, it can be also accessd by <code class="docutils literal notranslate"><span class="pre">Home</span></code>, or maybe by <code class="docutils literal notranslate"><span class="pre">hOme</span></code>, <code class="docutils literal notranslate"><span class="pre">hoMe</span></code>, <code class="docutils literal notranslate"><span class="pre">HOME</span></code>, etc. But the command shows only <code class="docutils literal notranslate"><span class="pre">home</span></code>.</p>
+<p>When auto-routing is enabled, if you have the route <code class="docutils literal notranslate"><span class="pre">home</span></code>, it can be also accessd by <code class="docutils literal notranslate"><span class="pre">Home</span></code>, or maybe by <code class="docutils literal notranslate"><span class="pre">hOme</span></code>, <code class="docutils literal notranslate"><span class="pre">hoMe</span></code>, <code class="docutils literal notranslate"><span class="pre">HOME</span></code>, etc. But the command shows only <code class="docutils literal notranslate"><span class="pre">home</span></code>.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -1154,7 +1257,7 @@ But <code class="docutils literal notranslate"><span class="pre">[/...]</span></
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 01, 2022.
+      <span class="lastupdated">Last updated on May 03, 2022.
       </span></p>
   </div>
 
