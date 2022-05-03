@@ -145,12 +145,16 @@ class Validation implements ValidationInterface
                 $rules = $this->splitRules($rules);
             }
 
-            $values = strpos($field, '*') !== false
-                ? array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
+            if (strpos($field, '*') !== false) {
+                $values = array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
                     '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
                     $key
-                ), ARRAY_FILTER_USE_KEY)
-                : dot_array_search($field, $data);
+                ), ARRAY_FILTER_USE_KEY);
+                // if keys not found
+                $values = $values ?: [$field => null];
+            } else {
+                $values = dot_array_search($field, $data);
+            }
 
             if ($values === []) {
                 // We'll process the values right away if an empty array

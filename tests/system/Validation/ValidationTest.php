@@ -1244,4 +1244,72 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->placeholderReplacementResultDetermination();
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5922
+     */
+    public function testNestedArrayThrowsException(): void
+    {
+        $rule = [
+            'customer_account_number' => [
+                'label' => 'ACCOUNT NUMBER',
+                'rules' => 'required|exact_length[5]',
+            ],
+            'debit_amount' => [
+                'label' => 'DEBIT AMOUNT',
+                'rules' => 'required|decimal|is_natural_no_zero',
+            ],
+            'beneficiaries_accounts.*.account_number' => [
+                'label' => 'BENEFICIARY ACCOUNT NUMBER',
+                'rules' => 'exact_length[5]',
+            ],
+            'beneficiaries_accounts.*.credit_amount' => [
+                'label' => 'CREDIT AMOUNT',
+                'rules' => 'required|decimal|is_natural_no_zero',
+            ],
+            'beneficiaries_accounts.*.purpose' => [
+                'label' => 'PURPOSE',
+                'rules' => 'required_without[beneficiaries_accounts.*.account_number]|min_length[3]|max_length[255]',
+            ],
+        ];
+
+        $this->validation->setRules($rule);
+        $data = [
+            'customer_account_number' => 'A_490',
+            'debit_amount'            => '1500',
+            'beneficiaries_accounts'  => [],
+        ];
+        $this->validation->run($data);
+
+        $this->assertSame([
+            'beneficiaries_accounts.*.account_number' => 'The BENEFICIARY ACCOUNT NUMBER field must be exactly 5 characters in length.',
+            'beneficiaries_accounts.*.credit_amount'  => 'The CREDIT AMOUNT field is required.',
+            'beneficiaries_accounts.*.purpose'        => 'The PURPOSE field is required when BENEFICIARY ACCOUNT NUMBER is not present.',
+        ], $this->validation->getErrors());
+
+        $this->validation->reset();
+        $this->validation->setRules($rule);
+        $data = [
+            'customer_account_number' => 'A_490',
+            'debit_amount'            => '1500',
+            'beneficiaries_accounts'  => [
+                'account_1' => [
+                    'account_number' => 'A_103',
+                    'credit_amount'  => 1000,
+                    'purpose'        => 'Personal',
+                ],
+                'account_2' => [
+                    'account_number' => 'A_258',
+                    'credit_amount'  => null,
+                    'purpose'        => 'A',
+                ],
+            ],
+        ];
+        $this->validation->run($data);
+
+        $this->assertSame([
+            'beneficiaries_accounts.account_2.credit_amount' => 'The CREDIT AMOUNT field is required.',
+            'beneficiaries_accounts.account_2.purpose'       => 'The PURPOSE field must be at least 3 characters in length.',
+        ], $this->validation->getErrors());
+    }
 }
