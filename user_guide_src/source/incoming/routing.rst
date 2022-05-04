@@ -193,7 +193,7 @@ a simple view:
 
 .. literalinclude:: routing/020.php
 
-Mapping multiple routes
+Mapping Multiple Routes
 =======================
 
 While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
