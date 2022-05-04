@@ -53,8 +53,11 @@ class Toolbar
 
         foreach ($config->collectors as $collector) {
             if (! class_exists($collector)) {
-                log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' .
-                                      'please check $collectors in the Config\Toolbar.php file.');
+                log_message(
+                    'critical',
+                    'Toolbar collector does not exists(' . $collector . ').'
+                    . ' please check $collectors in the app/Config/Toolbar.php file.'
+                );
 
                 continue;
             }
