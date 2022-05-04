@@ -12,6 +12,7 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use DateTime;
 
 /**
@@ -19,14 +20,27 @@ use DateTime;
  */
 final class HistoryTest extends CIUnitTestCase
 {
-    private const STEP = 0.0001;
+    private const STEP = 0.000001;
 
     private float $time;
+    private $streamFilter;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->time = (float) sprintf('%.4f', microtime(true));
+
+        CITestStreamFilter::$buffer = '';
+        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+        $this->time = (float) sprintf('%.6f', microtime(true));
+    }
+
+    protected function tearDown(): void
+    {
+        command('debugbar:clear');
+
+        stream_filter_remove($this->streamFilter);
     }
 
     private function createDummyDebugbarJson()
@@ -45,22 +59,19 @@ final class HistoryTest extends CIUnitTestCase
             'url'    => 'localhost',
             'isAJAX' => false,
         ];
+
         // create 20 dummy debugbar json files
         for ($i = 0; $i < 20; $i++) {
-            $path = str_replace($time, sprintf('%.4f', $time - self::STEP), $path);
+            $path = str_replace($time, sprintf('%.6f', $time - self::STEP), $path);
             file_put_contents($path, json_encode($dummyData));
-            $time = sprintf('%.4f', $time - self::STEP);
+            $time = sprintf('%.6f', $time - self::STEP);
         }
-    }
-
-    protected function tearDown(): void
-    {
-        command('debugbar:clear');
     }
 
     public function testSetFiles()
     {
         $time = $this->time;
+
         // test dir is now populated with json
         $this->createDummyDebugbarJson();
 
@@ -68,12 +79,16 @@ final class HistoryTest extends CIUnitTestCase
 
         $history = new History();
         $history->setFiles($time, 20);
+
         $this->assertArrayHasKey('files', $history->display());
         $this->assertNotEmpty($history->display()['files'], 'Dummy Debugbar data is empty');
 
         foreach ($history->display()['files'] as $request) {
             $this->assertSame($request['time'], sprintf('%.6f', $time));
-            $this->assertSame($request['datetime'], DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'));
+            $this->assertSame(
+                $request['datetime'],
+                DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u')
+            );
             $this->assertSame($request['active'], ($time === $activeRowTime));
 
             $time = sprintf('%.6f', $time - self::STEP);
