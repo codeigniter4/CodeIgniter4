@@ -37,7 +37,8 @@ Breaking Changes
 Breaking Enhancements
 *********************
 
-none.
+- The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
+- The method signature of ``CodeIgniter\Database\BaseBuilder::join()`` and ``CodeIgniter\Database\*\Builder::join()`` have been changed. The ``string`` typehint on the ``$cond`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
 
 Project Files
 *************
