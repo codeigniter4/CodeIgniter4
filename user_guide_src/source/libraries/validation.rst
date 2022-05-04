@@ -458,7 +458,7 @@ When using a wildcard, the error will point to a specific field, replacing the a
     ]
 
     // rule
-    contacts.*.name => 'required'
+    'contacts.*.name' => 'required'
 
     // error will be
     'contacts.friends.1.name' => 'The contacts.*.name field is required.'
