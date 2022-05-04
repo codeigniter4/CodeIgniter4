@@ -281,6 +281,7 @@ transactions.</p>
 <li><p><a class="reference internal" href="#disabling-transactions" id="id5">Disabling Transactions</a></p></li>
 <li><p><a class="reference internal" href="#test-mode" id="id6">Test Mode</a></p></li>
 <li><p><a class="reference internal" href="#running-transactions-manually" id="id7">Running Transactions Manually</a></p></li>
+<li><p><a class="reference internal" href="#nested-transactions" id="id8">Nested Transactions</a></p></li>
 </ul>
 </div>
 <section id="codeigniter-s-approach-to-transactions">
@@ -398,6 +399,33 @@ a valid result. To use test mode simply set the first parameter in the
 <p class="admonition-title">Note</p>
 <p>Make sure to use <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transBegin()</span></code> when running manual
 transactions, <strong>NOT</strong> <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code>.</p>
+</div>
+</section>
+<section id="nested-transactions">
+<h2><a class="toc-backref" href="#id8">Nested Transactions</a><a class="headerlink" href="#nested-transactions" title="Permalink to this headline"></a></h2>
+<p>In CodeIgniter, transactions can be nested in a way such that only the
+outmost or top-level transaction commands are executed. You can include as
+many pairs of <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> or <code class="docutils literal notranslate"><span class="pre">transBegin()</span></code>/<code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>/<code class="docutils literal notranslate"><span class="pre">transRollback()</span></code>
+as you want inside a transaction block and so on. CodeIgniter will keep
+track of the transaction “depth” and only take action at the outermost layer
+(zero depth).</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span> <span class="c1">// actually starts a transaction</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SOME QUERY 1 ...&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span> <span class="c1">// doesn&#39;t necessarily start another transaction</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SOME QUERY 2 ...&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span> <span class="c1">// doesn&#39;t necessarily end the transaction, but required to finish the inner transaction</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;SOME QUERY 3 ...&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span> <span class="c1">// actually ends the transaction</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In case the structure is far more complex, it’s your responsibility
+to ensure that the inner transactions can reach the outermost layer again
+in order to be fully executed by the database, thus prevents unintended
+commits/rollbacks.</p>
 </div>
 </section>
 </section>

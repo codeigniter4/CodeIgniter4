@@ -271,12 +271,20 @@ of random data. Use fabricators in your seeds or test cases to stage fake data f
 <ul class="simple">
 <li><p><a class="reference internal" href="#supported-models" id="id1">Supported Models</a></p></li>
 <li><p><a class="reference internal" href="#loading-fabricators" id="id2">Loading Fabricators</a></p></li>
-<li><p><a class="reference internal" href="#defining-formatters" id="id3">Defining Formatters</a></p></li>
-<li><p><a class="reference internal" href="#localization" id="id4">Localization</a></p></li>
-<li><p><a class="reference internal" href="#faking-the-data" id="id5">Faking the Data</a></p></li>
-<li><p><a class="reference internal" href="#specifying-test-data" id="id6">Specifying Test Data</a></p></li>
-<li><p><a class="reference internal" href="#test-helper" id="id7">Test Helper</a></p></li>
-<li><p><a class="reference internal" href="#table-counts" id="id8">Table Counts</a></p></li>
+<li><p><a class="reference internal" href="#defining-formatters" id="id3">Defining Formatters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#advanced-formatting" id="id4">Advanced Formatting</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#localization" id="id5">Localization</a></p></li>
+<li><p><a class="reference internal" href="#faking-the-data" id="id6">Faking the Data</a></p></li>
+<li><p><a class="reference internal" href="#specifying-test-data" id="id7">Specifying Test Data</a></p></li>
+<li><p><a class="reference internal" href="#test-helper" id="id8">Test Helper</a></p></li>
+<li><p><a class="reference internal" href="#table-counts" id="id9">Table Counts</a></p>
+<ul>
+<li><p><a class="reference internal" href="#methods" id="id10">Methods</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="supported-models">
@@ -340,7 +348,8 @@ of the time you will want to specify the formatters to use as the second paramet
 </pre></div>
 </div>
 <p>You can also change the formatters after a fabricator is initialized by using the <code class="docutils literal notranslate"><span class="pre">setFormatters()</span></code> method.</p>
-<p><strong>Advanced Formatting</strong></p>
+<section id="advanced-formatting">
+<h3><a class="toc-backref" href="#id4">Advanced Formatting</a><a class="headerlink" href="#advanced-formatting" title="Permalink to this headline"></a></h3>
 <p>Sometimes the default return of a formatter is not enough. Faker providers allow parameters to most formatters
 to further limit the scope of random data. A fabricator will check its representative model for the <code class="docutils literal notranslate"><span class="pre">fake()</span></code>
 method where you can define exactly what the faked data should look like:</p>
@@ -350,6 +359,8 @@ method where you can define exactly what the faked data should look like:</p>
 
 <span class="k">class</span> <span class="nc">UserModel</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">function</span> <span class="nf">fake</span><span class="p">(</span><span class="nx">Generator</span> <span class="o">&amp;</span><span class="nv">$faker</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
@@ -359,6 +370,19 @@ method where you can define exactly what the faked data should look like:</p>
             <span class="s1">&#39;avatar&#39;</span> <span class="o">=&gt;</span> <span class="nx">Faker\Provider\Image</span><span class="o">::</span><span class="na">imageUrl</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
             <span class="s1">&#39;login&#39;</span>  <span class="o">=&gt;</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Auth&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">allowRemembering</span> <span class="o">?</span> <span class="nb">date</span><span class="p">(</span><span class="s1">&#39;Y-m-d&#39;</span><span class="p">)</span> <span class="o">:</span> <span class="k">null</span><span class="p">,</span>
         <span class="p">];</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * Or you can return a return type object.</span>
+
+<span class="cm">        return new User([</span>
+<span class="cm">            &#39;first&#39;  =&gt; $faker-&gt;firstName,</span>
+<span class="cm">            &#39;email&#39;  =&gt; $faker-&gt;email,</span>
+<span class="cm">            &#39;phone&#39;  =&gt; $faker-&gt;phoneNumber,</span>
+<span class="cm">            &#39;avatar&#39; =&gt; Faker\Provider\Image::imageUrl(800, 400),</span>
+<span class="cm">            &#39;login&#39;  =&gt; config(&#39;Auth&#39;)-&gt;allowRemembering ? date(&#39;Y-m-d&#39;) : null,</span>
+<span class="cm">        ]);</span>
+
+<span class="cm">        */</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -384,8 +408,9 @@ a child class in your test support folder:</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="localization">
-<h2><a class="toc-backref" href="#id4">Localization</a><a class="headerlink" href="#localization" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Localization</a><a class="headerlink" href="#localization" title="Permalink to this headline"></a></h2>
 <p>Faker supports a lot of different locales. Check their documentation to determine which providers
 support your locale. Specify a locale in the third parameter while initiating a fabricator:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -397,7 +422,7 @@ support your locale. Specify a locale in the third parameter while initiating a 
 You can check the locale of an existing fabricator using its <code class="docutils literal notranslate"><span class="pre">getLocale()</span></code> method.</p>
 </section>
 <section id="faking-the-data">
-<h2><a class="toc-backref" href="#id5">Faking the Data</a><a class="headerlink" href="#faking-the-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Faking the Data</a><a class="headerlink" href="#faking-the-data" title="Permalink to this headline"></a></h2>
 <p>Once you have a properly-initialized fabricator it is easy to generate test data with the <code class="docutils literal notranslate"><span class="pre">make()</span></code> command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -470,7 +495,7 @@ the object with extra database fields above without actually touching the databa
 </div>
 </section>
 <section id="specifying-test-data">
-<h2><a class="toc-backref" href="#id6">Specifying Test Data</a><a class="headerlink" href="#specifying-test-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Specifying Test Data</a><a class="headerlink" href="#specifying-test-data" title="Permalink to this headline"></a></h2>
 <p>Generated data is great, but sometimes you may want to supply a specific field for a test without
 compromising your formatters configuration. Rather then creating a new fabricator for each variant
 you can use <code class="docutils literal notranslate"><span class="pre">setOverrides()</span></code> to specify the value for any fields:</p>
@@ -532,7 +557,7 @@ override or only for a single action:</p>
 <p>If no second parameter is supplied then passed values will persist by default.</p>
 </section>
 <section id="test-helper">
-<h2><a class="toc-backref" href="#id7">Test Helper</a><a class="headerlink" href="#test-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Test Helper</a><a class="headerlink" href="#test-helper" title="Permalink to this headline"></a></h2>
 <p>Often all you will need is a one-and-done fake object for testing. The Test Helper provides
 the <code class="docutils literal notranslate"><span class="pre">fake($model,</span> <span class="pre">$overrides,</span> <span class="pre">$persist</span> <span class="pre">=</span> <span class="pre">true)</span></code> function to do just this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -552,7 +577,7 @@ the <code class="docutils literal notranslate"><span class="pre">fake($model,</s
 <p>If you just need a fake object without saving it to the database you can pass false into the persist parameter.</p>
 </section>
 <section id="table-counts">
-<h2><a class="toc-backref" href="#id8">Table Counts</a><a class="headerlink" href="#table-counts" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Table Counts</a><a class="headerlink" href="#table-counts" title="Permalink to this headline"></a></h2>
 <p>Frequently your faked data will depend on other faked data. <code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> provides a static
 count of the number of faked items you have created for each table. Consider the following
 example:</p>
@@ -580,22 +605,35 @@ Your model’s fake method could look like this:</p>
 </pre></div>
 </div>
 <p>Now creating a new user will ensure it is a part of a valid group: <code class="docutils literal notranslate"><span class="pre">$user</span> <span class="pre">=</span> <span class="pre">fake(UserModel::class);</span></code></p>
+<section id="methods">
+<h3><a class="toc-backref" href="#id10">Methods</a><a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Fabricator</span></code> handles the counts internally but you can also access these static methods
 to assist with using them:</p>
-<p><strong>getCount(string $table): int</strong></p>
+<section id="getcount-string-table-int">
+<h4>getCount(string $table): int<a class="headerlink" href="#getcount-string-table-int" title="Permalink to this headline"></a></h4>
 <p>Return the current value for a specific table (default: 0).</p>
-<p><strong>setCount(string $table, int $count): int</strong></p>
+</section>
+<section id="setcount-string-table-int-count-int">
+<h4>setCount(string $table, int $count): int<a class="headerlink" href="#setcount-string-table-int-count-int" title="Permalink to this headline"></a></h4>
 <p>Set the value for a specific table manually, for example if you create some test items
 without using a fabricator that you still wanted factored into the final counts.</p>
-<p><strong>upCount(string $table): int</strong></p>
+</section>
+<section id="upcount-string-table-int">
+<h4>upCount(string $table): int<a class="headerlink" href="#upcount-string-table-int" title="Permalink to this headline"></a></h4>
 <p>Increment the value for a specific table by one and return the new value. (This is what is
 used internally with <code class="docutils literal notranslate"><span class="pre">Fabricator::create()</span></code>).</p>
-<p><strong>downCount(string $table): int</strong></p>
+</section>
+<section id="downcount-string-table-int">
+<h4>downCount(string $table): int<a class="headerlink" href="#downcount-string-table-int" title="Permalink to this headline"></a></h4>
 <p>Decrement the value for a specific table by one and return the new value, for example if
 you deleted a fake item but wanted to track the change.</p>
-<p><strong>resetCounts()</strong></p>
+</section>
+<section id="resetcounts">
+<h4>resetCounts()<a class="headerlink" href="#resetcounts" title="Permalink to this headline"></a></h4>
 <p>Resets all counts. Good idea to call this between test cases (though using
 <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase::$refresh</span> <span class="pre">=</span> <span class="pre">true</span></code> does it automatically).</p>
+</section>
+</section>
 </section>
 </section>
 
