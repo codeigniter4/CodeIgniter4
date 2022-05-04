@@ -234,6 +234,17 @@ outer``, and ``right outer``.
 
 .. literalinclude:: query_builder/020.php
 
+.. _query-builder-join-rawsql:
+
+RawSql
+^^^^^^
+
+Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+.. literalinclude:: query_builder/102.php
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 *************************
 Looking for Specific Data
 *************************

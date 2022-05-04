@@ -68,7 +68,7 @@ Database
     - It can access Oracle Database and supports SQL and PL/SQL statements.
 - QueryBuilder raw SQL string support
     - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
-    - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
+    - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>`, :ref:`join() <query-builder-join-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
 
 Others
 ======
