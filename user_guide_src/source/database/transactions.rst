@@ -97,3 +97,20 @@ If you would like to run transactions manually you can do so as follows:
 
 .. note:: Make sure to use ``$this->db->transBegin()`` when running manual
     transactions, **NOT** ``$this->db->transStart()``.
+
+Nested Transactions
+===================
+
+In CodeIgniter, transactions can be nested in a way such that only the
+outmost or top-level transaction commands are executed. You can include as
+many pairs of ``transStart()``/``transComplete()`` or ``transBegin()``/``transCommit()``/``transRollback()``
+as you want inside a transaction block and so on. CodeIgniter will keep
+track of the transaction "depth" and only take action at the outermost layer
+(zero depth).
+
+.. literalinclude:: transactions/007.php
+
+.. note:: In case the structure is far more complex, it's your responsibility
+    to ensure that the inner transactions can reach the outermost layer again
+    in order to be fully executed by the database, thus prevents unintended
+    commits/rollbacks.
