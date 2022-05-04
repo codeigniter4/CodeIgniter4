@@ -351,7 +351,8 @@ See :doc:`Controller filters <filters>` for more information on setting up filte
     in which case the filter you specified to the route will not be applied.
     See :ref:`use-defined-routes-only` to disable auto-routing.
 
-**Alias filter**
+Alias Filter
+^^^^^^^^^^^^
 
 You specify an alias defined in **app/Config/Filters.php** for the filter value:
 
@@ -361,13 +362,15 @@ You may also supply arguments to be passed to the alias filter's ``before()`` an
 
 .. literalinclude:: routing/035.php
 
-**Classname filter**
+Classname Filter
+^^^^^^^^^^^^^^^^
 
 You specify a filter classname for the filter value:
 
 .. literalinclude:: routing/036.php
 
-**Multiple filters**
+Multiple Filters
+^^^^^^^^^^^^^^^^
 
 .. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
 
