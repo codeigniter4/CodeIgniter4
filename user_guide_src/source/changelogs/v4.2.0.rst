@@ -64,7 +64,9 @@ Others
 - Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
 - HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag`.
 - RouteCollection::addRedirect() can now use placeholders.
-
+- QueryBuilder raw SQL string support
+    - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
+    - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
 
 Changes
 *******

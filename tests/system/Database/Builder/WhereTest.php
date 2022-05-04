@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use stdClass;
@@ -136,6 +137,20 @@ final class WhereTest extends CIUnitTestCase
         $expectedBinds = [];
 
         $builder->where($where);
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testWhereRawSql()
+    {
+        $builder = $this->db->table('jobs');
+
+        $sql = "id > 2 AND name != 'Accountant'";
+        $builder->where(new RawSql($sql));
+
+        $expectedSQL   = "SELECT * FROM \"jobs\" WHERE id > 2 AND name != 'Accountant'";
+        $expectedBinds = [];
+
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }

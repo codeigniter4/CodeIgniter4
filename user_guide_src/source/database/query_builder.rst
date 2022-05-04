@@ -41,7 +41,8 @@ The following methods allow you to build SQL **SELECT** statements.
 Get
 ===
 
-**$builder->get()**
+$builder->get()
+---------------
 
 Runs the selection query and returns the result. Can be used by itself
 to retrieve all records from a table:
@@ -61,7 +62,8 @@ $query, which can be used to show the results:
 Please visit the :doc:`getResult*() method <results>` page for a full
 discussion regarding result generation.
 
-**$builder->getCompiledSelect()**
+$builder->getCompiledSelect()
+-----------------------------
 
 Compiles the selection query just like ``$builder->get()`` but does not *run*
 the query. This method simply returns the SQL query as a string.
@@ -81,7 +83,8 @@ parameter. The reason for this outcome is because the query has not been
 executed using ``$builder->get()`` which resets values or reset directly
 using ``$builder->resetQuery()``.
 
-**$builder->getWhere()**
+$builder->getWhere()
+--------------------
 
 Identical to the ``get()`` method except that it permits you to add a
 "where" clause in the first parameter, instead of using the ``$builder->where()``
@@ -96,7 +99,8 @@ Please read about the ``where()`` method below for more information.
 Select
 ======
 
-**$builder->select()**
+$builder->select()
+------------------
 
 Permits you to write the **SELECT** portion of your query:
 
@@ -113,14 +117,27 @@ escaping of fields may break them.
 
 .. literalinclude:: query_builder/009.php
 
-**$builder->selectMax()**
+.. _query-builder-select-rawsql:
+
+RawSql
+^^^^^^
+
+Since v4.2.0, ``$builder->select()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+.. literalinclude:: query_builder/099.php
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+$builder->selectMax()
+---------------------
 
 Writes a **SELECT MAX(field)** portion for your query. You can optionally
 include a second parameter to rename the resulting field.
 
 .. literalinclude:: query_builder/010.php
 
-**$builder->selectMin()**
+$builder->selectMin()
+---------------------
 
 Writes a **SELECT MIN(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
@@ -128,7 +145,8 @@ the resulting field.
 
 .. literalinclude:: query_builder/011.php
 
-**$builder->selectAvg()**
+$builder->selectAvg()
+---------------------
 
 Writes a **SELECT AVG(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
@@ -136,7 +154,8 @@ the resulting field.
 
 .. literalinclude:: query_builder/012.php
 
-**$builder->selectSum()**
+$builder->selectSum()
+---------------------
 
 Writes a **SELECT SUM(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
@@ -144,7 +163,8 @@ the resulting field.
 
 .. literalinclude:: query_builder/013.php
 
-**$builder->selectCount()**
+$builder->selectCount()
+-----------------------
 
 Writes a **SELECT COUNT(field)** portion for your query. As with
 ``selectMax()``, You can optionally include a second parameter to rename
@@ -155,7 +175,8 @@ the resulting field.
 
 .. literalinclude:: query_builder/014.php
 
-**$builder->selectSubquery()**
+$builder->selectSubquery()
+--------------------------
 
 Adds a subquery to the SELECT section.
 
@@ -165,7 +186,8 @@ Adds a subquery to the SELECT section.
 From
 ====
 
-**$builder->from()**
+$builder->from()
+----------------
 
 Permits you to write the **FROM** portion of your query:
 
@@ -180,7 +202,8 @@ Permits you to write the **FROM** portion of your query:
 Subqueries
 ==========
 
-**$builder->fromSubquery()**
+$builder->fromSubquery()
+------------------------
 
 Permits you to write part of a **FROM** query as a subquery.
 
@@ -195,7 +218,8 @@ Use the ``$db->newQuery()`` method to make a subquery the main table:
 Join
 ====
 
-**$builder->join()**
+$builder->join()
+----------------
 
 Permits you to write the **JOIN** portion of your query:
 
@@ -214,7 +238,11 @@ outer``, and ``right outer``.
 Looking for Specific Data
 *************************
 
-**$builder->where()**
+Where
+=====
+
+$builder->where()
+-----------------
 
 This method enables you to set **WHERE** clauses using one of five
 methods:
@@ -225,7 +253,8 @@ methods:
 .. note:: ``$builder->where()`` accepts an optional third parameter. If you set it to
     ``false``, CodeIgniter will not try to protect your field or table names.
 
-#. **Simple key/value method:**
+1. Simple key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/021.php
 
@@ -236,14 +265,16 @@ methods:
 
     .. literalinclude:: query_builder/022.php
 
-#. **Custom key/value method:**
+2. Custom key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     You can include an operator in the first parameter in order to
     control the comparison:
 
     .. literalinclude:: query_builder/023.php
 
-#. **Associative array method:**
+3. Associative array method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/024.php
 
@@ -251,7 +282,8 @@ methods:
 
     .. literalinclude:: query_builder/025.php
 
-#. **Custom string:**
+4. Custom string
+^^^^^^^^^^^^^^^^
 
     You can write your own clauses manually:
 
@@ -262,20 +294,34 @@ methods:
 
         .. literalinclude:: query_builder/027.php
 
+.. _query-builder-where-rawsql:
+
+5. RawSql
+^^^^^^^^^
+
+    Since v4.2.0, ``$builder->where()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+    .. literalinclude:: query_builder/100.php
+
+    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 .. _query-builder-where-subquery:
 
-5. **Subqueries:**
+6. Subqueries
+^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/028.php
 
-**$builder->orWhere()**
+$builder->orWhere()
+-------------------
 
 This method is identical to the one above, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/029.php
 
-**$builder->whereIn()**
+$builder->whereIn()
+-------------------
 
 Generates a **WHERE** field IN ('item', 'item') SQL query joined with **AND** if
 appropriate:
@@ -286,7 +332,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/031.php
 
-**$builder->orWhereIn()**
+$builder->orWhereIn()
+---------------------
 
 Generates a **WHERE field IN ('item', 'item')** SQL query joined with **OR** if
 appropriate:
@@ -297,7 +344,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/033.php
 
-**$builder->whereNotIn()**
+$builder->whereNotIn()
+----------------------
 
 Generates a **WHERE field NOT IN ('item', 'item')** SQL query joined with
 **AND** if appropriate:
@@ -308,7 +356,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/035.php
 
-**$builder->orWhereNotIn()**
+$builder->orWhereNotIn()
+------------------------
 
 Generates a **WHERE field NOT IN ('item', 'item')** SQL query joined with **OR**
 if appropriate:
@@ -323,7 +372,11 @@ You can use subqueries instead of an array of values:
 Looking for Similar Data
 ************************
 
-**$builder->like()**
+Like
+====
+
+$builder->like()
+----------------
 
 This method enables you to generate **LIKE** clauses, useful for doing
 searches.
@@ -335,7 +388,8 @@ searches.
         otherwise, will force the values to be lowercase, i.e., ``WHERE LOWER(column) LIKE '%search%'``. This
         may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
-#. **Simple key/value method:**
+1. Simple key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/038.php
 
@@ -350,32 +404,48 @@ searches.
 
     .. literalinclude:: query_builder/040.php
 
-#. **Associative array method:**
+2. Associative array method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
        .. literalinclude:: query_builder/041.php
 
-**$builder->orLike()**
+.. _query-builder-like-rawsql:
+
+3. RawSql
+^^^^^^^^^
+
+    Since v4.2.0, ``$builder->like()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+    .. literalinclude:: query_builder/101.php
+
+    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+$builder->orLike()
+------------------
 
 This method is identical to the one above, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/042.php
 
-**$builder->notLike()**
+$builder->notLike()
+-------------------
 
 This method is identical to ``like()``, except that it generates
 **NOT LIKE** statements:
 
 .. literalinclude:: query_builder/043.php
 
-**$builder->orNotLike()**
+$builder->orNotLike()
+---------------------
 
 This method is identical to ``notLike()``, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/044.php
 
-**$builder->groupBy()**
+$builder->groupBy()
+-------------------
 
 Permits you to write the **GROUP BY** portion of your query:
 
@@ -385,13 +455,15 @@ You can also pass an array of multiple values as well:
 
 .. literalinclude:: query_builder/046.php
 
-**$builder->distinct()**
+$builder->distinct()
+--------------------
 
 Adds the **DISTINCT** keyword to a query
 
 .. literalinclude:: query_builder/047.php
 
-**$builder->having()**
+$builder->having()
+------------------
 
 Permits you to write the **HAVING** portion of your query. There are 2
 possible syntaxes, 1 argument or 2:
@@ -408,11 +480,13 @@ setting it to ``false``.
 
 .. literalinclude:: query_builder/050.php
 
-**$builder->orHaving()**
+$builder->orHaving()
+--------------------
 
 Identical to ``having()``, only separates multiple clauses with **OR**.
 
-**$builder->havingIn()**
+$builder->havingIn()
+--------------------
 
 Generates a **HAVING field IN ('item', 'item')** SQL query joined with **AND** if
 appropriate:
@@ -423,7 +497,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/052.php
 
-**$builder->orHavingIn()**
+$builder->orHavingIn()
+----------------------
 
 Generates a **HAVING field IN ('item', 'item')** SQL query joined with **OR** if
 appropriate
@@ -434,7 +509,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/054.php
 
-**$builder->havingNotIn()**
+$builder->havingNotIn()
+-----------------------
 
 Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with
 **AND** if appropriate
@@ -445,7 +521,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/056.php
 
-**$builder->orHavingNotIn()**
+$builder->orHavingNotIn()
+-------------------------
 
 Generates a **HAVING field NOT IN ('item', 'item')** SQL query joined with **OR**
 if appropriate
@@ -456,7 +533,8 @@ You can use subqueries instead of an array of values:
 
 .. literalinclude:: query_builder/058.php
 
-**$builder->havingLike()**
+$builder->havingLike()
+----------------------
 
 This method enables you to generate **LIKE** clauses for **HAVING** part or the query, useful for doing
 searches.
@@ -468,7 +546,8 @@ searches.
     otherwise, will force the values to be lowercase, i.e., ``HAVING LOWER(column) LIKE '%search%'``. This
     may require indexes to be made for ``LOWER(column)`` instead of ``column`` to be effective.
 
-#. **Simple key/value method:**
+1. Simple key/value method
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. literalinclude:: query_builder/059.php
 
@@ -483,25 +562,29 @@ searches.
 
     .. literalinclude:: query_builder/061.php
 
-#. **Associative array method:**
+2. Associative array method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
        .. literalinclude:: query_builder/062.php
 
-**$builder->orHavingLike()**
+$builder->orHavingLike()
+------------------------
 
 This method is identical to the one above, except that multiple
 instances are joined by **OR**:
 
 .. literalinclude:: query_builder/063.php
 
-**$builder->notHavingLike()**
+$builder->notHavingLike()
+-------------------------
 
 This method is identical to ``havingLike()``, except that it generates
 **NOT LIKE** statements:
 
 .. literalinclude:: query_builder/064.php
 
-**$builder->orNotHavingLike()**
+$builder->orNotHavingLike()
+---------------------------
 
 This method is identical to ``notHavingLike()``, except that multiple
 instances are joined by **OR**:
@@ -512,7 +595,11 @@ instances are joined by **OR**:
 Ordering Results
 ****************
 
-**$builder->orderBy()**
+OrderBy
+=======
+
+$builder->orderBy()
+-------------------
 
 Lets you set an **ORDER BY** clause.
 
@@ -540,7 +627,11 @@ be ignored, unless you specify a numeric seed value.
 Limiting or Counting Results
 ****************************
 
-**$builder->limit()**
+Limit
+=====
+
+$builder->limit()
+-----------------
 
 Lets you limit the number of rows you would like returned by the query:
 
@@ -550,7 +641,8 @@ The second parameter lets you set a result offset.
 
 .. literalinclude:: query_builder/071.php
 
-**$builder->countAllResults()**
+$builder->countAllResults()
+---------------------------
 
 Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
@@ -564,7 +656,8 @@ first parameter.
 
 .. literalinclude:: query_builder/073.php
 
-**$builder->countAll()**
+$builder->countAll()
+--------------------
 
 Permits you to determine the number of rows in a particular table.
 Example:
@@ -579,6 +672,9 @@ first parameter.
 Query grouping
 **************
 
+Group
+=====
+
 Query grouping allows you to create groups of **WHERE** clauses by enclosing them in parentheses. This will allow
 you to create queries with complex **WHERE** clauses. Nested groups are supported. Example:
 
@@ -586,43 +682,53 @@ you to create queries with complex **WHERE** clauses. Nested groups are supporte
 
 .. note:: Groups need to be balanced, make sure every ``groupStart()`` is matched by a ``groupEnd()``.
 
-**$builder->groupStart()**
+$builder->groupStart()
+----------------------
 
 Starts a new group by adding an opening parenthesis to the **WHERE** clause of the query.
 
-**$builder->orGroupStart()**
+$builder->orGroupStart()
+------------------------
 
 Starts a new group by adding an opening parenthesis to the **WHERE** clause of the query, prefixing it with **OR**.
 
-**$builder->notGroupStart()**
+$builder->notGroupStart()
+-------------------------
 
 Starts a new group by adding an opening parenthesis to the **WHERE** clause of the query, prefixing it with **NOT**.
 
-**$builder->orNotGroupStart()**
+$builder->orNotGroupStart()
+---------------------------
 
 Starts a new group by adding an opening parenthesis to the **WHERE** clause of the query, prefixing it with **OR NOT**.
 
-**$builder->groupEnd()**
+$builder->groupEnd()
+--------------------
 
 Ends the current group by adding a closing parenthesis to the **WHERE** clause of the query.
 
-**$builder->havingGroupStart()**
+$builder->havingGroupStart()
+----------------------------
 
 Starts a new group by adding an opening parenthesis to the **HAVING** clause of the query.
 
-**$builder->orHavingGroupStart()**
+$builder->orHavingGroupStart()
+------------------------------
 
 Starts a new group by adding an opening parenthesis to the **HAVING** clause of the query, prefixing it with **OR**.
 
-**$builder->notHavingGroupStart()**
+$builder->notHavingGroupStart()
+-------------------------------
 
 Starts a new group by adding an opening parenthesis to the **HAVING** clause of the query, prefixing it with **NOT**.
 
-**$builder->orNotHavingGroupStart()**
+$builder->orNotHavingGroupStart()
+---------------------------------
 
 Starts a new group by adding an opening parenthesis to the **HAVING** clause of the query, prefixing it with **OR NOT**.
 
-**$builder->havingGroupEnd()**
+$builder->havingGroupEnd()
+--------------------------
 
 Ends the current group by adding a closing parenthesis to the **HAVING** clause of the query.
 
@@ -630,7 +736,11 @@ Ends the current group by adding a closing parenthesis to the **HAVING** clause 
 Inserting Data
 **************
 
-**$builder->insert()**
+Insert
+======
+
+$builder->insert()
+------------------
 
 Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
@@ -648,7 +758,8 @@ The first parameter is an object.
 
 .. note:: All values are escaped automatically producing safer queries.
 
-**$builder->ignore()**
+$builder->ignore()
+------------------
 
 Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won't be inserted.
@@ -656,7 +767,8 @@ You can optionally pass an **boolean** to the method. Here is an example using t
 
 .. literalinclude:: query_builder/078.php
 
-**$builder->getCompiledInsert()**
+$builder->getCompiledInsert()
+-----------------------------
 
 Compiles the insertion query just like ``$builder->insert()`` but does not
 *run* the query. This method simply returns the SQL query as a string.
@@ -676,7 +788,11 @@ using ``$builder->insert()`` which resets values or reset directly using
 
 .. note:: This method doesn't work for batch inserts.
 
-**$builder->insertBatch()**
+insertBatch
+===========
+
+$builder->insertBatch()
+-----------------------
 
 Generates an insert string based on the data you supply, and runs the
 query. You can either pass an **array** or an **object** to the
@@ -692,7 +808,11 @@ The first parameter is an associative array of values.
 Updating Data
 *************
 
-**$builder->replace()**
+Update
+======
+
+$builder->replace()
+-------------------
 
 This method executes a **REPLACE** statement, which is basically the SQL
 standard for (optional) **DELETE** + **INSERT**, using *PRIMARY* and *UNIQUE*
@@ -712,7 +832,8 @@ will be deleted with our new row data replacing it.
 Usage of the ``set()`` method is also allowed and all fields are
 automatically escaped, just like with ``insert()``.
 
-**$builder->set()**
+$builder->set()
+---------------
 
 This method enables you to set values for inserts or updates.
 
@@ -741,7 +862,8 @@ Or an object:
 
 .. literalinclude:: query_builder/087.php
 
-**$builder->update()**
+$builder->update()
+------------------
 
 Generates an update string and runs the query based on the data you
 supply. You can pass an **array** or an **object** to the method. Here
@@ -768,7 +890,11 @@ Or as an array:
 You may also use the ``$builder->set()`` method described above when
 performing updates.
 
-**$builder->updateBatch()**
+UpdateBatch
+===========
+
+$builder->updateBatch()
+-----------------------
 
 Generates an update string based on the data you supply, and runs the query.
 You can either pass an **array** or an **object** to the method.
@@ -784,7 +910,8 @@ The first parameter is an associative array of values, the second parameter is t
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
 
-**$builder->getCompiledUpdate()**
+$builder->getCompiledUpdate()
+-----------------------------
 
 This works exactly the same way as ``$builder->getCompiledInsert()`` except
 that it produces an **UPDATE** SQL string instead of an **INSERT** SQL string.
@@ -797,7 +924,11 @@ For more information view documentation for ``$builder->getCompiledInsert()``.
 Deleting Data
 *************
 
-**$builder->delete()**
+Delete
+======
+
+$builder->delete()
+------------------
 
 Generates a **DELETE** SQL string and runs the query.
 
@@ -812,14 +943,16 @@ the data to the first parameter of the method:
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
 
-**$builder->emptyTable()**
+$builder->emptyTable()
+----------------------
 
 Generates a **DELETE** SQL string and runs the
 query:
 
 .. literalinclude:: query_builder/095.php
 
-**$builder->truncate()**
+$builder->truncate()
+--------------------
 
 Generates a **TRUNCATE** SQL string and runs the query.
 
@@ -828,7 +961,8 @@ Generates a **TRUNCATE** SQL string and runs the query.
 .. note:: If the TRUNCATE command isn't available, ``truncate()`` will
     execute as "DELETE FROM table".
 
-**$builder->getCompiledDelete()**
+$builder->getCompiledDelete()
+-----------------------------
 
 This works exactly the same way as ``$builder->getCompiledInsert()`` except
 that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
@@ -850,7 +984,11 @@ multiple methods. Consider this example:
 Resetting Query Builder
 ***********************
 
-**$builder->resetQuery()**
+ResetQuery
+==========
+
+$builder->resetQuery()
+----------------------
 
 Resetting Query Builder allows you to start fresh with your query without
 executing it first using a method like ``$builder->get()`` or ``$builder->insert()``.
@@ -926,7 +1064,7 @@ Class Reference
 
     .. php:method:: select([$select = '*'[, $escape = null]])
 
-        :param string $select: The SELECT portion of a query
+        :param array|RawSql|string $select: The SELECT portion of a query
         :param bool $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
@@ -978,7 +1116,7 @@ Class Reference
 
         Adds a ``SELECT COUNT(field)`` clause to a query.
 
-.. php:method:: selectSubquery(BaseBuilder $subquery, string $as)
+    .. php:method:: selectSubquery(BaseBuilder $subquery, string $as)
 
         :param string $subquery: Instance of BaseBuilder
         :param string $as: Alias for the resulting value name
@@ -1027,7 +1165,7 @@ Class Reference
 
     .. php:method:: where($key[, $value = null[, $escape = null]])
 
-        :param mixed $key: Name of field to compare, or associative array
+        :param array|RawSql|string $key: Name of field to compare, or associative array
         :param mixed $value: If a single key, compared to this value
         :param bool    $escape: Whether to escape values and identifiers
         :returns:   ``BaseBuilder`` instance (method chaining)
@@ -1122,7 +1260,7 @@ Class Reference
 
     .. php:method:: like($field[, $match = ''[, $side = 'both'[, $escape = null[, $insensitiveSearch = false]]]])
 
-        :param string $field: Field name
+        :param array|RawSql|string $field: Field name
         :param string $match: Text portion to match
         :param string $side: Which side of the expression to put the '%' wildcard on
         :param bool    $escape: Whether to escape values and identifiers

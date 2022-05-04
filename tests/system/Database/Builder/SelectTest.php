@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -92,6 +93,20 @@ final class SelectTest extends CIUnitTestCase
 
         $expected = 'SELECT (SELECT SUM(payments.amount) FROM payments WHERE payments.invoice_id=4) AS amount_paid FROM "users"';
 
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4355
+     */
+    public function testSelectWorksWithRawSql()
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $sql = 'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral';
+        $builder->select(new RawSql($sql));
+
+        $expected = 'SELECT ' . $sql . ' FROM "users"';
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
