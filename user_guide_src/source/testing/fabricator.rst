@@ -44,7 +44,8 @@ of the time you will want to specify the formatters to use as the second paramet
 
 You can also change the formatters after a fabricator is initialized by using the ``setFormatters()`` method.
 
-**Advanced Formatting**
+Advanced Formatting
+-------------------
 
 Sometimes the default return of a formatter is not enough. Faker providers allow parameters to most formatters
 to further limit the scope of random data. A fabricator will check its representative model for the ``fake()``
@@ -162,29 +163,37 @@ Your model's fake method could look like this:
 
 Now creating a new user will ensure it is a part of a valid group: ``$user = fake(UserModel::class);``
 
+Methods
+-------
+
 ``Fabricator`` handles the counts internally but you can also access these static methods
 to assist with using them:
 
-**getCount(string $table): int**
+getCount(string $table): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Return the current value for a specific table (default: 0).
 
-**setCount(string $table, int $count): int**
+setCount(string $table, int $count): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Set the value for a specific table manually, for example if you create some test items
 without using a fabricator that you still wanted factored into the final counts.
 
-**upCount(string $table): int**
+upCount(string $table): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Increment the value for a specific table by one and return the new value. (This is what is
 used internally with ``Fabricator::create()``).
 
-**downCount(string $table): int**
+downCount(string $table): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Decrement the value for a specific table by one and return the new value, for example if
 you deleted a fake item but wanted to track the change.
 
-**resetCounts()**
+resetCounts()
+^^^^^^^^^^^^^
 
 Resets all counts. Good idea to call this between test cases (though using
 ``CIUnitTestCase::$refresh = true`` does it automatically).
