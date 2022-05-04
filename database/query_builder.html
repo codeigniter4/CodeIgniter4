@@ -277,31 +277,69 @@ for safer queries, since the values are escaped automatically by the
 system.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#loading-the-query-builder" id="id1">Loading the Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#selecting-data" id="id2">Selecting Data</a></p>
+<li><p><a class="reference internal" href="#loading-the-query-builder" id="id8">Loading the Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#selecting-data" id="id9">Selecting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#get" id="id3">Get</a></p></li>
-<li><p><a class="reference internal" href="#select" id="id4">Select</a></p></li>
-<li><p><a class="reference internal" href="#from" id="id5">From</a></p></li>
-<li><p><a class="reference internal" href="#subqueries" id="id6">Subqueries</a></p></li>
-<li><p><a class="reference internal" href="#join" id="id7">Join</a></p></li>
+<li><p><a class="reference internal" href="#get" id="id10">Get</a></p></li>
+<li><p><a class="reference internal" href="#select" id="id11">Select</a></p></li>
+<li><p><a class="reference internal" href="#from" id="id12">From</a></p></li>
+<li><p><a class="reference internal" href="#subqueries" id="id13">Subqueries</a></p></li>
+<li><p><a class="reference internal" href="#join" id="id14">Join</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#looking-for-specific-data" id="id8">Looking for Specific Data</a></p></li>
-<li><p><a class="reference internal" href="#looking-for-similar-data" id="id9">Looking for Similar Data</a></p></li>
-<li><p><a class="reference internal" href="#ordering-results" id="id10">Ordering Results</a></p></li>
-<li><p><a class="reference internal" href="#limiting-or-counting-results" id="id11">Limiting or Counting Results</a></p></li>
-<li><p><a class="reference internal" href="#query-grouping" id="id12">Query grouping</a></p></li>
-<li><p><a class="reference internal" href="#inserting-data" id="id13">Inserting Data</a></p></li>
-<li><p><a class="reference internal" href="#updating-data" id="id14">Updating Data</a></p></li>
-<li><p><a class="reference internal" href="#deleting-data" id="id15">Deleting Data</a></p></li>
-<li><p><a class="reference internal" href="#method-chaining" id="id16">Method Chaining</a></p></li>
-<li><p><a class="reference internal" href="#resetting-query-builder" id="id17">Resetting Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#class-reference" id="id18">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#looking-for-specific-data" id="id15">Looking for Specific Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#where" id="id16">Where</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#looking-for-similar-data" id="id17">Looking for Similar Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#like" id="id18">Like</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ordering-results" id="id19">Ordering Results</a></p>
+<ul>
+<li><p><a class="reference internal" href="#orderby" id="id20">OrderBy</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#limiting-or-counting-results" id="id21">Limiting or Counting Results</a></p>
+<ul>
+<li><p><a class="reference internal" href="#limit" id="id22">Limit</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#query-grouping" id="id23">Query grouping</a></p>
+<ul>
+<li><p><a class="reference internal" href="#group" id="id24">Group</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#inserting-data" id="id25">Inserting Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#insert" id="id26">Insert</a></p></li>
+<li><p><a class="reference internal" href="#insertbatch" id="id27">insertBatch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#updating-data" id="id28">Updating Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#update" id="id29">Update</a></p></li>
+<li><p><a class="reference internal" href="#updatebatch" id="id30">UpdateBatch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#deleting-data" id="id31">Deleting Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#delete" id="id32">Delete</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#method-chaining" id="id33">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#resetting-query-builder" id="id34">Resetting Query Builder</a></p>
+<ul>
+<li><p><a class="reference internal" href="#resetquery" id="id35">ResetQuery</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#class-reference" id="id36">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="loading-the-query-builder">
-<h2><a class="toc-backref" href="#id1">Loading the Query Builder</a><a class="headerlink" href="#loading-the-query-builder" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Loading the Query Builder</a><a class="headerlink" href="#loading-the-query-builder" title="Permalink to this headline"></a></h2>
 <p>The Query Builder is loaded through the <code class="docutils literal notranslate"><span class="pre">table()</span></code> method on the
 database connection. This sets the <strong>FROM</strong> portion of the query for you
 and returns a new instance of the Query Builder class:</p>
@@ -315,11 +353,12 @@ and returns a new instance of the Query Builder class:</p>
 the class, so no resources are used by default.</p>
 </section>
 <section id="selecting-data">
-<h2><a class="toc-backref" href="#id2">Selecting Data</a><a class="headerlink" href="#selecting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Selecting Data</a><a class="headerlink" href="#selecting-data" title="Permalink to this headline"></a></h2>
 <p>The following methods allow you to build SQL <strong>SELECT</strong> statements.</p>
 <section id="get">
-<h3><a class="toc-backref" href="#id3">Get</a><a class="headerlink" href="#get" title="Permalink to this headline"></a></h3>
-<p><strong>$builder-&gt;get()</strong></p>
+<h3><a class="toc-backref" href="#id10">Get</a><a class="headerlink" href="#get" title="Permalink to this headline"></a></h3>
+<section id="builder-get">
+<h4>$builder-&gt;get()<a class="headerlink" href="#builder-get" title="Permalink to this headline"></a></h4>
 <p>Runs the selection query and returns the result. Can be used by itself
 to retrieve all records from a table:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -352,7 +391,9 @@ $query, which can be used to show the results:</p>
 </div>
 <p>Please visit the <a class="reference internal" href="results.html"><span class="doc">getResult*() method</span></a> page for a full
 discussion regarding result generation.</p>
-<p><strong>$builder-&gt;getCompiledSelect()</strong></p>
+</section>
+<section id="builder-getcompiledselect">
+<h4>$builder-&gt;getCompiledSelect()<a class="headerlink" href="#builder-getcompiledselect" title="Permalink to this headline"></a></h4>
 <p>Compiles the selection query just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code> but does not <em>run</em>
 the query. This method simply returns the SQL query as a string.</p>
 <p>Example:</p>
@@ -382,7 +423,9 @@ utilize <code class="docutils literal notranslate"><span class="pre">$builder-&g
 parameter. The reason for this outcome is because the query has not been
 executed using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code> which resets values or reset directly
 using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;resetQuery()</span></code>.</p>
-<p><strong>$builder-&gt;getWhere()</strong></p>
+</section>
+<section id="builder-getwhere">
+<h4>$builder-&gt;getWhere()<a class="headerlink" href="#builder-getwhere" title="Permalink to this headline"></a></h4>
 <p>Identical to the <code class="docutils literal notranslate"><span class="pre">get()</span></code> method except that it permits you to add a
 “where” clause in the first parameter, instead of using the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code>
 method:</p>
@@ -393,9 +436,11 @@ method:</p>
 </div>
 <p>Please read about the <code class="docutils literal notranslate"><span class="pre">where()</span></code> method below for more information.</p>
 </section>
+</section>
 <section id="select">
-<span id="query-builder-select"></span><h3><a class="toc-backref" href="#id4">Select</a><a class="headerlink" href="#select" title="Permalink to this headline"></a></h3>
-<p><strong>$builder-&gt;select()</strong></p>
+<span id="query-builder-select"></span><h3><a class="toc-backref" href="#id11">Select</a><a class="headerlink" href="#select" title="Permalink to this headline"></a></h3>
+<section id="builder-select">
+<h4>$builder-&gt;select()<a class="headerlink" href="#builder-select" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>SELECT</strong> portion of your query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -420,7 +465,26 @@ escaping of fields may break them.</p>
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;selectMax()</strong></p>
+<section id="rawsql">
+<span id="query-builder-select-rawsql"></span><h5>RawSql<a class="headerlink" href="#rawsql" title="Permalink to this headline"></a></h5>
+<p>Since v4.2.0, <code class="docutils literal notranslate"><span class="pre">$builder-&gt;select()</span></code> accepts a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\RawSql</span></code> instance, which expresses raw SQL strings.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;REGEXP_SUBSTR(ral_anno,&quot;[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})&quot;) AS ral&#39;</span><span class="p">;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="nv">$sql</span><span class="p">));</span>
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+</div>
+</section>
+</section>
+<section id="builder-selectmax">
+<h4>$builder-&gt;selectMax()<a class="headerlink" href="#builder-selectmax" title="Permalink to this headline"></a></h4>
 <p>Writes a <strong>SELECT MAX(field)</strong> portion for your query. You can optionally
 include a second parameter to rename the resulting field.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -434,7 +498,9 @@ include a second parameter to rename the resulting field.</p>
 <span class="c1">// Produces: SELECT MAX(age) as member_age FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;selectMin()</strong></p>
+</section>
+<section id="builder-selectmin">
+<h4>$builder-&gt;selectMin()<a class="headerlink" href="#builder-selectmin" title="Permalink to this headline"></a></h4>
 <p>Writes a <strong>SELECT MIN(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
@@ -445,7 +511,9 @@ the resulting field.</p>
 <span class="c1">// Produces: SELECT MIN(age) as age FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;selectAvg()</strong></p>
+</section>
+<section id="builder-selectavg">
+<h4>$builder-&gt;selectAvg()<a class="headerlink" href="#builder-selectavg" title="Permalink to this headline"></a></h4>
 <p>Writes a <strong>SELECT AVG(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
@@ -456,7 +524,9 @@ the resulting field.</p>
 <span class="c1">// Produces: SELECT AVG(age) as age FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;selectSum()</strong></p>
+</section>
+<section id="builder-selectsum">
+<h4>$builder-&gt;selectSum()<a class="headerlink" href="#builder-selectsum" title="Permalink to this headline"></a></h4>
 <p>Writes a <strong>SELECT SUM(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
@@ -467,7 +537,9 @@ the resulting field.</p>
 <span class="c1">// Produces: SELECT SUM(age) as age FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;selectCount()</strong></p>
+</section>
+<section id="builder-selectcount">
+<h4>$builder-&gt;selectCount()<a class="headerlink" href="#builder-selectcount" title="Permalink to this headline"></a></h4>
 <p>Writes a <strong>SELECT COUNT(field)</strong> portion for your query. As with
 <code class="docutils literal notranslate"><span class="pre">selectMax()</span></code>, You can optionally include a second parameter to rename
 the resulting field.</p>
@@ -483,7 +555,9 @@ counting results generally see <code class="docutils literal notranslate"><span 
 <span class="c1">// Produces: SELECT COUNT(age) as age FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;selectSubquery()</strong></p>
+</section>
+<section id="builder-selectsubquery">
+<h4>$builder-&gt;selectSubquery()<a class="headerlink" href="#builder-selectsubquery" title="Permalink to this headline"></a></h4>
 <p>Adds a subquery to the SELECT section.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;countries&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="nv">$builder</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">selectSubquery</span><span class="p">(</span><span class="nv">$subquery</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">);</span>
@@ -492,9 +566,11 @@ counting results generally see <code class="docutils literal notranslate"><span 
 </pre></div>
 </div>
 </section>
+</section>
 <section id="from">
-<h3><a class="toc-backref" href="#id5">From</a><a class="headerlink" href="#from" title="Permalink to this headline"></a></h3>
-<p><strong>$builder-&gt;from()</strong></p>
+<h3><a class="toc-backref" href="#id12">From</a><a class="headerlink" href="#from" title="Permalink to this headline"></a></h3>
+<section id="builder-from">
+<h4>$builder-&gt;from()<a class="headerlink" href="#builder-from" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>FROM</strong> portion of your query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -512,9 +588,11 @@ in the <code class="docutils literal notranslate"><span class="pre">$db-&gt;tabl
 to the FROM portion of your query.</p>
 </div>
 </section>
+</section>
 <section id="subqueries">
-<span id="query-builder-from-subquery"></span><h3><a class="toc-backref" href="#id6">Subqueries</a><a class="headerlink" href="#subqueries" title="Permalink to this headline"></a></h3>
-<p><strong>$builder-&gt;fromSubquery()</strong></p>
+<span id="query-builder-from-subquery"></span><h3><a class="toc-backref" href="#id13">Subqueries</a><a class="headerlink" href="#subqueries" title="Permalink to this headline"></a></h3>
+<section id="builder-fromsubquery">
+<h4>$builder-&gt;fromSubquery()<a class="headerlink" href="#builder-fromsubquery" title="Permalink to this headline"></a></h4>
 <p>Permits you to write part of a <strong>FROM</strong> query as a subquery.</p>
 <p>This is where we add a subquery to an existing table:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -535,9 +613,11 @@ to the FROM portion of your query.</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="join">
-<h3><a class="toc-backref" href="#id7">Join</a><a class="headerlink" href="#join" title="Permalink to this headline"></a></h3>
-<p><strong>$builder-&gt;join()</strong></p>
+<h3><a class="toc-backref" href="#id14">Join</a><a class="headerlink" href="#join" title="Permalink to this headline"></a></h3>
+<section id="builder-join">
+<h4>$builder-&gt;join()<a class="headerlink" href="#builder-join" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>JOIN</strong> portion of your query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -564,9 +644,13 @@ parameter of the method. Options are: <code class="docutils literal notranslate"
 </div>
 </section>
 </section>
+</section>
 <section id="looking-for-specific-data">
-<h2><a class="toc-backref" href="#id8">Looking for Specific Data</a><a class="headerlink" href="#looking-for-specific-data" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;where()</strong></p>
+<h2><a class="toc-backref" href="#id15">Looking for Specific Data</a><a class="headerlink" href="#looking-for-specific-data" title="Permalink to this headline"></a></h2>
+<section id="where">
+<h3><a class="toc-backref" href="#id16">Where</a><a class="headerlink" href="#where" title="Permalink to this headline"></a></h3>
+<section id="builder-where">
+<h4>$builder-&gt;where()<a class="headerlink" href="#builder-where" title="Permalink to this headline"></a></h4>
 <p>This method enables you to set <strong>WHERE</strong> clauses using one of five
 methods:</p>
 <div class="admonition note">
@@ -579,8 +663,8 @@ producing safer queries, except when using a custom string.</p>
 <p><code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code> accepts an optional third parameter. If you set it to
 <code class="docutils literal notranslate"><span class="pre">false</span></code>, CodeIgniter will not try to protect your field or table names.</p>
 </div>
-<ol class="arabic">
-<li><p><strong>Simple key/value method:</strong></p>
+<section id="simple-key-value-method">
+<h5>1. Simple key/value method<a class="headerlink" href="#simple-key-value-method" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -600,8 +684,9 @@ producing safer queries, except when using a custom string.</p>
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-<li><p><strong>Custom key/value method:</strong></p>
+</section>
+<section id="custom-key-value-method">
+<h5>2. Custom key/value method<a class="headerlink" href="#custom-key-value-method" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><p>You can include an operator in the first parameter in order to
 control the comparison:</p>
@@ -613,8 +698,9 @@ control the comparison:</p>
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-<li><p><strong>Associative array method:</strong></p>
+</section>
+<section id="associative-array-method">
+<h5>3. Associative array method<a class="headerlink" href="#associative-array-method" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -631,8 +717,9 @@ control the comparison:</p>
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-<li><p><strong>Custom string:</strong></p>
+</section>
+<section id="custom-string">
+<h5>4. Custom string<a class="headerlink" href="#custom-string" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><p>You can write your own clauses manually:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -654,10 +741,27 @@ data manually. Failure to do so could result in SQL injections.</p>
 </div>
 </div>
 </div></blockquote>
-</li>
-</ol>
-<ol class="arabic" id="query-builder-where-subquery" start="5">
-<li><p><strong>Subqueries:</strong></p>
+</section>
+<section id="query-builder-where-rawsql">
+<span id="id1"></span><h5>5. RawSql<a class="headerlink" href="#query-builder-where-rawsql" title="Permalink to this headline"></a></h5>
+<blockquote>
+<div><p>Since v4.2.0, <code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code> accepts a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\RawSql</span></code> instance, which expresses raw SQL strings.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="s2">&quot;id &gt; 2 AND name != &#39;Accountant&#39;&quot;</span><span class="p">;</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="nv">$sql</span><span class="p">));</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+</div>
+</div></blockquote>
+</section>
+<section id="query-builder-where-subquery">
+<span id="id2"></span><h5>6. Subqueries<a class="headerlink" href="#query-builder-where-subquery" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -671,9 +775,10 @@ data manually. Failure to do so could result in SQL injections.</p>
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-</ol>
-<p><strong>$builder-&gt;orWhere()</strong></p>
+</section>
+</section>
+<section id="builder-orwhere">
+<h4>$builder-&gt;orWhere()<a class="headerlink" href="#builder-orwhere" title="Permalink to this headline"></a></h4>
 <p>This method is identical to the one above, except that multiple
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -683,7 +788,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// Produces: WHERE name != &#39;Joe&#39; OR id &gt; 50</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;whereIn()</strong></p>
+</section>
+<section id="builder-wherein">
+<h4>$builder-&gt;whereIn()<a class="headerlink" href="#builder-wherein" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>WHERE</strong> field IN (‘item’, ‘item’) SQL query joined with <strong>AND</strong> if
 appropriate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -705,7 +812,9 @@ appropriate:</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orWhereIn()</strong></p>
+</section>
+<section id="builder-orwherein">
+<h4>$builder-&gt;orWhereIn()<a class="headerlink" href="#builder-orwherein" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>WHERE field IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong> if
 appropriate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -727,7 +836,9 @@ appropriate:</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orWhereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;whereNotIn()</strong></p>
+</section>
+<section id="builder-wherenotin">
+<h4>$builder-&gt;whereNotIn()<a class="headerlink" href="#builder-wherenotin" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>WHERE field NOT IN (‘item’, ‘item’)</strong> SQL query joined with
 <strong>AND</strong> if appropriate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -749,7 +860,9 @@ appropriate:</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">whereNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orWhereNotIn()</strong></p>
+</section>
+<section id="builder-orwherenotin">
+<h4>$builder-&gt;orWhereNotIn()<a class="headerlink" href="#builder-orwherenotin" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>WHERE field NOT IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong>
 if appropriate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -772,9 +885,14 @@ if appropriate:</p>
 </pre></div>
 </div>
 </section>
+</section>
+</section>
 <section id="looking-for-similar-data">
-<h2><a class="toc-backref" href="#id9">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;like()</strong></p>
+<h2><a class="toc-backref" href="#id17">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline"></a></h2>
+<section id="like">
+<h3><a class="toc-backref" href="#id18">Like</a><a class="headerlink" href="#like" title="Permalink to this headline"></a></h3>
+<section id="builder-like">
+<h4>$builder-&gt;like()<a class="headerlink" href="#builder-like" title="Permalink to this headline"></a></h4>
 <p>This method enables you to generate <strong>LIKE</strong> clauses, useful for doing
 searches.</p>
 <div class="admonition note">
@@ -788,8 +906,8 @@ a fifth parameter of <code class="docutils literal notranslate"><span class="pre
 otherwise, will force the values to be lowercase, i.e., <code class="docutils literal notranslate"><span class="pre">WHERE</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
 may require indexes to be made for <code class="docutils literal notranslate"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">column</span></code> to be effective.</p>
 </div>
-<ol class="arabic">
-<li><p><strong>Simple key/value method:</strong></p>
+<section id="id3">
+<h5>1. Simple key/value method<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -817,8 +935,9 @@ an optional third argument. Your options are <code class="docutils literal notra
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-<li><p><strong>Associative array method:</strong></p>
+</section>
+<section id="id4">
+<h5>2. Associative array method<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -828,9 +947,29 @@ an optional third argument. Your options are <code class="docutils literal notra
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-</ol>
-<p><strong>$builder-&gt;orLike()</strong></p>
+</section>
+<section id="query-builder-like-rawsql">
+<span id="id5"></span><h5>3. RawSql<a class="headerlink" href="#query-builder-like-rawsql" title="Permalink to this headline"></a></h5>
+<blockquote>
+<div><p>Since v4.2.0, <code class="docutils literal notranslate"><span class="pre">$builder-&gt;like()</span></code> accepts a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\RawSql</span></code> instance, which expresses raw SQL strings.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
+<span class="nv">$sql</span>    <span class="o">=</span> <span class="s2">&quot;CONCAT(users.name, &#39; &#39;, IF(users.surname IS NULL OR users.surname = &#39;&#39;, &#39;&#39;, users.surname))&quot;</span><span class="p">;</span>
+<span class="nv">$rawSql</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="nv">$rawSql</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="builder-orlike">
+<h4>$builder-&gt;orLike()<a class="headerlink" href="#builder-orlike" title="Permalink to this headline"></a></h4>
 <p>This method is identical to the one above, except that multiple
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -839,7 +978,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;notLike()</strong></p>
+</section>
+<section id="builder-notlike">
+<h4>$builder-&gt;notLike()<a class="headerlink" href="#builder-notlike" title="Permalink to this headline"></a></h4>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">like()</span></code>, except that it generates
 <strong>NOT LIKE</strong> statements:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -847,7 +988,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">notLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="c1">// WHERE `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orNotLike()</strong></p>
+</section>
+<section id="builder-ornotlike">
+<h4>$builder-&gt;orNotLike()<a class="headerlink" href="#builder-ornotlike" title="Permalink to this headline"></a></h4>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">notLike()</span></code>, except that multiple
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -857,7 +1000,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// WHERE `title` LIKE &#39;%match% OR  `body` NOT LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;groupBy()</strong></p>
+</section>
+<section id="builder-groupby">
+<h4>$builder-&gt;groupBy()<a class="headerlink" href="#builder-groupby" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>GROUP BY</strong> portion of your query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -872,7 +1017,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// Produces: GROUP BY title, date</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;distinct()</strong></p>
+</section>
+<section id="builder-distinct">
+<h4>$builder-&gt;distinct()<a class="headerlink" href="#builder-distinct" title="Permalink to this headline"></a></h4>
 <p>Adds the <strong>DISTINCT</strong> keyword to a query</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -881,7 +1028,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// Produces: SELECT DISTINCT * FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;having()</strong></p>
+</section>
+<section id="builder-having">
+<h4>$builder-&gt;having()<a class="headerlink" href="#builder-having" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>HAVING</strong> portion of your query. There are 2
 possible syntaxes, 1 argument or 2:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -906,9 +1055,13 @@ setting it to <code class="docutils literal notranslate"><span class="pre">false
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">having</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span> <span class="c1">// Produces: HAVING user_id = 45</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orHaving()</strong></p>
+</section>
+<section id="builder-orhaving">
+<h4>$builder-&gt;orHaving()<a class="headerlink" href="#builder-orhaving" title="Permalink to this headline"></a></h4>
 <p>Identical to <code class="docutils literal notranslate"><span class="pre">having()</span></code>, only separates multiple clauses with <strong>OR</strong>.</p>
-<p><strong>$builder-&gt;havingIn()</strong></p>
+</section>
+<section id="builder-havingin">
+<h4>$builder-&gt;havingIn()<a class="headerlink" href="#builder-havingin" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>HAVING field IN (‘item’, ‘item’)</strong> SQL query joined with <strong>AND</strong> if
 appropriate:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -930,7 +1083,9 @@ appropriate:</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orHavingIn()</strong></p>
+</section>
+<section id="builder-orhavingin">
+<h4>$builder-&gt;orHavingIn()<a class="headerlink" href="#builder-orhavingin" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>HAVING field IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong> if
 appropriate</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -952,7 +1107,9 @@ appropriate</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;havingNotIn()</strong></p>
+</section>
+<section id="builder-havingnotin">
+<h4>$builder-&gt;havingNotIn()<a class="headerlink" href="#builder-havingnotin" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>HAVING field NOT IN (‘item’, ‘item’)</strong> SQL query joined with
 <strong>AND</strong> if appropriate</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -974,7 +1131,9 @@ appropriate</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orHavingNotIn()</strong></p>
+</section>
+<section id="builder-orhavingnotin">
+<h4>$builder-&gt;orHavingNotIn()<a class="headerlink" href="#builder-orhavingnotin" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>HAVING field NOT IN (‘item’, ‘item’)</strong> SQL query joined with <strong>OR</strong>
 if appropriate</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -996,7 +1155,9 @@ if appropriate</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingNotIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nv">$subQuery</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;havingLike()</strong></p>
+</section>
+<section id="builder-havinglike">
+<h4>$builder-&gt;havingLike()<a class="headerlink" href="#builder-havinglike" title="Permalink to this headline"></a></h4>
 <p>This method enables you to generate <strong>LIKE</strong> clauses for <strong>HAVING</strong> part or the query, useful for doing
 searches.</p>
 <div class="admonition note">
@@ -1010,8 +1171,8 @@ a fifth parameter of <code class="docutils literal notranslate"><span class="pre
 otherwise, will force the values to be lowercase, i.e., <code class="docutils literal notranslate"><span class="pre">HAVING</span> <span class="pre">LOWER(column)</span> <span class="pre">LIKE</span> <span class="pre">'%search%'</span></code>. This
 may require indexes to be made for <code class="docutils literal notranslate"><span class="pre">LOWER(column)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">column</span></code> to be effective.</p>
 </div>
-<ol class="arabic">
-<li><p><strong>Simple key/value method:</strong></p>
+<section id="id6">
+<h5>1. Simple key/value method<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1039,8 +1200,9 @@ an optional third argument. Your options are <code class="docutils literal notra
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-<li><p><strong>Associative array method:</strong></p>
+</section>
+<section id="id7">
+<h5>2. Associative array method<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h5>
 <blockquote>
 <div><div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1050,9 +1212,10 @@ an optional third argument. Your options are <code class="docutils literal notra
 </pre></div>
 </div>
 </div></blockquote>
-</li>
-</ol>
-<p><strong>$builder-&gt;orHavingLike()</strong></p>
+</section>
+</section>
+<section id="builder-orhavinglike">
+<h4>$builder-&gt;orHavingLike()<a class="headerlink" href="#builder-orhavinglike" title="Permalink to this headline"></a></h4>
 <p>This method is identical to the one above, except that multiple
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1061,7 +1224,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;notHavingLike()</strong></p>
+</section>
+<section id="builder-nothavinglike">
+<h4>$builder-&gt;notHavingLike()<a class="headerlink" href="#builder-nothavinglike" title="Permalink to this headline"></a></h4>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">havingLike()</span></code>, except that it generates
 <strong>NOT LIKE</strong> statements:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1070,7 +1235,9 @@ instances are joined by <strong>OR</strong>:</p>
 <span class="c1">// HAVING `title` NOT LIKE &#39;%match% ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;orNotHavingLike()</strong></p>
+</section>
+<section id="builder-ornothavinglike">
+<h4>$builder-&gt;orNotHavingLike()<a class="headerlink" href="#builder-ornothavinglike" title="Permalink to this headline"></a></h4>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">notHavingLike()</span></code>, except that multiple
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1081,9 +1248,14 @@ instances are joined by <strong>OR</strong>:</p>
 </pre></div>
 </div>
 </section>
+</section>
+</section>
 <section id="ordering-results">
-<h2><a class="toc-backref" href="#id10">Ordering Results</a><a class="headerlink" href="#ordering-results" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;orderBy()</strong></p>
+<h2><a class="toc-backref" href="#id19">Ordering Results</a><a class="headerlink" href="#ordering-results" title="Permalink to this headline"></a></h2>
+<section id="orderby">
+<h3><a class="toc-backref" href="#id20">OrderBy</a><a class="headerlink" href="#orderby" title="Permalink to this headline"></a></h3>
+<section id="builder-orderby">
+<h4>$builder-&gt;orderBy()<a class="headerlink" href="#builder-orderby" title="Permalink to this headline"></a></h4>
 <p>Lets you set an <strong>ORDER BY</strong> clause.</p>
 <p>The first parameter contains the name of the column you would like to order by.</p>
 <p>The second parameter lets you set the direction of the result.
@@ -1121,9 +1293,14 @@ be ignored, unless you specify a numeric seed value.</p>
 </pre></div>
 </div>
 </section>
+</section>
+</section>
 <section id="limiting-or-counting-results">
-<h2><a class="toc-backref" href="#id11">Limiting or Counting Results</a><a class="headerlink" href="#limiting-or-counting-results" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;limit()</strong></p>
+<h2><a class="toc-backref" href="#id21">Limiting or Counting Results</a><a class="headerlink" href="#limiting-or-counting-results" title="Permalink to this headline"></a></h2>
+<section id="limit">
+<h3><a class="toc-backref" href="#id22">Limit</a><a class="headerlink" href="#limit" title="Permalink to this headline"></a></h3>
+<section id="builder-limit">
+<h4>$builder-&gt;limit()<a class="headerlink" href="#builder-limit" title="Permalink to this headline"></a></h4>
 <p>Lets you limit the number of rows you would like returned by the query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1138,7 +1315,9 @@ be ignored, unless you specify a numeric seed value.</p>
 <span class="c1">// Produces: LIMIT 20, 10 (in MySQL. Other databases have slightly different syntax)</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;countAllResults()</strong></p>
+</section>
+<section id="builder-countallresults">
+<h4>$builder-&gt;countAllResults()<a class="headerlink" href="#builder-countallresults" title="Permalink to this headline"></a></h4>
 <p>Permits you to determine the number of rows in a particular Query
 Builder query. Queries will accept Query Builder restrictors such as
 <code class="docutils literal notranslate"><span class="pre">where()</span></code>, <code class="docutils literal notranslate"><span class="pre">orWhere()</span></code>, <code class="docutils literal notranslate"><span class="pre">like()</span></code>, <code class="docutils literal notranslate"><span class="pre">orLike()</span></code>, etc. Example:</p>
@@ -1158,7 +1337,9 @@ first parameter.</p>
 <span class="k">echo</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">countAllResults</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Produces an integer, like 17</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;countAll()</strong></p>
+</section>
+<section id="builder-countall">
+<h4>$builder-&gt;countAll()<a class="headerlink" href="#builder-countall" title="Permalink to this headline"></a></h4>
 <p>Permits you to determine the number of rows in a particular table.
 Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1170,8 +1351,12 @@ Example:</p>
 to <code class="docutils literal notranslate"><span class="pre">select()</span></code> as well. If you need to keep them, you can pass <code class="docutils literal notranslate"><span class="pre">false</span></code> as the
 first parameter.</p>
 </section>
+</section>
+</section>
 <section id="query-grouping">
-<h2><a class="toc-backref" href="#id12">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id23">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
+<section id="group">
+<h3><a class="toc-backref" href="#id24">Group</a><a class="headerlink" href="#group" title="Permalink to this headline"></a></h3>
 <p>Query grouping allows you to create groups of <strong>WHERE</strong> clauses by enclosing them in parentheses. This will allow
 you to create queries with complex <strong>WHERE</strong> clauses. Nested groups are supported. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1196,30 +1381,54 @@ you to create queries with complex <strong>WHERE</strong> clauses. Nested groups
 <p class="admonition-title">Note</p>
 <p>Groups need to be balanced, make sure every <code class="docutils literal notranslate"><span class="pre">groupStart()</span></code> is matched by a <code class="docutils literal notranslate"><span class="pre">groupEnd()</span></code>.</p>
 </div>
-<p><strong>$builder-&gt;groupStart()</strong></p>
+<section id="builder-groupstart">
+<h4>$builder-&gt;groupStart()<a class="headerlink" href="#builder-groupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>WHERE</strong> clause of the query.</p>
-<p><strong>$builder-&gt;orGroupStart()</strong></p>
+</section>
+<section id="builder-orgroupstart">
+<h4>$builder-&gt;orGroupStart()<a class="headerlink" href="#builder-orgroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>WHERE</strong> clause of the query, prefixing it with <strong>OR</strong>.</p>
-<p><strong>$builder-&gt;notGroupStart()</strong></p>
+</section>
+<section id="builder-notgroupstart">
+<h4>$builder-&gt;notGroupStart()<a class="headerlink" href="#builder-notgroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>WHERE</strong> clause of the query, prefixing it with <strong>NOT</strong>.</p>
-<p><strong>$builder-&gt;orNotGroupStart()</strong></p>
+</section>
+<section id="builder-ornotgroupstart">
+<h4>$builder-&gt;orNotGroupStart()<a class="headerlink" href="#builder-ornotgroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>WHERE</strong> clause of the query, prefixing it with <strong>OR NOT</strong>.</p>
-<p><strong>$builder-&gt;groupEnd()</strong></p>
+</section>
+<section id="builder-groupend">
+<h4>$builder-&gt;groupEnd()<a class="headerlink" href="#builder-groupend" title="Permalink to this headline"></a></h4>
 <p>Ends the current group by adding a closing parenthesis to the <strong>WHERE</strong> clause of the query.</p>
-<p><strong>$builder-&gt;havingGroupStart()</strong></p>
+</section>
+<section id="builder-havinggroupstart">
+<h4>$builder-&gt;havingGroupStart()<a class="headerlink" href="#builder-havinggroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>HAVING</strong> clause of the query.</p>
-<p><strong>$builder-&gt;orHavingGroupStart()</strong></p>
+</section>
+<section id="builder-orhavinggroupstart">
+<h4>$builder-&gt;orHavingGroupStart()<a class="headerlink" href="#builder-orhavinggroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>HAVING</strong> clause of the query, prefixing it with <strong>OR</strong>.</p>
-<p><strong>$builder-&gt;notHavingGroupStart()</strong></p>
+</section>
+<section id="builder-nothavinggroupstart">
+<h4>$builder-&gt;notHavingGroupStart()<a class="headerlink" href="#builder-nothavinggroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>HAVING</strong> clause of the query, prefixing it with <strong>NOT</strong>.</p>
-<p><strong>$builder-&gt;orNotHavingGroupStart()</strong></p>
+</section>
+<section id="builder-ornothavinggroupstart">
+<h4>$builder-&gt;orNotHavingGroupStart()<a class="headerlink" href="#builder-ornothavinggroupstart" title="Permalink to this headline"></a></h4>
 <p>Starts a new group by adding an opening parenthesis to the <strong>HAVING</strong> clause of the query, prefixing it with <strong>OR NOT</strong>.</p>
-<p><strong>$builder-&gt;havingGroupEnd()</strong></p>
+</section>
+<section id="builder-havinggroupend">
+<h4>$builder-&gt;havingGroupEnd()<a class="headerlink" href="#builder-havinggroupend" title="Permalink to this headline"></a></h4>
 <p>Ends the current group by adding a closing parenthesis to the <strong>HAVING</strong> clause of the query.</p>
 </section>
+</section>
+</section>
 <section id="inserting-data">
-<h2><a class="toc-backref" href="#id13">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;insert()</strong></p>
+<h2><a class="toc-backref" href="#id25">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline"></a></h2>
+<section id="insert">
+<h3><a class="toc-backref" href="#id26">Insert</a><a class="headerlink" href="#insert" title="Permalink to this headline"></a></h3>
+<section id="builder-insert">
+<h4>$builder-&gt;insert()<a class="headerlink" href="#builder-insert" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. Here is an example using an array:</p>
@@ -1256,7 +1465,9 @@ method. Here is an example using an array:</p>
 <p class="admonition-title">Note</p>
 <p>All values are escaped automatically producing safer queries.</p>
 </div>
-<p><strong>$builder-&gt;ignore()</strong></p>
+</section>
+<section id="builder-ignore">
+<h4>$builder-&gt;ignore()<a class="headerlink" href="#builder-ignore" title="Permalink to this headline"></a></h4>
 <p>Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won’t be inserted.
 You can optionally pass an <strong>boolean</strong> to the method. Here is an example using the array of the above example:</p>
@@ -1272,7 +1483,9 @@ You can optionally pass an <strong>boolean</strong> to the method. Here is an ex
 <span class="c1">// Produces: INSERT OR IGNORE INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;getCompiledInsert()</strong></p>
+</section>
+<section id="builder-getcompiledinsert">
+<h4>$builder-&gt;getCompiledInsert()<a class="headerlink" href="#builder-getcompiledinsert" title="Permalink to this headline"></a></h4>
 <p>Compiles the insertion query just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;insert()</span></code> but does not
 <em>run</em> the query. This method simply returns the SQL query as a string.</p>
 <p>Example:</p>
@@ -1307,7 +1520,12 @@ using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;
 <p class="admonition-title">Note</p>
 <p>This method doesn’t work for batch inserts.</p>
 </div>
-<p><strong>$builder-&gt;insertBatch()</strong></p>
+</section>
+</section>
+<section id="insertbatch">
+<h3><a class="toc-backref" href="#id27">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
+<section id="builder-insertbatch">
+<h4>$builder-&gt;insertBatch()<a class="headerlink" href="#builder-insertbatch" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
 query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
 method. Here is an example using an array:</p>
@@ -1336,9 +1554,14 @@ method. Here is an example using an array:</p>
 <p>All values are escaped automatically producing safer queries.</p>
 </div>
 </section>
+</section>
+</section>
 <section id="updating-data">
-<h2><a class="toc-backref" href="#id14">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;replace()</strong></p>
+<h2><a class="toc-backref" href="#id28">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
+<section id="update">
+<h3><a class="toc-backref" href="#id29">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
+<section id="builder-replace">
+<h4>$builder-&gt;replace()<a class="headerlink" href="#builder-replace" title="Permalink to this headline"></a></h4>
 <p>This method executes a <strong>REPLACE</strong> statement, which is basically the SQL
 standard for (optional) <strong>DELETE</strong> + <strong>INSERT</strong>, using <em>PRIMARY</em> and <em>UNIQUE</em>
 keys as the determining factor.
@@ -1363,7 +1586,9 @@ key, then if a row containing <code class="docutils literal notranslate"><span c
 will be deleted with our new row data replacing it.</p>
 <p>Usage of the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method is also allowed and all fields are
 automatically escaped, just like with <code class="docutils literal notranslate"><span class="pre">insert()</span></code>.</p>
-<p><strong>$builder-&gt;set()</strong></p>
+</section>
+<section id="builder-set">
+<h4>$builder-&gt;set()<a class="headerlink" href="#builder-set" title="Permalink to this headline"></a></h4>
 <p>This method enables you to set values for inserts or updates.</p>
 <p><strong>It can be used instead of passing a data array directly to the insert()
 or update() methods:</strong></p>
@@ -1429,7 +1654,9 @@ parameter.</p>
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;update()</strong></p>
+</section>
+<section id="builder-update">
+<h4>$builder-&gt;update()<a class="headerlink" href="#builder-update" title="Permalink to this headline"></a></h4>
 <p>Generates an update string and runs the query based on the data you
 supply. You can pass an <strong>array</strong> or an <strong>object</strong> to the method. Here
 is an example using an array:</p>
@@ -1492,7 +1719,12 @@ directly into the <code class="docutils literal notranslate"><span class="pre">u
 </div>
 <p>You may also use the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;set()</span></code> method described above when
 performing updates.</p>
-<p><strong>$builder-&gt;updateBatch()</strong></p>
+</section>
+</section>
+<section id="updatebatch">
+<h3><a class="toc-backref" href="#id30">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
+<section id="builder-updatebatch">
+<h4>$builder-&gt;updateBatch()<a class="headerlink" href="#builder-updatebatch" title="Permalink to this headline"></a></h4>
 <p>Generates an update string based on the data you supply, and runs the query.
 You can either pass an <strong>array</strong> or an <strong>object</strong> to the method.
 Here is an example using an array:</p>
@@ -1537,7 +1769,9 @@ Here is an example using an array:</p>
 due to the very nature of how it works. Instead, <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>
 returns the number of rows affected.</p>
 </div>
-<p><strong>$builder-&gt;getCompiledUpdate()</strong></p>
+</section>
+<section id="builder-getcompiledupdate">
+<h4>$builder-&gt;getCompiledUpdate()<a class="headerlink" href="#builder-getcompiledupdate" title="Permalink to this headline"></a></h4>
 <p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
 that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INSERT</strong> SQL string.</p>
 <p>For more information view documentation for <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code>.</p>
@@ -1546,9 +1780,14 @@ that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INS
 <p>This method doesn’t work for batched updates.</p>
 </div>
 </section>
+</section>
+</section>
 <section id="deleting-data">
-<h2><a class="toc-backref" href="#id15">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;delete()</strong></p>
+<h2><a class="toc-backref" href="#id31">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
+<section id="delete">
+<h3><a class="toc-backref" href="#id32">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
+<section id="builder-delete">
+<h4>$builder-&gt;delete()<a class="headerlink" href="#builder-delete" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the query.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1572,7 +1811,9 @@ the data to the first parameter of the method:</p>
 </div>
 <p>If you want to delete all data from a table, you can use the <code class="docutils literal notranslate"><span class="pre">truncate()</span></code>
 method, or <code class="docutils literal notranslate"><span class="pre">emptyTable()</span></code>.</p>
-<p><strong>$builder-&gt;emptyTable()</strong></p>
+</section>
+<section id="builder-emptytable">
+<h4>$builder-&gt;emptyTable()<a class="headerlink" href="#builder-emptytable" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the
 query:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1581,7 +1822,9 @@ query:</p>
 <span class="c1">// Produces: DELETE FROM mytable</span>
 </pre></div>
 </div>
-<p><strong>$builder-&gt;truncate()</strong></p>
+</section>
+<section id="builder-truncate">
+<h4>$builder-&gt;truncate()<a class="headerlink" href="#builder-truncate" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>TRUNCATE</strong> SQL string and runs the query.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1597,13 +1840,17 @@ query:</p>
 <p>If the TRUNCATE command isn’t available, <code class="docutils literal notranslate"><span class="pre">truncate()</span></code> will
 execute as “DELETE FROM table”.</p>
 </div>
-<p><strong>$builder-&gt;getCompiledDelete()</strong></p>
+</section>
+<section id="builder-getcompileddelete">
+<h4>$builder-&gt;getCompiledDelete()<a class="headerlink" href="#builder-getcompileddelete" title="Permalink to this headline"></a></h4>
 <p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code> except
 that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSERT</strong> SQL string.</p>
 <p>For more information view documentation for <code class="docutils literal notranslate"><span class="pre">$builder-&gt;getCompiledInsert()</span></code>.</p>
 </section>
+</section>
+</section>
 <section id="method-chaining">
-<h2><a class="toc-backref" href="#id16">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id33">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
 <p>Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1616,8 +1863,11 @@ multiple methods. Consider this example:</p>
 </div>
 </section>
 <section id="resetting-query-builder">
-<span id="ar-caching"></span><h2><a class="toc-backref" href="#id17">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
-<p><strong>$builder-&gt;resetQuery()</strong></p>
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id34">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
+<section id="resetquery">
+<h3><a class="toc-backref" href="#id35">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
+<section id="builder-resetquery">
+<h4>$builder-&gt;resetQuery()<a class="headerlink" href="#builder-resetquery" title="Permalink to this headline"></a></h4>
 <p>Resetting Query Builder allows you to start fresh with your query without
 executing it first using a method like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code> or <code class="docutils literal notranslate"><span class="pre">$builder-&gt;insert()</span></code>.</p>
 <p>This is useful in situations where you are using Query Builder to generate SQL
@@ -1643,8 +1893,10 @@ run the query:</p>
 </pre></div>
 </div>
 </section>
+</section>
+</section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id18">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id36">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\BaseBuilder</code></dt>
@@ -1769,7 +2021,7 @@ called Query Builder methods.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$select</strong> (<em>string</em>) – The SELECT portion of a query</p></li>
+<li><p><strong>$select</strong> (<em>array|RawSql|string</em>) – The SELECT portion of a query</p></li>
 <li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
 </dd>
@@ -1883,28 +2135,26 @@ called Query Builder methods.</p>
 <p>Adds a <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">COUNT(field)</span></code> clause to a query.</p>
 </dd></dl>
 
-</dd></dl>
-
 <dl class="method">
 <dt id="selectSubquery">
 <code class="sig-name descname">selectSubquery</code><span class="sig-paren">(</span><em class="sig-param">BaseBuilder $subquery</em>, <em class="sig-param">string $as</em><span class="sig-paren">)</span><a class="headerlink" href="#selectSubquery" title="Permalink to this definition"></a></dt>
-<dd><blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param string $subquery</dt>
-<dd class="field-odd"><p>Instance of BaseBuilder</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$subquery</strong> (<em>string</em>) – Instance of BaseBuilder</p></li>
+<li><p><strong>$as</strong> (<em>string</em>) – Alias for the resulting value name</p></li>
+</ul>
 </dd>
-<dt class="field-even">param string $as</dt>
-<dd class="field-even"><p>Alias for the resulting value name</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
 </dd>
-<dt class="field-odd">returns</dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
-</dd>
-<dt class="field-even">rtype</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
 </dd>
 </dl>
 <p>Adds a subquery to the selection</p>
-</div></blockquote>
+</dd></dl>
+
 <dl class="method">
 <dt id="distinct">
 <code class="sig-name descname">distinct</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$val = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#distinct" title="Permalink to this definition"></a></dt>
@@ -1988,12 +2238,12 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="method">
-<dt id="where">
-<code class="sig-name descname">where</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#where" title="Permalink to this definition"></a></dt>
+<dt>
+<code class="sig-name descname">where</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>mixed</em>) – Name of field to compare, or associative array</p></li>
+<li><p><strong>$key</strong> (<em>array|RawSql|string</em>) – Name of field to compare, or associative array</p></li>
 <li><p><strong>$value</strong> (<em>mixed</em>) – If a single key, compared to this value</p></li>
 <li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
 </ul>
@@ -2184,12 +2434,12 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="method">
-<dt id="like">
-<code class="sig-name descname">like</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#like" title="Permalink to this definition"></a></dt>
+<dt>
+<code class="sig-name descname">like</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="optional">[</span>, <em class="sig-param">$match = ''</em><span class="optional">[</span>, <em class="sig-param">$side = 'both'</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">[</span>, <em class="sig-param">$insensitiveSearch = false</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$field</strong> (<em>string</em>) – Field name</p></li>
+<li><p><strong>$field</strong> (<em>array|RawSql|string</em>) – Field name</p></li>
 <li><p><strong>$match</strong> (<em>string</em>) – Text portion to match</p></li>
 <li><p><strong>$side</strong> (<em>string</em>) – Which side of the expression to put the ‘%’ wildcard on</p></li>
 <li><p><strong>$escape</strong> (<em>bool</em>) – Whether to escape values and identifiers</p></li>
@@ -2604,8 +2854,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="method">
-<dt id="limit">
-<code class="sig-name descname">limit</code><span class="sig-paren">(</span><em class="sig-param">$value</em><span class="optional">[</span>, <em class="sig-param">$offset = 0</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#limit" title="Permalink to this definition"></a></dt>
+<dt>
+<code class="sig-name descname">limit</code><span class="sig-paren">(</span><em class="sig-param">$value</em><span class="optional">[</span>, <em class="sig-param">$offset = 0</em><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2664,8 +2914,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="method">
-<dt id="insert">
-<code class="sig-name descname">insert</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = null</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#insert" title="Permalink to this definition"></a></dt>
+<dt>
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = null</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2732,8 +2982,8 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 </dd></dl>
 
 <dl class="method">
-<dt id="update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = null</em><span class="optional">[</span>, <em class="sig-param">$where = null</em><span class="optional">[</span>, <em class="sig-param">$limit = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#update" title="Permalink to this definition"></a></dt>
+<dt>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$set = null</em><span class="optional">[</span>, <em class="sig-param">$where = null</em><span class="optional">[</span>, <em class="sig-param">$limit = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2820,8 +3070,8 @@ multiple queries will be executed, each handling up to
 </dd></dl>
 
 <dl class="method">
-<dt id="delete">
-<code class="sig-name descname">delete</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$where = ''</em><span class="optional">[</span>, <em class="sig-param">$limit = null</em><span class="optional">[</span>, <em class="sig-param">$reset_data = true</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete" title="Permalink to this definition"></a></dt>
+<dt>
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$where = ''</em><span class="optional">[</span>, <em class="sig-param">$limit = null</em><span class="optional">[</span>, <em class="sig-param">$reset_data = true</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2998,7 +3248,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 03, 2022.
+      <span class="lastupdated">Last updated on May 04, 2022.
       </span></p>
   </div>
 
