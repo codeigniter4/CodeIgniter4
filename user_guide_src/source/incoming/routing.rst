@@ -715,10 +715,24 @@ The output is like the following:
     | auto   | home/index[/...] | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
     +--------+------------------+------------------------------------------+----------------+-----------------------+
 
-The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by auto-routing, so it is not defined in **app/Config/Routes.php**.
+The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by Auto Routing (Legacy), so it is not defined in **app/Config/Routes.php**.
 
 The *Route* column shows the URI path to match. The route of a defined route is expressed as a regular expression.
 But ``[/...]`` in the route of an auto route is indicates any number of segments.
+
+When you use Auto Routing (Improved), the output is like the following:
+
+.. code-block:: none
+
+    +-----------+-------------------------+------------------------------------------+----------------+---------------+
+    | Method    | Route                   | Handler                                  | Before Filters | After Filters |
+    +-----------+-------------------------+------------------------------------------+----------------+---------------+
+    | CLI       | ci(.*)                  | \CodeIgniter\CLI\CommandRunner::index/$1 |                |               |
+    | GET(auto) | product/list/../..[/..] | \App\Controllers\Product::getList        |                | toolbar       |
+    +-----------+-------------------------+------------------------------------------+----------------+---------------+
+
+The *Method* will be like ``GET(auto)``. ``/..`` in the *Route* column indicates one segment.
+``[/..]`` indicates it is optional.
 
 .. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
 
