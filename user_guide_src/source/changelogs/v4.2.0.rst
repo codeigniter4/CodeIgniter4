@@ -58,6 +58,18 @@ Commands
         - ``spark db:table my_table --metadata``
 - The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
 
+Database
+========
+
+- Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
+- Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
+- The BaseBuilder::buildSubquery() method can take an optional third argument ``string $alias``.
+- Added new OCI8 driver for database.
+    - It can access Oracle Database and supports SQL and PL/SQL statements.
+- QueryBuilder raw SQL string support
+    - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
+    - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
+
 Others
 ======
 
@@ -67,21 +79,14 @@ Others
     - Added the functions ``csp_script_nonce()`` and ``csp_style_nonce()`` to get nonce attributes
     - See :ref:`content-security-policy` for details.
 - New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
-- Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
-- Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
-- The BaseBuilder::buildSubquery() method can take an optional third argument ``string $alias``.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
-- Added new OCI8 driver for database.
-    - It can access Oracle Database and supports SQL and PL/SQL statements.
+- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
 - Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
     - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
 - Added support for webp files to **app/Config/Mimes.php**.
 - Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
 - HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag`.
 - RouteCollection::addRedirect() can now use placeholders.
-- QueryBuilder raw SQL string support
-    - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
-    - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
 
