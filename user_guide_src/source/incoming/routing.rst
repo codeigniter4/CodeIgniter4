@@ -693,7 +693,8 @@ CodeIgniter has the following :doc:`command </cli/cli_commands>` to display all 
 
 .. _spark-routes:
 
-**routes**
+routes
+======
 
 Displays all routes and filters::
 
