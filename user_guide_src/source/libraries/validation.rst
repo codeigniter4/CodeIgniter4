@@ -412,7 +412,7 @@ Or as a labeled style:
 .. literalinclude:: validation/024.php
 
 If you'd like to include a field's "human" name, or the optional parameter some rules allow for (such as max_length),
-or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively:
+or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
 
     'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
@@ -458,7 +458,7 @@ When using a wildcard, the error will point to a specific field, replacing the a
     ]
 
     // rule
-    contacts.*.name => 'required'
+    'contacts.*.name' => 'required'
 
     // error will be
     'contacts.friends.1.name' => 'The contacts.*.name field is required.'
