@@ -297,6 +297,7 @@
 <li><p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Autoloader\Autoloader::initialize()</span></code> has changed the behavior to fix a bug. It used to use Composer classmap only when <code class="docutils literal notranslate"><span class="pre">$modules-&gt;discoverInComposer</span></code> is true. Now it always uses the Composer classmap if Composer is available.</p></li>
 <li><p>The color code output by <a class="reference internal" href="../cli/cli_library.html#cli-library-color"><span class="std std-ref">CLI::color()</span></a> has been changed to fix a bug.</p></li>
 <li><p>To prevent unexpected access from the web browser, if a controller is added to a cli route (<code class="docutils literal notranslate"><span class="pre">$routes-&gt;cli()</span></code>), all methods of that controller are no longer accessible via auto-routing.</p></li>
+<li><p>There is a possible backward compatibility break for those users extending the History Collector and they should probably update <code class="docutils literal notranslate"><span class="pre">History::setFiles()</span></code> method.</p></li>
 </ul>
 </section>
 <section id="enhancements">
@@ -384,6 +385,13 @@
 <dt>QueryBuilder raw SQL string support</dt><dd><ul>
 <li><p>Added the class <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\RawSql</span></code> which expresses raw SQL strings.</p></li>
 <li><p><a class="reference internal" href="../database/query_builder.html#query-builder-select-rawsql"><span class="std std-ref">select()</span></a>, <a class="reference internal" href="../database/query_builder.html#query-builder-where-rawsql"><span class="std std-ref">where()</span></a>, <a class="reference internal" href="../database/query_builder.html#query-builder-like-rawsql"><span class="std std-ref">like()</span></a> accept the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\RawSql</span></code> instance.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Debugbar enhancements</dt><dd><ul>
+<li><p>Debug toolbar is now using <code class="docutils literal notranslate"><span class="pre">microtime()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">time()</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
