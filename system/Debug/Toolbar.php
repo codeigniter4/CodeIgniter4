@@ -76,7 +76,7 @@ class Toolbar
     {
         // Data items used within the view.
         $data['url']             = current_url();
-        $data['method']          = $request->getMethod(true);
+        $data['method']          = strtoupper($request->getMethod());
         $data['isAJAX']          = $request->isAJAX();
         $data['startTime']       = $startTime;
         $data['totalTime']       = $totalTime * 1000;
