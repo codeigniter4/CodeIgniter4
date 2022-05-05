@@ -55,8 +55,8 @@ class Toolbar
             if (! class_exists($collector)) {
                 log_message(
                     'critical',
-                    'Toolbar collector does not exists(' . $collector . ').'
-                    . ' please check $collectors in the app/Config/Toolbar.php file.'
+                    'Toolbar collector does not exist (' . $collector . ').'
+                    . ' Please check $collectors in the app/Config/Toolbar.php file.'
                 );
 
                 continue;
