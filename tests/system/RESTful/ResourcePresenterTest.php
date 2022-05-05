@@ -44,7 +44,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->resetServices();
+        $this->resetServices(true);
+        $this->resetFactories();
     }
 
     private function createCodeigniter(): void

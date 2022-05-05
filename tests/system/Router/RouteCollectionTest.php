@@ -26,7 +26,8 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->resetServices();
+        $this->resetServices(true);
+        $this->resetFactories();
     }
 
     protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
@@ -1661,6 +1662,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRoutesControllerNameReturnsFQCN($namespace)
     {
+        Services::request()->setMethod('get');
         $routes = $this->getCollector();
         $routes->setAutoRoute(false);
         $routes->setDefaultNamespace($namespace);
