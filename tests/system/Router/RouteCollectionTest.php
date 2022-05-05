@@ -1462,7 +1462,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
-        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithoutSubdomainMatch()
