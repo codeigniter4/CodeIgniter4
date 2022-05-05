@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
+use DateTime;
+
 /**
  * History collector
  */
@@ -56,10 +58,10 @@ class History extends BaseCollector
     /**
      * Specify time limit & file count for debug history.
      *
-     * @param int $current Current history time
-     * @param int $limit   Max history files
+     * @param string $current Current history time
+     * @param int    $limit   Max history files
      */
-    public function setFiles(int $current, int $limit = 20)
+    public function setFiles(string $current, int $limit = 20)
     {
         $filenames = glob(WRITEPATH . 'debugbar/debugbar_*.json');
 
@@ -81,13 +83,13 @@ class History extends BaseCollector
 
             $contents = @json_decode($contents);
             if (json_last_error() === JSON_ERROR_NONE) {
-                preg_match_all('/\d+/', $filename, $time);
-                $time = (int) end($time[0]);
+                preg_match('/debugbar_(.*)\.json$/s', $filename, $time);
+                $time = sprintf('%.6f', $time[1] ?? 0);
 
                 // Debugbar files shown in History Collector
                 $files[] = [
                     'time'        => $time,
-                    'datetime'    => date('Y-m-d H:i:s', $time),
+                    'datetime'    => DateTime::createFromFormat('U.u', $time)->format('Y-m-d H:i:s.u'),
                     'active'      => $time === $current,
                     'status'      => $contents->vars->response->statusCode,
                     'method'      => $contents->method,

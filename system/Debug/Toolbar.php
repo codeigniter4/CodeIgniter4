@@ -53,8 +53,11 @@ class Toolbar
 
         foreach ($config->collectors as $collector) {
             if (! class_exists($collector)) {
-                log_message('critical', 'Toolbar collector does not exists(' . $collector . ').' .
-                        'please check $collectors in the Config\Toolbar.php file.');
+                log_message(
+                    'critical',
+                    'Toolbar collector does not exist (' . $collector . ').'
+                    . ' Please check $collectors in the app/Config/Toolbar.php file.'
+                );
 
                 continue;
             }
@@ -378,8 +381,8 @@ class Toolbar
 
             helper('filesystem');
 
-            // Updated to time() so we can get history
-            $time = time();
+            // Updated to microtime() so we can get history
+            $time = sprintf('%.6f', microtime(true));
 
             if (! is_dir(WRITEPATH . 'debugbar')) {
                 mkdir(WRITEPATH . 'debugbar', 0777);
@@ -485,10 +488,10 @@ class Toolbar
     {
         $data = json_decode($data, true);
 
-        if ($this->config->maxHistory !== 0) {
+        if ($this->config->maxHistory !== 0 && preg_match('/\d+\.\d{6}/s', (string) Services::request()->getGet('debugbar_time'), $debugbarTime)) {
             $history = new History();
             $history->setFiles(
-                (int) Services::request()->getGet('debugbar_time'),
+                $debugbarTime[0],
                 $this->config->maxHistory
             );
 
