@@ -29,9 +29,6 @@ use Tests\Support\RESTful\Worker2;
  * so we need to make sure that the methods routed to
  * return correct responses.
  *
- * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
- *
  * @internal
  */
 final class ResourcePresenterTest extends CIUnitTestCase
@@ -48,7 +45,10 @@ final class ResourcePresenterTest extends CIUnitTestCase
         parent::setUp();
 
         $this->resetServices();
+    }
 
+    private function createCodeigniter(): void
+    {
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         // Inject mock router.
@@ -80,6 +80,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -100,6 +102,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/show/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -119,6 +123,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/new';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -137,6 +143,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI']    = '/work/create';
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->createCodeigniter();
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
@@ -158,6 +166,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/remove/123';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -177,6 +187,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI']    = '/work/delete/123';
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->createCodeigniter();
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
@@ -199,6 +211,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/edit/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -218,6 +232,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI']    = '/work/update/123';
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->createCodeigniter();
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
