@@ -29,7 +29,12 @@ use Tests\Support\RESTful\Worker2;
  * so we need to make sure that the methods routed to
  * return correct responses.
  *
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState         disabled
+ *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ResourcePresenterTest extends CIUnitTestCase
 {
