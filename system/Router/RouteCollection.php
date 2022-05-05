@@ -219,12 +219,19 @@ class RouteCollection implements RouteCollectionInterface
     protected $prioritizeDetected = false;
 
     /**
+     * The current hostname from $_SERVER['HTTP_HOST']
+     */
+    private ?string $httpHost = null;
+
+    /**
      * Constructor
      */
     public function __construct(FileLocator $locator, Modules $moduleConfig)
     {
         $this->fileLocator  = $locator;
         $this->moduleConfig = $moduleConfig;
+
+        $this->httpHost = Services::request()->getServer('HTTP_HOST');
     }
 
     /**
@@ -1176,7 +1183,7 @@ class RouteCollection implements RouteCollectionInterface
         // Hostname limiting?
         if (! empty($options['hostname'])) {
             // @todo determine if there's a way to whitelist hosts?
-            if (isset($_SERVER['HTTP_HOST']) && strtolower($_SERVER['HTTP_HOST']) !== strtolower($options['hostname'])) {
+            if (isset($this->httpHost) && strtolower($this->httpHost) !== strtolower($options['hostname'])) {
                 return;
             }
 
@@ -1302,7 +1309,7 @@ class RouteCollection implements RouteCollectionInterface
     private function checkSubdomains($subdomains): bool
     {
         // CLI calls can't be on subdomain.
-        if (! isset($_SERVER['HTTP_HOST'])) {
+        if (! isset($this->httpHost)) {
             return false;
         }
 
@@ -1337,7 +1344,7 @@ class RouteCollection implements RouteCollectionInterface
         // We have to ensure that a scheme exists
         // on the URL else parse_url will mis-interpret
         // 'host' as the 'path'.
-        $url = $_SERVER['HTTP_HOST'];
+        $url = $this->httpHost;
         if (strpos($url, 'http') !== 0) {
             $url = 'http://' . $url;
         }
