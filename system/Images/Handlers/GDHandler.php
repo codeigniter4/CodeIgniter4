@@ -451,7 +451,7 @@ class GDHandler extends BaseHandler
          * Get the rest of the string and split it into 2-length
          * hex values:
          */
-        $opacity = ($options['opacity'] * 127);
+        $opacity = (int) ($options['opacity'] * 127);
 
         // Allow opacity to be applied to the text
         imagealphablending($src, true);
