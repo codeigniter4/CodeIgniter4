@@ -1157,6 +1157,20 @@ final class RouteCollectionTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5959
+     */
+    public function testWithNoSubdomainAndDot()
+    {
+        $_SERVER['HTTP_HOST'] = 'example.com';
+
+        $routes = $this->getCollector();
+
+        $routes->add('/objects/(:alphanum)', 'App::objectsList/$1', ['subdomain' => '*']);
+
+        $this->assertSame([], $routes->getRoutes());
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
      */
     public function testWithSubdomainOrdered()
