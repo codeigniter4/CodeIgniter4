@@ -318,7 +318,7 @@ class CodeIgniter
 
         $this->spoofRequestMethod();
 
-        if ($this->request instanceof IncomingRequest && $this->request->getMethod() === 'cli') {
+        if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             $this->response->setStatusCode(405)->setBody('Method Not Allowed');
 
             return $this->sendResponse();
@@ -1047,7 +1047,7 @@ class CodeIgniter
     public function spoofRequestMethod()
     {
         // Only works with POSTED forms
-        if ($this->request->getMethod() !== 'post') {
+        if (strtolower($this->request->getMethod()) !== 'post') {
             return;
         }
 
