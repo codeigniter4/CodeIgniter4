@@ -23,10 +23,11 @@ use Config\Logger as LoggerConfig;
 
 /**
  * @runTestsInSeparateProcesses
- *
  * @preserveGlobalState disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class SessionTest extends CIUnitTestCase
 {

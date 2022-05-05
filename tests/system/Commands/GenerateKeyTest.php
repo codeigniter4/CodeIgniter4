@@ -16,6 +16,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class GenerateKeyTest extends CIUnitTestCase
 {

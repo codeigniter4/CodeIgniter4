@@ -17,6 +17,8 @@ use Config\Modules;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class EventsTest extends CIUnitTestCase
 {

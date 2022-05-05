@@ -21,6 +21,8 @@ use Tests\Support\Config\TestRegistrar;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class BaseConfigTest extends CIUnitTestCase
 {

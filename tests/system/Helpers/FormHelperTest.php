@@ -19,6 +19,8 @@ use Config\Filters;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class FormHelperTest extends CIUnitTestCase
 {

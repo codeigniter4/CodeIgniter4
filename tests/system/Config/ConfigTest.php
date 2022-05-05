@@ -17,6 +17,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ConfigTest extends CIUnitTestCase
 {

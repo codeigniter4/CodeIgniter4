@@ -37,6 +37,8 @@ use Tests\Support\Models\JobModel;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class CommonFunctionsTest extends CIUnitTestCase
 {

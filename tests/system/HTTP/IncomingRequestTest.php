@@ -20,6 +20,8 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class IncomingRequestTest extends CIUnitTestCase
 {

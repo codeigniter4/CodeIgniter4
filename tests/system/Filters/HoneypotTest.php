@@ -20,6 +20,8 @@ use Config\Honeypot;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class HoneypotTest extends CIUnitTestCase
 {

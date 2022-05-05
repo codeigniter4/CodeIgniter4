@@ -26,6 +26,8 @@ use Tests\Support\Controllers\Popcorn;
  * @preserveGlobalState         disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ControllerTestTraitTest extends CIUnitTestCase
 {

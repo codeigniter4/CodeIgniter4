@@ -22,6 +22,8 @@ use Config\ContentSecurityPolicy as CSPConfig;
  * See https://cspvalidator.org/
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ContentSecurityPolicyTest extends CIUnitTestCase
 {
