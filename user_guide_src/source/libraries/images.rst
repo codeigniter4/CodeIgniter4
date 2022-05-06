@@ -98,8 +98,9 @@ You will need to include the image resource or you will end up with an exact cop
 
 .. literalinclude:: images/006.php
 
+******************
 Processing Methods
-==================
+******************
 
 There are seven available processing methods:
 
@@ -120,7 +121,7 @@ error upon failure, like this:
 .. literalinclude:: images/007.php
 
 Cropping Images
----------------
+===============
 
 Images can be cropped so that only a portion of the original image remains. This is often used when creating
 thumbnail images that should match a certain size/aspect ratio. This is handled with the ``crop()`` method::
@@ -140,7 +141,7 @@ offset values:
 .. literalinclude:: images/008.php
 
 Converting Images
------------------
+=================
 
 The ``convert()`` method changes the library's internal indicator for the desired file format. This doesn't touch the actual image resource, but indicates to ``save()`` what format to use::
 
@@ -154,7 +155,7 @@ The ``convert()`` method changes the library's internal indicator for the desire
     indicated by their extension, ignoring ``$imageType``.
 
 Fitting Images
---------------
+==============
 
 The ``fit()`` method aims to help simplify cropping a portion of an image in a "smart" way, by doing the following steps:
 
@@ -175,7 +176,7 @@ This provides a much simpler way to crop that will always maintain the aspect ra
 .. literalinclude:: images/010.php
 
 Flattening Images
------------------
+=================
 
 The ``flatten()`` method aims to add a background color behind transparent images (PNG) and convert RGBA pixels to RGB pixels
 
@@ -192,7 +193,7 @@ The ``flatten()`` method aims to add a background color behind transparent image
 .. literalinclude:: images/011.php
 
 Flipping Images
----------------
+===============
 
 Images can be flipped along either their horizontal or vertical axis::
 
@@ -203,7 +204,7 @@ Images can be flipped along either their horizontal or vertical axis::
 .. literalinclude:: images/012.php
 
 Resizing Images
----------------
+===============
 
 Images can be resized to fit any dimension you require with the ``resize()`` method::
 
@@ -221,7 +222,7 @@ while the other dimension will be altered to match the original image's aspect r
 .. literalinclude:: images/013.php
 
 Rotating Images
----------------
+===============
 
 The ``rotate()`` method allows you to rotate an image in 90 degree increments::
 
@@ -233,7 +234,7 @@ The ``rotate()`` method allows you to rotate an image in 90 degree increments::
         If the value is any other than the three values listed above, it will throw a CodeIgniter\Images\ImageException.
 
 Adding a Text Watermark
------------------------
+=======================
 
 You can overlay a text watermark onto the image very simply with the ``text()`` method. This is useful for placing copyright
 notices, photographer names, or simply marking the images as a preview so they won't be used in other people's final
