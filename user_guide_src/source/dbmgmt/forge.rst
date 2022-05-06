@@ -117,7 +117,7 @@ $forge->addField()
 
 The add fields method will accept the above array.
 
-Passing strings as fields
+Passing Strings as Fields
 -------------------------
 
 If you know exactly how you want a field to be created, you can pass the
