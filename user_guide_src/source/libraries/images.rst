@@ -33,8 +33,8 @@ Service function:
 
 The available Handlers are as follows:
 
-- gd        The GD/GD2 image library
-- imagick   The ImageMagick library.
+- ``gd``      The GD/GD2 image library
+- ``imagick`` The ImageMagick library.
 
 If using the ImageMagick library, you must set the path to the library on your
 server in **app/Config/Images.php**.
@@ -58,7 +58,7 @@ For example, to create an image thumbnail you'll do this:
 The above code tells the library to look for an image
 called *mypic.jpg* located in the source_image folder, then create a
 new image from it that is 100 x 100pixels using the GD2 image_library,
-and save it to a new file (the thumb). Since it is using the fit() method,
+and save it to a new file (the thumb). Since it is using the ``fit()`` method,
 it will attempt to find the best portion of the image to crop based on the
 desired aspect ratio, and then crop and resize the result.
 
@@ -103,14 +103,14 @@ Processing Methods
 
 There are seven available processing methods:
 
--  $image->crop()
--  $image->convert()
--  $image->fit()
--  $image->flatten()
--  $image->flip()
--  $image->resize()
--  $image->rotate()
--  $image->text()
+-  ``$image->crop()``
+-  ``$image->convert()``
+-  ``$image->fit()``
+-  ``$image->flatten()``
+-  ``$image->flip()``
+-  ``$image->resize()``
+-  ``$image->rotate()``
+-  ``$image->text()``
 
 These methods return the class instance so they can be chained together, as shown above.
 If they fail they will throw a ``CodeIgniter\Images\ImageException`` that contains
@@ -127,12 +127,12 @@ thumbnail images that should match a certain size/aspect ratio. This is handled 
 
     crop(int $width = null, int $height = null, int $x = null, int $y = null, bool $maintainRatio = false, string $masterDim = 'auto')
 
-- **$width** is the desired width of the resulting image, in pixels.
-- **$height** is the desired height of the resulting image, in pixels.
-- **$x** is the number of pixels from the left side of the image to start cropping.
-- **$y** is the number of pixels from the top of the image to start cropping.
-- **$maintainRatio** will, if true, adjust the final dimensions as needed to maintain the image's original aspect ratio.
-- **$masterDim** specifies which dimension should be left untouched when $maintainRatio is true. Values can be: 'width', 'height', or 'auto'.
+- ``$width`` is the desired width of the resulting image, in pixels.
+- ``$height`` is the desired height of the resulting image, in pixels.
+- ``$x`` is the number of pixels from the left side of the image to start cropping.
+- ``$y`` is the number of pixels from the top of the image to start cropping.
+- ``$maintainRatio`` will, if true, adjust the final dimensions as needed to maintain the image's original aspect ratio.
+- ``$masterDim`` specifies which dimension should be left untouched when ``$maintainRatio`` is true. Values can be: ``'width'``, ``'height'``, or ``'auto'``.
 
 To take a 50x50 pixel square out of the center of an image, you would need to first calculate the appropriate x and y
 offset values:
@@ -146,12 +146,12 @@ The ``convert()`` method changes the library's internal indicator for the desire
 
     convert(int $imageType)
 
-- **$imageType** is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php):
+- ``$imageType`` is one of PHP's image type constants (see for example https://www.php.net/manual/en/function.image-type-to-mime-type.php):
 
   .. literalinclude:: images/009.php
 
 .. note:: ImageMagick already saves files in the type
-    indicated by their extension, ignoring **$imageType**
+    indicated by their extension, ignoring ``$imageType``.
 
 Fitting Images
 --------------
@@ -166,9 +166,9 @@ The ``fit()`` method aims to help simplify cropping a portion of an image in a "
 
     fit(int $width, int $height = null, string $position = 'center')
 
-- **$width** is the desired final width of the image.
-- **$height** is the desired final height of the image.
-- **$position** determines the portion of the image to crop out. Allowed positions: 'top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'.
+- ``$width`` is the desired final width of the image.
+- ``$height`` is the desired final height of the image.
+- ``$position`` determines the portion of the image to crop out. Allowed positions: ``'top-left'``, ``'top'``, ``'top-right'``, ``'left'``, ``'center'``, ``'right'``, ``'bottom-left'``, ``'bottom'``, ``'bottom-right'``.
 
 This provides a much simpler way to crop that will always maintain the aspect ratio:
 
@@ -185,9 +185,9 @@ The ``flatten()`` method aims to add a background color behind transparent image
 
     flatten(int $red = 255, int $green = 255, int $blue = 255)
 
-- **$red** is the red value of the background.
-- **$green** is the green value of the background.
-- **$blue** is the blue value of the background.
+- ``$red`` is the red value of the background.
+- ``$green`` is the green value of the background.
+- ``$blue`` is the blue value of the background.
 
 .. literalinclude:: images/011.php
 
@@ -198,24 +198,24 @@ Images can be flipped along either their horizontal or vertical axis::
 
     flip(string $dir)
 
-- **$dir** specifies the axis to flip along. Can be either 'vertical' or 'horizontal'.
+- ``$dir`` specifies the axis to flip along. Can be either ``'vertical'`` or ``'horizontal'``.
 
 .. literalinclude:: images/012.php
 
 Resizing Images
 ---------------
 
-Images can be resized to fit any dimension you require with the resize() method::
+Images can be resized to fit any dimension you require with the ``resize()`` method::
 
     resize(int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
 
-- **$width** is the desired width of the new image in pixels
-- **$height** is the desired height of the new image in pixels
-- **$maintainRatio** determines whether the image is stretched to fit the new dimensions, or the original aspect ratio is maintained.
-- **$masterDim** specifies which axis should have its dimension honored when maintaining ratio. Either 'width', 'height'.
+- ``$width`` is the desired width of the new image in pixels
+- ``$height`` is the desired height of the new image in pixels
+- ``$maintainRatio`` determines whether the image is stretched to fit the new dimensions, or the original aspect ratio is maintained.
+- ``$masterDim`` specifies which axis should have its dimension honored when maintaining ratio. Either ``'width'``, ``'height'``.
 
 When resizing images you can choose whether to maintain the ratio of the original image, or stretch/squash the new
-image to fit the desired dimensions. If $maintainRatio is true, the dimension specified by $masterDim will stay the same,
+image to fit the desired dimensions. If ``$maintainRatio`` is true, the dimension specified by ``$masterDim`` will stay the same,
 while the other dimension will be altered to match the original image's aspect ratio.
 
 .. literalinclude:: images/013.php
@@ -223,19 +223,19 @@ while the other dimension will be altered to match the original image's aspect r
 Rotating Images
 ---------------
 
-The rotate() method allows you to rotate an image in 90 degree increments::
+The ``rotate()`` method allows you to rotate an image in 90 degree increments::
 
     rotate(float $angle)
 
-- **$angle** is the number of degrees to rotate. One of '90', '180', '270'.
+- ``$angle`` is the number of degrees to rotate. One of ``90``, ``180``, ``270``.
 
-.. note:: While the $angle parameter accepts a float, it will convert it to an integer during the process.
+.. note:: While the ``$angle`` parameter accepts a float, it will convert it to an integer during the process.
         If the value is any other than the three values listed above, it will throw a CodeIgniter\Images\ImageException.
 
 Adding a Text Watermark
 -----------------------
 
-You can overlay a text watermark onto the image very simply with the text() method. This is useful for placing copyright
+You can overlay a text watermark onto the image very simply with the ``text()`` method. This is useful for placing copyright
 notices, photographer names, or simply marking the images as a preview so they won't be used in other people's final
 products.
 
@@ -250,17 +250,17 @@ that allow you to specify how the text should be displayed:
 
 The possible options that are recognized are as follows:
 
-- color         Text Color (hex number), i.e., #ff0000
-- opacity        A number between 0 and 1 that represents the opacity of the text.
-- withShadow    Boolean value whether to display a shadow or not.
-- shadowColor   Color of the shadow (hex number)
-- shadowOffset    How many pixels to offset the shadow. Applies to both the vertical and horizontal values.
-- hAlign        Horizontal alignment: left, center, right
-- vAlign        Vertical alignment: top, middle, bottom
-- hOffset        Additional offset on the x axis, in pixels
-- vOffset        Additional offset on the y axis, in pixels
-- fontPath        The full server path to the TTF font you wish to use. System font will be used if none is given.
-- fontSize        The font size to use. When using the GD handler with the system font, valid values are between 1-5.
+- ``color``         Text Color (hex number), i.e., #ff0000
+- ``opacity``        A number between 0 and 1 that represents the opacity of the text.
+- ``withShadow``    Boolean value whether to display a shadow or not.
+- ``shadowColor``   Color of the shadow (hex number)
+- ``shadowOffset``    How many pixels to offset the shadow. Applies to both the vertical and horizontal values.
+- ``hAlign``        Horizontal alignment: left, center, right
+- ``vAlign``        Vertical alignment: top, middle, bottom
+- ``hOffset``        Additional offset on the x axis, in pixels
+- ``vOffset``        Additional offset on the y axis, in pixels
+- ``fontPath``        The full server path to the TTF font you wish to use. System font will be used if none is given.
+- ``fontSize``        The font size to use. When using the GD handler with the system font, valid values are between 1-5.
 
 .. note:: The ImageMagick driver does not recognize full server path for fontPath. Instead, simply provide the
         name of one of the installed system fonts that you wish to use, i.e., Calibri.
