@@ -117,6 +117,18 @@ $forge->addField()
 
 The add fields method will accept the above array.
 
+.. _forge-addfield-default-value-rawsql:
+
+Raw Sql Strings as Default Values
+---------------------------------
+
+Since v4.2.0, ``$forge->addField()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
+
+
+.. literalinclude:: forge/027.php
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
 Passing Strings as Fields
 -------------------------
 
