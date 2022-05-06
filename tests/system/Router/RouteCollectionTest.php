@@ -1128,7 +1128,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $_SERVER['HTTP_HOST'] = 'example.uk.co';
+        $_SERVER['HTTP_HOST'] = 'example.co.uk';
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
