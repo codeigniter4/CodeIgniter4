@@ -666,11 +666,6 @@ parameters:
 			path: system/Log/Logger.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:asArray\\(\\)\\.$#"
-			count: 1
-			path: system/Model.php
-
-		-
 			message: "#^Property CodeIgniter\\\\RESTful\\\\ResourceController\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/RESTful/ResourceController.php

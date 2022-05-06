@@ -38,9 +38,37 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @mixin BaseBuilder
- *
  * @property BaseConnection $db
+ *
+ * @method $this havingIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this join(string $table, string $cond, string $type = '', ?bool $escape = null)
+ * @method $this like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this limit(?int $value = null, ?int $offset = 0)
+ * @method $this notHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this notLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this offset(int $offset)
+ * @method $this orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
+ * @method $this orHaving($key, $value = null, ?bool $escape = null)
+ * @method $this orHavingIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this orHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orHavingNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this orLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orNotHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orNotLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orWhere($key, $value = null, ?bool $escape = null)
+ * @method $this orWhereIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this orWhereNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this select($select = '*', ?bool $escape = null)
+ * @method $this selectAvg(string $select = '', string $alias = '')
+ * @method $this selectCount(string $select = '', string $alias = '')
+ * @method $this selectMax(string $select = '', string $alias = '')
+ * @method $this selectMin(string $select = '', string $alias = '')
+ * @method $this selectSum(string $select = '', string $alias = '')
+ * @method $this where($key, $value = null, ?bool $escape = null)
+ * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
  */
 class Model extends BaseModel
 {
