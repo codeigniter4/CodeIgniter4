@@ -31,7 +31,8 @@ to connect to as the first parameter.
 Creating and Dropping Databases
 *******************************
 
-**$forge->createDatabase('db_name')**
+$forge->createDatabase('db_name')
+=================================
 
 Permits you to create the database specified in the first parameter.
 Returns true/false based on success or failure:
@@ -43,7 +44,8 @@ or will check if a database exists before create it (depending on DBMS).
 
 .. literalinclude:: forge/004.php
 
-**$forge->dropDatabase('db_name')**
+$forge->dropDatabase('db_name')
+===============================
 
 Permits you to drop the database specified in the first parameter.
 Returns true/false based on success or failure:
@@ -110,7 +112,8 @@ After the fields have been defined, they can be added using
 ``$forge->addField($fields)`` followed by a call to the
 ``createTable()`` method.
 
-**$forge->addField()**
+$forge->addField()
+------------------
 
 The add fields method will accept the above array.
 
@@ -229,7 +232,8 @@ Modifying Tables
 Adding a Column to a Table
 ==========================
 
-**$forge->addColumn()**
+$forge->addColumn()
+-------------------
 
 The ``addColumn()`` method is used to modify an existing table. It
 accepts the same field array as above, and can be used for an unlimited
@@ -247,7 +251,8 @@ Examples:
 Dropping Columns From a Table
 ==============================
 
-**$forge->dropColumn()**
+$forge->dropColumn()
+--------------------
 
 Used to remove a column from a table.
 
@@ -260,7 +265,8 @@ Used to remove multiple columns from a table.
 Modifying a Column in a Table
 =============================
 
-**$forge->modifyColumn()**
+$forge->modifyColumn()
+----------------------
 
 The usage of this method is identical to ``addColumn()``, except it
 alters an existing column rather than adding a new one. In order to
