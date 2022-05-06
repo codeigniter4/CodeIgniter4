@@ -43,8 +43,9 @@ server in **app/Config/Images.php**.
         loaded on the server. As long as your script can access the library
         and can run ``exec()`` on the server, it should work.
 
+*******************
 Processing an Image
-===================
+*******************
 
 Regardless of the type of processing you would like to perform
 (resizing, cropping, rotation, or watermarking), the general process is
