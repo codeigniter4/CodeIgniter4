@@ -1,7 +1,6 @@
 <?php
 
-$image = \Config\Services::image()
-    ->withFile('/path/to/image/mypic.jpg')
+$image->withFile('/path/to/image/mypic.jpg')
     ->reorient()
     ->rotate(90)
     ->crop(100, 100, 0, 0)
