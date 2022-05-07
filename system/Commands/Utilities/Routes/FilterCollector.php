@@ -22,6 +22,18 @@ use CodeIgniter\Router\Router;
 final class FilterCollector
 {
     /**
+     * Whether to reset Defined Routes.
+     *
+     * If set to true, route filters are not found.
+     */
+    private bool $resetRoutes;
+
+    public function __construct(bool $resetRoutes = false)
+    {
+        $this->resetRoutes = $resetRoutes;
+    }
+
+    /**
      * @param string $method HTTP method
      * @param string $uri    URI path to find filters for
      *
@@ -49,7 +61,13 @@ final class FilterCollector
 
     private function createRouter(Request $request): Router
     {
-        return new Router(Services::routes(), $request);
+        $routes = Services::routes();
+
+        if ($this->resetRoutes) {
+            $routes->resetRoutes();
+        }
+
+        return new Router($routes, $request);
     }
 
     private function createFilters(Request $request): Filters

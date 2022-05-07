@@ -26,7 +26,7 @@ final class ControllerFinderTest extends CIUnitTestCase
 
         $controllers = $finder->find();
 
-        $this->assertCount(3, $controllers);
+        $this->assertCount(4, $controllers);
         $this->assertSame(Hello::class, $controllers[0]);
     }
 }
