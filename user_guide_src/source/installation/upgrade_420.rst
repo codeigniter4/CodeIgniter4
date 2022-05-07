@@ -24,7 +24,7 @@ The following files received significant changes and
 Breaking Changes
 ****************
 
-
+- The ``system/bootstrap.php`` file no longer returns a ``CodeIgniter`` instance, and does not load ``.env`` file. The ``index.php`` and ``spark`` now do them. If you have code that expects these behaviors, it will no longer work and must be modified.
 
 Breaking Enhancements
 *********************

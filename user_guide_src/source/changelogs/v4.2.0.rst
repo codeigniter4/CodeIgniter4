@@ -16,6 +16,7 @@ BREAKING
 - The ``CodeIgniter\CodeIgniter`` class has a new property ``$context`` and it must have the correct context at runtime. So the following files have been changed:
     - ``public/index.php``
     - ``spark``
+- The ``system/bootstrap.php`` no longer returns a ``CodeIgniter`` instance, and does not load ``.env`` file.
 - The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
 - The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
 - The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
