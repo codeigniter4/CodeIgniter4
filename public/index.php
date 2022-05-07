@@ -1,7 +1,5 @@
 <?php
 
-use Config\Services;
-
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
@@ -15,13 +13,13 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
  */
 
 // Ensure the current directory is pointing to the front controller's directory
-chdir(__DIR__);
+chdir(FCPATH);
 
-// Load our paths config file
 // This is the line that might need to be changed, depending on your folder structure.
 $pathsConfig = FCPATH . '../app/Config/Paths.php';
-// ^^^ Change this if you move your application folder
+// ^^^ Change this line if you move your application folder
 
+// Load our paths config file
 require $pathsConfig;
 
 $paths = new Config\Paths();
@@ -40,7 +38,7 @@ require $bootstrap;
  * the application run, and does all of the dirty work to get
  * the pieces all working together.
  */
-$app = Services::codeigniter();
+$app = Config\Services::codeigniter();
 $app->initialize();
 $context = is_cli() ? 'php-cli' : 'web';
 $app->setContext($context);
