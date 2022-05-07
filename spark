@@ -21,6 +21,11 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
+// Refuse to run when called from php-cgi
+if (strpos(PHP_SAPI, 'cgi') === 0) {
+    exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
+}
+
 /**
  * @var bool
  *
@@ -42,11 +47,6 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR)
 
 // Ensure the current directory is pointing to the front controller's directory
 chdir(FCPATH);
-
-// Refuse to run when called from php-cgi
-if (strpos(PHP_SAPI, 'cgi') === 0) {
-    exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
-}
 
 // This is the line that might need to be changed, depending on your folder structure.
 $pathsConfig = FCPATH . '../app/Config/Paths.php';
