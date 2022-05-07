@@ -225,6 +225,12 @@ class GDHandler extends BaseHandler
 
         $this->ensureResource();
 
+        // for png and webp we can actually preserve transparency
+        if (in_array($this->image()->imageType, $this->supportTransparency, true)) {
+            imagealphablending($this->resource, false);
+            imagesavealpha($this->resource, true);
+        }
+
         switch ($this->image()->imageType) {
             case IMAGETYPE_GIF:
                 if (! function_exists('imagegif')) {
