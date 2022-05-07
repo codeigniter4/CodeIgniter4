@@ -29,6 +29,12 @@ $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'boo
 
 require $bootstrap;
 
+// Load environment settings from .env files into $_SERVER and $_ENV
+require_once SYSTEMPATH . 'Config/DotEnv.php';
+
+$env = new CodeIgniter\Config\DotEnv(ROOTPATH);
+$env->load();
+
 /*
  * ---------------------------------------------------------------
  * GRAB OUR CODEIGNITER INSTANCE
