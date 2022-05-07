@@ -66,6 +66,7 @@ if (! defined('TESTPATH')) {
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
+
 if (! defined('APP_NAMESPACE')) {
     require_once APPPATH . 'Config/Constants.php';
 }
