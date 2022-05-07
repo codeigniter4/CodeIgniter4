@@ -1,5 +1,7 @@
 <?php
 
+use Config\Services;
+
 // Path to the front controller (this file)
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
@@ -19,14 +21,27 @@ chdir(__DIR__);
 // This is the line that might need to be changed, depending on your folder structure.
 $pathsConfig = FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this if you move your application folder
+
 require realpath($pathsConfig) ?: $pathsConfig;
 
 $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
-/** @var CodeIgniter\CodeIgniter $app */
-$app     = require realpath($bootstrap) ?: $bootstrap;
+
+require realpath($bootstrap) ?: $bootstrap;
+
+/*
+ * ---------------------------------------------------------------
+ * GRAB OUR CODEIGNITER INSTANCE
+ * ---------------------------------------------------------------
+ *
+ * The CodeIgniter class contains the core functionality to make
+ * the application run, and does all of the dirty work to get
+ * the pieces all working together.
+ */
+$app = Services::codeigniter();
+$app->initialize();
 $context = is_cli() ? 'php-cli' : 'web';
 $app->setContext($context);
 
