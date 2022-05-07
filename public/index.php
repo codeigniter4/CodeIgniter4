@@ -22,14 +22,14 @@ chdir(__DIR__);
 $pathsConfig = FCPATH . '../app/Config/Paths.php';
 // ^^^ Change this if you move your application folder
 
-require realpath($pathsConfig) ?: $pathsConfig;
+require $pathsConfig;
 
 $paths = new Config\Paths();
 
 // Location of the framework bootstrap file.
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-require realpath($bootstrap) ?: $bootstrap;
+require $bootstrap;
 
 /*
  * ---------------------------------------------------------------
