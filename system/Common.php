@@ -1014,10 +1014,13 @@ if (! function_exists('slash_item')) {
     function slash_item(string $item): ?string
     {
         $config     = config(App::class);
-        $configItem = $config->{$item};
+
+        if (property_exists($config, $item)) {
+            $configItem = $config->{$item};
+        }
 
         if (! isset($configItem) || empty(trim($configItem))) {
-            return $configItem;
+            return null;
         }
 
         return rtrim($configItem, '/') . '/';
