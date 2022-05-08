@@ -19,6 +19,8 @@ use DateTimeZone;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class DownloadResponseTest extends CIUnitTestCase
 {

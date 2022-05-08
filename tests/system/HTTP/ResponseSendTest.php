@@ -23,6 +23,8 @@ use Config\Services;
  * test cases need to be run as separate processes.
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ResponseSendTest extends CIUnitTestCase
 {

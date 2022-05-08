@@ -18,6 +18,8 @@ use org\bovigo\vfs\vfsStream;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class DotEnvTest extends CIUnitTestCase
 {

@@ -33,6 +33,8 @@ use Config\Security as SecurityConfig;
  * @preserveGlobalState disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class SecurityCSRFSessionTest extends CIUnitTestCase
 {

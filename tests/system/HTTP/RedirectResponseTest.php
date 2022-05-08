@@ -23,6 +23,8 @@ use Config\Services;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class RedirectResponseTest extends CIUnitTestCase
 {

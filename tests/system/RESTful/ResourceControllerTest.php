@@ -39,6 +39,8 @@ use Tests\Support\RESTful\Worker;
  * @preserveGlobalState         disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ResourceControllerTest extends CIUnitTestCase
 {
@@ -53,8 +55,12 @@ final class ResourceControllerTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->resetServices();
+        $this->resetServices(true);
+        $this->resetFactories();
+    }
 
+    private function createCodeigniter(): void
+    {
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         // Inject mock router.
@@ -86,11 +92,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['index']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['index']), $error);
     }
 
     public function testResourceGetNew()
@@ -105,11 +114,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/new';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['new']), $error);
     }
 
     public function testResourceGetEdit()
@@ -125,11 +137,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/1/edit';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['edit']), $error);
     }
 
     public function testResourceGetOne()
@@ -144,11 +159,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['show']), $error);
     }
 
     public function testResourcePost()
@@ -162,11 +180,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work';
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['create']), $error);
     }
 
     public function testResourcePatch()
@@ -181,11 +202,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/123';
         $_SERVER['REQUEST_METHOD'] = 'PATCH';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['patch']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $error);
     }
 
     public function testResourcePut()
@@ -200,11 +224,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/123';
         $_SERVER['REQUEST_METHOD'] = 'PUT';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['put']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['update']), $error);
     }
 
     public function testResourceDelete()
@@ -219,11 +246,14 @@ final class ResourceControllerTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/123';
         $_SERVER['REQUEST_METHOD'] = 'DELETE';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
 
-        $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $output);
+        $error = json_decode($output)->messages->error;
+        $this->assertStringContainsString(lang('RESTful.notImplemented', ['delete']), $error);
     }
 
     public function testModel()

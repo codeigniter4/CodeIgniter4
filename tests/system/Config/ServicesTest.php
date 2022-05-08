@@ -48,6 +48,8 @@ use Tests\Support\Config\Services;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ServicesTest extends CIUnitTestCase
 {
