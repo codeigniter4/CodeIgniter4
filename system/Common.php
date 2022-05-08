@@ -1013,7 +1013,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config     = config(App::class);
+        $config = config(App::class);
 
         if (property_exists($config, $item)) {
             $configItem = $config->{$item};
