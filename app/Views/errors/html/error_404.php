@@ -24,7 +24,7 @@
 		}
 		h1 {
 			font-weight: lighter;
-			letter-spacing: 0.8;
+			letter-spacing: normal;
 			font-size: 3rem;
 			margin-top: 0;
 			margin-bottom: 0;
