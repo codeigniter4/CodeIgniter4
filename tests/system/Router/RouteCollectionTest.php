@@ -1128,7 +1128,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $_SERVER['HTTP_HOST'] = 'example.uk.co';
+        $_SERVER['HTTP_HOST'] = 'example.co.uk';
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1154,6 +1154,20 @@ final class RouteCollectionTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expects, $routes->getRoutes());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5959
+     */
+    public function testWithNoSubdomainAndDot()
+    {
+        $_SERVER['HTTP_HOST'] = 'example.com';
+
+        $routes = $this->getCollector();
+
+        $routes->add('/objects/(:alphanum)', 'App::objectsList/$1', ['subdomain' => '*']);
+
+        $this->assertSame([], $routes->getRoutes());
     }
 
     /**
@@ -1448,7 +1462,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
-        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithoutSubdomainMatch()

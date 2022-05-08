@@ -1297,7 +1297,7 @@ class RouteCollection implements RouteCollectionInterface
      * Compares the subdomain(s) passed in against the current subdomain
      * on this page request.
      *
-     * @param mixed $subdomains
+     * @param string|string[] $subdomains
      */
     private function checkSubdomains($subdomains): bool
     {
@@ -1330,7 +1330,7 @@ class RouteCollection implements RouteCollectionInterface
      * It's especially not perfect since it's possible to register a domain
      * with a period (.) as part of the domain name.
      *
-     * @return mixed
+     * @return false|string the subdomain
      */
     private function determineCurrentSubdomain()
     {
@@ -1351,7 +1351,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         // Get rid of any domains, which will be the last
-        unset($host[count($host)]);
+        unset($host[count($host) - 1]);
 
         // Account for .co.uk, .co.nz, etc. domains
         if (end($host) === 'co') {
