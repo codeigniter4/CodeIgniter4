@@ -57,6 +57,25 @@ You can run the tests without running the live database and the live cache tests
 
 	> ./phpunit --exclude-group DatabaseLive,CacheLive
 
+## Result Of The Unit Test
+
+After running the test. For each test run, the PHPUnit command-line tool prints one character to indicate progress:
+
+1. `.` Printed when the test succeeds.
+2. `F` Printed when an assertion fails while running the test method.
+3. `E` Printed when an error occurs while running the test method.
+4. `R` Printed when the test has been marked as risky (see [Risky Tests](https://phpunit.readthedocs.io/en/9.5/risky-tests.html#risky-tests)).
+5. `S` Printed when the test has been skipped (see [Incomplete and Skipped Tests](https://phpunit.readthedocs.io/en/9.5/incomplete-and-skipped-tests.html#incomplete-and-skipped-tests)).
+6. `I` Printed when the test is marked as being incomplete or not yet implemented (see [Incomplete and Skipped Tests](https://phpunit.readthedocs.io/en/9.5/incomplete-and-skipped-tests.html#incomplete-and-skipped-tests)).
+
+Go to [The Command-Line Test Runner](https://phpunit.readthedocs.io/en/9.5/textui.html#the-command-line-test-runner) to see more info.
+
+You can also use the `--testdox` to view the results in more detail. For example:
+
+	> ./phpunit --testdox tests/system/HTTP/
+
+Go to [TestDox](https://phpunit.readthedocs.io/en/9.5/textui.html#testdox) to see more info.
+
 ## Generating Code Coverage
 
 To generate coverage information, including HTML reports you can view in your browser, 
