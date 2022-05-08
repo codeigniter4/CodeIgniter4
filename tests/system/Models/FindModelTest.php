@@ -338,7 +338,7 @@ final class FindModelTest extends LiveModelTestCase
     {
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
-        $results = $this->createModel(UserModel::class)->join('job', 'job.id = user.id')->first(1);
+        $results = $this->createModel(UserModel::class)->join('job', 'job.id = user.id')->first();
         $this->assertSame(1, (int) $results->id);
     }
 }
