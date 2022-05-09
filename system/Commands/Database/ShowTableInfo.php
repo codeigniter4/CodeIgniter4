@@ -111,27 +111,23 @@ class ShowTableInfo extends BaseCommand
         $limitRows   = (int) ($params['limit-rows'] ?? 10);
         $limitFields = (int) ($params['limit-fields'] ?? 15);
 
-        if (in_array($tableName, $tables, true)) {
-            if (array_key_exists('metadata', $params)) {
-                $this->showFieldMetaData($tableName);
+        if (! in_array($tableName, $tables, true)) {
+            $tableNameNo = CLI::promptByKey(
+                ['Here is the list of your database tables:', 'Which table do you want to see?'],
+                $tables,
+                'required'
+            );
 
-                return;
-            }
-
-            $this->showDataOfTable($tableName, $limitRows, $limitFields);
-
-            return;
+            $tableName = $tables[$tableNameNo];
         }
-
-        $tableName = CLI::promptByKey(['Here is the list of your database tables:', 'Which table do you want to see?'], $tables, 'required');
 
         if (array_key_exists('metadata', $params)) {
-            $this->showFieldMetaData($tables[$tableName]);
+            $this->showFieldMetaData($tableName);
 
             return;
         }
 
-        $this->showDataOfTable($tables[$tableName], $limitRows, $limitFields);
+        $this->showDataOfTable($tableName, $limitRows, $limitFields);
     }
 
     private function showDataOfTable(string $tableName, int $limitRows, int $limitFields)
