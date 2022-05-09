@@ -127,4 +127,29 @@ final class ShowTableInfoTest extends CIUnitTestCase
             EOL;
         $this->assertStringContainsString($expected, $result);
     }
+
+    public function testDbTableLimitColumnLength(): void
+    {
+        $seeder = \Config\Database::seeder();
+        $seeder->call(CITestSeeder::class);
+
+        command('db:table db_user --limit-column-length 5');
+
+        $result = $this->getResultWithoutControlCode();
+
+        $expected = 'Data of Table "db_user":';
+        $this->assertStringContainsString($expected, $result);
+
+        $expected = <<<'EOL'
+            +----+----------+----------+---------+------------+------------+------------+
+            | id | name     | email    | country | created_at | updated_at | deleted_at |
+            +----+----------+----------+---------+------------+------------+------------+
+            | 1  | Derek... | derek... | US      |            |            |            |
+            | 2  | Ahmad... | ahmad... | Iran    |            |            |            |
+            | 3  | Richa... | richa... | US      |            |            |            |
+            | 4  | Chris... | chris... | UK      |            |            |            |
+            +----+----------+----------+---------+------------+------------+------------+
+            EOL;
+        $this->assertStringContainsString($expected, $result);
+    }
 }
