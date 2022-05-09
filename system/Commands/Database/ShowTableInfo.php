@@ -84,9 +84,12 @@ class ShowTableInfo extends BaseCommand
      */
     private bool $sortDesc = false;
 
+    private string $DBPrefix;
+
     public function run(array $params)
     {
-        $this->db = Database::connect();
+        $this->db       = Database::connect();
+        $this->DBPrefix = $this->db->getPrefix();
 
         $tables = $this->db->listTables();
 
@@ -130,13 +133,26 @@ class ShowTableInfo extends BaseCommand
         $this->showDataOfTable($tableName, $limitRows, $limitFieldValue);
     }
 
+    private function removeDBPrefix(): void
+    {
+        $this->db->setPrefix('');
+    }
+
+    private function restoreDBPrefix(): void
+    {
+        $this->db->setPrefix($this->DBPrefix);
+    }
+
     private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue)
     {
         CLI::newLine();
         CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
-        $thead       = $this->db->getFieldNames($tableName);
+        $this->removeDBPrefix();
+        $thead = $this->db->getFieldNames($tableName);
+        $this->restoreDBPrefix();
+
         $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFieldValue);
         CLI::table($this->tbody, $thead);
     }
@@ -155,6 +171,8 @@ class ShowTableInfo extends BaseCommand
 
     private function makeTbodyForShowAllTables(array $tables): array
     {
+        $this->removeDBPrefix();
+
         foreach ($tables  as $id => $tableName) {
             $table = $this->db->protectIdentifiers($tableName);
             $db    = $this->db->query("SELECT * FROM {$table}");
@@ -167,6 +185,8 @@ class ShowTableInfo extends BaseCommand
             ];
         }
 
+        $this->restoreDBPrefix();
+
         if ($this->sortDesc) {
             krsort($this->tbody);
         }
@@ -178,8 +198,10 @@ class ShowTableInfo extends BaseCommand
     {
         $this->tbody = [];
 
+        $this->removeDBPrefix();
         $builder = $this->db->table($tableName);
         $rows    = $builder->limit($limitRows)->get()->getResultArray();
+        $this->restoreDBPrefix();
 
         foreach ($rows as $row) {
             $row = array_map(
@@ -210,7 +232,9 @@ class ShowTableInfo extends BaseCommand
 
         $thead = ['Field Name', 'Type', 'Max Length', 'Nullable', 'Default', 'Primary Key'];
 
+        $this->removeDBPrefix();
         $fields = $this->db->getFieldData($tableName);
+        $this->restoreDBPrefix();
 
         foreach ($fields as $row) {
             $this->tbody[] = [

@@ -96,10 +96,9 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $expected = 'List of Metadata Information in Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
 
+        $result   = preg_replace('/\s+/', ' ', $result);
         $expected = <<<'EOL'
-            +------------+---------+------------+----------+---------+-------------+
-            | Field Name | Type    | Max Length | Nullable | Default | Primary Key |
-            +------------+---------+------------+----------+---------+-------------+
+            | Field Name | Type | Max Length | Nullable | Default | Primary Key |
             EOL;
         $this->assertStringContainsString($expected, $result);
     }
