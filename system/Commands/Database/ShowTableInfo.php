@@ -178,21 +178,22 @@ class ShowTableInfo extends BaseCommand
     {
         $this->tbody = [];
 
-        $customQueryForEachField = '';
-
-        $fieldNames = $this->db->getFieldNames($tableName);
-
-        foreach ($fieldNames as $fieldName) {
-            $field = $this->db->protectIdentifiers($fieldName);
-            $customQueryForEachField .= ", IF(LENGTH({$field}) > {$limitFieldValue}, CONCAT(SUBSTRING({$field}, 1, {$limitFieldValue}), '...'), {$field}) AS {$field}";
-        }
-
         $table = $this->db->protectIdentifiers($tableName);
         $rows  = $this->db->query(
-            'SELECT * ' . $customQueryForEachField . " FROM {$table} LIMIT {$limitRows}"
+            "SELECT * FROM {$table} LIMIT {$limitRows}"
         )->getResultArray();
 
         foreach ($rows as $row) {
+            $row = array_map(
+                static function ($item) use ($limitFieldValue) {
+                    if (mb_strlen((string) $item) > $limitFieldValue) {
+                        return mb_substr((string) $item, 0, $limitFieldValue) . '...';
+                    }
+
+                    return $item;
+                },
+                $row
+            );
             $this->tbody[] = $row;
         }
 
