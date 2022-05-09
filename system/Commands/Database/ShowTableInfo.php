@@ -171,10 +171,10 @@ class ShowTableInfo extends BaseCommand
             $limitRows = 10;
         }
 
-        $limitFieldsValue = (int) CLI::getOption('limit-fields');
+        $limitFields = (int) CLI::getOption('limit-fields');
 
-        if (in_array($limitFieldsValue, [null, true, 0, 1], true)) {
-            $limitFieldsValue = 15;
+        if (in_array($limitFields, [null, true, 0, 1], true)) {
+            $limitFields = 15;
         }
 
         $this->tbody = [];
@@ -184,7 +184,7 @@ class ShowTableInfo extends BaseCommand
         $fieldNames = $this->db->getFieldNames($tableName);
 
         foreach ($fieldNames as $fieldName) {
-            $customQueryForEachField .= ",IF(length(`{$fieldName}`) > {$limitFieldsValue} ,CONCAT(SUBSTRING(`{$fieldName}`, 1, {$limitFieldsValue}),'...'), `{$fieldName}` ) as `{$fieldName}`";
+            $customQueryForEachField .= ",IF(length(`{$fieldName}`) > {$limitFields} ,CONCAT(SUBSTRING(`{$fieldName}`, 1, {$limitFields}),'...'), `{$fieldName}` ) as `{$fieldName}`";
         }
 
         $rows = $this->db->query('SELECT * ' . $customQueryForEachField . " FROM {$tableName} LIMIT {$limitRows}")->getResultArray();
