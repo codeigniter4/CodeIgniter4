@@ -75,7 +75,7 @@ Others
     - ``db:table --show``
     - ``db:table my_table``
     - ``db:table my_table --metadata``
-    - ``db:table my_table --limit-row 50 --limit-column-length 20 --desc``
+    - ``db:table my_table --limit-row 50 --limit-field-value 20 --desc``
 
 Changes
 *******

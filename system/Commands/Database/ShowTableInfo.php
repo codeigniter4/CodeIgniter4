@@ -65,11 +65,11 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '--show'                => 'Lists the names of all database tables.',
-        '--metadata'            => 'Retrieves list containing field information.',
-        '--desc'                => 'Sorts the table rows in DESC order.',
-        '--limit-rows'          => 'Limits the number of rows. Default: 10.',
-        '--limit-column-length' => 'Limits the length of columns. Default: 15.',
+        '--show'              => 'Lists the names of all database tables.',
+        '--metadata'          => 'Retrieves list containing field information.',
+        '--desc'              => 'Sorts the table rows in DESC order.',
+        '--limit-rows'        => 'Limits the number of rows. Default: 10.',
+        '--limit-field-value' => 'Limits the length of field values. Default: 15.',
     ];
 
     /**
@@ -107,9 +107,9 @@ class ShowTableInfo extends BaseCommand
             return;
         }
 
-        $tableName         = $params[0] ?? null;
-        $limitRows         = (int) ($params['limit-rows'] ?? 10);
-        $limitColumnLength = (int) ($params['limit-column-length'] ?? 15);
+        $tableName       = $params[0] ?? null;
+        $limitRows       = (int) ($params['limit-rows'] ?? 10);
+        $limitFieldValue = (int) ($params['limit-field-value'] ?? 15);
 
         if (! in_array($tableName, $tables, true)) {
             $tableNameNo = CLI::promptByKey(
@@ -127,17 +127,17 @@ class ShowTableInfo extends BaseCommand
             return;
         }
 
-        $this->showDataOfTable($tableName, $limitRows, $limitColumnLength);
+        $this->showDataOfTable($tableName, $limitRows, $limitFieldValue);
     }
 
-    private function showDataOfTable(string $tableName, int $limitRows, int $limitColumnLength)
+    private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue)
     {
         CLI::newLine();
         CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
         $thead       = $this->db->getFieldNames($tableName);
-        $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitColumnLength);
+        $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFieldValue);
         CLI::table($this->tbody, $thead);
     }
 
@@ -174,7 +174,7 @@ class ShowTableInfo extends BaseCommand
         return $this->tbody;
     }
 
-    private function makeTableRows(string $tableName, int $limitRows, int $limitColumnLength): array
+    private function makeTableRows(string $tableName, int $limitRows, int $limitFieldValue): array
     {
         $this->tbody = [];
 
@@ -184,7 +184,7 @@ class ShowTableInfo extends BaseCommand
 
         foreach ($fieldNames as $fieldName) {
             $field = $this->db->protectIdentifiers($fieldName);
-            $customQueryForEachField .= ", IF(LENGTH({$field}) > {$limitColumnLength}, CONCAT(SUBSTRING({$field}, 1, {$limitColumnLength}), '...'), {$field}) AS {$field}";
+            $customQueryForEachField .= ", IF(LENGTH({$field}) > {$limitFieldValue}, CONCAT(SUBSTRING({$field}, 1, {$limitFieldValue}), '...'), {$field}) AS {$field}";
         }
 
         $table = $this->db->protectIdentifiers($tableName);

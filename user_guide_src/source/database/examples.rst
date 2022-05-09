@@ -89,8 +89,8 @@ You can also use only the following command without the table name. In this case
 
     > php spark db:table
 
-.. note:: You can use the optional ``--desc``, ``--limit-rows``, ``--limit-column-length`` options at any time when using command ``db:table`` .
+.. note:: You can use the optional ``--desc``, ``--limit-rows``, ``--limit-field-value`` options at any time when using command ``db:table`` .
 
 Command ``db:table --limit-rows 50``, for example, limits the number of rows to 50 rows.
 Command ``db:table --desc``, set the sort direction to "DESC".
-And Command ``db:table --limit-column-length 10`` limits the length of the columns to 10 characters, to prevent confusion of the table output in the terminal.
+And Command ``db:table --limit-field-value 10`` limits the length of the field values to 10 characters, to prevent confusion of the table output in the terminal.

@@ -129,12 +129,12 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $result);
     }
 
-    public function testDbTableLimitColumnLength(): void
+    public function testDbTableLimitFieldValueLength(): void
     {
         $seeder = Database::seeder();
         $seeder->call(CITestSeeder::class);
 
-        command('db:table db_user --limit-column-length 5');
+        command('db:table db_user --limit-field-value 5');
 
         $result = $this->getResultWithoutControlCode();
 
