@@ -72,8 +72,16 @@ class ShowTableInfo extends BaseCommand
         '--limit-fields' => 'Limits the number of fields. Default: 15.',
     ];
 
+    /**
+     * @phpstan-var  list<list<string|int>> Table Data.
+     */
     private array $tbody;
+
     private BaseConnection $db;
+
+    /**
+     * @var bool Sort the table rows in DESC order or not.
+     */
     private bool $sortIsDESC = false;
 
     public function run(array $params)
