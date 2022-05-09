@@ -217,9 +217,9 @@ class ShowTableInfo extends BaseCommand
                 $row->name,
                 $row->type,
                 $row->max_length,
-                $this->setYesOrNo($row->nullable),
+                isset($row->nullable) ? $this->setYesOrNo($row->nullable) : 'n/a',
                 $row->default,
-                $this->setYesOrNo($row->primary_key),
+                isset($row->primary_key) ? $this->setYesOrNo($row->primary_key) : 'n/a',
             ];
         }
 
