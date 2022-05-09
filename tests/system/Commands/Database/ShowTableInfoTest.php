@@ -14,6 +14,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -105,7 +106,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     public function testDbTableDesc(): void
     {
-        $seeder = \Config\Database::seeder();
+        $seeder = Database::seeder();
         $seeder->call(CITestSeeder::class);
 
         command('db:table db_user --desc');
@@ -130,7 +131,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     public function testDbTableLimitColumnLength(): void
     {
-        $seeder = \Config\Database::seeder();
+        $seeder = Database::seeder();
         $seeder->call(CITestSeeder::class);
 
         command('db:table db_user --limit-column-length 5');
