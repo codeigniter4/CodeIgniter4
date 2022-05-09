@@ -178,10 +178,8 @@ class ShowTableInfo extends BaseCommand
     {
         $this->tbody = [];
 
-        $table = $this->db->protectIdentifiers($tableName);
-        $rows  = $this->db->query(
-            "SELECT * FROM {$table} LIMIT {$limitRows}"
-        )->getResultArray();
+        $builder = $this->db->table($tableName);
+        $rows    = $builder->limit($limitRows)->get()->getResultArray();
 
         foreach ($rows as $row) {
             $row = array_map(
