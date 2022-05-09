@@ -102,14 +102,7 @@ class ShowTableInfo extends BaseCommand
         }
 
         if (array_key_exists('show', $params)) {
-            CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
-            CLI::newLine();
-
-            $thead       = ['ID', 'Table Name', 'Num of Rows', 'Num of Fields'];
-            $this->tbody = $this->makeTbodyForShowAllTables($tables);
-
-            CLI::table($this->tbody, $thead);
-            CLI::newLine();
+            $this->showAllTables($tables);
 
             return;
         }
@@ -125,13 +118,7 @@ class ShowTableInfo extends BaseCommand
                 return;
             }
 
-            CLI::newLine();
-            CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
-            CLI::newLine();
-
-            $thead       = $this->db->getFieldNames($tableName);
-            $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFields);
-            CLI::table($this->tbody, $thead);
+            $this->showDataOfTable($tableName, $limitRows, $limitFields);
 
             return;
         }
@@ -144,13 +131,30 @@ class ShowTableInfo extends BaseCommand
             return;
         }
 
+        $this->showDataOfTable($tables[$tableName], $limitRows, $limitFields);
+    }
+
+    private function showDataOfTable(string $tableName, int $limitRows, int $limitFields)
+    {
         CLI::newLine();
-        CLI::write("Data of Table \"{$tables[$tableName]}\":", 'black', 'yellow');
+        CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
-        $thead       = $this->db->getFieldNames($tables[$tableName]);
-        $this->tbody = $this->makeTableRows($tables[$tableName], $limitRows, $limitFields);
+        $thead       = $this->db->getFieldNames($tableName);
+        $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFields);
         CLI::table($this->tbody, $thead);
+    }
+
+    private function showAllTables(array $tables)
+    {
+        CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
+        CLI::newLine();
+
+        $thead       = ['ID', 'Table Name', 'Num of Rows', 'Num of Fields'];
+        $this->tbody = $this->makeTbodyForShowAllTables($tables);
+
+        CLI::table($this->tbody, $thead);
+        CLI::newLine();
     }
 
     private function makeTbodyForShowAllTables(array $tables): array
