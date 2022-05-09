@@ -81,7 +81,9 @@ class ShowTableInfo extends BaseCommand
 
         $tables = $this->db->listTables();
 
-        $this->sortIsDESC = CLI::getOption('desc');
+        if (CLI::getOption('desc') === true) {
+            $this->sortIsDESC = true;
+        }
 
         if ($tables === []) {
             CLI::error('Database has no tables!', 'light_gray', 'red');
