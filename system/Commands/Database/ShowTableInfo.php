@@ -156,7 +156,8 @@ class ShowTableInfo extends BaseCommand
     private function makeTbodyForShowAllTables(array $tables): array
     {
         foreach ($tables  as $id => $tableName) {
-            $db = $this->db->query("SELECT * FROM {$tableName}");
+            $table = $this->db->protectIdentifiers($tableName);
+            $db    = $this->db->query("SELECT * FROM {$table}");
 
             $this->tbody[] = [
                 $id + 1,
@@ -173,7 +174,7 @@ class ShowTableInfo extends BaseCommand
         return $this->tbody;
     }
 
-    private function makeTableRows(string $tableName, $limitRows, $limitColumnLength): array
+    private function makeTableRows(string $tableName, int $limitRows, int $limitColumnLength): array
     {
         $this->tbody = [];
 
@@ -182,10 +183,14 @@ class ShowTableInfo extends BaseCommand
         $fieldNames = $this->db->getFieldNames($tableName);
 
         foreach ($fieldNames as $fieldName) {
-            $customQueryForEachField .= ",IF(length(`{$fieldName}`) > {$limitColumnLength} ,CONCAT(SUBSTRING(`{$fieldName}`, 1, {$limitColumnLength}),'...'), `{$fieldName}` ) as `{$fieldName}`";
+            $field = $this->db->protectIdentifiers($fieldName);
+            $customQueryForEachField .= ", IF(LENGTH({$field}) > {$limitColumnLength}, CONCAT(SUBSTRING({$field}, 1, {$limitColumnLength}), '...'), {$field}) AS {$field}";
         }
 
-        $rows = $this->db->query('SELECT * ' . $customQueryForEachField . " FROM {$tableName} LIMIT {$limitRows}")->getResultArray();
+        $table = $this->db->protectIdentifiers($tableName);
+        $rows  = $this->db->query(
+            'SELECT * ' . $customQueryForEachField . " FROM {$table} LIMIT {$limitRows}"
+        )->getResultArray();
 
         foreach ($rows as $row) {
             $this->tbody[] = $row;
