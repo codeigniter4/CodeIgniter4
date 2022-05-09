@@ -82,7 +82,7 @@ class ShowTableInfo extends BaseCommand
     /**
      * @var bool Sort the table rows in DESC order or not.
      */
-    private bool $sortIsDESC = false;
+    private bool $sortDesc = false;
 
     public function run(array $params)
     {
@@ -91,7 +91,7 @@ class ShowTableInfo extends BaseCommand
         $tables = $this->db->listTables();
 
         if (CLI::getOption('desc') === true) {
-            $this->sortIsDESC = true;
+            $this->sortDesc = true;
         }
 
         if ($tables === []) {
@@ -164,7 +164,7 @@ class ShowTableInfo extends BaseCommand
             ];
         }
 
-        if ($this->sortIsDESC) {
+        if ($this->sortDesc) {
             krsort($this->tbody);
         }
 
@@ -201,7 +201,7 @@ class ShowTableInfo extends BaseCommand
             $this->tbody[] = $row;
         }
 
-        if ($this->sortIsDESC) {
+        if ($this->sortDesc) {
             krsort($this->tbody);
         }
 
@@ -229,7 +229,7 @@ class ShowTableInfo extends BaseCommand
             ];
         }
 
-        if ($this->sortIsDESC) {
+        if ($this->sortDesc) {
             krsort($this->tbody);
         }
 
