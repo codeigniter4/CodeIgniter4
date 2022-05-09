@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Database\BaseConnection;
 use Config\Database;
 
 /**
@@ -72,7 +73,7 @@ class ShowTableInfo extends BaseCommand
     ];
 
     private array $tbody;
-    private string $db       = '';
+    private BaseConnection $db;
     private bool $sortIsDESC = false;
 
     public function run(array $params)
