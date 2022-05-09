@@ -77,20 +77,20 @@ Query Builder Insert
 
 .. literalinclude:: examples/008.php
 
-Get table rows in the Command Line
-===============================
+Get Table Rows in the Command Line
+==================================
 
 You can see specific table info on the command line. Assuming there is a table called ``my_table`` , use the following command to get started::
 
     > php spark db:table my_table
 
-If table `my_table` is not in the database, the CodeIgniter displays a list of available tables to select.
+If table ``my_table`` is not in the database, the CodeIgniter displays a list of available tables to select.
 You can also use only the following command without the table name. In this case, the table name will be asked ::
 
     > php spark db:table
 
-.. note:: You can use the optional ``--desc``, ``--limit-rows``, ``--limit-fields-value`` options at any time when using command ``db:table`` .
+.. note:: You can use the optional ``--desc``, ``--limit-rows``, ``--limit-column-length`` options at any time when using command ``db:table`` .
 
 Command ``db:table --limit-rows 50``, for example, limits the number of rows to 50 rows.
 Command ``db:table --desc``, set the sort direction to "DESC".
-And Command ``db:table --limit-fields-value 10`` limits the values of the fields to "10" characters, to prevent confusion of the table output in the terminal.
+And Command ``db:table --limit-column-length 10`` limits the length of the columns to 10 characters, to prevent confusion of the table output in the terminal.
