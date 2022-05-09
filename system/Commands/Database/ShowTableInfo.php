@@ -48,7 +48,7 @@ class ShowTableInfo extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'db:table <table_name> [options]';
+    protected $usage = 'db:table [<table_name>] [options]';
 
     /**
      * The Command's arguments
