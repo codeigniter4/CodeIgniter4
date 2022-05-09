@@ -69,7 +69,7 @@ class ShowTableInfo extends BaseCommand
         '--metadata'           => 'Retrieves list of containing field information.',
         '--desc'               => 'Sort the table rows in DESC order.',
         '--limit-rows'         => 'Limit the number of rows. [Default = 10]',
-        '--limit-fields-value' => 'Custom length Limit of field values. [Default = 15]',
+        '--limit-fields' => 'Limit the number of fields. Default: 15.',
     ];
 
     private array $tbody;
@@ -171,7 +171,7 @@ class ShowTableInfo extends BaseCommand
             $limitRows = 10;
         }
 
-        $limitFieldsValue = (int) CLI::getOption('limit-fields-value');
+        $limitFieldsValue = (int) CLI::getOption('limit-fields');
 
         if (in_array($limitFieldsValue, [null, true, 0, 1], true)) {
             $limitFieldsValue = 15;
