@@ -90,7 +90,7 @@ class ShowTableInfo extends BaseCommand
 
         $tables = $this->db->listTables();
 
-        if (CLI::getOption('desc') === true) {
+        if (array_key_exists('desc', $params)) {
             $this->sortDesc = true;
         }
 
@@ -101,7 +101,7 @@ class ShowTableInfo extends BaseCommand
             return;
         }
 
-        if (CLI::getOption('show')) {
+        if (array_key_exists('show', $params)) {
             CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
             CLI::newLine();
 
@@ -114,10 +114,12 @@ class ShowTableInfo extends BaseCommand
             return;
         }
 
-        $tableName = array_shift($params);
+        $tableName   = $params[0] ?? null;
+        $limitRows   = (int) ($params['limit-rows'] ?? 10);
+        $limitFields = (int) ($params['limit-fields'] ?? 15);
 
         if (in_array($tableName, $tables, true)) {
-            if (CLI::getOption('metadata')) {
+            if (array_key_exists('metadata', $params)) {
                 $this->showFieldMetaData($tableName);
 
                 return;
@@ -128,7 +130,7 @@ class ShowTableInfo extends BaseCommand
             CLI::newLine();
 
             $thead       = $this->db->getFieldNames($tableName);
-            $this->tbody = $this->makeTableRows($tableName);
+            $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFields);
             CLI::table($this->tbody, $thead);
 
             return;
@@ -136,7 +138,7 @@ class ShowTableInfo extends BaseCommand
 
         $tableName = CLI::promptByKey(['Here is the list of your database tables:', 'Which table do you want to see?'], $tables, 'required');
 
-        if (CLI::getOption('metadata')) {
+        if (array_key_exists('metadata', $params)) {
             $this->showFieldMetaData($tables[$tableName]);
 
             return;
@@ -147,7 +149,7 @@ class ShowTableInfo extends BaseCommand
         CLI::newLine();
 
         $thead       = $this->db->getFieldNames($tables[$tableName]);
-        $this->tbody = $this->makeTableRows($tables[$tableName]);
+        $this->tbody = $this->makeTableRows($tables[$tableName], $limitRows, $limitFields);
         CLI::table($this->tbody, $thead);
     }
 
@@ -171,20 +173,8 @@ class ShowTableInfo extends BaseCommand
         return $this->tbody;
     }
 
-    private function makeTableRows(string $tableName): array
+    private function makeTableRows(string $tableName, $limitRows, $limitFields): array
     {
-        $limitRows = (int) CLI::getOption('limit-rows');
-
-        if (in_array($limitRows, [null, true, 0, 1], true)) {
-            $limitRows = 10;
-        }
-
-        $limitFields = (int) CLI::getOption('limit-fields');
-
-        if (in_array($limitFields, [null, true, 0, 1], true)) {
-            $limitFields = 15;
-        }
-
         $this->tbody = [];
 
         $customQueryForEachField = '';
