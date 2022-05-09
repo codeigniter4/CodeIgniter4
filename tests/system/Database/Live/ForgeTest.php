@@ -843,6 +843,9 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame('integer', $fieldsData[0]->type);
             $this->assertSame('character varying', $fieldsData[1]->type);
 
+            $this->assertFalse($fieldsData[0]->nullable);
+            $this->assertFalse($fieldsData[1]->nullable);
+
             $this->assertSame(32, (int) $fieldsData[0]->max_length);
             $this->assertSame(255, (int) $fieldsData[1]->max_length);
 
