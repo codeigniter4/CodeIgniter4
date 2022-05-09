@@ -56,7 +56,7 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $arguments = [
-        'table_name' => 'The table name for show info',
+        'table_name' => 'The table name to show info',
     ];
 
     /**
@@ -65,11 +65,11 @@ class ShowTableInfo extends BaseCommand
      * @var array<string, string>
      */
     protected $options = [
-        '--show'               => 'List the names of all database tables.',
-        '--metadata'           => 'Retrieves list of containing field information.',
-        '--desc'               => 'Sort the table rows in DESC order.',
-        '--limit-rows'         => 'Limit the number of rows. [Default = 10]',
-        '--limit-fields' => 'Limit the number of fields. Default: 15.',
+        '--show'         => 'Lists the names of all database tables.',
+        '--metadata'     => 'Retrieves list containing field information.',
+        '--desc'         => 'Sorts the table rows in DESC order.',
+        '--limit-rows'   => 'Limits the number of rows. Default: 10.',
+        '--limit-fields' => 'Limits the number of fields. Default: 15.',
     ];
 
     private array $tbody;
@@ -97,7 +97,7 @@ class ShowTableInfo extends BaseCommand
             CLI::write('The following is a list of the names of all database tables:', 'black', 'yellow');
             CLI::newLine();
 
-            $thead       = ['ID', 'Table name', 'Number of rows', 'Number of fields'];
+            $thead       = ['ID', 'Table Name', 'Num of Rows', 'Num of Fields'];
             $this->tbody = $this->makeTbodyForShowAllTables($tables);
 
             CLI::table($this->tbody, $thead);
@@ -116,7 +116,7 @@ class ShowTableInfo extends BaseCommand
             }
 
             CLI::newLine();
-            CLI::write("Data of table \"{$tableName}\":", 'black', 'yellow');
+            CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
             CLI::newLine();
 
             $thead       = $this->db->getFieldNames($tableName);
@@ -135,7 +135,7 @@ class ShowTableInfo extends BaseCommand
         }
 
         CLI::newLine();
-        CLI::write("Data of table \"{$tables[$tableName]}\":", 'black', 'yellow');
+        CLI::write("Data of Table \"{$tables[$tableName]}\":", 'black', 'yellow');
         CLI::newLine();
 
         $thead       = $this->db->getFieldNames($tables[$tableName]);
@@ -203,10 +203,10 @@ class ShowTableInfo extends BaseCommand
     private function showFieldMetaData(string $tableName): void
     {
         CLI::newLine();
-        CLI::write("List of metadata information in table \"{$tableName}\":", 'black', 'yellow');
+        CLI::write("List of Metadata Information in Table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
-        $thead = ['field name', 'type', 'max_length', 'nullable', 'default', 'primary_key'];
+        $thead = ['Field Name', 'Type', 'Max Length', 'Nullable', 'Default', 'Primary Key'];
 
         $fields = $this->db->getFieldData($tableName);
 
