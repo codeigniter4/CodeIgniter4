@@ -47,10 +47,10 @@ foreach ($files as $filePath => $fileInfo) {
         continue;
     }
 
-    $pattern = '/<div role="navigation" aria-label="breadcrumbs navigation">/u';
+    $pattern = '/<div class="rst-content">/u';
     $content = preg_replace(
         $pattern,
-        $gitHubLink . PHP_EOL . '<div role="navigation" aria-label="breadcrumbs navigation">',
+        '<div class="rst-content">' . PHP_EOL . $gitHubLink . PHP_EOL,
         $content
     );
 
