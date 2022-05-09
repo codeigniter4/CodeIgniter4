@@ -131,9 +131,6 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     public function testDbTableLimitFieldValueLength(): void
     {
-        $seeder = Database::seeder();
-        $seeder->call(CITestSeeder::class);
-
         command('db:table db_user --limit-field-value 5');
 
         $result = $this->getResultWithoutControlCode();
