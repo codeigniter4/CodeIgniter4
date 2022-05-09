@@ -205,10 +205,9 @@ class ShowTableInfo extends BaseCommand
 
         foreach ($rows as $row) {
             $row = array_map(
-                static fn ($item): string => mb_strlen((string) $item) > $limitFieldValue) 
+                static fn ($item): string => mb_strlen((string) $item) > $limitFieldValue
                     ? mb_substr((string) $item, 0, $limitFieldValue) . '...'
-                    : $item
-                ,
+                    : (string) $item,
                 $row
             );
             $this->tbody[] = $row;
