@@ -1145,9 +1145,9 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testWithDifferentSubdomainMissing()
     {
-        $routes = $this->getCollector();
-
         $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'nothere']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1', ['subdomain' => '*']);
@@ -1178,9 +1178,9 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testWithSubdomainOrdered()
     {
-        $routes = $this->getCollector();
-
         $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
@@ -1422,10 +1422,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithSubdomainNot()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1434,10 +1434,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainMatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1446,10 +1446,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainMismatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1458,10 +1458,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainNot()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1482,10 +1482,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithoutSubdomainMismatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1532,8 +1532,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingTwoRules()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1553,8 +1553,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingTwoRulesLastApplies()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1573,8 +1573,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingMatchingSubdomain()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1593,8 +1593,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingMatchingHost()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
