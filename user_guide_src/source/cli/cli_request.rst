@@ -10,31 +10,36 @@ but adds some accessor methods for convenience.
 Additional Accessors
 ====================
 
-**getSegments()**
+getSegments()
+-------------
 
 Returns an array of the command line arguments deemed to be part of a path:
 
 .. literalinclude:: cli_request/001.php
 
-**getPath()**
+getPath()
+---------
 
 Returns the reconstructed path as a string:
 
 .. literalinclude:: cli_request/002.php
 
-**getOptions()**
+getOptions()
+------------
 
 Returns an array of the command line arguments deemed to be options:
 
 .. literalinclude:: cli_request/003.php
 
-**getOption($which)**
+getOption($which)
+-----------------
 
 Returns the value of a specific command line argument deemed to be an option:
 
 .. literalinclude:: cli_request/004.php
 
-**getOptionString()**
+getOptionString()
+-----------------
 
 Returns the reconstructed command line string for the options:
 
