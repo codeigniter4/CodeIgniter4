@@ -12,7 +12,8 @@ The Database Utility Class contains methods that help you manage your database.
 Get XML from Result
 *******************
 
-**getXMLFromResult()**
+getXMLFromResult()
+==================
 
 This method returns the xml result from database result. You can do like this:
 
