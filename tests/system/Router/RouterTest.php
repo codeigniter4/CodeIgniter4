@@ -384,6 +384,16 @@ final class RouterTest extends CIUnitTestCase
         $router->autoRoute('home/initController');
     }
 
+    public function testExceptionMessageWhenRouteNotFound()
+    {
+        $router = new Router($this->collection, $this->request);
+
+        $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage("Can't find a route for 'get: url/not-exists'");
+
+        $router->handle('url/not-exists');
+    }
+
     public function testDetectsLocales()
     {
         $router = new Router($this->collection, $this->request);
