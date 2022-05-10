@@ -383,7 +383,7 @@ The methods provided by the parent classes that are available are:
 
         .. note:: Unlike the :doc:`Cookie Helper <../helpers/cookie_helper>`
             function :php:func:`get_cookie()`, this method does NOT prepend
-            your configured ``$config['cookie_prefix']`` value.
+            your configured ``Config\Cookie::$prefix`` value.
 
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
         :noindex:

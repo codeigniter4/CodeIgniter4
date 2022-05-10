@@ -429,7 +429,7 @@ Preference           Default         Description
 
 .. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
     Instead the HttpOnly parameter is always enabled, for security
-    reasons. Additionally, the 'cookiePrefix' setting is completely
+    reasons. Additionally, the ``Config\Cookie::$prefix`` setting is completely
     ignored.
 
 Session Drivers
