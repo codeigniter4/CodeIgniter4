@@ -26,18 +26,21 @@ This is defined in the boot files (e.g. **app/Config/Boot/development.php**).
 Using Kint
 ==========
 
-**d()**
+d()
+---
 
 The ``d()`` method dumps all of the data it knows about the contents passed as the only parameter to the screen, and
 allows the script to continue executing:
 
 .. literalinclude:: debugging/001.php
 
-**dd()**
+dd()
+----
 
 This method is identical to ``d()``, except that it also ``dies()`` and no further code is executed this request.
 
-**trace()**
+trace()
+-------
 
 This provides a backtrace to the current execution point, with Kint's own unique spin:
 
