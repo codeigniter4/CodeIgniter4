@@ -296,7 +296,8 @@ This is defined in the boot files (e.g. <strong>app/Config/Boot/development.php<
 </section>
 <section id="using-kint">
 <h3><a class="toc-backref" href="#id4">Using Kint</a><a class="headerlink" href="#using-kint" title="Permalink to this headline"></a></h3>
-<p><strong>d()</strong></p>
+<section id="d">
+<h4>d()<a class="headerlink" href="#d" title="Permalink to this headline"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">d()</span></code> method dumps all of the data it knows about the contents passed as the only parameter to the screen, and
 allows the script to continue executing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -304,9 +305,13 @@ allows the script to continue executing:</p>
 <span class="nx">d</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>dd()</strong></p>
+</section>
+<section id="dd">
+<h4>dd()<a class="headerlink" href="#dd" title="Permalink to this headline"></a></h4>
 <p>This method is identical to <code class="docutils literal notranslate"><span class="pre">d()</span></code>, except that it also <code class="docutils literal notranslate"><span class="pre">dies()</span></code> and no further code is executed this request.</p>
-<p><strong>trace()</strong></p>
+</section>
+<section id="trace">
+<h4>trace()<a class="headerlink" href="#trace" title="Permalink to this headline"></a></h4>
 <p>This provides a backtrace to the current execution point, with Kint’s own unique spin:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -314,6 +319,7 @@ allows the script to continue executing:</p>
 </pre></div>
 </div>
 <p>For more information, see <a class="reference external" href="https://kint-php.github.io/kint//">Kint’s page</a>.</p>
+</section>
 </section>
 </section>
 <section id="the-debug-toolbar">
@@ -498,7 +504,7 @@ outer array’s key is the name of the section on the Vars tab:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 07, 2022.
+      <span class="lastupdated">Last updated on May 10, 2022.
       </span></p>
   </div>
 
