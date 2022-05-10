@@ -269,7 +269,8 @@
 but adds some accessor methods for convenience.</p>
 <section id="additional-accessors">
 <h2>Additional Accessors<a class="headerlink" href="#additional-accessors" title="Permalink to this headline"></a></h2>
-<p><strong>getSegments()</strong></p>
+<section id="getsegments">
+<h3>getSegments()<a class="headerlink" href="#getsegments" title="Permalink to this headline"></a></h3>
 <p>Returns an array of the command line arguments deemed to be part of a path:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -277,7 +278,9 @@ but adds some accessor methods for convenience.</p>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getSegments</span><span class="p">();</span>  <span class="c1">// [&#39;users&#39;, &#39;21&#39;, &#39;profile&#39;]</span>
 </pre></div>
 </div>
-<p><strong>getPath()</strong></p>
+</section>
+<section id="getpath">
+<h3>getPath()<a class="headerlink" href="#getpath" title="Permalink to this headline"></a></h3>
 <p>Returns the reconstructed path as a string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -285,7 +288,9 @@ but adds some accessor methods for convenience.</p>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>  <span class="c1">// users/21/profile</span>
 </pre></div>
 </div>
-<p><strong>getOptions()</strong></p>
+</section>
+<section id="getoptions">
+<h3>getOptions()<a class="headerlink" href="#getoptions" title="Permalink to this headline"></a></h3>
 <p>Returns an array of the command line arguments deemed to be options:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -293,16 +298,20 @@ but adds some accessor methods for convenience.</p>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOptions</span><span class="p">();</span>  <span class="c1">// [&#39;foo&#39; =&gt; &#39;bar&#39;]</span>
 </pre></div>
 </div>
-<p><strong>getOption($which)</strong></p>
+</section>
+<section id="getoption-which">
+<h3>getOption($which)<a class="headerlink" href="#getoption-which" title="Permalink to this headline"></a></h3>
 <p>Returns the value of a specific command line argument deemed to be an option:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// command line: php index.php users 21 profile --foo bar</span>
-<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>  <span class="c1">// bar</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>      <span class="c1">// bar</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;notthere&#39;</span><span class="p">);</span> <span class="c1">// null</span>
 </pre></div>
 </div>
-<p><strong>getOptionString()</strong></p>
+</section>
+<section id="getoptionstring">
+<h3>getOptionString()<a class="headerlink" href="#getoptionstring" title="Permalink to this headline"></a></h3>
 <p>Returns the reconstructed command line string for the options:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -314,10 +323,11 @@ but adds some accessor methods for convenience.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// php index.php user 21 --foo bar -f</span>
-<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOptionString</span><span class="p">();</span> <span class="c1">// -foo bar -f</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOptionString</span><span class="p">();</span>     <span class="c1">// -foo bar -f</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getOptionString</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// --foo bar -f</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 
