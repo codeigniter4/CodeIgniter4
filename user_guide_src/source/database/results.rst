@@ -12,7 +12,8 @@ There are several ways to generate query results:
 Result Arrays
 *************
 
-**getResult()**
+getResult()
+===========
 
 This method returns the query result as an array of **objects**, or
 **an empty array** on failure. Typically you'll use this in a foreach
@@ -36,7 +37,8 @@ instantiate for each result object
 
 The above method is an alias of ``getCustomResultObject()``.
 
-**getResultArray()**
+getResultArray()
+================
 
 This method returns the query result as a pure array, or an empty
 array when no result is produced. Typically you'll use this in a foreach
@@ -48,7 +50,8 @@ loop, like this:
 Result Rows
 ***********
 
-**getRow()**
+getRow()
+========
 
 This method returns a single result row. If your query has more than
 one row, it returns only the first row. The result is returned as an
@@ -66,7 +69,8 @@ to instantiate the row with:
 
 .. literalinclude:: results/007.php
 
-**getRowArray()**
+getRowArray()
+=============
 
 Identical to the above ``row()`` method, except it returns an array.
 Example:
@@ -98,7 +102,8 @@ parameter:
     (prefetching). Use ``getUnbufferedRow()`` for processing large
     result sets.
 
-**getUnbufferedRow()**
+getUnbufferedRow()
+==================
 
 This method returns a single result row without prefetching the whole
 result in memory as ``row()`` does. If your query has more than one row,
@@ -145,7 +150,8 @@ In addition to the two methods listed below, the following methods also can
 take a class name to return the results as: ``getFirstRow()``, ``getLastRow()``,
 ``getNextRow()``, and ``getPreviousRow()``.
 
-**getCustomResultObject()**
+getCustomResultObject()
+=======================
 
 Returns the entire result set as an array of instances of the class requested.
 The only parameter is the name of the class to instantiate.
@@ -154,7 +160,8 @@ Example:
 
 .. literalinclude:: results/014.php
 
-**getCustomRowObject()**
+getCustomRowObject()
+====================
 
 Returns a single row from your query results. The first parameter is the row
 number of the results. The second parameter is the class name to instantiate.
@@ -173,21 +180,24 @@ Example:
 Result Helper Methods
 *********************
 
-**getFieldCount()**
+getFieldCount()
+===============
 
 The number of FIELDS (columns) returned by the query. Make sure to call
 the method using your query result object:
 
 .. literalinclude:: results/017.php
 
-**getFieldNames()**
+getFieldNames()
+===============
 
 Returns an array with the names of the FIELDS (columns) returned by the query.
 Make sure to call the method using your query result object:
 
 .. literalinclude:: results/018.php
 
-**getNumRows()**
+getNumRows()
+============
 
 The number of records returned by the query. Make sure to call
 the method using your query result object:
@@ -198,7 +208,8 @@ the method using your query result object:
     CodeIgniter will fetch and buffer the query result records internally and
     return a count of the resulting record array, which can be inefficient.
 
-**freeResult()**
+freeResult()
+============
 
 It frees the memory associated with the result and deletes the result
 resource ID. Normally PHP frees its memory automatically at the end of
@@ -210,7 +221,8 @@ Example:
 
 .. literalinclude:: results/020.php
 
-**dataSeek()**
+dataSeek()
+==========
 
 This method sets the internal pointer for the next result row to be
 fetched. It is only useful in combination with ``getUnbufferedRow()``.
