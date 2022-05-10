@@ -196,7 +196,7 @@ class Router implements RouterInterface
         // Controllers/directories, but the application may not
         // want this, like in the case of API's.
         if (! $this->collection->shouldAutoRoute()) {
-            throw new PageNotFoundException("Can't find a route for '{$uri}'.");
+            throw new PageNotFoundException("Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'.");
         }
 
         // Checks auto routes
