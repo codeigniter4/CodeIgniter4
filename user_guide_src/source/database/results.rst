@@ -81,18 +81,18 @@ digit in the first parameter:
 In addition, you can walk forward/backwards/first/last through your
 results using these variations:
 
-    | **$row = $query->getFirstRow()**
-    | **$row = $query->getLastRow()**
-    | **$row = $query->getNextRow()**
-    | **$row = $query->getPreviousRow()**
+    | ``$row = $query->getFirstRow()``
+    | ``$row = $query->getLastRow()``
+    | ``$row = $query->getNextRow()``
+    | ``$row = $query->getPreviousRow()``
 
 By default they return an object unless you put the word "array" in the
 parameter:
 
-    | **$row = $query->getFirstRow('array')**
-    | **$row = $query->getLastRow('array')**
-    | **$row = $query->getNextRow('array')**
-    | **$row = $query->getPreviousRow('array')**
+    | ``$row = $query->getFirstRow('array')``
+    | ``$row = $query->getLastRow('array')``
+    | ``$row = $query->getNextRow('array')``
+    | ``$row = $query->getPreviousRow('array')``
 
 .. note:: All the methods above will load the whole result into memory
     (prefetching). Use ``getUnbufferedRow()`` for processing large
