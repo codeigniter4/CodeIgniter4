@@ -37,7 +37,7 @@ allows the script to continue executing:
 dd()
 ----
 
-This method is identical to ``d()``, except that it also ``dies()`` and no further code is executed this request.
+This method is identical to ``d()``, except that it also ``die()`` and no further code is executed this request.
 
 trace()
 -------
