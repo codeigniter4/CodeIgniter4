@@ -489,6 +489,10 @@ the <code class="docutils literal notranslate"><span class="pre">withDeleted()</
 <p>This requires either a DATETIME or INTEGER field in the database as per the model’s
 <code class="docutils literal notranslate"><span class="pre">$dateFormat</span></code> setting. The default field name is <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> however this name can be
 configured to any name of your choice by using <code class="docutils literal notranslate"><span class="pre">$deletedField</span></code> property.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> field must be nullable.</p>
+</div>
 </section>
 <section id="allowedfields">
 <h4>$allowedFields<a class="headerlink" href="#allowedfields" title="Permalink to this headline"></a></h4>
@@ -1436,7 +1440,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 10, 2022.
+      <span class="lastupdated">Last updated on May 11, 2022.
       </span></p>
   </div>
 
