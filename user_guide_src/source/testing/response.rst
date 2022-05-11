@@ -143,6 +143,9 @@ The response you get back contains a number of helper methods to inspect the HTM
 are useful for using within assertions in your tests.
 
 The **see()** method checks the text on the page to see if it exists either by itself, or more specifically within
+see()
+-----
+
 a tag, as specified by type, class, or id:
 
 .. literalinclude:: response/018.php
@@ -152,19 +155,31 @@ The **dontSee()** method is the exact opposite:
 .. literalinclude:: response/019.php
 
 The **seeElement()** and **dontSeeElement()** are very similar to the previous methods, but do not look at the
+seeElement()
+------------
+
 values of the elements. Instead, they simply check that the elements exist on the page:
 
 .. literalinclude:: response/020.php
 
 You can use **seeLink()** to ensure that a link appears on the page with the specified text:
+seeLink()
+---------
+
 
 .. literalinclude:: response/021.php
 
 The **seeInField()** method checks for any input tags exist with the name and value:
+seeInField()
+------------
+
 
 .. literalinclude:: response/022.php
 
 Finally, you can check if a checkbox exists and is checked with the **seeCheckboxIsChecked()** method:
+seeCheckboxIsChecked()
+----------------------
+
 
 .. literalinclude:: response/023.php
 
