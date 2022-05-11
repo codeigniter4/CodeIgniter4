@@ -32,7 +32,7 @@ this:
 Simplified Queries
 ==================
 
-The **simpleQuery** method is a simplified version of the
+The ``simpleQuery()`` method is a simplified version of the
 ``$db->query()`` method. It DOES
 NOT return a database result set, nor does it set the query timer, or
 compile bind data, or store your query for debugging. It simply lets you
@@ -85,9 +85,9 @@ identifier you can use:
     is NOT designed to work with arbitrary user input. DO NOT feed it
     with unsanitized user data.
 
-This function will also add a table prefix to your table, assuming you
+This function will also add a **table prefix** to your table, assuming you
 have a prefix specified in your database config file. To enable the
-prefixing set true (boolean) via the second parameter:
+prefixing set ``true`` (boolean) via the second parameter:
 
 .. literalinclude:: queries/008.php
 
@@ -111,9 +111,6 @@ single quotes around the data so you don't have to:
 2. $db->escapeString()
 ======================
 
-#. **$db->escapeLikeString()** This method should be used when
-   strings are to be used in LIKE conditions so that LIKE wildcards
-   ('%', '\_') in the string are also properly escaped.
 This function escapes the data passed to
 it, regardless of type. Most of the time you'll use the above
 function rather than this one. Use the function like this:
@@ -123,11 +120,14 @@ function rather than this one. Use the function like this:
 3. $db->escapeLikeString()
 ==========================
 
+This method should be used when
+strings are to be used in LIKE conditions so that LIKE wildcards
+(``%``, ``_``) in the string are also properly escaped.
 
 .. literalinclude:: queries/011.php
 
-.. important:: The ``escapeLikeString()`` method uses '!' (exclamation mark)
-    to escape special characters for *LIKE* conditions. Because this
+.. important:: The ``escapeLikeString()`` method uses ``'!'`` (exclamation mark)
+    to escape special characters for ``LIKE`` conditions. Because this
     method escapes partial strings that you would wrap in quotes
     yourself, it cannot automatically add the ``ESCAPE '!'``
     condition for you, and so you'll have to manually do that.
@@ -266,7 +266,7 @@ getLastQuery()
 ==============
 
 When you just need to retrieve the last Query object, use the
-getLastQuery() method:
+``getLastQuery()`` method:
 
 .. literalinclude:: queries/021.php
 
