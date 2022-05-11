@@ -21,11 +21,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+
       # Build the latest User Guide
       - name: Build with Sphinx
         uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: user_guide_src/
+
+      - name: Add "Edit this page" links
+        run: |
+          cd user_guide_src
+          # Fix permissions
+          sudo chown -R runner:docker build/html/
+          php add-edit-this-page build/html/
 
       # Create an artifact of the html output
       - name: Upload artifact
