@@ -51,7 +51,7 @@ fetchable results.
     So keep that in mind if you're looking for a boolean value.
 
 ***************************************
-Working with Database prefixes manually
+Working with Database Prefixes Manually
 ***************************************
 
 If you have configured a database prefix and would like to prepend it to
@@ -70,7 +70,7 @@ You can get the current prefix any time with this method:
 .. literalinclude:: queries/006.php
 
 **********************
-Protecting identifiers
+Protecting Identifiers
 **********************
 
 In many databases, it is advisable to protect table and field names - for
