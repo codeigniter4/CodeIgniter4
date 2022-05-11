@@ -297,14 +297,17 @@ create your own directly using any <code class="docutils literal notranslate"><s
 there are a number of new assertions that you can use in your tests.</p>
 <section id="accessing-request-response">
 <h3><a class="toc-backref" href="#id2">Accessing Request/Response</a><a class="headerlink" href="#accessing-request-response" title="Permalink to this headline"></a></h3>
-<p><strong>request()</strong></p>
+<section id="request">
+<h4>request()<a class="headerlink" href="#request" title="Permalink to this headline"></a></h4>
 <p>You can access directly the Request object, if it was set during testing:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span> <span class="o">=</span> <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>response()</strong></p>
+</section>
+<section id="response">
+<h4>response()<a class="headerlink" href="#response" title="Permalink to this headline"></a></h4>
 <p>This allows you direct access to the response object:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -312,9 +315,11 @@ there are a number of new assertions that you can use in your tests.</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="checking-response-status">
 <h3><a class="toc-backref" href="#id3">Checking Response Status</a><a class="headerlink" href="#checking-response-status" title="Permalink to this headline"></a></h3>
-<p><strong>isOK()</strong></p>
+<section id="isok">
+<h4>isOK()<a class="headerlink" href="#isok" title="Permalink to this headline"></a></h4>
 <p>Returns a boolean true/false based on whether the response is perceived to be “ok”. This is primarily determined by
 a response status code in the 200 or 300’s. An empty body is not considered valid, unless in redirects.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -324,14 +329,18 @@ a response status code in the 200 or 300’s. An empty body is not considered va
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>assertOK()</strong></p>
-<p>This assertion simply uses the <strong>isOK()</strong> method to test a response. <strong>assertNotOK</strong> is the inverse of this assertion.</p>
+</section>
+<section id="assertok">
+<h4>assertOK()<a class="headerlink" href="#assertok" title="Permalink to this headline"></a></h4>
+<p>This assertion simply uses the <code class="docutils literal notranslate"><span class="pre">isOK()</span></code> method to test a response. <code class="docutils literal notranslate"><span class="pre">assertNotOK()</span></code> is the inverse of this assertion.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertOK</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>isRedirect()</strong></p>
+</section>
+<section id="isredirect">
+<h4>isRedirect()<a class="headerlink" href="#isredirect" title="Permalink to this headline"></a></h4>
 <p>Returns a boolean true/false based on whether the response is a redirected response.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -340,14 +349,18 @@ a response status code in the 200 or 300’s. An empty body is not considered va
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><strong>assertRedirect()</strong></p>
-<p>Asserts that the Response is an instance of RedirectResponse. <strong>assertNotRedirect</strong> is the inverse of this assertion.</p>
+</section>
+<section id="assertredirect">
+<h4>assertRedirect()<a class="headerlink" href="#assertredirect" title="Permalink to this headline"></a></h4>
+<p>Asserts that the Response is an instance of RedirectResponse. <code class="docutils literal notranslate"><span class="pre">assertNotRedirect()</span></code> is the inverse of this assertion.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirect</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>assertRedirectTo()</strong></p>
+</section>
+<section id="assertredirectto">
+<h4>assertRedirectTo()<a class="headerlink" href="#assertredirectto" title="Permalink to this headline"></a></h4>
 <p>Asserts that the Response is an instance of RedirectResponse and the destination
 matches the uri given.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -355,7 +368,9 @@ matches the uri given.</p>
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertRedirectTo</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>getRedirectUrl()</strong></p>
+</section>
+<section id="getredirecturl">
+<h4>getRedirectUrl()<a class="headerlink" href="#getredirecturl" title="Permalink to this headline"></a></h4>
 <p>Returns the URL set for a RedirectResponse, or null for failure.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -363,7 +378,9 @@ matches the uri given.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="nx">site_url</span><span class="p">(</span><span class="s1">&#39;foo/bar&#39;</span><span class="p">),</span> <span class="nv">$url</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertStatus(int $code)</strong></p>
+</section>
+<section id="assertstatus-int-code">
+<h4>assertStatus(int $code)<a class="headerlink" href="#assertstatus-int-code" title="Permalink to this headline"></a></h4>
 <p>Asserts that the HTTP status code returned matches $code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -371,9 +388,11 @@ matches the uri given.</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="session-assertions">
 <h3><a class="toc-backref" href="#id4">Session Assertions</a><a class="headerlink" href="#session-assertions" title="Permalink to this headline"></a></h3>
-<p><strong>assertSessionHas(string $key, $value = null)</strong></p>
+<section id="assertsessionhas-string-key-value-null">
+<h4>assertSessionHas(string $key, $value = null)<a class="headerlink" href="#assertsessionhas-string-key-value-null" title="Permalink to this headline"></a></h4>
 <p>Asserts that a value exists in the resulting session. If $value is passed, will also assert that the variable’s value
 matches what was specified.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -381,7 +400,9 @@ matches what was specified.</p>
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSessionHas</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertSessionMissing(string $key)</strong></p>
+</section>
+<section id="assertsessionmissing-string-key">
+<h4>assertSessionMissing(string $key)<a class="headerlink" href="#assertsessionmissing-string-key" title="Permalink to this headline"></a></h4>
 <p>Asserts that the resulting session does not include the specified $key.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -389,43 +410,53 @@ matches what was specified.</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="header-assertions">
 <h3><a class="toc-backref" href="#id5">Header Assertions</a><a class="headerlink" href="#header-assertions" title="Permalink to this headline"></a></h3>
-<p><strong>assertHeader(string $key, $value = null)</strong></p>
-<p>Asserts that a header named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
+<section id="assertheader-string-key-value-null">
+<h4>assertHeader(string $key, $value = null)<a class="headerlink" href="#assertheader-string-key-value-null" title="Permalink to this headline"></a></h4>
+<p>Asserts that a header named <code class="docutils literal notranslate"><span class="pre">$key</span></code> exists in the response. If <code class="docutils literal notranslate"><span class="pre">$value</span></code> is not empty, will also assert that
 the values match.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertHeaderMissing(string $key)</strong></p>
-<p>Asserts that a header name <strong>$key</strong> does not exist in the response.</p>
+</section>
+<section id="assertheadermissing-string-key">
+<h4>assertHeaderMissing(string $key)<a class="headerlink" href="#assertheadermissing-string-key" title="Permalink to this headline"></a></h4>
+<p>Asserts that a header name <code class="docutils literal notranslate"><span class="pre">$key</span></code> does not exist in the response.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertHeader</span><span class="p">(</span><span class="s1">&#39;Accepts&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="cookie-assertions">
 <h3><a class="toc-backref" href="#id6">Cookie Assertions</a><a class="headerlink" href="#cookie-assertions" title="Permalink to this headline"></a></h3>
-<p><strong>assertCookie(string $key, $value = null, string $prefix = ‘’)</strong></p>
-<p>Asserts that a cookie named <strong>$key</strong> exists in the response. If <strong>$value</strong> is not empty, will also assert that
+<section id="assertcookie-string-key-value-null-string-prefix">
+<h4>assertCookie(string $key, $value = null, string $prefix = ‘’)<a class="headerlink" href="#assertcookie-string-key-value-null-string-prefix" title="Permalink to this headline"></a></h4>
+<p>Asserts that a cookie named <code class="docutils literal notranslate"><span class="pre">$key</span></code> exists in the response. If <code class="docutils literal notranslate"><span class="pre">$value</span></code> is not empty, will also assert that
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookie</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertCookieMissing(string $key)</strong></p>
-<p>Asserts that a cookie named <strong>$key</strong> does not exist in the response.</p>
+</section>
+<section id="assertcookiemissing-string-key">
+<h4>assertCookieMissing(string $key)<a class="headerlink" href="#assertcookiemissing-string-key" title="Permalink to this headline"></a></h4>
+<p>Asserts that a cookie named <code class="docutils literal notranslate"><span class="pre">$key</span></code> does not exist in the response.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertCookieMissing</span><span class="p">(</span><span class="s1">&#39;ci_session&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertCookieExpired(string $key, string $prefix = ‘’)</strong></p>
-<p>Asserts that a cookie named <strong>$key</strong> exists, but has expired. You can set the cookie prefix, if needed, by passing it
+</section>
+<section id="assertcookieexpired-string-key-string-prefix">
+<h4>assertCookieExpired(string $key, string $prefix = ‘’)<a class="headerlink" href="#assertcookieexpired-string-key-string-prefix" title="Permalink to this headline"></a></h4>
+<p>Asserts that a cookie named <code class="docutils literal notranslate"><span class="pre">$key</span></code> exists, but has expired. You can set the cookie prefix, if needed, by passing it
 in as the second parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -433,11 +464,14 @@ in as the second parameter.</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="dom-helpers">
 <h3><a class="toc-backref" href="#id7">DOM Helpers</a><a class="headerlink" href="#dom-helpers" title="Permalink to this headline"></a></h3>
 <p>The response you get back contains a number of helper methods to inspect the HTML output within the response. These
 are useful for using within assertions in your tests.</p>
-<p>The <strong>see()</strong> method checks the text on the page to see if it exists either by itself, or more specifically within
+<section id="see">
+<h4>see()<a class="headerlink" href="#see" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">see()</span></code> method checks the text on the page to see if it exists either by itself, or more specifically within
 a tag, as specified by type, class, or id:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -451,7 +485,7 @@ a tag, as specified by type, class, or id:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">see</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <strong>dontSee()</strong> method is the exact opposite:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dontSee()</span></code> method is the exact opposite:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Checks that &quot;Hello World&quot; does NOT exist on the page</span>
@@ -460,7 +494,10 @@ a tag, as specified by type, class, or id:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <strong>seeElement()</strong> and <strong>dontSeeElement()</strong> are very similar to the previous methods, but do not look at the
+</section>
+<section id="seeelement">
+<h4>seeElement()<a class="headerlink" href="#seeelement" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">seeElement()</span></code> and <code class="docutils literal notranslate"><span class="pre">dontSeeElement()</span></code> are very similar to the previous methods, but do not look at the
 values of the elements. Instead, they simply check that the elements exist on the page:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -472,7 +509,10 @@ values of the elements. Instead, they simply check that the elements exist on th
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>You can use <strong>seeLink()</strong> to ensure that a link appears on the page with the specified text:</p>
+</section>
+<section id="seelink">
+<h4>seeLink()<a class="headerlink" href="#seelink" title="Permalink to this headline"></a></h4>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">seeLink()</span></code> to ensure that a link appears on the page with the specified text:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text::</span>
@@ -481,7 +521,10 @@ values of the elements. Instead, they simply check that the elements exist on th
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <strong>seeInField()</strong> method checks for any input tags exist with the name and value:</p>
+</section>
+<section id="seeinfield">
+<h4>seeInField()<a class="headerlink" href="#seeinfield" title="Permalink to this headline"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">seeInField()</span></code> method checks for any input tags exist with the name and value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Check that an input exists named &#39;user&#39; with the value &#39;John Snow&#39;</span>
@@ -490,7 +533,10 @@ values of the elements. Instead, they simply check that the elements exist on th
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeInField</span><span class="p">(</span><span class="s1">&#39;user[name]&#39;</span><span class="p">,</span> <span class="s1">&#39;John Snow&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Finally, you can check if a checkbox exists and is checked with the <strong>seeCheckboxIsChecked()</strong> method:</p>
+</section>
+<section id="seecheckboxischecked">
+<h4>seeCheckboxIsChecked()<a class="headerlink" href="#seecheckboxischecked" title="Permalink to this headline"></a></h4>
+<p>Finally, you can check if a checkbox exists and is checked with the <code class="docutils literal notranslate"><span class="pre">seeCheckboxIsChecked()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Check if checkbox is checked with class of &#39;foo&#39;</span>
@@ -500,11 +546,13 @@ values of the elements. Instead, they simply check that the elements exist on th
 </pre></div>
 </div>
 </section>
+</section>
 <section id="dom-assertions">
 <h3><a class="toc-backref" href="#id8">DOM Assertions</a><a class="headerlink" href="#dom-assertions" title="Permalink to this headline"></a></h3>
 <p>You can perform tests to see if specific elements/text/etc exist with the body of the response with the following
 assertions.</p>
-<p><strong>assertSee(string $search = null, string $element = null)</strong></p>
+<section id="assertsee-string-search-null-string-element-null">
+<h4>assertSee(string $search = null, string $element = null)<a class="headerlink" href="#assertsee-string-search-null-string-element-null" title="Permalink to this headline"></a></h4>
 <p>Asserts that text/HTML is on the page, either by itself or - more specifically - within
 a tag, as specified by type, class, or id:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -519,8 +567,10 @@ a tag, as specified by type, class, or id:</p>
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;Hellow World&#39;</span><span class="p">,</span> <span class="s1">&#39;#title&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertDontSee(string $search = null, string $element = null)</strong></p>
-<p>Asserts the exact opposite of the <strong>assertSee()</strong> method:</p>
+</section>
+<section id="assertdontsee-string-search-null-string-element-null">
+<h4>assertDontSee(string $search = null, string $element = null)<a class="headerlink" href="#assertdontsee-string-search-null-string-element-null" title="Permalink to this headline"></a></h4>
+<p>Asserts the exact opposite of the <code class="docutils literal notranslate"><span class="pre">assertSee()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Checks that &quot;Hello World&quot; does NOT exist on the page</span>
@@ -529,8 +579,10 @@ a tag, as specified by type, class, or id:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSee</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="s1">&#39;h1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertSeeElement(string $search)</strong></p>
-<p>Similar to <strong>assertSee()</strong>, however this only checks for an existing element. It does not check for specific text:</p>
+</section>
+<section id="assertseeelement-string-search">
+<h4>assertSeeElement(string $search)<a class="headerlink" href="#assertseeelement-string-search" title="Permalink to this headline"></a></h4>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">assertSee()</span></code>, however this only checks for an existing element. It does not check for specific text:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Check that an element with class &#39;notice&#39; exists</span>
@@ -539,8 +591,10 @@ a tag, as specified by type, class, or id:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertDontSeeElement(string $search)</strong></p>
-<p>Similar to <strong>assertSee()</strong>, however this only checks for an existing element that is missing. It does not check for
+</section>
+<section id="assertdontseeelement-string-search">
+<h4>assertDontSeeElement(string $search)<a class="headerlink" href="#assertdontseeelement-string-search" title="Permalink to this headline"></a></h4>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">assertSee()</span></code>, however this only checks for an existing element that is missing. It does not check for
 specific text:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -548,8 +602,10 @@ specific text:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">dontSeeElement</span><span class="p">(</span><span class="s1">&#39;#title&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertSeeLink(string $text, string $details=null)</strong></p>
-<p>Asserts that an anchor tag is found with matching <strong>$text</strong> as the body of the tag:</p>
+</section>
+<section id="assertseelink-string-text-string-details-null">
+<h4>assertSeeLink(string $text, string $details = null)<a class="headerlink" href="#assertseelink-string-text-string-details-null" title="Permalink to this headline"></a></h4>
+<p>Asserts that an anchor tag is found with matching <code class="docutils literal notranslate"><span class="pre">$text</span></code> as the body of the tag:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Check that a link exists with &#39;Upgrade Account&#39; as the text::</span>
@@ -558,7 +614,9 @@ specific text:</p>
 <span class="nv">$results</span><span class="o">-&gt;</span><span class="na">seeLink</span><span class="p">(</span><span class="s1">&#39;Upgrade Account&#39;</span><span class="p">,</span> <span class="s1">&#39;.upsell&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>assertSeeInField(string $field, string $value=null)</strong></p>
+</section>
+<section id="assertseeinfield-string-field-string-value-null">
+<h4>assertSeeInField(string $field, string $value = null)<a class="headerlink" href="#assertseeinfield-string-field-string-value-null" title="Permalink to this headline"></a></h4>
 <p>Asserts that an input tag exists with the name and value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -569,11 +627,13 @@ specific text:</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="working-with-json">
 <h3><a class="toc-backref" href="#id9">Working With JSON</a><a class="headerlink" href="#working-with-json" title="Permalink to this headline"></a></h3>
 <p>Responses will frequently contain JSON responses, especially when working with API methods. The following methods
 can help to test the responses.</p>
-<p><strong>getJSON()</strong></p>
+<section id="getjson">
+<h4>getJSON()<a class="headerlink" href="#getjson" title="Permalink to this headline"></a></h4>
 <p>This method will return the body of the response as a JSON string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -602,7 +662,9 @@ can help to test the responses.</p>
 <p class="admonition-title">Note</p>
 <p>Be aware that the JSON string will be pretty-printed in the result.</p>
 </div>
-<p><strong>assertJSONFragment(array $fragment)</strong></p>
+</section>
+<section id="assertjsonfragment-array-fragment">
+<h4>assertJSONFragment(array $fragment)<a class="headerlink" href="#assertjsonfragment-array-fragment" title="Permalink to this headline"></a></h4>
 <p>Asserts that $fragment is found within the JSON response. It does not need to match the entire JSON value.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -617,13 +679,18 @@ can help to test the responses.</p>
 <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">assertJSONFragment</span><span class="p">([</span><span class="s1">&#39;config&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;key-a&#39;</span><span class="p">]]);</span>
 </pre></div>
 </div>
-<p><strong>assertJSONExact($test)</strong></p>
-<p>Similar to <strong>assertJSONFragment()</strong>, but checks the entire JSON response to ensure exact matches.</p>
+</section>
+<section id="assertjsonexact-test">
+<h4>assertJSONExact($test)<a class="headerlink" href="#assertjsonexact-test" title="Permalink to this headline"></a></h4>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">assertJSONFragment()</span></code>, but checks the entire JSON response to ensure exact matches.</p>
+</section>
 </section>
 <section id="working-with-xml">
 <h3><a class="toc-backref" href="#id10">Working With XML</a><a class="headerlink" href="#working-with-xml" title="Permalink to this headline"></a></h3>
-<p><strong>getXML()</strong></p>
+<section id="getxml">
+<h4>getXML()<a class="headerlink" href="#getxml" title="Permalink to this headline"></a></h4>
 <p>If your application returns XML, you can retrieve it through this method.</p>
+</section>
 </section>
 </section>
 </section>
