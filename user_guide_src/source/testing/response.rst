@@ -50,7 +50,7 @@ a response status code in the 200 or 300's. An empty body is not considered vali
 assertOK()
 ----------
 
-This assertion simply uses the **isOK()** method to test a response. **assertNotOK** is the inverse of this assertion.
+This assertion simply uses the ``isOK()`` method to test a response. ``assertNotOK()`` is the inverse of this assertion.
 
 .. literalinclude:: response/005.php
 
@@ -64,7 +64,7 @@ Returns a boolean true/false based on whether the response is a redirected respo
 assertRedirect()
 ----------------
 
-Asserts that the Response is an instance of RedirectResponse. **assertNotRedirect** is the inverse of this assertion.
+Asserts that the Response is an instance of RedirectResponse. ``assertNotRedirect()`` is the inverse of this assertion.
 
 .. literalinclude:: response/007.php
 
@@ -114,7 +114,7 @@ Header Assertions
 assertHeader(string $key, $value = null)
 ----------------------------------------
 
-Asserts that a header named **$key** exists in the response. If **$value** is not empty, will also assert that
+Asserts that a header named ``$key`` exists in the response. If ``$value`` is not empty, will also assert that
 the values match.
 
 .. literalinclude:: response/013.php
@@ -122,7 +122,7 @@ the values match.
 assertHeaderMissing(string $key)
 --------------------------------
 
-Asserts that a header name **$key** does not exist in the response.
+Asserts that a header name ``$key`` does not exist in the response.
 
 .. literalinclude:: response/014.php
 
@@ -132,7 +132,7 @@ Cookie Assertions
 assertCookie(string $key, $value = null, string $prefix = '')
 -------------------------------------------------------------
 
-Asserts that a cookie named **$key** exists in the response. If **$value** is not empty, will also assert that
+Asserts that a cookie named ``$key`` exists in the response. If ``$value`` is not empty, will also assert that
 the values match. You can set the cookie prefix, if needed, by passing it in as the third parameter.
 
 .. literalinclude:: response/015.php
@@ -140,14 +140,14 @@ the values match. You can set the cookie prefix, if needed, by passing it in as 
 assertCookieMissing(string $key)
 --------------------------------
 
-Asserts that a cookie named **$key** does not exist in the response.
+Asserts that a cookie named ``$key`` does not exist in the response.
 
 .. literalinclude:: response/016.php
 
 assertCookieExpired(string $key, string $prefix = '')
 -----------------------------------------------------
 
-Asserts that a cookie named **$key** exists, but has expired. You can set the cookie prefix, if needed, by passing it
+Asserts that a cookie named ``$key`` exists, but has expired. You can set the cookie prefix, if needed, by passing it
 in as the second parameter.
 
 .. literalinclude:: response/017.php
@@ -158,44 +158,44 @@ DOM Helpers
 The response you get back contains a number of helper methods to inspect the HTML output within the response. These
 are useful for using within assertions in your tests.
 
-The **see()** method checks the text on the page to see if it exists either by itself, or more specifically within
 see()
 -----
 
+The ``see()`` method checks the text on the page to see if it exists either by itself, or more specifically within
 a tag, as specified by type, class, or id:
 
 .. literalinclude:: response/018.php
 
-The **dontSee()** method is the exact opposite:
+The ``dontSee()`` method is the exact opposite:
 
 .. literalinclude:: response/019.php
 
-The **seeElement()** and **dontSeeElement()** are very similar to the previous methods, but do not look at the
 seeElement()
 ------------
 
+The ``seeElement()`` and ``dontSeeElement()`` are very similar to the previous methods, but do not look at the
 values of the elements. Instead, they simply check that the elements exist on the page:
 
 .. literalinclude:: response/020.php
 
-You can use **seeLink()** to ensure that a link appears on the page with the specified text:
 seeLink()
 ---------
 
+You can use ``seeLink()`` to ensure that a link appears on the page with the specified text:
 
 .. literalinclude:: response/021.php
 
-The **seeInField()** method checks for any input tags exist with the name and value:
 seeInField()
 ------------
 
+The ``seeInField()`` method checks for any input tags exist with the name and value:
 
 .. literalinclude:: response/022.php
 
-Finally, you can check if a checkbox exists and is checked with the **seeCheckboxIsChecked()** method:
 seeCheckboxIsChecked()
 ----------------------
 
+Finally, you can check if a checkbox exists and is checked with the ``seeCheckboxIsChecked()`` method:
 
 .. literalinclude:: response/023.php
 
@@ -216,21 +216,21 @@ a tag, as specified by type, class, or id:
 assertDontSee(string $search = null, string $element = null)
 ------------------------------------------------------------
 
-Asserts the exact opposite of the **assertSee()** method:
+Asserts the exact opposite of the ``assertSee()`` method:
 
 .. literalinclude:: response/025.php
 
 assertSeeElement(string $search)
 --------------------------------
 
-Similar to **assertSee()**, however this only checks for an existing element. It does not check for specific text:
+Similar to ``assertSee()``, however this only checks for an existing element. It does not check for specific text:
 
 .. literalinclude:: response/026.php
 
 assertDontSeeElement(string $search)
 ------------------------------------
 
-Similar to **assertSee()**, however this only checks for an existing element that is missing. It does not check for
+Similar to ``assertSee()``, however this only checks for an existing element that is missing. It does not check for
 specific text:
 
 .. literalinclude:: response/027.php
@@ -238,7 +238,7 @@ specific text:
 assertSeeLink(string $text, string $details = null)
 ---------------------------------------------------
 
-Asserts that an anchor tag is found with matching **$text** as the body of the tag:
+Asserts that an anchor tag is found with matching ``$text`` as the body of the tag:
 
 .. literalinclude:: response/028.php
 
@@ -278,7 +278,7 @@ Asserts that $fragment is found within the JSON response. It does not need to ma
 assertJSONExact($test)
 ----------------------
 
-Similar to **assertJSONFragment()**, but checks the entire JSON response to ensure exact matches.
+Similar to ``assertJSONFragment()``, but checks the entire JSON response to ensure exact matches.
 
 Working With XML
 ================
