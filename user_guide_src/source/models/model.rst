@@ -131,6 +131,8 @@ This requires either a DATETIME or INTEGER field in the database as per the mode
 ``$dateFormat`` setting. The default field name is ``deleted_at`` however this name can be
 configured to any name of your choice by using ``$deletedField`` property.
 
+.. important:: The ``deleted_at`` field must be nullable.
+
 $allowedFields
 --------------
 
