@@ -14,13 +14,13 @@ create your own directly using any ``ResponseInterface``:
     :depth: 2
 
 Testing the Response
-====================
+********************
 
 Whether you have received a ``TestResponse`` as a result of your tests or created one yourself,
 there are a number of new assertions that you can use in your tests.
 
 Accessing Request/Response
---------------------------
+==========================
 
 **request()**
 
@@ -35,7 +35,7 @@ This allows you direct access to the response object:
 .. literalinclude:: response/003.php
 
 Checking Response Status
-------------------------
+========================
 
 **isOK()**
 
@@ -82,7 +82,7 @@ Asserts that the HTTP status code returned matches $code.
 .. literalinclude:: response/010.php
 
 Session Assertions
-------------------
+==================
 
 **assertSessionHas(string $key, $value = null)**
 
@@ -98,7 +98,7 @@ Asserts that the resulting session does not include the specified $key.
 .. literalinclude:: response/012.php
 
 Header Assertions
------------------
+=================
 
 **assertHeader(string $key, $value = null)**
 
@@ -114,7 +114,7 @@ Asserts that a header name **$key** does not exist in the response.
 .. literalinclude:: response/014.php
 
 Cookie Assertions
------------------
+=================
 
 **assertCookie(string $key, $value = null, string $prefix = '')**
 
@@ -137,7 +137,7 @@ in as the second parameter.
 .. literalinclude:: response/017.php
 
 DOM Helpers
------------
+===========
 
 The response you get back contains a number of helper methods to inspect the HTML output within the response. These
 are useful for using within assertions in your tests.
@@ -169,7 +169,7 @@ Finally, you can check if a checkbox exists and is checked with the **seeCheckbo
 .. literalinclude:: response/023.php
 
 DOM Assertions
---------------
+==============
 
 You can perform tests to see if specific elements/text/etc exist with the body of the response with the following
 assertions.
@@ -213,7 +213,7 @@ Asserts that an input tag exists with the name and value:
 .. literalinclude:: response/029.php
 
 Working With JSON
------------------
+=================
 
 Responses will frequently contain JSON responses, especially when working with API methods. The following methods
 can help to test the responses.
@@ -241,7 +241,7 @@ Asserts that $fragment is found within the JSON response. It does not need to ma
 Similar to **assertJSONFragment()**, but checks the entire JSON response to ensure exact matches.
 
 Working With XML
-----------------
+================
 
 **getXML()**
 
