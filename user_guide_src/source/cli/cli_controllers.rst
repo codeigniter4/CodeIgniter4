@@ -1,6 +1,6 @@
-############################
-Running via the Command Line
-############################
+###########################
+Running Controllers via CLI
+###########################
 
 As well as calling an application's :doc:`Controllers </incoming/controllers>`
 via the URL in a browser they can also be loaded via the command-line
@@ -9,27 +9,6 @@ interface (CLI).
 .. contents::
     :local:
     :depth: 2
-
-What is the CLI?
-================
-
-The command-line interface is a text-based method of interacting with
-computers. For more information, check the `Wikipedia
-article <https://en.wikipedia.org/wiki/Command-line_interface>`_.
-
-Why run via the command-line?
-=============================
-
-There are many reasons for running CodeIgniter from the command-line,
-but they are not always obvious.
-
--  Run your cron-jobs without needing to use *wget* or *curl*.
--  Make your cron-jobs inaccessible from being loaded in the URL by
-   checking the return value of :php:func:`is_cli()`.
--  Make interactive "tasks" that can do things like set permissions,
-   prune cache folders, run backups, etc.
--  Integrate with other applications in other languages. For example, a
-   random C++ script could call one command and run code in your models!
 
 Let's try it: Hello World!
 ==========================
