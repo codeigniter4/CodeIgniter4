@@ -47,7 +47,7 @@ See :ref:`auto-routing-improved` for the details.
 Commands
 ========
 
-- Added ``spark db:table`` command.
+- Added ``spark db:table`` command. See :doc:`../dbmgmt/db_commands` for the details.
     - You can now see the names of all the tables in the database you are currently connected in the terminal.
         - ``spark db:table --show``
     - Or you can see the field names and the records of a table.
