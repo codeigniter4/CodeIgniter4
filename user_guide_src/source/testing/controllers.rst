@@ -31,14 +31,16 @@ to run as the parameter:
 Helper Methods
 ==============
 
-**controller($class)**
+controller($class)
+------------------
 
 Specifies the class name of the controller to test. The first parameter must be a fully qualified class name
 (i.e., include the namespace):
 
 .. literalinclude:: controllers/003.php
 
-**execute(string $method, ...$params)**
+execute(string $method, ...$params)
+-----------------------------------
 
 Executes the specified method within the controller. The first parameter is the name of the method to run:
 
@@ -49,7 +51,8 @@ By specifying the second and subsequent parameters, you can pass them to the con
 This returns a new helper class that provides a number of routines for checking the response itself. See below
 for details.
 
-**withConfig($config)**
+withConfig($config)
+-------------------
 
 Allows you to pass in a modified version of **Config\App.php** to test with different settings:
 
@@ -57,7 +60,8 @@ Allows you to pass in a modified version of **Config\App.php** to test with diff
 
 If you do not provide one, the application's App config file will be used.
 
-**withRequest($request)**
+withRequest($request)
+---------------------
 
 Allows you to provide an **IncomingRequest** instance tailored to your testing needs:
 
@@ -66,7 +70,8 @@ Allows you to provide an **IncomingRequest** instance tailored to your testing n
 If you do not provide one, a new IncomingRequest instance with the default application values will be passed
 into your controller.
 
-**withResponse($response)**
+withResponse($response)
+-----------------------
 
 Allows you to provide a **Response** instance:
 
@@ -75,7 +80,8 @@ Allows you to provide a **Response** instance:
 If you do not provide one, a new Response instance with the default application values will be passed
 into your controller.
 
-**withLogger($logger)**
+withLogger($logger)
+-------------------
 
 Allows you to provide a **Logger** instance:
 
@@ -84,7 +90,8 @@ Allows you to provide a **Logger** instance:
 If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.
 
-**withURI(string $uri)**
+withURI(string $uri)
+--------------------
 
 Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
@@ -94,7 +101,8 @@ representing a valid URI:
 
 It is a good practice to always provide the URI during testing to avoid surprises.
 
-**withBody($body)**
+withBody($body)
+---------------
 
 Allows you to provide a custom body for the request. This can be helpful when testing API controllers where
 you need to set a JSON value as the body. The only parameter is a string that represents the body of the request:
@@ -187,18 +195,30 @@ Assertions
 In addition to the helper methods above ``FilterTestTrait`` also comes with some assertions
 to streamline your test methods.
 
-The **assertFilter()** method checks that the given route at position uses the filter (by its alias):
+assertFilter()
+^^^^^^^^^^^^^^
+
+The ``assertFilter()`` method checks that the given route at position uses the filter (by its alias):
 
 .. literalinclude:: controllers/015.php
 
-The **assertNotFilter()** method checks that the given route at position does not use the filter (by its alias):
+assertNotFilter()
+^^^^^^^^^^^^^^^^^
+
+The ``assertNotFilter()`` method checks that the given route at position does not use the filter (by its alias):
 
 .. literalinclude:: controllers/016.php
 
-The **assertHasFilters()** method checks that the given route at position has at least one filter set:
+assertHasFilters()
+^^^^^^^^^^^^^^^^^^
+
+The ``assertHasFilters()`` method checks that the given route at position has at least one filter set:
 
 .. literalinclude:: controllers/017.php
 
-The **assertNotHasFilters()** method checks that the given route at position has no filters set:
+assertNotHasFilters()
+^^^^^^^^^^^^^^^^^^^^^
+
+The ``assertNotHasFilters()`` method checks that the given route at position has no filters set:
 
 .. literalinclude:: controllers/018.php
