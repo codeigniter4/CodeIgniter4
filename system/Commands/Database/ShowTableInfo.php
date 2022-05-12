@@ -48,7 +48,16 @@ class ShowTableInfo extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'db:table [<table_name>] [options]';
+    protected $usage = <<<'EOL'
+        db:table [<table_name>] [options]
+
+          Examples:
+            db:table --show
+            db:table --metadata
+            db:table my_table --metadata
+            db:table my_table
+            db:table my_table --limit-rows 5 --limit-field-value 10 --desc
+        EOL;
 
     /**
      * The Command's arguments
