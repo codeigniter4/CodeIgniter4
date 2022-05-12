@@ -47,12 +47,14 @@ See :ref:`auto-routing-improved` for the details.
 Commands
 ========
 
-- Added ``db:table`` command.
-    - You can now see the names of all the tables in the database you are currently connected, field names or other metadata, like the column type, max length and ... each table, and the information in that table in the terminal.
-        - ``db:table --show``
-        - ``db:table my_table``
-        - ``db:table my_table --metadata``
-        - ``db:table my_table --limit-row 50 --limit-field-value 20 --desc``
+- Added ``spark db:table`` command.
+    - You can now see the names of all the tables in the database you are currently connected in the terminal.
+        - ``spark db:table --show``
+    - Or you can see the field names and the records of a table.
+        - ``spark db:table my_table``
+        - ``spark db:table my_table --limit-row 50 --limit-field-value 20 --desc``
+    - Or you can see metadata like the column type, max length of a table.
+        - ``spark db:table my_table --metadata``
 - The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
 
 Others
