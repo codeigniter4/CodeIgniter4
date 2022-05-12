@@ -80,7 +80,7 @@ Query Builder Insert
 Get Table Rows in the Command Line
 ==================================
 
-You can see specific table info on the command line. Assuming there is a table called ``my_table`` , use the following command to get started::
+You can see specific table information on the command line. Assuming there is a table called ``my_table``, use the following command to get started::
 
     > php spark db:table my_table
 
