@@ -1,6 +1,6 @@
-########################
+#########
 Utilities
-########################
+#########
 
 The Database Utility Class contains methods that help you manage your database.
 
@@ -9,10 +9,11 @@ The Database Utility Class contains methods that help you manage your database.
     :depth: 2
 
 *******************
-Get XML FROM Result
+Get XML from Result
 *******************
 
-**getXMLFromResult()**
+getXMLFromResult()
+==================
 
 This method returns the xml result from database result. You can do like this:
 
