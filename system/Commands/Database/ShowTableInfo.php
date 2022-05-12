@@ -162,7 +162,13 @@ class ShowTableInfo extends BaseCommand
         $thead = $this->db->getFieldNames($tableName);
         $this->restoreDBPrefix();
 
-        $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFieldValue);
+        // If there is a field named `id`, sort by it.
+        $sortField = null;
+        if (in_array('id', $thead, true)) {
+            $sortField = 'id';
+        }
+
+        $this->tbody = $this->makeTableRows($tableName, $limitRows, $limitFieldValue, $sortField);
         CLI::table($this->tbody, $thead);
     }
 
@@ -203,13 +209,21 @@ class ShowTableInfo extends BaseCommand
         return $this->tbody;
     }
 
-    private function makeTableRows(string $tableName, int $limitRows, int $limitFieldValue): array
-    {
+    private function makeTableRows(
+        string $tableName,
+        int $limitRows,
+        int $limitFieldValue,
+        ?string $sortField = null
+    ): array {
         $this->tbody = [];
 
         $this->removeDBPrefix();
         $builder = $this->db->table($tableName);
-        $rows    = $builder->limit($limitRows)->get()->getResultArray();
+        $builder->limit($limitRows);
+        if ($sortField !== null) {
+            $builder->orderBy($sortField, $this->sortDesc ? 'DESC' : 'ASC');
+        }
+        $rows = $builder->get()->getResultArray();
         $this->restoreDBPrefix();
 
         foreach ($rows as $row) {
@@ -222,7 +236,7 @@ class ShowTableInfo extends BaseCommand
             $this->tbody[] = $row;
         }
 
-        if ($this->sortDesc) {
+        if ($sortField === null && $this->sortDesc) {
             krsort($this->tbody);
         }
 

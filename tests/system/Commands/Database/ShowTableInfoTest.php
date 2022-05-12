@@ -169,4 +169,24 @@ final class ShowTableInfoTest extends CIUnitTestCase
             EOL;
         $this->assertStringContainsString($expected, $result);
     }
+
+    public function testDbTableAllOptions(): void
+    {
+        command('db:table db_user --limit-rows 2 --limit-field-value 5 --desc');
+
+        $result = $this->getResultWithoutControlCode();
+
+        $expected = 'Data of Table "db_user":';
+        $this->assertStringContainsString($expected, $result);
+
+        $expected = <<<'EOL'
+            +----+----------+----------+---------+------------+------------+------------+
+            | id | name     | email    | country | created_at | updated_at | deleted_at |
+            +----+----------+----------+---------+------------+------------+------------+
+            | 4  | Chris... | chris... | UK      |            |            |            |
+            | 3  | Richa... | richa... | US      |            |            |            |
+            +----+----------+----------+---------+------------+------------+------------+
+            EOL;
+        $this->assertStringContainsString($expected, $result);
+    }
 }
