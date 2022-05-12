@@ -149,4 +149,24 @@ final class ShowTableInfoTest extends CIUnitTestCase
             EOL;
         $this->assertStringContainsString($expected, $result);
     }
+
+    public function testDbTableLimitRows(): void
+    {
+        command('db:table db_user --limit-rows 2');
+
+        $result = $this->getResultWithoutControlCode();
+
+        $expected = 'Data of Table "db_user":';
+        $this->assertStringContainsString($expected, $result);
+
+        $expected = <<<'EOL'
+            +----+-------------+--------------------+---------+------------+------------+------------+
+            | id | name        | email              | country | created_at | updated_at | deleted_at |
+            +----+-------------+--------------------+---------+------------+------------+------------+
+            | 1  | Derek Jones | derek@world.com    | US      |            |            |            |
+            | 2  | Ahmadinejad | ahmadinejad@wor... | Iran    |            |            |            |
+            +----+-------------+--------------------+---------+------------+------------+------------+
+            EOL;
+        $this->assertStringContainsString($expected, $result);
+    }
 }
