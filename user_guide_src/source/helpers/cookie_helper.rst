@@ -50,8 +50,8 @@ The following functions are available:
     cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
     detailed description of its use, as this function acts very
     similarly to ``IncomingRequest::getCookie()``, except it will also prepend
-    the ``$cookiePrefix`` that you might've set in your
-    **app/Config/App.php** file.
+    the ``Config\Cookie::$prefix`` that you might've set in your
+    **app/Config/Cookie.php** file.
 
 .. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
 
