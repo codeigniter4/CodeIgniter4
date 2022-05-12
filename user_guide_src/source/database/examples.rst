@@ -84,7 +84,7 @@ You can see specific table information on the command line. Assuming there is a 
 
     > php spark db:table my_table
 
-If table ``my_table`` is not in the database, the CodeIgniter displays a list of available tables to select.
+If table ``my_table`` is not in the database, CodeIgniter displays a list of available tables to select.
 You can also use only the following command without the table name. In this case, the table name will be asked ::
 
     > php spark db:table
