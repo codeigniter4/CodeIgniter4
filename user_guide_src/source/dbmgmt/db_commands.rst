@@ -36,6 +36,14 @@ When you have a table named ``my_table``, you can see the field names and the re
 
     > php spark db:table my_table
 
+If the table ``my_table`` is not in the database, CodeIgniter displays a list of available tables to select.
+
+You can also use the following command without the table name::
+
+    > php spark db:table
+
+In this case, the table name will be asked.
+
 You can also pass a few options::
 
     > php spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc
