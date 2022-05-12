@@ -32,7 +32,7 @@ this:
 Simplified Queries
 ==================
 
-The **simpleQuery** method is a simplified version of the
+The ``simpleQuery()`` method is a simplified version of the
 ``$db->query()`` method. It DOES
 NOT return a database result set, nor does it set the query timer, or
 compile bind data, or store your query for debugging. It simply lets you
@@ -51,7 +51,7 @@ fetchable results.
     So keep that in mind if you're looking for a boolean value.
 
 ***************************************
-Working with Database prefixes manually
+Working with Database Prefixes Manually
 ***************************************
 
 If you have configured a database prefix and would like to prepend it to
@@ -70,7 +70,7 @@ You can get the current prefix any time with this method:
 .. literalinclude:: queries/006.php
 
 **********************
-Protecting identifiers
+Protecting Identifiers
 **********************
 
 In many databases, it is advisable to protect table and field names - for
@@ -85,9 +85,9 @@ identifier you can use:
     is NOT designed to work with arbitrary user input. DO NOT feed it
     with unsanitized user data.
 
-This function will also add a table prefix to your table, assuming you
+This function will also add a **table prefix** to your table, assuming you
 have a prefix specified in your database config file. To enable the
-prefixing set true (boolean) via the second parameter:
+prefixing set ``true`` (boolean) via the second parameter:
 
 .. literalinclude:: queries/008.php
 
@@ -99,26 +99,35 @@ It's a very good security practice to escape your data before submitting
 it into your database. CodeIgniter has three methods that help you do
 this:
 
-#. **$db->escape()** This function determines the data type so
-   that it can escape only string data. It also automatically adds
-   single quotes around the data so you don't have to:
+1. $db->escape()
+================
 
-   .. literalinclude:: queries/009.php
+This function determines the data type so
+that it can escape only string data. It also automatically adds
+single quotes around the data so you don't have to:
 
-#. **$db->escapeString()** This function escapes the data passed to
-   it, regardless of type. Most of the time you'll use the above
-   function rather than this one. Use the function like this:
+.. literalinclude:: queries/009.php
 
-   .. literalinclude:: queries/010.php
+2. $db->escapeString()
+======================
 
-#. **$db->escapeLikeString()** This method should be used when
-   strings are to be used in LIKE conditions so that LIKE wildcards
-   ('%', '\_') in the string are also properly escaped.
+This function escapes the data passed to
+it, regardless of type. Most of the time you'll use the above
+function rather than this one. Use the function like this:
+
+.. literalinclude:: queries/010.php
+
+3. $db->escapeLikeString()
+==========================
+
+This method should be used when
+strings are to be used in LIKE conditions so that LIKE wildcards
+(``%``, ``_``) in the string are also properly escaped.
 
 .. literalinclude:: queries/011.php
 
-.. important:: The ``escapeLikeString()`` method uses '!' (exclamation mark)
-    to escape special characters for *LIKE* conditions. Because this
+.. important:: The ``escapeLikeString()`` method uses ``'!'`` (exclamation mark)
+    to escape special characters for ``LIKE`` conditions. Because this
     method escapes partial strings that you would wrap in quotes
     yourself, it cannot automatically add the ``ESCAPE '!'``
     condition for you, and so you'll have to manually do that.
@@ -162,7 +171,8 @@ placeholders in the query:
 Handling Errors
 ***************
 
-**$db->error();**
+$db->error()
+============
 
 If you need to get the last error that has occurred, the ``error()`` method
 will return an array containing its code and message. Here's a quick
@@ -220,23 +230,26 @@ Other Methods
 
 In addition to these two primary methods, the prepared query object also has the following methods:
 
-**close()**
+close()
+-------
 
 While PHP does a pretty good job of closing all open statements with the database it's always a good idea to
 close out the prepared statement when you're done with it:
 
 .. literalinclude:: queries/020.php
 
-**getQueryString()**
+getQueryString()
+----------------
 
 This returns the prepared query as a string.
 
-**hasError()**
+hasError()
+----------
 
 Returns boolean true/false if the last ``execute()`` call created any errors.
 
-**getErrorCode()**
-**getErrorMessage()**
+getErrorCode() getErrorMessage()
+--------------------------------
 
 If any errors were encountered these methods can be used to retrieve the error code and string.
 
@@ -249,10 +262,11 @@ Internally, all queries are processed and stored as instances of
 the parameters, otherwise preparing the query, and storing performance
 data about its query.
 
-**getLastQuery()**
+getLastQuery()
+==============
 
 When you just need to retrieve the last Query object, use the
-getLastQuery() method:
+``getLastQuery()`` method:
 
 .. literalinclude:: queries/021.php
 
@@ -263,7 +277,8 @@ Each query object stores several pieces of information about the query itself.
 This is used, in part, by the Timeline feature, but is available for your use
 as well.
 
-**getQuery()**
+getQuery()
+----------
 
 Returns the final query after all processing has happened. This is the exact
 query that was sent to the database:
@@ -274,28 +289,32 @@ This same value can be retrieved by casting the Query object to a string:
 
 .. literalinclude:: queries/023.php
 
-**getOriginalQuery()**
+getOriginalQuery()
+------------------
 
 Returns the raw SQL that was passed into the object. This will not have any
 binds in it, or prefixes swapped out, etc:
 
 .. literalinclude:: queries/024.php
 
-**hasError()**
+hasError()
+----------
 
 If an error was encountered during the execution of this query this method
 will return true:
 
 .. literalinclude:: queries/025.php
 
-**isWriteType()**
+isWriteType()
+-------------
 
 Returns true if the query was determined to be a write-type query (i.e.,
 INSERT, UPDATE, DELETE, etc):
 
 .. literalinclude:: queries/026.php
 
-**swapPrefix()**
+swapPrefix()
+------------
 
 Replaces one table prefix with another value in the SQL. The first
 parameter is the original prefix that you want replaced, and the second
@@ -303,13 +322,15 @@ parameter is the value you want it replaced with:
 
 .. literalinclude:: queries/027.php
 
-**getStartTime()**
+getStartTime()
+--------------
 
 Gets the time the query was executed in seconds with microseconds:
 
 .. literalinclude:: queries/028.php
 
-**getDuration()**
+getDuration()
+-------------
 
 Returns a float with the duration of the query in seconds with microseconds:
 
