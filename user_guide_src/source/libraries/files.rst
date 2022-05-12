@@ -31,34 +31,39 @@ New Features
 
 In addition to all of the methods in the SplFileInfo class, you get some new tools.
 
-**getRandomName()**
+getRandomName()
+---------------
 
 You can generate a cryptographically secure random filename, with the current timestamp prepended, with the ``getRandomName()``
 method. This is especially useful to rename files when moving it so that the filename is unguessable:
 
 .. literalinclude:: files/003.php
 
-**getSize()**
+getSize()
+---------
 
 Returns the size of the uploaded file in bytes:
 
 .. literalinclude:: files/004.php
 
-**getSizeByUnit()**
+getSizeByUnit()
+---------------
 
 Returns the size of the uploaded file default in bytes. You can pass in either 'kb' or 'mb' as the first parameter to get
 the results in kilobytes or megabytes, respectively:
 
 .. literalinclude:: files/005.php
 
-**getMimeType()**
+getMimeType()
+-------------
 
 Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
 the type of file:
 
 .. literalinclude:: files/006.php
 
-**guessExtension()**
+guessExtension()
+----------------
 
 Attempts to determine the file extension based on the trusted ``getMimeType()`` method. If the mime type is unknown,
 will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
@@ -108,12 +113,14 @@ Below are the specific methods for working with a ``FileCollection``.
 Starting a Collection
 =====================
 
-**__construct(string[] $files = [])**
+__construct(string[] $files = [])
+---------------------------------
 
 The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
 ``add()`` so any files supplied by child classes in the ``$files`` will remain.
 
-**define()**
+define()
+--------
 
 Allows child classes to define their own initial files. This method is called by the constructor and allows
 predefined collections without having to use their methods. Example:
@@ -123,7 +130,8 @@ predefined collections without having to use their methods. Example:
 Now you may use the ``ConfigCollection`` anywhere in your project to access all App Config files without
 having to re-call the collection methods every time.
 
-**set(array $files)**
+set(array $files)
+-----------------
 
 Sets the list of input files to the provided string array of file paths. This will remove any existing
 files from the collection, so ``$collection->set([])`` is essentially a hard reset.
@@ -131,23 +139,26 @@ files from the collection, so ``$collection->set([])`` is essentially a hard res
 Inputting Files
 ===============
 
-**add(string[]|string $paths, bool $recursive = true)**
+add(string[]|string $paths, bool $recursive = true)
+---------------------------------------------------
 
 Adds all files indicated by the path or array of paths. If the path resolves to a directory then ``$recursive``
 will include sub-directories.
 
-**addFile(string $file)** /
-**addFiles(array $files)**
+addFile(string $file) / addFiles(array $files)
+----------------------------------------------
 
 Adds the file or files to the current list of input files. Files are absolute paths to actual files.
 
-**removeFile(string $file)** /
-**removeFiles(array $files)**
+removeFile(string $file) / removeFiles(array $files)
+----------------------------------------------------
 
 Removes the file or files from the current list of input files.
 
-**addDirectory(string $directory, bool $recursive = false)** /
-**addDirectories(array $directories, bool $recursive = false)**
+addDirectory(string $directory, bool $recursive = false)
+--------------------------------------------------------
+addDirectories(array $directories, bool $recursive = false)
+-----------------------------------------------------------
 
 Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
 absolute paths to actual directories.
@@ -155,8 +166,10 @@ absolute paths to actual directories.
 Filtering Files
 ===============
 
-**removePattern(string $pattern, string $scope = null)** /
-**retainPattern(string $pattern, string $scope = null)**
+removePattern(string $pattern, string $scope = null)
+----------------------------------------------------
+retainPattern(string $pattern, string $scope = null)
+----------------------------------------------------
 
 Filters the current file list through the pattern (and optional scope), removing or retaining matched
 files. ``$pattern`` may be a complete regex (like ``'#[A-Za-z]+\.php#'``) or a pseudo-regex similar
@@ -171,7 +184,8 @@ Examples:
 Retrieving Files
 ================
 
-**get(): string[]**
+get(): string[]
+---------------
 
 Returns an array of all the loaded input files.
 
