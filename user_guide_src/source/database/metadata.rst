@@ -25,15 +25,6 @@ you are currently connected to. Example:
 
 .. note:: Some drivers have additional system tables that are excluded from this return.
 
-db:table --show command
------------------------
-
-CodeIgniter supports show list the tables in your database straight from your favorite terminal using the dedicated ``db:table --show`` command. By using this command it is assumed that the tables is   existing. Otherwise, CodeIgniter will complain that tables list show has failed.
-
-To start, just type ::
-
-    > php spark db:table --show
-
 Determine If a Table Exists
 ===========================
 
@@ -113,18 +104,6 @@ database:
 -  max_length - maximum length of the column
 -  primary_key - 1 if the column is a primary key
 -  type - the type of the column
-
-db:table --metadata command
----------------------------
-
-CodeIgniter supports show table containing field information in your database straight from your favorite terminal using the dedicated ``db:table my_table --metadata`` command. By using this command it is assumed that the table ``my_table`` is existing. Otherwise, CodeIgniter will show that tables list for select.
-Also, you can use this command as ``db:table --metadata``.
-
-.. note:: You can use the optional ``--desc``, ``--limit-rows``, ``--limit-field-value`` options at any time when using command ``db:table`` .
-
-Command ``db:table --limit-rows 50``, for example, limits the number of rows to 50 rows.
-Command ``db:table --desc``, set the sort direction to "DESC". 
-And Command ``db:table --limit-field-value 10`` limits the length of the field values to 10 characters, to prevent confusion of the table output in the terminal.
 
 List the Indexes in a Table
 ===========================

@@ -10,3 +10,4 @@ CodeIgniter comes with tools to restructure or seed your database.
     Database Manipulation with Database Forge <forge>
     Database Migrations <migration>
     Database Seeding <seeds>
+    db_commands
