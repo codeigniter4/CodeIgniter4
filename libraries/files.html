@@ -277,7 +277,12 @@ and <a class="reference internal" href="images.html"><span class="doc">images</s
 <li><p><a class="reference internal" href="#taking-advantage-of-spl" id="id2">Taking Advantage of Spl</a></p></li>
 <li><p><a class="reference internal" href="#new-features" id="id3">New Features</a></p>
 <ul>
-<li><p><a class="reference internal" href="#moving-files" id="id4">Moving Files</a></p></li>
+<li><p><a class="reference internal" href="#getrandomname" id="id4">getRandomName()</a></p></li>
+<li><p><a class="reference internal" href="#getsize" id="id5">getSize()</a></p></li>
+<li><p><a class="reference internal" href="#getsizebyunit" id="id6">getSizeByUnit()</a></p></li>
+<li><p><a class="reference internal" href="#getmimetype" id="id7">getMimeType()</a></p></li>
+<li><p><a class="reference internal" href="#guessextension" id="id8">guessExtension()</a></p></li>
+<li><p><a class="reference internal" href="#moving-files" id="id9">Moving Files</a></p></li>
 </ul>
 </li>
 </ul>
@@ -321,7 +326,8 @@ to check that the file exists and throw <code class="docutils literal notranslat
 <section id="new-features">
 <h2><a class="toc-backref" href="#id3">New Features</a><a class="headerlink" href="#new-features" title="Permalink to this headline"></a></h2>
 <p>In addition to all of the methods in the SplFileInfo class, you get some new tools.</p>
-<p><strong>getRandomName()</strong></p>
+<section id="getrandomname">
+<h3><a class="toc-backref" href="#id4">getRandomName()</a><a class="headerlink" href="#getrandomname" title="Permalink to this headline"></a></h3>
 <p>You can generate a cryptographically secure random filename, with the current timestamp prepended, with the <code class="docutils literal notranslate"><span class="pre">getRandomName()</span></code>
 method. This is especially useful to rename files when moving it so that the filename is unguessable:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -330,14 +336,18 @@ method. This is especially useful to rename files when moving it so that the fil
 <span class="nv">$newName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getRandomName</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>getSize()</strong></p>
+</section>
+<section id="getsize">
+<h3><a class="toc-backref" href="#id5">getSize()</a><a class="headerlink" href="#getsize" title="Permalink to this headline"></a></h3>
 <p>Returns the size of the uploaded file in bytes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$size</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSize</span><span class="p">();</span> <span class="c1">// 256901</span>
 </pre></div>
 </div>
-<p><strong>getSizeByUnit()</strong></p>
+</section>
+<section id="getsizebyunit">
+<h3><a class="toc-backref" href="#id6">getSizeByUnit()</a><a class="headerlink" href="#getsizebyunit" title="Permalink to this headline"></a></h3>
 <p>Returns the size of the uploaded file default in bytes. You can pass in either ‘kb’ or ‘mb’ as the first parameter to get
 the results in kilobytes or megabytes, respectively:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -347,7 +357,9 @@ the results in kilobytes or megabytes, respectively:</p>
 <span class="nv">$megabytes</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getSizeByUnit</span><span class="p">(</span><span class="s1">&#39;mb&#39;</span><span class="p">);</span> <span class="c1">// 0.245</span>
 </pre></div>
 </div>
-<p><strong>getMimeType()</strong></p>
+</section>
+<section id="getmimetype">
+<h3><a class="toc-backref" href="#id7">getMimeType()</a><a class="headerlink" href="#getmimetype" title="Permalink to this headline"></a></h3>
 <p>Retrieve the media type (mime type) of the file. Uses methods that are considered as secure as possible when determining
 the type of file:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -357,7 +369,9 @@ the type of file:</p>
 <span class="k">echo</span> <span class="nv">$type</span><span class="p">;</span> <span class="c1">// image/png</span>
 </pre></div>
 </div>
-<p><strong>guessExtension()</strong></p>
+</section>
+<section id="guessextension">
+<h3><a class="toc-backref" href="#id8">guessExtension()</a><a class="headerlink" href="#guessextension" title="Permalink to this headline"></a></h3>
 <p>Attempts to determine the file extension based on the trusted <code class="docutils literal notranslate"><span class="pre">getMimeType()</span></code> method. If the mime type is unknown,
 will return null. This is often a more trusted source than simply using the extension provided by the filename. Uses
 the values in <strong>app/Config/Mimes.php</strong> to determine extension:</p>
@@ -367,8 +381,9 @@ the values in <strong>app/Config/Mimes.php</strong> to determine extension:</p>
 <span class="nv">$ext</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">guessExtension</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
 <section id="moving-files">
-<h3><a class="toc-backref" href="#id4">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline"></a></h3>
 <p>Each file can be moved to its new location with the aptly named <code class="docutils literal notranslate"><span class="pre">move()</span></code> method. This takes the directory to move
 the file to as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -433,10 +448,13 @@ or retain files matching a certain regex or glob-style pattern:</p>
 <p>Below are the specific methods for working with a <code class="docutils literal notranslate"><span class="pre">FileCollection</span></code>.</p>
 <section id="starting-a-collection">
 <h2>Starting a Collection<a class="headerlink" href="#starting-a-collection" title="Permalink to this headline"></a></h2>
-<p><strong>__construct(string[] $files = [])</strong></p>
+<section id="construct-string-files">
+<h3>__construct(string[] $files = [])<a class="headerlink" href="#construct-string-files" title="Permalink to this headline"></a></h3>
 <p>The constructor accepts an optional array of file paths to use as the initial collection. These are passed to
 <code class="docutils literal notranslate"><span class="pre">add()</span></code> so any files supplied by child classes in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> will remain.</p>
-<p><strong>define()</strong></p>
+</section>
+<section id="define">
+<h3>define()<a class="headerlink" href="#define" title="Permalink to this headline"></a></h3>
 <p>Allows child classes to define their own initial files. This method is called by the constructor and allows
 predefined collections without having to use their methods. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -454,30 +472,41 @@ predefined collections without having to use their methods. Example:</p>
 </div>
 <p>Now you may use the <code class="docutils literal notranslate"><span class="pre">ConfigCollection</span></code> anywhere in your project to access all App Config files without
 having to re-call the collection methods every time.</p>
-<p><strong>set(array $files)</strong></p>
+</section>
+<section id="set-array-files">
+<h3>set(array $files)<a class="headerlink" href="#set-array-files" title="Permalink to this headline"></a></h3>
 <p>Sets the list of input files to the provided string array of file paths. This will remove any existing
 files from the collection, so <code class="docutils literal notranslate"><span class="pre">$collection-&gt;set([])</span></code> is essentially a hard reset.</p>
 </section>
+</section>
 <section id="inputting-files">
 <h2>Inputting Files<a class="headerlink" href="#inputting-files" title="Permalink to this headline"></a></h2>
-<p><strong>add(string[]|string $paths, bool $recursive = true)</strong></p>
 <p>Adds all files indicated by the path or array of paths. If the path resolves to a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code>
 will include sub-directories.</p>
-<p><strong>addFile(string $file)</strong> /
-<strong>addFiles(array $files)</strong></p>
+<section id="addfile-string-file-addfiles-array-files">
+<h3>addFile(string $file) / addFiles(array $files)<a class="headerlink" href="#addfile-string-file-addfiles-array-files" title="Permalink to this headline"></a></h3>
 <p>Adds the file or files to the current list of input files. Files are absolute paths to actual files.</p>
-<p><strong>removeFile(string $file)</strong> /
-<strong>removeFiles(array $files)</strong></p>
+</section>
+<section id="removefile-string-file-removefiles-array-files">
+<h3>removeFile(string $file) / removeFiles(array $files)<a class="headerlink" href="#removefile-string-file-removefiles-array-files" title="Permalink to this headline"></a></h3>
 <p>Removes the file or files from the current list of input files.</p>
-<p><strong>addDirectory(string $directory, bool $recursive = false)</strong> /
-<strong>addDirectories(array $directories, bool $recursive = false)</strong></p>
+</section>
+<section id="adddirectory-string-directory-bool-recursive-false">
+<h3>addDirectory(string $directory, bool $recursive = false)<a class="headerlink" href="#adddirectory-string-directory-bool-recursive-false" title="Permalink to this headline"></a></h3>
+</section>
+<section id="adddirectories-array-directories-bool-recursive-false">
+<h3>addDirectories(array $directories, bool $recursive = false)<a class="headerlink" href="#adddirectories-array-directories-bool-recursive-false" title="Permalink to this headline"></a></h3>
 <p>Adds all files from the directory or directories, optionally recursing into sub-directories. Directories are
 absolute paths to actual directories.</p>
 </section>
+</section>
 <section id="filtering-files">
 <h2>Filtering Files<a class="headerlink" href="#filtering-files" title="Permalink to this headline"></a></h2>
-<p><strong>removePattern(string $pattern, string $scope = null)</strong> /
-<strong>retainPattern(string $pattern, string $scope = null)</strong></p>
+<section id="removepattern-string-pattern-string-scope-null">
+<h3>removePattern(string $pattern, string $scope = null)<a class="headerlink" href="#removepattern-string-pattern-string-scope-null" title="Permalink to this headline"></a></h3>
+</section>
+<section id="retainpattern-string-pattern-string-scope-null">
+<h3>retainPattern(string $pattern, string $scope = null)<a class="headerlink" href="#retainpattern-string-pattern-string-scope-null" title="Permalink to this headline"></a></h3>
 <p>Filters the current file list through the pattern (and optional scope), removing or retaining matched
 files. <code class="docutils literal notranslate"><span class="pre">$pattern</span></code> may be a complete regex (like <code class="docutils literal notranslate"><span class="pre">'#[A-Za-z]+\.php#'</span></code>) or a pseudo-regex similar
 to <code class="docutils literal notranslate"><span class="pre">glob()</span></code> (like <code class="docutils literal notranslate"><span class="pre">*.css</span></code>).
@@ -497,14 +526,17 @@ outside of <code class="docutils literal notranslate"><span class="pre">$scope</
 </pre></div>
 </div>
 </section>
+</section>
 <section id="retrieving-files">
 <h2>Retrieving Files<a class="headerlink" href="#retrieving-files" title="Permalink to this headline"></a></h2>
-<p><strong>get(): string[]</strong></p>
+<section id="get-string">
+<h3>get(): string[]<a class="headerlink" href="#get-string" title="Permalink to this headline"></a></h3>
 <p>Returns an array of all the loaded input files.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">FileCollection</span></code> is an <code class="docutils literal notranslate"><span class="pre">IteratorAggregate</span></code> so you can work with it directly (e.g. <code class="docutils literal notranslate"><span class="pre">foreach</span> <span class="pre">($collection</span> <span class="pre">as</span> <span class="pre">$file)</span></code>).</p>
 </div>
+</section>
 </section>
 </section>
 
