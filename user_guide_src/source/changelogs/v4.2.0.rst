@@ -44,6 +44,19 @@ Added an optional new more secure auto router. These are the changes from the le
 
 See :ref:`auto-routing-improved` for the details.
 
+Commands
+========
+
+- Added ``spark db:table`` command. See :doc:`../dbmgmt/db_commands` for the details.
+    - You can now see the names of all the tables in the database you are currently connected in the terminal.
+        - ``spark db:table --show``
+    - Or you can see the field names and the records of a table.
+        - ``spark db:table my_table``
+        - ``spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc``
+    - Or you can see metadata like the column type, max length of a table.
+        - ``spark db:table my_table --metadata``
+- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
+
 Others
 ======
 
@@ -58,7 +71,6 @@ Others
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.
-- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
 - Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
     - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
 - Added support for webp files to **app/Config/Mimes.php**.

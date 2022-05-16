@@ -15,7 +15,8 @@ These functions let you fetch table information.
 List the Tables in Your Database
 ================================
 
-**$db->listTables();**
+$db->listTables()
+-----------------
 
 Returns an array containing the names of all the tables in the database
 you are currently connected to. Example:
@@ -27,7 +28,8 @@ you are currently connected to. Example:
 Determine If a Table Exists
 ===========================
 
-**$db->tableExists();**
+$db->tableExists()
+------------------
 
 Sometimes it's helpful to know whether a particular table exists before
 running an operation on it. Returns a boolean true/false. Usage example:
@@ -43,7 +45,8 @@ Field MetaData
 List the Fields in a Table
 ==========================
 
-**$db->getFieldNames()**
+$db->getFieldNames()
+--------------------
 
 Returns an array containing the field names. This query can be called
 two ways:
@@ -60,7 +63,8 @@ calling the function from your query result object:
 Determine If a Field is Present in a Table
 ==========================================
 
-**$db->fieldExists()**
+$db->fieldExists()
+------------------
 
 Sometimes it's helpful to know whether a particular field exists before
 performing an action. Returns a boolean true/false. Usage example:
@@ -74,7 +78,8 @@ performing an action. Returns a boolean true/false. Usage example:
 Retrieve Field Metadata
 =======================
 
-**$db->getFieldData()**
+$db->getFieldData()
+-------------------
 
 Returns an array of objects containing field information.
 
@@ -103,7 +108,8 @@ database:
 List the Indexes in a Table
 ===========================
 
-**$db->getIndexData()**
+$db->getIndexData()
+-------------------
 
 Returns an array of objects containing index information.
 
