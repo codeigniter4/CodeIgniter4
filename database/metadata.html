@@ -156,6 +156,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
 </ul>
 </li>
 </ul>
@@ -291,7 +292,8 @@
 <p>These functions let you fetch table information.</p>
 <section id="list-the-tables-in-your-database">
 <h3><a class="toc-backref" href="#id2">List the Tables in Your Database</a><a class="headerlink" href="#list-the-tables-in-your-database" title="Permalink to this headline"></a></h3>
-<p><strong>$db-&gt;listTables();</strong></p>
+<section id="db-listtables">
+<h4>$db-&gt;listTables()<a class="headerlink" href="#db-listtables" title="Permalink to this headline"></a></h4>
 <p>Returns an array containing the names of all the tables in the database
 you are currently connected to. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -308,9 +310,11 @@ you are currently connected to. Example:</p>
 <p>Some drivers have additional system tables that are excluded from this return.</p>
 </div>
 </section>
+</section>
 <section id="determine-if-a-table-exists">
 <h3><a class="toc-backref" href="#id3">Determine If a Table Exists</a><a class="headerlink" href="#determine-if-a-table-exists" title="Permalink to this headline"></a></h3>
-<p><strong>$db-&gt;tableExists();</strong></p>
+<section id="db-tableexists">
+<h4>$db-&gt;tableExists()<a class="headerlink" href="#db-tableexists" title="Permalink to this headline"></a></h4>
 <p>Sometimes it’s helpful to know whether a particular table exists before
 running an operation on it. Returns a boolean true/false. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -326,11 +330,13 @@ running an operation on it. Returns a boolean true/false. Usage example:</p>
 </div>
 </section>
 </section>
+</section>
 <section id="field-metadata">
 <h2><a class="toc-backref" href="#id4">Field MetaData</a><a class="headerlink" href="#field-metadata" title="Permalink to this headline"></a></h2>
 <section id="list-the-fields-in-a-table">
 <h3><a class="toc-backref" href="#id5">List the Fields in a Table</a><a class="headerlink" href="#list-the-fields-in-a-table" title="Permalink to this headline"></a></h3>
-<p><strong>$db-&gt;getFieldNames()</strong></p>
+<section id="db-getfieldnames">
+<h4>$db-&gt;getFieldNames()<a class="headerlink" href="#db-getfieldnames" title="Permalink to this headline"></a></h4>
 <p>Returns an array containing the field names. This query can be called
 two ways:</p>
 <ol class="arabic">
@@ -358,9 +364,11 @@ calling the function from your query result object:</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="determine-if-a-field-is-present-in-a-table">
 <h3><a class="toc-backref" href="#id6">Determine If a Field is Present in a Table</a><a class="headerlink" href="#determine-if-a-field-is-present-in-a-table" title="Permalink to this headline"></a></h3>
-<p><strong>$db-&gt;fieldExists()</strong></p>
+<section id="db-fieldexists">
+<h4>$db-&gt;fieldExists()<a class="headerlink" href="#db-fieldexists" title="Permalink to this headline"></a></h4>
 <p>Sometimes it’s helpful to know whether a particular field exists before
 performing an action. Returns a boolean true/false. Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -377,9 +385,11 @@ for, and replace <em>table_name</em> with the name of the table you are
 looking for.</p>
 </div>
 </section>
+</section>
 <section id="retrieve-field-metadata">
 <h3><a class="toc-backref" href="#id7">Retrieve Field Metadata</a><a class="headerlink" href="#retrieve-field-metadata" title="Permalink to this headline"></a></h3>
-<p><strong>$db-&gt;getFieldData()</strong></p>
+<section id="db-getfielddata">
+<h4>$db-&gt;getFieldData()<a class="headerlink" href="#db-getfielddata" title="Permalink to this headline"></a></h4>
 <p>Returns an array of objects containing field information.</p>
 <p>Sometimes it’s helpful to gather the field names or other metadata, like
 the column type, max length, etc.</p>
@@ -417,9 +427,11 @@ database:</p>
 <li><p>type - the type of the column</p></li>
 </ul>
 </section>
+</section>
 <section id="list-the-indexes-in-a-table">
 <h3><a class="toc-backref" href="#id8">List the Indexes in a Table</a><a class="headerlink" href="#list-the-indexes-in-a-table" title="Permalink to this headline"></a></h3>
-<p><strong>$db-&gt;getIndexData()</strong></p>
+<section id="db-getindexdata">
+<h4>$db-&gt;getIndexData()<a class="headerlink" href="#db-getindexdata" title="Permalink to this headline"></a></h4>
 <p>Returns an array of objects containing index information.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -458,6 +470,7 @@ foreign key definitions.</p>
 </section>
 </section>
 </section>
+</section>
 
 
            </div>
@@ -471,7 +484,7 @@ foreign key definitions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 14, 2022.
+      <span class="lastupdated">Last updated on May 16, 2022.
       </span></p>
   </div>
 

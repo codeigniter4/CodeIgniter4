@@ -156,6 +156,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Manipulation with Database Forge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
 </ul>
 </li>
 </ul>
@@ -277,12 +278,13 @@
 <li><p><a class="reference internal" href="#enhancements" id="id2">Enhancements</a></p>
 <ul>
 <li><p><a class="reference internal" href="#new-improved-auto-routing" id="id3">New Improved Auto Routing</a></p></li>
-<li><p><a class="reference internal" href="#others" id="id4">Others</a></p></li>
+<li><p><a class="reference internal" href="#commands" id="id4">Commands</a></p></li>
+<li><p><a class="reference internal" href="#others" id="id5">Others</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#changes" id="id5">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id6">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id7">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id6">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id7">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id8">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="breaking">
@@ -349,8 +351,42 @@
 </ul>
 <p>See <a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a> for the details.</p>
 </section>
+<section id="commands">
+<h3><a class="toc-backref" href="#id4">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Added <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span></code> command. See <a class="reference internal" href="../dbmgmt/db_commands.html"><span class="doc">Database Commands</span></a> for the details.</dt><dd><ul>
+<li><dl class="simple">
+<dt>You can now see the names of all the tables in the database you are currently connected in the terminal.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span> <span class="pre">--show</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Or you can see the field names and the records of a table.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span> <span class="pre">my_table</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span> <span class="pre">my_table</span> <span class="pre">--limit-rows</span> <span class="pre">50</span> <span class="pre">--limit-field-value</span> <span class="pre">20</span> <span class="pre">--desc</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Or you can see metadata like the column type, max length of a table.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">db:table</span> <span class="pre">my_table</span> <span class="pre">--metadata</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command now shows closure routes, auto routes, and filters. See <a class="reference internal" href="../incoming/routing.html#spark-routes"><span class="std std-ref">URI Routing</span></a>.</p></li>
+</ul>
+</section>
 <section id="others">
-<h3><a class="toc-backref" href="#id4">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><dl class="simple">
 <dt>Content Security Policy (CSP) enhancements</dt><dd><ul>
@@ -373,7 +409,6 @@
 </dd>
 </dl>
 </li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command now shows closure routes, auto routes, and filters. See <a class="reference internal" href="../incoming/routing.html#spark-routes"><span class="std std-ref">URI Routing</span></a>.</p></li>
 <li><dl class="simple">
 <dt>Exception information logged through <code class="docutils literal notranslate"><span class="pre">log_message()</span></code> has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.</dt><dd><ul>
 <li><p>The log format has also changed. If users are depending on the log format in their apps, the new log format is “&lt;1-based count&gt; &lt;cleaned filepath&gt;(&lt;line&gt;): &lt;class&gt;&lt;function&gt;&lt;args&gt;”</p></li>
@@ -404,7 +439,7 @@
 </section>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id5">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Update minimal PHP requirement to 7.4.</p></li>
 <li><p>The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.</p></li>
@@ -415,7 +450,7 @@
 </ul>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id6">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLSRV\Connection::getError()</span></code> is deprecated. Use <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\SQLSRV\Connection::error()</span></code> instead.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions::cleanPath()</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Toolbar\Collectors\BaseCollector::cleanPath()</span></code> are deprecated. Use the <code class="docutils literal notranslate"><span class="pre">clean_path()</span></code> function instead.</p></li>
@@ -426,7 +461,7 @@
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id7">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <p>See the repo’s <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a> for a complete list of bugs fixed.</p>
 </section>
 </section>
@@ -443,7 +478,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 14, 2022.
+      <span class="lastupdated">Last updated on May 16, 2022.
       </span></p>
   </div>
 
