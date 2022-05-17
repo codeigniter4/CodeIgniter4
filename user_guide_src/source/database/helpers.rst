@@ -7,7 +7,7 @@ Query Helper Methods
     :depth: 2
 
 Information From Executing a Query
-==================================
+**********************************
 
 **$db->insertID()**
 
@@ -32,7 +32,7 @@ Displays the number of affected rows, when doing "write" type queries
 Returns a Query object that represents the last query that was run (the query string, not the result).
 
 Information About Your Database
-===============================
+*******************************
 
 **$db->countAll()**
 
