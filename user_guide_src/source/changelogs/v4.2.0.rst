@@ -102,6 +102,7 @@ Deprecations
 - ``CodeIgniter\Router\Router::setDefaultController()`` is deprecated.
 - The constant ``SPARKED`` in **spark** is deprecated. Use the ``$context`` property in ``CodeIgniter\CodeIgniter`` instead.
 - ``CodeIgniter\Autoloader\Autoloader::discoverComposerNamespaces()`` is deprecated, and no longer used.
+- The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated. Use the class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH`` instead.
 
 Bugs Fixed
 **********

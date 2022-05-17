@@ -46,10 +46,12 @@ are executed first, with a value of 1 having the highest priority, and there bei
 
 Any subscribers with the same priority will be executed in the order they were defined.
 
-Three constants are defined for your use, that set some helpful ranges on the values. You are not required to use these
+Since v4.2.0, three class constants are defined for your use, that set some helpful ranges on the values. You are not required to use these
 but you might find they aid readability:
 
 .. literalinclude:: events/004.php
+
+.. note:: The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated, and the definitions are moved to ``app/Config/Constants.php``.
 
 Once sorted, all subscribers are executed in order. If any subscriber returns a boolean false value, then execution of
 the subscribers will stop.

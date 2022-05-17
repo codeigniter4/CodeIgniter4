@@ -15,11 +15,19 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Mandatory File Changes
 **********************
 
+index.php and spark
+===================
+
 The following files received significant changes and
 **you must merge the updated versions** with your application:
 
 * ``public/index.php``
 * ``spark``
+
+Config/Constants.php
+====================
+
+The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated, and the definitions are moved to ``app/Config/Constants.php``. If you use these constants, define them in ``app/Config/Constants.php``. Or use new class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH``.
 
 Breaking Changes
 ****************
