@@ -14,15 +14,15 @@ namespace CodeIgniter\Events;
 use Config\Modules;
 use Config\Services;
 
-define('EVENT_PRIORITY_LOW', 200);
-define('EVENT_PRIORITY_NORMAL', 100);
-define('EVENT_PRIORITY_HIGH', 10);
-
 /**
  * Events
  */
 class Events
 {
+    public const PRIORITY_LOW    = 200;
+    public const PRIORITY_NORMAL = 100;
+    public const PRIORITY_HIGH   = 10;
+
     /**
      * The list of listeners.
      *
