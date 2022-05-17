@@ -9,9 +9,7 @@ on readability and user friendliness.
 While they can be quite technical, we always write for humans!
 
 A local table of contents should always be included, like the one below.
-It is created automatically by inserting the following:
-
-::
+It is created automatically by inserting the following::
 
     .. contents::
         :local:
@@ -86,8 +84,8 @@ create these with the following tab triggers::
 References
 **********
 
-References to a Section
-=======================
+To a Section
+============
 
 If you need to link to a specific section, the first you add the label before a header::
 
@@ -102,11 +100,23 @@ And then you can reference it like this::
 
     See :ref:`curlrequest-request-options-headers` for how to add.
 
-References to a Page
-====================
+To a Section in the Page
+========================
+
+You can reference a section in the current page like the following::
+
+     See `Result Rows`_
+
+To a Page
+=========
 
 You can reference a page like the following::
 
-    :doc:`Session <../libraries/sessions>` library
+    See :doc:`Session <../libraries/sessions>` library
 
-    :doc:`../libraries/sessions` library
+    See :doc:`../libraries/sessions` library
+
+To a URL
+========
+
+    `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
