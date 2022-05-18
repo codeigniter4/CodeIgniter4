@@ -271,13 +271,27 @@
 <h1>Query Helper Methods<a class="headerlink" href="#query-helper-methods" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#information-from-executing-a-query" id="id1">Information From Executing a Query</a></p></li>
-<li><p><a class="reference internal" href="#information-about-your-database" id="id2">Information About Your Database</a></p></li>
+<li><p><a class="reference internal" href="#information-from-executing-a-query" id="id1">Information From Executing a Query</a></p>
+<ul>
+<li><p><a class="reference internal" href="#db-insertid" id="id2">$db-&gt;insertID()</a></p></li>
+<li><p><a class="reference internal" href="#db-affectedrows" id="id3">$db-&gt;affectedRows()</a></p></li>
+<li><p><a class="reference internal" href="#db-getlastquery" id="id4">$db-&gt;getLastQuery()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#information-about-your-database" id="id5">Information About Your Database</a></p>
+<ul>
+<li><p><a class="reference internal" href="#db-countall" id="id6">$db-&gt;countAll()</a></p></li>
+<li><p><a class="reference internal" href="#db-countallresults" id="id7">$db-&gt;countAllResults()</a></p></li>
+<li><p><a class="reference internal" href="#db-getplatform" id="id8">$db-&gt;getPlatform()</a></p></li>
+<li><p><a class="reference internal" href="#db-getversion" id="id9">$db-&gt;getVersion()</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="information-from-executing-a-query">
 <h2><a class="toc-backref" href="#id1">Information From Executing a Query</a><a class="headerlink" href="#information-from-executing-a-query" title="Permalink to this headline"></a></h2>
-<p><strong>$db-&gt;insertID()</strong></p>
+<section id="db-insertid">
+<h3><a class="toc-backref" href="#id2">$db-&gt;insertID()</a><a class="headerlink" href="#db-insertid" title="Permalink to this headline"></a></h3>
 <p>The insert ID number when performing database inserts.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -285,7 +299,9 @@
 driver, this function requires a $name parameter, which specifies the
 appropriate sequence to check for the insert id.</p>
 </div>
-<p><strong>$db-&gt;affectedRows()</strong></p>
+</section>
+<section id="db-affectedrows">
+<h3><a class="toc-backref" href="#id3">$db-&gt;affectedRows()</a><a class="headerlink" href="#db-affectedrows" title="Permalink to this headline"></a></h3>
 <p>Displays the number of affected rows, when doing “write” type queries
 (insert, update, etc.).</p>
 <div class="admonition note">
@@ -295,12 +311,16 @@ class has a small hack that allows it to return the correct number of
 affected rows. By default this hack is enabled but it can be turned off
 in the database driver file.</p>
 </div>
-<p><strong>$db-&gt;getLastQuery()</strong></p>
+</section>
+<section id="db-getlastquery">
+<h3><a class="toc-backref" href="#id4">$db-&gt;getLastQuery()</a><a class="headerlink" href="#db-getlastquery" title="Permalink to this headline"></a></h3>
 <p>Returns a Query object that represents the last query that was run (the query string, not the result).</p>
 </section>
+</section>
 <section id="information-about-your-database">
-<h2><a class="toc-backref" href="#id2">Information About Your Database</a><a class="headerlink" href="#information-about-your-database" title="Permalink to this headline"></a></h2>
-<p><strong>$db-&gt;countAll()</strong></p>
+<h2><a class="toc-backref" href="#id5">Information About Your Database</a><a class="headerlink" href="#information-about-your-database" title="Permalink to this headline"></a></h2>
+<section id="db-countall">
+<h3><a class="toc-backref" href="#id6">$db-&gt;countAll()</a><a class="headerlink" href="#db-countall" title="Permalink to this headline"></a></h3>
 <p>Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example:</p>
@@ -310,7 +330,9 @@ Example:</p>
 <span class="c1">// Produces an integer, like 25</span>
 </pre></div>
 </div>
-<p><strong>$db-&gt;countAllResults()</strong></p>
+</section>
+<section id="db-countallresults">
+<h3><a class="toc-backref" href="#id7">$db-&gt;countAllResults()</a><a class="headerlink" href="#db-countallresults" title="Permalink to this headline"></a></h3>
 <p>Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
 Example:</p>
@@ -320,7 +342,9 @@ Example:</p>
 <span class="c1">// Produces an integer, like 5</span>
 </pre></div>
 </div>
-<p><strong>$db-&gt;getPlatform()</strong></p>
+</section>
+<section id="db-getplatform">
+<h3><a class="toc-backref" href="#id8">$db-&gt;getPlatform()</a><a class="headerlink" href="#db-getplatform" title="Permalink to this headline"></a></h3>
 <p>Outputs the database platform you are running (MySQL, MS SQL, Postgres,
 etc…):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -328,13 +352,16 @@ etc…):</p>
 <span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getPlatform</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>$db-&gt;getVersion()</strong></p>
+</section>
+<section id="db-getversion">
+<h3><a class="toc-backref" href="#id9">$db-&gt;getVersion()</a><a class="headerlink" href="#db-getversion" title="Permalink to this headline"></a></h3>
 <p>Outputs the database version you are running:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getVersion</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 
