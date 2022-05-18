@@ -110,7 +110,7 @@ class Events
      * @param callable $callback
      * @param int      $priority
      */
-    public static function on($eventName, $callback, $priority = EVENT_PRIORITY_NORMAL)
+    public static function on($eventName, $callback, $priority = self::PRIORITY_NORMAL)
     {
         if (! isset(static::$listeners[$eventName])) {
             static::$listeners[$eventName] = [
