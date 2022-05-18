@@ -457,54 +457,31 @@ class Router implements RouterInterface
 
                     $this->params = $matches;
 
-                    $this->matchedRoute = [
-                        $matchedKey,
-                        $handler,
-                    ];
-
-                    $this->matchedRouteOptions = $this->collection->getRoutesOptions($matchedKey);
+                    $this->setMatchedRoute($matchedKey, $handler);
 
                     return true;
                 }
 
-                if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
-                    // Using back-references
+                [$controller, ] = explode('::', $handler);
 
+                // Checks `/` in controller name
+                if (strpos($controller, '/') !== false) {
+                    throw RouterException::forInvalidControllerName($handler);
+                }
+
+                if (strpos($handler, '$') !== false && strpos($routeKey, '(') !== false) {
                     // Checks dynamic controller
-                    [$controller, ] = explode('::', $handler);
                     if (strpos($controller, '$') !== false) {
                         throw RouterException::forDynamicController($handler);
                     }
 
-                    // Checks `/` in controller name
-                    if (strpos($controller, '/') !== false) {
-                        throw RouterException::forInvalidControllerName($handler);
-                    }
-
-                    if (strpos($routeKey, '/') !== false) {
-                        $replacekey = str_replace('/(.*)', '', $routeKey);
-                        $handler    = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
-                        $handler    = str_replace($replacekey, str_replace('/', '\\', $replacekey), $handler);
-                    } else {
-                        $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
-                    }
-                } elseif (strpos($handler, '/') !== false) {
-                    [$controller, $method] = explode('::', $handler);
-
-                    // Only replace slashes in the controller, not in the method.
-                    $controller = str_replace('/', '\\', $controller);
-
-                    $handler = $controller . '::' . $method;
+                    // Using back-references
+                    $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
                 }
 
                 $this->setRequest(explode('/', $handler));
 
-                $this->matchedRoute = [
-                    $matchedKey,
-                    $handler,
-                ];
-
-                $this->matchedRouteOptions = $this->collection->getRoutesOptions($matchedKey);
+                $this->setMatchedRoute($matchedKey, $handler);
 
                 return true;
             }
@@ -671,5 +648,19 @@ class Router implements RouterInterface
         $this->controller = ucfirst($class);
 
         log_message('info', 'Used the default controller.');
+    }
+
+    /**
+     * @param callable|string $handler
+     *
+     * @return static
+     */
+    protected function setMatchedRoute(string $route, $handler)
+    {
+        $this->matchedRoute = [$route, $handler];
+
+        $this->matchedRouteOptions = $this->collection->getRoutesOptions($route);
+
+        return $this;
     }
 }
