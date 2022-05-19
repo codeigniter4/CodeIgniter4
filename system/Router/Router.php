@@ -653,14 +653,12 @@ class Router implements RouterInterface
     /**
      * @param callable|string $handler
      *
-     * @return static
+     * @return void
      */
     protected function setMatchedRoute(string $route, $handler)
     {
         $this->matchedRoute = [$route, $handler];
 
         $this->matchedRouteOptions = $this->collection->getRoutesOptions($route);
-
-        return $this;
     }
 }
