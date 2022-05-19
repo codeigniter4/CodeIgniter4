@@ -69,6 +69,7 @@ Others
 - New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
 - Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
 - Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
+- The BaseBuilder::buildSubquery() method can take an optional third argument ``string $alias``.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.
