@@ -652,10 +652,8 @@ class Router implements RouterInterface
 
     /**
      * @param callable|string $handler
-     *
-     * @return void
      */
-    protected function setMatchedRoute(string $route, $handler)
+    protected function setMatchedRoute(string $route, $handler): void
     {
         $this->matchedRoute = [$route, $handler];
 
