@@ -403,9 +403,6 @@ class Router implements RouterInterface
 
         // Loop through the route array looking for wildcards
         foreach ($routes as $routeKey => $handler) {
-            // Reset localeSegment
-            $localeSegment = null;
-
             $routeKey = $routeKey === '/'
                 ? $routeKey
                 : ltrim($routeKey, '/ ');
@@ -414,12 +411,7 @@ class Router implements RouterInterface
 
             // Are we dealing with a locale?
             if (strpos($routeKey, '{locale}') !== false) {
-                $localeSegment = array_search('{locale}', preg_split('/[\/]*((^[a-zA-Z0-9])|\(([^()]*)\))*[\/]+/m', $routeKey), true);
-
-                // Replace it with a regex so it
-                // will actually match.
-                $routeKey = str_replace('/', '\/', $routeKey);
-                $routeKey = str_replace('{locale}', '[^\/]+', $routeKey);
+                $routeKey = str_replace('{locale}', '[^/]+', $routeKey);
             }
 
             // Does the RegEx match?
@@ -440,10 +432,15 @@ class Router implements RouterInterface
                 }
                 // Store our locale so CodeIgniter object can
                 // assign it to the Request.
-                if (isset($localeSegment)) {
-                    // The following may be inefficient, but doesn't upset NetBeans :-/
-                    $temp                 = (explode('/', $uri));
-                    $this->detectedLocale = $temp[$localeSegment];
+                if (strpos($matchedKey, '{locale}') !== false) {
+                    preg_match(
+                        '#^' . str_replace('{locale}', '(?<locale>[^/]+)', $matchedKey) . '$#u',
+                        $uri,
+                        $matched
+                    );
+
+                    $this->detectedLocale = $matched['locale'];
+                    unset($matched);
                 }
 
                 // Are we using Closures? If so, then we need

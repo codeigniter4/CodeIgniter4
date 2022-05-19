@@ -47,6 +47,7 @@ final class RouterTest extends CIUnitTestCase
             'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
             'closure/(:num)/(:alpha)'                         => static fn ($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
+            'test/(:any)/lang/{locale}'                       => 'App\Pages::list_all',
             'admin/admins'                                    => 'App\Admin\Admins::list_all',
             'admin/admins/edit/(:any)'                        => 'App/Admin/Admins::edit_show/$1',
             '/some/slash'                                     => 'App\Slash::index',
@@ -402,6 +403,11 @@ final class RouterTest extends CIUnitTestCase
 
         $this->assertTrue($router->hasLocale());
         $this->assertSame('fr', $router->getLocale());
+
+        $router->handle('test/123/lang/bg');
+
+        $this->assertTrue($router->hasLocale());
+        $this->assertSame('bg', $router->getLocale());
     }
 
     public function testRouteResource()
