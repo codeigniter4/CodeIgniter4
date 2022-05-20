@@ -807,6 +807,21 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
+    public function testBodyIsResstOnSecondRequest()
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
+        ]);
+        $request->setBody('name=George');
+        $request->setOutput('Hi there');
+
+        $request->post('answer');
+        $request->post('answer');
+
+        $this->assertArrayNotHasKey(CURLOPT_POSTFIELDS, $request->curl_options);
+    }
+
     public function testResponseHeaders()
     {
         $request = $this->getRequest([
@@ -922,7 +937,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('post', $this->request->getMethod());
 
         $expected = json_encode($params);
-        $this->assertSame($expected, $this->request->getBody());
+        $this->assertSame(
+            $expected,
+            $this->request->curl_options[CURLOPT_POSTFIELDS]
+        );
     }
 
     public function testSetJSON()
@@ -936,7 +954,12 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         ];
         $this->request->setJSON($params)->post('/post');
 
-        $this->assertSame(json_encode($params), $this->request->getBody());
+        $expected = json_encode($params);
+        $this->assertSame(
+            $expected,
+            $this->request->curl_options[CURLOPT_POSTFIELDS]
+        );
+
         $this->assertSame(
             'Content-Type: application/json',
             $this->request->curl_options[CURLOPT_HTTPHEADER][0]

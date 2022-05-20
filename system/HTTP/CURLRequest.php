@@ -151,6 +151,9 @@ class CURLRequest extends Request
         $this->headers   = [];
         $this->headerMap = [];
 
+        // Reset body
+        $this->body = null;
+
         // Reset configs
         $this->config = $this->defaultConfig;
 
