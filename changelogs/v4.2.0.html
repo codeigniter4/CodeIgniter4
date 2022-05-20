@@ -305,6 +305,7 @@
 <li><p>The color code output by <a class="reference internal" href="../cli/cli_library.html#cli-library-color"><span class="std std-ref">CLI::color()</span></a> has been changed to fix a bug.</p></li>
 <li><p>To prevent unexpected access from the web browser, if a controller is added to a cli route (<code class="docutils literal notranslate"><span class="pre">$routes-&gt;cli()</span></code>), all methods of that controller are no longer accessible via auto-routing.</p></li>
 <li><p>There is a possible backward compatibility break for those users extending the History Collector and they should probably update <code class="docutils literal notranslate"><span class="pre">History::setFiles()</span></code> method.</p></li>
+<li><p>The <a class="reference internal" href="../helpers/array_helper.html#dot_array_search" title="dot_array_search"><code class="xref php php-func docutils literal notranslate"><span class="pre">dot_array_search</span></code></a>’s unexpected behavior has been fixed. Now <code class="docutils literal notranslate"><span class="pre">dot_array_search('foo.bar.baz',</span> <span class="pre">['foo'</span> <span class="pre">=&gt;</span> <span class="pre">['bar'</span> <span class="pre">=&gt;</span> <span class="pre">23]])</span></code> returns <code class="docutils literal notranslate"><span class="pre">null</span></code>. The previous versions returned <code class="docutils literal notranslate"><span class="pre">23</span></code>.</p></li>
 </ul>
 </section>
 <section id="enhancements">
@@ -481,7 +482,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 19, 2022.
+      <span class="lastupdated">Last updated on May 20, 2022.
       </span></p>
   </div>
 

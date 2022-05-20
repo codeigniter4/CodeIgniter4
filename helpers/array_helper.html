@@ -362,6 +362,11 @@ have a numeric index:</p>
 </div>
 </dd></dl>
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.2.0, <code class="docutils literal notranslate"><span class="pre">dot_array_search('foo.bar.baz',</span> <span class="pre">['foo'</span> <span class="pre">=&gt;</span> <span class="pre">['bar'</span> <span class="pre">=&gt;</span> <span class="pre">23]])</span></code> returned <code class="docutils literal notranslate"><span class="pre">23</span></code>
+due to a bug. v4.2.0 and later returns <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</div>
 <dl class="function">
 <dt id="array_deep_search">
 <code class="sig-name descname">array_deep_search</code><span class="sig-paren">(</span><em class="sig-param">$key</em>, <em class="sig-param">array $array</em><span class="sig-paren">)</span><a class="headerlink" href="#array_deep_search" title="Permalink to this definition"></a></dt>
@@ -570,7 +575,7 @@ will be supplying an initial <code class="docutils literal notranslate"><span cl
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 19, 2022.
+      <span class="lastupdated">Last updated on May 20, 2022.
       </span></p>
   </div>
 
