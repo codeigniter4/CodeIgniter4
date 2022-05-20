@@ -45,7 +45,16 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame(23, dot_array_search('foo.bar.baz', $data));
+        $this->assertNull(dot_array_search('foo.bar.baz', $data));
+    }
+
+    public function testArrayDotTooManyLevelsWithWildCard()
+    {
+        $data = [
+            'a' => [],
+        ];
+
+        $this->assertNull(dot_array_search('a.*.c', $data));
     }
 
     /**
@@ -77,15 +86,24 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     public function testArraySearchDotMultiLevels()
     {
-        $data1 = ['bar' => [['foo' => 'baz']]];
-        $data2 = ['bar' => [
-            ['foo' => 'bizz'],
-            ['foo' => 'buzz'],
-        ]];
-        $data3 = ['baz' => 'none'];
-
+        $data1 = [
+            'bar' => [
+                ['foo' => 'baz'],
+            ],
+        ];
         $this->assertSame('baz', dot_array_search('bar.*.foo', $data1));
+
+        $data2 = [
+            'bar' => [
+                ['foo' => 'bizz'],
+                ['foo' => 'buzz'],
+            ],
+        ];
         $this->assertSame(['bizz', 'buzz'], dot_array_search('bar.*.foo', $data2));
+
+        $data3 = [
+            'baz' => 'none',
+        ];
         $this->assertNull(dot_array_search('bar.*.foo', $data3));
     }
 

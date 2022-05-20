@@ -48,6 +48,9 @@ The following functions are available:
 
     .. literalinclude:: array_helper/005.php
 
+.. note:: Prior to v4.2.0, ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returned ``23``
+    due to a bug. v4.2.0 and later returns ``null``.
+
 ..  php:function:: array_deep_search($key, array $array)
 
     :param  mixed  $key: The target key

@@ -89,8 +89,8 @@ if (! function_exists('_array_search_dot')) {
             return _array_search_dot($indexes, $array[$currentIndex]);
         }
 
-        // Otherwise we've found our match!
-        return $array[$currentIndex];
+        // Otherwise, not found.
+        return null;
     }
 }
 
