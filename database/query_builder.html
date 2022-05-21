@@ -567,7 +567,7 @@ counting results generally see <code class="docutils literal notranslate"><span 
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;countries&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="nv">$builder</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">selectSubquery</span><span class="p">(</span><span class="nv">$subquery</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">);</span>
 <span class="nv">$query</span>    <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-<span class="c1">// Produces: SELECT `name`, (SELECT `name` FROM `countries` WHERE `id` = 1) AS `country` FROM `users`</span>
+<span class="c1">// Produces: SELECT `name`, (SELECT `name` FROM `countries` WHERE `id` = 1) `country` FROM `users`</span>
 </pre></div>
 </div>
 </section>
@@ -605,7 +605,7 @@ to the FROM portion of your query.</p>
 <span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;jobs&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">fromSubquery</span><span class="p">(</span><span class="nv">$subquery</span><span class="p">,</span> <span class="s1">&#39;alias&#39;</span><span class="p">);</span>
 <span class="nv">$query</span>    <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-<span class="c1">// Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) AS `alias`</span>
+<span class="c1">// Produces: SELECT * FROM `jobs`, (SELECT * FROM `users`) `alias`</span>
 </pre></div>
 </div>
 <p>Use the <code class="docutils literal notranslate"><span class="pre">$db-&gt;newQuery()</span></code> method to make a subquery the main table:</p>
@@ -614,7 +614,7 @@ to the FROM portion of your query.</p>
 <span class="nv">$subquery</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id, name&#39;</span><span class="p">);</span>
 <span class="nv">$builder</span>  <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">newQuery</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fromSubquery</span><span class="p">(</span><span class="nv">$subquery</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">);</span>
 <span class="nv">$query</span>    <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
-<span class="c1">// Produces: SELECT * FROM (SELECT `id`, `name` FROM users) AS `t`</span>
+<span class="c1">// Produces: SELECT * FROM (SELECT `id`, `name` FROM users) `t`</span>
 </pre></div>
 </div>
 </section>
@@ -3253,7 +3253,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 20, 2022.
+      <span class="lastupdated">Last updated on May 21, 2022.
       </span></p>
   </div>
 
