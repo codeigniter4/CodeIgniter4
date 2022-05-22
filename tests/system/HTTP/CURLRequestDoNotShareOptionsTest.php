@@ -807,7 +807,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
-    public function testBodyIsResstOnSecondRequest()
+    public function testBodyIsResetOnSecondRequest()
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
