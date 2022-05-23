@@ -85,6 +85,7 @@ Others
     - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
+- Added a sample file for `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_. See **preload.php**.
 
 Changes
 *******
