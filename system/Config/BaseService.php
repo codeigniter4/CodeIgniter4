@@ -273,7 +273,7 @@ class BaseService
     /**
      * Reset shared instances and mocks for testing.
      */
-    public static function reset(bool $initAutoloader = false)
+    public static function reset(bool $initAutoloader = true)
     {
         static::$mocks     = [];
         static::$instances = [];
