@@ -425,9 +425,7 @@ The methods provided by the parent class that are available are:
         :param string $prefix: Cookie name prefix
         :rtype: void
 
-        Delete an existing cookie by setting its expiry to ``0``.
-
-        **Notes**
+        Delete an existing cookie.
 
         Only the ``name`` is required.
 
