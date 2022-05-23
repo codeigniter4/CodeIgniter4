@@ -370,7 +370,7 @@ The methods provided by the parent class that are available are:
         :param string $prefix: Cookie name prefix
         :param bool $secure: Whether to only transfer the cookie through HTTPS
         :param bool $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
-        :param string $samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to `null`, the default value from `config/App.php` will be used
+        :param string $samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
         :rtype: void
 
         Sets a cookie containing the values you specify. There are two ways to
@@ -386,28 +386,28 @@ The methods provided by the parent class that are available are:
 
         **Notes**
 
-        Only the name and value are required. To delete a cookie set it with the
-        expiration blank.
+        Only the ``name`` and ``value`` are required. To delete a cookie set it with the
+        ``expire`` blank.
 
-        The expiration is set in **seconds**, which will be added to the current
+        The ``expire`` is set in **seconds**, which will be added to the current
         time. Do not include the time, but rather only the number of seconds
-        from *now* that you wish the cookie to be valid. If the expiration is
+        from *now* that you wish the cookie to be valid. If the ``expire`` is
         set to zero the cookie will only last as long as the browser is open.
 
         For site-wide cookies regardless of how your site is requested, add your
-        URL to the **domain** starting with a period, like this:
+        URL to the ``domain`` starting with a period, like this:
         .your-domain.com
 
-        The path is usually not needed since the method sets a root path.
+        The ``path`` is usually not needed since the method sets a root path.
 
-        The prefix is only needed if you need to avoid name collisions with
+        The ``prefix`` is only needed if you need to avoid name collisions with
         other identically named cookies for your server.
 
-        The secure flag is only needed if you want to make it a secure cookie
+        The ``secure`` flag is only needed if you want to make it a secure cookie
         by setting it to ``true``.
 
-        The SameSite value controls how cookies are shared between domains and sub-domains.
-        Allowed values are 'None', 'Lax', 'Strict' or a blank string ``''``.
+        The ``samesite`` value controls how cookies are shared between domains and sub-domains.
+        Allowed values are ``'None'``, ``'Lax'``, ``'Strict'`` or a blank string ``''``.
         If set to blank string, default SameSite attribute will be set.
 
         **Discrete Parameters**
@@ -429,14 +429,14 @@ The methods provided by the parent class that are available are:
 
         **Notes**
 
-        Only the name is required.
+        Only the ``name`` is required.
 
-        The prefix is only needed if you need to avoid name collisions with
+        The ``prefix`` is only needed if you need to avoid name collisions with
         other identically named cookies for your server.
 
-        Provide a prefix if cookies should only be deleted for that subset.
-        Provide a domain name if cookies should only be deleted for that domain.
-        Provide a path name if cookies should only be deleted for that path.
+        Provide a ``prefix`` if cookies should only be deleted for that subset.
+        Provide a ``domain`` name if cookies should only be deleted for that domain.
+        Provide a ``path`` name if cookies should only be deleted for that path.
 
         If any of the optional parameters are empty, then the same-named
         cookie will be deleted across all that apply.
@@ -456,10 +456,10 @@ The methods provided by the parent class that are available are:
 
         **Notes**
 
-        Only the name is required. If a prefix is specified, it will be prepended to the cookie name.
+        Only the ``name`` is required. If a ``prefix`` is specified, it will be prepended to the cookie name.
 
-        If no value is given, the method just checks for the existence of the named cookie.
-        If a value is given, then the method checks that the cookie exists, and that it
+        If no ``value`` is given, the method just checks for the existence of the named cookie.
+        If a ``value`` is given, then the method checks that the cookie exists, and that it
         has the prescribed value.
 
         Example:
@@ -473,7 +473,7 @@ The methods provided by the parent class that are available are:
         :rtype: ``Cookie|Cookie[]|null``
 
         Returns the named cookie, if found, or ``null``.
-        If no name is given, returns the array of ``Cookie`` objects.
+        If no ``name`` is given, returns the array of ``Cookie`` objects.
 
         Example:
 
