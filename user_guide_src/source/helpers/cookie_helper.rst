@@ -69,7 +69,13 @@ The following functions are available:
     .. literalinclude:: cookie_helper/002.php
 
     This function is otherwise identical to ``set_cookie()``, except that it
-    does not have the ``value`` and ``expire`` parameters. You can submit an
+    does not have the ``value`` and ``expire`` parameters.
+
+    .. note:: When you use ``set_cookie()``,
+        if the ``value`` is set to empty string and the ``expire`` is set to ``0``, the cookie will be deleted.
+        If the ``value`` is set to non-empty string and the ``expire`` is set to ``0``, the cookie will only last as long as the browser is open.
+
+    You can submit an
     array of values in the first parameter or you can set discrete
     parameters.
 

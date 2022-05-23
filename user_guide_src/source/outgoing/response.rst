@@ -394,6 +394,9 @@ The methods provided by the parent class that are available are:
         from *now* that you wish the cookie to be valid. If the ``expire`` is
         set to zero the cookie will only last as long as the browser is open.
 
+        .. note:: But if the ``value`` is set to empty string and the ``expire`` is set to ``0``,
+            the cookie will be deleted.
+
         For site-wide cookies regardless of how your site is requested, add your
         URL to the ``domain`` starting with a period, like this:
         .your-domain.com
