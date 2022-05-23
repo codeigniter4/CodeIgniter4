@@ -384,8 +384,6 @@ The methods provided by the parent class that are available are:
 
         .. literalinclude:: response/023.php
 
-        **Notes**
-
         Only the ``name`` and ``value`` are required. To delete a cookie set it with the
         ``expire`` blank.
 
