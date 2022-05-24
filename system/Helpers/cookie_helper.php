@@ -63,7 +63,7 @@ if (! function_exists('get_cookie')) {
      */
     function get_cookie($index, bool $xssClean = false, ?string $prefix = null)
     {
-        $prefix  = $prefix !== null ? $prefix : config(App::class)->cookiePrefix;
+        $prefix ??= config(App::class)->cookiePrefix;
         $request = Services::request();
         $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_DEFAULT;
 
