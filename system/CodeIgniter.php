@@ -246,7 +246,7 @@ class CodeIgniter
 
                 $file = SYSTEMPATH . 'ThirdParty/Kint/' . implode('/', $class) . '.php';
 
-                if (file_exists($file)) {
+                if (is_file($file)) {
                     require_once $file;
                 }
             });

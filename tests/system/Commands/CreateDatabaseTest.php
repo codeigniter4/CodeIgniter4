@@ -39,7 +39,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
         if ($this->connection instanceof SQLite3Connection) {
             $file = WRITEPATH . 'foobar.db';
-            if (file_exists($file)) {
+            if (is_file($file)) {
                 unlink($file);
             }
         } else {

@@ -78,7 +78,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
 
     private function deleteFiles(): void
     {
-        if (file_exists($this->file1)) {
+        if (is_file($this->file1)) {
             unlink($this->file1);
         }
     }
