@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
 
 /**
@@ -88,9 +89,11 @@ class Builder extends BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
+     * @param RawSql|string $cond
+     *
      * @return $this
      */
-    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
+    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if ($type !== '') {
             $type = strtoupper(trim($type));

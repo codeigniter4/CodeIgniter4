@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\RawSql;
 
 /**
  * Builder for Postgre
@@ -300,9 +301,11 @@ class Builder extends BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
+     * @param RawSql|string $cond
+     *
      * @return BaseBuilder
      */
-    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
+    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if (! in_array('FULL OUTER', $this->joinTypes, true)) {
             $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);

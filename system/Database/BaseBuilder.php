@@ -579,9 +579,11 @@ class BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
+     * @param RawSql|string $cond
+     *
      * @return $this
      */
-    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
+    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if ($type !== '') {
             $type = strtoupper(trim($type));
@@ -599,6 +601,17 @@ class BaseBuilder
 
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
+        }
+
+        // Do we want to escape the table name?
+        if ($escape === true) {
+            $table = $this->db->protectIdentifiers($table, true, null, false);
+        }
+
+        if ($cond instanceof RawSql) {
+            $this->QBJoin[] = $type . 'JOIN ' . $table . ' ON ' . $cond;
+
+            return $this;
         }
 
         if (! $this->hasOperator($cond)) {
@@ -632,11 +645,6 @@ class BaseBuilder
                 $cond .= $joints[$i];
                 $cond .= preg_match('/(\(*)?([\[\]\w\.\'-]+)' . preg_quote($operator, '/') . '(.*)/i', $condition, $match) ? $match[1] . $this->db->protectIdentifiers($match[2]) . $operator . $this->db->protectIdentifiers($match[3]) : $condition;
             }
-        }
-
-        // Do we want to escape the table name?
-        if ($escape === true) {
-            $table = $this->db->protectIdentifiers($table, true, null, false);
         }
 
         // Assemble the JOIN statement
