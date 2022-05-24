@@ -38,10 +38,11 @@ The following functions are available:
     a description of its use, as this function is an alias for
     ``Response::setCookie()``.
 
-.. php:function:: get_cookie($index[, $xssClean = false])
+.. php:function:: get_cookie($index[, $xssClean = false[, $prefix = null]])
 
     :param	string	$index: Cookie name
     :param	bool	$xss_clean: Whether to apply XSS filtering to the returned value
+    :param  string  $prefix: A custom prefix to overwrite what is set in the App Config
     :returns:	The cookie value or NULL if not found
     :rtype:	mixed
 
