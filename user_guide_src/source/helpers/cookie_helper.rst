@@ -31,13 +31,13 @@ The following functions are available:
     :param    string    $prefix: Cookie name prefix
     :param    bool    $secure: Whether to only send the cookie through HTTPS
     :param    bool    $httpOnly: Whether to hide the cookie from JavaScript
-    :param    string    $sameSite: The value for the SameSite cookie parameter. If null, the default from `config/App.php` is used
+    :param    string    $sameSite: The value for the SameSite cookie parameter. If ``null``, the default from **app/Config/Cookie.php** is used
     :rtype:    void
 
     This helper function gives you friendlier syntax to set browser
     cookies. Refer to the :doc:`Response Library </outgoing/response>` for
     a description of its use, as this function is an alias for
-    ``Response::setCookie()``.
+    :php:func:`Response::setCookie() <setCookie>`.
 
 .. php:function:: get_cookie($index[, $xssClean = false])
 
@@ -69,7 +69,13 @@ The following functions are available:
     .. literalinclude:: cookie_helper/002.php
 
     This function is otherwise identical to ``set_cookie()``, except that it
-    does not have the value and expiration parameters. You can submit an
+    does not have the ``value`` and ``expire`` parameters.
+
+    .. note:: When you use ``set_cookie()``,
+        if the ``value`` is set to empty string and the ``expire`` is set to ``0``, the cookie will be deleted.
+        If the ``value`` is set to non-empty string and the ``expire`` is set to ``0``, the cookie will only last as long as the browser is open.
+
+    You can submit an
     array of values in the first parameter or you can set discrete
     parameters.
 
