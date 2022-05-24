@@ -227,14 +227,16 @@ class Session implements SessionInterface
             return;
         }
 
+         $cookieName = $this->cookie->getPrefixedName();
+
         $this->configure();
         $this->setSaveHandler();
 
         // Sanitize the cookie, because apparently PHP doesn't do that for userspace handlers
-        if (isset($_COOKIE[$this->sessionCookieName])
-            && (! is_string($_COOKIE[$this->sessionCookieName]) || ! preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$this->sessionCookieName]))
+        if (isset($_COOKIE[$cookieName])
+            && (! is_string($_COOKIE[$cookieName]) || ! preg_match('#\A' . $this->sidRegexp . '\z#', $_COOKIE[$cookieName]))
         ) {
-            unset($_COOKIE[$this->sessionCookieName]);
+            unset($_COOKIE[$cookieName]);
         }
 
         $this->startSession();
@@ -251,7 +253,7 @@ class Session implements SessionInterface
         }
         // Another work-around ... PHP doesn't seem to send the session cookie
         // unless it is being currently created or regenerated
-        elseif (isset($_COOKIE[$this->sessionCookieName]) && $_COOKIE[$this->sessionCookieName] === session_id()) {
+        elseif (isset($_COOKIE[$cookieName]) && $_COOKIE[$cookieName] === session_id()) {
             $this->setCookie();
         }
 
@@ -271,7 +273,7 @@ class Session implements SessionInterface
     public function stop()
     {
         setcookie(
-            $this->sessionCookieName,
+            $this->cookie->getPrefixedName(),
             session_id(),
             ['expires' => 1, 'path' => $this->cookie->getPath(), 'domain' => $this->cookie->getDomain(), 'secure' => $this->cookie->isSecure(), 'httponly' => true]
         );
@@ -286,10 +288,12 @@ class Session implements SessionInterface
      */
     protected function configure()
     {
-        if (empty($this->sessionCookieName)) {
-            $this->sessionCookieName = ini_get('session.name');
+        $cookieName = $this->cookie->getPrefixedName();
+
+        if (empty($cookieName)) {
+            $cookieName = ini_get('session.name');
         } else {
-            ini_set('session.name', $this->sessionCookieName);
+            ini_set('session.name', $cookieName);
         }
 
         $sameSite = $this->cookie->getSameSite() ?: ucfirst(Cookie::SAMESITE_LAX);

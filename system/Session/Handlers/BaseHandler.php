@@ -119,7 +119,7 @@ abstract class BaseHandler implements SessionHandlerInterface
     protected function destroyCookie(): bool
     {
         return setcookie(
-            $this->cookieName,
+            config('App')->cookiePrefix . $this->cookieName,
             '',
             ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true]
         );
