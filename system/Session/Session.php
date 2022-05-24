@@ -227,7 +227,7 @@ class Session implements SessionInterface
             return;
         }
 
-         $cookieName = $this->cookie->getPrefixedName();
+        $cookieName = $this->cookie->getPrefixedName();
 
         $this->configure();
         $this->setSaveHandler();
