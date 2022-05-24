@@ -116,11 +116,6 @@ parameters:
 			path: system/CodeIgniter.php
 
 		-
-			message: "#^Binary operation \"\\+\" between array\\<string, class\\-string\\>\\|false and non\\-empty\\-array\\<string, string\\> results in an error\\.$#"
-			count: 1
-			path: system/Common.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/Database/BaseBuilder.php
@@ -576,7 +571,7 @@ parameters:
 			path: system/HTTP/Request.php
 
 		-
-			message: "#^Cannot unset offset 'path' on array\\{host\\: mixed\\}\\.$#"
+			message: "#^Cannot unset offset 'path' on array{host: non-empty-string}\\.$#"
 			count: 1
 			path: system/HTTP/URI.php
 
@@ -874,7 +869,6 @@ parameters:
 			message: "#^Result of \\|\\| is always false\\.$#"
 			paths:
 				- system/Cache/CacheFactory.php
-				- system/Filters/Filters.php
 
 		-
 			message: "#^Binary operation \"/\" between string and 8 results in an error\\.$#"
