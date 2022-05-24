@@ -61,9 +61,9 @@ if (! function_exists('get_cookie')) {
      *
      * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
      */
-    function get_cookie($index, bool $xssClean = false)
+    function get_cookie($index, bool $xssClean = false, string $prefix = null)
     {
-        $prefix  = isset($_COOKIE[$index]) ? '' : config(App::class)->cookiePrefix;
+        $prefix  = $prefix !== null ? $prefix : config(App::class)->cookiePrefix;
         $request = Services::request();
         $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_DEFAULT;
 
