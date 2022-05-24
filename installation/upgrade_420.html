@@ -318,7 +318,10 @@
 </section>
 <section id="breaking-enhancements">
 <h2><a class="toc-backref" href="#id5">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
-<p>none.</p>
+<ul class="simple">
+<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::setRule()</span></code> has been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
+<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseBuilder::join()</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\*\Builder::join()</span></code> have been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$cond</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
+</ul>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id6">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
