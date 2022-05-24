@@ -46,7 +46,7 @@ final class FiltersTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;
 
-    protected $response;
+    private $response;
 
     protected function setUp(): void
     {
