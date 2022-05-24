@@ -60,6 +60,7 @@ if (! function_exists('get_cookie'))
 	 *
 	 * @param string  $index
 	 * @param boolean $xssClean
+	 * @param string  $prefix
 	 *
 	 * @return mixed
 	 *
