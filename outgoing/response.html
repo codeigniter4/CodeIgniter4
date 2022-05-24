@@ -844,7 +844,7 @@ this as it is handled automatically by CodeIgniter.</p>
 <li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
 <li><p><strong>$secure</strong> (<em>bool</em>) – Whether to only transfer the cookie through HTTPS</p></li>
 <li><p><strong>$httponly</strong> (<em>bool</em>) – Whether to only make the cookie accessible for HTTP requests (no JavaScript)</p></li>
-<li><p><strong>$samesite</strong> (<em>string</em>) – The value for the SameSite cookie parameter. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, no SameSite attribute will be set on the cookie. If set to <cite>null</cite>, the default value from <cite>config/App.php</cite> will be used</p></li>
+<li><p><strong>$samesite</strong> (<em>string</em>) – The value for the SameSite cookie parameter. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, no SameSite attribute will be set on the cookie. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -874,23 +874,27 @@ parameter:</p>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCookie</span><span class="p">(</span><span class="nv">$cookie</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>Notes</strong></p>
-<p>Only the name and value are required. To delete a cookie set it with the
-expiration blank.</p>
-<p>The expiration is set in <strong>seconds</strong>, which will be added to the current
+<p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> are required. To delete a cookie set it with the
+<code class="docutils literal notranslate"><span class="pre">expire</span></code> blank.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set in <strong>seconds</strong>, which will be added to the current
 time. Do not include the time, but rather only the number of seconds
-from <em>now</em> that you wish the cookie to be valid. If the expiration is
+from <em>now</em> that you wish the cookie to be valid. If the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is
 set to zero the cookie will only last as long as the browser is open.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>But if the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>,
+the cookie will be deleted.</p>
+</div>
 <p>For site-wide cookies regardless of how your site is requested, add your
-URL to the <strong>domain</strong> starting with a period, like this:
+URL to the <code class="docutils literal notranslate"><span class="pre">domain</span></code> starting with a period, like this:
 .your-domain.com</p>
-<p>The path is usually not needed since the method sets a root path.</p>
-<p>The prefix is only needed if you need to avoid name collisions with
+<p>The <code class="docutils literal notranslate"><span class="pre">path</span></code> is usually not needed since the method sets a root path.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with
 other identically named cookies for your server.</p>
-<p>The secure flag is only needed if you want to make it a secure cookie
+<p>The <code class="docutils literal notranslate"><span class="pre">secure</span></code> flag is only needed if you want to make it a secure cookie
 by setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
-<p>The SameSite value controls how cookies are shared between domains and sub-domains.
-Allowed values are ‘None’, ‘Lax’, ‘Strict’ or a blank string <code class="docutils literal notranslate"><span class="pre">''</span></code>.
+<p>The <code class="docutils literal notranslate"><span class="pre">samesite</span></code> value controls how cookies are shared between domains and sub-domains.
+Allowed values are <code class="docutils literal notranslate"><span class="pre">'None'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Lax'</span></code>, <code class="docutils literal notranslate"><span class="pre">'Strict'</span></code> or a blank string <code class="docutils literal notranslate"><span class="pre">''</span></code>.
 If set to blank string, default SameSite attribute will be set.</p>
 <p><strong>Discrete Parameters</strong></p>
 <p>If you prefer, you can set the cookie by passing data using individual
@@ -918,14 +922,13 @@ parameters:</p>
 <dd class="field-even"><p>void</p>
 </dd>
 </dl>
-<p>Delete an existing cookie by setting its expiry to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
-<p><strong>Notes</strong></p>
-<p>Only the name is required.</p>
-<p>The prefix is only needed if you need to avoid name collisions with
+<p>Delete an existing cookie.</p>
+<p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> is required.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is only needed if you need to avoid name collisions with
 other identically named cookies for your server.</p>
-<p>Provide a prefix if cookies should only be deleted for that subset.
-Provide a domain name if cookies should only be deleted for that domain.
-Provide a path name if cookies should only be deleted for that path.</p>
+<p>Provide a <code class="docutils literal notranslate"><span class="pre">prefix</span></code> if cookies should only be deleted for that subset.
+Provide a <code class="docutils literal notranslate"><span class="pre">domain</span></code> name if cookies should only be deleted for that domain.
+Provide a <code class="docutils literal notranslate"><span class="pre">path</span></code> name if cookies should only be deleted for that path.</p>
 <p>If any of the optional parameters are empty, then the same-named
 cookie will be deleted across all that apply.</p>
 <p>Example:</p>
@@ -953,9 +956,9 @@ cookie will be deleted across all that apply.</p>
 </dl>
 <p>Checks to see if the Response has a specified cookie or not.</p>
 <p><strong>Notes</strong></p>
-<p>Only the name is required. If a prefix is specified, it will be prepended to the cookie name.</p>
-<p>If no value is given, the method just checks for the existence of the named cookie.
-If a value is given, then the method checks that the cookie exists, and that it
+<p>Only the <code class="docutils literal notranslate"><span class="pre">name</span></code> is required. If a <code class="docutils literal notranslate"><span class="pre">prefix</span></code> is specified, it will be prepended to the cookie name.</p>
+<p>If no <code class="docutils literal notranslate"><span class="pre">value</span></code> is given, the method just checks for the existence of the named cookie.
+If a <code class="docutils literal notranslate"><span class="pre">value</span></code> is given, then the method checks that the cookie exists, and that it
 has the prescribed value.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -982,7 +985,7 @@ has the prescribed value.</p>
 </dd>
 </dl>
 <p>Returns the named cookie, if found, or <code class="docutils literal notranslate"><span class="pre">null</span></code>.
-If no name is given, returns the array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects.</p>
+If no <code class="docutils literal notranslate"><span class="pre">name</span></code> is given, returns the array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects.</p>
 <p>Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1021,7 +1024,7 @@ request only.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 21, 2022.
+      <span class="lastupdated">Last updated on May 24, 2022.
       </span></p>
   </div>
 

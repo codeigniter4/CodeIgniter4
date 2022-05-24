@@ -303,7 +303,7 @@ cookies.</p>
 <li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
 <li><p><strong>$secure</strong> (<em>bool</em>) – Whether to only send the cookie through HTTPS</p></li>
 <li><p><strong>$httpOnly</strong> (<em>bool</em>) – Whether to hide the cookie from JavaScript</p></li>
-<li><p><strong>$sameSite</strong> (<em>string</em>) – The value for the SameSite cookie parameter. If null, the default from <cite>config/App.php</cite> is used</p></li>
+<li><p><strong>$sameSite</strong> (<em>string</em>) – The value for the SameSite cookie parameter. If <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default from <strong>app/Config/Cookie.php</strong> is used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -313,7 +313,7 @@ cookies.</p>
 <p>This helper function gives you friendlier syntax to set browser
 cookies. Refer to the <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response Library</span></a> for
 a description of its use, as this function is an alias for
-<code class="docutils literal notranslate"><span class="pre">Response::setCookie()</span></code>.</p>
+<a class="reference internal" href="../outgoing/response.html#setCookie" title="setCookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">Response::setCookie()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -369,7 +369,14 @@ values, only the name of the cookie is needed.</p>
 </pre></div>
 </div>
 <p>This function is otherwise identical to <code class="docutils literal notranslate"><span class="pre">set_cookie()</span></code>, except that it
-does not have the value and expiration parameters. You can submit an
+does not have the <code class="docutils literal notranslate"><span class="pre">value</span></code> and <code class="docutils literal notranslate"><span class="pre">expire</span></code> parameters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">set_cookie()</span></code>,
+if the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will be deleted.
+If the <code class="docutils literal notranslate"><span class="pre">value</span></code> is set to non-empty string and the <code class="docutils literal notranslate"><span class="pre">expire</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>, the cookie will only last as long as the browser is open.</p>
+</div>
+<p>You can submit an
 array of values in the first parameter or you can set discrete
 parameters.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -412,7 +419,7 @@ parameters.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 21, 2022.
+      <span class="lastupdated">Last updated on May 24, 2022.
       </span></p>
   </div>
 
