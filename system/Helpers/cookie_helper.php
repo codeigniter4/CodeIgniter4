@@ -61,7 +61,7 @@ if (! function_exists('get_cookie')) {
      *
      * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
      */
-    function get_cookie($index, bool $xssClean = false, string $prefix = null)
+    function get_cookie($index, bool $xssClean = false, ?string $prefix = null)
     {
         $prefix  = $prefix !== null ? $prefix : config(App::class)->cookiePrefix;
         $request = Services::request();
