@@ -9,8 +9,8 @@ Services
 Introduction
 ************
 
-What is Services?
-=================
+What are Services?
+==================
 
 The **Services** in CodeIgniter 4 provide the functionality to create and share new class instances.
 It is implemented as the ``Config\Services`` class.
