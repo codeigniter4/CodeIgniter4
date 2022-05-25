@@ -291,8 +291,8 @@
 <section id="breaking">
 <h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::setRule()</span></code> has been changed.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseBuilder::join()</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\*\Builder::join()</span></code> have been changed.</p></li>
+<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::setRule()</span></code> has been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CLI\CommandRunner::_remap()</span></code> has been changed to fix a bug.</p></li>
 <li><dl class="simple">
 <dt>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter\CodeIgniter</span></code> class has a new property <code class="docutils literal notranslate"><span class="pre">$context</span></code> and it must have the correct context at runtime. So the following files have been changed:</dt><dd><ul>
@@ -411,6 +411,7 @@
 </dd>
 </dl>
 </li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DBForge::addField()</span></code> default value raw SQL string support. See <a class="reference internal" href="../dbmgmt/forge.html#forge-addfield-default-value-rawsql"><span class="std std-ref">Raw Sql Strings as Default Values</span></a>.</p></li>
 </ul>
 </section>
 <section id="others">
@@ -491,7 +492,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 24, 2022.
+      <span class="lastupdated">Last updated on May 25, 2022.
       </span></p>
   </div>
 
