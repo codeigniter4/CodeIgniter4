@@ -6,14 +6,15 @@ To get the most out of CodeIgniter, you need to understand how the application i
 can change to meet the needs of your application.
 
 Default Directories
-===================
+*******************
 
 A fresh install has five directories: ``/app``, ``/public``,
 ``/writable``, ``/tests`` and ``/system`` or ``/vendor``.
 Each of these directories has a very specific part to play.
 
 app
----
+===
+
 The ``app`` directory is where all of your application code lives. This comes with a default directory
 structure that works well for many applications. The following folders make up the basic contents:
 
@@ -43,7 +44,7 @@ All files in this directory live under the ``App`` namespace, though you are fre
 **app/Config/Constants.php**.
 
 system
-------
+======
 
 .. note:: If you install CodeIgniter with Composer, the ``system`` is located in ``vendor/codeigniter4/framework/system``.
 
@@ -54,7 +55,7 @@ extend the classes, or create new classes, to provide the desired functionality.
 All files in this directory live under the ``CodeIgniter`` namespace.
 
 public
-------
+======
 
 The **public** folder holds the browser-accessible portion of your web application,
 preventing direct access to your source code.
@@ -66,20 +67,22 @@ This folder is meant to be the "web root" of your site, and your web server
 would be configured to point to it.
 
 writable
---------
+========
+
 This directory holds any directories that might need to be written to in the course of an application's life.
 This includes directories for storing cache files, logs, and any uploads a user might send. You should add any other
 directories that your application will need to write to here. This allows you to keep your other primary directories
 non-writable as an added security measure.
 
 tests
------
+=====
+
 This directory is set up to hold your test files. The ``_support`` directory holds various mock classes and other
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.
 
 Modifying Directory Locations
------------------------------
+*****************************
 
 If you've relocated any of the main directories, you can change the configuration
 settings inside **app/Config/Paths.php**.

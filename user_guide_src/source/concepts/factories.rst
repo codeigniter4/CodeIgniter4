@@ -7,10 +7,10 @@ Factories
     :depth: 2
 
 Introduction
-============
+************
 
 What are Factories?
--------------------
+===================
 
 Like :doc:`./services`, **Factories** are an extension of autoloading that helps keep your code
 concise yet optimal, without having to pass around object instances between classes.
@@ -25,7 +25,7 @@ to work on or transmit common data. The framework itself uses Factories internal
 make sure the correct configuration is loaded when using the ``Config`` class.
 
 Differences from Services
--------------------------
+=========================
 
 Factories require a concrete class name to instantiate and do not have code to create instances.
 
@@ -37,7 +37,7 @@ that needs other services or class instances. When you get a service, Services r
 not a class name, so the returned instance can be changed without changing the client code.
 
 Example
--------
+=======
 
 Take a look at **Models** as an example. You can access the Factory specific to Models
 by using the magic static method of the Factories class, ``Factories::models()``.
@@ -69,26 +69,26 @@ you get back the instance as before:
 .. literalinclude:: factories/003.php
 
 Convenience Functions
-=====================
+*********************
 
 Two shortcut functions for Factories have been provided. These functions are always available.
 
 config()
---------
+========
 
 The first is ``config()`` which returns a new instance of a Config class. The only required parameter is the class name:
 
 .. literalinclude:: factories/008.php
 
 model()
---------
+=======
 
 The second function, ``model()`` returns a new instance of a Model class. The only required parameter is the class name:
 
 .. literalinclude:: factories/009.php
 
 Factory Parameters
-==================
+******************
 
 ``Factories`` takes as a second parameter an array of option values (described below).
 These directives will override the default options configured for each component.
@@ -106,7 +106,7 @@ class instance that uses the alternate database connection.
 .. _factories-options:
 
 Factories Options
-==================
+*****************
 
 The default behavior might not work for every component. For example, say your component
 name and its path do not align, or you need to limit instances to a certain type of class.
@@ -127,7 +127,7 @@ preferApp  boolean        Whether a class with the same basename in the App name
 ========== ============== ============================================================ ===================================================
 
 Factories Behavior
-==================
+******************
 
 Options can be applied in one of three ways (listed in ascending priority):
 
@@ -136,7 +136,7 @@ Options can be applied in one of three ways (listed in ascending priority):
 * Passing options directly at call time with a parameter.
 
 Configurations
---------------
+==============
 
 To set default component options, create a new Config files at **app/Config/Factory.php**
 that supplies options as an array property that matches the name of the component.
@@ -154,7 +154,7 @@ This would prevent conflict of an third-party module which happened to have an
 unrelated ``Filters`` path in its namespace.
 
 setOptions Method
------------------
+=================
 
 The ``Factories`` class has a static method to allow runtime option configuration: simply
 supply the desired array of options using the ``setOptions()`` method and they will be
@@ -163,7 +163,7 @@ merged with the default values and stored for the next call:
 .. literalinclude:: factories/006.php
 
 Parameter Options
------------------
+=================
 
 ``Factories``'s magic static call takes as a second parameter an array of option values.
 These directives will override the stored options configured for each component and can be
