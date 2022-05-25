@@ -309,10 +309,7 @@ class FileLocator
                 continue;
             }
 
-            $tempFiles = get_filenames($fullPath, true);
-
-            // Remove directories
-            $tempFiles = array_filter($tempFiles, static fn ($path) => strtolower(substr($path, -4)) === '.php');
+            $tempFiles = get_filenames($fullPath, true, false, false);
 
             if (! empty($tempFiles)) {
                 $files = array_merge($files, $tempFiles);
