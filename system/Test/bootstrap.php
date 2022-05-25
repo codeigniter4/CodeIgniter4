@@ -53,7 +53,7 @@ defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 // Load Common.php from App then System
-if (file_exists(APPPATH . 'Common.php')) {
+if (is_file(APPPATH . 'Common.php')) {
     require_once APPPATH . 'Common.php';
 }
 

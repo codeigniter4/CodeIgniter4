@@ -326,11 +326,11 @@ final class FileMovingTest extends CIUnitTestCase
 
 function is_uploaded_file($filename)
 {
-    if (! file_exists($filename)) {
+    if (! is_file($filename)) {
         file_put_contents($filename, 'data');
     }
 
-    return file_exists($filename);
+    return is_file($filename);
 }
 
 /*
