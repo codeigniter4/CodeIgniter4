@@ -15,6 +15,10 @@ identifying the top vulnerabilities for web applications.
 For each, we provide a brief description, the OWASP recommendations, and then
 the CodeIgniter provisions to address the problem.
 
+.. contents::
+    :local:
+    :depth: 1
+
 ************
 A1 Injection
 ************

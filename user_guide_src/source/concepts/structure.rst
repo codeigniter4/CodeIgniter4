@@ -5,6 +5,10 @@ Application Structure
 To get the most out of CodeIgniter, you need to understand how the application is structured, by default, and what you
 can change to meet the needs of your application.
 
+.. contents::
+    :local:
+    :depth: 2
+
 Default Directories
 *******************
 

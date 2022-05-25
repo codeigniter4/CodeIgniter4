@@ -9,6 +9,10 @@ concepts behind HTTP is a **must** for all developers that want to be successful
 The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss
 how to work with the requests and responses within CodeIgniter.
 
+.. contents::
+    :local:
+    :depth: 2
+
 What is HTTP?
 *************
 

@@ -2,6 +2,10 @@
 Models, Views, and Controllers
 ##############################
 
+.. contents::
+    :local:
+    :depth: 2
+
 Whenever you create an application, you have to find a way to organize the code to make it simple to locate
 the proper files and make it simple to maintain. Like most of the web frameworks, CodeIgniter uses the Model,
 View, Controller (MVC) pattern to organize the files. This keeps the data, the presentation, and flow through the
