@@ -980,6 +980,8 @@ class Forge
                 // Override the NULL attribute if that's our default
                 $attributes['NULL'] = true;
                 $field['null']      = empty($this->null) ? '' : ' ' . $this->null;
+            } elseif ($attributes['DEFAULT'] instanceof RawSql) {
+                $field['default'] = $this->default . $attributes['DEFAULT'];
             } else {
                 $field['default'] = $this->default . $this->db->escape($attributes['DEFAULT']);
             }
