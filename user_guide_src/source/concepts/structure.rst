@@ -12,8 +12,8 @@ can change to meet the needs of your application.
 Default Directories
 *******************
 
-A fresh install has five directories: ``/app``, ``/public``,
-``/writable``, ``/tests`` and ``/system`` or ``/vendor``.
+A fresh install has five directories: ``app/``, ``public/``,
+``writable/``, ``tests/`` and ``vendor/`` or ``system/``.
 Each of these directories has a very specific part to play.
 
 app
@@ -24,17 +24,17 @@ structure that works well for many applications. The following folders make up t
 
 .. code-block:: none
 
-    /app
-        /Config         Stores the configuration files
-        /Controllers    Controllers determine the program flow
-        /Database       Stores the database migrations and seeds files
-        /Filters        Stores filter classes that can run before and after controller
-        /Helpers        Helpers store collections of standalone functions
-        /Language       Multiple language support reads the language strings from here
-        /Libraries      Useful classes that don't fit in another category
-        /Models         Models work with the database to represent the business entities.
-        /ThirdParty     ThirdParty libraries that can be used in application
-        /Views          Views make up the HTML that is displayed to the client.
+    app/
+        Config/         Stores the configuration files
+        Controllers/    Controllers determine the program flow
+        Database/       Stores the database migrations and seeds files
+        Filters/        Stores filter classes that can run before and after controller
+        Helpers/        Helpers store collections of standalone functions
+        Language/       Multiple language support reads the language strings from here
+        Libraries/      Useful classes that don't fit in another category
+        Models/         Models work with the database to represent the business entities
+        ThirdParty/     ThirdParty libraries that can be used in application
+        Views/          Views make up the HTML that is displayed to the client
 
 Because the ``app`` directory is already namespaced, you should feel free to modify the structure
 of this directory to suit your application's needs. For example, you might decide to start using the Repository

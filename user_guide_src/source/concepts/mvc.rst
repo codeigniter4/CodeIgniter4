@@ -28,7 +28,7 @@ the data storage.
 
 At their most basic, controllers and models are simply classes that have a specific job. They are not the only class
 types that you can use, obviously, but they make up the core of how this framework is designed to be used. They even
-have designated directories in the **/app** directory for their storage, though you're free to store them
+have designated directories in the **app** directory for their storage, though you're free to store them
 wherever you desire, as long as they are properly namespaced. We will discuss that in more detail below.
 
 Let's take a closer look at each of these three main components.
