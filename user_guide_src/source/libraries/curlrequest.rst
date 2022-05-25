@@ -28,11 +28,13 @@ Sharing Options
 
 Due to historical reasons, by default, the CURLRequest shares all the options between requests.
 If you send more than one request with an instance of the class,
-this behavior may cause an error request with unnecessary headers.
+this behavior may cause an error request with unnecessary headers and body.
 
 You can change the behavior by editing the following config parameter value in **app/Config/CURLRequest.php** to ``false``:
 
 .. literalinclude:: curlrequest/001.php
+
+.. note:: Before v4.2.0, the request body is not reset even if ``$shareOptions`` is false due to a bug.
 
 *******************
 Loading the Library
