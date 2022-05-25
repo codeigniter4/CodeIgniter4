@@ -110,6 +110,13 @@ class BaseBuilder
     public $QBOrderBy = [];
 
     /**
+     * QB UNION data
+     *
+     * @var array<string>
+     */
+    protected array $QBUnion = [];
+
+    /**
      * QB NO ESCAPE data
      *
      * @var array
@@ -1136,6 +1143,48 @@ class BaseBuilder
         }
 
         return "{$prefix} {$column} {$not} LIKE :{$bind}:";
+    }
+
+    /**
+     * Add UNION statement
+     *
+     * @param BaseBuilder|Closure $union
+     *
+     * @return $this
+     */
+    public function union($union)
+    {
+        return $this->addUnionStatement($union);
+    }
+
+    /**
+     * Add UNION ALL statement
+     *
+     * @param BaseBuilder|Closure $union
+     *
+     * @return $this
+     */
+    public function unionAll($union)
+    {
+        return $this->addUnionStatement($union, true);
+    }
+
+    /**
+     * @used-by union()
+     * @used-by unionAll()
+     *
+     * @param BaseBuilder|Closure $union
+     *
+     * @return $this
+     */
+    protected function addUnionStatement($union, bool $all = false)
+    {
+        $this->QBUnion[] = "\n" . 'UNION '
+            . ($all ? 'ALL ' : '')
+            . 'SELECT * FROM '
+            . $this->buildSubquery($union, true, 'uwrp' . (count($this->QBUnion) + 1));
+
+        return $this;
     }
 
     /**
@@ -2427,10 +2476,10 @@ class BaseBuilder
             . $this->compileOrderBy();
 
         if ($this->QBLimit) {
-            return $this->_limit($sql . "\n");
+            $sql = $this->_limit($sql . "\n");
         }
 
-        return $sql;
+        return $this->unionInjection($sql);
     }
 
     /**
@@ -2585,6 +2634,17 @@ class BaseBuilder
         return '';
     }
 
+    protected function unionInjection(string $sql): string
+    {
+        if ($this->QBUnion === []) {
+            return $sql;
+        }
+
+        return 'SELECT * FROM (' . $sql . ') '
+            . ($this->db->protectIdentifiers ? $this->db->escapeIdentifiers('uwrp0') : 'uwrp0')
+            . implode("\n", $this->QBUnion);
+    }
+
     /**
      * Takes an object as input and converts the class variables to array key/vals
      *
@@ -2704,6 +2764,7 @@ class BaseBuilder
             'QBDistinct' => false,
             'QBLimit'    => false,
             'QBOffset'   => false,
+            'QBUnion'    => [],
         ]);
 
         if (! empty($this->db)) {
