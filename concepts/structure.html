@@ -271,26 +271,40 @@
 <h1>Application Structure<a class="headerlink" href="#application-structure" title="Permalink to this headline"></a></h1>
 <p>To get the most out of CodeIgniter, you need to understand how the application is structured, by default, and what you
 can change to meet the needs of your application.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#default-directories" id="id1">Default Directories</a></p>
+<ul>
+<li><p><a class="reference internal" href="#app" id="id2">app</a></p></li>
+<li><p><a class="reference internal" href="#system" id="id3">system</a></p></li>
+<li><p><a class="reference internal" href="#public" id="id4">public</a></p></li>
+<li><p><a class="reference internal" href="#writable" id="id5">writable</a></p></li>
+<li><p><a class="reference internal" href="#tests" id="id6">tests</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#modifying-directory-locations" id="id7">Modifying Directory Locations</a></p></li>
+</ul>
+</div>
 <section id="default-directories">
-<h2>Default Directories<a class="headerlink" href="#default-directories" title="Permalink to this headline"></a></h2>
-<p>A fresh install has five directories: <code class="docutils literal notranslate"><span class="pre">/app</span></code>, <code class="docutils literal notranslate"><span class="pre">/public</span></code>,
-<code class="docutils literal notranslate"><span class="pre">/writable</span></code>, <code class="docutils literal notranslate"><span class="pre">/tests</span></code> and <code class="docutils literal notranslate"><span class="pre">/system</span></code> or <code class="docutils literal notranslate"><span class="pre">/vendor</span></code>.
+<h2><a class="toc-backref" href="#id1">Default Directories</a><a class="headerlink" href="#default-directories" title="Permalink to this headline"></a></h2>
+<p>A fresh install has five directories: <code class="docutils literal notranslate"><span class="pre">app/</span></code>, <code class="docutils literal notranslate"><span class="pre">public/</span></code>,
+<code class="docutils literal notranslate"><span class="pre">writable/</span></code>, <code class="docutils literal notranslate"><span class="pre">tests/</span></code> and <code class="docutils literal notranslate"><span class="pre">vendor/</span></code> or <code class="docutils literal notranslate"><span class="pre">system/</span></code>.
 Each of these directories has a very specific part to play.</p>
 <section id="app">
-<h3>app<a class="headerlink" href="#app" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id2">app</a><a class="headerlink" href="#app" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">app</span></code> directory is where all of your application code lives. This comes with a default directory
 structure that works well for many applications. The following folders make up the basic contents:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>/app
-    /Config         Stores the configuration files
-    /Controllers    Controllers determine the program flow
-    /Database       Stores the database migrations and seeds files
-    /Filters        Stores filter classes that can run before and after controller
-    /Helpers        Helpers store collections of standalone functions
-    /Language       Multiple language support reads the language strings from here
-    /Libraries      Useful classes that don&#39;t fit in another category
-    /Models         Models work with the database to represent the business entities.
-    /ThirdParty     ThirdParty libraries that can be used in application
-    /Views          Views make up the HTML that is displayed to the client.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>app/
+    Config/         Stores the configuration files
+    Controllers/    Controllers determine the program flow
+    Database/       Stores the database migrations and seeds files
+    Filters/        Stores filter classes that can run before and after controller
+    Helpers/        Helpers store collections of standalone functions
+    Language/       Multiple language support reads the language strings from here
+    Libraries/      Useful classes that don&#39;t fit in another category
+    Models/         Models work with the database to represent the business entities
+    ThirdParty/     ThirdParty libraries that can be used in application
+    Views/          Views make up the HTML that is displayed to the client
 </pre></div>
 </div>
 <p>Because the <code class="docutils literal notranslate"><span class="pre">app</span></code> directory is already namespaced, you should feel free to modify the structure
@@ -306,7 +320,7 @@ routing to controllers, and will need to define all of your routes in the routes
 <strong>app/Config/Constants.php</strong>.</p>
 </section>
 <section id="system">
-<h3>system<a class="headerlink" href="#system" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">system</a><a class="headerlink" href="#system" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you install CodeIgniter with Composer, the <code class="docutils literal notranslate"><span class="pre">system</span></code> is located in <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework/system</span></code>.</p>
@@ -317,7 +331,7 @@ extend the classes, or create new classes, to provide the desired functionality.
 <p>All files in this directory live under the <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> namespace.</p>
 </section>
 <section id="public">
-<h3>public<a class="headerlink" href="#public" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">public</a><a class="headerlink" href="#public" title="Permalink to this headline"></a></h3>
 <p>The <strong>public</strong> folder holds the browser-accessible portion of your web application,
 preventing direct access to your source code.
 It contains the main <strong>.htaccess</strong> file, <strong>index.php</strong>, and any application
@@ -327,24 +341,24 @@ images.</p>
 would be configured to point to it.</p>
 </section>
 <section id="writable">
-<h3>writable<a class="headerlink" href="#writable" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">writable</a><a class="headerlink" href="#writable" title="Permalink to this headline"></a></h3>
 <p>This directory holds any directories that might need to be written to in the course of an application’s life.
 This includes directories for storing cache files, logs, and any uploads a user might send. You should add any other
 directories that your application will need to write to here. This allows you to keep your other primary directories
 non-writable as an added security measure.</p>
 </section>
 <section id="tests">
-<h3>tests<a class="headerlink" href="#tests" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">tests</a><a class="headerlink" href="#tests" title="Permalink to this headline"></a></h3>
 <p>This directory is set up to hold your test files. The <code class="docutils literal notranslate"><span class="pre">_support</span></code> directory holds various mock classes and other
 utilities that you can use while writing your tests. This directory does not need to be transferred to your
 production servers.</p>
 </section>
+</section>
 <section id="modifying-directory-locations">
-<h3>Modifying Directory Locations<a class="headerlink" href="#modifying-directory-locations" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id7">Modifying Directory Locations</a><a class="headerlink" href="#modifying-directory-locations" title="Permalink to this headline"></a></h2>
 <p>If you’ve relocated any of the main directories, you can change the configuration
 settings inside <strong>app/Config/Paths.php</strong>.</p>
 <p>Please read <a class="reference internal" href="../general/managing_apps.html"><span class="doc">Managing your Applications</span></a>.</p>
-</section>
 </section>
 </section>
 
