@@ -424,7 +424,7 @@ class MigrationRunner
         if (! empty($this->path)) {
             helper('filesystem');
             $dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
-            $files = get_filenames($dir, true);
+            $files = get_filenames($dir, true, false, false);
         } else {
             $files = $locator->listNamespaceFiles($namespace, '/Database/Migrations/');
         }
