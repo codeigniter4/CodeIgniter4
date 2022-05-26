@@ -94,6 +94,7 @@ Others
 - RouteCollection::addRedirect() can now use placeholders.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
+- Added a sample file for `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_. See **preload.php**.
 
 Changes
 *******
