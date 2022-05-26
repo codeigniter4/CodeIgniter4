@@ -25,6 +25,7 @@ BREAKING
 - To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto-routing.
 - There is a possible backward compatibility break for those users extending the History Collector and they should probably update ``History::setFiles()`` method.
 - The :php:func:`dot_array_search`'s unexpected behavior has been fixed. Now ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returns ``null``. The previous versions returned ``23``.
+- The default parameter values for ``Service::reset()`` and ``CIUnitTestCase::resetServices()`` have been changed from ``false`` to ``true``. This is to eliminate unexpected problems during testing, such as ``lang()`` not getting translated messages.
 
 Enhancements
 ************
