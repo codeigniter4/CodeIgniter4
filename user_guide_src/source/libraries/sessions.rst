@@ -143,6 +143,10 @@ omit the item key (magic getter only works for single property values):
 
 .. literalinclude:: sessions/009.php
 
+.. important:: The ``get()`` method WILL return flashdata or tempdata items when
+    retrieving a single item by key. It will not return flashdata or tempdata when
+    grabbing all userdata from the session, however.
+
 Adding Session Data
 ===================
 
