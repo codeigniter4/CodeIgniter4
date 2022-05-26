@@ -39,7 +39,7 @@ CodeIgniter provisions
 ======================
 
 - :doc:`HTTP library <../incoming/incomingrequest>` provides for input field filtering & content metadata
-- Form validation library
+- Validation library
 
 *********************************************
 A2 Weak authentication and session management
@@ -82,7 +82,7 @@ CodeIgniter provisions
 ======================
 
 - esc function
-- Form validation library
+- Validation library
 
 ***********************************
 A4 Insecure Direct Object Reference
@@ -103,7 +103,7 @@ OWASP recommendations
 CodeIgniter provisions
 ======================
 
-- Form validation library
+- Validation library
 - Easy to add third party authentication
 
 ****************************
