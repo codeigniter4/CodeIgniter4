@@ -37,7 +37,7 @@ final class DatabaseTest extends CIUnitTestCase
 
         $this->assertSame('1234.56 ms', $queries[0]['duration']);
         $this->assertSame('<strong>SHOW</strong> TABLES;', $queries[0]['sql']);
-        $this->assertSame(clean_path(__FILE__) . ':35', $queries[0]['trace-file']);
+        $this->assertSame(clean_path(__FILE__) . ':33', $queries[0]['trace-file']);
 
         foreach ($queries[0]['trace'] as $i => $trace) {
             // since we added the index numbering
