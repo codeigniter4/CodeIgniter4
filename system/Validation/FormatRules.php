@@ -274,7 +274,7 @@ class FormatRules
                 break;
 
             default:
-                $which = 0;
+                $which = FILTER_DEFAULT;
         }
 
         return filter_var($ip, FILTER_VALIDATE_IP, $which) !== false
