@@ -9,8 +9,12 @@ concepts behind HTTP is a **must** for all developers that want to be successful
 The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss
 how to work with the requests and responses within CodeIgniter.
 
+.. contents::
+    :local:
+    :depth: 2
+
 What is HTTP?
-=============
+*************
 
 HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser
 requests a page, it asks the server if it can get the page. The server then prepares the page and sends
@@ -22,7 +26,8 @@ you develop web applications is to always understand what the browser is request
 respond appropriately.
 
 The Request
------------
+===========
+
 Whenever a client (a web browser, smartphone app, etc) makes a request, it sends a small text message
 to the server and waits for a response.
 
@@ -42,7 +47,7 @@ client accepts, and much more. Wikipedia has an article that lists `all header f
 <https://en.wikipedia.org/wiki/List_of_HTTP_header_fields>`_ if you want to look it over.
 
 The Response
-------------
+============
 
 Once the server receives the request, your application will take that information and generate some output.
 The server will bundle your output as part of its response to the client. This is also represented as
@@ -64,7 +69,7 @@ wasn't found (404). Head over to IANA for a `full list of HTTP status codes
 <https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>`_.
 
 Working with Requests and Responses
------------------------------------
+***********************************
 
 While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
 abstracts them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </incoming/incomingrequest>`

@@ -28,13 +28,13 @@ The autoloader is always active, being registered with ``spl_autoload_register()
 beginning of the framework's execution.
 
 Configuration
-=============
+*************
 
 Initial configuration is done in **app/Config/Autoload.php**. This file contains two primary
 arrays: one for the classmap, and one for PSR-4 compatible namespaces.
 
 Namespaces
-==========
+**********
 
 The recommended method for organizing your classes is to create one or more namespaces for your
 application's files. This is most important for any business-logic related classes, entity classes,
@@ -61,7 +61,7 @@ You will need to modify any existing files that are referencing the current name
     namespace has changed.
 
 Classmap
-========
+********
 
 The classmap is used extensively by CodeIgniter to eke the last ounces of performance out of the system
 by not hitting the file-system with extra ``is_file()`` calls. You can use the classmap to link to
@@ -72,7 +72,7 @@ third-party libraries that are not namespaced:
 The key of each row is the name of the class that you want to locate. The value is the path to locate it at.
 
 Composer Support
-================
+****************
 
 Composer support is automatically initialized by default. By default, it looks for Composer's autoload file at
 ``ROOTPATH . 'vendor/autoload.php'``. If you need to change the location of that file for any reason, you can modify

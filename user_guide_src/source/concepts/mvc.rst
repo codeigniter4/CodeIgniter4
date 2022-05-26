@@ -2,10 +2,20 @@
 Models, Views, and Controllers
 ##############################
 
+.. contents::
+    :local:
+    :depth: 2
+
+************
+What is MVC?
+************
+
 Whenever you create an application, you have to find a way to organize the code to make it simple to locate
 the proper files and make it simple to maintain. Like most of the web frameworks, CodeIgniter uses the Model,
 View, Controller (MVC) pattern to organize the files. This keeps the data, the presentation, and flow through the
-application as separate parts. It should be noted that there are many views on the exact roles of each element,
+application as separate parts.
+
+It should be noted that there are many views on the exact roles of each element,
 but this document describes our take on it. If you think of it differently, you're free to modify how you use
 each piece as you need.
 
@@ -18,7 +28,7 @@ the data storage.
 
 At their most basic, controllers and models are simply classes that have a specific job. They are not the only class
 types that you can use, obviously, but they make up the core of how this framework is designed to be used. They even
-have designated directories in the **/app** directory for their storage, though you're free to store them
+have designated directories in the **app** directory for their storage, though you're free to store them
 wherever you desire, as long as they are properly namespaced. We will discuss that in more detail below.
 
 Let's take a closer look at each of these three main components.
