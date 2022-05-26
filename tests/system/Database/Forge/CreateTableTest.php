@@ -27,7 +27,7 @@ final class CreateTableTest extends CIUnitTestCase
             ->setConstructorArgs([[]])
             ->onlyMethods(['listTables'])
             ->getMock();
-        $dbMock->expects($this->any())
+        $dbMock
             ->method('listTables')
             ->willReturn(['foo']);
 
@@ -53,7 +53,7 @@ final class CreateTableTest extends CIUnitTestCase
             ->setConstructorArgs([[]])
             ->onlyMethods(['query'])
             ->getMock();
-        $dbMock->expects($this->any())
+        $dbMock
             ->method('query')
             ->with($sql)
             ->willReturn(true);

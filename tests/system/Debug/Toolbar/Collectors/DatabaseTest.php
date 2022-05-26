@@ -23,9 +23,7 @@ final class DatabaseTest extends CIUnitTestCase
     public function testDisplay(): void
     {
         /** @var MockObject&Query $query */
-        $query = $this->getMockBuilder(Query::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $query = $this->createMock(Query::class);
 
         // set mock returns
         $query->method('getQuery')->willReturn('SHOW TABLES;');
