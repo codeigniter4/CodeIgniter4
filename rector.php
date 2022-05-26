@@ -57,6 +57,7 @@ return static function (RectorConfig $rectorConfig): void {
         LevelSetList::UP_TO_PHP_74,
         PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD,
         PHPUnitSetList::PHPUNIT_80,
+        PHPUnitSetList::REMOVE_MOCKS,
     ]);
 
     $rectorConfig->parallel();
