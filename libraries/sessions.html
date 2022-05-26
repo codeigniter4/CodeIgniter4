@@ -448,6 +448,12 @@ omit the item key (magic getter only works for single property values):</p>
 <span class="nv">$userData</span> <span class="o">=</span> <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata or tempdata items when
+retrieving a single item by key. It will not return flashdata or tempdata when
+grabbing all userdata from the session, however.</p>
+</div>
 </section>
 <section id="adding-session-data">
 <h3><a class="toc-backref" href="#id7">Adding Session Data</a><a class="headerlink" href="#adding-session-data" title="Permalink to this headline"></a></h3>
