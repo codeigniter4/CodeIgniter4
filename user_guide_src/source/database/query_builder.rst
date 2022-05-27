@@ -712,7 +712,7 @@ In the example below, we get the first 5 users + the last 5 users and sort the r
 $builder->unionAll()
 --------------------
 
-The behavior is the same as the ``union()`` method.
+The behavior is the same as the ``union()`` method. However, all results will be returned, not just the unique ones.
 
 **************
 Query grouping
