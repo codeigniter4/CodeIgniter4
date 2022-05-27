@@ -510,8 +510,8 @@ The following functions are available:
         <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?> />
         <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?> />
 
-    .. note:: If you are using the Form Validation class, you must always specify
+    .. note:: If you are using the Validation class, you must always specify
         a rule for your field, even if empty, in order for the ``set_*()``
-        functions to work. This is because if a Form Validation object is
+        functions to work. This is because if a Validation object is
         defined, the control for ``set_*()`` is handed over to a method of the
         class instead of the generic helper function.
