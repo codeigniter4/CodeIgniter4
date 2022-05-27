@@ -691,7 +691,7 @@ Union
 $builder->union()
 -----------------
 
-Is used to combine the result-set of two or more SELECT statements.
+Is used to combine the result-set of two or more SELECT statements. It will return only the unique results.
 
 .. literalinclude:: query_builder/103.php
 
