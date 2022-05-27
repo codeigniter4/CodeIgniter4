@@ -119,5 +119,6 @@ Deprecations
 
 Bugs Fixed
 **********
+- The SQLSRV driver ignores the port value from the config.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
