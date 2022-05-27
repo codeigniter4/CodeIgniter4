@@ -571,7 +571,6 @@ if (! function_exists('set_select')) {
      * Set Select
      *
      * Let's you set the selected value of a <select> menu via data in the POST array.
-     * If Form Validation is active it retrieves the info from the validation class
      */
     function set_select(string $field, string $value = '', bool $default = false): string
     {
@@ -608,7 +607,6 @@ if (! function_exists('set_checkbox')) {
      * Set Checkbox
      *
      * Let's you set the selected value of a checkbox via the value in the POST array.
-     * If Form Validation is active it retrieves the info from the validation class
      */
     function set_checkbox(string $field, string $value = '', bool $default = false): string
     {
@@ -646,7 +644,6 @@ if (! function_exists('set_radio')) {
      * Set Radio
      *
      * Let's you set the selected value of a radio field via info in the POST array.
-     * If Form Validation is active it retrieves the info from the validation class
      */
     function set_radio(string $field, string $value = '', bool $default = false): string
     {
