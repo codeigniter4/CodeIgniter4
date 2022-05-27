@@ -120,6 +120,10 @@ class Connection extends BaseConnection
             unset($connection['UID'], $connection['PWD']);
         }
 
+        if (strpos($this->hostname, ',') === false) {
+            $this->hostname = $this->port !== '' ? "{$this->hostname}, {$this->port}" : $this->hostname;
+        }
+
         sqlsrv_configure('WarningsReturnAsErrors', 0);
         $this->connID = sqlsrv_connect($this->hostname, $connection);
 
