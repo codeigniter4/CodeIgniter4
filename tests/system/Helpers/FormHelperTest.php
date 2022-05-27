@@ -838,7 +838,7 @@ final class FormHelperTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
      */
-    public function testSetRadio()
+    public function testSetRadioFromSessionOldInput()
     {
         $_SESSION = [
             '_ci_old_input' => [
@@ -883,7 +883,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame(' checked="checked"', set_radio('bar', '0', true));
     }
 
-    public function testSetRadioFromPostArray()
+    public function testSetRadioFromSessionOldInputPostArray()
     {
         $_SESSION = [
             '_ci_old_input' => [
@@ -900,7 +900,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('bar', 'baz'));
     }
 
-    public function testSetRadioFromPostArrayWithValueZero()
+    public function testSetRadioFromSessionOldInputPostArrayWithValueZero()
     {
         $_SESSION = [
             '_ci_old_input' => [
