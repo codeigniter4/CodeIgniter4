@@ -3,12 +3,12 @@ Testing
 #######
 
 CodeIgniter has been built to make testing both the framework and your application as simple as possible.
-Support for ``PHPUnit`` is built in, and the framework provides a number of convenient
+Support for `PHPUnit <https://phpunit.de/>`__ is built in, and the framework provides a number of convenient
 helper methods to make testing every aspect of your application as painless as possible.
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 *************
 System Set Up
@@ -35,7 +35,11 @@ application and system directories) type the following from the command line::
 This will install the correct version for your current PHP version. Once that is done, you can run all of the
 tests for this project by typing::
 
-    > ./vendor/bin/phpunit
+    > vendor/bin/phpunit
+
+If you are using Windows, use the following command::
+
+    > vendor\bin\phpunit
 
 Phar
 ----
@@ -144,8 +148,8 @@ Ensure that a header or cookie was actually emitted:
 
 .. literalinclude:: overview/009.php
 
-Note: the test case with this should be `run as a separate process
-in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
+.. note:: the test case with this should be `run as a separate process
+    in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
 
 assertHeaderNotEmitted($header, $ignoreCase = false)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -154,8 +158,8 @@ Ensure that a header or cookie was not emitted:
 
 .. literalinclude:: overview/010.php
 
-Note: the test case with this should be `run as a separate process
-in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
+.. note:: the test case with this should be `run as a separate process
+    in PHPunit <https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess>`_.
 
 assertCloseEnough($expected, $actual, $message = '', $tolerance = 1)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -215,8 +219,8 @@ your tests to only the code in question, while simulating various responses from
 true when testing controllers and other integration testing. The **Services** class provides the following methods
 to simplify this.
 
-injectMock()
-------------
+Services::injectMock()
+----------------------
 
 This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.
@@ -226,13 +230,15 @@ set properties of a service so that it behaves in a certain way, or replace a se
 The first parameter is the service that you are replacing. The name must match the function name in the Services
 class exactly. The second parameter is the instance to replace it with.
 
-reset()
--------
+Services::reset()
+-----------------
 
 Removes all mocked classes from the Services class, bringing it back to its original state.
 
-resetSingle(string $name)
--------------------------
+You can also use the ``$this->resetServices()`` method that ``CIUnitTestCase`` provides.
+
+Services::resetSingle(string $name)
+-----------------------------------
 
 Removes any mock and shared instances for a single service, by its name.
 
@@ -242,7 +248,7 @@ Mocking Factory Instances
 =========================
 
 Similar to Services, you may find yourself needing to supply a pre-configured class instance
-during testing that will be used with ``Factories``. Use the same ``injectMock()`` and ``reset()``
+during testing that will be used with ``Factories``. Use the same ``Factories::injectMock()`` and ``Factories::reset()``
 static methods like **Services**, but they take an additional preceding parameter for the
 component name:
 
