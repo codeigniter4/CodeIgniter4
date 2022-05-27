@@ -843,12 +843,12 @@ final class FormHelperTest extends CIUnitTestCase
         $_SESSION = [
             '_ci_old_input' => [
                 'post' => [
-                    'foo' => 'bar',
+                    'foo' => '<bar>',
                 ],
             ],
         ];
 
-        $this->assertSame(' checked="checked"', set_radio('foo', 'bar'));
+        $this->assertSame(' checked="checked"', set_radio('foo', '<bar>'));
         $this->assertSame('', set_radio('foo', 'baz'));
 
         unset($_SESSION['_ci_old_input']);
@@ -864,7 +864,7 @@ final class FormHelperTest extends CIUnitTestCase
 
         $this->assertSame(' checked="checked"', set_radio('bar', 'baz'));
         $this->assertSame('', set_radio('bar', 'boop'));
-        $this->assertSame(' checked="checked"', set_radio('bar', 'boop', true));
+        $this->assertSame('', set_radio('bar', 'boop', true));
     }
 
     /**
@@ -873,7 +873,7 @@ final class FormHelperTest extends CIUnitTestCase
      */
     public function testSetRadioFromPostWithValueZero()
     {
-        $_POST['bar'] = 0;
+        $_POST['bar'] = '0';
 
         $this->assertSame(' checked="checked"', set_radio('bar', '0'));
         $this->assertSame('', set_radio('bar', 'boop'));
