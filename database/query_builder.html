@@ -312,35 +312,40 @@ system.</p>
 <li><p><a class="reference internal" href="#limit" id="id23">Limit</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#query-grouping" id="id24">Query grouping</a></p>
+<li><p><a class="reference internal" href="#union-queries" id="id24">Union queries</a></p>
 <ul>
-<li><p><a class="reference internal" href="#group" id="id25">Group</a></p></li>
+<li><p><a class="reference internal" href="#union" id="id25">Union</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#inserting-data" id="id26">Inserting Data</a></p>
+<li><p><a class="reference internal" href="#query-grouping" id="id26">Query grouping</a></p>
 <ul>
-<li><p><a class="reference internal" href="#insert" id="id27">Insert</a></p></li>
-<li><p><a class="reference internal" href="#insertbatch" id="id28">insertBatch</a></p></li>
+<li><p><a class="reference internal" href="#group" id="id27">Group</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#updating-data" id="id29">Updating Data</a></p>
+<li><p><a class="reference internal" href="#inserting-data" id="id28">Inserting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#update" id="id30">Update</a></p></li>
-<li><p><a class="reference internal" href="#updatebatch" id="id31">UpdateBatch</a></p></li>
+<li><p><a class="reference internal" href="#insert" id="id29">Insert</a></p></li>
+<li><p><a class="reference internal" href="#insertbatch" id="id30">insertBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#deleting-data" id="id32">Deleting Data</a></p>
+<li><p><a class="reference internal" href="#updating-data" id="id31">Updating Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#delete" id="id33">Delete</a></p></li>
+<li><p><a class="reference internal" href="#update" id="id32">Update</a></p></li>
+<li><p><a class="reference internal" href="#updatebatch" id="id33">UpdateBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#method-chaining" id="id34">Method Chaining</a></p></li>
-<li><p><a class="reference internal" href="#resetting-query-builder" id="id35">Resetting Query Builder</a></p>
+<li><p><a class="reference internal" href="#deleting-data" id="id34">Deleting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#resetquery" id="id36">ResetQuery</a></p></li>
+<li><p><a class="reference internal" href="#delete" id="id35">Delete</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id37">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#method-chaining" id="id36">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#resetting-query-builder" id="id37">Resetting Query Builder</a></p>
+<ul>
+<li><p><a class="reference internal" href="#resetquery" id="id38">ResetQuery</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#class-reference" id="id39">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="loading-the-query-builder">
@@ -1375,10 +1380,65 @@ first parameter.</p>
 </section>
 </section>
 </section>
+<section id="union-queries">
+<span id="query-builder-union"></span><h2><a class="toc-backref" href="#id24">Union queries</a><a class="headerlink" href="#union-queries" title="Permalink to this headline"></a></h2>
+<section id="union">
+<h3><a class="toc-backref" href="#id25">Union</a><a class="headerlink" href="#union" title="Permalink to this headline"></a></h3>
+<section id="builder-union">
+<h4>$builder-&gt;union()<a class="headerlink" href="#builder-union" title="Permalink to this headline"></a></h4>
+<p>Is used to combine the result-set of two or more SELECT statements. It will return only the unique results.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$union</span>   <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">);</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">union</span><span class="p">(</span><span class="nv">$union</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * SELECT * FROM (SELECT `id`, `name` FROM `users` LIMIT 10) uwrp0</span>
+<span class="cm"> * UNION SELECT * FROM (SELECT `id`, `name` FROM `users`) uwrp1</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For correct work with DBMS (such as MSSQL and Oracle) queries are wrapped in <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">(</span> <span class="pre">...</span> <span class="pre">)</span> <span class="pre">alias</span></code>
+The main query will always have an alias of <code class="docutils literal notranslate"><span class="pre">uwrp0</span></code>. Each subsequent query added via <code class="docutils literal notranslate"><span class="pre">union()</span></code> will have an
+alias <code class="docutils literal notranslate"><span class="pre">uwrpN+1</span></code>.</p>
+</div>
+<p>All union queries will be added after the main query, regardless of the order in which the <code class="docutils literal notranslate"><span class="pre">union()</span></code> method was
+called. That is, the <code class="docutils literal notranslate"><span class="pre">limit()</span></code> or <code class="docutils literal notranslate"><span class="pre">orderBy()</span></code> methods will be relative to the main query, even if called after
+<code class="docutils literal notranslate"><span class="pre">union()</span></code>.</p>
+<p>In some cases, it may be necessary, for example, to sort or limit the number of records of the query result.
+The solution is to use the wrapper created via <code class="docutils literal notranslate"><span class="pre">$db-&gt;newQuery()</span></code>.
+In the example below, we get the first 5 users + the last 5 users and sort the result by id:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$union</span>   <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;ASC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">union</span><span class="p">(</span><span class="nv">$union</span><span class="p">);</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">newQuery</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">fromSubquery</span><span class="p">(</span><span class="nv">$builder</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;DESC&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * SELECT * FROM (</span>
+<span class="cm"> *      SELECT * FROM (SELECT `id`, `name` FROM `users` ORDER BY `id` ASC LIMIT 5) uwrp0</span>
+<span class="cm"> *      UNION</span>
+<span class="cm"> *      SELECT * FROM (SELECT `id`, `name` FROM `users` ORDER BY `id` DESC LIMIT 5) uwrp1</span>
+<span class="cm"> * ) q ORDER BY `id` DESC</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+</section>
+<section id="builder-unionall">
+<h4>$builder-&gt;unionAll()<a class="headerlink" href="#builder-unionall" title="Permalink to this headline"></a></h4>
+<p>The behavior is the same as the <code class="docutils literal notranslate"><span class="pre">union()</span></code> method. However, all results will be returned, not just the unique ones.</p>
+</section>
+</section>
+</section>
 <section id="query-grouping">
-<h2><a class="toc-backref" href="#id24">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id26">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
 <section id="group">
-<h3><a class="toc-backref" href="#id25">Group</a><a class="headerlink" href="#group" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id27">Group</a><a class="headerlink" href="#group" title="Permalink to this headline"></a></h3>
 <p>Query grouping allows you to create groups of <strong>WHERE</strong> clauses by enclosing them in parentheses. This will allow
 you to create queries with complex <strong>WHERE</strong> clauses. Nested groups are supported. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1446,9 +1506,9 @@ you to create queries with complex <strong>WHERE</strong> clauses. Nested groups
 </section>
 </section>
 <section id="inserting-data">
-<h2><a class="toc-backref" href="#id26">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id28">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline"></a></h2>
 <section id="insert">
-<h3><a class="toc-backref" href="#id27">Insert</a><a class="headerlink" href="#insert" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id29">Insert</a><a class="headerlink" href="#insert" title="Permalink to this headline"></a></h3>
 <section id="builder-insert">
 <h4>$builder-&gt;insert()<a class="headerlink" href="#builder-insert" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
@@ -1545,7 +1605,7 @@ using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;
 </section>
 </section>
 <section id="insertbatch">
-<h3><a class="toc-backref" href="#id28">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id30">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
 <section id="builder-insertbatch">
 <h4>$builder-&gt;insertBatch()<a class="headerlink" href="#builder-insertbatch" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
@@ -1579,9 +1639,9 @@ method. Here is an example using an array:</p>
 </section>
 </section>
 <section id="updating-data">
-<h2><a class="toc-backref" href="#id29">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id31">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
 <section id="update">
-<h3><a class="toc-backref" href="#id30">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id32">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
 <section id="builder-replace">
 <h4>$builder-&gt;replace()<a class="headerlink" href="#builder-replace" title="Permalink to this headline"></a></h4>
 <p>This method executes a <strong>REPLACE</strong> statement, which is basically the SQL
@@ -1744,7 +1804,7 @@ performing updates.</p>
 </section>
 </section>
 <section id="updatebatch">
-<h3><a class="toc-backref" href="#id31">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id33">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
 <section id="builder-updatebatch">
 <h4>$builder-&gt;updateBatch()<a class="headerlink" href="#builder-updatebatch" title="Permalink to this headline"></a></h4>
 <p>Generates an update string based on the data you supply, and runs the query.
@@ -1805,9 +1865,9 @@ that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INS
 </section>
 </section>
 <section id="deleting-data">
-<h2><a class="toc-backref" href="#id32">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id34">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
 <section id="delete">
-<h3><a class="toc-backref" href="#id33">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id35">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
 <section id="builder-delete">
 <h4>$builder-&gt;delete()<a class="headerlink" href="#builder-delete" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the query.</p>
@@ -1872,7 +1932,7 @@ that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSE
 </section>
 </section>
 <section id="method-chaining">
-<h2><a class="toc-backref" href="#id34">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id36">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
 <p>Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1885,9 +1945,9 @@ multiple methods. Consider this example:</p>
 </div>
 </section>
 <section id="resetting-query-builder">
-<span id="ar-caching"></span><h2><a class="toc-backref" href="#id35">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id37">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
 <section id="resetquery">
-<h3><a class="toc-backref" href="#id36">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id38">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
 <section id="builder-resetquery">
 <h4>$builder-&gt;resetQuery()<a class="headerlink" href="#builder-resetquery" title="Permalink to this headline"></a></h4>
 <p>Resetting Query Builder allows you to start fresh with your query without
@@ -1918,7 +1978,7 @@ run the query:</p>
 </section>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id37">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id39">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt>
 <code class="sig-name descname">CodeIgniter\Database\BaseBuilder</code></dt>
@@ -2915,6 +2975,44 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="method">
+<dt>
+<code class="sig-name descname">union</code><span class="sig-paren">(</span><em class="sig-param">$union</em><span class="sig-paren">)</span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$union</strong> (<em>BaseBulder|Closure</em>) – Union query</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+</dd>
+</dl>
+<p>Adds a <code class="docutils literal notranslate"><span class="pre">UNION</span></code> clause.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="unionAll">
+<code class="sig-name descname">unionAll</code><span class="sig-paren">(</span><em class="sig-param">$union</em><span class="sig-paren">)</span><a class="headerlink" href="#unionAll" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$union</strong> (<em>BaseBulder|Closure</em>) – Union query</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+</dd>
+</dl>
+<p>Adds a <code class="docutils literal notranslate"><span class="pre">UNION</span> <span class="pre">ALL</span></code> clause.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="set">
 <code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$escape = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -3270,7 +3368,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 27, 2022.
+      <span class="lastupdated">Last updated on May 28, 2022.
       </span></p>
   </div>
 
