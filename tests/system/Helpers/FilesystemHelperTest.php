@@ -400,6 +400,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
                 'server_path'   => $file,
                 'size'          => $info['size'],
                 'date'          => $info['date'],
+                'type'          => $info['type'],
                 'relative_path' => realpath(__DIR__ . '/../../_support/Files/baker'),
             ],
         ];
@@ -437,6 +438,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
             'server_path' => $file,
             'size'        => $info['size'],
             'date'        => $info['date'],
+            'type'        => $info['type'],
         ];
 
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php'));
@@ -451,6 +453,21 @@ final class FilesystemHelperTest extends CIUnitTestCase
         ];
 
         $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/baker/banana.php', 'readable,writable,executable'));
+    }
+
+    public function testGetFileType()
+    {
+        $expected = [
+            'type'   => 'gif',
+        ];
+
+        $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Images/ci-logo.gif', 'type'));
+
+        $expected = [
+            'type'   => 'php',
+        ];
+
+        $this->assertSame($expected, get_file_info(SUPPORTPATH . 'Files/able/apple.php', 'type'));
     }
 
     public function testGetFileInfoPerms()
