@@ -391,7 +391,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testSlashItem()
     {
         $this->assertSame('/', slash_item('cookiePath')); // slash already there
-        $this->assertSame('', slash_item('cookieDomain')); // empty, so untouched
+        $this->assertNull(null, slash_item('cookieDomain')); // empty, so untouched
         $this->assertSame('en/', slash_item('defaultLocale')); // slash appended
     }
 
