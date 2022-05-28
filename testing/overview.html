@@ -270,22 +270,40 @@
   <section id="testing">
 <h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline"></a></h1>
 <p>CodeIgniter has been built to make testing both the framework and your application as simple as possible.
-Support for <code class="docutils literal notranslate"><span class="pre">PHPUnit</span></code> is built in, and the framework provides a number of convenient
+Support for <a class="reference external" href="https://phpunit.de/">PHPUnit</a> is built in, and the framework provides a number of convenient
 helper methods to make testing every aspect of your application as painless as possible.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#system-set-up" id="id2">System Set Up</a></p>
 <ul>
-<li><p><a class="reference internal" href="#installing-phpunit" id="id3">Installing PHPUnit</a></p></li>
+<li><p><a class="reference internal" href="#installing-phpunit" id="id3">Installing PHPUnit</a></p>
+<ul>
+<li><p><a class="reference internal" href="#composer" id="id4">Composer</a></p></li>
+<li><p><a class="reference internal" href="#phar" id="id5">Phar</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#testing-your-application" id="id4">Testing Your Application</a></p>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#testing-your-application" id="id6">Testing Your Application</a></p>
 <ul>
-<li><p><a class="reference internal" href="#phpunit-configuration" id="id5">PHPUnit Configuration</a></p></li>
-<li><p><a class="reference internal" href="#the-test-class" id="id6">The Test Class</a></p></li>
-<li><p><a class="reference internal" href="#mocking-services" id="id7">Mocking Services</a></p></li>
-<li><p><a class="reference internal" href="#mocking-factory-instances" id="id8">Mocking Factory Instances</a></p></li>
-<li><p><a class="reference internal" href="#stream-filters" id="id9">Stream Filters</a></p></li>
+<li><p><a class="reference internal" href="#phpunit-configuration" id="id7">PHPUnit Configuration</a></p></li>
+<li><p><a class="reference internal" href="#the-test-class" id="id8">The Test Class</a></p>
+<ul>
+<li><p><a class="reference internal" href="#staging" id="id9">Staging</a></p></li>
+<li><p><a class="reference internal" href="#traits" id="id10">Traits</a></p></li>
+<li><p><a class="reference internal" href="#additional-assertions" id="id11">Additional Assertions</a></p></li>
+<li><p><a class="reference internal" href="#accessing-protected-private-properties" id="id12">Accessing Protected/Private Properties</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#mocking-services" id="id13">Mocking Services</a></p>
+<ul>
+<li><p><a class="reference internal" href="#services-injectmock" id="id14">Services::injectMock()</a></p></li>
+<li><p><a class="reference internal" href="#services-reset" id="id15">Services::reset()</a></p></li>
+<li><p><a class="reference internal" href="#services-resetsingle-string-name" id="id16">Services::resetSingle(string $name)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#mocking-factory-instances" id="id17">Mocking Factory Instances</a></p></li>
+<li><p><a class="reference internal" href="#stream-filters" id="id18">Stream Filters</a></p></li>
 </ul>
 </li>
 </ul>
@@ -297,7 +315,7 @@ helper methods to make testing every aspect of your application as painless as p
 <p>CodeIgniter uses <a class="reference external" href="https://phpunit.de/">PHPUnit</a> as the basis for all of its testing. There are two ways to install
 PHPUnit to use within your system.</p>
 <section id="composer">
-<h4>Composer<a class="headerlink" href="#composer" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id4">Composer</a><a class="headerlink" href="#composer" title="Permalink to this headline"></a></h4>
 <p>The recommended method is to install it in your project using <a class="reference external" href="https://getcomposer.org/">Composer</a>. While it’s possible
 to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
 system as time goes on.</p>
@@ -308,21 +326,25 @@ application and system directories) type the following from the command line:</p
 </div>
 <p>This will install the correct version for your current PHP version. Once that is done, you can run all of the
 tests for this project by typing:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="o">./</span><span class="nx">vendor</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">phpunit</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">vendor</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">phpunit</span>
+</pre></div>
+</div>
+<p>If you are using Windows, use the following command:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">vendor\bin\phpunit</span>
 </pre></div>
 </div>
 </section>
 <section id="phar">
-<h4>Phar<a class="headerlink" href="#phar" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id5">Phar</a><a class="headerlink" href="#phar" title="Permalink to this headline"></a></h4>
 <p>The other option is to download the .phar file from the <a class="reference external" href="https://phpunit.de/getting-started/phpunit-9.html">PHPUnit</a> site.
 This is a standalone file that should be placed within your project root.</p>
 </section>
 </section>
 </section>
 <section id="testing-your-application">
-<h2><a class="toc-backref" href="#id4">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline"></a></h2>
 <section id="phpunit-configuration">
-<h3><a class="toc-backref" href="#id5">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline"></a></h3>
 <p>The framework has a <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> file in the project root. This controls unit
 testing of the framework itself. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>, it will
 over-ride this.</p>
@@ -330,7 +352,7 @@ over-ride this.</p>
 <code class="docutils literal notranslate"><span class="pre">ThirdParty</span></code> folders, if you are unit testing your application.</p>
 </section>
 <section id="the-test-class">
-<h3><a class="toc-backref" href="#id6">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h3>
 <p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code>. All tests
 are expected to be located in the <strong>tests/app</strong> directory by default.</p>
 <p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/app/Libraries/FooTest.php</strong>:</p>
@@ -374,7 +396,7 @@ have the correct namespace relative to <code class="docutils literal notranslate
 </div>
 <p>When testing database results, you must use the <a class="reference internal" href="database.html"><span class="doc">DatabaseTestTrait</span></a> in your class.</p>
 <section id="staging">
-<h4>Staging<a class="headerlink" href="#staging" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id9">Staging</a><a class="headerlink" href="#staging" title="Permalink to this headline"></a></h4>
 <p>Most tests require some preparation in order to run correctly. PHPUnit’s <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> provides four methods
 to help with staging and clean up:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">setUpBeforeClass</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
@@ -398,6 +420,7 @@ parent as well so extended test cases do not interfere with staging:</p>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
+
         <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -417,6 +440,7 @@ parameter-free methods you want run during set up and tear down:</p>
         <span class="s1">&#39;mockEmail&#39;</span><span class="p">,</span>
         <span class="s1">&#39;mockSession&#39;</span><span class="p">,</span>
     <span class="p">];</span>
+
     <span class="k">protected</span> <span class="nv">$tearDownMethods</span> <span class="o">=</span> <span class="p">[];</span>
 <span class="p">}</span>
 </pre></div>
@@ -444,7 +468,7 @@ that or provide their own:</p>
 </div>
 </section>
 <section id="traits">
-<h4>Traits<a class="headerlink" href="#traits" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id10">Traits</a><a class="headerlink" href="#traits" title="Permalink to this headline"></a></h4>
 <p>A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
 to run named for the trait itself. For example, if you needed to add authentication to some
@@ -475,7 +499,7 @@ logged in user:</p>
 </div>
 </section>
 <section id="additional-assertions">
-<h4>Additional Assertions<a class="headerlink" href="#additional-assertions" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id11">Additional Assertions</a><a class="headerlink" href="#additional-assertions" title="Permalink to this headline"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides additional unit testing assertions that you might find useful.</p>
 <section id="assertlogged-level-expectedmessage">
 <h5>assertLogged($level, $expectedMessage)<a class="headerlink" href="#assertlogged-level-expectedmessage" title="Permalink to this headline"></a></h5>
@@ -521,8 +545,11 @@ logged in user:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderEmitted</span><span class="p">(</span><span class="s1">&#39;Set-Cookie: foo=bar&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
+</div>
 </section>
 <section id="assertheadernotemitted-header-ignorecase-false">
 <h5>assertHeaderNotEmitted($header, $ignoreCase = false)<a class="headerlink" href="#assertheadernotemitted-header-ignorecase-false" title="Permalink to this headline"></a></h5>
@@ -538,8 +565,11 @@ in PHPunit</a>.</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertHeaderNotEmitted</span><span class="p">(</span><span class="s1">&#39;Set-Cookie: banana&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Note: the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the test case with this should be <a class="reference external" href="https://phpunit.readthedocs.io/en/9.5/annotations.html#runinseparateprocess">run as a separate process
 in PHPunit</a>.</p>
+</div>
 </section>
 <section id="assertcloseenough-expected-actual-message-tolerance-1">
 <h5>assertCloseEnough($expected, $actual, $message = ‘’, $tolerance = 1)<a class="headerlink" href="#assertcloseenough-expected-actual-message-tolerance-1" title="Permalink to this headline"></a></h5>
@@ -569,7 +599,7 @@ between expected and actual time, formatted as strings, is within the prescribed
 </section>
 </section>
 <section id="accessing-protected-private-properties">
-<h4>Accessing Protected/Private Properties<a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id12">Accessing Protected/Private Properties</a><a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline"></a></h4>
 <p>When testing, you can use the following setter and getter methods to access protected and private methods and
 properties in the classes that you are testing.</p>
 <section id="getprivatemethodinvoker-instance-method">
@@ -622,18 +652,19 @@ parameter is the name of the property to set the value of. The third parameter i
 </section>
 </section>
 <section id="mocking-services">
-<h3><a class="toc-backref" href="#id7">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline"></a></h3>
 <p>You will often find that you need to mock one of the services defined in <strong>app/Config/Services.php</strong> to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The <strong>Services</strong> class provides the following methods
 to simplify this.</p>
-<section id="injectmock">
-<h4>injectMock()<a class="headerlink" href="#injectmock" title="Permalink to this headline"></a></h4>
+<section id="services-injectmock">
+<h4><a class="toc-backref" href="#id14">Services::injectMock()</a><a class="headerlink" href="#services-injectmock" title="Permalink to this headline"></a></h4>
 <p>This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
 
 <span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
@@ -652,12 +683,13 @@ set properties of a service so that it behaves in a certain way, or replace a se
 <p>The first parameter is the service that you are replacing. The name must match the function name in the Services
 class exactly. The second parameter is the instance to replace it with.</p>
 </section>
-<section id="reset">
-<h4>reset()<a class="headerlink" href="#reset" title="Permalink to this headline"></a></h4>
+<section id="services-reset">
+<h4><a class="toc-backref" href="#id15">Services::reset()</a><a class="headerlink" href="#services-reset" title="Permalink to this headline"></a></h4>
 <p>Removes all mocked classes from the Services class, bringing it back to its original state.</p>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">$this-&gt;resetServices()</span></code> method that <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides.</p>
 </section>
-<section id="resetsingle-string-name">
-<h4>resetSingle(string $name)<a class="headerlink" href="#resetsingle-string-name" title="Permalink to this headline"></a></h4>
+<section id="services-resetsingle-string-name">
+<h4><a class="toc-backref" href="#id16">Services::resetSingle(string $name)</a><a class="headerlink" href="#services-resetsingle-string-name" title="Permalink to this headline"></a></h4>
 <p>Removes any mock and shared instances for a single service, by its name.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -666,13 +698,14 @@ class exactly. The second parameter is the instance to replace it with.</p>
 </section>
 </section>
 <section id="mocking-factory-instances">
-<h3><a class="toc-backref" href="#id8">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline"></a></h3>
 <p>Similar to Services, you may find yourself needing to supply a pre-configured class instance
-during testing that will be used with <code class="docutils literal notranslate"><span class="pre">Factories</span></code>. Use the same <code class="docutils literal notranslate"><span class="pre">injectMock()</span></code> and <code class="docutils literal notranslate"><span class="pre">reset()</span></code>
+during testing that will be used with <code class="docutils literal notranslate"><span class="pre">Factories</span></code>. Use the same <code class="docutils literal notranslate"><span class="pre">Factories::injectMock()</span></code> and <code class="docutils literal notranslate"><span class="pre">Factories::reset()</span></code>
 static methods like <strong>Services</strong>, but they take an additional preceding parameter for the
 component name:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Config\Factories</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
 
 <span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
@@ -693,14 +726,16 @@ component name:</p>
 </div>
 </section>
 <section id="stream-filters">
-<h3><a class="toc-backref" href="#id9">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline"></a></h3>
 <p><strong>CITestStreamFilter</strong> provides an alternate to these helper methods.</p>
 <p>You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP’s own STDOUT, or STDERR,
 might be helpful. The <code class="docutils literal notranslate"><span class="pre">CITestStreamFilter</span></code> helps you capture the output from the stream of your choice.</p>
 <p>An example demonstrating this inside one of your test cases:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\Filters\CITestStreamFilter</span><span class="p">;</span>
 
 <span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
@@ -718,6 +753,7 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomeOutput</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
         <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
+
         <span class="nv">$expected</span> <span class="o">=</span> <span class="s2">&quot;first.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="nv">$buffer</span><span class="p">);</span>
     <span class="p">}</span>
