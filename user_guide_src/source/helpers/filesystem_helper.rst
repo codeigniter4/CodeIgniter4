@@ -184,18 +184,18 @@ The following functions are available:
 
     .. literalinclude:: filesystem_helper/011.php
 
-.. php:function:: get_file_info($file[, $returnedValues = ['name', 'server_path', 'size', 'date']])
+.. php:function:: get_file_info($file[, $returnedValues = ['name', 'server_path', 'size', 'date', 'type']])
 
     :param    string        $file: File path
     :param    array|string  $returnedValues: What type of info to return to be passed as array or comma separated string
     :returns:    An array containing info on the specified file or false on failure
     :rtype:    array
 
-    Given a file and path, returns (optionally) the *name*, *path*, *size* and *date modified*
+    Given a file and path, returns (optionally) the *name*, *path*, *size*, *type* and *date modified*
     information attributes for a file. Second parameter allows you to explicitly declare what
     information you want returned.
 
-    Valid ``$returnedValues`` options are: ``name``, ``size``, ``date``, ``readable``, ``writeable``,
+    Valid ``$returnedValues`` options are: ``name``, ``size``, ``date``, ``type``, ``readable``, ``writeable``,
     ``executable`` and ``fileperms``.
 
 .. php:function:: symbolic_permissions($perms)
