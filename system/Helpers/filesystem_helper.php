@@ -289,7 +289,7 @@ if (! function_exists('get_file_info')) {
      *
      * Given a file and path, returns the name, path, size, date modified
      * Second parameter allows you to explicitly declare what information you want returned
-     * Options are: name, server_path, size, date, readable, writable, executable, fileperms
+     * Options are: name, server_path, size, date, type, readable, writable, executable, fileperms
      * Returns false if the file cannot be found.
      *
      * @param string $file           Path to file
@@ -297,7 +297,7 @@ if (! function_exists('get_file_info')) {
      *
      * @return array|null
      */
-    function get_file_info(string $file, $returnedValues = ['name', 'server_path', 'size', 'date'])
+    function get_file_info(string $file, $returnedValues = ['name', 'server_path', 'size', 'date', 'type'])
     {
         if (! is_file($file)) {
             return null;
@@ -325,6 +325,10 @@ if (! function_exists('get_file_info')) {
 
                 case 'date':
                     $fileInfo['date'] = filemtime($file);
+                    break;
+
+                case 'type':
+                    $fileInfo['type'] = pathinfo($file, PATHINFO_EXTENSION);
                     break;
 
                 case 'readable':
