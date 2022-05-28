@@ -679,6 +679,41 @@ As is in ``countAllResult()`` method, this method resets any field values that y
 to ``select()`` as well. If you need to keep them, you can pass ``false`` as the
 first parameter.
 
+.. _query-builder-union:
+
+*************
+Union queries
+*************
+
+Union
+=====
+
+$builder->union()
+-----------------
+
+Is used to combine the result-set of two or more SELECT statements. It will return only the unique results.
+
+.. literalinclude:: query_builder/103.php
+
+.. note:: For correct work with DBMS (such as MSSQL and Oracle) queries are wrapped in ``SELECT * FROM ( ... ) alias``
+    The main query will always have an alias of ``uwrp0``. Each subsequent query added via ``union()`` will have an
+    alias ``uwrpN+1``.
+
+All union queries will be added after the main query, regardless of the order in which the ``union()`` method was
+called. That is, the ``limit()`` or ``orderBy()`` methods will be relative to the main query, even if called after
+``union()``.
+
+In some cases, it may be necessary, for example, to sort or limit the number of records of the query result.
+The solution is to use the wrapper created via ``$db->newQuery()``.
+In the example below, we get the first 5 users + the last 5 users and sort the result by id:
+
+.. literalinclude:: query_builder/104.php
+
+$builder->unionAll()
+--------------------
+
+The behavior is the same as the ``union()`` method. However, all results will be returned, not just the unique ones.
+
 **************
 Query grouping
 **************
@@ -1494,6 +1529,22 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds an ``OFFSET`` clause to a query.
+
+    .. php:method:: union($union)
+
+        :param BaseBulder|Closure $union: Union query
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Adds a ``UNION`` clause.
+
+    .. php:method:: unionAll($union)
+
+        :param BaseBulder|Closure $union: Union query
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Adds a ``UNION ALL`` clause.
 
     .. php:method:: set($key[, $value = ''[, $escape = null]])
 

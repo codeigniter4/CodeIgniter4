@@ -74,6 +74,7 @@ Database
     - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
     - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>`, :ref:`join() <query-builder-join-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
 - ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
+- QueryBuilder. Union queries. See :ref:`query-builder-union`.
 
 Others
 ======

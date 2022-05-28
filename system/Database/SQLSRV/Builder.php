@@ -597,7 +597,7 @@ class Builder extends BaseBuilder
             $sql = $this->_limit($sql . "\n");
         }
 
-        return $sql;
+        return $this->unionInjection($sql);
     }
 
     /**
