@@ -1,6 +1,8 @@
 <?php
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 final class SomeTest extends CIUnitTestCase
 {
@@ -18,6 +20,7 @@ final class SomeTest extends CIUnitTestCase
     public function testSomeOutput(): void
     {
         CLI::write('first.');
+
         $expected = "first.\n";
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }

@@ -10,5 +10,6 @@ final class OneOfMyModelsTest extends CIUnitTestCase
         'mockEmail',
         'mockSession',
     ];
+
     protected $tearDownMethods = [];
 }

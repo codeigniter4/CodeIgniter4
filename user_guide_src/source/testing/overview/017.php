@@ -1,5 +1,6 @@
 <?php
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Test\CIUnitTestCase;
 
 final class SomeTest extends CIUnitTestCase

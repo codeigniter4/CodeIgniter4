@@ -1,6 +1,7 @@
 <?php
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Services;
 
 final class SomeTest extends CIUnitTestCase
 {
