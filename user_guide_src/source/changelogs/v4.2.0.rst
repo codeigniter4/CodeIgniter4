@@ -19,7 +19,6 @@ BREAKING
     - ``public/index.php``
     - ``spark``
 - The ``system/bootstrap.php`` file has been modified to easily implement `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_. Returning a ``CodeIgniter`` instance and loading ``.env`` file have been moved to ``index.php`` and ``spark``.
-- The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
 - The ``CodeIgniter\Autoloader\Autoloader::initialize()`` has changed the behavior to fix a bug. It used to use Composer classmap only when ``$modules->discoverInComposer`` is true. Now it always uses the Composer classmap if Composer is available.
 - The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
 - To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto-routing.
@@ -86,7 +85,6 @@ Others
     - See :ref:`content-security-policy` for details.
 - New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
-- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
 - Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
     - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
 - Added support for webp files to **app/Config/Mimes.php**.
