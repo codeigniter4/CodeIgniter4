@@ -101,7 +101,7 @@ Others
 - New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
 - Added support for webp files to **app/Config/Mimes.php**.
-- RouteCollection::addRedirect() can now use placeholders.
+- ``RouteCollection::addRedirect()`` can now use placeholders. See :ref:`redirecting-routes` for details.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
 - Added a sample file for `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_. See **preload.php**.
