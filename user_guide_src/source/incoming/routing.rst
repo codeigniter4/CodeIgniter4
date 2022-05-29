@@ -202,6 +202,8 @@ define an array of routes and then pass it as the first parameter to the ``map()
 
 .. literalinclude:: routing/021.php
 
+.. _redirecting-routes:
+
 Redirecting Routes
 ==================
 
@@ -212,6 +214,8 @@ the HTTP status code that should be sent along with the redirect. The default va
 redirect and is recommended in most cases:
 
 .. literalinclude:: routing/022.php
+
+.. note:: Since v4.2.0 ``addRedirect()`` can use placeholders.
 
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
