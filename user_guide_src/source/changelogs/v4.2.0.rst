@@ -12,9 +12,17 @@ Release Date: Not Released
 BREAKING
 ********
 
+Method Signature Changes
+========================
+
 - The method signature of ``CodeIgniter\Database\BaseBuilder::join()`` and ``CodeIgniter\Database\*\Builder::join()`` have been changed.
 - The method signature of ``Validation::setRule()`` has been changed. The ``string`` typehint on the ``$rules`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
 - The method signature of ``CodeIgniter\CLI\CommandRunner::_remap()`` has been changed to fix a bug.
+- The default parameter values for ``Service::reset()`` and ``CIUnitTestCase::resetServices()`` have been changed from ``false`` to ``true``. This is to eliminate unexpected problems during testing, such as ``lang()`` not getting translated messages.
+
+Behavior Changes
+================
+
 - The ``CodeIgniter\CodeIgniter`` class has a new property ``$context`` and it must have the correct context at runtime. So the following files have been changed:
     - ``public/index.php``
     - ``spark``
@@ -24,7 +32,6 @@ BREAKING
 - To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto-routing.
 - There is a possible backward compatibility break for those users extending the History Collector and they should probably update ``History::setFiles()`` method.
 - The :php:func:`dot_array_search`'s unexpected behavior has been fixed. Now ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returns ``null``. The previous versions returned ``23``.
-- The default parameter values for ``Service::reset()`` and ``CIUnitTestCase::resetServices()`` have been changed from ``false`` to ``true``. This is to eliminate unexpected problems during testing, such as ``lang()`` not getting translated messages.
 
 Enhancements
 ************
@@ -75,6 +82,14 @@ Database
 - ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
 - QueryBuilder. Union queries. See :ref:`query-builder-union`.
 
+Helpers and Functions
+=====================
+
+- HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag`.
+- Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
+- Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
+    - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
+
 Others
 ======
 
@@ -85,11 +100,7 @@ Others
     - See :ref:`content-security-policy` for details.
 - New :doc:`../outgoing/view_decorators` allow modifying the generated HTML prior to caching.
 - Added Validation Strict Rules. See :ref:`validation-traditional-and-strict-rules`.
-- Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
-    - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
 - Added support for webp files to **app/Config/Mimes.php**.
-- Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
-- HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag`.
 - RouteCollection::addRedirect() can now use placeholders.
 - Debugbar enhancements
     - Debug toolbar is now using ``microtime()`` instead of ``time()``.
