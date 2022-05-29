@@ -155,7 +155,6 @@ that it could benefit from a review by fellow developers.
 > Remember to sync your local repo with the shared one before pushing!
 It is a lot easier to resolve conflicts at this stage.
 
-
 Synchronize your repository:
 
     git checkout develop
@@ -214,6 +213,33 @@ Label your PRs with the one of the following [labels](https://github.com/codeign
 
 And if your PRs have the breaking changes, label the following label:
 - **breaking change** ... PRs that may break existing functionalities
+
+## Updating Your Branch
+
+If you are asked for changes in the review, commit the fix in your branch and push it to GitHub again.
+
+If the `develop` branch progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
+do the following:
+
+Synchronize your repository:
+
+    git checkout develop
+    git fetch upstream
+    git merge upstream/develop
+    git push origin develop
+
+Bring your feature branch up to date:
+
+    git checkout new/mind-reader
+    git rebase upstream/develop
+
+You might get conflicts when you rebase. It is your
+responsibility to resolve those locally, so that you can continue
+collaborating with the shared repository.
+
+And finally push your local branch to your GitHub repository:
+
+    git push --force-with-lease origin new/mind-reader
 
 ## Cleanup
 
