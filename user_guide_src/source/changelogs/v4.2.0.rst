@@ -71,16 +71,17 @@ Commands
 Database
 ========
 
-- Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
-- Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
-- The BaseBuilder::buildSubquery() method can take an optional third argument ``string $alias``.
 - Added new OCI8 driver for database.
     - It can access Oracle Database and supports SQL and PL/SQL statements.
-- QueryBuilder raw SQL string support
+- QueryBuilder
+    - Added Subqueries in the FROM section. See :ref:`query-builder-from-subquery`.
+    - Added Subqueries in the SELECT section. See :ref:`query-builder-select`.
+    - The ``BaseBuilder::buildSubquery()`` method can take an optional third argument ``string $alias``.
+    - Union queries. See :ref:`query-builder-union`.
+- Raw SQL string support
     - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
     - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>`, :ref:`join() <query-builder-join-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
-- ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
-- QueryBuilder. Union queries. See :ref:`query-builder-union`.
+    - ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
 
 Helpers and Functions
 =====================
