@@ -113,34 +113,28 @@ Explanation of Values:
 **username**    The username used to connect to the database.
 **password**    The password used to connect to the database.
 **database**    The name of the database you want to connect to.
-**DBDriver**    The database type. e.g.,: MySQLi, Postgre, etc. The case must match the driver name
+**DBDriver**    The database type. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
 **pConnect**    true/false (boolean) - Whether to use a persistent connection.
 **DBDebug**     true/false (boolean) - Whether database errors should be displayed.
 **charset**     The character set used in communicating with the database.
-**DBCollat**    The character collation used in communicating with the database
-
-                .. note:: Only used in the 'MySQLi' driver.
-
-**swapPre**     A default table prefix that should be swapped with dbprefix. This is useful for distributed
+**DBCollat**    The character collation used in communicating with the database (``MySQLi`` only)
+**swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                 applications where you might run manually written queries, and need the prefix to still be
                 customizable by the end user.
-**schema**      The database schema, default value varies by driver. Used by PostgreSQL and SQLSRV drivers.
+**schema**      The database schema, default value varies by driver. Used by ``Postgres`` and ``SQLSRV`` drivers.
 **encrypt**     Whether or not to use an encrypted connection.
-
-                - 'sqlsrv' and 'pdo/sqlsrv' drivers accept true/false
-                - 'MySQLi' and 'pdo/mysql' drivers accept an array with the following options:
-
-                    - 'ssl_key'    - Path to the private key file
-                    - 'ssl_cert'   - Path to the public key certificate file
-                    - 'ssl_ca'     - Path to the certificate authority file
-                    - 'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format
-                    - 'ssl_cipher' - List of *allowed* ciphers to be used for the encryption, separated by colons (':')
-                    - 'ssl_verify' - true/false; Whether to verify the server certificate or not ('MySQLi' only)
-
-**compress**    Whether or not to use client compression (MySQL only).
+                ``SQLSRV`` drivers accept true/false
+                ``MySQLi`` drivers accept an array with the following options:
+                * ``ssl_key``    - Path to the private key file
+                * ``ssl_cert``   - Path to the public key certificate file
+                * ``ssl_ca``     - Path to the certificate authority file
+                * ``ssl_capath`` - Path to a directory containing trusted CA certificates in PEM format
+                * ``ssl_cipher`` - List of *allowed* ciphers to be used for the encryption, separated by colons (``:``)
+                * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
+**compress**    Whether or not to use client compression (``MySQLi`` only).
 **strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
                 while developing an application.
 **port**        The database port number. To use this value you have to add a line to the database config array.
