@@ -101,8 +101,6 @@ default group's configuration settings. The values should be name following this
     database.default.password = '';
     database.default.database = 'ci4';
 
-As with all other
-
 **********************
 Explanation of Values:
 **********************
