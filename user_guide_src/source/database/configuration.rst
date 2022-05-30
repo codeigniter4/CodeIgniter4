@@ -105,9 +105,9 @@ default group's configuration settings. The values should be name following this
 Explanation of Values:
 **********************
 
-==============  ===========================================================================================================
+=============== ===========================================================================================================
  Name Config    Description
-==============  ===========================================================================================================
+=============== ===========================================================================================================
 **dsn**         The DSN connect string (an all-in-one configuration sequence).
 **hostname**    The hostname of your database server. Often this is 'localhost'.
 **username**    The username used to connect to the database.
@@ -140,8 +140,12 @@ Explanation of Values:
 **port**        The database port number. To use this value you have to add a line to the database config array.
 
                 .. literalinclude:: configuration/009.php
+**foreignKeys** true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
 
-==============  ===========================================================================================================
+                .. important:: SQLite3 Foreign Key constraint is disabled by default.
+                    See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
+                    To enforce Foreign Key constraint, set this config item to true.
+=============== ===========================================================================================================
 
 .. note:: Depending on what database platform you are using (MySQL, PostgreSQL,
     etc.) not all values will be needed. For example, when using SQLite you
