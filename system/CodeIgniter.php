@@ -34,6 +34,7 @@ use Exception;
 use Kint;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
+use LogicException;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -304,10 +305,9 @@ class CodeIgniter
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
-        assert(
-            $this->context !== null,
-            'Context must be set before run() is called. If you are upgrading from 4.1.x, you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.'
-        );
+        if ($this->context === null) {
+            throw new LogicException('Context must be set before run() is called. If you are upgrading from 4.1.x, you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.');
+        }
 
         $this->startBenchmark();
 
