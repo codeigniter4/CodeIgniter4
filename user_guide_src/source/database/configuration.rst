@@ -6,6 +6,10 @@ Database Configuration
     :local:
     :depth: 2
 
+***********
+Config File
+***********
+
 CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
 file is located at **app/Config/Database.php**. You can also set
@@ -21,6 +25,9 @@ while connecting to specify a group name.
 
 .. note:: The default location of the SQLite3 database is in the ``writable`` folder.
     If you want to change the location, you must set the full path to the new folder.
+
+DSN
+===
 
 Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
 require a full DSN string to be provided. If that is the case, you
@@ -44,6 +51,9 @@ add the config variables as a query string:
 .. note:: If you provide a DSN string and it is missing some valid settings (e.g., the
     database character set), which are present in the rest of the configuration
     fields, CodeIgniter will append them.
+
+Failovers
+=========
 
 You can also specify failovers for the situation when the main connection cannot connect for some reason.
 These failovers can be specified by setting the failover for a connection like this:
@@ -69,14 +79,18 @@ variable located in the config file:
     default we've used the word "default" for the primary connection,
     but it too can be renamed to something more relevant to your project.
 
+defaultGroup
+============
+
 You could modify the config file to detect the environment and automatically
 update the `defaultGroup` value to the correct one by adding the required logic
 within the class' constructor:
 
 .. literalinclude:: configuration/008.php
 
-Configuring With .env File
---------------------------
+**************************
+Configuring with .env File
+**************************
 
 You can also save your configuration values within a **.env** file with the current server's
 database settings. You only need to enter the values that change from what is in the
@@ -89,8 +103,9 @@ default group's configuration settings. The values should be name following this
 
 As with all other
 
+**********************
 Explanation of Values:
-----------------------
+**********************
 
 ==============  ===========================================================================================================
  Name Config    Description
