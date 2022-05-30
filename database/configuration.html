@@ -605,6 +605,16 @@ while developing an application.</p></td>
 </div>
 </td>
 </tr>
+<tr class="row-odd"><td><p><strong>foreignKeys</strong></p></td>
+<td><p>true/false (boolean) - Whether or not to enable Foreign Key constraint (<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>SQLite3 Foreign Key constraint is disabled by default.
+See <a class="reference external" href="https://www.sqlite.org/pragma.html#pragma_foreign_keys">SQLite documentation</a>.
+To enforce Foreign Key constraint, set this config item to true.</p>
+</div>
+</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
