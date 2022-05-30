@@ -424,6 +424,30 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
     }
 
+    public function testNotStoresPreviousURLByCheckingContentType()
+    {
+        $_SERVER['argv'] = ['index.php', 'image'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/image';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('image', static function () {
+            $response = Services::response();
+
+            return $response->setContentType('image/jpeg', '');
+        });
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        ob_get_clean();
+
+        $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
+    }
+
     /**
      * The method after all test, reset Servces:: config
      * Can't use static::tearDownAfterClass. This will cause a buffer exception
