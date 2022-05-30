@@ -38,6 +38,20 @@ class Connection extends BaseConnection
     public $escapeChar = '`';
 
     /**
+     * @var bool Enable Foreign Key constraint or not
+     */
+    protected $foreignKeys = false;
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        if ($this->foreignKeys) {
+            $this->enableForeignKeyChecks();
+        }
+    }
+
+    /**
      * Connect to the database.
      *
      * @throws DatabaseException
