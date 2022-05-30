@@ -1,3 +1,6 @@
 <?php
 
-$default['port'] = 5432;
+$default = [
+    // ...
+    'port' => 5432,
+];
