@@ -25,7 +25,7 @@ parameters:
 		- utils/PHPStan
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
-		- system/Test/bootstrap.php
+		- phpstan-bootstrap.php
 	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*
