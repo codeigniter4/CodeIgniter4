@@ -271,10 +271,19 @@
 <h1>Database Configuration<a class="headerlink" href="#database-configuration" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#configuring-with-env-file" id="id1">Configuring With .env File</a></p></li>
-<li><p><a class="reference internal" href="#explanation-of-values" id="id2">Explanation of Values:</a></p></li>
+<li><p><a class="reference internal" href="#config-file" id="id1">Config File</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dsn" id="id2">DSN</a></p></li>
+<li><p><a class="reference internal" href="#failovers" id="id3">Failovers</a></p></li>
+<li><p><a class="reference internal" href="#defaultgroup" id="id4">defaultGroup</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#configuring-with-env-file" id="id5">Configuring with .env File</a></p></li>
+<li><p><a class="reference internal" href="#explanation-of-values" id="id6">Explanation of Values:</a></p></li>
 </ul>
 </div>
+<section id="config-file">
+<h2><a class="toc-backref" href="#id1">Config File</a><a class="headerlink" href="#config-file" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has a config file that lets you store your database
 connection values (username, password, database name, etc.). The config
 file is located at <strong>app/Config/Database.php</strong>. You can also set
@@ -306,6 +315,7 @@ prototype:</p>
         <span class="s1">&#39;compress&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
         <span class="s1">&#39;strictOn&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
         <span class="s1">&#39;failover&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span>
+        <span class="s1">&#39;port&#39;</span>     <span class="o">=&gt;</span> <span class="mi">3306</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -319,6 +329,8 @@ while connecting to specify a group name.</p>
 <p>The default location of the SQLite3 database is in the <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder.
 If you want to change the location, you must set the full path to the new folder.</p>
 </div>
+<section id="dsn">
+<h3><a class="toc-backref" href="#id2">DSN</a><a class="headerlink" href="#dsn" title="Permalink to this headline"></a></h3>
 <p>Some database drivers (such as PDO, PostgreSQL, Oracle, ODBC) might
 require a full DSN string to be provided. If that is the case, you
 should use the ‘DSN’ configuration setting, as if you’re using the
@@ -326,10 +338,16 @@ driver’s underlying native PHP extension, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// PDO</span>
-<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pgsql:host=localhost;port=5432;dbname=database_name&#39;</span><span class="p">;</span>
+<span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;pgsql:host=localhost;port=5432;dbname=database_name&#39;</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+<span class="p">];</span>
 
 <span class="c1">// Oracle</span>
-<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;//localhost/XE&#39;</span><span class="p">;</span>
+<span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;//localhost/XE&#39;</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -340,7 +358,10 @@ will try to build it with the rest of the provided settings.</p>
 <p>You can also set a Data Source Name in universal manner (URL like). In that case DSNs must have this prototype:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;DBDriver://username:password@hostname:port/database&#39;</span><span class="p">;</span>
+<span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DBDriver://username:password@hostname:port/database&#39;</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <p>To override default config values when connecting with a universal version of the DSN string,
@@ -348,9 +369,16 @@ add the config variables as a query string:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// MySQLi</span>
-<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;MySQLi://username:password@hostname:3306/database?charset=utf8&amp;DBCollat=utf8_general_ci&#39;</span><span class="p">;</span>
+<span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;MySQLi://username:password@hostname:3306/database?charset=utf8&amp;DBCollat=utf8_general_ci&#39;</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+<span class="p">];</span>
+
 <span class="c1">// Postgre</span>
-<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;DSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Postgre://username:password@hostname:5432/database?charset=utf8&amp;connect_timeout=5&amp;sslmode=1&#39;</span><span class="p">;</span>
+<span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DSN&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Postgre://username:password@hostname:5432/database?charset=utf8&amp;connect_timeout=5&amp;sslmode=1&#39;</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -359,6 +387,9 @@ add the config variables as a query string:</p>
 database character set), which are present in the rest of the configuration
 fields, CodeIgniter will append them.</p>
 </div>
+</section>
+<section id="failovers">
+<h3><a class="toc-backref" href="#id3">Failovers</a><a class="headerlink" href="#failovers" title="Permalink to this headline"></a></h3>
 <p>You can also specify failovers for the situation when the main connection cannot connect for some reason.
 These failovers can be specified by setting the failover for a connection like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -449,6 +480,9 @@ variable located in the config file:</p>
 default we’ve used the word “default” for the primary connection,
 but it too can be renamed to something more relevant to your project.</p>
 </div>
+</section>
+<section id="defaultgroup">
+<h3><a class="toc-backref" href="#id4">defaultGroup</a><a class="headerlink" href="#defaultgroup" title="Permalink to this headline"></a></h3>
 <p>You could modify the config file to detect the environment and automatically
 update the <cite>defaultGroup</cite> value to the correct one by adding the required logic
 within the class’ constructor:</p>
@@ -471,8 +505,10 @@ within the class’ constructor:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+</section>
 <section id="configuring-with-env-file">
-<h2><a class="toc-backref" href="#id1">Configuring With .env File</a><a class="headerlink" href="#configuring-with-env-file" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Configuring with .env File</a><a class="headerlink" href="#configuring-with-env-file" title="Permalink to this headline"></a></h2>
 <p>You can also save your configuration values within a <strong>.env</strong> file with the current server’s
 database settings. You only need to enter the values that change from what is in the
 default group’s configuration settings. The values should be name following this format, where
@@ -482,10 +518,9 @@ default group’s configuration settings. The values should be name following th
 <span class="nx">database</span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">&#39;ci4&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>As with all other</p>
 </section>
 <section id="explanation-of-values">
-<h2><a class="toc-backref" href="#id2">Explanation of Values:</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Explanation of Values:</a><a class="headerlink" href="#explanation-of-values" title="Permalink to this headline"></a></h2>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -513,7 +548,7 @@ default group’s configuration settings. The values should be name following th
 <td><p>The name of the database you want to connect to.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>DBDriver</strong></p></td>
-<td><p>The database type. e.g.,: MySQLi, Postgre, etc. The case must match the driver name</p></td>
+<td><p>The database type. e.g.,: <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgres</span></code>, etc. The case must match the driver name</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBPrefix</strong></p></td>
 <td><p>An optional table prefix which will added to the table name when running
@@ -530,42 +565,29 @@ installations to share one database.</p></td>
 <td><p>The character set used in communicating with the database.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBCollat</strong></p></td>
-<td><p>The character collation used in communicating with the database</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Only used in the ‘MySQLi’ driver.</p>
-</div>
-</td>
+<td><p>The character collation used in communicating with the database (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only)</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>swapPre</strong></p></td>
-<td><p>A default table prefix that should be swapped with dbprefix. This is useful for distributed
+<td><p>A default table prefix that should be swapped with <code class="docutils literal notranslate"><span class="pre">DBPrefix</span></code>. This is useful for distributed
 applications where you might run manually written queries, and need the prefix to still be
 customizable by the end user.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>schema</strong></p></td>
-<td><p>The database schema, default value varies by driver. Used by PostgreSQL and SQLSRV drivers.</p></td>
+<td><p>The database schema, default value varies by driver. Used by <code class="docutils literal notranslate"><span class="pre">Postgres</span></code> and <code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> drivers.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>encrypt</strong></p></td>
-<td><p>Whether or not to use an encrypted connection.</p>
-<ul>
-<li><p>‘sqlsrv’ and ‘pdo/sqlsrv’ drivers accept true/false</p></li>
-<li><p>‘MySQLi’ and ‘pdo/mysql’ drivers accept an array with the following options:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>‘ssl_key’    - Path to the private key file</p></li>
-<li><p>‘ssl_cert’   - Path to the public key certificate file</p></li>
-<li><p>‘ssl_ca’     - Path to the certificate authority file</p></li>
-<li><p>‘ssl_capath’ - Path to a directory containing trusted CA certificates in PEM format</p></li>
-<li><p>‘ssl_cipher’ - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (‘:’)</p></li>
-<li><p>‘ssl_verify’ - true/false; Whether to verify the server certificate or not (‘MySQLi’ only)</p></li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-</td>
+<td><p>Whether or not to use an encrypted connection.
+<code class="docutils literal notranslate"><span class="pre">SQLSRV</span></code> drivers accept true/false
+<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> drivers accept an array with the following options:
+* <code class="docutils literal notranslate"><span class="pre">ssl_key</span></code>    - Path to the private key file
+* <code class="docutils literal notranslate"><span class="pre">ssl_cert</span></code>   - Path to the public key certificate file
+* <code class="docutils literal notranslate"><span class="pre">ssl_ca</span></code>     - Path to the certificate authority file
+* <code class="docutils literal notranslate"><span class="pre">ssl_capath</span></code> - Path to a directory containing trusted CA certificates in PEM format
+* <code class="docutils literal notranslate"><span class="pre">ssl_cipher</span></code> - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (<code class="docutils literal notranslate"><span class="pre">:</span></code>)
+* <code class="docutils literal notranslate"><span class="pre">ssl_verify</span></code> - true/false; Whether to verify the server certificate or not (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only)</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>compress</strong></p></td>
-<td><p>Whether or not to use client compression (MySQL only).</p></td>
+<td><p>Whether or not to use client compression (<code class="docutils literal notranslate"><span class="pre">MySQLi</span></code> only).</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>strictOn</strong></p></td>
 <td><p>true/false (boolean) - Whether to force “Strict Mode” connections, good for ensuring strict SQL
@@ -575,7 +597,10 @@ while developing an application.</p></td>
 <td><p>The database port number. To use this value you have to add a line to the database config array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$default</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5432</span><span class="p">;</span>
+<span class="nv">$default</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1">// ...</span>
+    <span class="s1">&#39;port&#39;</span> <span class="o">=&gt;</span> <span class="mi">5432</span><span class="p">,</span>
+<span class="p">];</span>
 </pre></div>
 </div>
 </td>
@@ -605,7 +630,7 @@ you are using MySQL.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 29, 2022.
+      <span class="lastupdated">Last updated on May 30, 2022.
       </span></p>
   </div>
 
