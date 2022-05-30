@@ -304,10 +304,9 @@ class CodeIgniter
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
-        assert(
-            $this->context !== null,
-            'Context must be set before run() is called. If you are upgrading from 4.1.x, you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.'
-        );
+        if ($this->context === null) {
+            throw FrameworkException::forMissingContext();
+        }
 
         $this->startBenchmark();
 

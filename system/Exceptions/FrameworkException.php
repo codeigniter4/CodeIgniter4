@@ -63,4 +63,16 @@ class FrameworkException extends RuntimeException implements ExceptionInterface
     {
         return new static(lang('Fabricator.createFailed', [$table, $reason]));
     }
+
+    public static function forMissingContext()
+    {
+        $message = <<<'MESSAGE'
+            Context must be set before $app->run() is called. If you are upgrading from 4.1.x, you need to merge the following files:
+                - public/index.php
+                - spark
+            from vendor/codeigniter4/framework
+            MESSAGE;
+
+        return new static($message);
+    }
 }
