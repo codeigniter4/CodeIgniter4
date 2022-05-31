@@ -279,7 +279,9 @@ class Table
         $exFields  = implode(', ', $exFields);
         $newFields = implode(', ', $newFields);
 
-        $this->db->query("INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}");
+        $this->db->query(
+            "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}"
+        );
     }
 
     /**
