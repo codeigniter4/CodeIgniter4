@@ -113,7 +113,7 @@ final class ThrottleTest extends CIUnitTestCase
         $throttler->check('127.0.0.1', 60, MINUTE);
         $throttler->check('127.0.0.1', 60, MINUTE);
 
-        $this->assertSame(57, $this->cache->get('throttler_127.0.0.1'));
+        $this->assertCloseEnough(57, $this->cache->get('throttler_127.0.0.1'));
     }
 
     public function testReturnsFalseIfBucketEmpty()
