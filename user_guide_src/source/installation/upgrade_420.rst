@@ -42,7 +42,6 @@ Breaking Changes
 ****************
 
 - The ``system/bootstrap.php`` file no longer returns a ``CodeIgniter`` instance, and does not load the ``.env`` file (now handled in ``index.php`` and ``spark``). If you have code that expects these behaviors it will no longer work and must be modified. This has been changed to make `Preloading <https://www.php.net/manual/en/opcache.preloading.php>`_ easier to implement.
-- ``previous_url()`` has been changed to return only the URLs whose Content-Type was ``text/html``. Accordingly, the behavior of ``redirect()->back()`` has been changed.
 
 Breaking Enhancements
 *********************
