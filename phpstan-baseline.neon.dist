@@ -661,11 +661,6 @@ parameters:
 			path: system/Log/Logger.php
 
 		-
-			message: "#^Property CodeIgniter\\\\RESTful\\\\ResourceController\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/RESTful/ResourceController.php
-
-		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#"
 			count: 3
 			path: system/Router/Router.php
@@ -834,11 +829,6 @@ parameters:
 			message: "#^Cannot access property \\$insert_id on bool\\|object\\|resource\\.$#"
 			count: 1
 			path: system/Test/Mock/MockConnection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockResourcePresenter\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Test/Mock/MockResourcePresenter.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#"
