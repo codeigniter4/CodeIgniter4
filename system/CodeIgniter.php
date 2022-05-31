@@ -1031,6 +1031,11 @@ class CodeIgniter
             return;
         }
 
+        // Ignore non-HTML responses
+        if (strpos($this->response->getHeaderLine('Content-Type'), 'text/html') === false) {
+            return;
+        }
+
         // This is mainly needed during testing...
         if (is_string($uri)) {
             $uri = new URI($uri);
