@@ -456,11 +456,6 @@ parameters:
 			path: system/Debug/Exceptions.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Debug\\\\Exceptions\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Exceptions.php
-
-		-
 			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Debug/Exceptions.php
