@@ -322,6 +322,7 @@
 <li><p>To prevent unexpected access from the web browser, if a controller is added to a cli route (<code class="docutils literal notranslate"><span class="pre">$routes-&gt;cli()</span></code>), all methods of that controller are no longer accessible via auto-routing.</p></li>
 <li><p>There is a possible backward compatibility break for those users extending the History Collector and they should probably update <code class="docutils literal notranslate"><span class="pre">History::setFiles()</span></code> method.</p></li>
 <li><p>The <a class="reference internal" href="../helpers/array_helper.html#dot_array_search" title="dot_array_search"><code class="xref php php-func docutils literal notranslate"><span class="pre">dot_array_search</span></code></a>’s unexpected behavior has been fixed. Now <code class="docutils literal notranslate"><span class="pre">dot_array_search('foo.bar.baz',</span> <span class="pre">['foo'</span> <span class="pre">=&gt;</span> <span class="pre">['bar'</span> <span class="pre">=&gt;</span> <span class="pre">23]])</span></code> returns <code class="docutils literal notranslate"><span class="pre">null</span></code>. The previous versions returned <code class="docutils literal notranslate"><span class="pre">23</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">CodeIgniter::storePreviousURL()</span></code> has been changed to store only the URLs whose Content-Type was <code class="docutils literal notranslate"><span class="pre">text/html</span></code>. It also affects the behavior of <a class="reference internal" href="../helpers/url_helper.html#previous_url" title="previous_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">previous_url</span></code></a> and <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()-&gt;back()</span></code></a>.</p></li>
 </ul>
 </section>
 </section>
@@ -521,7 +522,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 30, 2022.
+      <span class="lastupdated">Last updated on May 31, 2022.
       </span></p>
   </div>
 
