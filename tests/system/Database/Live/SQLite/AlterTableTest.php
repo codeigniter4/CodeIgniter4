@@ -220,7 +220,7 @@ final class AlterTableTest extends CIUnitTestCase
             ->dropColumn('name')
             ->run();
 
-        $this->dontSeeInDatabase('foo', ['name' => 'George Clinton']);
+        $this->assertFalse($this->db->fieldExists('name', 'foo'));
         $this->seeInDatabase('foo', ['email' => 'funkalicious@example.com']);
     }
 
