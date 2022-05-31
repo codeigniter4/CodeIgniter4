@@ -89,7 +89,7 @@ final class AlterTableTest extends CIUnitTestCase
 
         $fields = $this->getPrivateProperty($this->table, 'fields');
 
-        $this->assertCount(4, $fields);
+        $this->assertCount(5, $fields);
         $this->assertArrayHasKey('id', $fields);
         $this->assertNull($fields['id']['default']);
         $this->assertTrue($fields['id']['null']);
@@ -264,6 +264,11 @@ final class AlterTableTest extends CIUnitTestCase
                 'type'       => 'integer',
                 'constraint' => 11,
                 'unsigned'   => true,
+            ],
+            'group' => [
+                'type'       => 'varchar',
+                'constraint' => 255,
+                'null'       => true,
             ],
         ]);
         $this->forge->addPrimaryKey('id');
