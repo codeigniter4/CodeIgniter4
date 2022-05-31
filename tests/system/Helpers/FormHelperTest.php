@@ -12,10 +12,10 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
+use Config\Services;
 
 /**
  * @internal

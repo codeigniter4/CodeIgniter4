@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
+use Config\Services;
 use Psr\Log\LoggerInterface;
 
 /**

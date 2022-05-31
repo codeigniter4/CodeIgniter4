@@ -12,7 +12,6 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
-use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
@@ -29,6 +28,7 @@ use CodeIgniter\Test\TestLogger;
 use Config\App;
 use Config\Logger;
 use Config\Modules;
+use Config\Services;
 use Kint;
 use stdClass;
 use Tests\Support\Models\JobModel;
@@ -118,8 +118,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
             Services::locator(),
             new Modules()
         );
-        \CodeIgniter\Services::injectMock('response', $response);
-        \CodeIgniter\Services::injectMock('routes', $routes);
+        Services::injectMock('response', $response);
+        Services::injectMock('routes', $routes);
 
         $routes->add('home/base', 'Controller::index', ['as' => 'base']);
         $response->method('redirect')->willReturnArgument(0);

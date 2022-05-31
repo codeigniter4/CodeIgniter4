@@ -11,11 +11,11 @@
 
 namespace CodeIgniter\Log\Handlers;
 
-use CodeIgniter\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
+use Config\Services;
 use stdClass;
 
 /**
