@@ -45,3 +45,4 @@ parameters:
 		- CI_DEBUG
 		- ENVIRONMENT
 		- SODIUM_LIBRARY_VERSION
+	reportUnmatchedIgnoredErrors: false

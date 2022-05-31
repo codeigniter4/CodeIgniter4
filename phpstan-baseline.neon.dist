@@ -456,6 +456,11 @@ parameters:
 			path: system/Debug/Exceptions.php
 
 		-
+			message: "#^Property CodeIgniter\\\\Debug\\\\Exceptions\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: system/Debug/Exceptions.php
+
+		-
 			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Debug/Exceptions.php
@@ -829,6 +834,11 @@ parameters:
 			message: "#^Cannot access property \\$insert_id on bool\\|object\\|resource\\.$#"
 			count: 1
 			path: system/Test/Mock/MockConnection.php
+
+		-
+			message: "#^Property CodeIgniter\\\\Test\\\\Mock\\\\MockResourcePresenter\\:\\:\\$formatter \\(CodeIgniter\\\\Format\\\\FormatterInterface\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: system/Test/Mock/MockResourcePresenter.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Throttle\\\\Throttler\\:\\:\\$testTime \\(int\\) on left side of \\?\\? is not nullable\\.$#"
