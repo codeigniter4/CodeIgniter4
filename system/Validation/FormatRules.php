@@ -266,19 +266,19 @@ class FormatRules
 
         switch (strtolower($which ?? '')) {
             case 'ipv4':
-                $which = FILTER_FLAG_IPV4;
+                $option = FILTER_FLAG_IPV4;
                 break;
 
             case 'ipv6':
-                $which = FILTER_FLAG_IPV6;
+                $option = FILTER_FLAG_IPV6;
                 break;
 
             default:
-                $which = 0;
+                $option = 0;
         }
 
-        return filter_var($ip, FILTER_VALIDATE_IP, $which) !== false
-            || (! ctype_print($ip) && filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $which) !== false);
+        return filter_var($ip, FILTER_VALIDATE_IP, $option) !== false
+            || (! ctype_print($ip) && filter_var(inet_ntop($ip), FILTER_VALIDATE_IP, $option) !== false);
     }
 
     /**
