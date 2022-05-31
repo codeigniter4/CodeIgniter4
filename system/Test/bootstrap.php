@@ -76,11 +76,6 @@ require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
 
-// Use Config\Services as CodeIgniter\Services
-if (! class_exists('CodeIgniter\Services', false)) {
-    class_alias(Services::class, 'CodeIgniter\Services');
-}
-
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
 

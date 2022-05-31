@@ -19,6 +19,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
+use Config\Services;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -56,7 +57,7 @@ final class ControllerTest extends CIUnitTestCase
         $this->config   = new App();
         $this->request  = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
         $this->response = new Response($this->config);
-        $this->logger   = \Config\Services::logger();
+        $this->logger   = Services::logger();
     }
 
     public function testConstructor()
