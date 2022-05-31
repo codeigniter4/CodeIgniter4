@@ -51,6 +51,7 @@ final class AlterTableTest extends CIUnitTestCase
         $config = [
             'DBDriver' => 'SQLite3',
             'database' => 'database.db',
+            'DBDebug'  => true,
         ];
 
         $this->db    = db_connect($config);
