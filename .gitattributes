@@ -28,6 +28,7 @@ rector.php export-ignore
 phpunit.xml.dist export-ignore
 phpstan-baseline.neon.dist export-ignore
 phpstan.neon.dist export-ignore
+phpstan-bootstrap.php export-ignore
 .php-cs-fixer.dist.php export-ignore
 .php-cs-fixer.no-header.php export-ignore
 .php-cs-fixer.user-guide.php export-ignore

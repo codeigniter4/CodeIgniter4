@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Test\Mock;
 
+use Tests\Support\Log\Handlers\TestHandler;
+
 class MockLogger
 {
     /*
@@ -81,7 +83,7 @@ class MockLogger
      */
     public $handlers = [
         // File Handler
-        'Tests\Support\Log\Handlers\TestHandler' => [
+        TestHandler::class => [
             // The log levels that this handler will handle.
             'handles' => [
                 'critical',

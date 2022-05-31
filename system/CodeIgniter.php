@@ -29,6 +29,7 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
+use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
 use Kint;
@@ -258,7 +259,7 @@ class CodeIgniter
         /**
          * Config\Kint
          */
-        $config = config('Config\Kint');
+        $config = config(KintConfig::class);
 
         Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;

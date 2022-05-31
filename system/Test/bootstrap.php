@@ -11,10 +11,10 @@
 
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Services;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
+use Config\Services;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -78,7 +78,7 @@ require_once APPPATH . 'Config/Services.php';
 
 // Use Config\Services as CodeIgniter\Services
 if (! class_exists('CodeIgniter\Services', false)) {
-    class_alias('Config\Services', 'CodeIgniter\Services');
+    class_alias(Services::class, 'CodeIgniter\Services');
 }
 
 // Initialize and register the loader with the SPL autoloader stack.
