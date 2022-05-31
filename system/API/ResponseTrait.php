@@ -75,7 +75,7 @@ trait ResponseTrait
     /**
      * Current Formatter instance. This is usually set by ResponseTrait::format
      *
-     * @var FormatterInterface
+     * @var FormatterInterface|null
      */
     protected $formatter;
 
