@@ -78,7 +78,7 @@ Then synchronizing is done by pulling from us and pushing to you. This
 is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
-    git checkout develop
+    git switch develop
     git fetch upstream
     git merge upstream/develop
     git push origin develop
@@ -109,8 +109,8 @@ For instance, make sure you are in the *develop* branch, and create a
 new feature branch, based on *develop*, for a new feature you are
 creating:
 
-    git checkout develop
-    git checkout -b new/mind-reader
+    git switch develop
+    git switch -c new/mind-reader
 
 Saving changes only updates your local working area.
 
@@ -131,15 +131,15 @@ Just make sure that your commits in a feature branch are all related.
 If you are working on two features at a time, then you will want to
 switch between them to keep the contributions separate. For instance:
 
-    git checkout new/mind-reader
+    git switch new/mind-reader
     // work away
     git add .
     git commit -S -m "Added adapter for abc"
-    git checkout fix/issue-123
+    git switch fix/issue-123
     // work away
     git add .
     git commit -S -m "Fixed problem in DEF\Something"
-    git checkout develop
+    git switch develop
 
 The last checkout makes sure that you end up in your *develop* branch as
 a starting point for your next session working with your repository.
@@ -155,17 +155,16 @@ that it could benefit from a review by fellow developers.
 > Remember to sync your local repo with the shared one before pushing!
 It is a lot easier to resolve conflicts at this stage.
 
-
 Synchronize your repository:
 
-    git checkout develop
+    git switch develop
     git fetch upstream
     git merge upstream/develop
     git push origin develop
 
 Bring your feature branch up to date:
 
-    git checkout new/mind-reader
+    git switch new/mind-reader
     git rebase upstream/develop
 
 And finally push your local branch to your GitHub repository:
@@ -214,6 +213,33 @@ Label your PRs with the one of the following [labels](https://github.com/codeign
 
 And if your PRs have the breaking changes, label the following label:
 - **breaking change** ... PRs that may break existing functionalities
+
+## Updating Your Branch
+
+If you are asked for changes in the review, commit the fix in your branch and push it to GitHub again.
+
+If the `develop` branch progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
+do the following:
+
+Synchronize your repository:
+
+    git switch develop
+    git fetch upstream
+    git merge upstream/develop
+    git push origin develop
+
+Bring your feature branch up to date:
+
+    git switch new/mind-reader
+    git rebase upstream/develop
+
+You might get conflicts when you rebase. It is your
+responsibility to resolve those locally, so that you can continue
+collaborating with the shared repository.
+
+And finally push your local branch to your GitHub repository:
+
+    git push --force-with-lease origin new/mind-reader
 
 ## Cleanup
 
