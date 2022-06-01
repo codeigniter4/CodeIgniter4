@@ -141,6 +141,8 @@ This array should be updated with the field names that can be set during ``save(
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.
 
+.. note:: The ``$primaryKey`` field should never be an allowed field.
+
 $useTimestamps
 --------------
 
