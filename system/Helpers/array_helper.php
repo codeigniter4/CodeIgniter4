@@ -122,8 +122,8 @@ if (! function_exists('array_multidimensional_search')) {
     /**
      * Returns the current index by providing key and value matching in arrays with the same key value in multidimensional arrays with uncertain depth.
      *
-     * @param $key
-     * @param $value
+     * @param mixed $key
+     * @param mixed $value
      * @param array $array
      * @return array
      */
