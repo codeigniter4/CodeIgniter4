@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use stdClass;
 use Throwable;
 
 /**
@@ -974,6 +975,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param bool         $fieldExists        Supplied $item contains a column name?
      *
      * @return array|string
+     * @phpstan-return ($item is array ? array : string)
      */
     public function protectIdentifiers($item, bool $prefixSingle = false, ?bool $protectIdentifiers = null, bool $fieldExists = true)
     {
@@ -1444,7 +1446,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an object with field data
      *
-     * @return array
+     * @return stdClass[]
      */
     public function getFieldData(string $table)
     {

@@ -51,6 +51,7 @@ final class AlterTableTest extends CIUnitTestCase
         $config = [
             'DBDriver' => 'SQLite3',
             'database' => 'database.db',
+            'DBDebug'  => true,
         ];
 
         $this->db    = db_connect($config);
@@ -88,7 +89,7 @@ final class AlterTableTest extends CIUnitTestCase
 
         $fields = $this->getPrivateProperty($this->table, 'fields');
 
-        $this->assertCount(4, $fields);
+        $this->assertCount(5, $fields);
         $this->assertArrayHasKey('id', $fields);
         $this->assertNull($fields['id']['default']);
         $this->assertTrue($fields['id']['null']);
@@ -219,7 +220,7 @@ final class AlterTableTest extends CIUnitTestCase
             ->dropColumn('name')
             ->run();
 
-        $this->dontSeeInDatabase('foo', ['name' => 'George Clinton']);
+        $this->assertFalse($this->db->fieldExists('name', 'foo'));
         $this->seeInDatabase('foo', ['email' => 'funkalicious@example.com']);
     }
 
@@ -263,6 +264,11 @@ final class AlterTableTest extends CIUnitTestCase
                 'type'       => 'integer',
                 'constraint' => 11,
                 'unsigned'   => true,
+            ],
+            'group' => [
+                'type'       => 'varchar',
+                'constraint' => 255,
+                'null'       => true,
             ],
         ]);
         $this->forge->addPrimaryKey('id');
