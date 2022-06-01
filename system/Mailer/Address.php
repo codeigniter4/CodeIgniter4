@@ -73,7 +73,7 @@ class Address
             $element = reset($addresses);
 
             if (is_string($element) && strpos($element, ',') !== false) {
-                $addresses = preg_split('/[\s,]/', $element, -1, PREG_SPLIT_NO_EMPTY);
+                $addresses = preg_split('/[\n\t\v,]/', $element, -1, PREG_SPLIT_NO_EMPTY);
             }
         }
 

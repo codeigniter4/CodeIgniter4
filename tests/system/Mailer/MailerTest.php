@@ -4,7 +4,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 class MailerTest extends CIUnitTestCase
 {
-	public function tearDown()
+	public function tearDown(): void
 	{
 		// Restore file permissions after unreadable attachment test
 		$thefile = SUPPORTPATH . 'Mailer/ci-logo-not-readable.png';

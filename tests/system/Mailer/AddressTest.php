@@ -137,6 +137,39 @@ class AddressTest extends CIUnitTestCase
 		];
 	}
 
+    public function testCreateArray()
+    {
+        $addresses = [
+            'leia@alderaan.org',
+            '"Luke Skywalker" <luke@tatooine.org>',
+        ];
+
+        $created = Address::createArray($addresses);
+
+        $emails = array_map(function($addy) {
+            return $addy->getEmail();
+        }, $created);
+
+        $this->assertTrue(in_array('leia@alderaan.org', $emails));
+        $this->assertTrue(in_array('luke@tatooine.org', $emails));
+    }
+
+    public function testCreateArrayFromCSV()
+    {
+        $addresses = [
+            'leia@alderaan.org,"Luke Skywalker" <luke@tatooine.org>',
+        ];
+
+        $created = Address::createArray($addresses);
+
+        $emails = array_map(function($addy) {
+            return $addy->getEmail();
+        }, $created);
+
+        $this->assertTrue(in_array('leia@alderaan.org', $emails));
+        $this->assertTrue(in_array('luke@tatooine.org', $emails));
+    }
+
     /**
      * @dataProvider userProvider
      */

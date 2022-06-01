@@ -21,6 +21,9 @@ use DateTimeInterface;
  *
  * Represents a single email message.
  * This class extends HTTP\Message and uses headers for most storage and retrieval.
+ *
+ * @see https://datatracker.ietf.org/doc/html/rfc5322
+ * @see https://datatracker.ietf.org/doc/html/rfc2047
  */
 class Email extends Message
 {
@@ -45,7 +48,7 @@ class Email extends Message
      *
      * @var Attachment[]
      */
-    protected $attachements = [];
+    protected $attachments = [];
 
     /**
      * This email's unique Message ID.
@@ -104,8 +107,8 @@ class Email extends Message
             $getter = 'get' . ucfirst($setter);
 
             if (array_key_exists($setter, $data)) {
-                if ($overwrite || null === $this->{$getter}()) {
-                    $this->{$method}($data[$method]);
+                if ($overwrite || $this->{$getter}() === null) {
+                    $this->{$setter}($data[$setter]);
                 }
             }
         }
@@ -130,7 +133,7 @@ class Email extends Message
             if (isset($exclude) && in_array($name, $exclude, true)) {
                 continue;
             }
-            // Check includion
+            // Check inclusion
             if (isset($include) && ! in_array($name, $include, true)) {
                 continue;
             }
@@ -140,12 +143,14 @@ class Email extends Message
                 $string .= implode(',', array_map('__toString', $value));
             } elseif (is_array($value)) {
                 foreach ($value as $header) {
-                    $string .= $header . $this->newline;
+                    $string .= $header . $newline;
                 }
             } else {
-                $string .= $value . $this->newline; // Trailing newline is intentional
+                $string .= (string)$value->getValue() . $newline; // Trailing newline is intentional
             }
         }
+
+        return $string;
     }
 
     //--------------------------------------------------------------------
@@ -183,9 +188,13 @@ class Email extends Message
     /**
      * @return $this
      */
-    public function from(string $address)
+    public function from(string $address, ?string $name=null)
     {
-        return $this->setHeader('From', Address::create($address));
+        $addr = $name !== null
+            ? new Address($address, $name)
+            : Address::create($address);
+
+        return $this->setHeader('From', $addr);
     }
 
     /**
@@ -195,6 +204,12 @@ class Email extends Message
      */
     public function to(...$addresses)
     {
+        // If an array of address was pushed in
+        // break it out so we get only the actual emails
+        if($addresses[0] && is_array($addresses[0])) {
+            $addresses = $addresses[0];
+        }
+
         return $this->setHeader('To', Address::createArray($addresses));
     }
 
@@ -205,6 +220,12 @@ class Email extends Message
      */
     public function cc(...$addresses)
     {
+        // If an array of address was pushed in
+        // break it out so we get only the actual emails
+        if($addresses[0] && is_array($addresses[0])) {
+            $addresses = $addresses[0];
+        }
+
         return $this->setHeader('Cc', Address::createArray($addresses));
     }
 
@@ -215,15 +236,25 @@ class Email extends Message
      */
     public function bcc(...$addresses)
     {
+        // If an array of address was pushed in
+        // break it out so we get only the actual emails
+        if($addresses[0] && is_array($addresses[0])) {
+            $addresses = $addresses[0];
+        }
+
         return $this->setHeader('Bcc', Address::createArray($addresses));
     }
 
     /**
      * @return $this
      */
-    public function replyTo(string $address)
+    public function replyTo(string $address, ?string $name=null)
     {
-        return $this->setHeader('From', Address::create($address));
+        $addr = $name !== null
+            ? new Address($address, $name)
+            : Address::create($address);
+
+        return $this->setHeader('Reply-To', $addr);
     }
 
     /**
@@ -266,12 +297,12 @@ class Email extends Message
 
     public function getSubject(): ?string
     {
-        return $this->hasHeader('Subject') ? $this->getHeader('Subject')->getValue() : null;
+        return $this->hasHeader('Subject') ? $this->header('Subject')->getValue() : null;
     }
 
     public function getFrom(): ?Address
     {
-        return $this->hasHeader('From') ? Address::create($this->getHeader('From')->getValue()) : null;
+        return $this->hasHeader('From') ? Address::create($this->header('From')->getValue()) : null;
     }
 
     /**
@@ -279,7 +310,7 @@ class Email extends Message
      */
     public function getTo(): ?array
     {
-        return $this->hasHeader('To') ? Address::createArray($this->getHeader('To')->getValue()) : null;
+        return $this->hasHeader('To') ? Address::createArray($this->header('To')->getValue()) : null;
     }
 
     /**
@@ -287,7 +318,7 @@ class Email extends Message
      */
     public function getCc(): ?array
     {
-        return $this->hasHeader('Cc') ? Address::createArray($this->getHeader('Cc')->getValue()) : null;
+        return $this->hasHeader('Cc') ? Address::createArray($this->header('Cc')->getValue()) : null;
     }
 
     /**
@@ -295,12 +326,12 @@ class Email extends Message
      */
     public function getBcc(): ?array
     {
-        return $this->hasHeader('Bcc') ? Address::createArray($this->getHeader('Bcc')->getValue()) : null;
+        return $this->hasHeader('Bcc') ? Address::createArray($this->header('Bcc')->getValue()) : null;
     }
 
     public function getReplyTo(): ?Address
     {
-        return $this->hasHeader('Reply-To') ? Address::create($this->getHeader('Reply-To')->getValue()) : null;
+        return $this->hasHeader('Reply-To') ? Address::create($this->header('Reply-To')->getValue()) : null;
     }
 
     public function getReturnPath(): ?Address
@@ -310,7 +341,7 @@ class Email extends Message
         }
 
         // Get just the email portion of the stored address
-        $address = $this->getHeader('Return-Path')->getValue();
+        $address = $this->header('Return-Path')->getValue();
         $email   = Address::split($address)['email'];
 
         // Force Address to use angle braces by giving an empty display name
@@ -326,7 +357,7 @@ class Email extends Message
     public function getPriority(): ?int
     {
         if ($this->hasHeader('X-Priority')) {
-            return array_search($this->getHeader('X-Priority')->getValue(), self::PRIORITIES, true) ?: null;
+            return array_search($this->header('X-Priority')->getValue(), self::PRIORITIES, true) ?: null;
         }
 
         return null;
@@ -334,7 +365,7 @@ class Email extends Message
 
     public function getDate(): ?Time
     {
-        return $this->hasHeader('Date') ? Time::parse($this->getHeader('Date')->getValue()) : null;
+        return $this->hasHeader('Date') ? Time::parse($this->header('Date')->getValue()) : null;
     }
 
     /**
@@ -343,7 +374,7 @@ class Email extends Message
      */
     public function getMessageId(): ?string
     {
-        if (null === $this->messageId && $returnPath = $this->getReturnPath()) {
+        if ($this->messageId === null && $returnPath = $this->getReturnPath()) {
             // Use a unique ID with the same domain as the Return-Path email
             $this->messageId = '<' . uniqid('', true) . strstr($returnPath->getEmail(), '@') . '>';
         }
@@ -432,6 +463,20 @@ class Email extends Message
     public function setMessage($body): self
     {
         return $this->body($body);
+    }
+
+    /**
+     * Sets a header and it's value.
+     *
+     * Extends the default 
+     *
+     * @param array|string|null $value
+     *
+     * @return $this
+     */
+    public function setHeader(string $name, $value): self
+    {
+
     }
 
     /**

@@ -159,33 +159,64 @@ final class Encode
 
     /**
      * Performs "Q Encoding" on a string for use in email headers.
-     * This is mostly straight from CodeIgniter 3.
+     * It's related but not identical to quoted-printable, so it has its
+     * own method.
      *
-     * @see https://www.freesoft.org/CIE/RFC/1522/6.htm
+     * @param string $str
+     *
+     * @return string
      */
-    public function Q(string $string): string
+    protected function Q($str)
     {
-        $string = str_replace(["\r", "\n"], '', $string);
+        $str = str_replace(["\r", "\n"], '', $str);
+
+        if ($this->charset === 'UTF-8') {
+            // Note: We used to have mb_encode_mimeheader() as the first choice
+            // here, but it turned out to be buggy and unreliable. DO NOT
+            // re-add it! -- Narf
+            if (extension_loaded('iconv')) {
+                $output = @iconv_mime_encode('', $str, [
+                    'scheme'           => 'Q',
+                    'line-length'      => 76,
+                    'input-charset'    => $this->charset,
+                    'output-charset'   => $this->charset,
+                    'line-break-chars' => $this->CRLF,
+                ]);
+
+                // There are reports that iconv_mime_encode() might fail and return FALSE
+                if ($output !== false) {
+                    // iconv_mime_encode() will always put a header field name.
+                    // We've passed it an empty one, but it still prepends our
+                    // encoded string with ': ', so we need to strip it.
+                    return static::substr($output, 2);
+                }
+
+                $chars = iconv_strlen($str, 'UTF-8');
+            } elseif (extension_loaded('mbstring')) {
+                $chars = mb_strlen($str, 'UTF-8');
+            }
+        }
+
+        // We might already have this set for UTF-8
+        if (! isset($chars)) {
+            $chars = static::strlen($str);
+        }
+
         $output = '=?' . $this->charset . '?Q?';
-        $chars  = $this->charset === 'UTF-8' ? mb_strlen($string, 'UTF-8') : mb_strlen($string, '8bit');
-        $length = mb_strlen($output, '8bit');
 
-        for ($i = 0; $i < $chars; $i++) {
-            $chr = ($this->charset === 'UTF-8' && extension_loaded('iconv'))
-                ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($string, $i, 1, $this->charset))), 2))
-                : '=' . strtoupper(bin2hex($string[$i]));
+        for ($i = 0, $length = static::strlen($output); $i < $chars; $i++) {
+            $chr = ($this->charset === 'UTF-8' && extension_loaded('iconv')) ? '=' . implode('=', str_split(strtoupper(bin2hex(iconv_substr($str, $i, 1, $this->charset))), 2)) : '=' . strtoupper(bin2hex($str[$i]));
 
-            $chrlen = mb_strlen($chr, '8bit');
-
-            // RFC 2045 sets a limit of 76 characters per line, but leave space for ?= at the end of each line
-            if ($length + $chrlen > 74) {
-                $output .= '?=' . $this->crlf // EOL
+            // RFC 2045 sets a limit of 76 characters per line.
+            // We'll append ?= to the end of each line though.
+            if ($length + ($l = static::strlen($chr)) > 74) {
+                $output .= '?=' . $this->CRLF // EOL
                     . ' =?' . $this->charset . '?Q?' . $chr; // New line
 
-                $length = 6 + mb_strlen($this->charset, '8bit') + $chrlen; // Reset the length for the new line
+                $length = 6 + static::strlen($this->charset) + $l; // Reset the length for the new line
             } else {
                 $output .= $chr;
-                $length += $chrlen;
+                $length += $l;
             }
         }
 

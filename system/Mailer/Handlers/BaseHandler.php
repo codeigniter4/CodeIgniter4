@@ -16,6 +16,8 @@ use CodeIgniter\Mailer\Email;
 use CodeIgniter\Mailer\Exceptions\MailerException;
 use CodeIgniter\Mailer\MailerInterface;
 use Config\Mailer;
+use CodeIgniter\Mailer\Encode;
+use CodeIgniter\Mailer\Format;
 
 /**
  * Mail Handler
@@ -30,7 +32,7 @@ abstract class BaseHandler implements MailerInterface
      *
      * @var string
      */
-    protected $protocol;
+    protected string $protocol;
 
     /**
      * The Mailer config.
