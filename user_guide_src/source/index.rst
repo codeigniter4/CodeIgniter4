@@ -113,3 +113,12 @@ Advanced Topics
 
     license
     changelogs/index
+
+*****************
+Official Packages
+*****************
+
+.. toctree::
+    :titlesonly:
+
+    libraries/official_packages
