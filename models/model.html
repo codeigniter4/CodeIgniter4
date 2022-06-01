@@ -505,6 +505,10 @@ configured to any name of your choice by using <code class="docutils literal not
 <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods. Any field names other than these will be discarded. This helps to protect
 against just taking input from a form and throwing it all at the model, resulting in
 potential mass assignment vulnerabilities.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code> field should never be an allowed field.</p>
+</div>
 </section>
 <section id="usetimestamps">
 <h4>$useTimestamps<a class="headerlink" href="#usetimestamps" title="Permalink to this headline"></a></h4>
@@ -1445,7 +1449,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on May 31, 2022.
+      <span class="lastupdated">Last updated on Jun 01, 2022.
       </span></p>
   </div>
 
