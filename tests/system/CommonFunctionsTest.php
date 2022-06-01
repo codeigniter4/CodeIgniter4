@@ -30,6 +30,7 @@ use Config\App;
 use Config\Logger;
 use Config\Modules;
 use Kint;
+use RuntimeException;
 use stdClass;
 use Tests\Support\Models\JobModel;
 
@@ -390,9 +391,28 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testSlashItem()
     {
-        $this->assertSame('/', slash_item('cookiePath')); // slash already there
-        $this->assertNull(null, slash_item('cookieDomain')); // empty, so untouched
-        $this->assertSame('en/', slash_item('defaultLocale')); // slash appended
+        $this->assertSame('/', slash_item('cookiePath')); // /
+        $this->assertSame('', slash_item('cookieDomain')); // ''
+        $this->assertSame('en/', slash_item('defaultLocale')); // en
+        $this->assertSame('7200/', slash_item('sessionExpiration')); // int 7200
+        $this->assertSame('', slash_item('negotiateLocale')); // false
+        $this->assertSame('1/', slash_item('cookieHTTPOnly')); // true
+    }
+
+    public function testSlashItemOnInexistentItem()
+    {
+        $this->assertNull(slash_item('foo'));
+        $this->assertNull(slash_item('bar'));
+        $this->assertNull(slash_item('cookieDomains'));
+        $this->assertNull(slash_item('indices'));
+    }
+
+    public function testSlashItemThrowsErrorOnNonStringableItem()
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Cannot convert "Config\\App::$supportedLocales" of type "array" to type "string".');
+
+        slash_item('supportedLocales');
     }
 
     protected function injectSessionMock()
