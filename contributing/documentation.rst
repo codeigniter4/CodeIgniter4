@@ -120,3 +120,10 @@ To a URL
 ========
 
     `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
+
+To a Function
+=============
+
+    :php:func:`dot_array_search`
+
+    :php:func:`Response::setCookie() <setCookie>`
