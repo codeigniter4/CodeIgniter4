@@ -246,6 +246,63 @@ final class ArrayHelperTest extends CIUnitTestCase
     }
 
     /**
+     * @dataProvider multidimensionalSearchProvider
+     *
+     * @param mixed $key
+     * @param mixed $expected
+     */
+    public function testArrayMultidimensionalSearch($key, $value, $expected)
+    {
+        $data = [
+            'key1' => 'Value 1',
+            'key5' => [
+                [
+                    'key1' => 'Value 5.1.1',
+                    'key2' => 'Value 5.1.2',
+                ],
+                [
+                    'key1' => 'Value 5.2.1',
+                    'key2' => 'Value 5.2.2.',
+                    'key3' => 'Value 5.2.3',
+                ],
+            ],
+            'key6' => [
+                'key61' => [
+                    'key611' => 'Value 6.1.1',
+                    'key64' => [
+                        [
+                            'key1' => 'Value 6.4.1.1',
+                            'key2' => 'Value 6.4.1.2',
+                            'key3' => 'Value 6.4.1.3',
+                        ],
+                        [
+                            'key1' => 'Value 6.4.2.1',
+                            'key2' => 'Value 6.4.2.2',
+                            'key3' => 'Value 6.4.2.3',
+                        ],
+                        [
+                            'key1' => 'Value 6.4.3.1',
+                            'key2' => 'Value 6.4.3.2',
+                            'key3' => 'Value 6.4.3.3',
+                        ]
+                    ],
+                ],
+            ],
+        ];
+
+        $result = array_multidimensional_search($key, $value, $data);
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testArrayMultidimensionalSearchReturnNullEmptyArray()
+    {
+        $data = [];
+
+        $this->assertNull(array_multidimensional_search('key644', 'Value 6.4.4', $data));
+    }
+
+    /**
      * @dataProvider sortByMultipleKeysProvider
      *
      * @param mixed $data
@@ -352,6 +409,46 @@ final class ArrayHelperTest extends CIUnitTestCase
             [
                 '',
                 null,
+            ],
+        ];
+    }
+
+    public static function multidimensionalSearchProvider()
+    {
+        return [
+            'key1' => 'Value 1',
+            'key5' => [
+                [
+                    'key1' => 'Value 5.1.1',
+                    'key2' => 'Value 5.1.2',
+                ],
+                [
+                    'key1' => 'Value 5.2.1',
+                    'key2' => 'Value 5.2.2.',
+                    'key3' => 'Value 5.2.3',
+                ],
+            ],
+            'key6' => [
+                'key61' => [
+                    'key611' => 'Value 6.1.1',
+                    'key64' => [
+                        [
+                            'key1' => 'Value 6.4.1.1',
+                            'key2' => 'Value 6.4.1.2',
+                            'key3' => 'Value 6.4.1.3',
+                        ],
+                        [
+                            'key1' => 'Value 6.4.2.1',
+                            'key2' => 'Value 6.4.2.2',
+                            'key3' => 'Value 6.4.2.3',
+                        ],
+                        [
+                            'key1' => 'Value 6.4.3.1',
+                            'key2' => 'Value 6.4.3.2',
+                            'key3' => 'Value 6.4.3.3',
+                        ]
+                    ],
+                ],
             ],
         ];
     }

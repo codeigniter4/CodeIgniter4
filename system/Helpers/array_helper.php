@@ -118,6 +118,36 @@ if (! function_exists('array_deep_search')) {
     }
 }
 
+if (! function_exists('array_multidimensional_search')) {
+    /**
+     * Returns the current index by providing key and value matching in arrays with the same key value in multidimensional arrays with uncertain depth.
+     *
+     * @param $key
+     * @param $value
+     * @param array $array
+     * @return array
+     */
+    function array_multidimensional_search($key, $value, array $array)
+    {
+        if (isset($array[$key]) && $array[$key] == $value)
+        {
+            return $array;
+        }
+
+        foreach ($array as $item)
+        {
+            if (is_array($item) && ($result = array_multidimensional_search($key, $value, $item)))
+            {
+                if (isset($result[$key]) && $result[$key] == $value){
+                    return $result;
+                }
+            }
+        }
+
+        return [];
+    }
+}
+
 if (! function_exists('array_sort_by_multiple_keys')) {
     /**
      * Sorts a multidimensional array by its elements values. The array
