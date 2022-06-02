@@ -42,7 +42,7 @@ or moves servers, without having to touch the code.
 Cache
 *****
 
-We provide a `PSR-6 and PSR-16 Cache Adapters <https://github.com/codeigniter4/cache>`_
+We provide a library with `PSR-6 and PSR-16 Cache Adapters <https://github.com/codeigniter4/cache>`_
 for CodeIgniter 4. This is not required for use, since CodeIgniter 4 comes with a fully-
 functional cache component. This module is only for integrating third-party packages
 that rely on the PSR interface provisions.
@@ -65,5 +65,5 @@ Coding Standard
 
 The `CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_
 holds the official coding standards of CodeIgniter based on PHP CS Fixer and powered by
-Nexus CS Config. This can be used into your own projects to form the basis of a
+Nexus CS Config. This can be used in your own projects to form the basis of a
 consistent set of style rules that can be automatically applied to your code.
