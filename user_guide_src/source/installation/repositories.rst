@@ -1,6 +1,13 @@
 CodeIgniter Repositories
 ########################
 
+.. contents::
+    :local:
+    :depth: 2
+
+codeigniter4 organization
+=========================
+
 The CodeIgniter 4 open source project has its own
 `GitHub organization <https://github.com/codeigniter4>`_.
 
@@ -15,9 +22,15 @@ There are several development repositories, of interest to potential contributor
 +------------------+--------------+-----------------------------------------------------------------+
 | coding-standard_ | contributors | Coding style conventions & rules                                |
 +------------------+--------------+-----------------------------------------------------------------+
+| devkit           | developers   | Development toolkit for CodeIgniter libraries and projects      |
++------------------+--------------+-----------------------------------------------------------------+
 | settings         | developers   | Settings Library for CodeIgniter 4                              |
 +------------------+--------------+-----------------------------------------------------------------+
-| devkit           | developers   | Development toolkit for CodeIgniter libraries and projects      |
+| shield           | developers   | Authentication and Authorization Library for CodeIgniter 4      |
++------------------+--------------+-----------------------------------------------------------------+
+| tasks            | developers   | Task Scheduler for CodeIgnter 4                                 |
++------------------+--------------+-----------------------------------------------------------------+
+| cache            | developers   | PSR-6 and PSR-16 Cache Adapters for CodeIgniter 4               |
 +------------------+--------------+-----------------------------------------------------------------+
 
 .. _coding-standard: https://github.com/CodeIgniter/coding-standard
@@ -53,6 +66,10 @@ These correspond to the repositories mentioned above:
 - `codeigniter4/appstarter <https://packagist.org/packages/codeigniter4/appstarter>`_
 - `codeigniter4/translations <https://packagist.org/packages/codeigniter4/translations>`_
 - `codeigniter/coding-standard  <https://packagist.org/packages/codeigniter/coding-standard>`_
+- `codeigniter4/devkit <https://packagist.org/packages/codeigniter4/devkit>`_
+- `codeigniter4/settings <https://packagist.org/packages/codeigniter4/settings>`_
+- `codeigniter4/shield <https://packagist.org/packages/codeigniter4/shield>`_
+- `codeigniter4/cache <https://packagist.org/packages/codeigniter4/cache>`_
 
 See the :doc:`Installation </installation/index>` page for more information.
 
