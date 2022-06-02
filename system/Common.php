@@ -1013,10 +1013,26 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config     = config(App::class);
+        $config = config(App::class);
+
+        if (! property_exists($config, $item)) {
+            return null;
+        }
+
         $configItem = $config->{$item};
 
-        if (! isset($configItem) || empty(trim($configItem))) {
+        if (! is_scalar($configItem)) {
+            throw new RuntimeException(sprintf(
+                'Cannot convert "%s::$%s" of type "%s" to type "string".',
+                App::class,
+                $item,
+                gettype($configItem)
+            ));
+        }
+
+        $configItem = trim((string) $configItem);
+
+        if ($configItem === '') {
             return $configItem;
         }
 
