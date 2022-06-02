@@ -5,7 +5,7 @@ CodeIgniter Repositories
     :local:
     :depth: 2
 
-codeIgniter4 organization
+codeigniter4 organization
 =========================
 
 The CodeIgniter 4 open source project has its own
