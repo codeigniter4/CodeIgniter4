@@ -76,4 +76,29 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-*
+* app/Config/App.php
+* app/Config/Constants.php
+* app/Config/ContentSecurityPolicy.php
+* app/Config/Database.php
+* app/Config/Events.php
+* app/Config/Feature.php
+* app/Config/Filters.php
+* app/Config/Format.php
+* app/Config/Logger.php
+* app/Config/Mimes.php
+* app/Config/Publisher.php
+* app/Config/Routes.php
+* app/Config/Security.php
+* app/Config/Validation.php
+* app/Config/View.php
+* app/Controllers/BaseController.php
+* app/Views/errors/html/debug.css
+* app/Views/errors/html/debug.js
+* app/Views/errors/html/error_404.php
+* app/Views/errors/html/error_exception.php
+* app/Views/errors/html/production.php
+* app/Views/welcome_message.php
+* app/index.html
+* preload.php
+* public/index.php
+* spark
