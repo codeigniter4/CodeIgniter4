@@ -1,7 +1,7 @@
 Version 4.2.0
 #############
 
-Release Date: Not Released
+Release Date: June 3, 2022
 
 **4.2.0 release of CodeIgniter4**
 
