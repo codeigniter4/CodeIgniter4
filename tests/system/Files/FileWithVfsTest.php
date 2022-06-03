@@ -20,14 +20,10 @@ use org\bovigo\vfs\vfsStream;
 final class FileWithVfsTest extends CIUnitTestCase
 {
     // For VFS stuff
-    protected $root;
-    protected $path;
-    protected $start;
-
-    /**
-     * @var File
-     */
-    protected $file;
+    private $root;
+    private $path;
+    private $start;
+    private File $file;
 
     protected function setUp(): void
     {

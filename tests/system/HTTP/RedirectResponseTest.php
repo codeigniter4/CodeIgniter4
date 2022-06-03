@@ -23,6 +23,8 @@ use Config\Services;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class RedirectResponseTest extends CIUnitTestCase
 {
@@ -31,8 +33,8 @@ final class RedirectResponseTest extends CIUnitTestCase
      */
     protected $routes;
 
-    protected $request;
-    protected $config;
+    private $request;
+    private $config;
 
     protected function setUp(): void
     {

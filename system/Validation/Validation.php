@@ -17,6 +17,7 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use CodeIgniter\View\RendererInterface;
 use Config\Validation as ValidationConfig;
 use InvalidArgumentException;
+use TypeError;
 
 /**
  * Validator
@@ -107,7 +108,13 @@ class Validation implements ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
-        $data = $data ?? $this->data;
+        // If there are still validation errors for redirect_with_input request, remove them.
+        // See `getErrors()` method.
+        if (isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
+            unset($_SESSION['_ci_validation_errors']);
+        }
+
+        $data ??= $this->data;
 
         // i.e. is_unique
         $data['DBGroup'] = $dbGroup;
@@ -138,7 +145,16 @@ class Validation implements ValidationInterface
                 $rules = $this->splitRules($rules);
             }
 
-            $values = dot_array_search($field, $data);
+            if (strpos($field, '*') !== false) {
+                $values = array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
+                    '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
+                    $key
+                ), ARRAY_FILTER_USE_KEY);
+                // if keys not found
+                $values = $values ?: [$field => null];
+            } else {
+                $values = dot_array_search($field, $data);
+            }
 
             if ($values === []) {
                 // We'll process the values right away if an empty array
@@ -147,10 +163,10 @@ class Validation implements ValidationInterface
                 continue;
             }
 
-            if (strpos($field, '*') !== false && is_array($values)) {
+            if (strpos($field, '*') !== false) {
                 // Process multiple fields
-                foreach ($values as $value) {
-                    $this->processRules($field, $setup['label'] ?? $field, $value, $rules, $data);
+                foreach ($values as $dotField => $value) {
+                    $this->processRules($dotField, $setup['label'] ?? $field, $value, $rules, $data);
                 }
             } else {
                 // Process single field
@@ -196,19 +212,17 @@ class Validation implements ValidationInterface
             $ifExistField  = $field;
 
             if (strpos($field, '.*') !== false) {
-                // We'll change the dot notation into a PCRE pattern
-                // that can be used later
-                $ifExistField = str_replace('\.\*', '\.(?:[^\.]+)', preg_quote($field, '/'));
+                // We'll change the dot notation into a PCRE pattern that can be used later
+                $ifExistField   = str_replace('\.\*', '\.(?:[^\.]+)', preg_quote($field, '/'));
+                $dataIsExisting = false;
+                $pattern        = sprintf('/%s/u', $ifExistField);
 
-                $dataIsExisting = array_reduce(
-                    array_keys($flattenedData),
-                    static function ($carry, $item) use ($ifExistField) {
-                        $pattern = sprintf('/%s/u', $ifExistField);
-
-                        return $carry || preg_match($pattern, $item) === 1;
-                    },
-                    false
-                );
+                foreach (array_keys($flattenedData) as $item) {
+                    if (preg_match($pattern, $item) === 1) {
+                        $dataIsExisting = true;
+                        break;
+                    }
+                }
             } else {
                 $dataIsExisting = array_key_exists($ifExistField, $flattenedData);
             }
@@ -330,8 +344,6 @@ class Validation implements ValidationInterface
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
-     *
-     * @param IncomingRequest|RequestInterface $request
      */
     public function withRequest(RequestInterface $request): ValidationInterface
     {
@@ -342,7 +354,7 @@ class Validation implements ValidationInterface
             return $this;
         }
 
-        if (in_array($request->getMethod(), ['put', 'patch', 'delete'], true)
+        if (in_array(strtolower($request->getMethod()), ['put', 'patch', 'delete'], true)
             && strpos($request->getHeaderLine('Content-Type'), 'multipart/form-data') === false
         ) {
             $this->data = $request->getRawInput();
@@ -364,18 +376,30 @@ class Validation implements ValidationInterface
      *        'rule' => 'message'
      *    ]
      *
+     * @param array|string $rules
+     *
+     * @throws TypeError
+     *
      * @return $this
      */
-    public function setRule(string $field, ?string $label, string $rules, array $errors = [])
+    public function setRule(string $field, ?string $label, $rules, array $errors = [])
     {
-        $this->rules[$field] = [
-            'label' => $label,
-            'rules' => $rules,
+        if (! is_array($rules) && ! is_string($rules)) {
+            throw new TypeError('$rules must be of type string|array');
+        }
+
+        $ruleSet = [
+            $field => [
+                'label' => $label,
+                'rules' => $rules,
+            ],
         ];
 
-        $this->customErrors = array_merge($this->customErrors, [
-            $field => $errors,
-        ]);
+        if ($errors) {
+            $ruleSet[$field]['errors'] = $errors;
+        }
+
+        $this->setRules($ruleSet + $this->getRules());
 
         return $this;
     }
@@ -403,16 +427,18 @@ class Validation implements ValidationInterface
         $this->customErrors = $errors;
 
         foreach ($rules as $field => &$rule) {
-            if (! is_array($rule)) {
-                continue;
-            }
+            if (is_array($rule)) {
+                if (array_key_exists('errors', $rule)) {
+                    $this->customErrors[$field] = $rule['errors'];
+                    unset($rule['errors']);
+                }
 
-            if (! array_key_exists('errors', $rule)) {
-                continue;
+                // if $rule is already a rule collection, just move it to "rules"
+                // transforming [foo => [required, foobar]] to [foo => [rules => [required, foobar]]]
+                if (! array_key_exists('rules', $rule)) {
+                    $rule = ['rules' => $rule];
+                }
             }
-
-            $this->customErrors[$field] = $rule['errors'];
-            unset($rule['errors']);
         }
 
         $this->rules = $rules;
@@ -583,23 +609,27 @@ class Validation implements ValidationInterface
             $replacements["{{$key}}"] = $value;
         }
 
-        if (! empty($replacements)) {
+        if ($replacements !== []) {
             foreach ($rules as &$rule) {
-                if (is_array($rule)) {
-                    foreach ($rule as &$row) {
-                        // Should only be an `errors` array
-                        // which doesn't take placeholders.
-                        if (is_array($row)) {
-                            continue;
+                $ruleSet = $rule['rules'] ?? $rule;
+
+                if (is_array($ruleSet)) {
+                    foreach ($ruleSet as &$row) {
+                        if (is_string($row)) {
+                            $row = strtr($row, $replacements);
                         }
-
-                        $row = strtr($row ?? '', $replacements);
                     }
-
-                    continue;
                 }
 
-                $rule = strtr($rule ?? '', $replacements);
+                if (is_string($ruleSet)) {
+                    $ruleSet = strtr($ruleSet, $replacements);
+                }
+
+                if (isset($rule['rules'])) {
+                    $rule['rules'] = $ruleSet;
+                } else {
+                    $rule = $ruleSet;
+                }
             }
         }
 
@@ -611,7 +641,9 @@ class Validation implements ValidationInterface
      */
     public function hasError(string $field): bool
     {
-        return array_key_exists($field, $this->getErrors());
+        $pattern = '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/';
+
+        return (bool) preg_grep($pattern, array_keys($this->getErrors()));
     }
 
     /**
@@ -624,7 +656,12 @@ class Validation implements ValidationInterface
             $field = array_key_first($this->rules);
         }
 
-        return array_key_exists($field, $this->getErrors()) ? $this->errors[$field] : '';
+        $errors = array_filter($this->getErrors(), static fn ($key) => preg_match(
+            '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
+            $key
+        ), ARRAY_FILTER_USE_KEY);
+
+        return $errors === [] ? '' : implode("\n", $errors);
     }
 
     /**
@@ -669,7 +706,7 @@ class Validation implements ValidationInterface
      */
     protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null): string
     {
-        $param = $param ?? '';
+        $param ??= '';
 
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {

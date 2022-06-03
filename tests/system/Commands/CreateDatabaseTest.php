@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Database as DatabaseFactory;
+use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -23,12 +24,8 @@ use Config\Database;
  */
 final class CreateDatabaseTest extends CIUnitTestCase
 {
-    protected $streamFilter;
-
-    /**
-     * @var BaseConnection
-     */
-    protected $connection;
+    private $streamFilter;
+    private BaseConnection $connection;
 
     protected function setUp(): void
     {
@@ -42,7 +39,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
         if ($this->connection instanceof SQLite3Connection) {
             $file = WRITEPATH . 'foobar.db';
-            if (file_exists($file)) {
+            if (is_file($file)) {
                 unlink($file);
             }
         } else {
@@ -68,6 +65,10 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     public function testCreateDatabase()
     {
+        if ($this->connection instanceof OCI8Connection) {
+            $this->markTestSkipped('Needs to run on non-OCI8 drivers.');
+        }
+
         command('db:create foobar');
         $this->assertStringContainsString('successfully created.', $this->getBuffer());
     }
@@ -87,8 +88,8 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     public function testOtherDriverDuplicatedDatabase()
     {
-        if ($this->connection instanceof SQLite3Connection) {
-            $this->markTestSkipped('Needs to run on non-SQLite3 drivers.');
+        if ($this->connection instanceof SQLite3Connection || $this->connection instanceof OCI8Connection) {
+            $this->markTestSkipped('Needs to run on non-SQLite3 and non-OCI8 drivers.');
         }
 
         command('db:create foobar');

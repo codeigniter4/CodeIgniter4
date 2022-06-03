@@ -17,13 +17,15 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ConfigTest extends CIUnitTestCase
 {
     public function testCreateSingleInstance()
     {
         $Config          = Config::get('DocTypes', false);
-        $NamespaceConfig = Config::get('Config\\DocTypes', false);
+        $NamespaceConfig = Config::get(DocTypes::class, false);
 
         $this->assertInstanceOf(DocTypes::class, $Config);
         $this->assertInstanceOf(DocTypes::class, $NamespaceConfig);
@@ -39,7 +41,7 @@ final class ConfigTest extends CIUnitTestCase
     public function testCreateSharedInstance()
     {
         $Config  = Config::get('DocTypes');
-        $Config2 = Config::get('Config\\DocTypes');
+        $Config2 = Config::get(DocTypes::class);
 
         $this->assertSame($Config2, $Config);
     }

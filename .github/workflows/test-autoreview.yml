@@ -1,0 +1,49 @@
+name: Automatic Code Review
+
+on:
+  pull_request:
+    paths:
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-autoreview.yml
+  push:
+    paths:
+      - composer.json
+      - spark
+      - '**.php'
+      - .github/workflows/test-autoreview.yml
+
+jobs:
+  auto-review-tests:
+    name: Automatic Code Review
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update --ansi
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+      - name: Run AutoReview Tests
+        run: vendor/bin/phpunit --color=always --group=auto-review --no-coverage

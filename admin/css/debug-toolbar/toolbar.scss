@@ -77,16 +77,9 @@
 
     // General elements
     h1 {
-        bottom: 0;
-        display: inline-block;
-        font-size: $base-size - 2;
+        display: flex;
         font-weight: normal;
-        margin: 0 16px 0 0;
-        padding: 0;
-        position: absolute;
-        right: 30px;
-        text-align: left;
-        top: 0;
+        margin: 0 0 0 auto;
 
         svg {
             width: 16px;
@@ -238,15 +231,8 @@
 
     // The "Open/Close" toggle
     #debug-bar-link {
-        bottom: 0;
-        display: inline-block;
-        font-size: $base-size;
-        line-height: 36px;
+        display: flex;
         padding: 6px;
-        position: absolute;
-        right: 10px;
-        top: 0;
-        width: 24px;
     }
 
     // The toolbar menus
@@ -488,8 +474,8 @@
     width: 70px;
 }
 
-.debug-bar-width140p {
-    width: 140px;
+.debug-bar-width190p {
+    width: 190px;
 }
 
 .debug-bar-width20e {

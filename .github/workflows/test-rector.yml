@@ -6,37 +6,43 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - '4.*'
+      - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'utils/**.php'
       - '.github/workflows/test-rector.yml'
       - composer.json
-      - 'utils/Rector/**'
-      - 'rector.php'
+
   push:
     branches:
       - 'develop'
-      - '4.*'
+      - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'utils/**.php'
       - '.github/workflows/test-rector.yml'
       - composer.json
-      - 'utils/Rector/**'
-      - 'rector.php'
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Analyze code (Rector)
+    name: PHP ${{ matrix.php-versions }} Analyze code (Rector) on ${{ matrix.paths }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
         php-versions: ['7.4', '8.0']
+        paths:
+          - app
+          - system
+          - tests
+          - utils/Rector
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -58,7 +64,7 @@ jobs:
         run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -68,4 +74,4 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/rector process --dry-run --no-progress-bar
+        run: vendor/bin/rector process ${{ matrix.paths }} --dry-run --no-progress-bar

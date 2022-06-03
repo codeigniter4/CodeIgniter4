@@ -20,15 +20,8 @@ use Config\Services;
  */
 final class ParserPluginTest extends CIUnitTestCase
 {
-    /**
-     * @var Parser
-     */
-    protected $parser;
-
-    /**
-     * @var Validation
-     */
-    protected $validator;
+    private Parser $parser;
+    private Validation $validator;
 
     protected function setUp(): void
     {
@@ -42,7 +35,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testCurrentURL()
     {
-        helper('url');
         $template = '{+ current_url +}';
 
         $this->assertSame(current_url(), $this->parser->renderString($template));
@@ -50,7 +42,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testPreviousURL()
     {
-        helper('url');
         $template = '{+ previous_url +}';
 
         // Ensure a previous URL exists to work with.
@@ -61,7 +52,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testMailto()
     {
-        helper('url');
         $template = '{+ mailto email=foo@example.com title=Silly +}';
 
         $this->assertSame(mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
@@ -72,7 +62,6 @@ final class ParserPluginTest extends CIUnitTestCase
      */
     public function testMailtoWithDashAndParenthesis()
     {
-        helper('url');
         $template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
 
         $this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
@@ -80,7 +69,6 @@ final class ParserPluginTest extends CIUnitTestCase
 
     public function testSafeMailto()
     {
-        helper('url');
         $template = '{+ safe_mailto email=foo@example.com title=Silly +}';
 
         $this->assertSame(safe_mailto('foo@example.com', 'Silly'), $this->parser->renderString($template));
@@ -132,5 +120,18 @@ final class ParserPluginTest extends CIUnitTestCase
     public function setHints($output)
     {
         return preg_replace('/(<!-- DEBUG-VIEW+) (\w+) (\d+)/', '${1}', $output);
+    }
+
+    public function testCspScriptNonceWithCspEnabled()
+    {
+        $config             = config('App');
+        $config->CSPEnabled = true;
+
+        $template = 'aaa {+ csp_script_nonce +} bbb';
+
+        $this->assertMatchesRegularExpression(
+            '/aaa nonce="[0-9a-z]{24}" bbb/',
+            $this->parser->renderString($template)
+        );
     }
 }

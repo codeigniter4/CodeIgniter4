@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\SQLSRV;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\ResultInterface;
 
 /**
@@ -68,7 +69,7 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = $this->getFullName($value);
+            $from[] = strpos($value, '(SELECT') === 0 ? $value : $this->getFullName($value);
         }
 
         return implode(', ', $from);
@@ -88,9 +89,11 @@ class Builder extends BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
+     * @param RawSql|string $cond
+     *
      * @return $this
      */
-    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
+    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if ($type !== '') {
             $type = strtoupper(trim($type));
@@ -382,9 +385,7 @@ class Builder extends BaseBuilder
         }
 
         // Get the unique field names
-        $escKeyFields = array_map(function (string $field): string {
-            return $this->db->protectIdentifiers($field);
-        }, array_values(array_unique($keyFields)));
+        $escKeyFields = array_map(fn (string $field): string => $this->db->protectIdentifiers($field), array_values(array_unique($keyFields)));
 
         // Get the binds
         $binds = $this->binds;
@@ -596,7 +597,7 @@ class Builder extends BaseBuilder
             $sql = $this->_limit($sql . "\n");
         }
 
-        return $sql;
+        return $this->unionInjection($sql);
     }
 
     /**

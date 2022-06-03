@@ -17,7 +17,6 @@ use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
-use InvalidArgumentException;
 use Tests\Support\Controllers\Popcorn;
 
 /**
@@ -27,6 +26,8 @@ use Tests\Support\Controllers\Popcorn;
  * @preserveGlobalState         disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ControllerTestTraitTest extends CIUnitTestCase
 {
@@ -34,7 +35,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
     public function testBadController()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $logger = new Logger(new LoggerConfig());
         $this->withURI('http://example.com')
             ->withLogger($logger)
@@ -44,7 +45,7 @@ final class ControllerTestTraitTest extends CIUnitTestCase
 
     public function testBadControllerMethod()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $logger = new Logger(new LoggerConfig());
         $this->withURI('http://example.com')
             ->withLogger($logger)

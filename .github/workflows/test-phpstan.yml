@@ -6,21 +6,26 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - '4.*'
+      - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
+      - '**.neon.dist'
+      - '.github/workflows/test-phpstan.yml'
+
   push:
     branches:
       - 'develop'
-      - '4.*'
+      - 'v4.*'
     paths:
-      - 'app/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'utils/**.php'
       - composer.json
-      - phpstan.neon.dist
+      - '**.neon.dist'
+      - '.github/workflows/test-phpstan.yml'
 
 jobs:
   build:
@@ -32,7 +37,7 @@ jobs:
         php-versions: ['8.0', '8.1']
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -54,7 +59,7 @@ jobs:
         run: mkdir -p ${{ steps.composer-cache.outputs.dir }}
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -64,7 +69,7 @@ jobs:
         run: mkdir -p build/phpstan
 
       - name: Cache PHPStan result cache directory
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: build/phpstan
           key: ${{ runner.os }}-phpstan-${{ github.sha }}

@@ -2,6 +2,16 @@
 Upgrading from 4.1.3 to 4.1.4
 #############################
 
+Please refer to the upgrade instructions corresponding to your installation method.
+
+- :ref:`Composer Installation App Starter Upgrading <app-starter-upgrading>`
+- :ref:`Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading <adding-codeigniter4-upgrading>`
+- :ref:`Manual Installation Upgrading <installing-manual-upgrading>`
+
+.. contents::
+    :local:
+    :depth: 2
+
 This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
 `CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
 
@@ -33,7 +43,6 @@ If you relied on any of these methods being public (highly unlikely) adjust your
 * ``CodeIgniter\Images\Handlers\ImageMagickHandler::_flip()``
 * ``CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()``
 * ``CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()``
-
 
 Project Files
 =============

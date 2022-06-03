@@ -3,7 +3,7 @@ Generating Test Data
 ####################
 
 Often you will need sample data for your application to run its tests. The ``Fabricator`` class
-uses fzaninotto's `Faker <https://github.com/fzaninotto/Faker//>`_ to turn models into generators
+uses fzaninotto's `Faker <https://github.com/FakerPHP/Faker>`_ to turn models into generators
 of random data. Use fabricators in your seeds or test cases to stage fake data for your unit tests.
 
 .. contents::
@@ -14,27 +14,22 @@ Supported Models
 ================
 
 ``Fabricator`` supports any model that extends the framework's core model, ``CodeIgniter\Model``.
-You may use your own custom models by ensuring they implement ``CodeIgniter\Test\Interfaces\FabricatorModel``::
+You may use your own custom models by ensuring they implement ``CodeIgniter\Test\Interfaces\FabricatorModel``:
 
-    class MyModel implements CodeIgniter\Test\Interfaces\FabricatorModel
+.. literalinclude:: fabricator/001.php
 
 .. note:: In addition to methods, the interface outlines some necessary properties for the target model. Please see the interface code for details.
 
 Loading Fabricators
 ===================
 
-At its most basic a fabricator takes the model to act on::
+At its most basic a fabricator takes the model to act on:
 
-    use App\Models\UserModel;
-    use CodeIgniter\Test\Fabricator;
+.. literalinclude:: fabricator/002.php
 
-    $fabricator = new Fabricator(UserModel::class);
+The parameter can be a string specifying the name of the model, or an instance of the model itself:
 
-The parameter can be a string specifying the name of the model, or an instance of the model itself::
-
-    $model = new UserModel($testDbConnection);
-
-    $fabricator = new Fabricator($model);
+.. literalinclude:: fabricator/003.php
 
 Defining Formatters
 ===================
@@ -43,58 +38,36 @@ Faker generates data by requesting it from a formatter. With no formatters defin
 attempt to guess at the most appropriate fit based on the field name and properties of the model it
 represents, falling back on ``$fabricator->defaultFormatter``. This may be fine if your field names
 correspond with common formatters, or if you don't care much about the content of the fields, but most
-of the time you will want to specify the formatters to use as the second parameter to the constructor::
+of the time you will want to specify the formatters to use as the second parameter to the constructor:
 
-    $formatters = [
-        'first'  => 'firstName',
-        'email'  => 'email',
-        'phone'  => 'phoneNumber',
-        'avatar' => 'imageUrl',
-    ];
-
-    $fabricator = new Fabricator(UserModel::class, $formatters);
+.. literalinclude:: fabricator/004.php
 
 You can also change the formatters after a fabricator is initialized by using the ``setFormatters()`` method.
 
-**Advanced Formatting**
+Advanced Formatting
+-------------------
 
 Sometimes the default return of a formatter is not enough. Faker providers allow parameters to most formatters
 to further limit the scope of random data. A fabricator will check its representative model for the ``fake()``
-method where you can define exactly what the faked data should look like::
+method where you can define exactly what the faked data should look like:
 
-    class UserModel
-    {
-        public function fake(Generator &$faker)
-        {
-            return [
-                'first'  => $faker->firstName,
-                'email'  => $faker->email,
-                'phone'  => $faker->phoneNumber,
-                'avatar' => Faker\Provider\Image::imageUrl(800, 400),
-                'login'  => config('Auth')->allowRemembering ? date('Y-m-d') : null,
-            ];
-        }
+.. literalinclude:: fabricator/005.php
 
 Notice in this example how the first three values are equivalent to the formatters from before. However for ``avatar``
 we have requested an image size other than the default and ``login`` uses a conditional based on app configuration,
 neither of which are possible using the ``$formatters`` parameter.
 You may want to keep your test data separate from your production models, so it is a good practice to define
-a child class in your test support folder::
+a child class in your test support folder:
 
-    namespace Tests\Support\Models;
-
-    class UserFabricator extends \App\Models\UserModel
-    {
-        public function fake(&$faker)
-        {
+.. literalinclude:: fabricator/006.php
 
 Localization
 ============
 
 Faker supports a lot of different locales. Check their documentation to determine which providers
-support your locale. Specify a locale in the third parameter while initiating a fabricator::
+support your locale. Specify a locale in the third parameter while initiating a fabricator:
 
-    $fabricator = new Fabricator(UserModel::class, null, 'fr_FR');
+.. literalinclude:: fabricator/007.php
 
 If no locale is specified it will use the one defined in **app/Config/App.php** as ``defaultLocale``.
 You can check the locale of an existing fabricator using its ``getLocale()`` method.
@@ -102,114 +75,61 @@ You can check the locale of an existing fabricator using its ``getLocale()`` met
 Faking the Data
 ===============
 
-Once you have a properly-initialized fabricator it is easy to generate test data with the ``make()`` command::
+Once you have a properly-initialized fabricator it is easy to generate test data with the ``make()`` command:
 
-    $fabricator = new Fabricator(UserFabricator::class);
-    $testUser   = $fabricator->make();
-    print_r($testUser);
+.. literalinclude:: fabricator/008.php
 
-You might get back something like this::
+You might get back something like this:
 
-    array(
-        'first'  => "Maynard",
-        'email'  => "king.alford@example.org",
-        'phone'  => "201-886-0269 x3767",
-        'avatar' => "http://lorempixel.com/800/400/",
-        'login'  => null,
-    )
+.. literalinclude:: fabricator/009.php
 
-You can also get a lot of them back by supplying a count::
+You can also get a lot of them back by supplying a count:
 
-    $users = $fabricator->make(10);
+.. literalinclude:: fabricator/010.php
 
 The return type of ``make()`` mimics what is defined in the representative model, but you can
-force a type using the methods directly::
+force a type using the methods directly:
 
-    $userArray  = $fabricator->makeArray();
-    $userObject = $fabricator->makeObject();
-    $userEntity = $fabricator->makeObject('App\Entities\User');
+.. literalinclude:: fabricator/011.php
 
 The return from ``make()`` is ready to be used in tests or inserted into the database. Alternatively
 ``Fabricator`` includes the ``create()`` command to insert it for you, and return the result. Due
 to model callbacks, database formatting, and special keys like primary and timestamps the return
-from ``create()`` can differ from ``make()``. You might get back something like this::
+from ``create()`` can differ from ``make()``. You might get back something like this:
 
-    array(
-        'id'         => 1,
-        'first'      => "Rachel",
-        'email'      => "bradley72@gmail.com",
-        'phone'      => "741-241-2356",
-        'avatar'     => "http://lorempixel.com/800/400/",
-        'login'      => null,
-        'created_at' => "2020-05-08 14:52:10",
-        'updated_at' => "2020-05-08 14:52:10",
-    )
+.. literalinclude:: fabricator/012.php
 
-Similar to ``make()`` you can supply a count to insert and return an array of objects::
+Similar to ``make()`` you can supply a count to insert and return an array of objects:
 
-    $users = $fabricator->create(100);
+.. literalinclude:: fabricator/013.php
 
 Finally, there may be times you want to test with the full database object but you are not actually
 using a database. ``create()`` takes a second parameter to allowing mocking the object, returning
-the object with extra database fields above without actually touching the database::
+the object with extra database fields above without actually touching the database:
 
-    $user = $fabricator(null, true);
-
-    $this->assertIsNumeric($user->id);
-    $this->dontSeeInDatabase('user', ['id' => $user->id]);
+.. literalinclude:: fabricator/014.php
 
 Specifying Test Data
 ====================
 
 Generated data is great, but sometimes you may want to supply a specific field for a test without
 compromising your formatters configuration. Rather then creating a new fabricator for each variant
-you can use ``setOverrides()`` to specify the value for any fields::
+you can use ``setOverrides()`` to specify the value for any fields:
 
-    $fabricator->setOverrides(['first' => 'Bobby']);
-    $bobbyUser = $fabricator->make();
+.. literalinclude:: fabricator/015.php
 
-Now any data generated with ``make()`` or ``create()`` will always use "Bobby" for the ``first`` field::
+Now any data generated with ``make()`` or ``create()`` will always use "Bobby" for the ``first`` field:
 
-    array(
-        'first'  => "Bobby",
-        'email'  => "latta.kindel@company.org",
-        'phone'  => "251-806-2169",
-        'avatar' => "http://lorempixel.com/800/400/",
-        'login'  => null,
-    )
-
-    array(
-        'first'  => "Bobby",
-        'email'  => "melissa.strike@fabricon.us",
-        'phone'  => "525-214-2656 x23546",
-        'avatar' => "http://lorempixel.com/800/400/",
-        'login'  => null,
-    )
+.. literalinclude:: fabricator/016.php
 
 ``setOverrides()`` can take a second parameter to indicate whether this should be a persistent
-override or only for a single action::
+override or only for a single action:
 
-    $fabricator->setOverrides(['first' => 'Bobby'], $persist = false);
-    $bobbyUser = $fabricator->make();
-    $bobbyUser = $fabricator->make();
+.. literalinclude:: fabricator/017.php
 
-Notice after the first return the fabricator stops using the overrides::
+Notice after the first return the fabricator stops using the overrides:
 
-    array(
-        'first'  => "Bobby",
-        'email'  => "belingadon142@example.org",
-        'phone'  => "741-857-1933 x1351",
-        'avatar' => "http://lorempixel.com/800/400/",
-        'login'  => null,
-    )
-
-    array(
-        'first'  => "Hans",
-        'email'  => "hoppifur@metraxalon.com",
-        'phone'  => "487-235-7006",
-        'avatar' => "http://lorempixel.com/800/400/",
-        'login'  => null,
-    )
+.. literalinclude:: fabricator/018.php
 
 If no second parameter is supplied then passed values will persist by default.
 
@@ -217,16 +137,13 @@ Test Helper
 ===========
 
 Often all you will need is a one-and-done fake object for testing. The Test Helper provides
-the ``fake($model, $overrides, $persist = true)`` function to do just this::
+the ``fake($model, $overrides, $persist = true)`` function to do just this:
 
-    helper('test');
-    $user = fake('App\Models\UserModel', ['name' => 'Gerry']);
+.. literalinclude:: fabricator/019.php
 
-This is equivalent to::
+This is equivalent to:
 
-    $fabricator = new Fabricator('App\Models\UserModel');
-    $fabricator->setOverrides(['name' => 'Gerry']);
-    $user = $fabricator->create();
+.. literalinclude:: fabricator/020.php
 
 If you just need a fake object without saving it to the database you can pass false into the persist parameter.
 
@@ -240,46 +157,43 @@ example:
 Your project has users and groups. In your test case you want to create various scenarios
 with groups of different sizes, so you use ``Fabricator`` to create a bunch of groups.
 Now you want to create fake users but don't want to assign them to a non-existant group ID.
-Your model's fake method could look like this::
+Your model's fake method could look like this:
 
-    class UserModel
-    {
-        protected $table = 'users';
-
-        public function fake(Generator &$faker)
-        {
-            return [
-                'first'    => $faker->firstName,
-                'email'    => $faker->email,
-                'group_id' => rand(1, Fabricator::getCount('groups')),
-            ];
-        }
+.. literalinclude:: fabricator/021.php
 
 Now creating a new user will ensure it is a part of a valid group: ``$user = fake(UserModel::class);``
+
+Methods
+-------
 
 ``Fabricator`` handles the counts internally but you can also access these static methods
 to assist with using them:
 
-**getCount(string $table): int**
+getCount(string $table): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Return the current value for a specific table (default: 0).
 
-**setCount(string $table, int $count): int**
+setCount(string $table, int $count): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Set the value for a specific table manually, for example if you create some test items
 without using a fabricator that you still wanted factored into the final counts.
 
-**upCount(string $table): int**
+upCount(string $table): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Increment the value for a specific table by one and return the new value. (This is what is
 used internally with ``Fabricator::create()``).
 
-**downCount(string $table): int**
+downCount(string $table): int
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Decrement the value for a specific table by one and return the new value, for example if
 you deleted a fake item but wanted to track the change.
 
-**resetCounts()**
+resetCounts()
+^^^^^^^^^^^^^
 
 Resets all counts. Good idea to call this between test cases (though using
 ``CIUnitTestCase::$refresh = true`` does it automatically).

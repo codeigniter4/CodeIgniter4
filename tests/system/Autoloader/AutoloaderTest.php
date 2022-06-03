@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Autoloader;
 
+use App\Controllers\Home;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
@@ -22,12 +23,7 @@ use UnnamespacedClass;
  */
 final class AutoloaderTest extends CIUnitTestCase
 {
-    /**
-     * @var Autoloader
-     */
-    protected $loader;
-
-    protected $filesPath = SUPPORTPATH . 'Autoloader/';
+    private Autoloader $loader;
 
     protected function setUp(): void
     {
@@ -70,13 +66,29 @@ final class AutoloaderTest extends CIUnitTestCase
         (new Autoloader())->initialize($config, $modules);
     }
 
+    public function testInitializeTwice()
+    {
+        $loader = new Autoloader();
+        $loader->initialize(new Autoload(), new Modules());
+
+        $ns = $loader->getNamespace();
+        $this->assertCount(1, $ns['App']);
+        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+
+        $loader->initialize(new Autoload(), new Modules());
+
+        $ns = $loader->getNamespace();
+        $this->assertCount(1, $ns['App']);
+        $this->assertSame('ROOTPATH/app', clean_path($ns['App'][0]));
+    }
+
     public function testServiceAutoLoaderFromShareInstances()
     {
         $autoloader = Services::autoloader();
         // look for Home controller, as that should be in base repo
-        $actual   = $autoloader->loadClass('App\Controllers\Home');
+        $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, realpath($actual) ?: $actual);
     }
 
     public function testServiceAutoLoader()
@@ -85,14 +97,14 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
         // look for Home controller, as that should be in base repo
-        $actual   = $autoloader->loadClass('App\Controllers\Home');
+        $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
-        $this->assertSame($expected, $actual);
+        $this->assertSame($expected, realpath($actual) ?: $actual);
     }
 
     public function testExistingFile()
     {
-        $actual   = $this->loader->loadClass('App\Controllers\Home');
+        $actual   = $this->loader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
 
@@ -103,7 +115,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testMatchesWithPrecedingSlash()
     {
-        $actual   = $this->loader->loadClass('\App\Controllers\Home');
+        $actual   = $this->loader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, $actual);
     }
@@ -219,6 +231,23 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $namespaces = $this->loader->getNamespace();
         $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testComposerNamespaceDoesNotOverwriteConfigAutoloadPsr4()
+    {
+        $config       = new Autoload();
+        $config->psr4 = [
+            'Psr\Log' => '/Config/Autoload/Psr/Log/',
+        ];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+
+        $this->loader = new Autoloader();
+        $this->loader->initialize($config, $modules);
+
+        $namespaces = $this->loader->getNamespace();
+        $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
+        $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
     }
 
     public function testFindsComposerRoutesWithComposerPathNotFound()

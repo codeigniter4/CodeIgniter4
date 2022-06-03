@@ -16,7 +16,6 @@ App changes:
 
 Message changes:
 
-
 The list of changed files follows, with PR numbers shown.
 
 - admin/
@@ -120,7 +119,6 @@ The list of changed files follows, with PR numbers shown.
         - model #2316, 2332
     - outgoing/
         - table #2337
-
 
 PRs merged:
 -----------

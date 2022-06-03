@@ -234,9 +234,9 @@ class Connection extends BaseConnection
      */
     protected function _fieldData(string $table): array
     {
-        $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
-			FROM "information_schema"."columns"
-			WHERE LOWER("table_name") = '
+        $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default",  "is_nullable"
+            FROM "information_schema"."columns"
+            WHERE LOWER("table_name") = '
                 . $this->escape(strtolower($table))
                 . ' ORDER BY "ordinal_position"';
 
@@ -252,6 +252,7 @@ class Connection extends BaseConnection
 
             $retVal[$i]->name       = $query[$i]->column_name;
             $retVal[$i]->type       = $query[$i]->data_type;
+            $retVal[$i]->nullable   = $query[$i]->is_nullable === 'YES';
             $retVal[$i]->default    = $query[$i]->column_default;
             $retVal[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
         }
@@ -284,9 +285,7 @@ class Connection extends BaseConnection
             $obj         = new stdClass();
             $obj->name   = $row->indexname;
             $_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
-            $obj->fields = array_map(static function ($v) {
-                return trim($v);
-            }, $_fields);
+            $obj->fields = array_map(static fn ($v) => trim($v), $_fields);
 
             if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0) {
                 $obj->type = 'PRIMARY';

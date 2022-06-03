@@ -14,6 +14,8 @@ namespace CodeIgniter\Database;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Services;
+use Tests\Support\Database\Seeds\AnotherSeeder;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -23,8 +25,6 @@ use Config\Services;
 final class DatabaseTestCaseTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
-
-    protected static $loaded = false;
 
     /**
      * Should the db be refreshed before
@@ -41,8 +41,8 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
      * @var array|string
      */
     protected $seed = [
-        'Tests\Support\Database\Seeds\CITestSeeder',
-        'Tests\Support\Database\Seeds\AnotherSeeder',
+        CITestSeeder::class,
+        AnotherSeeder::class,
     ];
 
     /**
@@ -60,12 +60,24 @@ final class DatabaseTestCaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        if (! self::$loaded) {
-            Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', SUPPORTPATH . 'MigrationTestMigrations');
-            self::$loaded = true;
-        }
+        $this->setUpMethods[] = 'setUpAddNamespace';
 
         parent::setUp();
+    }
+
+    protected function setUpAddNamespace()
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->regressDatabase();
     }
 
     public function testMultipleSeeders()

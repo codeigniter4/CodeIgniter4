@@ -72,7 +72,7 @@ final class Environment extends BaseCommand
      *
      * @var array<int, string>
      */
-    private static $knownTypes = [
+    private static array $knownTypes = [
         'production',
         'development',
     ];

@@ -24,10 +24,7 @@ use Config\App;
  */
 final class CLIRequestTest extends CIUnitTestCase
 {
-    /**
-     * @var CLIRequest
-     */
-    protected $request;
+    private CLIRequest $request;
 
     protected function setUp(): void
     {
@@ -160,6 +157,34 @@ final class CLIRequestTest extends CIUnitTestCase
 
         $expected = '';
         $this->assertSame($expected, $this->request->getOptionString());
+    }
+
+    public function testParsingArgs()
+    {
+        $_SERVER['argv'] = [
+            'spark',
+            'command',
+            'param1',
+            'param2',
+            '--opt1',
+            'opt1val',
+            '--opt-2',
+            'opt 2 val',
+            'param3',
+        ];
+
+        // reinstantiate it to force parsing
+        $this->request = new CLIRequest(new App());
+
+        $options = [
+            'command',
+            'param1',
+            'param2',
+            'opt1'  => 'opt1val',
+            'opt-2' => 'opt 2 val',
+            'param3',
+        ];
+        $this->assertSame($options, $this->request->getArgs());
     }
 
     public function testParsingPath()
@@ -552,83 +577,6 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertSame('0.0.0.0', $this->request->getIPAddress());
     }
-
-    public function testGetIPAddressNormal()
-    {
-        $expected               = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR'] = $expected;
-        $this->request          = new Request(new App());
-        $this->assertSame($expected, $this->request->getIPAddress());
-        // call a second time to exercise the initial conditional block in getIPAddress()
-        $this->assertSame($expected, $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxy()
-    {
-        $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
-
-        // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxyInvalid()
-    {
-        $expected                        = '123.456.23.123';
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
-
-        // spoofed address invalid
-        $this->assertSame('10.0.1.200', $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxyNotWhitelisted()
-    {
-        $expected                        = '123.456.23.123';
-        $_SERVER['REMOTE_ADDR']          = '10.10.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
-
-        // spoofed address invalid
-        $this->assertSame('10.10.1.200', $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxySubnet()
-    {
-        $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $config                          = new App();
-        $config->proxyIPs                = ['192.168.5.0/24'];
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
-
-        // we should see the original forwarded address
-        $this->assertSame($expected, $this->request->getIPAddress());
-    }
-
-    public function testGetIPAddressThruProxyOutofSubnet()
-    {
-        $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $config                          = new App();
-        $config->proxyIPs                = ['192.168.5.0/28'];
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
-
-        // we should see the original forwarded address
-        $this->assertSame('192.168.5.21', $this->request->getIPAddress());
-    }
-
-    // FIXME getIPAddress should have more testing, to 100% code coverage
 
     public function testMethodReturnsRightStuff()
     {

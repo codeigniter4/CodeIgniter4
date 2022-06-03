@@ -15,103 +15,77 @@ CodeIgniter's CLI library makes creating interactive command-line scripts simple
     :depth: 2
 
 Initializing the Class
-======================
+**********************
 
 You do not need to create an instance of the CLI library, since all of it's methods are static. Instead, you simply
-need to ensure your controller can locate it via a ``use`` statement above your class::
+need to ensure your controller can locate it via a ``use`` statement above your class:
 
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\CLI\CLI;
-
-    class MyController extends \CodeIgniter\Controller
-    {
-        // ...
-    }
+.. literalinclude:: cli_library/001.php
 
 The class is automatically initialized when the file is loaded the first time.
 
 Getting Input from the User
-===========================
+***************************
 
 Sometimes you need to ask the user for more information. They might not have provided optional command-line
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the ``prompt()`` or ``promptByKey()`` method.
 
-You can provide a question by passing it in as the first parameter::
+You can provide a question by passing it in as the first parameter:
 
-    $color = CLI::prompt('What is your favorite color?');
+.. literalinclude:: cli_library/002.php
 
 You can provide a default answer that will be used if the user just hits enter by passing the default in the
-second parameter::
+second parameter:
 
-    $color = CLI::prompt('What is your favorite color?', 'blue');
+.. literalinclude:: cli_library/003.php
 
-You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter::
+You can restrict the acceptable answers by passing in an array of allowed answers as the second parameter:
 
-    $overwrite = CLI::prompt('File exists. Overwrite?', ['y','n']);
+.. literalinclude:: cli_library/004.php
 
-Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter::
+Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter:
 
-    $email = CLI::prompt('What is your email?', null, 'required|valid_email');
+.. literalinclude:: cli_library/005.php
 
-Validation rules can also be written in the array syntax.::
+Validation rules can also be written in the array syntax:
 
-    $email = CLI::prompt('What is your email?', null, ['required', 'valid_email']);
+.. literalinclude:: cli_library/006.php
 
-
-**promptByKey()**
+promptByKey()
+=============
 
 Predefined answers (options) for prompt sometimes need to be described or are too complex to select via their value.
-``promptByKey()`` allows the user to select an option by its key instead of its value::
+``promptByKey()`` allows the user to select an option by its key instead of its value:
 
-    $fruit = CLI::promptByKey('These are your choices:', ['The red apple', 'The plump orange', 'The ripe banana']);
+.. literalinclude:: cli_library/007.php
 
-    //These are your choices:
-    //  [0]  The red apple
-    //  [1]  The plump orange
-    //  [2]  The ripe banana
-    //
-    //[0, 1, 2]:
+Named keys are also possible:
 
-Named keys are also possible::
-
-    $fruit = CLI::promptByKey(['These are your choices:', 'Which would you like?'], [
-        'apple' => 'The red apple',
-        'orange' => 'The plump orange',
-        'banana' => 'The ripe banana'
-    ]);
-
-    //These are your choices:
-    //  [apple]   The red apple
-    //  [orange]  The plump orange
-    //  [banana]  The ripe banana
-    //
-    //Which would you like? [apple, orange, banana]:
+.. literalinclude:: cli_library/008.php
 
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
 Providing Feedback
-==================
+******************
 
-**write()**
+write()
+=======
 
 Several methods are provided for you to provide feedback to your users. This can be as simple as a single status update
 or a complex table of information that wraps to the user's terminal window. At the core of this is the ``write()``
-method which takes the string to output as the first parameter::
+method which takes the string to output as the first parameter:
 
-    CLI::write('The rain in Spain falls mainly on the plains.');
+.. literalinclude:: cli_library/009.php
 
-You can change the color of the text by passing in a color name as the second parameter::
+You can change the color of the text by passing in a color name as the second parameter:
 
-    CLI::write('File created.', 'green');
+.. literalinclude:: cli_library/010.php
 
 This could be used to differentiate messages by status, or create 'headers' by using a different color. You can
-even set background colors by passing the color name in as the third parameter::
+even set background colors by passing the color name in as the third parameter:
 
-    CLI::write('File overwritten.', 'light_red', 'dark_gray');
+.. literalinclude:: cli_library/011.php
 
 The following foreground colors are available:
 
@@ -144,88 +118,63 @@ And a smaller number are available as background colors:
 * light_gray
 * magenta
 
-**print()**
+print()
+=======
 
 Print functions identically to the ``write()`` method, except that it does not force a newline either before or after.
 Instead it prints it to the screen wherever the cursor is currently. This allows you to print multiple items all on
 the same line, from different calls. This is especially helpful when you want to show a status, do something, then
-print "Done" on the same line::
+print "Done" on the same line:
 
-    for ($i = 0; $i <= 10; $i++) {
-        CLI::print($i);
-    }
+.. literalinclude:: cli_library/012.php
 
-**color()**
+.. _cli-library-color:
+
+color()
+=======
 
 While the ``write()`` command will write a single line to the terminal, ending it with a EOL character, you can
 use the ``color()`` method to make a string fragment that can be used in the same way, except that it will not force
 an EOL after printing. This allows you to create multiple outputs on the same row. Or, more commonly, you can use
-it inside of a ``write()`` method to create a string of a different color inside::
+it inside of a ``write()`` method to create a string of a different color inside:
 
-    CLI::write("fileA \t". CLI::color('/path/to/file', 'white'), 'yellow');
+.. literalinclude:: cli_library/013.php
 
 This example would write a single line to the window, with ``fileA`` in yellow, followed by a tab, and then
 ``/path/to/file`` in white text.
 
-**error()**
+error()
+=======
 
 If you need to output errors, you should use the appropriately named ``error()`` method. This writes light-red text
 to STDERR, instead of STDOUT, like ``write()`` and ``color()`` do. This can be useful if you have scripts watching
 for errors so they don't have to sift through all of the information, only the actual error messages. You use it
-exactly as you would the ``write()`` method::
+exactly as you would the ``write()`` method:
 
-    CLI::error('Cannot write to file: ' . $file);
+.. literalinclude:: cli_library/014.php
 
-**wrap()**
+wrap()
+======
 
 This command will take a string, start printing it on the current line, and wrap it to a set length on new lines.
 This might be useful when displaying a list of options with descriptions that you want to wrap in the current
-window and not go off screen::
+window and not go off screen:
 
-    CLI::color("task1\t", 'yellow');
-    CLI::wrap("Some long description goes here that might be longer than the current window.");
+.. literalinclude:: cli_library/015.php
 
 By default, the string will wrap at the terminal width. Windows currently doesn't provide a way to determine
 the window size, so we default to 80 characters. If you want to restrict the width to something shorter that
 you can be pretty sure fits within the window, pass the maximum line-length as the second parameter. This
 will break the string at the nearest word barrier so that words are not broken.
-::
 
-    // Wrap the text at max 20 characters wide
-    CLI::wrap($description, 20);
+.. literalinclude:: cli_library/016.php
 
 You may find that you want a column on the left of titles, files, or tasks, while you want a column of text
 on the right with their descriptions. By default, this will wrap back to the left edge of the window, which
 doesn't allow things to line up in columns. In cases like this, you can pass in a number of spaces to pad
-every line after the first line, so that you will have a crisp column edge on the left::
+every line after the first line, so that you will have a crisp column edge on the left:
 
-    $titles = [
-        'task1a',
-        'task1abc',
-    ];
-    $descriptions = [
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        "Lorem Ipsum has been the industry's standard dummy text ever since the",
-    ];
-
-    // Determine the maximum length of all titles
-    // to determine the width of the left column
-    $maxlen = max(array_map('strlen', $titles));
-
-    for ($i = 0; $i < count($titles); $i++) {
-        CLI::write(
-            // Display the title on the left of the row
-            substr(
-                $titles[$i] . str_repeat(' ', $maxlen + 3),
-                0,
-                $maxlen + 3
-            ) .
-            // Wrap the descriptions in a right-hand column
-            // with its left side 3 characters wider than
-            // the longest item on the left.
-            CLI::wrap($descriptions[$i], 40, $maxlen + 3)
-        );
-    }
+.. literalinclude:: cli_library/017.php
 
 Would create something like this:
 
@@ -238,21 +187,24 @@ Would create something like this:
                industry's standard dummy
                text ever since the
 
-**newLine()**
+newLine()
+=========
 
-The ``newLine()`` method displays a blank line to the user. It does not take any parameters::
+The ``newLine()`` method displays a blank line to the user. It does not take any parameters:
 
-    CLI::newLine();
+.. literalinclude:: cli_library/018.php
 
-**clearScreen()**
+clearScreen()
+=============
 
 You can clear the current terminal window with the ``clearScreen()`` method. In most versions of Windows, this will
 simply insert 40 blank lines since Windows doesn't support this feature. Windows 10 bash integration should change
-this::
+this:
 
-    CLI::clearScreen();
+.. literalinclude:: cli_library/019.php
 
-**showProgress()**
+showProgress()
+==============
 
 If you have a long-running task that you would like to keep the user updated with the progress, you can use the
 ``showProgress()`` method which displays something like the following:
@@ -266,30 +218,13 @@ This block is animated in place for a very nice effect.
 To use it, pass in the current step as the first parameter, and the total number of steps as the second parameter.
 The percent complete and the length of the display will be determined based on that number. When you are done,
 pass ``false`` as the first parameter and the progress bar will be removed.
-::
 
-    $totalSteps = count($tasks);
-    $currStep   = 1;
+.. literalinclude:: cli_library/020.php
 
-    foreach ($tasks as $task) {
-        CLI::showProgress($currStep++, $totalSteps);
-        $task->run();
-    }
+table()
+=======
 
-    // Done, so erase it...
-    CLI::showProgress(false);
-
-**table()**
-
-::
-
-    $thead = ['ID', 'Title', 'Updated At', 'Active'];
-    $tbody = [
-        [7, 'A great item title', '2017-11-15 10:35:02', 1],
-        [8, 'Another great item title', '2017-11-16 13:46:54', 0]
-    ];
-
-    CLI::table($tbody, $thead);
+.. literalinclude:: cli_library/021.php
 
 .. code-block:: none
 
@@ -300,18 +235,10 @@ pass ``false`` as the first parameter and the progress bar will be removed.
     | 8  | Another great item title | 2017-11-16 13:46:54 | 0      |
     +----+--------------------------+---------------------+--------+
 
-**wait()**
+wait()
+======
 
 Waits a certain number of seconds, optionally showing a wait message and
 waiting for a key press.
 
-::
-
-        // wait for specified interval, with countdown displayed
-        CLI::wait($seconds, true);
-
-        // show continuation message and wait for input
-        CLI::wait(0, false);
-
-        // wait for specified interval
-        CLI::wait($seconds, false);
+.. literalinclude:: cli_library/022.php

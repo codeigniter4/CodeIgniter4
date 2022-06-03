@@ -57,7 +57,7 @@ class Language
     {
         $this->locale = $locale;
 
-        if (class_exists('MessageFormatter')) {
+        if (class_exists(MessageFormatter::class)) {
             $this->intlSupport = true;
         }
     }
@@ -115,7 +115,7 @@ class Language
             $output = $this->getTranslationOutput('en', $file, $parsedLine);
         }
 
-        $output = $output ?? $line;
+        $output ??= $line;
 
         return $this->formatMessage($output, $args);
     }

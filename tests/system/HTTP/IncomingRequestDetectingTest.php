@@ -21,10 +21,7 @@ use Config\App;
  */
 final class IncomingRequestDetectingTest extends CIUnitTestCase
 {
-    /**
-     * @var IncomingRequest
-     */
-    protected $request;
+    private IncomingRequest $request;
 
     protected function setUp(): void
     {

@@ -73,17 +73,13 @@ Sections can contain nested sections::
         <?= $this->endSection() ?>
     <?= $this->endSection() ?>
 
-
 ******************
 Rendering the View
 ******************
 
-Rendering the view and it's layout is done exactly as any other view would be displayed within a controller::
+Rendering the view and it's layout is done exactly as any other view would be displayed within a controller:
 
-    public function index()
-    {
-        echo view('some_view');
-    }
+.. literalinclude:: view_layouts/001.php
 
 It renders the View **app/Views/some_view.php** and if it extends ``default``,
 the Layout **app/Views/default.php** is also used automatically.

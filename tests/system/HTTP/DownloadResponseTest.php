@@ -19,6 +19,8 @@ use DateTimeZone;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class DownloadResponseTest extends CIUnitTestCase
 {
@@ -277,7 +279,7 @@ final class DownloadResponseTest extends CIUnitTestCase
     public function testGetReason()
     {
         $response = new DownloadResponse('unit-test.php', false);
-        $this->assertSame('OK', $response->getReason());
+        $this->assertSame('OK', $response->getReasonPhrase());
     }
 
     public function testPretendOutput()

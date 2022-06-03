@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Postgre\Builder as PostgreBuilder;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Database\SQLSRV\Builder as SQLSRVBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -73,6 +74,28 @@ final class JoinTest extends CIUnitTestCase
         $expectedSQL = "SELECT * FROM \"table1\" LEFT JOIN \"table2\" ON \"table1\".\"field1\" = \"table2\".\"field2\" AND \"table1\".\"field1\" = 'foo' AND \"table2\".\"field2\" = 0";
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3832
+     */
+    public function testJoinRawSql()
+    {
+        $builder = new BaseBuilder('device', $this->db);
+
+        $sql = 'user.id = device.user_id
+            AND (
+                (1=1 OR 1=1)
+                OR
+                (1=1 OR 1=1)
+            )';
+        $builder->join('user', new RawSql($sql), 'LEFT');
+
+        $expectedSQL = 'SELECT * FROM "device" LEFT JOIN "user" ON user.id = device.user_id AND ( (1=1 OR 1=1) OR (1=1 OR 1=1) )';
+
+        $output = str_replace("\n", ' ', $builder->getCompiledSelect());
+        $output = preg_replace('/\s+/', ' ', $output);
+        $this->assertSame($expectedSQL, $output);
     }
 
     public function testFullOuterJoin()

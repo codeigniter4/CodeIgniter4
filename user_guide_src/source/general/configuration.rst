@@ -9,42 +9,31 @@ the required settings are public properties.
 Unlike many other frameworks, CodeIgniter configurable items aren't contained in
 a single file. Instead, each class that needs configurable items will have a
 configuration file with the same name as the class that uses it. You will find
-the application configuration files in the **/app/Config** folder.
+the application configuration files in the **app/Config** folder.
 
 .. contents::
     :local:
     :depth: 2
 
 Working With Configuration Files
-================================
+********************************
 
 You can access configuration files for your classes in several different ways.
 
-- By using the ``new`` keyword to create an instance::
+- By using the ``new`` keyword to create an instance:
 
-    // Creating new configuration object by hand
-    $config = new \Config\Pager();
+  .. literalinclude:: configuration/001.php
 
-- By using the ``config()`` function::
+- By using the ``config()`` function:
 
-    // Get shared instance with config function
-    $config = config('Pager');
+  .. literalinclude:: configuration/002.php
 
-    // Access config class with namespace
-    $config = config('Config\\Pager');
-    $config = config(\Config\Pager::class);
+All configuration object properties are public, so you access the settings like any other property:
 
-    // Creating a new object with config function
-    $config = config('Pager', false);
-
-All configuration object properties are public, so you access the settings like any other property::
-
-    $config = config('Pager');
-    // Access settings as object properties
-    $pageSize = $config->perPage;
+.. literalinclude:: configuration/003.php
 
 If no namespace is provided, it will look for the file in all defined namespaces
-as well as **/app/Config/**.
+as well as **app/Config/**.
 
 All of the configuration files that ship with CodeIgniter are namespaced with
 ``Config``. Using this namespace in your application will provide the best
@@ -56,43 +45,32 @@ that is not web-accessible while keeping it under **/app** for easy access
 during development.
 
 Creating Configuration Files
-============================
+****************************
 
 When you need a new configuration, first you create a new file at your desired location.
-The default file location (recommended for most cases) is **/app/Config**.
+The default file location (recommended for most cases) is **app/Config**.
 The class should use the appropriate namespace, and it should extend
 ``CodeIgniter\Config\BaseConfig`` to ensure that it can receive environment-specific settings.
 
-Define the class and fill it with public properties that represent your settings.::
+Define the class and fill it with public properties that represent your settings:
 
-    <?php
-
-    namespace Config;
-
-    use CodeIgniter\Config\BaseConfig;
-
-    class CustomClass extends BaseConfig
-    {
-        public $siteName  = 'My Great Site';
-        public $siteEmail = 'webmaster@example.com';
-
-    }
+.. literalinclude:: configuration/004.php
 
 Environment Variables
-=====================
+*********************
 
-One of today’s best practices for application setup is to use Environment Variables. One reason for this is that Environment Variables are easy to change between deploys without changing any code. Configuration can change a lot across deploys, but code does not. For instance, multiple environments, such as the developer’s local machine and the production server, usually need different configuration values for each particular setup.
+One of today's best practices for application setup is to use Environment Variables. One reason for this is that Environment Variables are easy to change between deploys without changing any code. Configuration can change a lot across deploys, but code does not. For instance, multiple environments, such as the developer's local machine and the production server, usually need different configuration values for each particular setup.
 
 Environment Variables should also be used for anything private such as passwords, API keys, or other sensitive data.
 
 Environment Variables and CodeIgniter
 =====================================
 
-CodeIgniter makes it simple and painless to set Environment Variables by using a “dotenv” file. The term comes from the file name, which starts with a dot before the text “env”.
+CodeIgniter makes it simple and painless to set Environment Variables by using a "dotenv" file. The term comes from the file name, which starts with a dot before the text "env".
 
-CodeIgniter expects **.env** to be at the root of your project alongside the ``system``
-and ``app`` directories. There is a template file distributed with CodeIgniter that’s
-located at the project root named **env** (Notice there’s no dot (**.**) at the start?).
+CodeIgniter expects **.env** to be at the root of your project alongside the
+``app`` directories. There is a template file distributed with CodeIgniter that's
+located at the project root named **env** (Notice there's no dot (**.**) at the start?).
 It has a large collection of variables your project might use that have been assigned
 empty, dummy, or default values. You can use this file as a starting place for your
 application by either renaming the template to **.env**, or by making a copy of it named **.env**.
@@ -110,11 +88,8 @@ When your application runs, **.env** will be loaded automatically, and the varia
 into the environment. If a variable already exists in the environment, it will NOT be
 overwritten. The loaded Environment variables are accessed using any of the following:
 ``getenv()``, ``$_SERVER``, or ``$_ENV``.
-::
 
-    $s3_bucket = getenv('S3_BUCKET');
-    $s3_bucket = $_ENV['S3_BUCKET'];
-    $s3_bucket = $_SERVER['S3_BUCKET'];
+.. literalinclude:: configuration/005.php
 
 .. warning:: Note that your settings from the **.env** file are added to Environment Variables. As a side effect, this means that if your CodeIgniter application is (for example) generating a ``var_dump($_ENV)`` or ``phpinfo()`` (for debugging or other valid reasons) **your secure credentials are publicly exposed**.
 
@@ -122,7 +97,9 @@ Nesting Variables
 =================
 
 To save on typing, you can reuse variables that you've already specified in the file by wrapping the
-variable name within ``${...}``::
+variable name within ``${...}``:
+
+::
 
     BASE_DIR="/var/webroot/project-root"
     CACHE_DIR="${BASE_DIR}/cache"
@@ -138,6 +115,7 @@ This problem is solved by "*namespacing*" the variables.
 Namespaced variables use a dot notation to qualify variable names so they will be unique
 when incorporated into the environment. This is done by including a distinguishing
 prefix followed by a dot (.), and then the variable name itself.
+
 ::
 
     // not namespaced variables
@@ -151,8 +129,21 @@ prefix followed by a dot (.), and then the variable name itself.
     backend.db = admin
     BackEnd.db = admin
 
+.. _env-var-namespace-separator:
+
+Namespace Separator
+-------------------
+
+Some environments, e.g., Docker, CloudFormation, do not permit variable name with dots (``.``). In such case, since v4.1.5, you could also use underscores (``_``) as a seperator.
+
+::
+
+    // namespaced variables with underscore
+    app_forceGlobalSecureRequests = true
+    app_CSPEnabled = true
+
 Configuration Classes and Environment Variables
-===============================================
+***********************************************
 
 When you instantiate a configuration class, any *namespaced* environment variables
 are considered for merging into the configuration object's properties.
@@ -163,29 +154,29 @@ property. If it matches an existing configuration property, the environment vari
 value will replace the corresponding value from the configuration file. If there is no match,
 the configuration class properties are left unchanged. In this usage, the prefix must be
 the full (case-sensitive) namespace of the class.
+
 ::
 
     Config\App.forceGlobalSecureRequests = true
     Config\App.CSPEnabled = true
-
 
 .. note:: Both the namespace prefix and the property name are case-sensitive. They must exactly match the full namespace and property names as defined in the configuration class file.
 
 The same holds for a *short prefix*, which is a namespace using only the lowercase version of
 the configuration class name. If the short prefix matches the class name,
 the value from **.env** replaces the configuration file value.
+
 ::
 
     app.forceGlobalSecureRequests = true
     app.CSPEnabled = true
 
-.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
-
-Some environments do not permit variable name with dots. In such case, you could also use ``_`` as a seperator.
-::
+Since v4.1.5, you can also write with underscores::
 
     app_forceGlobalSecureRequests = true
     app_CSPEnabled = true
+
+.. note:: When using the *short prefix* the property names must still exactly match the class defined name.
 
 Environment Variables as Replacements for Data
 ==============================================
@@ -209,6 +200,7 @@ A namespaced environment variable can be further treated as an array.
 If the prefix matches the configuration class, then the remainder of the
 environment variable name is treated as an array reference if it also
 contains a dot.
+
 ::
 
     // regular namespaced variable
@@ -218,37 +210,36 @@ contains a dot.
     Config\SimpleConfig.address.city = "Berlin"
     Config\SimpleConfig.address.country = "Germany"
 
-If this was referring to a SimpleConfig configuration object, the above example would be treated as::
+If this was referring to a SimpleConfig configuration object, the above example would be treated as:
 
-    $address['city']    = "Berlin";
-    $address['country'] = "Germany";
+.. literalinclude:: configuration/006.php
 
 Any other elements of the ``$address`` property would be unchanged.
 
 You can also use the array property name as a prefix. If the environment file
 held the following then the result would be the same as above.
+
 ::
 
     // array namespaced variables
     Config\SimpleConfig.address.city = "Berlin"
     address.country = "Germany"
 
-
 Handling Different Environments
-===============================
+*******************************
 
 Configuring multiple environments is easily accomplished by using a separate **.env** file with values modified to meet that environment's needs.
 
 The file should not contain every possible setting for every configuration class used by the application. In truth, it should include only those items that are specific to the environment or are sensitive details like passwords and API keys and other information that should not be exposed. But anything that changes between deployments is fair-game.
 
-In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``system`` and ``app`` directories.
+In each environment, place the **.env** file in the project's root folder. For most setups, this will be the same level as the ``app`` directories.
 
 Do not track **.env** files with your version control system. If you do, and the repository is made public, you will have put sensitive information where everybody can find it.
 
 .. _registrars:
 
 Registrars
-==========
+**********
 
 "Registrars" are any other classes which might provide additional configuration properties.
 Registrars provide a means of altering a configuration at runtime across namespaces and files.
@@ -257,41 +248,29 @@ There are two ways to implement a Registrar: implicit and explicit.
 .. note:: Values from **.env** always take priority over Registrars.
 
 Implicit Registrars
--------------------
+===================
 
 Any namespace may define registrars by using the **Config/Registrar.php** file, if discovery
 is enabled in :doc:`Modules </general/modules>`. These files are classes whose methods are
 named for each configuration class you wish to extend. For example, a third-party module might
 wish to supply an additional template to ``Pager`` without overwriting whatever a develop has
 already configured. In **src/Config/Registrar.php** there would be a ``Registrar`` class with
-the single ``Pager()`` method (note the case-sensitivity)::
+the single ``Pager()`` method (note the case-sensitivity):
 
-    class Registrar
-    {
-        public static function Pager(): array
-        {
-            return [
-                'templates' => [
-                    'module_pager' => 'MyModule\Views\Pager',
-                ],
-            ];
-        }
-    }
+.. literalinclude:: configuration/007.php
 
 Registrar methods must always return an array, with keys corresponding to the properties
 of the target config file. Existing values are merged, and Registrar properties have
 overwrite priority.
 
 Explicit Registrars
--------------------
+===================
 
 A configuration file can also specify any number of registrars explicitly.
 This is done by adding a ``$registrars`` property to your configuration file,
-holding an array of the names of candidate registrars.::
+holding an array of the names of candidate registrars:
 
-    public static $registrars = [
-        SupportingPackageRegistrar::class
-    ];
+.. literalinclude:: configuration/008.php
 
 In order to act as a "registrar" the classes so identified must have a
 static function with the same name as the configuration class, and it should return an associative
@@ -301,43 +280,16 @@ When your configuration object is instantiated, it will loop over the
 designated classes in ``$registrars``. For each of these classes it will invoke
 the method named for the configuration class and incorporate any returned properties.
 
-A sample configuration class setup for this::
+A sample configuration class setup for this:
 
-    <?php
+.. literalinclude:: configuration/009.php
 
-    namespace App\Config;
+... and the associated regional sales model might look like:
 
-    use CodeIgniter\Config\BaseConfig;
-
-    class MySalesConfig extends BaseConfig
-    {
-        public $target            = 100;
-        public $campaign          = "Winter Wonderland";
-        public static $registrars = [
-            '\App\Models\RegionalSales'
-        ];
-    }
-
-... and the associated regional sales model might look like::
-
-    <?php
-
-    namespace App\Models;
-
-    class RegionalSales
-    {
-        public static function MySalesConfig()
-        {
-            return [
-                'target' => 45,
-                'actual' => 72,
-            ];
-        }
-    }
+.. literalinclude:: configuration/010.php
 
 With the above example, when ``MySalesConfig`` is instantiated, it will end up with
 the two properties declared, but the value of the ``$target`` property will be overridden
-by treating ``RegionalSales`` as a "registrar". The resulting configuration properties::
+by treating ``RegionalSales`` as a "registrar". The resulting configuration properties:
 
-    $target   = 45;
-    $campaign = "Winter Wonderland";
+.. literalinclude:: configuration/011.php

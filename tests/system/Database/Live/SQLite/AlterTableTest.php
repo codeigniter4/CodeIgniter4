@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live\SQLite;
 
+use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Database\SQLite3\Forge;
 use CodeIgniter\Database\SQLite3\Table;
@@ -34,20 +35,14 @@ final class AlterTableTest extends CIUnitTestCase
      */
     protected $migrate = false;
 
-    /**
-     * @var Table
-     */
-    protected $table;
+    private Table $table;
 
     /**
      * @var Connection
      */
     protected $db;
 
-    /**
-     * @var Forge
-     */
-    protected $forge;
+    private Forge $forge;
 
     protected function setUp(): void
     {
@@ -56,6 +51,7 @@ final class AlterTableTest extends CIUnitTestCase
         $config = [
             'DBDriver' => 'SQLite3',
             'database' => 'database.db',
+            'DBDebug'  => true,
         ];
 
         $this->db    = db_connect($config);
@@ -77,7 +73,7 @@ final class AlterTableTest extends CIUnitTestCase
 
     public function testFromTableThrowsOnNoTable()
     {
-        $this->expectException('CodeIgniter\Database\Exceptions\DataException');
+        $this->expectException(DataException::class);
         $this->expectExceptionMessage('Table `foo` was not found in the current database.');
 
         $this->table->fromTable('foo');
@@ -93,7 +89,7 @@ final class AlterTableTest extends CIUnitTestCase
 
         $fields = $this->getPrivateProperty($this->table, 'fields');
 
-        $this->assertCount(4, $fields);
+        $this->assertCount(5, $fields);
         $this->assertArrayHasKey('id', $fields);
         $this->assertNull($fields['id']['default']);
         $this->assertTrue($fields['id']['null']);
@@ -224,7 +220,7 @@ final class AlterTableTest extends CIUnitTestCase
             ->dropColumn('name')
             ->run();
 
-        $this->dontSeeInDatabase('foo', ['name' => 'George Clinton']);
+        $this->assertFalse($this->db->fieldExists('name', 'foo'));
         $this->seeInDatabase('foo', ['email' => 'funkalicious@example.com']);
     }
 
@@ -268,6 +264,11 @@ final class AlterTableTest extends CIUnitTestCase
                 'type'       => 'integer',
                 'constraint' => 11,
                 'unsigned'   => true,
+            ],
+            'group' => [
+                'type'       => 'varchar',
+                'constraint' => 255,
+                'null'       => true,
             ],
         ]);
         $this->forge->addPrimaryKey('id');

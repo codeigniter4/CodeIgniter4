@@ -1,5 +1,5 @@
-Static pages
-###############################################################################
+Static Pages
+############
 
 .. note:: This tutorial assumes you've downloaded CodeIgniter and
    :doc:`installed the framework <../installation/index>` in your
@@ -9,49 +9,13 @@ The first thing you're going to do is set up a **controller** to handle
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.
 
-For example, when a call is made to:
-
-::
-
-    http://example.com/news/latest/10
-
-We might imagine that there is a controller named "news". The method
-being called on news would be "latest". The news method's job could be to
-grab 10 news items, and render them on the page. Very often in MVC,
-you'll see URL patterns that match:
-
-::
-
-    http://example.com/[controller-class]/[controller-method]/[arguments]
-
-As URL schemes become more complex, this may change. But for now, this
-is all we will need to know.
-
-Let's make our first controller
--------------------------------------------------------
+Let's Make our First Controller
+*******************************
 
 Create a file at **app/Controllers/Pages.php** with the following
 code.
 
-::
-
-    <?php
-
-    namespace App\Controllers;
-
-    class Pages extends BaseController
-    {
-        public function index()
-        {
-            return view('welcome_message');
-        }
-
-        public function view($page = 'home')
-        {
-            // ...
-        }
-    }
-
+.. literalinclude:: static_pages/001.php
 
 You have created a class named ``Pages``, with a ``view()`` method that accepts
 one argument named ``$page``. It also has an ``index()`` method, the same
@@ -60,13 +24,13 @@ displays the CodeIgniter welcome page.
 
 .. note:: There are two ``view()`` functions referred to in this tutorial.
     One is the class method created with ``public function view($page = 'home')``
-    and ``echo view('welcome_message')`` for displaying a view.
+    and ``return view('welcome_message')`` for displaying a view.
     Both are *technically* a function. But when you create a function in a class,
     it's called a method.
 
 The ``Pages`` class is extending the ``BaseController`` class that extends the
 ``CodeIgniter\Controller`` class. This means that the new Pages class can access the
-methods and variables defined in the ``CodeIgniter\Controller`` class
+methods and properties defined in the ``CodeIgniter\Controller`` class
 (**system/Controller.php**).
 
 The **controller is what will become the center of every request** to
@@ -78,9 +42,7 @@ templates. We will be creating two "views" (page templates) that act as
 our page footer and header.
 
 Create the header at **app/Views/templates/header.php** and add
-the following code:
-
-::
+the following code::
 
     <!doctype html>
     <html>
@@ -95,9 +57,7 @@ The header contains the basic HTML code that you'll want to display
 before loading the main view, together with a heading. It will also
 output the ``$title`` variable, which we'll define later in the controller.
 Now, create a footer at **app/Views/templates/footer.php** that
-includes the following code:
-
-::
+includes the following code::
 
         <em>&copy; 2021</em>
     </body>
@@ -107,8 +67,8 @@ includes the following code:
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
 
-Adding logic to the controller
--------------------------------------------------------
+Adding Logic to the Controller
+******************************
 
 Earlier you set up a controller with a ``view()`` method. The method
 accepts one parameter, which is the name of the page to be loaded. The
@@ -116,28 +76,14 @@ static page bodies will be located in the **app/Views/pages/**
 directory.
 
 In that directory, create two files named **home.php** and **about.php**.
-Within those files, type some text − anything you'd like − and save them.
+Within those files, type some text - anything you'd like - and save them.
 If you like to be particularly un-original, try "Hello World!".
 
 In order to load those pages, you'll have to check whether the requested
 page actually exists. This will be the body of the ``view()`` method
 in the ``Pages`` controller created above:
 
-::
-
-    public function view($page = 'home')
-    {
-        if (! is_file(APPPATH . 'Views/pages/' . $page . '.php')) {
-            // Whoops, we don't have a page for that!
-            throw new \CodeIgniter\Exceptions\PageNotFoundException($page);
-        }
-
-        $data['title'] = ucfirst($page); // Capitalize the first letter
-
-        echo view('templates/header', $data);
-        echo view('pages/' . $page, $data);
-        echo view('templates/footer', $data);
-    }
+.. literalinclude:: static_pages/002.php
 
 Now, when the requested page does exist, it is loaded, including the header and
 footer, and displayed to the user. If the requested page doesn't exist, a "404
@@ -166,64 +112,11 @@ view.
     throw errors on case-sensitive platforms. You can read more about it
     :doc:`here </outgoing/views>`.
 
-Running the App
--------------------------------------------------------
-
-Ready to test? You cannot run the app using PHP's built-in server,
-since it will not properly process the ``.htaccess`` rules that are provided in
-``public``, and which eliminate the need to specify "index.php/"
-as part of a URL. CodeIgniter has its own command that you can use though.
-
-From the command line, at the root of your project:
-
-::
-
-    > php spark serve
-
-will start a web server, accessible on port 8080. If you set the location field
-in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
-
-You can now try several URLs in the browser location field, to see what the ``Pages``
-controller you made above produces...
-
-.. table::
-    :widths: 20 80
-
-    +---------------------------------+-----------------------------------------------------------------+
-    | URL                             | Will show                                                       |
-    +=================================+=================================================================+
-    | localhost:8080/pages            | the results from the `index` method inside our `Pages`          |
-    |                                 | controller, which is to display the CodeIgniter "welcome" page, |
-    |                                 | because "index" is the default controller method                |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/index      | the CodeIgniter "welcome" page, because we explicitly asked for |
-    |                                 | the "index" method                                              |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
-    |                                 | "page" parameter to the ``view()`` method.                      |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
-    |                                 | asked for it                                                    |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
-    |                                 | asked for it                                                    |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
-    |                                 | `app/Views/pages/shop.php`                                      |
-    +---------------------------------+-----------------------------------------------------------------+
-
-
 Routing
--------------------------------------------------------
+*******
 
-The controller is now functioning!
-
-Using custom routing rules, you have the power to map any URI to any
-controller and method, and break free from the normal convention:
-
-::
-
-    http://example.com/[controller-class]/[controller-method]/[arguments]
+We have made the controller. The next thing is to set routing rules.
+Routing associates a URI with a controller's method.
 
 Let's do that. Open the routing file located at
 **app/Config/Routes.php** and look for the "Route Definitions"
@@ -231,18 +124,15 @@ section of the configuration file.
 
 The only uncommented line there to start with should be:
 
-::
-
-    $routes->get('/', 'Home::index');
+.. literalinclude:: static_pages/003.php
 
 This directive says that any incoming request without any content
 specified should be handled by the ``index()`` method inside the ``Home`` controller.
 
-Add the following line, **after** the route directive for '/'.
+Add the following lines, **after** the route directive for '/'.
 
-::
-
-    $routes->get('(:any)', 'Pages::view/$1');
+.. literalinclude:: static_pages/004.php
+   :lines: 2-
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
@@ -254,18 +144,57 @@ arguments.
 More information about routing can be found in the URI Routing
 :doc:`documentation </incoming/routing>`.
 
-Here, the second rule in the ``$routes`` object matches **any** request
-using the wildcard string ``(:any)``. and passes the parameter to the
+Here, the second rule in the ``$routes`` object matches GET request
+to the URI path ``/pages`` maps the ``index()`` method of the ``Pages`` class.
+
+The third rule in the ``$routes`` object matches GET request to **any** URI path
+using the wildcard string ``(:any)``, and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
 
+Running the App
+***************
+
+Ready to test? You cannot run the app using PHP's built-in server,
+since it will not properly process the ``.htaccess`` rules that are provided in
+``public``, and which eliminate the need to specify "index.php/"
+as part of a URL. CodeIgniter has its own command that you can use though.
+
+From the command line, at the root of your project::
+
+    > php spark serve
+
+will start a web server, accessible on port 8080. If you set the location field
+in your browser to ``localhost:8080``, you should see the CodeIgniter welcome page.
+
 Now visit ``localhost:8080/home``. Did it get routed correctly to the ``view()``
-method in the pages controller? Awesome!
+method in the ``Pages`` controller? Awesome!
 
 You should see something like the following:
 
 .. image:: ../images/tutorial1.png
     :align: center
 
-.. note:: When manually specifying routes, it is recommended to disable
-    auto-routing by setting ``$routes->setAutoRoute(false);`` in the **Routes.php** file.
-    This ensures that only routes you define can be accessed.
+You can now try several URLs in the browser location field, to see what the ``Pages``
+controller you made above produces...
+
+.. table::
+    :widths: 20 80
+
+    +---------------------------------+-----------------------------------------------------------------+
+    | URL                             | Will show                                                       |
+    +=================================+=================================================================+
+    | localhost:8080/pages            | the results from the ``index()`` method inside our ``Pages``    |
+    |                                 | controller, which is to display the CodeIgniter "welcome" page. |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
+    |                                 | "page" parameter to the ``view()`` method.                      |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
+    |                                 | asked for it.                                                   |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
+    |                                 | asked for it.                                                   |
+    +---------------------------------+-----------------------------------------------------------------+
+    | localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
+    |                                 | **app/Views/pages/shop.php**.                                   |
+    +---------------------------------+-----------------------------------------------------------------+

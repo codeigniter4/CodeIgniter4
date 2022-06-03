@@ -581,12 +581,34 @@ class URI
         $path   = $this->getPath();
         $scheme = $this->getScheme();
 
+        // If the hosts matches then assume this should be relative to baseURL
+        [$scheme, $path] = $this->changeSchemeAndPath($scheme, $path);
+
+        return static::createURIString(
+            $scheme,
+            $this->getAuthority(),
+            $path, // Absolute URIs should use a "/" for an empty path
+            $this->getQuery(),
+            $this->getFragment()
+        );
+    }
+
+    /**
+     * Change the path (and scheme) assuming URIs with the same host as baseURL
+     * should be relative to the project's configuration.
+     *
+     * @deprecated This method will be deleted.
+     */
+    private function changeSchemeAndPath(string $scheme, string $path): array
+    {
         // Check if this is an internal URI
         $config  = config('App');
         $baseUri = new self($config->baseURL);
 
-        // If the hosts matches then assume this should be relative to baseURL
-        if ($this->getHost() === $baseUri->getHost()) {
+        if (
+            substr($this->getScheme(), 0, 4) === 'http'
+            && $this->getHost() === $baseUri->getHost()
+        ) {
             // Check for additional segments
             $basePath = trim($baseUri->getPath(), '/') . '/';
             $trimPath = ltrim($path, '/');
@@ -601,13 +623,7 @@ class URI
             }
         }
 
-        return static::createURIString(
-            $scheme,
-            $this->getAuthority(),
-            $path, // Absolute URIs should use a "/" for an empty path
-            $this->getQuery(),
-            $this->getFragment()
-        );
+        return [$scheme, $path];
     }
 
     /**
@@ -878,9 +894,7 @@ class URI
         // Encode characters
         $path = preg_replace_callback(
             '/(?:[^' . static::CHAR_UNRESERVED . ':@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/',
-            static function (array $matches) {
-                return rawurlencode($matches[0]);
-            },
+            static fn (array $matches) => rawurlencode($matches[0]),
             $path
         );
 
@@ -1025,11 +1039,11 @@ class URI
         $return = [];
         $query  = explode('&', $query);
 
-        $params = array_map(static function (string $chunk) {
-            return preg_replace_callback('/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/', static function (array $match) {
-                return str_replace($match['key'], bin2hex($match['key']), $match[0]);
-            }, urldecode($chunk));
-        }, $query);
+        $params = array_map(static fn (string $chunk) => preg_replace_callback(
+            '/^(?<key>[^&=]+?)(?:\[[^&=]*\])?=(?<value>[^&=]+)/',
+            static fn (array $match) => str_replace($match['key'], bin2hex($match['key']), $match[0]),
+            urldecode($chunk)
+        ), $query);
 
         $params = implode('&', $params);
         parse_str($params, $params);

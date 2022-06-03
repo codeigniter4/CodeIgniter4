@@ -14,6 +14,9 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use CodeIgniter\Controller;
+use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\RESTful\ResourcePresenter;
 
 /**
  * Generates a skeleton controller file.
@@ -99,7 +102,7 @@ class ControllerGenerator extends BaseCommand
         // Gets the appropriate parent class to extend.
         if ($bare || $rest) {
             if ($bare) {
-                $useStatement = 'CodeIgniter\Controller';
+                $useStatement = Controller::class;
                 $extends      = 'Controller';
             } elseif ($rest) {
                 $rest = is_string($rest) ? $rest : 'controller';
@@ -112,10 +115,10 @@ class ControllerGenerator extends BaseCommand
                 }
 
                 if ($rest === 'controller') {
-                    $useStatement = 'CodeIgniter\RESTful\ResourceController';
+                    $useStatement = ResourceController::class;
                     $extends      = 'ResourceController';
                 } elseif ($rest === 'presenter') {
-                    $useStatement = 'CodeIgniter\RESTful\ResourcePresenter';
+                    $useStatement = ResourcePresenter::class;
                     $extends      = 'ResourcePresenter';
                 }
             }

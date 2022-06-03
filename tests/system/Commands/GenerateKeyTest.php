@@ -16,12 +16,14 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class GenerateKeyTest extends CIUnitTestCase
 {
     private $streamFilter;
-    private $envPath;
-    private $backupEnvPath;
+    private string $envPath;
+    private string $backupEnvPath;
 
     protected function setUp(): void
     {
@@ -34,7 +36,7 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->envPath       = ROOTPATH . '.env';
         $this->backupEnvPath = ROOTPATH . '.env.backup';
 
-        if (file_exists($this->envPath)) {
+        if (is_file($this->envPath)) {
             rename($this->envPath, $this->backupEnvPath);
         }
 
@@ -45,11 +47,11 @@ final class GenerateKeyTest extends CIUnitTestCase
     {
         stream_filter_remove($this->streamFilter);
 
-        if (file_exists($this->envPath)) {
+        if (is_file($this->envPath)) {
             unlink($this->envPath);
         }
 
-        if (file_exists($this->backupEnvPath)) {
+        if (is_file($this->backupEnvPath)) {
             rename($this->backupEnvPath, $this->envPath);
         }
 

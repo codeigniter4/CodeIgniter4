@@ -153,7 +153,6 @@ The list of changed files follows, with PR numbers shown.
         - ViewTest #1827, #1836
     - ControllerTest #1850
 
-
 - user_guide_src/
     - cli/
         - cli_commands #1777
@@ -233,7 +232,7 @@ PRs merged:
 - #1839 Dont replace slashes with backslashes in the to route
 - #1836 Test: Improve View\View coverage
 - #1831 Fix some PHPDoc comments error
-- #1829 Improve: Models now require a primary key. This is partially to keep the code …
+- #1829 Improve: Models now require a primary key. This is partially to keep the code ...
 - #1828 Fix: Remove bootstrap styles from validation views.
 - #1827 Fix: Adding include method to View library to render view partials... views.
 - #1823 Docs: Remove legacy Bootstrap references in Pagination class

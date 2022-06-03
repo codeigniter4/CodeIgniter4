@@ -18,12 +18,12 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
 
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: source
 
       - name: Checkout target
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: codeigniter4/framework
           token: ${{ secrets.ACCESS_TOKEN }}
@@ -36,7 +36,7 @@ jobs:
         run: ./source/.github/scripts/deploy-framework ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/framework ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |
@@ -63,12 +63,12 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
 
       - name: Checkout source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: source
 
       - name: Checkout target
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: codeigniter4/appstarter
           token: ${{ secrets.ACCESS_TOKEN }}
@@ -81,7 +81,7 @@ jobs:
         run: ./source/.github/scripts/deploy-appstarter ${GITHUB_WORKSPACE}/source ${GITHUB_WORKSPACE}/appstarter ${GITHUB_REF##*/}
 
       - name: Release
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.ACCESS_TOKEN}}
           script: |

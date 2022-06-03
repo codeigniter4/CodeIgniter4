@@ -168,7 +168,17 @@ final class FindModelTest extends LiveModelTestCase
             $this->model->groupBy('id');
         }
 
-        $user = $this->model->select('SUM(id) as total')->where('id >', 2)->first();
+        $ANSISQLDriverNames = ['OCI8'];
+
+        if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+            $this->model->select('SUM("id") as "total"');
+        } else {
+            $this->model->select('SUM(id) as total');
+        }
+
+        $user = $this->model
+            ->where('id >', 2)
+            ->first();
         $this->assertSame($total, (int) $user->total);
     }
 
@@ -195,10 +205,20 @@ final class FindModelTest extends LiveModelTestCase
         $this->createModel(UserModel::class);
 
         if ($aggregate) {
-            $this->model->select('SUM(id) as id');
+            $ANSISQLDriverNames = ['OCI8'];
+
+            if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+                $this->model->select('SUM("id") as "id"');
+            } else {
+                $this->model->select('SUM(id) as id');
+            }
         }
 
         if ($groupBy) {
+            if (! $aggregate) {
+                $this->model->select('id');
+            }
+
             $this->model->groupBy('id');
         }
 
@@ -212,7 +232,7 @@ final class FindModelTest extends LiveModelTestCase
             $this->assertSame(9, (int) $user->id);
         }
 
-        $user = $this->model->withDeleted()->first();
+        $user = $this->model->withDeleted()->select('id')->first();
         $this->assertSame(1, (int) $user->id);
     }
 
@@ -228,7 +248,15 @@ final class FindModelTest extends LiveModelTestCase
         $this->model->delete(1);
 
         if ($aggregate) {
-            $this->model->select('sum(id) as id');
+            $ANSISQLDriverNames = ['OCI8'];
+
+            if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+                $this->model->select('SUM("id") as "id"');
+            } else {
+                $this->model->select('SUM(id) as id');
+            }
+        } else {
+            $this->model->select('id');
         }
 
         if ($groupBy) {
@@ -238,7 +266,7 @@ final class FindModelTest extends LiveModelTestCase
         $user = $this->model->withDeleted()->first();
         $this->assertSame(1, (int) $user->id);
 
-        $user2 = $this->model->first();
+        $user2 = $this->model->select('id')->first();
         $this->assertSame(2, (int) $user2->id);
     }
 
@@ -310,7 +338,7 @@ final class FindModelTest extends LiveModelTestCase
     {
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at' => null]);
 
-        $results = $this->createModel(UserModel::class)->join('job', 'job.id = user.id')->first(1);
+        $results = $this->createModel(UserModel::class)->join('job', 'job.id = user.id')->first();
         $this->assertSame(1, (int) $results->id);
     }
 }

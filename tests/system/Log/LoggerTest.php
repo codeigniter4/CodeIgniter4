@@ -15,7 +15,6 @@ use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
-use CodeIgniter\Test\TestLogger;
 use Exception;
 use Tests\Support\Log\Handlers\TestHandler;
 
@@ -32,7 +31,7 @@ final class LoggerTest extends CIUnitTestCase
         $this->expectException(FrameworkException::class);
         $this->expectExceptionMessage(lang('Core.noHandlers', ['LoggerConfig']));
 
-        $logger = new Logger($config);
+        new Logger($config);
     }
 
     public function testLogThrowsExceptionOnInvalidLevel()
@@ -60,12 +59,9 @@ final class LoggerTest extends CIUnitTestCase
     public function testLogActuallyLogs()
     {
         $config = new LoggerConfig();
-        //      $Config->handlers['TestHandler']['handles'] =  [LogLevel::CRITICAL];
-
         $logger = new Logger($config);
 
         $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
-
         $logger->log('debug', 'Test message');
 
         $logs = TestHandler::getLogs();
@@ -76,8 +72,9 @@ final class LoggerTest extends CIUnitTestCase
 
     public function testLogDoesnotLogUnhandledLevels()
     {
-        $config                                                                = new LoggerConfig();
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
+        $config = new LoggerConfig();
+
+        $config->handlers[TestHandler::class]['handles'] = ['critical'];
 
         $logger = new Logger($config);
 
@@ -372,17 +369,6 @@ final class LoggerTest extends CIUnitTestCase
 
         $this->assertCount(1, $logs);
         $this->assertStringContainsString($expected, $logs[0]);
-    }
-
-    public function testFilenameCleaning()
-    {
-        $config = new LoggerConfig();
-        $logger = new TestLogger($config);
-
-        $ohoh     = APPPATH . 'LoggerTest';
-        $expected = 'APPPATH/LoggerTest';
-
-        $this->assertSame($expected, $logger->cleanup($ohoh));
     }
 
     public function testDetermineFileNoStackTrace()

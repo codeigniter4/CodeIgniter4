@@ -43,15 +43,18 @@ use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use Config\App;
 use Config\Exceptions;
-use Tests\Support\Config\Services as Services;
+use RuntimeException;
+use Tests\Support\Config\Services;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ServicesTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $original;
+    private $config;
+    private $original;
 
     protected function setUp(): void
     {
@@ -69,7 +72,7 @@ final class ServicesTest extends CIUnitTestCase
 
     public function testCanReplaceFrameworkServices()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Service originated from Tests\Support\Config\Services');
 
         Services::uri('testCanReplaceFrameworkServices');
@@ -341,6 +344,17 @@ final class ServicesTest extends CIUnitTestCase
 
         $this->assertNotSame($response, $response2);
         $this->assertSame($security, $security2);
+    }
+
+    public function testResetSingleCaseInsensitive()
+    {
+        Services::injectMock('response', new MockResponse(new App()));
+        $someService = service('response');
+        $this->assertInstanceOf(MockResponse::class, $someService);
+
+        Services::resetSingle('Response');
+        $someService = service('response');
+        $this->assertNotInstanceOf(MockResponse::class, $someService);
     }
 
     public function testFilters()

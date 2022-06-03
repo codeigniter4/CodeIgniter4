@@ -70,9 +70,15 @@ class TestLogger extends Logger
         return false;
     }
 
-    // Expose cleanFileNames()
+    /**
+     * Expose filenames.
+     *
+     * @param string $file
+     *
+     * @deprecated No longer needed as underlying protected method is also deprecated.
+     */
     public function cleanup($file)
     {
-        return $this->cleanFileNames($file);
+        return clean_path($file);
     }
 }

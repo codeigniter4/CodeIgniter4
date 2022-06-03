@@ -16,7 +16,7 @@ use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
-use Config\ContentSecurityPolicy as CSPConfig;
+use Config\Services;
 
 /**
  * Representation of an outgoing, getServer-side response.
@@ -152,7 +152,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
         $this->noCache();
 
         // We need CSP object even if not enabled to avoid calls to non existing methods
-        $this->CSP = new ContentSecurityPolicy(new CSPConfig());
+        $this->CSP = Services::csp();
 
         $this->CSPEnabled = $config->CSPEnabled;
 
@@ -165,7 +165,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
         $this->cookieHTTPOnly = $config->cookieHTTPOnly;
         $this->cookieSameSite = $config->cookieSameSite ?? Cookie::SAMESITE_LAX;
 
-        $config->cookieSameSite = $config->cookieSameSite ?? Cookie::SAMESITE_LAX;
+        $config->cookieSameSite ??= Cookie::SAMESITE_LAX;
 
         if (! in_array(strtolower($config->cookieSameSite ?: Cookie::SAMESITE_LAX), Cookie::ALLOWED_SAMESITE_VALUES, true)) {
             throw CookieException::forInvalidSameSite($config->cookieSameSite);

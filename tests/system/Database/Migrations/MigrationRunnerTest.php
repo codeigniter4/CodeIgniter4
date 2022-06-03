@@ -33,21 +33,42 @@ final class MigrationRunnerTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $root;
-    protected $start;
-    protected $config;
+
+    // Do not migrate automatically, because we test migrations.
+    protected $migrate = false;
+
+    // Use specific migration files for this test case.
+    protected $namespace = 'Tests\Support\MigrationTestMigrations';
+    private $root;
+    private $config;
 
     protected function setUp(): void
     {
+        $this->setUpMethods[] = 'setUpAddNamespace';
+
         parent::setUp();
 
         $this->root   = vfsStream::setup('root');
-        $this->start  = $this->root->url() . '/';
         $this->config = new Migrations();
 
         $this->config->enabled = true;
+    }
 
-        Services::autoloader()->addNamespace('Tests\Support\MigrationTestMigrations', TESTPATH . '_support/MigrationTestMigrations');
+    protected function setUpAddNamespace()
+    {
+        Services::autoloader()->addNamespace(
+            'Tests\Support\MigrationTestMigrations',
+            SUPPORTPATH . 'MigrationTestMigrations'
+        );
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // To delete data with `$this->regressDatabase()`, set it true.
+        $this->migrate = true;
+        $this->regressDatabase();
     }
 
     public function testLoadsDefaultDatabaseWhenNoneSpecified()
@@ -239,7 +260,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testMigrationThrowsDisabledException()
     {
-        $this->expectException('CodeIgniter\Exceptions\ConfigException');
+        $this->expectException(ConfigException::class);
         $this->expectExceptionMessage('Migrations have been loaded but are disabled or setup incorrectly.');
 
         $config          = $this->config;
@@ -327,10 +348,11 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
         $runner->setSilent(false)
-            ->setNamespace('Tests\Support\MigrationTestMigrations')
-            ->clearHistory();
+            ->setNamespace('Tests\Support\MigrationTestMigrations');
 
         $result = null;
+
+        Events::removeAllListeners();
         Events::on('migrate', static function ($arg) use (&$result) {
             $result = $arg;
         });
@@ -345,10 +367,10 @@ final class MigrationRunnerTest extends CIUnitTestCase
     {
         $runner = new MigrationRunner($this->config);
         $runner->setSilent(false)
-            ->setNamespace('Tests\Support\MigrationTestMigrations')
-            ->clearHistory();
+            ->setNamespace('Tests\Support\MigrationTestMigrations');
 
         $result = null;
+        Events::removeAllListeners();
         Events::on('migrate', static function ($arg) use (&$result) {
             $result = $arg;
         });

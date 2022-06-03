@@ -38,9 +38,37 @@ use ReflectionProperty;
  *      - allow intermingling calls to the builder
  *      - removes the need to use Result object directly in most cases
  *
- * @mixin BaseBuilder
- *
  * @property BaseConnection $db
+ *
+ * @method $this havingIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this join(string $table, string $cond, string $type = '', ?bool $escape = null)
+ * @method $this like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this limit(?int $value = null, ?int $offset = 0)
+ * @method $this notHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this notLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this offset(int $offset)
+ * @method $this orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
+ * @method $this orHaving($key, $value = null, ?bool $escape = null)
+ * @method $this orHavingIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this orHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orHavingNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this orLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orNotHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orNotLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orWhere($key, $value = null, ?bool $escape = null)
+ * @method $this orWhereIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this orWhereNotIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this select($select = '*', ?bool $escape = null)
+ * @method $this selectAvg(string $select = '', string $alias = '')
+ * @method $this selectCount(string $select = '', string $alias = '')
+ * @method $this selectMax(string $select = '', string $alias = '')
+ * @method $this selectMin(string $select = '', string $alias = '')
+ * @method $this selectSum(string $select = '', string $alias = '')
+ * @method $this where($key, $value = null, ?bool $escape = null)
+ * @method $this whereIn(?string $key = null, $values = null, ?bool $escape = null)
+ * @method $this whereNotIn(?string $key = null, $values = null, ?bool $escape = null)
  */
 class Model extends BaseModel
 {
@@ -89,14 +117,25 @@ class Model extends BaseModel
      */
     protected $escape = [];
 
-    public function __construct(?ConnectionInterface &$db = null, ?ValidationInterface $validation = null)
+    /**
+     * Builder method names that should not be used in the Model.
+     *
+     * @var string[] method name
+     */
+    private array $builderMethodsNotAvailable = [
+        'getCompiledInsert',
+        'getCompiledSelect',
+        'getCompiledUpdate',
+    ];
+
+    public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)
     {
         /**
-         * @var BaseConnection $db
+         * @var BaseConnection|null $db
          */
-        $db = $db ?? Database::connect($this->DBGroup);
+        $db ??= Database::connect($this->DBGroup);
 
-        $this->db = &$db;
+        $this->db = $db;
 
         parent::__construct($validation);
     }
@@ -346,6 +385,8 @@ class Model extends BaseModel
 
                 return false; // @codeCoverageIgnore
             }
+
+            $builder->where($this->deletedField);
 
             $set[$this->deletedField] = $this->setDate();
 
@@ -725,6 +766,8 @@ class Model extends BaseModel
         if (method_exists($this->db, $name)) {
             $result = $this->db->{$name}(...$params);
         } elseif (method_exists($builder, $name)) {
+            $this->checkBuilderMethod($name);
+
             $result = $builder->{$name}(...$params);
         } else {
             throw new BadMethodCallException('Call to undefined method ' . static::class . '::' . $name);
@@ -735,6 +778,16 @@ class Model extends BaseModel
         }
 
         return $result;
+    }
+
+    /**
+     * Checks the Builder method name that should not be used in the Model.
+     */
+    private function checkBuilderMethod(string $name): void
+    {
+        if (in_array($name, $this->builderMethodsNotAvailable, true)) {
+            throw ModelException::forMethodNotAvailable(static::class, $name . '()');
+        }
     }
 
     /**

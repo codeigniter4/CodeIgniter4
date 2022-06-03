@@ -156,7 +156,7 @@ if (! function_exists('img_data')) {
         $data = base64_encode($data);
 
         // Figure out the type (Hail Mary to JPEG)
-        $mime = $mime ?? Mimes::guessTypeFromExtension(pathinfo($path, PATHINFO_EXTENSION)) ?? 'image/jpg';
+        $mime ??= Mimes::guessTypeFromExtension(pathinfo($path, PATHINFO_EXTENSION)) ?? 'image/jpg';
 
         return 'data:' . $mime . ';base64,' . $data;
     }
@@ -189,8 +189,8 @@ if (! function_exists('script_tag')) {
      *
      * Generates link to a JS file
      *
-     * @param mixed $src       Script source or an array
-     * @param bool  $indexPage Should indexPage be added to the JS path
+     * @param array|string $src       Script source or an array of attributes
+     * @param bool         $indexPage Should indexPage be added to the JS path
      */
     function script_tag($src = '', bool $indexPage = false): string
     {
@@ -207,11 +207,12 @@ if (! function_exists('script_tag')) {
                     $script .= 'src="' . slash_item('baseURL') . $v . '" ';
                 }
             } else {
-                $script .= $k . '="' . $v . '" ';
+                // for attributes without values, like async or defer, use NULL.
+                $script .= $k . (null === $v ? ' ' : '="' . $v . '" ');
             }
         }
 
-        return $script . 'type="text/javascript"' . '></script>';
+        return $script . 'type="text/javascript"></script>';
     }
 }
 

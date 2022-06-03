@@ -17,7 +17,6 @@ New messages:
 
 App changes:
 
-
 Testing changes:
 
 - enhanced database & migration testing in tests/_support
@@ -152,7 +151,6 @@ The list of changed files follows, with PR numbers shown.
     - testing/
         - database #2051, #2053
 
-
 PRs merged:
 -----------
 
@@ -191,7 +189,7 @@ PRs merged:
 - #2005 Plugin closures docs update and test
 - #2004 Allow hasChanged() without parameter
 - #2002 Entity Refactor
-- #1999 use CodeIgniter\Controller; not needed since Home Controller extends …
+- #1999 use CodeIgniter\Controller; not needed since Home Controller extends ...
 - #1996 Attempting to fix CURLRequest debug issue. #1994
 - #e21823 Corrected docs for parser plugins. Closes #1995
 - #1989 argument set() must by type of string - cannot agree

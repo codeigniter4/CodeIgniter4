@@ -32,7 +32,7 @@ abstract class BaseHandler implements EncrypterInterface
      */
     public function __construct(?Encryption $config = null)
     {
-        $config = $config ?? config('Encryption');
+        $config ??= config('Encryption');
 
         // make the parameters conveniently accessible
         foreach (get_object_vars($config) as $key => $value) {

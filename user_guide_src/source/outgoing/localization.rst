@@ -30,9 +30,9 @@ supported language::
 Configuring the Locale
 ======================
 
-Every site will have a default language/locale they operate in. This can be set in **Config/App.php**::
+Every site will have a default language/locale they operate in. This can be set in **Config/App.php**:
 
-    public $defaultLocale = 'en';
+.. literalinclude:: localization/001.php
 
 The value can be any string that your application uses to manage text strings and other formats. It is
 recommended that a `BCP 47 <http://www.rfc-editor.org/rfc/bcp/bcp47.txt>`_ language code is used. This results in
@@ -58,25 +58,25 @@ Content Negotiation
 -------------------
 
 You can set up content negotiation to happen automatically by setting two additional settings in Config/App.
-The first value tells the Request class that we do want to negotiate a locale, so simply set it to true::
+The first value tells the Request class that we do want to negotiate a locale, so simply set it to true:
 
-    public $negotiateLocale = true;
+.. literalinclude:: localization/002.php
 
 Once this is enabled, the system will automatically negotiate the correct language based upon an array
 of locales that you have defined in ``$supportLocales``. If no match is found between the languages
 that you support, and the requested language, the first item in $supportedLocales will be used. In
-the following example, the **en** locale would be used if no match is found::
+the following example, the **en** locale would be used if no match is found:
 
-    public $supportedLocales = ['en', 'es', 'fr-FR'];
+.. literalinclude:: localization/003.php
 
 In Routes
 ---------
 
 The second method uses a custom placeholder to detect the desired locale and set it on the Request. The
 placeholder ``{locale}`` can be placed as a segment in your route. If present, the contents of the matching
-segment will be your locale::
+segment will be your locale:
 
-    $routes->get('{locale}/books', 'App\Books::index');
+.. literalinclude:: localization/004.php
 
 In this example, if the user tried to visit ``http://example.com/fr/books``, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
@@ -88,23 +88,13 @@ Retrieving the Current Locale
 =============================
 
 The current locale can always be retrieved from the IncomingRequest object, through the ``getLocale()`` method.
-If your controller is extending ``CodeIgniter\Controller``, this will be available through ``$this->request``::
+If your controller is extending ``CodeIgniter\Controller``, this will be available through ``$this->request``:
 
-    <?php
+.. literalinclude:: localization/005.php
 
-    namespace App\Controllers;
+Alternatively, you can use the :doc:`Services class </concepts/services>` to retrieve the current request:
 
-    class UserController extends \CodeIgniter\Controller
-    {
-        public function index()
-        {
-            $locale = $this->request->getLocale();
-        }
-    }
-
-Alternatively, you can use the :doc:`Services class </concepts/services>` to retrieve the current request::
-
-    $locale = service('request')->getLocale();
+.. literalinclude:: localization/006.php
 
 *********************
 Language Localization
@@ -117,43 +107,28 @@ Languages do not have any specific naming convention that are required. The file
 describe the type of content it holds. For example, let's say you want to create a file containing error messages.
 You might name it simply: **Errors.php**.
 
-Within the file, you would return an array, where each element in the array has a language key and can have string to return::
+Within the file, you would return an array, where each element in the array has a language key and can have string to return:
 
-    'languageKey' => 'The actual message to be shown.'
+.. literalinclude:: localization/007.php
 
-It also support nested definition::
+It also support nested definition:
 
-    'languageKey' => [
-        'nested' => [
-            'key' => 'The actual message to be shown.',
-        ],
-    ],
+.. literalinclude:: localization/008.php
 
-::
-
-    return [
-        'errorEmailMissing'    => 'You must submit an email address',
-        'errorURLMissing'      => 'You must submit a URL',
-        'errorUsernameMissing' => 'You must submit a username',
-        'nested'               => [
-            'error' => [
-                'message' => 'A specific error message',
-            ],
-        ],
-    ];
+.. literalinclude:: localization/009.php
 
 Basic Usage
 ===========
 
 You can use the ``lang()`` helper function to retrieve text from any of the language files, by passing the
 filename and the language key as the first parameter, separated by a period (.). For example, to load the
-``errorEmailMissing`` string from the ``Errors`` language file, you would do the following::
+``errorEmailMissing`` string from the ``Errors`` language file, you would do the following:
 
-    echo lang('Errors.errorEmailMissing');
+.. literalinclude:: localization/010.php
 
-For nested definition, you would do the following::
+For nested definition, you would do the following:
 
-    echo lang('Errors.nested.error.message');
+.. literalinclude:: localization/011.php
 
 If the requested language key doesn't exist in the file for the current locale, the string will be passed
 back, unchanged. In this example, it would return 'Errors.errorEmailMissing' or 'Errors.nested.error.message' if it didn't exist.
@@ -166,27 +141,17 @@ Replacing Parameters
     A great overview can be found over at `Sitepoint <https://www.sitepoint.com/localization-demystified-understanding-php-intl/>`_.
 
 You can pass an array of values to replace placeholders in the language string as the second parameter to the
-``lang()`` function. This allows for very simple number translations and formatting::
+``lang()`` function. This allows for very simple number translations and formatting:
 
-    // The language file, Tests.php:
-    return [
-        'apples'      => 'I have {0, number} apples.',
-        'men'         => 'The top {1, number} men out-performed the remaining {0, number}',
-        'namedApples' => 'I have {number_apples, number, integer} apples.',
-    ];
+.. literalinclude:: localization/012.php
 
-    // Displays "I have 3 apples."
-    echo lang('Tests.apples', [ 3 ]);
+The first item in the placeholder corresponds to the index of the item in the array, if it's numerical:
 
-The first item in the placeholder corresponds to the index of the item in the array, if it's numerical::
+.. literalinclude:: localization/013.php
 
-    // Displays "The top 23 men out-performed the remaining 20"
-    echo lang('Tests.men', [20, 23]);
+You can also use named keys to make it easier to keep things straight, if you'd like:
 
-You can also use named keys to make it easier to keep things straight, if you'd like::
-
-    // Displays "I have 3 apples."
-    echo lang('Tests.namedApples', ['number_apples' => 3]);
+.. literalinclude:: localization/014.php
 
 Obviously, you can do more than just number replacement. According to the
 `official ICU docs <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classMessageFormat.html#details>`_ for the underlying
@@ -199,46 +164,9 @@ library, the following types of data can be replaced:
 * ordinal
 * duration
 
-Here are a few examples::
+Here are a few examples:
 
-    // The language file, Tests.php
-    return [
-        'shortTime'  => 'The time is now {0, time, short}.',
-        'mediumTime' => 'The time is now {0, time, medium}.',
-        'longTime'   => 'The time is now {0, time, long}.',
-        'fullTime'   => 'The time is now {0, time, full}.',
-        'shortDate'  => 'The date is now {0, date, short}.',
-        'mediumDate' => 'The date is now {0, date, medium}.',
-        'longDate'   => 'The date is now {0, date, long}.',
-        'fullDate'   => 'The date is now {0, date, full}.',
-        'spelledOut' => '34 is {0, spellout}',
-        'ordinal'    => 'The ordinal is {0, ordinal}',
-        'duration'   => 'It has been {0, duration}',
-    ];
-
-    // Displays "The time is now 11:18 PM"
-    echo lang('Tests.shortTime', [time()]);
-    // Displays "The time is now 11:18:50 PM"
-    echo lang('Tests.mediumTime', [time()]);
-    // Displays "The time is now 11:19:09 PM CDT"
-    echo lang('Tests.longTime', [time()]);
-    // Displays "The time is now 11:19:26 PM Central Daylight Time"
-    echo lang('Tests.fullTime', [time()]);
-
-    // Displays "The date is now 8/14/16"
-    echo lang('Tests.shortDate', [time()]);
-    // Displays "The date is now Aug 14, 2016"
-    echo lang('Tests.mediumDate', [time()]);
-    // Displays "The date is now August 14, 2016"
-    echo lang('Tests.longDate', [time()]);
-    // Displays "The date is now Sunday, August 14, 2016"
-    echo lang('Tests.fullDate', [time()]);
-
-    // Displays "34 is thirty-four"
-    echo lang('Tests.spelledOut', [34]);
-
-    // Displays "It has been 408,676:24:35"
-    echo lang('Tests.ordinal', [time()]);
+.. literalinclude:: localization/015.php
 
 You should be sure to read up on the MessageFormatter class and the underlying ICU formatting to get a better
 idea on what capabilities it has, like performing the conditional replacement, pluralization, and more. Both of the links provided
@@ -249,37 +177,15 @@ Specifying Locale
 
 To specify a different locale to be used when replacing parameters, you can pass the locale in as the
 third parameter to the ``lang()`` method.
-::
 
-    // Displays "The time is now 23:21:28 GMT-5"
-    echo lang('Test.longTime', [time()], 'ru-RU');
-
-    // Displays "£7.41"
-    echo lang('{price, number, currency}', ['price' => 7.41], 'en-GB');
-    // Displays "$7.41"
-    echo lang('{price, number, currency}', ['price' => 7.41], 'en-US');
+.. literalinclude:: localization/016.php
 
 Nested Arrays
 -------------
 
 Language files also allow nested arrays to make working with lists, etc... easier.
-::
 
-    // Language/en/Fruit.php
-
-    return [
-        'list' => [
-            'Apples',
-            'Bananas',
-            'Grapes',
-            'Lemons',
-            'Oranges',
-            'Strawberries',
-        ],
-    ];
-
-    // Displays "Apples, Bananas, Grapes, Lemons, Oranges, Strawberries"
-    echo implode(', ', lang('Fruit.list'));
+.. literalinclude:: localization/017.php
 
 Language Fallback
 =================

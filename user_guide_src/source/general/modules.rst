@@ -30,13 +30,9 @@ directory in the main project root::
     /tests
     /writable
 
-Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property::
+Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property:
 
-    public $psr4 = [
-        APP_NAMESPACE => APPPATH, // For custom namespace
-        'Config'      => APPPATH . 'Config',
-        'Acme'        => ROOTPATH . 'acme',
-    ];
+.. literalinclude:: modules/001.php
 
 Now that this is set up, we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
 takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself with namespaces
@@ -75,13 +71,7 @@ Another approach provided by CodeIgniter is to autoload these *non-class* files 
 your classes. All we need to do is provide the list of paths to those files and include them in the
 ``$files`` property of your **app/Config/Autoload.php** file.
 
-::
-
-    public $files = [
-        'path/to/my/functions.php',
-        'path/to/my/constants.php',
-        'path/to/my/bootstrap.php',
-    ];
+.. literalinclude:: modules/002.php
 
 ==============
 Auto-Discovery
@@ -103,13 +93,7 @@ The auto-discovery system works by scanning for particular directories and files
 To make auto-discovery work for our **Blog** namespace, we need to make one small adjustment.
 **Acme** needs to be changed to **Acme\\Blog** because each "module" within the namespace needs to be fully defined.
 
-::
-
-    public $psr4 = [
-        APP_NAMESPACE => APPPATH, // For custom namespace
-        'Config'      => APPPATH . 'Config',
-        'Acme\Blog'   => ROOTPATH . 'acme/Blog', // Change
-    ];
+.. literalinclude:: modules/003.php
 
 Once your module folder path is defined, the discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
 
@@ -132,9 +116,9 @@ Packages installed via Composer using PSR-4 namespaces will also be discovered b
 PSR-0 namespaced packages will not be detected.
 
 If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
-by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``::
+by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``:
 
-    public $discoverInComposer = false;
+.. literalinclude:: modules/004.php
 
 ==================
 Working With Files
@@ -165,32 +149,29 @@ It can be turned off in the **Modules** config file, described above.
 .. note:: Since the files are being included into the current scope, the ``$filters`` instance is already defined for you.
     It will cause errors if you attempt to redefine that class.
 
-In the module's **Config/Filters.php** file, you need to define the aliases of the filters you use.::
+In the module's **Config/Filters.php** file, you need to define the aliases of the filters you use:
 
-    $filters->aliases['menus'] = MenusFilter::class;
+.. literalinclude:: modules/005.php
 
 Controllers
 ===========
 
 Controllers outside of the main **app/Controllers** directory cannot be automatically routed by URI detection,
-but must be specified within the Routes file itself::
+but must be specified within the Routes file itself:
 
-    // Routes.php
-    $routes->get('blog', 'Acme\Blog\Controllers\Blog::index');
+.. literalinclude:: modules/006.php
 
-To reduce the amount of typing needed here, the **group** routing feature is helpful::
+To reduce the amount of typing needed here, the **group** routing feature is helpful:
 
-    $routes->group('blog', ['namespace' => 'Acme\Blog\Controllers'], function ($routes) {
-        $routes->get('/', 'Blog::index');
-    });
+.. literalinclude:: modules/007.php
 
 Config Files
 ============
 
 No special change is needed when working with configuration files. These are still namespaced classes and loaded
-with the ``new`` command::
+with the ``new`` command:
 
-    $config = new \Acme\Blog\Config\Blog();
+.. literalinclude:: modules/008.php
 
 Config files are automatically discovered whenever using the **config()** function that is always available.
 
@@ -219,9 +200,9 @@ Helpers
 =======
 
 Helpers will be located automatically from defined namespaces when using the ``helper()`` method, as long as it
-is within the namespaces **Helpers** directory::
+is within the namespaces **Helpers** directory:
 
-    helper('blog');
+.. literalinclude:: modules/009.php
 
 Language Files
 ==============
@@ -232,20 +213,20 @@ file follows the same directory structures as the main application directory.
 Libraries
 =========
 
-Libraries are always instantiated by their fully-qualified class name, so no special access is provided::
+Libraries are always instantiated by their fully-qualified class name, so no special access is provided:
 
-    $lib = new \Acme\Blog\Libraries\BlogLib();
+.. literalinclude:: modules/010.php
 
 Models
 ======
 
-Models are always instantiated by their fully-qualified class name, so no special access is provided::
+Models are always instantiated by their fully-qualified class name, so no special access is provided:
 
-    $model = new \Acme\Blog\Models\PostModel();
+.. literalinclude:: modules/011.php
 
 Views
 =====
 
-Views can be loaded using the class namespace as described in the :doc:`views </outgoing/views>` documentation::
+Views can be loaded using the class namespace as described in the :doc:`views </outgoing/views>` documentation:
 
-    echo view('Acme\Blog\Views\index');
+.. literalinclude:: modules/012.php

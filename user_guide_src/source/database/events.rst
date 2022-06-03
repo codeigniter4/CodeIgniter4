@@ -20,13 +20,6 @@ The Events
 This event is triggered whenever a new query has been run, whether successful or not. The only parameter is
 a :doc:`Query </database/queries>` instance of the current query. You could use this to display all queries
 in STDOUT, or logging to a file, or even creating tools to do automatic query analysis to help you spot
-potentially missing indexes, slow queries, etc. An example usage might be::
+potentially missing indexes, slow queries, etc. An example usage might be:
 
-    // In Config\Events.php
-    Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
-
-    // Collect the queries so something can be done with them later.
-    public static function collect(CodeIgniter\Database\Query $query)
-    {
-        static::$queries[] = $query;
-    }
+.. literalinclude:: events/001.php

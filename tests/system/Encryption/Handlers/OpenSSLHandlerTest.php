@@ -12,6 +12,7 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
@@ -20,10 +21,7 @@ use Config\Encryption as EncryptionConfig;
  */
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var \CodeIgniter\Encryption\Encryption
-     */
-    protected $encryption;
+    private Encryption $encryption;
 
     protected function setUp(): void
     {
@@ -79,7 +77,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
      */
     public function testWithoutKey()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter = new OpenSSLHandler();
         $message1  = 'This is a plain-text message.';
@@ -100,7 +98,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
      */
     public function testWithWrongKeyString()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $key1      = 'abracadabra';
         $encrypter = new OpenSSLHandler();
@@ -125,7 +123,7 @@ final class OpenSSLHandlerTest extends CIUnitTestCase
      */
     public function testWithWrongKeyArray()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $key1      = 'abracadabra';
         $encrypter = new OpenSSLHandler();

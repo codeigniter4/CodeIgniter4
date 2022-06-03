@@ -26,9 +26,9 @@ final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $group1;
-    protected $group2;
-    protected $tests;
+    private $group1;
+    private $group2;
+    private $tests;
 
     protected function setUp(): void
     {
@@ -95,14 +95,22 @@ final class ConnectTest extends CIUnitTestCase
     public function testConnectWithFailover()
     {
         $this->tests['failover'][] = $this->tests;
-
         unset($this->tests['failover'][0]['failover']);
+
+        // Change main's DBPrefix
+        $this->tests['DBPrefix'] = 'main_';
+
+        if ($this->tests['DBDriver'] === 'SQLite3') {
+            // Change main's database path to fail to connect
+            $this->tests['database'] = '/does/not/exists/test.db';
+        }
 
         $this->tests['username'] = 'wrong';
 
         $db1 = Database::connect($this->tests);
 
-        $this->assertSame($this->tests['failover'][0]['DBDriver'], $this->getPrivateProperty($db1, 'DBDriver'));
+        $this->assertSame($this->tests['failover'][0]['DBPrefix'], $this->getPrivateProperty($db1, 'DBPrefix'));
+
         $this->assertGreaterThanOrEqual(0, count($db1->listTables()));
     }
 }

@@ -30,8 +30,8 @@ class LanguageCommand extends BaseCommand
     public function run(array $params)
     {
         $this->setHasClassName(false);
-        $params[0]      = 'Foobar';
-        $params['lang'] = $params['lang'] ?? 'en';
+        $params[0] = 'Foobar';
+        $params['lang'] ??= 'en';
 
         $this->component = 'Language';
         $this->directory = 'Language\\' . $params['lang'];

@@ -11,9 +11,9 @@ The Security Helper file contains security related functions.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('security');
+.. literalinclude:: security_helper/001.php
 
 Available Functions
 ===================
@@ -41,9 +41,9 @@ The following functions are available:
     This is a security function that will strip image tags from a string.
     It leaves the image URL as plain text.
 
-    Example::
+    Example:
 
-        $string = strip_image_tags($string);
+    .. literalinclude:: security_helper/002.php
 
 .. php:function:: encode_php_tags($str)
 
@@ -53,6 +53,6 @@ The following functions are available:
 
     This is a security function that converts PHP tags to entities.
 
-    Example::
+    Example:
 
-        $string = encode_php_tags($string);
+    .. literalinclude:: security_helper/003.php

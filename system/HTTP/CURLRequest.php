@@ -79,20 +79,16 @@ class CURLRequest extends Request
 
     /**
      * The default options from the constructor. Applied to all requests.
-     *
-     * @var array
      */
-    private $defaultOptions;
+    private array $defaultOptions;
 
     /**
      * Whether share options between requests or not.
      *
      * If true, all the options won't be reset between requests.
      * It may cause an error request with unnecessary headers.
-     *
-     * @var bool
      */
-    private $shareOptions;
+    private bool $shareOptions;
 
     /**
      * Takes an array of options to set the following possible class properties:
@@ -154,6 +150,9 @@ class CURLRequest extends Request
         // Reset headers
         $this->headers   = [];
         $this->headerMap = [];
+
+        // Reset body
+        $this->body = null;
 
         // Reset configs
         $this->config = $this->defaultConfig;
@@ -358,7 +357,7 @@ class CURLRequest extends Request
 
         // Do we need to delay this request?
         if ($this->delay > 0) {
-            sleep($this->delay);
+            usleep((int) $this->delay * 1_000_000);
         }
 
         $output = $this->sendRequest($curlOptions);

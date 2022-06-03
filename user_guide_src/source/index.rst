@@ -75,7 +75,6 @@ Handling Databases
 
     dbmgmt/index
 
-
 *******************
 Libraries & Helpers
 *******************
@@ -114,3 +113,12 @@ Advanced Topics
 
     license
     changelogs/index
+
+*****************
+Official Packages
+*****************
+
+.. toctree::
+    :titlesonly:
+
+    libraries/official_packages

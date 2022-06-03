@@ -94,12 +94,12 @@ trait FilterTestTrait
         // Create our own Request and Response so we can
         // use the same ones for Filters and FilterInterface
         // yet isolate them from outside influence
-        $this->request  = $this->request ?? clone Services::request();
-        $this->response = $this->response ?? clone Services::response();
+        $this->request ??= clone Services::request();
+        $this->response ??= clone Services::response();
 
         // Create our config and Filters instance to reuse for performance
-        $this->filtersConfig = $this->filtersConfig ?? config('Filters');
-        $this->filters       = $this->filters ?? new Filters($this->filtersConfig, $this->request, $this->response);
+        $this->filtersConfig ??= config('Filters');
+        $this->filters ??= new Filters($this->filtersConfig, $this->request, $this->response);
 
         if ($this->collection === null) {
             // Load the RouteCollection from Config to gather App route info
@@ -151,16 +151,12 @@ trait FilterTestTrait
         $request = clone $this->request;
 
         if ($position === 'before') {
-            return static function (?array $params = null) use ($filter, $request) {
-                return $filter->before($request, $params);
-            };
+            return static fn (?array $params = null) => $filter->before($request, $params);
         }
 
         $response = clone $this->response;
 
-        return static function (?array $params = null) use ($filter, $request, $response) {
-            return $filter->after($request, $response, $params);
-        };
+        return static fn (?array $params = null) => $filter->after($request, $response, $params);
     }
 
     /**
@@ -180,8 +176,8 @@ trait FilterTestTrait
 
         $this->filters->reset();
 
-        if ($routeFilter = $this->collection->getFilterForRoute($route)) {
-            $this->filters->enableFilter($routeFilter, $position);
+        if ($routeFilters = $this->collection->getFiltersForRoute($route)) {
+            $this->filters->enableFilters($routeFilters, $position);
         }
 
         $aliases = $this->filters->initialize($route)->getFilters();

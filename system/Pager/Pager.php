@@ -143,7 +143,7 @@ class Pager implements PagerInterface
             $page = $this->groups[$group]['currentPage'];
         }
 
-        $perPage   = $perPage ?? $this->config->perPage;
+        $perPage ??= $this->config->perPage;
         $pageCount = (int) ceil($total / $perPage);
 
         $this->groups[$group]['currentPage'] = $page > $pageCount ? $pageCount : $page;
@@ -162,6 +162,10 @@ class Pager implements PagerInterface
     public function setSegment(int $number, string $group = 'default')
     {
         $this->segment[$group] = $number;
+
+        // Recalculate current page
+        $this->ensureGroup($group);
+        $this->calculateCurrentPage($group);
 
         return $this;
     }
@@ -279,7 +283,15 @@ class Pager implements PagerInterface
             $uri->setQueryArray($query);
         }
 
-        return $returnObject === true ? $uri : URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
+        return ($returnObject === true)
+            ? $uri
+            : URI::createURIString(
+                $uri->getScheme(),
+                $uri->getAuthority(),
+                $uri->getPath(),
+                $uri->getQuery(),
+                $uri->getFragment()
+            );
     }
 
     /**
@@ -383,6 +395,7 @@ class Pager implements PagerInterface
         }
 
         $this->groups[$group] = [
+            'currentUri'   => clone current_url(true),
             'uri'          => clone current_url(true),
             'hasMore'      => false,
             'total'        => null,
@@ -405,7 +418,8 @@ class Pager implements PagerInterface
     {
         if (array_key_exists($group, $this->segment)) {
             try {
-                $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['uri']->setSilent(false)->getSegment($this->segment[$group]);
+                $this->groups[$group]['currentPage'] = (int) $this->groups[$group]['currentUri']
+                    ->setSilent(false)->getSegment($this->segment[$group]);
             } catch (HTTPException $e) {
                 $this->groups[$group]['currentPage'] = 1;
             }

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Forge;
 
 use CodeIgniter\Database\Forge;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -26,7 +27,7 @@ final class CreateTableTest extends CIUnitTestCase
             ->setConstructorArgs([[]])
             ->onlyMethods(['listTables'])
             ->getMock();
-        $dbMock->expects($this->any())
+        $dbMock
             ->method('listTables')
             ->willReturn(['foo']);
 
@@ -36,6 +37,43 @@ final class CreateTableTest extends CIUnitTestCase
 
         $forge->addField('id');
         $actual = $forge->createTable('foo', true);
+
+        $this->assertTrue($actual);
+    }
+
+    public function testCreateTableWithDefaultRawSql()
+    {
+        $sql = <<<'SQL'
+            CREATE TABLE "foo" (
+            	"id" INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+            	"ts" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+            )
+            SQL;
+        $dbMock = $this->getMockBuilder(MockConnection::class)
+            ->setConstructorArgs([[]])
+            ->onlyMethods(['query'])
+            ->getMock();
+        $dbMock
+            ->method('query')
+            ->with($sql)
+            ->willReturn(true);
+
+        $forge = new class ($dbMock) extends Forge {};
+
+        $fields = [
+            'id' => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned'       => true,
+                'auto_increment' => true,
+            ],
+            'ts' => [
+                'type'    => 'TIMESTAMP',
+                'default' => new RawSql('CURRENT_TIMESTAMP'),
+            ],
+        ];
+        $forge->addField($fields);
+        $actual = $forge->createTable('foo');
 
         $this->assertTrue($actual);
     }

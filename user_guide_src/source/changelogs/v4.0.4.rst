@@ -31,7 +31,6 @@ Enhancements:
 - Cookies and headers can be copied from the global Response object when doing a redirect using the new ``withCookies()`` and ``withHeaders()`` methods.
 - Support for special prefix "hex2bin:" which can be used with ``$key`` parameter in :doc:`Encryption class</libraries/encryption>` or in .env file.
 
-
 Bugs Fixed:
 
 - Fixed location for the SQLite3 database which by default will be now located in a ``writable`` folder instead of the ``public`` folder.
@@ -56,4 +55,3 @@ Bugs Fixed:
 - Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql
 - Added ``$arguments`` parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated
 - Fixed a bug where filter arguments were not passed to after()
-

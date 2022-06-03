@@ -19,7 +19,6 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
 use ReflectionException;
-use stdClass;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
 use Tests\Support\Entity\Cast\NotExtendsBaseCast;
@@ -120,12 +119,14 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->bar = 'made it';
 
-        // Check mapped field
+        // Check db column name
         $this->assertSame('made it', $entity->foo);
-        // Should also get from original name
-        // since Model's would be looking for the original name
+
+        // Should also get from property name
+        // since Model's would be looking for the property name
         $this->assertSame('made it', $entity->bar);
-        // But it shouldn't actually set a class property for the original name...
+
+        // But it shouldn't actually set a class property for the column name...
         $this->expectException(ReflectionException::class);
         $this->getPrivateProperty($entity, 'bar');
     }
@@ -134,7 +135,7 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity = $this->getMappedEntity();
 
-        // Will map to "simple"
+        // Will map to "simple" column
         $entity->orig = 'first';
 
         $this->assertSame('oo:first:oo', $entity->simple);
@@ -144,35 +145,40 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame('oo:second:oo', $entity->simple);
     }
 
-    public function testIssetWorksWithMapping()
+    public function testDataMappingIsset()
     {
         $entity = $this->getMappedEntity();
 
-        // maps to 'foo'
+        // maps to 'foo' column
         $entity->bar = 'here';
 
-        $attributes = $this->getPrivateProperty($entity, 'attributes');
-        $this->assertArrayHasKey('foo', $attributes);
-        $this->assertArrayNotHasKey('bar', $attributes);
+        $isset = isset($entity->bar);
+        $this->assertTrue($isset);
+
+        $isset = isset($entity->foo);
+        $this->assertFalse($isset);
     }
 
     public function testUnsetWorksWithMapping()
     {
         $entity = $this->getMappedEntity();
-        // maps to 'foo'
+
+        // maps to 'foo' column
         $entity->bar = 'here';
 
-        // doesn't work on original name
-        unset($entity->bar);
+        // doesn't work on db column name
+        unset($entity->foo);
 
         $this->assertSame('here', $entity->bar);
         $this->assertSame('here', $entity->foo);
 
-        // does work on mapped field
-        unset($entity->foo);
+        // does work on property name
+        unset($entity->bar);
 
-        $this->assertNull($entity->foo);
-        $this->assertNull($entity->bar);
+        $isset = isset($entity->foo);
+        $this->assertFalse($isset);
+        $isset = isset($entity->bar);
+        $this->assertFalse($isset);
     }
 
     public function testDateMutationFromString()
@@ -365,7 +371,7 @@ final class EntityTest extends CIUnitTestCase
         $entity->sixth = $data;
 
         $this->assertIsObject($entity->sixth);
-        $this->assertInstanceOf(stdClass::class, $entity->sixth);
+        $this->assertInstanceOf('stdClass', $entity->sixth);
         $this->assertSame($data, (array) $entity->sixth);
     }
 
@@ -375,7 +381,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->eighth = 'March 12, 2017';
 
-        $this->assertInstanceOf('DateTime', $entity->eighth);
+        $this->assertInstanceOf(DateTime::class, $entity->eighth);
         $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 
@@ -509,7 +515,7 @@ final class EntityTest extends CIUnitTestCase
         $check = $this->getPrivateProperty($entity, 'attributes')['tenth'];
         $this->assertSame('{"foo":"bar"}', $check);
 
-        $this->assertInstanceOf(stdClass::class, $entity->tenth);
+        $this->assertInstanceOf('stdClass', $entity->tenth);
         $this->assertSame(['foo' => 'bar'], (array) $entity->tenth);
     }
 
@@ -757,6 +763,46 @@ final class EntityTest extends CIUnitTestCase
         ], $result);
     }
 
+    public function testDataMappingIssetSwapped()
+    {
+        $entity = $this->getSimpleSwappedEntity();
+
+        $entity->foo = '111';
+        $entity->bar = '222';
+
+        $isset = isset($entity->foo);
+        $this->assertTrue($isset);
+        $this->assertSame('111', $entity->foo);
+
+        $isset = isset($entity->bar);
+        $this->assertTrue($isset);
+        $this->assertSame('222', $entity->bar);
+
+        $result = $entity->toRawArray();
+
+        $this->assertSame([
+            'foo' => '222',
+            'bar' => '111',
+        ], $result);
+    }
+
+    public function testDataMappingIssetUnsetSwapped()
+    {
+        $entity = $this->getSimpleSwappedEntity();
+
+        $entity->foo = '111';
+        $entity->bar = '222';
+        unset($entity->foo);
+
+        $isset = isset($entity->foo);
+        $this->assertFalse($isset);
+        $this->assertNull($entity->foo);
+
+        $isset = isset($entity->bar);
+        $this->assertTrue($isset);
+        $this->assertSame('222', $entity->bar);
+    }
+
     public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
     {
         $entity                   = new class () extends Entity {
@@ -899,18 +945,18 @@ final class EntityTest extends CIUnitTestCase
         $this->assertFalse($entity->hasChanged('xxx'));
     }
 
-    public function testIssetKeyMap()
+    public function testDataMappingIssetSetGetMethod()
     {
-        $entity             = $this->getEntity();
+        $entity = $this->getEntity();
+
         $entity->created_at = '12345678';
-        $entity->bar        = 'foo';
 
         $issetReturn = isset($entity->createdAt);
-
         $this->assertTrue($issetReturn);
 
-        $issetReturn = isset($entity->FakeBar);
+        $entity->bar = 'foo';
 
+        $issetReturn = isset($entity->FakeBar);
         $this->assertTrue($issetReturn);
     }
 
@@ -972,7 +1018,7 @@ final class EntityTest extends CIUnitTestCase
                 'simple' => null,
             ];
 
-            // 'bar' is db column, 'foo' is internal representation
+            // 'bar' is class property, 'foo' is db column
             protected $datamap = [
                 'bar'  => 'foo',
                 'orig' => 'simple',
@@ -1005,6 +1051,24 @@ final class EntityTest extends CIUnitTestCase
                 'bar'          => 'foo',
                 'foo'          => 'bar',
                 'original_bar' => 'bar',
+            ];
+        };
+    }
+
+    protected function getSimpleSwappedEntity()
+    {
+        return new class () extends Entity {
+            protected $attributes = [
+                'foo' => 'foo',
+                'bar' => 'bar',
+            ];
+            protected $_original = [
+                'foo' => 'foo',
+                'bar' => 'bar',
+            ];
+            protected $datamap = [
+                'bar' => 'foo',
+                'foo' => 'bar',
             ];
         };
     }

@@ -1,7 +1,7 @@
 .. _validation:
 
 Validation
-##################################################
+##########
 
 CodeIgniter provides a comprehensive data validation class that
 helps minimize the amount of code you'll write.
@@ -11,7 +11,7 @@ helps minimize the amount of code you'll write.
     :depth: 2
 
 Overview
-************************************************
+********
 
 Before explaining CodeIgniter's approach to data validation, let's
 describe the ideal scenario:
@@ -43,7 +43,7 @@ HTML. Form validation, while simple to create, is generally very messy
 and tedious to implement.
 
 Form Validation Tutorial
-************************************************
+************************
 
 What follows is a "hands on" tutorial for implementing CodeIgniter's Form
 Validation.
@@ -60,7 +60,7 @@ Let's create those three things, using a member sign-up form as the
 example.
 
 The Form
-================================================
+========
 
 Using a text editor, create a form called **Signup.php**. In it, place this
 code and save it to your **app/Views/** folder::
@@ -95,7 +95,7 @@ code and save it to your **app/Views/** folder::
     </html>
 
 The Success Page
-================================================
+================
 
 Using a text editor, create a form called **Success.php**. In it, place
 this code and save it to your **app/Views/** folder::
@@ -114,35 +114,15 @@ this code and save it to your **app/Views/** folder::
     </html>
 
 The Controller
-================================================
+==============
 
 Using a text editor, create a controller called **Form.php**. In it, place
-this code and save it to your **app/Controllers/** folder::
+this code and save it to your **app/Controllers/** folder:
 
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\Controller;
-
-    class Form extends Controller
-    {
-        public function index()
-        {
-            helper(['form', 'url']);
-
-            if (! $this->validate([])) {
-                echo view('Signup', [
-                    'validation' => $this->validator,
-                ]);
-            } else {
-                echo view('Success');
-            }
-        }
-    }
+.. literalinclude:: validation/001.php
 
 Try it!
-================================================
+=======
 
 To try your form, visit your site using a URL similar to this one::
 
@@ -152,7 +132,7 @@ If you submit the form you should simply see the form reload. That's
 because you haven't set up any validation rules in ``$this->validate()`` yet.
 
 The ``validate()`` method is a method in the Controller. It uses
-the **Validation class** inside. See *Validating data* in :doc:`/incoming/controllers`.
+the **Validation class** inside. See :ref:`controllers-validating-data`.
 
 .. note:: Since you haven't told the ``validate()`` method to validate anything
     yet, it **returns false** (boolean false) **by default**. The ``validate()``
@@ -160,7 +140,7 @@ the **Validation class** inside. See *Validating data* in :doc:`/incoming/contro
     any of them failing.
 
 Explanation
-================================================
+===========
 
 You'll notice several things about the above pages:
 
@@ -186,27 +166,51 @@ Based on whether the validation was successful it either presents the
 form or the success page.
 
 Add Validation Rules
-================================================
+====================
 
-Then add validation rules in the controller (**Form.php**)::
+Then add validation rules in the controller (**Form.php**):
 
-            if (! $this->validate([
-                'username' => 'required',
-                'password' => 'required|min_length[10]',
-                'passconf' => 'required|matches[password]',
-                'email'    => 'required|valid_email',
-            ])) {
-                ...
-            }
+.. literalinclude:: validation/002.php
 
 If you submit the form you should see the success page or the form with error messages.
 
+Config for Validation
+*********************
+
+.. _validation-traditional-and-strict-rules:
+
+Traditional and Strict Rules
+============================
+
+CI4 has two kinds of Validation rule classes.
+The default rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
+and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
+
+The **Traditional Rules** implicitly assume that string values are validated,
+and the input value may be converted implicitly to a string value.
+It works for most basic cases like validating POST data.
+
+However, for example, if you use JSON input data, it may be a type of bool/null/array.
+When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
+If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
+
+The **Strict Rules** don't use implicit type conversion.
+
+.. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
+
+Using Strict Rules
+------------------
+
+If you want to use these rules, you need to change the rule classes in **app/Config/Validation.php**:
+
+.. literalinclude:: validation/003.php
+
 Loading the Library
-************************************************
+*******************
 
-The library is loaded as a service named **validation**::
+The library is loaded as a service named **validation**:
 
-    $validation =  \Config\Services::validation();
+.. literalinclude:: validation/004.php
 
 This automatically loads the ``Config\Validation`` file which contains settings
 for including multiple Rulesets, and collections of rules that can be easily reused.
@@ -215,7 +219,7 @@ for including multiple Rulesets, and collections of rules that can be easily reu
     the :doc:`Model </models/model>` provide methods to make validation even easier.
 
 Setting Validation Rules
-************************************************
+************************
 
 CodeIgniter lets you set as many validation rules as you need for a
 given field, cascading them in order. To set validation rules you
@@ -225,32 +229,33 @@ methods.
 setRule()
 =========
 
-This method sets a single rule. It takes the name of the field as
-the first parameter, an optional label and a string with a pipe-delimited list of rules
-that should be applied::
+This method sets a single rule. It has the method signature::
 
-    $validation->setRule('username', 'Username', 'required');
+    setRule(string $field, ?string $label, array|string $rules[, array $errors = []])
 
-The **field name** must match the key of any data array that is sent in. If
+The ``$rules`` either takes in a pipe-delimited list of rules or an array collection of rules:
+
+.. literalinclude:: validation/005.php
+
+The value you pass to ``$field`` must match the key of any data array that is sent in. If
 the data is taken directly from ``$_POST``, then it must be an exact match for
 the form input name.
+
+.. warning:: Prior to v4.2.0, this method's third parameter, ``$rules``, was typehinted to accept
+    ``string``. In v4.2.0 and after, the typehint was removed to allow arrays, too. To avoid LSP being
+    broken in extending classes overriding this method, the child class's method should also be modified
+    to remove the typehint.
 
 setRules()
 ==========
 
-Like, ``setRule()``, but accepts an array of field names and their rules::
+Like ``setRule()``, but accepts an array of field names and their rules:
 
-    $validation->setRules([
-        'username' => 'required',
-        'password' => 'required|min_length[10]',
-    ]);
+.. literalinclude:: validation/006.php
 
-To give a labeled error message you can set up as::
+To give a labeled error message you can set up as:
 
-    $validation->setRules([
-        'username' => ['label' => 'Username', 'rules' => 'required'],
-        'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]'],
-    ]);
+.. literalinclude:: validation/007.php
 
 withRequest()
 =============
@@ -258,72 +263,39 @@ withRequest()
 One of the most common times you will use the validation library is when validating
 data that was input from an HTTP Request. If desired, you can pass an instance of the
 current Request object and it will take all of the input data and set it as the
-data to be validated::
+data to be validated:
 
-    $validation->withRequest($this->request)->run();
+.. literalinclude:: validation/008.php
 
 Working with Validation
-************************************************
+***********************
 
 Validating Keys that are Arrays
-================================================
+===============================
 
 If your data is in a nested associative array, you can use "dot array syntax" to
-easily validate your data::
+easily validate your data:
 
-    // The data to test:
-    'contacts' => [
-        'name' => 'Joe Smith',
-        'friends' => [
-            [
-                'name' => 'Fred Flinstone',
-            ],
-            [
-                'name' => 'Wilma',
-            ],
-        ]
-    ]
+.. literalinclude:: validation/009.php
 
-    // Joe Smith
-    $validation->setRules([
-        'contacts.name' => 'required',
-    ]);
+You can use the '*' wildcard symbol to match any one level of the array:
 
-    // Fred Flintsone & Wilma
-    $validation->setRules([
-        'contacts.friends.name' => 'required',
-    ]);
-
-You can use the '*' wildcard symbol to match any one level of the array::
-
-    // Fred Flintsone & Wilma
-    $validation->setRules([
-        'contacts.*.name' => 'required',
-    ]);
+.. literalinclude:: validation/010.php
 
 "dot array syntax" can also be useful when you have single dimension array data.
-For example, data returned by multi select dropdown::
+For example, data returned by multi select dropdown:
 
-    // The data to test:
-    'user_ids' => [
-        1,
-        2,
-        3,
-    ]
-    // Rule
-    $validation->setRules([
-        'user_ids.*' => 'required',
-    ]);
+.. literalinclude:: validation/011.php
 
 Validate 1 Value
-================================================
+================
 
-Validate one value against a rule::
+Validate one value against a rule:
 
-    $validation->check($value, 'required');
+.. literalinclude:: validation/012.php
 
 Saving Sets of Validation Rules to the Config File
-=======================================================
+==================================================
 
 A nice feature of the Validation class is that it permits you to store all
 your validation rules for your entire application in a config file. You organize
@@ -333,88 +305,47 @@ the validation.
 .. _validation-array:
 
 How to save your rules
--------------------------------------------------------
+----------------------
 
 To store your validation rules, simply create a new public property in the ``Config\Validation``
 class with the name of your group. This element will hold an array with your validation
-rules. As shown earlier, the validation array will have this prototype::
+rules. As shown earlier, the validation array will have this prototype:
 
-    class Validation
-    {
-        public $signup = [
-            'username'     => 'required',
-            'password'     => 'required',
-            'pass_confirm' => 'required|matches[password]',
-            'email'        => 'required|valid_email',
-        ];
-    }
+.. literalinclude:: validation/013.php
 
-You can specify the group to use when you call the ``run()`` method::
+You can specify the group to use when you call the ``run()`` method:
 
-    $validation->run($data, 'signup');
+.. literalinclude:: validation/014.php
 
 You can also store custom error messages in this configuration file by naming the
 property the same as the group, and appended with ``_errors``. These will automatically
-be used for any errors when this group is used::
+be used for any errors when this group is used:
 
-    class Validation
-    {
-        public $signup = [
-            'username'     => 'required',
-            'password'     => 'required',
-            'pass_confirm' => 'required|matches[password]',
-            'email'        => 'required|valid_email',
-        ];
+.. literalinclude:: validation/015.php
 
-        public $signup_errors = [
-            'username' => [
-                'required'    => 'You must choose a username.',
-            ],
-            'email'    => [
-                'valid_email' => 'Please check the Email field. It does not appear to be valid.',
-            ],
-        ];
-    }
+Or pass all settings in an array:
 
-Or pass all settings in an array::
-
-    class Validation
-    {
-        public $signup = [
-            'username' => [
-                'rules'  => 'required',
-                'errors' => [
-                    'required' => 'You must choose a Username.',
-                ],
-            ],
-            'email'    => [
-                'rules'  => 'required|valid_email',
-                'errors' => [
-                    'valid_email' => 'Please check the Email field. It does not appear to be valid.',
-                ],
-            ],
-        ];
-    }
+.. literalinclude:: validation/016.php
 
 See below for details on the formatting of the array.
 
 Getting & Setting Rule Groups
--------------------------------------------------------
+-----------------------------
 
 **Get Rule Group**
 
-This method gets a rule group from the validation configuration::
+This method gets a rule group from the validation configuration:
 
-    $validation->getRuleGroup('signup');
+.. literalinclude:: validation/017.php
 
 **Set Rule Group**
 
-This method sets a rule group from the validation configuration to the validation service::
+This method sets a rule group from the validation configuration to the validation service:
 
-    $validation->setRuleGroup('signup');
+.. literalinclude:: validation/018.php
 
 Running Multiple Validations
-=======================================================
+============================
 
 .. note:: ``run()`` method will not reset error state. Should a previous run fail,
    ``run()`` will always return false and ``getErrors()`` will return
@@ -423,42 +354,28 @@ Running Multiple Validations
 If you intend to run multiple validations, for instance on different data sets or with different
 rules after one another, you might need to call ``$validation->reset()`` before each run to get rid of
 errors from previous run. Be aware that ``reset()`` will invalidate any data, rule or custom error
-you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated::
+you previously set, so ``setRules()``, ``setRuleGroup()`` etc. need to be repeated:
 
-    foreach ($userAccounts as $user) {
-        $validation->reset();
-        $validation->setRules($userAccountRules);
-
-        if (! $validation->run($user)) {
-            // handle validation errors
-        }
-    }
+.. literalinclude:: validation/019.php
 
 Validation Placeholders
-=======================================================
+=======================
 
 The Validation class provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
 the name of the field (or array key) that was passed in as ``$data`` surrounded by curly brackets. It will be
-replaced by the **value** of the matched incoming field. An example should clarify this::
+replaced by the **value** of the matched incoming field. An example should clarify this:
 
-    $validation->setRules([
-        'email' => 'required|valid_email|is_unique[users.email,id,{id}]',
-    ]);
+.. literalinclude:: validation/020.php
 
 In this set of rules, it states that the email address should be unique in the database, except for the row
-that has an id matching the placeholder's value. Assuming that the form POST data had the following::
+that has an id matching the placeholder's value. Assuming that the form POST data had the following:
 
-    $_POST = [
-        'id' => 4,
-        'email' => 'foo@example.com',
-    ];
+.. literalinclude:: validation/021.php
 
-then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule::
+then the ``{id}`` placeholder would be replaced with the number **4**, giving this revised rule:
 
-    $validation->setRules([
-        'email' => 'required|valid_email|is_unique[users.email,id,4]',
-    ]);
+.. literalinclude:: validation/022.php
 
 So it will ignore the row in the database that has ``id=4`` when it verifies the email is unique.
 
@@ -466,7 +383,7 @@ This can also be used to create more dynamic rules at runtime, as long as you ta
 keys passed in don't conflict with your form data.
 
 Working With Errors
-************************************************
+*******************
 
 The Validation library provides several methods to help you set error messages, provide
 custom error messages, and retrieve one or more errors to display.
@@ -486,49 +403,21 @@ instance. If not custom error message is provided, the default value will be use
 
 These are two ways to provide custom error messages.
 
-As the last parameter::
+As the last parameter:
 
-    $validation->setRules([
-            'username' => 'required|is_unique[users.username]',
-            'password' => 'required|min_length[10]'
-        ],
-        [   // Errors
-            'username' => [
-                'required' => 'All accounts must have usernames provided',
-            ],
-            'password' => [
-                'min_length' => 'Your password is too short. You want to get hacked?',
-            ],
-        ]
-    );
+.. literalinclude:: validation/023.php
 
-Or as a labeled style::
+Or as a labeled style:
 
-    $validation->setRules([
-            'username' => [
-                'label'  => 'Username',
-                'rules'  => 'required|is_unique[users.username]',
-                'errors' => [
-                    'required' => 'All accounts must have {field} provided',
-                ],
-            ],
-            'password' => [
-                'label'  => 'Password',
-                'rules'  => 'required|min_length[10]',
-                'errors' => [
-                    'min_length' => 'Your {field} is too short. You want to get hacked?',
-                ],
-            ]
-        ]
-    );
+.. literalinclude:: validation/024.php
 
-If you’d like to include a field’s “human” name, or the optional parameter some rules allow for (such as max_length),
+If you'd like to include a field's "human" name, or the optional parameter some rules allow for (such as max_length),
 or the value that was validated you can add the ``{field}``, ``{param}`` and ``{value}`` tags to your message, respectively::
 
     'min_length' => 'Supplied value ({value}) for {field} must have at least {param} characters.'
 
-On a field with the human name Username and a rule of ``min_length[6]`` with a value of “Pizza”, an error would display: “Supplied value (Pizza) for Username must have
-at least 6 characters.”
+On a field with the human name Username and a rule of ``min_length[6]`` with a value of "Pizza", an error would display: "Supplied value (Pizza) for Username must have
+at least 6 characters."
 
 .. warning:: If you get the error messages with ``getErrors()`` or ``getError()``, the messages are not HTML escaped. If you use user input data like ``({value})`` to make the error message, it might contain HTML tags. If you don't escape the messages before displying them, XSS attacks are possible.
 
@@ -539,59 +428,63 @@ Translation Of Messages And Validation Labels
 
 To use translated strings from language files, we can simply use the dot syntax.
 Let's say we have a file with translations located here: ``app/Languages/en/Rules.php``.
-We can simply use the language lines defined in this file, like this::
+We can simply use the language lines defined in this file, like this:
 
-    $validation->setRules([
-            'username' => [
-                'label'  => 'Rules.username',
-                'rules'  => 'required|is_unique[users.username]',
-                'errors' => [
-                    'required' => 'Rules.username.required',
-                ],
-            ],
-            'password' => [
-                'label'  => 'Rules.password',
-                'rules'  => 'required|min_length[10]',
-                'errors' => [
-                    'min_length' => 'Rules.password.min_length',
-                ],
-            ],
-        ]
-    );
+.. literalinclude:: validation/025.php
+
+.. _validation-getting-all-errors:
 
 Getting All Errors
 ==================
 
-If you need to retrieve all error messages for failed fields, you can use the ``getErrors()`` method::
+If you need to retrieve all error messages for failed fields, you can use the ``getErrors()`` method:
 
-    $errors = $validation->getErrors();
-
-    // Returns:
-    [
-        'field1' => 'error message',
-        'field2' => 'error message',
-    ]
+.. literalinclude:: validation/026.php
 
 If no errors exist, an empty array will be returned.
+
+When using a wildcard, the error will point to a specific field, replacing the asterisk with the appropriate key/keys::
+
+    // for data
+    'contacts' => [
+        'friends' => [
+            [
+                'name' => 'Fred Flinstone',
+            ],
+            [
+                'name' => '',
+            ],
+        ]
+    ]
+
+    // rule
+    'contacts.*.name' => 'required'
+
+    // error will be
+    'contacts.friends.1.name' => 'The contacts.*.name field is required.'
 
 Getting a Single Error
 ======================
 
 You can retrieve the error for a single field with the ``getError()`` method. The only parameter is the field
-name::
+name:
 
-    $error = $validation->getError('username');
+.. literalinclude:: validation/027.php
 
 If no error exists, an empty string will be returned.
+
+.. note:: When using a wildcard, all found errors that match the mask will be combined into one line separated by the EOL character.
 
 Check If Error Exists
 =====================
 
-You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name::
+You can check to see if an error exists with the ``hasError()`` method. The only parameter is the field name:
 
-    if ($validation->hasError('username')) {
-        echo $validation->getError('username');
-    }
+.. literalinclude:: validation/028.php
+
+When specifying a field with a wildcard, all errors matching the mask will be checked:
+
+.. literalinclude:: validation/029.php
 
 Customizing Error Display
 *************************
@@ -605,23 +498,14 @@ Creating the Views
 
 The first step is to create custom views. These can be placed anywhere that the ``view()`` method can locate them,
 which means the standard View directory, or any namespaced View folder will work. For example, you could create
-a new view at **/app/Views/_errors_list.php**::
+a new view at **app/Views/_errors_list.php**:
 
-    <div class="alert alert-danger" role="alert">
-        <ul>
-        <?php foreach ($errors as $error): ?>
-            <li><?= esc($error) ?></li>
-        <?php endforeach ?>
-        </ul>
-    </div>
+.. literalinclude:: validation/030.php
 
 An array named ``$errors`` is available within the view that contains a list of the errors, where the key is
-the name of the field that had the error, and the value is the error message, like this::
+the name of the field that had the error, and the value is the error message, like this:
 
-    $errors = [
-        'username' => 'The username field must be unique.',
-        'email'    => 'You must provide a valid email address.'
-    ];
+.. literalinclude:: validation/031.php
 
 There are actually two types of views that you can create. The first has an array of all of the errors, and is what
 we just looked at. The other type is simpler, and only contains a single variable, ``$error`` that contains the
@@ -634,13 +518,9 @@ Configuration
 
 Once you have your views created, you need to let the Validation library know about them. Open ``Config/Validation.php``.
 Inside, you'll find the ``$templates`` property where you can list as many custom views as you want, and provide an
-short alias they can be referenced by. If we were to add our example file from above, it would look something like::
+short alias they can be referenced by. If we were to add our example file from above, it would look something like:
 
-    public $templates = [
-        'list'    => 'CodeIgniter\Validation\Views\list',
-        'single'  => 'CodeIgniter\Validation\Views\single',
-        'my_list' => '_errors_list',
-    ];
+.. literalinclude:: validation/032.php
 
 Specifying the Template
 =======================
@@ -655,98 +535,40 @@ right after the name of the field the error should belong to::
     <?= $validation->showError('username', 'my_single') ?>
 
 Creating Custom Rules
-************************************************
+*********************
 
 Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
 autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
-add the new file to the ``$ruleSets`` array::
+add the new file to the ``$ruleSets`` array:
 
-    use CodeIgniter\Validation\CreditCardRules;
-    use CodeIgniter\Validation\FileRules;
-    use CodeIgniter\Validation\FormatRules;
-    use CodeIgniter\Validation\Rules;
-
-    public $ruleSets = [
-        Rules::class,
-        FormatRules::class,
-        FileRules::class,
-        CreditCardRules::class,
-    ];
+.. literalinclude:: validation/033.php
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
 
 Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
-a boolean true or false value signifying true if it passed the test or false if it did not::
+a boolean true or false value signifying true if it passed the test or false if it did not:
 
-    class MyRules
-    {
-        public function even(string $str): bool
-        {
-            return (int) $str % 2 == 0;
-        }
-    }
+.. literalinclude:: validation/034.php
 
 By default, the system will look within ``CodeIgniter\Language\en\Validation.php`` for the language strings used
 within errors. In custom rules, you may provide error messages by accepting a ``$error`` variable by reference in the
-second parameter::
+second parameter:
 
-    public function even(string $str, string &$error = null): bool
-    {
-        if ((int) $str % 2 !== 0) {
-            $error = lang('myerrors.evenError');
+.. literalinclude:: validation/035.php
 
-            return false;
-        }
+Your new custom rule could now be used just like any other rule:
 
-        return true;
-    }
-
-Your new custom rule could now be used just like any other rule::
-
-    $this->validate($request, [
-        'foo' => 'required|even',
-    ]);
+.. literalinclude:: validation/036.php
 
 Allowing Parameters
 ===================
 
 If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
-for rules like ``require_with`` that needs to check the value of another submitted field to base its result on::
+for rules like ``require_with`` that needs to check the value of another submitted field to base its result on:
 
-    public function required_with($str, string $fields, array $data): bool
-    {
-        $fields = explode(',', $fields);
-
-        // If the field is present we can safely assume that
-        // the field is here, no matter whether the corresponding
-        // search field is present or not.
-        $present = $this->required($str ?? '');
-
-        if ($present) {
-            return true;
-        }
-
-        // Still here? Then we fail this test if
-        // any of the fields are present in $data
-        // as $fields is the lis
-        $requiredFields = [];
-
-        foreach ($fields as $field) {
-            if (array_key_exists($field, $data)) {
-                $requiredFields[] = $field;
-            }
-        }
-
-        // Remove any keys with empty values since, that means they
-        // weren't truly there, as far as this is concerned.
-        $requiredFields = array_filter($requiredFields, function ($item) use ($data) {
-            return ! empty($data[$item]);
-        });
-
-        return empty($requiredFields);
-    }
+.. literalinclude:: validation/037.php
 
 Custom errors can be returned as the fourth parameter, just as described above.
 
@@ -758,16 +580,7 @@ The following is a list of all the native rules that are available to use:
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
-::
-
-    // is_unique[table.field,ignore_field,ignore_value]
-
-    $validation->setRules([
-        'name' => "is_unique[supplier.name,uuid, $uuid]",  // is not ok
-        'name' => "is_unique[supplier.name,uuid,$uuid ]",  // is not ok
-        'name' => "is_unique[supplier.name,uuid,$uuid]",   // is ok
-        'name' => "is_unique[supplier.name,uuid,{uuid}]",  // is ok - see "Validation Placeholders"
-    ]);
+.. literalinclude:: validation/038.php
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
@@ -860,8 +673,8 @@ valid_email             No         Fails if field does not contain a valid
 valid_emails            No         Fails if any value provided in a comma
                                    separated list is not a valid email.
 valid_ip                No         Fails if the supplied IP is not valid.        valid_ip[ipv6]
-                                   Accepts an optional parameter of ‘ipv4’ or
-                                   ‘ipv6’ to specify an IP format.
+                                   Accepts an optional parameter of 'ipv4' or
+                                   'ipv6' to specify an IP format.
 valid_url               No         Fails if field does not contain (loosely) a
                                    URL. Includes simple strings that could be
                                    hostnames, like "codeigniter".

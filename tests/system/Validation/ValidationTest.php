@@ -19,19 +19,17 @@ use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
 use Generator;
+use PHPUnit\Framework\ExpectationFailedException;
 use Tests\Support\Validation\TestRules;
+use TypeError;
 
 /**
  * @internal
  */
 final class ValidationTest extends CIUnitTestCase
 {
-    /**
-     * @var Validation
-     */
-    private $validation;
-
-    private $config = [
+    private Validation $validation;
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -87,7 +85,109 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame($rules, $this->validation->getRules());
     }
 
-    public function testRunReturnsFalseWithNothingToDo(): void
+    public function testSetRuleStoresRule()
+    {
+        $this->validation->setRules([]);
+        $this->validation->setRule('foo', null, 'bar|baz');
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    public function testSetRuleAddsRule()
+    {
+        $this->validation->setRules([
+            'bar' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ]);
+        $this->validation->setRule('foo', null, 'foo|foz');
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'foo|foz',
+            ],
+            'bar' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    public function testSetRuleOverwritesRule()
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'label' => null,
+                'rules' => 'bar|baz',
+            ],
+        ]);
+        $this->validation->setRule('foo', null, 'foo|foz');
+
+        $this->assertSame([
+            'foo' => [
+                'label' => null,
+                'rules' => 'foo|foz',
+            ],
+        ], $this->validation->getRules());
+    }
+
+    /**
+     * @dataProvider setRuleRulesFormatCaseProvider
+     *
+     * @param mixed $rules
+     */
+    public function testSetRuleRulesFormat(bool $expected, $rules): void
+    {
+        if (! $expected) {
+            $this->expectException(TypeError::class);
+            $this->expectExceptionMessage('$rules must be of type string|array');
+        }
+
+        $this->validation->setRule('foo', null, $rules);
+        $this->addToAssertionCount(1);
+    }
+
+    public function setRuleRulesFormatCaseProvider(): iterable
+    {
+        yield 'fail-simple-object' => [
+            false,
+            (object) ['required'],
+        ];
+
+        yield 'pass-single-string' => [
+            true,
+            'required',
+        ];
+
+        yield 'pass-single-array' => [
+            true,
+            ['required'],
+        ];
+
+        yield 'fail-deep-object' => [
+            false,
+            new Validation((object) $this->config, Services::renderer()),
+        ];
+
+        yield 'pass-multiple-string' => [
+            true,
+            'required|alpha',
+        ];
+
+        yield 'pass-multiple-array' => [
+            true,
+            ['required', 'alpha'],
+        ];
+    }
+
+    public function testRunReturnsFalseWithNothingToDo()
     {
         $this->validation->setRules([]);
         $this->assertFalse($this->validation->run([]));
@@ -533,10 +633,24 @@ final class ValidationTest extends CIUnitTestCase
 
     public function testHasError(): void
     {
-        $data = ['foo' => 'notanumber'];
-        $this->validation->setRules(['foo' => 'is_numeric']);
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => [
+                ['baz' => 'string'],
+                ['baz' => ''],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'foo'       => 'is_numeric',
+            'bar.*.baz' => 'required',
+        ]);
+
         $this->validation->run($data);
         $this->assertTrue($this->validation->hasError('foo'));
+        $this->assertTrue($this->validation->hasError('bar.*.baz'));
+        $this->assertFalse($this->validation->hasError('bar.0.baz'));
+        $this->assertTrue($this->validation->hasError('bar.1.baz'));
     }
 
     public function testSplitRulesTrue(): void
@@ -725,22 +839,42 @@ final class ValidationTest extends CIUnitTestCase
             ],
             'name_user' => [
                 123,
+                'alpha',
                 'xyz098',
+            ],
+            'contacts' => [
+                'friends' => [
+                    ['name' => ''],
+                    ['name' => 'John'],
+                ],
             ],
         ];
 
         $request = new IncomingRequest($config, new URI(), 'php://input', new UserAgent());
 
         $this->validation->setRules([
-            'id_user.*'   => 'numeric',
-            'name_user.*' => 'alpha',
+            'id_user.*'       => 'numeric',
+            'name_user.*'     => 'alpha',
+            'contacts.*.name' => 'required',
         ]);
 
         $this->validation->withRequest($request->withMethod('post'))->run();
         $this->assertSame([
-            'id_user.*'   => 'The id_user.* field must contain only numbers.',
-            'name_user.*' => 'The name_user.* field may only contain alphabetical characters.',
+            'id_user.0'               => 'The id_user.* field must contain only numbers.',
+            'name_user.0'             => 'The name_user.* field may only contain alphabetical characters.',
+            'name_user.2'             => 'The name_user.* field may only contain alphabetical characters.',
+            'contacts.friends.0.name' => 'The contacts.*.name field is required.',
         ], $this->validation->getErrors());
+
+        $this->assertSame(
+            "The name_user.* field may only contain alphabetical characters.\n"
+            . 'The name_user.* field may only contain alphabetical characters.',
+            $this->validation->getError('name_user.*')
+        );
+        $this->assertSame(
+            'The contacts.*.name field is required.',
+            $this->validation->getError('contacts.*.name')
+        );
     }
 
     public function testRulesForSingleRuleWithSingleValue(): void
@@ -862,17 +996,21 @@ final class ValidationTest extends CIUnitTestCase
         yield 'dot-on-middle-fail' => [
             false,
             ['fizz.*.baz' => 'if_exist|numeric'],
-            ['fizz' => [
-                'bar' => ['baz' => 'yes'],
-            ]],
+            [
+                'fizz' => [
+                    'bar' => ['baz' => 'yes'],
+                ],
+            ],
         ];
 
         yield 'dot-on-middle-pass' => [
             true,
             ['fizz.*.baz' => 'if_exist|numeric'],
-            ['fizz' => [
-                'bar' => ['baz' => 30],
-            ]],
+            [
+                'fizz' => [
+                    'bar' => ['baz' => 30],
+                ],
+            ],
         ];
 
         yield 'dot-multiple-fail' => [
@@ -1007,5 +1145,171 @@ final class ValidationTest extends CIUnitTestCase
             'required|regex_match[/^(01|2689|09)[0-9]{8}$/]|numeric',
             ['required', 'regex_match[/^(01|2689|09)[0-9]{8}$/]', 'numeric'],
         ];
+    }
+
+    /**
+     * internal method to simplify placeholder replacement test
+     * REQUIRES THE RULES TO BE SET FOR THE FIELD "foo"
+     *
+     * @param array|null $data optional POST data, needs to contain the key $placeholderField to pass
+     *
+     * @source https://github.com/codeigniter4/CodeIgniter4/pull/3910#issuecomment-784922913
+     */
+    private function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
+    {
+        if ($data === null) {
+            $data = [$placeholder => 'placeholder-value'];
+        }
+
+        $validationRules = $this->getPrivateMethodInvoker($this->validation, 'fillPlaceholders')($this->validation->getRules(), $data);
+        $fieldRules      = $validationRules['foo']['rules'] ?? $validationRules['foo'];
+        if (is_string($fieldRules)) {
+            $fieldRules = $this->getPrivateMethodInvoker($this->validation, 'splitRules')($fieldRules);
+        }
+
+        // loop all rules for this field
+        foreach ($fieldRules as $rule) {
+            // only string type rules are supported
+            if (is_string($rule)) {
+                $this->assertStringNotContainsString('{' . $placeholder . '}', $rule);
+            }
+        }
+    }
+
+    /**
+     * @see ValidationTest::placeholderReplacementResultDetermination()
+     */
+    public function testPlaceholderReplacementTestFails()
+    {
+        // to test if placeholderReplacementResultDetermination() works we provoke and expect an exception
+        $this->expectException(ExpectationFailedException::class);
+        $this->expectExceptionMessage('Failed asserting that \'filter[{id}]\' does not contain "{id}".');
+
+        $this->validation->setRule('foo', 'foo-label', 'required|filter[{id}]');
+
+        // calling with empty $data should produce an exception since {id} can't be replaced
+        $this->placeholderReplacementResultDetermination('id', []);
+    }
+
+    public function testPlaceholderReplacementSetSingleRuleString()
+    {
+        $this->validation->setRule('foo', null, 'required|filter[{id}]');
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetSingleRuleArray()
+    {
+        $this->validation->setRule('foo', null, ['required', 'filter[{id}]']);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesSimpleString()
+    {
+        $this->validation->setRules([
+            'foo' => 'required|filter[{id}]',
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesSimpleArray()
+    {
+        $this->validation->setRules([
+            'foo' => ['required', 'filter[{id}]'],
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesComplexString()
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'rules' => 'required|filter[{id}]',
+            ],
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    public function testPlaceholderReplacementSetMultipleRulesComplexArray()
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'rules' => ['required', 'filter[{id}]'],
+            ],
+        ]);
+
+        $this->placeholderReplacementResultDetermination();
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5922
+     */
+    public function testNestedArrayThrowsException(): void
+    {
+        $rule = [
+            'customer_account_number' => [
+                'label' => 'ACCOUNT NUMBER',
+                'rules' => 'required|exact_length[5]',
+            ],
+            'debit_amount' => [
+                'label' => 'DEBIT AMOUNT',
+                'rules' => 'required|decimal|is_natural_no_zero',
+            ],
+            'beneficiaries_accounts.*.account_number' => [
+                'label' => 'BENEFICIARY ACCOUNT NUMBER',
+                'rules' => 'exact_length[5]',
+            ],
+            'beneficiaries_accounts.*.credit_amount' => [
+                'label' => 'CREDIT AMOUNT',
+                'rules' => 'required|decimal|is_natural_no_zero',
+            ],
+            'beneficiaries_accounts.*.purpose' => [
+                'label' => 'PURPOSE',
+                'rules' => 'required_without[beneficiaries_accounts.*.account_number]|min_length[3]|max_length[255]',
+            ],
+        ];
+
+        $this->validation->setRules($rule);
+        $data = [
+            'customer_account_number' => 'A_490',
+            'debit_amount'            => '1500',
+            'beneficiaries_accounts'  => [],
+        ];
+        $this->validation->run($data);
+
+        $this->assertSame([
+            'beneficiaries_accounts.*.account_number' => 'The BENEFICIARY ACCOUNT NUMBER field must be exactly 5 characters in length.',
+            'beneficiaries_accounts.*.credit_amount'  => 'The CREDIT AMOUNT field is required.',
+            'beneficiaries_accounts.*.purpose'        => 'The PURPOSE field is required when BENEFICIARY ACCOUNT NUMBER is not present.',
+        ], $this->validation->getErrors());
+
+        $this->validation->reset();
+        $this->validation->setRules($rule);
+        $data = [
+            'customer_account_number' => 'A_490',
+            'debit_amount'            => '1500',
+            'beneficiaries_accounts'  => [
+                'account_1' => [
+                    'account_number' => 'A_103',
+                    'credit_amount'  => 1000,
+                    'purpose'        => 'Personal',
+                ],
+                'account_2' => [
+                    'account_number' => 'A_258',
+                    'credit_amount'  => null,
+                    'purpose'        => 'A',
+                ],
+            ],
+        ];
+        $this->validation->run($data);
+
+        $this->assertSame([
+            'beneficiaries_accounts.account_2.credit_amount' => 'The CREDIT AMOUNT field is required.',
+            'beneficiaries_accounts.account_2.purpose'       => 'The PURPOSE field must be at least 3 characters in length.',
+        ], $this->validation->getErrors());
     }
 }

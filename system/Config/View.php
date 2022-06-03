@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\View\ViewDecoratorInterface;
+
 /**
  * View configuration
  */
@@ -76,6 +78,8 @@ class View extends BaseConfig
      * @var array
      */
     protected $corePlugins = [
+        'csp_script_nonce'  => '\CodeIgniter\View\Plugins::cspScriptNonce',
+        'csp_style_nonce'   => '\CodeIgniter\View\Plugins::cspStyleNonce',
         'current_url'       => '\CodeIgniter\View\Plugins::currentURL',
         'previous_url'      => '\CodeIgniter\View\Plugins::previousURL',
         'mailto'            => '\CodeIgniter\View\Plugins::mailto',
@@ -85,6 +89,17 @@ class View extends BaseConfig
         'route'             => '\CodeIgniter\View\Plugins::route',
         'siteURL'           => '\CodeIgniter\View\Plugins::siteURL',
     ];
+
+    /**
+     * View Decorators are class methods that will be run in sequence to
+     * have a chance to alter the generated output just prior to caching
+     * the results.
+     *
+     * All classes must implement CodeIgniter\View\ViewDecoratorInterface
+     *
+     * @var class-string<ViewDecoratorInterface>[]
+     */
+    public array $decorators = [];
 
     /**
      * Merge the built-in and developer-configured filters and plugins,

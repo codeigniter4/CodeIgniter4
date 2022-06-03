@@ -21,7 +21,7 @@ final class ConfigTest extends CIUnitTestCase
 {
     use ReflectionHelper;
 
-    protected $group = [
+    private array $group = [
         'DSN'      => '',
         'hostname' => 'localhost',
         'username' => 'first',
@@ -40,7 +40,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-    protected $dsnGroup = [
+    private array $dsnGroup = [
         'DSN'      => 'MySQLi://user:pass@localhost:3306/dbname?DBPrefix=test_&pConnect=true&charset=latin1&DBCollat=latin1_swedish_ci',
         'hostname' => '',
         'username' => '',
@@ -59,7 +59,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 3306,
     ];
-    protected $dsnGroupPostgre = [
+    private array $dsnGroupPostgre = [
         'DSN'      => 'Postgre://user:pass@localhost:5432/dbname?DBPrefix=test_&connect_timeout=5&sslmode=1',
         'hostname' => '',
         'username' => '',
@@ -78,7 +78,7 @@ final class ConfigTest extends CIUnitTestCase
         'failover' => [],
         'port'     => 5432,
     ];
-    protected $dsnGroupPostgreNative = [
+    private array $dsnGroupPostgreNative = [
         'DSN'      => 'pgsql:host=localhost;port=5432;dbname=database_name',
         'hostname' => '',
         'username' => '',

@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,7 +25,7 @@ final class OrderTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
     public function testOrderAscending()
     {
@@ -83,6 +84,8 @@ final class OrderTest extends CIUnitTestCase
         } elseif ($this->db->DBDriver === 'SQLSRV') {
             $key   = 'NEWID()';
             $table = '"' . $this->db->getDatabase() . '"."' . $this->db->schema . '".' . $table;
+        } elseif ($this->db->DBDriver === 'OCI8') {
+            $key = '"DBMS_RANDOM"."RANDOM"';
         }
 
         $expected = 'SELECT * FROM ' . $table . ' ORDER BY ' . $key;

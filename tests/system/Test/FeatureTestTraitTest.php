@@ -11,13 +11,13 @@
 
 namespace CodeIgniter\Test;
 
+use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Response;
+use Config\Services;
 
 /**
- * @group                       DatabaseLive
- * @runTestsInSeparateProcesses
- * @preserveGlobalState         disabled
+ * @group DatabaseLive
  *
  * @internal
  */
@@ -32,15 +32,22 @@ final class FeatureTestTraitTest extends CIUnitTestCase
         $this->skipEvents();
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Events::simulate(false);
+
+        $this->resetServices();
+    }
+
     public function testCallGet()
     {
         $this->withRoutes([
             [
                 'get',
                 'home',
-                static function () {
-                    return 'Hello World';
-                },
+                static fn () => 'Hello World',
             ],
         ]);
         $response = $this->get('home');
@@ -55,9 +62,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'add',
                 'home',
-                static function () {
-                    return 'Hello Earth';
-                },
+                static fn () => 'Hello Earth',
             ],
         ]);
         $response = $this->call('get', 'home');
@@ -75,9 +80,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'post',
                 'home',
-                static function () {
-                    return 'Hello Mars';
-                },
+                static fn () => 'Hello Mars',
             ],
         ]);
         $response = $this->post('home');
@@ -91,9 +94,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'post',
                 'home',
-                static function () {
-                    return 'Hello ' . service('request')->getPost('foo') . '!';
-                },
+                static fn () => 'Hello ' . service('request')->getPost('foo') . '!',
             ],
         ]);
         $response = $this->post('home', ['foo' => 'Mars']);
@@ -107,9 +108,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'put',
                 'home',
-                static function () {
-                    return 'Hello Pluto';
-                },
+                static fn () => 'Hello Pluto',
             ],
         ]);
         $response = $this->put('home');
@@ -123,9 +122,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'patch',
                 'home',
-                static function () {
-                    return 'Hello Jupiter';
-                },
+                static fn () => 'Hello Jupiter',
             ],
         ]);
         $response = $this->patch('home');
@@ -139,9 +136,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'options',
                 'home',
-                static function () {
-                    return 'Hello George';
-                },
+                static fn () => 'Hello George',
             ],
         ]);
         $response = $this->options('home');
@@ -155,9 +150,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'delete',
                 'home',
-                static function () {
-                    return 'Hello Wonka';
-                },
+                static fn () => 'Hello Wonka',
             ],
         ]);
         $response = $this->delete('home');
@@ -171,9 +164,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                static function () {
-                    return 'Home';
-                },
+                static fn () => 'Home',
             ],
         ])->withSession([
             'fruit'    => 'apple',
@@ -195,9 +186,7 @@ final class FeatureTestTraitTest extends CIUnitTestCase
             [
                 'get',
                 'home',
-                static function () {
-                    return 'Home';
-                },
+                static fn () => 'Home',
             ],
         ])->withSession()->get('home');
 
@@ -273,10 +262,15 @@ final class FeatureTestTraitTest extends CIUnitTestCase
                 'Hello::index',
                 'Hello',
             ],
-            'parameterized cli' => [
+            'parameterized param cli' => [
                 'hello/(:any)',
                 'Hello::index/$1',
                 'Hello/index/samsonasik',
+            ],
+            'parameterized method cli' => [
+                'hello/(:segment)',
+                'Hello::$1',
+                'Hello/index',
             ],
             'default method index' => [
                 'hello',
@@ -301,8 +295,11 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     public function testOpenCliRoutesFromHttpGot404($from, $to, $httpGet)
     {
         $this->expectException(PageNotFoundException::class);
+        $this->expectExceptionMessage('Cannot access the controller in a CLI Route.');
 
-        require_once SUPPORTPATH . 'Controllers/Hello.php';
+        $collection = Services::routes();
+        $collection->setAutoRoute(true);
+        $collection->setDefaultNamespace('Tests\Support\Controllers');
 
         $this->withRoutes([
             [

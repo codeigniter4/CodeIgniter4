@@ -15,6 +15,7 @@ use CodeIgniter\Database\Database;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -26,8 +27,8 @@ final class DbUtilsTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
-    protected static $origDebug;
+    protected $seed    = CITestSeeder::class;
+    private static $origDebug;
 
     /**
      * This test must run first to store the inital debug value before we tinker with it below
@@ -76,7 +77,7 @@ final class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $databases = $util->listDatabases();
 
             $this->assertContains($this->db->getDatabase(), $databases);
@@ -92,7 +93,7 @@ final class DbUtilsTest extends CIUnitTestCase
     {
         $util = (new Database())->loadUtils($this->db);
 
-        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV'], true)) {
+        if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre', 'SQLSRV', 'OCI8'], true)) {
             $exist = $util->databaseExists($this->db->getDatabase());
 
             $this->assertTrue($exist);
@@ -107,6 +108,12 @@ final class DbUtilsTest extends CIUnitTestCase
     public function testUtilsOptimizeDatabase()
     {
         $util = (new Database())->loadUtils($this->db);
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.'
+            );
+        }
 
         $d = $util->optimizeDatabase();
 
@@ -146,6 +153,12 @@ final class DbUtilsTest extends CIUnitTestCase
     public function testUtilsOptimizeTable()
     {
         $util = (new Database())->loadUtils($this->db);
+
+        if ($this->db->DBDriver === 'OCI8') {
+            $this->markTestSkipped(
+                'Unsupported feature of the oracle database platform.'
+            );
+        }
 
         $d = $util->optimizeTable('db_job');
 

@@ -28,9 +28,7 @@ if (! function_exists('dot_array_search')) {
             PREG_SPLIT_NO_EMPTY
         );
 
-        $segments = array_map(static function ($key) {
-            return str_replace('\.', '.', $key);
-        }, $segments);
+        $segments = array_map(static fn ($key) => str_replace('\.', '.', $key), $segments);
 
         return _array_search_dot($segments, $array);
     }
@@ -66,9 +64,7 @@ if (! function_exists('_array_search_dot')) {
                 $answer[] = _array_search_dot($indexes, $value);
             }
 
-            $answer = array_filter($answer, static function ($value) {
-                return $value !== null;
-            });
+            $answer = array_filter($answer, static fn ($value) => $value !== null);
 
             if ($answer !== []) {
                 if (count($answer) === 1) {
@@ -93,8 +89,8 @@ if (! function_exists('_array_search_dot')) {
             return _array_search_dot($indexes, $array[$currentIndex]);
         }
 
-        // Otherwise we've found our match!
-        return $array[$currentIndex];
+        // Otherwise, not found.
+        return null;
     }
 }
 
@@ -207,7 +203,7 @@ if (! function_exists('array_flatten_with_dots')) {
         foreach ($array as $key => $value) {
             $newKey = $id . $key;
 
-            if (is_array($value)) {
+            if (is_array($value) && $value !== []) {
                 $flattened = array_merge($flattened, array_flatten_with_dots($value, $newKey . '.'));
             } else {
                 $flattened[$newKey] = $value;

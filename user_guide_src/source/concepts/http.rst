@@ -9,8 +9,12 @@ concepts behind HTTP is a **must** for all developers that want to be successful
 The first part of this chapter gives an overview. After the concepts are out of the way, we will discuss
 how to work with the requests and responses within CodeIgniter.
 
+.. contents::
+    :local:
+    :depth: 2
+
 What is HTTP?
-=============
+*************
 
 HTTP is simply a text-based convention that allows two machines to talk to each other. When a browser
 requests a page, it asks the server if it can get the page. The server then prepares the page and sends
@@ -22,7 +26,8 @@ you develop web applications is to always understand what the browser is request
 respond appropriately.
 
 The Request
------------
+===========
+
 Whenever a client (a web browser, smartphone app, etc) makes a request, it sends a small text message
 to the server and waits for a response.
 
@@ -42,7 +47,7 @@ client accepts, and much more. Wikipedia has an article that lists `all header f
 <https://en.wikipedia.org/wiki/List_of_HTTP_header_fields>`_ if you want to look it over.
 
 The Response
-------------
+============
 
 Once the server receives the request, your application will take that information and generate some output.
 The server will bundle your output as part of its response to the client. This is also represented as
@@ -64,38 +69,13 @@ wasn't found (404). Head over to IANA for a `full list of HTTP status codes
 <https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml>`_.
 
 Working with Requests and Responses
------------------------------------
+***********************************
 
 While PHP provides ways to interact with the request and response headers, CodeIgniter, like most frameworks,
 abstracts them so that you have a consistent, simple interface to them. The :doc:`IncomingRequest class </incoming/incomingrequest>`
-is an object-oriented representation of the HTTP request. It provides everything you need::
+is an object-oriented representation of the HTTP request. It provides everything you need:
 
-    use CodeIgniter\HTTP\IncomingRequest;
-
-    $request = service('request');
-
-    // the URI being requested (i.e., /about)
-    $request->getUri()->getPath();
-
-    // Retrieve $_GET and $_POST variables
-    $request->getGet('foo');
-    $request->getPost('foo');
-
-    // Retrieve from $_REQUEST which should include
-    // both $_GET and $_POST contents
-    $request->getVar('foo');
-
-    // Retrieve JSON from AJAX calls
-    $request->getJSON();
-
-    // Retrieve server variables
-    $request->getServer('Host');
-
-    // Retrieve an HTTP Request header, with case-insensitive names
-    $request->getHeader('host');
-    $request->getHeader('Content-Type');
-
-    $request->getMethod();  // get, post, put, etc
+.. literalinclude:: http/001.php
 
 The request class does a lot of work in the background for you, that you never need to worry about.
 The ``isAJAX()`` and ``isSecure()`` methods check several different methods to determine the correct answer.
@@ -103,19 +83,8 @@ The ``isAJAX()`` and ``isSecure()`` methods check several different methods to d
 .. note:: The ``isAJAX()`` method depends on the ``X-Requested-With`` header, which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch). See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
 CodeIgniter also provides a :doc:`Response class </outgoing/response>` that is an object-oriented representation
-of the HTTP response. This gives you an easy and powerful way to construct your response to the client::
+of the HTTP response. This gives you an easy and powerful way to construct your response to the client:
 
-  use CodeIgniter\HTTP\Response;
-
-  $response = service('response');
-
-  $response->setStatusCode(Response::HTTP_OK);
-  $response->setBody($output);
-  $response->setHeader('Content-type', 'text/html');
-  $response->noCache();
-
-  // Sends the output to the browser
-  // This is typically handled by the framework
-  $response->send();
+.. literalinclude:: http/002.php
 
 In addition, the Response class allows you to work the HTTP cache layer for the best performance.

@@ -20,10 +20,7 @@ use Config\Modules;
  */
 final class FileLocatorTest extends CIUnitTestCase
 {
-    /**
-     * @var FileLocator
-     */
-    protected $locator;
+    private FileLocator $locator;
 
     protected function setUp(): void
     {
@@ -212,6 +209,18 @@ final class FileLocatorTest extends CIUnitTestCase
         $expectedWin = APPPATH . 'Config\App.php';
         $expectedLin = APPPATH . 'Config/App.php';
         $this->assertTrue(in_array($expectedWin, $files, true) || in_array($expectedLin, $files, true));
+    }
+
+    public function testListFilesDoesNotContainDirectories()
+    {
+        $files = $this->locator->listFiles('Config/');
+
+        $directory = str_replace(
+            '/',
+            DIRECTORY_SEPARATOR,
+            APPPATH . 'Config/Boot'
+        );
+        $this->assertNotContains($directory, $files);
     }
 
     public function testListFilesWithFileAsInput()

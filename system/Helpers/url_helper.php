@@ -30,7 +30,7 @@ if (! function_exists('_get_uri')) {
      */
     function _get_uri(string $relativePath = '', ?App $config = null): URI
     {
-        $config = $config ?? config('App');
+        $config ??= config('App');
 
         if ($config->baseURL === '') {
             throw new InvalidArgumentException('_get_uri() requires a valid baseURL.');
@@ -109,7 +109,7 @@ if (! function_exists('base_url')) {
 
 if (! function_exists('current_url')) {
     /**
-     * Returns the current full URL based on the IncomingRequest.
+     * Returns the current full URL based on the Config\App settings and IncomingRequest.
      * String returns ignore query and fragment parts.
      *
      * @param bool                 $returnObject True to return an object instead of a string
@@ -119,8 +119,8 @@ if (! function_exists('current_url')) {
      */
     function current_url(bool $returnObject = false, ?IncomingRequest $request = null)
     {
-        $request = $request ?? Services::request();
-        $path    = $request->getPath();
+        $request ??= Services::request();
+        $path = $request->getPath();
 
         // Append queries and fragments
         if ($query = $request->getUri()->getQuery()) {
@@ -152,7 +152,7 @@ if (! function_exists('previous_url')) {
         // Otherwise, grab a sanitized version from $_SERVER.
         $referer = $_SESSION['_ci_previous_url'] ?? Services::request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL);
 
-        $referer = $referer ?? site_url('/');
+        $referer ??= site_url('/');
 
         return $returnObject ? new URI($referer) : $referer;
     }
@@ -521,6 +521,9 @@ if (! function_exists('url_to')) {
     /**
      * Get the full, absolute URL to a controller method
      * (with additional arguments)
+     *
+     * NOTE: This requires the controller/method to
+     * have a route defined in the routes Config file.
      *
      * @param mixed ...$args
      *

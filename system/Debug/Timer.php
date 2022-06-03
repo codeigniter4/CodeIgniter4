@@ -78,7 +78,7 @@ class Timer
      * @param string $name     The name of the timer.
      * @param int    $decimals Number of decimal places.
      *
-     * @return float|null Returns null if timer exists by that name.
+     * @return float|null Returns null if timer does not exist by that name.
      *                    Returns a float representing the number of
      *                    seconds elapsed while that timer was running.
      */
@@ -96,7 +96,7 @@ class Timer
             $timer['end'] = microtime(true);
         }
 
-        return (float) number_format($timer['end'] - $timer['start'], $decimals);
+        return (float) number_format($timer['end'] - $timer['start'], $decimals, '.', '');
     }
 
     /**

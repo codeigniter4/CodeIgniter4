@@ -12,7 +12,6 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use InvalidArgumentException;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
@@ -306,6 +305,22 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertSame($expected, get_filenames($vfs->url(), false));
     }
 
+    public function testGetFilenamesWithoutDirectories()
+    {
+        $vfs = vfsStream::setup('root', null, $this->structure);
+
+        $filenames = get_filenames($vfs->url(), true, false, false);
+
+        $expected = [
+            'vfs://root/boo/far',
+            'vfs://root/boo/faz',
+            'vfs://root/foo/bar',
+            'vfs://root/foo/baz',
+            'vfs://root/simpleFile',
+        ];
+        $this->assertSame($expected, $filenames);
+    }
+
     public function testGetFilenamesWithHidden()
     {
         $this->assertTrue(function_exists('get_filenames'));
@@ -525,13 +540,13 @@ final class FilesystemHelperTest extends CIUnitTestCase
 
     public function testRealPathURL()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         set_realpath('http://somewhere.com/overtherainbow');
     }
 
     public function testRealPathInvalid()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         set_realpath(SUPPORTPATH . 'root/../', true);
     }
 

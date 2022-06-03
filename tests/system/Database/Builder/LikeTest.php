@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -39,6 +40,29 @@ final class LikeTest extends CIUnitTestCase
         $expectedBinds = [
             'name' => [
                 '%veloper%',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/3970
+     */
+    public function testLikeWithRawSql()
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $sql    = "concat(users.name, ' ', IF(users.surname IS NULL or users.surname = '', '', users.surname))";
+        $rawSql = new RawSql($sql);
+        $builder->like($rawSql, 'value', 'both');
+
+        $expectedSQL   = "SELECT * FROM \"users\" WHERE  {$sql}  LIKE '%value%' ESCAPE '!' ";
+        $expectedBinds = [
+            $rawSql->getBindingKey() => [
+                '%value%',
                 true,
             ],
         ];
@@ -180,6 +204,29 @@ final class LikeTest extends CIUnitTestCase
             ],
         ];
 
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5775
+     */
+    public function testDBPrefixAndCoulmnWithTablename()
+    {
+        $this->db = new MockConnection(['DBPrefix' => 'db_']);
+        $builder  = new BaseBuilder('test', $this->db);
+
+        $builder->like('test.field', 'string');
+
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "db_test" WHERE "db_test"."field" LIKE '%string%' ESCAPE '!'
+            SQL;
+        $expectedBinds = [
+            'test.field' => [
+                '%string%',
+                true,
+            ],
+        ];
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }

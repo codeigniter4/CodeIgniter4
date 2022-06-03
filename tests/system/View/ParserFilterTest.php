@@ -20,9 +20,9 @@ use Config\View;
  */
 final class ParserFilterTest extends CIUnitTestCase
 {
-    protected $loader;
-    protected $viewsDir;
-    protected $config;
+    private $loader;
+    private $viewsDir;
+    private $config;
 
     protected function setUp(): void
     {
@@ -326,7 +326,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number }';
@@ -340,7 +340,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number(decimal,2) }';
@@ -354,7 +354,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number(spellout) }';
@@ -368,7 +368,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_number(decimal,4,de_DE) }';
@@ -382,7 +382,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'mynum' => 1234567.891234567890000,
+            'mynum' => 1_234_567.8912346,
         ];
 
         $template = '{ mynum|local_currency(EUR,de_DE,2) }';

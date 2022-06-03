@@ -21,6 +21,8 @@
 #--------------------------------------------------------------------
 
 # app.baseURL = ''
+# If you have trouble with `.`, you could also use `_`.
+# app_baseURL = ''
 # app.forceGlobalSecureRequests = false
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
@@ -60,7 +62,7 @@
 # contentsecuritypolicy.scriptSrc = 'self'
 # contentsecuritypolicy.styleSrc = 'self'
 # contentsecuritypolicy.imageSrc = 'self'
-# contentsecuritypolicy.base_uri = null
+# contentsecuritypolicy.baseURI = null
 # contentsecuritypolicy.childSrc = null
 # contentsecuritypolicy.connectSrc = 'self'
 # contentsecuritypolicy.fontSrc = null
@@ -73,6 +75,9 @@
 # contentsecuritypolicy.reportURI = null
 # contentsecuritypolicy.sandbox = false
 # contentsecuritypolicy.upgradeInsecureRequests = false
+# contentsecuritypolicy.styleNonceTag = '{csp-style-nonce}'
+# contentsecuritypolicy.scriptNonceTag = '{csp-script-nonce}'
+# contentsecuritypolicy.autoNonce = true
 
 #--------------------------------------------------------------------
 # COOKIE

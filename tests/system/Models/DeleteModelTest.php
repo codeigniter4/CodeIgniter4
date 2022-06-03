@@ -59,7 +59,11 @@ final class DeleteModelTest extends LiveModelTestCase
 
         $result = $this->model->delete(1);
         $this->assertTrue($result);
+        $this->assertSame(1, $this->db->affectedRows());
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NOT NULL' => null]);
+
+        $this->model->delete(1);
+        $this->assertSame(0, $this->db->affectedRows());
     }
 
     public function testDeleteWithSoftDeleteFail(): void

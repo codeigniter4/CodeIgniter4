@@ -17,146 +17,97 @@ case you need it.
 The Helper Trait
 ================
 
-To enable Controller Testing you need to use the ``ControllerTestTrait`` trait within your tests::
+To enable Controller Testing you need to use the ``ControllerTestTrait`` trait within your tests:
 
-    <?php
-
-    namespace CodeIgniter;
-
-    use CodeIgniter\Test\ControllerTestTrait;
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class TestControllerA extends CIUnitTestCase
-    {
-        use ControllerTestTrait, DatabaseTestTrait;
-    }
+.. literalinclude:: controllers/001.php
 
 Once the trait has been included, you can start setting up the environment, including the request and response classes,
 the request body, URI, and more. You specify the controller to use with the ``controller()`` method, passing in the
 fully qualified class name of your controller. Finally, call the ``execute()`` method with the name of the method
-to run as the parameter::
+to run as the parameter:
 
-    <?php
-
-    namespace CodeIgniter;
-
-    use CodeIgniter\Test\ControllerTestTrait;
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class TestControllerA extends CIUnitTestCase
-    {
-        use ControllerTestTrait, DatabaseTestTrait;
-
-        public function testShowCategories()
-        {
-            $result = $this->withURI('http://example.com/categories')
-                           ->controller(\App\Controllers\ForumController::class)
-                           ->execute('showCategories');
-
-            $this->assertTrue($result->isOK());
-        }
-    }
+.. literalinclude:: controllers/002.php
 
 Helper Methods
 ==============
 
-**controller($class)**
+controller($class)
+------------------
 
 Specifies the class name of the controller to test. The first parameter must be a fully qualified class name
-(i.e., include the namespace)::
+(i.e., include the namespace):
 
-    $this->controller(\App\Controllers\ForumController::class);
+.. literalinclude:: controllers/003.php
 
-**execute(string $method, ...$params)**
+execute(string $method, ...$params)
+-----------------------------------
 
-Executes the specified method within the controller. The first parameter is the name of the method to run::
+Executes the specified method within the controller. The first parameter is the name of the method to run:
 
-    $results = $this->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/004.php
 
 By specifying the second and subsequent parameters, you can pass them to the controller method.
 
 This returns a new helper class that provides a number of routines for checking the response itself. See below
 for details.
 
-**withConfig($config)**
+withConfig($config)
+-------------------
 
-Allows you to pass in a modified version of **Config\App.php** to test with different settings::
+Allows you to pass in a modified version of **Config\App.php** to test with different settings:
 
-    $config = new Config\App();
-    $config->appTimezone = 'America/Chicago';
-
-    $results = $this->withConfig($config)
-                    ->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/005.php
 
 If you do not provide one, the application's App config file will be used.
 
-**withRequest($request)**
+withRequest($request)
+---------------------
 
-Allows you to provide an **IncomingRequest** instance tailored to your testing needs::
+Allows you to provide an **IncomingRequest** instance tailored to your testing needs:
 
-    $request = new \CodeIgniter\HTTP\IncomingRequest(new \Config\App(), new URI('http://example.com'));
-    $request->setLocale($locale);
-
-    $results = $this->withRequest($request)
-                    ->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/006.php
 
 If you do not provide one, a new IncomingRequest instance with the default application values will be passed
 into your controller.
 
-**withResponse($response)**
+withResponse($response)
+-----------------------
 
-Allows you to provide a **Response** instance::
+Allows you to provide a **Response** instance:
 
-    $response = new \CodeIgniter\HTTP\Response(new \Config\App());
-
-    $results = $this->withResponse($response)
-                    ->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/007.php
 
 If you do not provide one, a new Response instance with the default application values will be passed
 into your controller.
 
-**withLogger($logger)**
+withLogger($logger)
+-------------------
 
-Allows you to provide a **Logger** instance::
+Allows you to provide a **Logger** instance:
 
-    $logger = new \CodeIgniter\Log\Handlers\FileHandler();
-
-    $results = $this->withResponse($response)
-                    ->withLogger($logger)
-                    ->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/008.php
 
 If you do not provide one, a new Logger instance with the default configuration values will be passed
 into your controller.
 
-**withURI(string $uri)**
+withURI(string $uri)
+--------------------
 
 Allows you to provide a new URI that simulates the URL the client was visiting when this controller was run.
 This is helpful if you need to check URI segments within your controller. The only parameter is a string
-representing a valid URI::
+representing a valid URI:
 
-    $results = $this->withURI('http://example.com/forums/categories')
-                    ->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/009.php
 
 It is a good practice to always provide the URI during testing to avoid surprises.
 
-**withBody($body)**
+withBody($body)
+---------------
 
 Allows you to provide a custom body for the request. This can be helpful when testing API controllers where
-you need to set a JSON value as the body. The only parameter is a string that represents the body of the request::
+you need to set a JSON value as the body. The only parameter is a string that represents the body of the request:
 
-    $body = json_encode(['foo' => 'bar']);
-
-    $results = $this->withBody($body)
-                    ->controller(\App\Controllers\ForumController::class)
-                    ->execute('showCategories');
+.. literalinclude:: controllers/010.php
 
 Checking the Response
 =====================
@@ -174,19 +125,9 @@ The Helper Trait
 ----------------
 
 Just like with the Controller Tester you need to include the ``FilterTestTrait`` in your test
-cases to enable these features::
+cases to enable these features:
 
-    <?php
-
-    namespace CodeIgniter;
-
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\FilterTestTrait;
-
-    class FilterTestCase extends CIUnitTestCase
-    {
-        use FilterTestTrait;
-    }
+.. literalinclude:: controllers/011.php
 
 Configuration
 -------------
@@ -205,19 +146,9 @@ you can alter any of the properties before calling the support methods:
 
 The default configuration will usually be best for your testing since it most closely emulates
 a "live" project, but (for example) if you wanted to simulate a filter triggering accidentally
-on an unfiltered route you could add it to the Config::
+on an unfiltered route you could add it to the Config:
 
-    class FilterTestCase extends CIUnitTestCase
-    {
-        use FilterTestTrait;
-
-        protected function testFilterFailsOnAdminRoute()
-        {
-            $this->filtersConfig->globals['before'] = ['admin-only-filter'];
-
-            $this->assertHasFilters('unfiltered/route', 'before');
-        }
-    ...
+.. literalinclude:: controllers/012.php
 
 Checking Routes
 ---------------
@@ -234,9 +165,9 @@ a large performance advantage over Controller and HTTP Testing.
     :returns:    Aliases for each filter that would have run
     :rtype:    string[]
 
-    Usage example::
+    Usage example:
 
-        $result = $this->getFiltersForRoute('/', 'after'); // ['toolbar']
+    .. literalinclude:: controllers/013.php
 
 Calling Filter Methods
 ----------------------
@@ -252,15 +183,9 @@ method using these properties to test your Filter code safely and check the resu
     :returns:    A callable method to run the simulated Filter event
     :rtype:    Closure
 
-    Usage example::
+    Usage example:
 
-        protected function testUnauthorizedAccessRedirects()
-        {
-            $caller = $this->getFilterCaller('permission', 'before');
-            $result = $caller('MayEditWidgets');
-
-            $this->assertInstanceOf('CodeIgniter\HTTP\RedirectResponse', $result);
-        }
+    .. literalinclude:: controllers/014.php
 
     Notice how the ``Closure`` can take input parameters which are passed to your filter method.
 
@@ -270,22 +195,30 @@ Assertions
 In addition to the helper methods above ``FilterTestTrait`` also comes with some assertions
 to streamline your test methods.
 
-The **assertFilter()** method checks that the given route at position uses the filter (by its alias)::
+assertFilter()
+^^^^^^^^^^^^^^
 
-    // Make sure users are logged in before checking their account
-    $this->assertFilter('users/account', 'before', 'login');
+The ``assertFilter()`` method checks that the given route at position uses the filter (by its alias):
 
-The **assertNotFilter()** method checks that the given route at position does not use the filter (by its alias)::
+.. literalinclude:: controllers/015.php
 
-    // Make sure API calls do not try to use the Debug Toolbar
-    $this->assertNotFilter('api/v1/widgets', 'after', 'toolbar');
+assertNotFilter()
+^^^^^^^^^^^^^^^^^
 
-The **assertHasFilters()** method checks that the given route at position has at least one filter set::
+The ``assertNotFilter()`` method checks that the given route at position does not use the filter (by its alias):
 
-    // Make sure that filters are enabled
-    $this->assertHasFilters('filtered/route', 'after');
+.. literalinclude:: controllers/016.php
 
-The **assertNotHasFilters()** method checks that the given route at position has no filters set::
+assertHasFilters()
+^^^^^^^^^^^^^^^^^^
 
-    // Make sure no filters run for our static pages
-    $this->assertNotHasFilters('about/contact', 'before');
+The ``assertHasFilters()`` method checks that the given route at position has at least one filter set:
+
+.. literalinclude:: controllers/017.php
+
+assertNotHasFilters()
+^^^^^^^^^^^^^^^^^^^^^
+
+The ``assertNotHasFilters()`` method checks that the given route at position has no filters set:
+
+.. literalinclude:: controllers/018.php

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cache;
 
+use CodeIgniter\Cache\Exceptions\CacheException;
 use CodeIgniter\Cache\Handlers\DummyHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cache;
@@ -20,9 +21,9 @@ use Config\Cache;
  */
 final class CacheFactoryTest extends CIUnitTestCase
 {
-    private static $directory = 'CacheFactory';
-    private $cacheFactory;
-    private $config;
+    private static string $directory = 'CacheFactory';
+    private CacheFactory $cacheFactory;
+    private Cache $config;
 
     protected function setUp(): void
     {
@@ -50,7 +51,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
     public function testGetHandlerExceptionCacheInvalidHandlers()
     {
-        $this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+        $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config must have an array of $validHandlers.');
 
         $this->config->validHandlers = null;
@@ -60,7 +61,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
     public function testGetHandlerExceptionCacheNoBackup()
     {
-        $this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+        $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config must have a handler and backupHandler set.');
 
         $this->config->backupHandler = null;
@@ -70,7 +71,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
     public function testGetHandlerExceptionCacheNoHandler()
     {
-        $this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+        $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config must have a handler and backupHandler set.');
 
         $this->config->handler = null;
@@ -80,7 +81,7 @@ final class CacheFactoryTest extends CIUnitTestCase
 
     public function testGetHandlerExceptionCacheHandlerNotFound()
     {
-        $this->expectException('CodeIgniter\Cache\Exceptions\CacheException');
+        $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config has an invalid handler or backup handler specified.');
 
         unset($this->config->validHandlers[$this->config->handler]);

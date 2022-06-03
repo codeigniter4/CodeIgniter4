@@ -1,3 +1,7 @@
+conditionalTags:
+	PhpParser\NodeVisitor\NodeConnectingVisitor:
+		phpstan.parser.richParserNodeVisitor: true
+
 services:
 	-
 		class: Utils\PHPStan\CheckUseStatementsAfterLicenseRule
@@ -12,6 +16,7 @@ includes:
 	- phpstan-baseline.neon.dist
 
 parameters:
+	phpVersion: 80000
 	tmpDir: build/phpstan
 	level: 5
 	paths:
@@ -20,7 +25,7 @@ parameters:
 		- utils/PHPStan
 	treatPhpDocTypesAsCertain: false
 	bootstrapFiles:
-		- system/Test/bootstrap.php
+		- phpstan-bootstrap.php
 	excludePaths:
 		- app/Views/errors/cli/*
 		- app/Views/errors/html/*

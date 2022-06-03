@@ -47,9 +47,11 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
 
         $this->path = $this->origin . 'ci-logo.png';
 
-        $handlerConfig              = new Images();
-        $handlerConfig->libraryPath = '/usr/bin/convert';
-        $this->handler              = Services::image('imagick', $handlerConfig, false);
+        $handlerConfig = new Images();
+        if (is_file('/usr/bin/convert')) {
+            $handlerConfig->libraryPath = '/usr/bin/convert';
+        }
+        $this->handler = Services::image('imagick', $handlerConfig, false);
     }
 
     public function testGetVersion()
@@ -392,7 +394,6 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageConvert()
     {
         $this->handler->withFile($this->origin . 'ci-logo.jpeg');
-        $this->handler->getResource(); // make sure resource is loaded
         $this->handler->convert(IMAGETYPE_PNG);
         $this->handler->save($this->root . 'ci-logo.png');
         $this->assertSame(exif_imagetype($this->root . 'ci-logo.png'), IMAGETYPE_PNG);

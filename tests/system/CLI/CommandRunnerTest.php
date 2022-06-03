@@ -26,15 +26,8 @@ final class CommandRunnerTest extends CIUnitTestCase
      */
     private $streamFilter;
 
-    /**
-     * @var Logger
-     */
-    private static $logger;
-
-    /**
-     * @var CommandRunner
-     */
-    private static $runner;
+    private static Logger $logger;
+    private static CommandRunner $runner;
 
     public static function setUpBeforeClass(): void
     {
@@ -123,14 +116,5 @@ final class CommandRunnerTest extends CIUnitTestCase
 
         // make sure the result looks like a command list
         $this->assertStringContainsString('Command "bogus" not found', CITestStreamFilter::$buffer);
-    }
-
-    public function testRemapEmptyFirstParams()
-    {
-        self::$runner->_remap('anyvalue', null, 'list');
-        $result = CITestStreamFilter::$buffer;
-
-        // make sure the result looks like a command list
-        $this->assertStringContainsString('Lists the available commands.', $result);
     }
 }

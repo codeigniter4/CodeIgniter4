@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
@@ -62,7 +63,7 @@ final class InsertTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
 
         $builder->testMode()->insert(null, true);
@@ -97,6 +98,43 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
 
         $expected = "INSERT INTO \"jobs\" (\"description\", \"id\", \"name\") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver')";
+        $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5671
+     */
+    public function testInsertBatchIgnore()
+    {
+        $builder = $this->db->table('jobs');
+
+        $insertData = [
+            [
+                'id'          => 2,
+                'name'        => 'Commedian',
+                'description' => 'There\'s something in your teeth',
+            ],
+            [
+                'id'          => 3,
+                'name'        => 'Cab Driver',
+                'description' => 'I am yellow',
+            ],
+        ];
+
+        $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
+        $builder->ignore()->insertBatch($insertData, true, 1);
+
+        $query = $this->db->getLastQuery();
+        $this->assertInstanceOf(Query::class, $query);
+
+        $raw = <<<'SQL'
+            INSERT IGNORE INTO "jobs" ("description", "id", "name") VALUES ('I am yellow',3,'Cab Driver')
+            SQL;
+        $this->assertSame($raw, str_replace("\n", ' ', $query->getOriginalQuery()));
+
+        $expected = <<<'SQL'
+            INSERT IGNORE INTO "jobs" ("description", "id", "name") VALUES ('I am yellow',3,'Cab Driver')
+            SQL;
         $this->assertSame($expected, str_replace("\n", ' ', $query->getQuery()));
     }
 
@@ -155,7 +193,7 @@ final class InsertTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('You must use the "set" method to update an entry.');
         $builder->insertBatch();
     }
@@ -164,7 +202,7 @@ final class InsertTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $this->expectException('\CodeIgniter\Database\Exceptions\DatabaseException');
+        $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('insertBatch() called with no data');
         $builder->insertBatch([]);
     }

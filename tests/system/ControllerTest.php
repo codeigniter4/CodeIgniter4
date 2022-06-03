@@ -17,9 +17,9 @@ use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Mock\MockCodeIgniter;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
+use Config\Services;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -34,43 +34,30 @@ use Psr\Log\LoggerInterface;
 final class ControllerTest extends CIUnitTestCase
 {
     /**
-     * @var CodeIgniter
-     */
-    protected $codeigniter;
-
-    /**
      * @var Controller
      */
-    protected $controller;
+    private $controller;
 
     /**
      * Current request.
-     *
-     * @var Request
      */
-    protected $request;
+    private Request $request;
 
     /**
      * Current response.
-     *
-     * @var Response
      */
-    protected $response;
+    private Response $response;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    private LoggerInterface $logger;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->config      = new App();
-        $this->request     = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
-        $this->response    = new Response($this->config);
-        $this->logger      = \Config\Services::logger();
-        $this->codeigniter = new MockCodeIgniter($this->config);
+        $this->config   = new App();
+        $this->request  = new IncomingRequest($this->config, new URI('https://somwhere.com'), null, new UserAgent());
+        $this->response = new Response($this->config);
+        $this->logger   = Services::logger();
     }
 
     public function testConstructor()
@@ -166,6 +153,29 @@ final class ControllerTest extends CIUnitTestCase
             ],
         ]));
         $this->assertSame('You must choose a username.', Services::validation()->getError());
+    }
+
+    public function testValidateData()
+    {
+        // make sure we can instantiate one
+        $this->controller = new Controller();
+        $this->controller->initController($this->request, $this->response, $this->logger);
+
+        $method = $this->getPrivateMethodInvoker($this->controller, 'validateData');
+
+        $data = [
+            'username' => 'mike',
+            'password' => '123',
+        ];
+        $rule = [
+            'username' => 'required',
+            'password' => 'required|min_length[10]',
+        ];
+        $this->assertFalse($method($data, $rule));
+        $this->assertSame(
+            'The password field must be at least 10 characters in length.',
+            Services::validation()->getError('password')
+        );
     }
 
     public function testHelpers()

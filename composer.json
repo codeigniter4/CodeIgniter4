@@ -5,26 +5,26 @@
     "homepage": "https://codeigniter.com",
     "license": "MIT",
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^7.4 || ^8.0",
         "ext-curl": "*",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "kint-php/kint": "^4.0",
+        "kint-php/kint": "^4.1.1",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
-        "codeigniter/coding-standard": "1.2.*",
+        "codeigniter/coding-standard": "^1.1",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "3.2.*",
+        "friendsofphp/php-cs-fixer": "3.6.*",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
-        "phpstan/phpstan": "1.4.3",
+        "phpstan/phpstan": "^1.7.1",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1",
-        "rector/rector": "0.12.10"
+        "rector/rector": "0.13.3"
     },
     "suggest": {
         "ext-fileinfo": "Improves mime type detection for files"
@@ -50,6 +50,7 @@
     "autoload-dev": {
         "psr-4": {
             "CodeIgniter\\": "tests/system/",
+            "CodeIgniter\\AutoReview\\": "tests/AutoReview/",
             "Utils\\": "utils/"
         }
     },
@@ -61,12 +62,14 @@
         "analyze": "phpstan analyse",
         "test": "phpunit",
         "cs": [
-            "php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --dry-run --diff"
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --dry-run --diff"
         ],
         "cs-fix": [
-            "php-cs-fixer fix --verbose --diff --config=.no-header.php-cs-fixer.dist.php",
-            "php-cs-fixer fix --verbose --diff"
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
+            "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
+            "php-cs-fixer fix --ansi --verbose --diff"
         ]
     },
     "scripts-descriptions": {

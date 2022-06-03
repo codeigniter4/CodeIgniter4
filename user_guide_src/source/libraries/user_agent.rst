@@ -18,9 +18,9 @@ Initializing the Class
 
 The User Agent class is always available directly from the current :doc:`IncomingRequest </incoming/incomingrequest>` instance.
 By default, you will have a request instance in your controller that you can retrieve the
-User Agent class from::
+User Agent class from:
 
-    $agent = $this->request->getUserAgent();
+.. literalinclude:: user_agent/001.php
 
 User Agent Definitions
 ======================
@@ -35,23 +35,9 @@ Example
 When the User Agent class is initialized it will attempt to determine
 whether the user agent browsing your site is a web browser, a mobile
 device, or a robot. It will also gather the platform information if it
-is available::
+is available:
 
-    $agent = $this->request->getUserAgent();
-
-    if ($agent->isBrowser()) {
-        $currentAgent = $agent->getBrowser() . ' ' . $agent->getVersion();
-    } elseif ($agent->isRobot()) {
-        $currentAgent = $agent->getRobot();
-    } elseif ($agent->isMobile()) {
-        $currentAgent = $agent->getMobile();
-    } else {
-        $currentAgent = 'Unidentified User Agent';
-    }
-
-    echo $currentAgent;
-
-    echo $agent->getPlatform(); // Platform info (Windows, Linux, Mac, etc.)
+.. literalinclude:: user_agent/002.php
 
 ***************
 Class Reference
@@ -66,13 +52,8 @@ Class Reference
         :rtype:    bool
 
         Returns true/false (boolean) if the user agent is a known web browser.
-        ::
 
-            if ($agent->isBrowser('Safari')) {
-                echo 'You are using Safari.';
-            } elseif ($agent->isBrowser()) {
-                echo 'You are using a browser.';
-            }
+        .. literalinclude:: user_agent/003.php
 
         .. note:: The string "Safari" in this example is an array key in the list of browser definitions.
                   You can find this list in **app/Config/UserAgents.php** if you want to add new
@@ -85,15 +66,8 @@ Class Reference
         :rtype:    bool
 
         Returns true/false (boolean) if the user agent is a known mobile device.
-        ::
 
-            if ($agent->isMobile('iphone')) {
-                echo view('iphone/home');
-            } elseif ($agent->isMobile()) {
-                echo view('mobile/home');
-            } else {
-                echo view('web/home');
-            }
+        .. literalinclude:: user_agent/004.php
 
     .. php:method:: isRobot([$key = null])
 
@@ -155,11 +129,9 @@ Class Reference
         :returns:    Detected referrer or an empty string
         :rtype:    string
 
-        The referrer, if the user agent was referred from another site. Typically you'll test for this as follows::
+        The referrer, if the user agent was referred from another site. Typically you'll test for this as follows:
 
-            if ($agent->isReferral()) {
-                echo $agent->referrer();
-            }
+        .. literalinclude:: user_agent/005.php
 
     .. php:method:: getAgentString()
 

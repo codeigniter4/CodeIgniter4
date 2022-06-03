@@ -13,16 +13,22 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use Config\Autoload;
+use Config\Modules;
+use Config\Services;
 
 /**
  * @internal
  */
 final class ScaffoldGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {
+        $this->resetServices();
+        Services::autoloader()->initialize(new Autoload(), new Modules());
+
         CITestStreamFilter::$buffer = '';
 
         $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
@@ -36,7 +42,7 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
 
     protected function getFileContents(string $filepath): string
     {
-        if (! file_exists($filepath)) {
+        if (! is_file($filepath)) {
             return '';
         }
 

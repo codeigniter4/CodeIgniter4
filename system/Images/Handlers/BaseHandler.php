@@ -296,6 +296,8 @@ abstract class BaseHandler implements ImageHandlerInterface
      */
     public function convert(int $imageType)
     {
+        $this->ensureResource();
+
         $this->image()->imageType = $imageType;
 
         return $this;

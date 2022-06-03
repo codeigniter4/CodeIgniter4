@@ -14,6 +14,7 @@ namespace CodeIgniter\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 use ReflectionProperty;
+use RuntimeException;
 
 /**
  * @internal
@@ -38,18 +39,21 @@ final class CLITest extends CIUnitTestCase
     public function testNew()
     {
         $actual = new CLI();
+
         $this->assertInstanceOf(CLI::class, $actual);
     }
 
     public function testBeep()
     {
         $this->expectOutputString("\x07");
+
         CLI::beep();
     }
 
     public function testBeep4()
     {
         $this->expectOutputString("\x07\x07\x07\x07");
+
         CLI::beep(4);
     }
 
@@ -95,12 +99,13 @@ final class CLITest extends CIUnitTestCase
     public function testNewLine()
     {
         $this->expectOutputString('');
+
         CLI::newLine();
     }
 
     public function testColorExceptionForeground()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid foreground color: Foreground');
 
         CLI::color('test', 'Foreground');
@@ -108,7 +113,7 @@ final class CLITest extends CIUnitTestCase
 
     public function testColorExceptionBackground()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Invalid background color: Background');
 
         CLI::color('test', 'white', 'Background');
@@ -118,9 +123,10 @@ final class CLITest extends CIUnitTestCase
     {
         $nocolor = getenv('NO_COLOR');
         putenv('NO_COLOR=1');
-
         CLI::init(); // force re-check on env
+
         $this->assertSame('test', CLI::color('test', 'white', 'green'));
+
         putenv($nocolor ? "NO_COLOR={$nocolor}" : 'NO_COLOR');
     }
 
@@ -128,9 +134,10 @@ final class CLITest extends CIUnitTestCase
     {
         $termProgram = getenv('TERM_PROGRAM');
         putenv('TERM_PROGRAM=Hyper');
-
         CLI::init(); // force re-check on env
+
         $this->assertSame("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
+
         putenv($termProgram ? "TERM_PROGRAM={$termProgram}" : 'TERM_PROGRAM');
     }
 
@@ -145,36 +152,49 @@ final class CLITest extends CIUnitTestCase
         // After the tests on NO_COLOR and TERM_PROGRAM above,
         // the $isColored variable is rigged. So we reset this.
         CLI::init();
-        $this->assertSame("\033[1;37m\033[42m\033[4mtest\033[0m", CLI::color('test', 'white', 'green', 'underline'));
+
+        $this->assertSame(
+            "\033[1;37m\033[42m\033[4mtest\033[0m",
+            CLI::color('test', 'white', 'green', 'underline')
+        );
+    }
+
+    public function testColorEmtpyString()
+    {
+        $this->assertSame(
+            '',
+            CLI::color('', 'white', 'green', 'underline')
+        );
     }
 
     public function testPrint()
     {
         CLI::print('test');
-        $expected = 'test';
 
+        $expected = 'test';
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testPrintForeground()
     {
         CLI::print('test', 'red');
-        $expected = "\033[0;31mtest\033[0m";
 
+        $expected = "\033[0;31mtest\033[0m";
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testPrintBackground()
     {
         CLI::print('test', 'red', 'green');
-        $expected = "\033[0;31m\033[42mtest\033[0m";
 
+        $expected = "\033[0;31m\033[42mtest\033[0m";
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWrite()
     {
         CLI::write('test');
+
         $expected = PHP_EOL . 'test' . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
@@ -182,6 +202,7 @@ final class CLITest extends CIUnitTestCase
     public function testWriteForeground()
     {
         CLI::write('test', 'red');
+
         $expected = "\033[0;31mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
@@ -189,20 +210,37 @@ final class CLITest extends CIUnitTestCase
     public function testWriteForegroundWithColorBefore()
     {
         CLI::write(CLI::color('green', 'green') . ' red', 'red');
-        $expected = "\033[0;31m\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
+
+        $expected = "\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteForegroundWithColorAfter()
     {
         CLI::write('red ' . CLI::color('green', 'green'), 'red');
-        $expected = "\033[0;31mred \033[0;32mgreen\033[0m" . PHP_EOL;
+
+        $expected = "\033[0;31mred \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
+        $this->assertSame($expected, CITestStreamFilter::$buffer);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5892
+     */
+    public function testWriteForegroundWithColorTwice()
+    {
+        CLI::write(
+            CLI::color('green', 'green') . ' red ' . CLI::color('green', 'green'),
+            'red'
+        );
+
+        $expected = "\033[0;32mgreen\033[0m\033[0;31m red \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
 
     public function testWriteBackground()
     {
         CLI::write('test', 'red', 'green');
+
         $expected = "\033[0;31m\033[42mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
@@ -210,7 +248,9 @@ final class CLITest extends CIUnitTestCase
     public function testError()
     {
         $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
         CLI::error('test');
+
         // red expected cuz stderr
         $expected = "\033[1;31mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
@@ -219,7 +259,9 @@ final class CLITest extends CIUnitTestCase
     public function testErrorForeground()
     {
         $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
         CLI::error('test', 'purple');
+
         $expected = "\033[0;35mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
@@ -227,7 +269,9 @@ final class CLITest extends CIUnitTestCase
     public function testErrorBackground()
     {
         $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
+
         CLI::error('test', 'purple', 'green');
+
         $expected = "\033[0;35m\033[42mtest\033[0m" . PHP_EOL;
         $this->assertSame($expected, CITestStreamFilter::$buffer);
     }
@@ -272,9 +316,18 @@ final class CLITest extends CIUnitTestCase
     public function testWrap()
     {
         $this->assertSame('', CLI::wrap(''));
-        $this->assertSame('1234' . PHP_EOL . ' 5678' . PHP_EOL . ' 90' . PHP_EOL . ' abc' . PHP_EOL . ' de' . PHP_EOL . ' fghij' . PHP_EOL . ' 0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1));
-        $this->assertSame('1234 5678 90' . PHP_EOL . '  abc de fghij' . PHP_EOL . '  0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2));
-        $this->assertSame('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321'));
+        $this->assertSame(
+            '1234' . PHP_EOL . ' 5678' . PHP_EOL . ' 90' . PHP_EOL . ' abc' . PHP_EOL . ' de' . PHP_EOL . ' fghij' . PHP_EOL . ' 0987654321',
+            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 5, 1)
+        );
+        $this->assertSame(
+            '1234 5678 90' . PHP_EOL . '  abc de fghij' . PHP_EOL . '  0987654321',
+            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321', 999, 2)
+        );
+        $this->assertSame(
+            '1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321',
+            CLI::wrap('1234 5678 90' . PHP_EOL . 'abc de fghij' . PHP_EOL . '0987654321')
+        );
     }
 
     public function testParseCommand()
@@ -286,6 +339,7 @@ final class CLITest extends CIUnitTestCase
         ];
         $_SERVER['argc'] = 3;
         CLI::init();
+
         $this->assertNull(CLI::getSegment(3));
         $this->assertSame('b', CLI::getSegment(1));
         $this->assertSame('c', CLI::getSegment(2));
@@ -311,6 +365,7 @@ final class CLITest extends CIUnitTestCase
             'sure',
         ];
         CLI::init();
+
         $this->assertNull(CLI::getSegment(7));
         $this->assertSame('b', CLI::getSegment(1));
         $this->assertSame('c', CLI::getSegment(2));
@@ -334,6 +389,7 @@ final class CLITest extends CIUnitTestCase
             'd',
         ];
         CLI::init();
+
         $this->assertSame(['parm' => 'pvalue'], CLI::getOptions());
         $this->assertSame('pvalue', CLI::getOption('parm'));
         $this->assertSame('-parm pvalue ', CLI::getOptionString());
@@ -358,6 +414,7 @@ final class CLITest extends CIUnitTestCase
             'value 3',
         ];
         CLI::init();
+
         $this->assertSame(['parm' => 'pvalue', 'p2' => null, 'p3' => 'value 3'], CLI::getOptions());
         $this->assertSame('pvalue', CLI::getOption('parm'));
         $this->assertSame('-parm pvalue -p2 -p3 "value 3" ', CLI::getOptionString());
@@ -372,11 +429,13 @@ final class CLITest extends CIUnitTestCase
         $height = new ReflectionProperty(CLI::class, 'height');
         $height->setAccessible(true);
         $height->setValue(null);
+
         $this->assertIsInt(CLI::getHeight());
 
         $width = new ReflectionProperty(CLI::class, 'width');
         $width->setAccessible(true);
         $width->setValue(null);
+
         $this->assertIsInt(CLI::getWidth());
     }
 
@@ -390,6 +449,7 @@ final class CLITest extends CIUnitTestCase
     public function testTable($tbody, $thead, $expected)
     {
         CLI::table($tbody, $thead);
+
         $this->assertSame(CITestStreamFilter::$buffer, $expected);
     }
 

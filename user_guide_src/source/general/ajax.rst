@@ -25,7 +25,6 @@ Fetch API
         }
     });
 
-
 jQuery
 ======
 
@@ -38,7 +37,6 @@ For libraries like jQuery for example, it is not necessary to make explicit the 
         headers: {'X-Requested-With': 'XMLHttpRequest'}
     });
 
-
 VueJS
 =====
 
@@ -47,7 +45,6 @@ In VueJS you just need to add the following code to the ``created`` function, as
 .. code-block:: javascript
 
     axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 
 React
 =====

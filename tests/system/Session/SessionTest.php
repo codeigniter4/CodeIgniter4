@@ -23,10 +23,11 @@ use Config\Logger as LoggerConfig;
 
 /**
  * @runTestsInSeparateProcesses
- *
  * @preserveGlobalState disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class SessionTest extends CIUnitTestCase
 {
@@ -41,7 +42,7 @@ final class SessionTest extends CIUnitTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\FileHandler',
+            'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
             'sessionSavePath'          => null,

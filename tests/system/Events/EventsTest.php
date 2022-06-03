@@ -17,15 +17,15 @@ use Config\Modules;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class EventsTest extends CIUnitTestCase
 {
     /**
      * Accessible event manager instance
-     *
-     * @var MockEvents
      */
-    protected $manager;
+    private MockEvents $manager;
 
     protected function setUp(): void
     {
@@ -157,15 +157,15 @@ final class EventsTest extends CIUnitTestCase
 
         Events::on('foo', static function () use (&$result) {
             $result[] = 'a';
-        }, EVENT_PRIORITY_NORMAL);
+        }, Events::PRIORITY_NORMAL);
 
         Events::on('foo', static function () use (&$result) {
             $result[] = 'b';
-        }, EVENT_PRIORITY_LOW);
+        }, Events::PRIORITY_LOW);
 
         Events::on('foo', static function () use (&$result) {
             $result[] = 'c';
-        }, EVENT_PRIORITY_HIGH);
+        }, Events::PRIORITY_HIGH);
 
         Events::on('foo', static function () use (&$result) {
             $result[] = 'd';

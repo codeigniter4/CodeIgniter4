@@ -12,6 +12,8 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use ErrorException;
+use ValueError;
 
 /**
  * @internal
@@ -43,7 +45,16 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
         ];
 
-        $this->assertSame(23, dot_array_search('foo.bar.baz', $data));
+        $this->assertNull(dot_array_search('foo.bar.baz', $data));
+    }
+
+    public function testArrayDotTooManyLevelsWithWildCard()
+    {
+        $data = [
+            'a' => [],
+        ];
+
+        $this->assertNull(dot_array_search('a.*.c', $data));
     }
 
     /**
@@ -75,15 +86,24 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     public function testArraySearchDotMultiLevels()
     {
-        $data1 = ['bar' => [['foo' => 'baz']]];
-        $data2 = ['bar' => [
-            ['foo' => 'bizz'],
-            ['foo' => 'buzz'],
-        ]];
-        $data3 = ['baz' => 'none'];
-
+        $data1 = [
+            'bar' => [
+                ['foo' => 'baz'],
+            ],
+        ];
         $this->assertSame('baz', dot_array_search('bar.*.foo', $data1));
+
+        $data2 = [
+            'bar' => [
+                ['foo' => 'bizz'],
+                ['foo' => 'buzz'],
+            ],
+        ];
         $this->assertSame(['bizz', 'buzz'], dot_array_search('bar.*.foo', $data2));
+
+        $data3 = [
+            'baz' => 'none',
+        ];
         $this->assertNull(dot_array_search('bar.*.foo', $data3));
     }
 
@@ -295,9 +315,9 @@ final class ArrayHelperTest extends CIUnitTestCase
     {
         // PHP 8 changes this error type
         if (version_compare(PHP_VERSION, '8.0', '<')) {
-            $this->expectException('ErrorException');
+            $this->expectException(ErrorException::class);
         } else {
-            $this->expectException('ValueError');
+            $this->expectException(ValueError::class);
         }
 
         $this->expectExceptionMessage('Array sizes are inconsistent');
@@ -391,11 +411,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider arrayFlattenProvider
-     *
-     * @param iterable $input
-     * @param iterable $expected
      */
-    public function testArrayFlattening($input, $expected): void
+    public function testArrayFlattening(array $input, array $expected): void
     {
         $this->assertSame($expected, array_flatten_with_dots($input));
     }
@@ -452,24 +469,22 @@ final class ArrayHelperTest extends CIUnitTestCase
             ],
             [
                 'foo'      => 'bar',
+                'baz'      => [],
                 'bar.fizz' => 'buzz',
                 'bar.nope' => 'yeah',
+                'bar.why'  => [],
             ],
         ];
 
-        yield 'with-mixed-empty' => [
+        yield 'with-empty-string-index' => [
             [
                 'foo' => 1,
                 ''    => [
                     'bar' => 2,
                     'baz' => 3,
                 ],
-                0 => [
-                    'fizz' => 4,
-                ],
-                1 => [
-                    'buzz' => 5,
-                ],
+                ['fizz' => 4],
+                ['buzz' => 5],
             ],
             [
                 'foo'    => 1,
@@ -477,6 +492,19 @@ final class ArrayHelperTest extends CIUnitTestCase
                 '.baz'   => 3,
                 '0.fizz' => 4,
                 '1.buzz' => 5,
+            ],
+        ];
+
+        yield 'empty-array-and-lists' => [
+            [
+                'bar' => [
+                    ['foo' => 'baz'],
+                    ['foo' => []],
+                ],
+            ],
+            [
+                'bar.0.foo' => 'baz',
+                'bar.1.foo' => [],
             ],
         ];
     }

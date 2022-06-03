@@ -23,6 +23,8 @@ use Config\Services;
  * test cases need to be run as separate processes.
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ResponseSendTest extends CIUnitTestCase
 {
@@ -79,7 +81,10 @@ final class ResponseSendTest extends CIUnitTestCase
      */
     public function testHeadersWithCSP()
     {
-        $config             = new App();
+        $this->resetFactories();
+        $this->resetServices();
+
+        $config             = config('App');
         $config->CSPEnabled = true;
         $response           = new Response($config);
         $response->pretend(false);

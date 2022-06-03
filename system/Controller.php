@@ -97,7 +97,7 @@ class Controller
      *
      * @throws HTTPException
      */
-    protected function forceHTTPS(int $duration = 31536000)
+    protected function forceHTTPS(int $duration = 31_536_000)
     {
         force_https($duration, $this->request, $this->response);
     }
@@ -128,13 +128,37 @@ class Controller
     }
 
     /**
-     * A shortcut to performing validation on input data. If validation
-     * is not successful, a $errors property will be set on this class.
+     * A shortcut to performing validation on Request data.
      *
      * @param array|string $rules
      * @param array        $messages An array of custom error messages
      */
     protected function validate($rules, array $messages = []): bool
+    {
+        $this->setValidator($rules, $messages);
+
+        return $this->validator->withRequest($this->request)->run();
+    }
+
+    /**
+     * A shortcut to performing validation on any input data.
+     *
+     * @param array        $data     The data to validate
+     * @param array|string $rules
+     * @param array        $messages An array of custom error messages
+     * @param string|null  $dbGroup  The database group to use
+     */
+    protected function validateData(array $data, $rules, array $messages = [], ?string $dbGroup = null): bool
+    {
+        $this->setValidator($rules, $messages);
+
+        return $this->validator->run($data, null, $dbGroup);
+    }
+
+    /**
+     * @param array|string $rules
+     */
+    private function setValidator($rules, array $messages): void
     {
         $this->validator = Services::validation();
 
@@ -157,6 +181,6 @@ class Controller
             $rules = $validation->{$rules};
         }
 
-        return $this->validator->withRequest($this->request)->setRules($rules, $messages)->run();
+        $this->validator->setRules($rules, $messages);
     }
 }

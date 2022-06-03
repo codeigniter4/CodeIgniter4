@@ -101,6 +101,27 @@ final class FromTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    public function testFromSubquery()
+    {
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") "alias"';
+        $subquery    = new BaseBuilder('users', $this->db);
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedSQL = 'SELECT * FROM (SELECT "id", "name" FROM "users") "users_1"';
+        $subquery    = (new BaseBuilder('users', $this->db))->select('id, name');
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'users_1');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+
+        $expectedSQL = 'SELECT * FROM (SELECT * FROM "users") "alias", "some_table"';
+        $subquery    = new BaseBuilder('users', $this->db);
+        $builder     = $this->db->newQuery()->fromSubquery($subquery, 'alias')->from('some_table');
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     public function testFromWithMultipleTablesAsStringWithSQLSRV()
     {
         $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
@@ -110,6 +131,21 @@ final class FromTest extends CIUnitTestCase
         $builder->from(['jobs, roles']);
 
         $expectedSQL = 'SELECT * FROM "test"."dbo"."user", "test"."dbo"."jobs", "test"."dbo"."roles"';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testFromSubqueryWithSQLSRV()
+    {
+        $this->db = new MockConnection(['DBDriver' => 'SQLSRV', 'database' => 'test', 'schema' => 'dbo']);
+
+        $subquery = new SQLSRVBuilder('users', $this->db);
+
+        $builder = new SQLSRVBuilder('jobs', $this->db);
+
+        $builder->fromSubquery($subquery, 'users_1');
+
+        $expectedSQL = 'SELECT * FROM "test"."dbo"."jobs", (SELECT * FROM "test"."dbo"."users") "users_1"';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }

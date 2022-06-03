@@ -21,9 +21,9 @@ Initializing a Session
 Sessions will typically run globally with each page load, so the Session
 class should be magically initialized.
 
-To access and initialize the session::
+To access and initialize the session:
 
-    $session = \Config\Services::session($config);
+.. literalinclude:: sessions/001.php
 
 The ``$config`` parameter is optional - your application configuration.
 If not provided, the services register will instantiate your default
@@ -36,9 +36,8 @@ Once loaded, the Sessions library object will be available using::
 Alternatively, you can use the helper function that will use the default
 configuration options. This version is a little friendlier to read,
 but does not take any configuration options.
-::
 
-    $session = session();
+.. literalinclude:: sessions/002.php
 
 How do Sessions work?
 =====================
@@ -67,7 +66,7 @@ Unless you're developing a website with heavy AJAX usage, you can skip this
 section. If you are, however, and if you're experiencing performance
 issues, then this note is exactly what you're looking for.
 
-Sessions in previous versions of CodeIgniter didn't implement locking,
+Sessions in CodeIgniter v2.x didn't implement locking,
 which meant that two HTTP requests using the same session could run exactly
 at the same time. To use a more appropriate technical term - requests were
 non-blocking.
@@ -89,9 +88,8 @@ Locking is not the issue, it is a solution. Your issue is that you still
 have the session open, while you've already processed it and therefore no
 longer need it. So, what you need is to close the session for the
 current request after you no longer need it.
-::
 
-    session_write_close();
+.. literalinclude:: sessions/003.php
 
 What is Session Data?
 =====================
@@ -115,47 +113,39 @@ Retrieving Session Data
 =======================
 
 Any piece of information from the session array is available through the
-``$_SESSION`` superglobal::
+``$_SESSION`` superglobal:
 
-    $_SESSION['item']
+.. literalinclude:: sessions/004.php
 
-Or through the conventional accessor method::
+Or through the conventional accessor method:
 
-    $session->get('item');
+.. literalinclude:: sessions/005.php
 
-Or through the magic getter::
+Or through the magic getter:
 
-    $session->item
+.. literalinclude:: sessions/006.php
 
-Or even through the session helper method::
+Or even through the session helper method:
 
-    session('item');
+.. literalinclude:: sessions/007.php
 
 Where ``item`` is the array key corresponding to the item you wish to fetch.
 For example, to assign a previously stored 'name' item to the ``$name``
-variable, you will do this::
+variable, you will do this:
 
-    $name = $_SESSION['name'];
-
-    // or:
-
-    $name = $session->name
-
-    // or:
-
-    $name = $session->get('name');
+.. literalinclude:: sessions/008.php
 
 .. note:: The ``get()`` method returns null if the item you are trying
     to access does not exist.
 
 If you want to retrieve all of the existing userdata, you can simply
-omit the item key (magic getter only works for single property values)::
+omit the item key (magic getter only works for single property values):
 
-    $_SESSION
+.. literalinclude:: sessions/009.php
 
-    // or:
-
-    $session->get();
+.. important:: The ``get()`` method WILL return flashdata or tempdata items when
+    retrieving a single item by key. It will not return flashdata or tempdata when
+    grabbing all userdata from the session, however.
 
 Adding Session Data
 ===================
@@ -170,71 +160,55 @@ variable. Or as a property of ``$session``.
 
 The former userdata method is deprecated,
 but you can pass an array containing your new session data to the
-``set()`` method::
+``set()`` method:
 
-    $session->set($array);
+.. literalinclude:: sessions/010.php
 
 Where ``$array`` is an associative array containing your new data. Here's
-an example::
+an example:
 
-    $newdata = [
-        'username'  => 'johndoe',
-        'email'     => 'johndoe@some-site.com',
-        'logged_in' => true,
-    ];
-
-    $session->set($newdata);
+.. literalinclude:: sessions/011.php
 
 If you want to add session data one value at a time, ``set()`` also
-supports this syntax::
+supports this syntax:
 
-    $session->set('some_name', 'some_value');
+.. literalinclude:: sessions/012.php
 
 If you want to verify that a session value exists, simply check with
-``isset()``::
+``isset()``:
 
-    // returns false if the 'some_name' item doesn't exist or is null,
-    // true otherwise:
-    isset($_SESSION['some_name'])
+.. literalinclude:: sessions/013.php
 
-Or you can call ``has()``::
+Or you can call ``has()``:
 
-    $session->has('some_name');
+.. literalinclude:: sessions/014.php
 
 Pushing new value to session data
 =================================
 
 The push method is used to push a new value onto a session value that is an array.
-For instance, if the 'hobbies' key contains an array of hobbies, you can add a new value onto the array like so::
+For instance, if the 'hobbies' key contains an array of hobbies, you can add a new value onto the array like so:
 
-$session->push('hobbies', ['sport'=>'tennis']);
+.. literalinclude:: sessions/015.php
 
 Removing Session Data
 =====================
 
 Just as with any other variable, unsetting a value in ``$_SESSION`` can be
-done through ``unset()``::
+done through ``unset()``:
 
-    unset($_SESSION['some_name']);
-
-    // or multiple values:
-
-    unset(
-        $_SESSION['some_name'],
-        $_SESSION['another_name']
-    );
+.. literalinclude:: sessions/016.php
 
 Also, just as ``set()`` can be used to add information to a
 session, ``remove()`` can be used to remove it, by passing the
 session key. For example, if you wanted to remove 'some_name' from your
-session data array::
+session data array:
 
-    $session->remove('some_name');
+.. literalinclude:: sessions/017.php
 
-This method also accepts an array of item keys to unset::
+This method also accepts an array of item keys to unset:
 
-    $array_items = ['username', 'email'];
-    $session->remove($array_items);
+.. literalinclude:: sessions/018.php
 
 Flashdata
 =========
@@ -248,44 +222,43 @@ status messages (for example: "Record 2 deleted").
 It should be noted that flashdata variables are regular session variables,
 managed inside the CodeIgniter session handler.
 
-To mark an existing item as "flashdata"::
+To mark an existing item as "flashdata":
 
-    $session->markAsFlashdata('item');
+.. literalinclude:: sessions/019.php
 
 If you want to mark multiple items as flashdata, simply pass the keys as an
-array::
+array:
 
-    $session->markAsFlashdata(['item', 'item2']);
+.. literalinclude:: sessions/020.php
 
-To add flashdata::
+To add flashdata:
 
-    $_SESSION['item'] = 'value';
-    $session->markAsFlashdata('item');
+.. literalinclude:: sessions/021.php
 
-Or alternatively, using the ``setFlashdata()`` method::
+Or alternatively, using the ``setFlashdata()`` method:
 
-    $session->setFlashdata('item', 'value');
+.. literalinclude:: sessions/022.php
 
 You can also pass an array to ``setFlashdata()``, in the same manner as
 ``set()``.
 
 Reading flashdata variables is the same as reading regular session data
-through ``$_SESSION``::
+through ``$_SESSION``:
 
-    $_SESSION['item']
+.. literalinclude:: sessions/023.php
 
 .. important:: The ``get()`` method WILL return flashdata items when
     retrieving a single item by key. It will not return flashdata when
     grabbing all userdata from the session, however.
 
 However, if you want to be sure that you're reading "flashdata" (and not
-any other kind), you can also use the ``getFlashdata()`` method::
+any other kind), you can also use the ``getFlashdata()`` method:
 
-    $session->getFlashdata('item');
+.. literalinclude:: sessions/024.php
 
-Or to get an array with all flashdata, simply omit the key parameter::
+Or to get an array with all flashdata, simply omit the key parameter:
 
-    $session->getFlashdata();
+.. literalinclude:: sessions/025.php
 
 .. note:: The ``getFlashdata()`` method returns null if the item cannot be
     found.
@@ -294,10 +267,7 @@ If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the ``keepFlashdata()`` method.
 You can either pass a single item or an array of flashdata items to keep.
 
-::
-
-    $session->keepFlashdata('item');
-    $session->keepFlashdata(['item1', 'item2', 'item3']);
+.. literalinclude:: sessions/026.php
 
 Tempdata
 ========
@@ -310,73 +280,62 @@ Similarly to flashdata, tempdata variables are managed internally by the
 CodeIgniter session handler.
 
 To mark an existing item as "tempdata", simply pass its key and expiry time
-(in seconds!) to the ``markAsTempdata()`` method::
+(in seconds!) to the ``markAsTempdata()`` method:
 
-    // 'item' will be erased after 300 seconds
-    $session->markAsTempdata('item', 300);
+.. literalinclude:: sessions/027.php
 
 You can mark multiple items as tempdata in two ways, depending on whether
-you want them all to have the same expiry time or not::
+you want them all to have the same expiry time or not:
 
-    // Both 'item' and 'item2' will expire after 300 seconds
-    $session->markAsTempdata(['item', 'item2'], 300);
+.. literalinclude:: sessions/028.php
 
-    // 'item' will be erased after 300 seconds, while 'item2'
-    // will do so after only 240 seconds
-    $session->markAsTempdata([
-        'item'    => 300,
-        'item2'    => 240,
-    ]);
+To add tempdata:
 
-To add tempdata::
+.. literalinclude:: sessions/029.php
 
-    $_SESSION['item'] = 'value';
-    $session->markAsTempdata('item', 300); // Expire in 5 minutes
+Or alternatively, using the ``setTempdata()`` method:
 
-Or alternatively, using the ``setTempdata()`` method::
+.. literalinclude:: sessions/030.php
 
-    $session->setTempdata('item', 'value', 300);
+You can also pass an array to ``setTempdata()``:
 
-You can also pass an array to ``setTempdata()``::
-
-    $tempdata = ['newuser' => true, 'message' => 'Thanks for joining!'];
-    $session->setTempdata($tempdata, null, $expire);
+.. literalinclude:: sessions/031.php
 
 .. note:: If the expiration is omitted or set to 0, the default
     time-to-live value of 300 seconds (or 5 minutes) will be used.
 
 To read a tempdata variable, again you can just access it through the
-``$_SESSION`` superglobal array::
+``$_SESSION`` superglobal array:
 
-    $_SESSION['item']
+.. literalinclude:: sessions/032.php
 
 .. important:: The ``get()`` method WILL return tempdata items when
     retrieving a single item by key. It will not return tempdata when
     grabbing all userdata from the session, however.
 
 Or if you want to be sure that you're reading "tempdata" (and not any
-other kind), you can also use the ``getTempdata()`` method::
+other kind), you can also use the ``getTempdata()`` method:
 
-    $session->getTempdata('item');
+.. literalinclude:: sessions/033.php
 
-And of course, if you want to retrieve all existing tempdata::
+And of course, if you want to retrieve all existing tempdata:
 
-    $session->getTempdata();
+.. literalinclude:: sessions/034.php
 
 .. note:: The ``getTempdata()`` method returns null if the item cannot be
     found.
 
 If you need to remove a tempdata value before it expires, you can directly
-unset it from the ``$_SESSION`` array::
+unset it from the ``$_SESSION`` array:
 
-    unset($_SESSION['item']);
+.. literalinclude:: sessions/035.php
 
 However, this won't remove the marker that makes this specific item to be
 tempdata (it will be invalidated on the next HTTP request), so if you
 intend to reuse that same key in the same request, you'd want to use
-``removeTempdata()``::
+``removeTempdata()``:
 
-    $session->removeTempdata('item');
+.. literalinclude:: sessions/036.php
 
 Destroying a Session
 ====================
@@ -384,13 +343,9 @@ Destroying a Session
 To clear the current session (for example, during a logout), you may
 simply use either PHP's `session_destroy() <https://www.php.net/session_destroy>`_
 function, or the library's ``destroy()`` method. Both will work in exactly the
-same way::
+same way:
 
-    session_destroy();
-
-    // or
-
-    $session->destroy();
+.. literalinclude:: sessions/037.php
 
 .. note:: This must be the last session-related operation that you do
     during the same request. All session data (including flashdata and
@@ -399,9 +354,9 @@ same way::
 
 You may also use the ``stop()`` method to completely kill the session
 by removing the old session_id, destroying all data, and destroying
-the cookie that contained the session id::
+the cookie that contained the session id:
 
-    $session->stop();
+.. literalinclude:: sessions/038.php
 
 Accessing session metadata
 ==========================
@@ -463,7 +418,6 @@ Preference                     Default                                      Opti
     (often the default value of ``1440``). This needs to be changed in
     ``php.ini`` or via ``ini_set()`` as needed.
 
-
 In addition to the values above, the cookie and native drivers apply the
 following configuration values shared by the :doc:`IncomingRequest </incoming/incomingrequest>` and
 :doc:`Security <security>` classes:
@@ -479,7 +433,7 @@ Preference           Default         Description
 
 .. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
     Instead the HttpOnly parameter is always enabled, for security
-    reasons. Additionally, the 'cookiePrefix' setting is completely
+    reasons. Additionally, the ``Config\Cookie::$prefix`` setting is completely
     ignored.
 
 Session Drivers
@@ -575,10 +529,9 @@ In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
 ``$sessionSavePath`` value.
 For example, if you would like to use 'ci_sessions' as your table name,
-you would do this::
+you would do this:
 
-    public $sessionDriver   = 'CodeIgniter\Session\Handlers\DatabaseHandler';
-    public $sessionSavePath = 'ci_sessions';
+.. literalinclude:: sessions/039.php
 
 And then of course, create the database table ...
 
@@ -616,14 +569,14 @@ setting**. The examples below work both on MySQL and PostgreSQL::
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
 You can choose the Database group to use by adding a new line to the
-**app/Config/App.php** file with the name of the group to use::
+**app/Config/App.php** file with the name of the group to use:
 
-  public $sessionDBGroup = 'groupName';
+.. literalinclude:: sessions/040.php
 
-If you'd rather not do all of this by hand, you can use the ``session:migration`` command
+If you'd rather not do all of this by hand, you can use the ``make:migration --session`` command
 from the cli to generate a migration file for you::
 
-  > php spark session:migration
+  > php spark make:migration --session
   > php spark migrate
 
 This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
@@ -669,10 +622,9 @@ link you to it:
     the link above.
 
 For the most common case however, a simple ``host:port`` pair should be
-sufficient::
+sufficient:
 
-    public $sessionDiver    = 'CodeIgniter\Session\Handlers\RedisHandler';
-    public $sessionSavePath = 'tcp://localhost:6379';
+.. literalinclude:: sessions/041.php
 
 MemcachedHandler Driver
 =======================
@@ -697,10 +649,9 @@ expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
 The ``$sessionSavePath`` format is fairly straightforward here,
-being just a ``host:port`` pair::
+being just a ``host:port`` pair:
 
-    public $sessionDriver   = 'CodeIgniter\Session\Handlers\MemcachedHandler';
-    public $sessionSavePath = 'localhost:11211';
+.. literalinclude:: sessions/042.php
 
 Bonus Tip
 ---------
@@ -710,8 +661,6 @@ third colon-separated (``:weight``) value is also supported, but we have
 to note that we haven't tested if that is reliable.
 
 If you want to experiment with this feature (on your own risk), simply
-separate the multiple server paths with commas::
+separate the multiple server paths with commas:
 
-    // localhost will be given higher priority (5) here,
-    // compared to 192.0.2.1 with a weight of 1.
-    public $sessionSavePath = 'localhost:11211:5,192.0.2.1:11211:1';
+.. literalinclude:: sessions/043.php

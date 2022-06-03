@@ -22,9 +22,9 @@ Class Reference
         :rtype:   string
 
         Returns the IP address for the current user. If the IP address is not valid, the method
-        will return '0.0.0.0'::
+        will return '0.0.0.0':
 
-            echo $request->getIPAddress();
+        .. literalinclude:: request/001.php
 
         .. important:: This method takes into account the ``App->proxyIPs`` setting and will
             return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
@@ -44,13 +44,7 @@ Class Reference
 
         .. note:: The $request->getIPAddress() method above automatically validates the IP address.
 
-            ::
-
-                if ( ! $request->isValidIP($ip)) {
-                    echo 'Not Valid';
-                } else {
-                    echo 'Valid';
-                }
+            .. literalinclude:: request/002.php
 
         Accepts an optional second string parameter of 'ipv4' or 'ipv6' to specify
         an IP format. The default checks for both formats.
@@ -65,11 +59,8 @@ Class Reference
 
         Returns the ``$_SERVER['REQUEST_METHOD']``, with the option to set it
         in uppercase or lowercase.
-        ::
 
-            echo $request->getMethod(true); // Outputs: POST
-            echo $request->getMethod(false); // Outputs: post
-            echo $request->getMethod(); // Outputs: post
+        .. literalinclude:: request/003.php
 
     .. php:method:: setMethod($method)
 
@@ -86,15 +77,14 @@ Class Reference
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getServer data (``$_SERVER``)::
+        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches server data (``$_SERVER``):
 
-            $request->getServer('some_data');
+        .. literalinclude:: request/004.php
 
         To return an array of multiple ``$_SERVER`` values, pass all the required keys
         as an array.
-        ::
 
-            $require->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);
+        .. literalinclude:: request/005.php
 
     .. php:method:: getEnv([$index = null[, $filter = null[, $flags = null]]])
 
@@ -105,15 +95,14 @@ Class Reference
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getEnv data (``$_ENV``)::
+        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getEnv data (``$_ENV``):
 
-            $request->getEnv('some_data');
+        .. literalinclude:: request/006.php
 
         To return an array of multiple ``$_ENV`` values, pass all the required keys
         as an array.
-        ::
 
-            $require->getEnv(['CI_ENVIRONMENT', 'S3_BUCKET']);
+        .. literalinclude:: request/007.php
 
     .. php:method:: setGlobal($method, $value)
 

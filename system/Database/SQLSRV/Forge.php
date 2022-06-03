@@ -152,9 +152,7 @@ class Forge extends BaseForge
 
             $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' DROP ';
 
-            $fields = array_map(static function ($item) {
-                return 'COLUMN [' . trim($item) . ']';
-            }, (array) $field);
+            $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $field);
 
             return $sql . implode(',', $fields);
         }

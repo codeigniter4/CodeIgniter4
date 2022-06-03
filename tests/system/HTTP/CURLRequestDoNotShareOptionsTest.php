@@ -25,10 +25,7 @@ use CURLFile;
  */
 final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
-    /**
-     * @var MockCURLRequest
-     */
-    protected $request;
+    private MockCURLRequest $request;
 
     protected function setUp(): void
     {
@@ -96,7 +93,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 
         $response = $this->request->setOutput($output)->send('get', 'http://example.com');
 
-        $this->assertInstanceOf('CodeIgniter\\HTTP\\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
         $this->assertSame($output, $response->getBody());
     }
 
@@ -267,13 +264,13 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 
     public function testOptionsDelay()
     {
+        $request = $this->getRequest();
+        $this->assertSame(0.0, $request->getDelay());
+
         $options = [
             'delay'   => 2000,
             'headers' => ['fruit' => 'apple'],
         ];
-        $request = $this->getRequest();
-        $this->assertSame(0.0, $request->getDelay());
-
         $request = $this->getRequest($options);
         $this->assertSame(2.0, $request->getDelay());
     }
@@ -715,20 +712,20 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->get('products');
 
         // we still need to check the code coverage to make sure this was done
-        $this->assertSame(1.0, $request->getDelay());
+        $this->assertSame(0.1, $request->getDelay());
     }
 
     public function testSendContinued()
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setOutput("HTTP/1.1 100 Continue\x0d\x0a\x0d\x0aHi there");
@@ -743,7 +740,7 @@ final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $output = "HTTP/1.1 100 Continue
@@ -787,7 +784,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setOutput("Accept: text/html\x0d\x0a\x0d\x0aHi there");
@@ -799,7 +796,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setBody('name=George');
@@ -810,11 +807,26 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('name=George', $request->curl_options[CURLOPT_POSTFIELDS]);
     }
 
+    public function testBodyIsResetOnSecondRequest()
+    {
+        $request = $this->getRequest([
+            'base_uri' => 'http://www.foo.com/api/v1/',
+            'delay'    => 100,
+        ]);
+        $request->setBody('name=George');
+        $request->setOutput('Hi there');
+
+        $request->post('answer');
+        $request->post('answer');
+
+        $this->assertArrayNotHasKey(CURLOPT_POSTFIELDS, $request->curl_options);
+    }
+
     public function testResponseHeaders()
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setOutput("HTTP/2.0 234 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there");
@@ -828,7 +840,7 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
     {
         $request = $this->getRequest([
             'base_uri' => 'http://www.foo.com/api/v1/',
-            'delay'    => 1000,
+            'delay'    => 100,
         ]);
 
         $request->setOutput("HTTP/2 235 Ohoh\x0d\x0aAccept: text/html\x0d\x0a\x0d\x0aHi there shortie");
@@ -925,7 +937,10 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame('post', $this->request->getMethod());
 
         $expected = json_encode($params);
-        $this->assertSame($expected, $this->request->getBody());
+        $this->assertSame(
+            $expected,
+            $this->request->curl_options[CURLOPT_POSTFIELDS]
+        );
     }
 
     public function testSetJSON()
@@ -939,7 +954,12 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         ];
         $this->request->setJSON($params)->post('/post');
 
-        $this->assertSame(json_encode($params), $this->request->getBody());
+        $expected = json_encode($params);
+        $this->assertSame(
+            $expected,
+            $this->request->curl_options[CURLOPT_POSTFIELDS]
+        );
+
         $this->assertSame(
             'Content-Type: application/json',
             $this->request->curl_options[CURLOPT_HTTPHEADER][0]

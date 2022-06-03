@@ -19,7 +19,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class CommandGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {
@@ -47,7 +47,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
 
     protected function getFileContents(string $filepath): string
     {
-        if (! file_exists($filepath)) {
+        if (! is_file($filepath)) {
             return '';
         }
 

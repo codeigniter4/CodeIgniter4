@@ -92,8 +92,8 @@ final class TimerTest extends CIUnitTestCase
     public function testLongExecutionTime()
     {
         $timer = new Timer();
-        $timer->start('longjohn', strtotime('-11 minutes'));
-        $this->assertCloseEnough(11 * 60, $timer->getElapsedTime('longjohn'));
+        $timer->start('longjohn', strtotime('-110 minutes'));
+        $this->assertCloseEnough(110 * 60, $timer->getElapsedTime('longjohn'));
     }
 
     public function testLongExecutionTimeThroughCommonFunc()

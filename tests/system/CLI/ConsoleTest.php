@@ -49,6 +49,7 @@ final class ConsoleTest extends CIUnitTestCase
         CLI::init();
 
         $this->app = new MockCodeIgniter(new MockCLIConfig());
+        $this->app->setContext('spark');
     }
 
     protected function tearDown(): void

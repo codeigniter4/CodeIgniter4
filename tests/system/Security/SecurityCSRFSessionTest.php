@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockAppConfig;
@@ -32,13 +33,15 @@ use Config\Security as SecurityConfig;
  * @preserveGlobalState disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class SecurityCSRFSessionTest extends CIUnitTestCase
 {
     /**
      * @var string CSRF protection hash
      */
-    private $hash = '8b9218a55906f9dcc1dc263dce7f005a';
+    private string $hash = '8b9218a55906f9dcc1dc263dce7f005a';
 
     protected function setUp(): void
     {
@@ -57,7 +60,7 @@ final class SecurityCSRFSessionTest extends CIUnitTestCase
     private function createSession($options = []): Session
     {
         $defaults = [
-            'sessionDriver'            => 'CodeIgniter\Session\Handlers\FileHandler',
+            'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
             'sessionSavePath'          => null,

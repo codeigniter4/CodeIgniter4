@@ -21,10 +21,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 final class CookieStoreTest extends CIUnitTestCase
 {
-    /**
-     * @var array
-     */
-    private $defaults;
+    private array $defaults;
 
     protected function setUp(): void
     {
@@ -110,7 +107,7 @@ final class CookieStoreTest extends CIUnitTestCase
         $prod = $cookies['prod']->getOptions();
 
         /**
-         * @var MockObject&CookieStore $store
+         * @var CookieStore&MockObject $store
          */
         $store = $this->getMockBuilder(CookieStore::class)
             ->setConstructorArgs([$cookies])

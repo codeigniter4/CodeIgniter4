@@ -12,6 +12,7 @@
 namespace CodeIgniter\Encryption\Handlers;
 
 use CodeIgniter\Encryption\Encryption;
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 
@@ -20,15 +21,8 @@ use Config\Encryption as EncryptionConfig;
  */
 final class SodiumHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var \CodeIgniter\Encryption\Encryption
-     */
-    protected $encryption;
-
-    /**
-     * @var \Config\Encryption
-     */
-    protected $config;
+    private Encryption $encryption;
+    private EncryptionConfig $config;
 
     protected function setUp(): void
     {
@@ -57,7 +51,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testEmptyKeyThrowsErrorOnInitialize()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $this->config->key = '';
         $this->encryption->initialize($this->config);
@@ -65,7 +59,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testEmptyKeyThrowsErrorOnEncrypt()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter = $this->encryption->initialize($this->config);
         $encrypter->encrypt('Some message to encrypt', '');
@@ -73,7 +67,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testInvalidBlockSizeThrowsErrorOnEncrypt()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
         $this->config->blockSize = -1;
 
         $encrypter = $this->encryption->initialize($this->config);
@@ -82,7 +76,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testEmptyKeyThrowsErrorOnDecrypt()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter  = $this->encryption->initialize($this->config);
         $ciphertext = $encrypter->encrypt('Some message to encrypt');
@@ -92,7 +86,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testInvalidBlockSizeThrowsErrorOnDecrypt()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
         $key = $this->config->key;
 
         $encrypter  = $this->encryption->initialize($this->config);
@@ -103,7 +97,7 @@ final class SodiumHandlerTest extends CIUnitTestCase
 
     public function testTruncatedMessageThrowsErrorOnDecrypt()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         $encrypter  = $this->encryption->initialize($this->config);
         $ciphertext = $encrypter->encrypt('Some message to encrypt');

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 use CodeIgniter\View\Exceptions\ViewException;
@@ -20,12 +21,8 @@ use CodeIgniter\View\Exceptions\ViewException;
  */
 final class CellTest extends CIUnitTestCase
 {
-    protected $cache;
-
-    /**
-     * @var Cell
-     */
-    protected $cell;
+    private $cache;
+    private Cell $cell;
 
     protected function setUp(): void
     {
@@ -252,6 +249,6 @@ final class CellTest extends CIUnitTestCase
 
     public function testCallInitControllerIfMethodExists()
     {
-        $this->assertSame('CodeIgniter\HTTP\Response', $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
+        $this->assertSame(Response::class, $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
     }
 }

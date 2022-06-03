@@ -11,7 +11,6 @@ Documentations
 - `Model Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/general/models.html>`_
 - :doc:`Model Documentation CodeIgniter 4.X </models/model>`
 
-
 What has been changed
 =====================
 
@@ -25,7 +24,7 @@ Upgrade Guide
 2. Add this line just after the opening php tag: ``namespace App\Models;``.
 3. Below the ``namespace App\Models;`` line add this line: ``use CodeIgniter\Model;``.
 4. Replace ``extends CI_Model`` with ``extends Model``.
-5. Instead of CI3’s ``$this->load->model(x);``, you would now use ``$this->x = new X();``, following namespaced conventions for your component. Alternatively, you can use the ``model()`` function: ``$this->x = model('X');``.
+5. Instead of CI3's ``$this->load->model(x);``, you would now use ``$this->x = new X();``, following namespaced conventions for your component. Alternatively, you can use the ``model()`` function: ``$this->x = model('X');``.
 
 If you use sub-directories in your model structure you have to change the namespace according to that.
 Example: You have a version 3 model located in **application/models/users/user_contact.php** the namespace has to be ``namespace App\Models\Users;`` and the model path in the version 4 should look like this: **app/Models/Users/UserContact.php**
@@ -38,39 +37,18 @@ You can find more information to those methods :doc:`here </models/model>`.
 Code Example
 ============
 
-CodeIgniter Version 3.11
+CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/models**::
+Path: **application/models**:
 
-    <?php
-
-    class User_contact extends CI_Model
-    {
-        public function insert($name, $address, $email)
-        {
-            $this->db->insert('user_contacts', array(
-                'name'    => $name,
-                'address' => $address,
-                'email'   => $email,
-            ));
-        }
-    }
+.. literalinclude:: upgrade_models/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Models**::
+Path: **app/Models**:
 
-    <?php
-
-    namespace App\Models;
-
-    use CodeIgniter\Model;
-
-    class UserContact extends Model
-    {
-        // insert() method already implemented in parent
-    }
+.. literalinclude:: upgrade_models/001.php
 
 To insert data you can just directly call the ``$model->insert()`` method because this method is built-in since CI4.

@@ -37,7 +37,7 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
 * Replace **CHANGELOG.md** with the new version generated above
 * Set the date in **user_guide_src/source/changelogs/{version}.rst** to format `Release Date: January 31, 2021`
 * Create a new changelog for the next version at **user_guide_src/source/changelogs/{next_version}.rst** and add it to **index.rst**
-* If there are additional upgrade steps, create **user_guide_src/source/installation/upgrade_{ver}.rst** and add it to **upgrading.rst**
+* Create **user_guide_src/source/installation/upgrade_{ver}.rst**, fill in the "All Changes" section, and add it to **upgrading.rst**
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
 	* Title: "Prep for 4.x.x release"
@@ -57,6 +57,12 @@ CodeIgniter 4.x.x release.
 See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
 ```
 * Watch for the "Deploy Framework" Action to make sure **framework** and **appstarter** get updated
+* Run the following commands to install and test AppStarter and verify the new version:
+```bash
+composer create-project codeigniter4/appstarter release-test
+cd release-test
+composer test && composer info codeigniter4/framework
+```
 
 ## User Guide
 
@@ -93,6 +99,13 @@ the User Guide repo to **public/userguide4** and browse to the website to make s
 
 * Make a new topic in the "News & Discussion" forums: https://forum.codeigniter.com/forum-2.html
 * The content is somewhat organic, but should include any major features and changes as well as a link to the User Guide's changelog
+
+## After Publishing Security Advisory
+
+* Send a PR to [PHP Security Advisories Database](https://github.com/FriendsOfPHP/security-advisories).
+    * E.g. https://github.com/FriendsOfPHP/security-advisories/pull/606
+    * See https://github.com/FriendsOfPHP/security-advisories#contributing
+    * Don't forget to run `php -d memory_limit=-1 validator.php`, before submitting the PR
 
 ## Appendix
 

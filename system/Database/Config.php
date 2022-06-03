@@ -55,7 +55,7 @@ class Config extends BaseConfig
             $group  = 'custom-' . md5(json_encode($config));
         }
 
-        $config = $config ?? config('Database');
+        $config ??= config('Database');
 
         if (empty($group)) {
             $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;

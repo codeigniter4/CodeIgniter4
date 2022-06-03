@@ -12,189 +12,124 @@ There are several ways to generate query results:
 Result Arrays
 *************
 
-**getResult()**
+getResult()
+===========
 
 This method returns the query result as an array of **objects**, or
 **an empty array** on failure. Typically you'll use this in a foreach
-loop, like this::
+loop, like this:
 
-    $query = $db->query("YOUR QUERY");
-
-    foreach ($query->getResult() as $row) {
-        echo $row->title;
-        echo $row->name;
-        echo $row->body;
-    }
+.. literalinclude:: results/001.php
 
 The above method is an alias of ``getResultObject()``.
 
 You can pass in the string 'array' if you wish to get your results
-as an array of arrays::
+as an array of arrays:
 
-    $query = $db->query("YOUR QUERY");
-
-    foreach ($query->getResult('array') as $row) {
-        echo $row['title'];
-        echo $row['name'];
-        echo $row['body'];
-    }
+.. literalinclude:: results/002.php
 
 The above usage is an alias of ``getResultArray()``.
 
 You can also pass a string to ``getResult()`` which represents a class to
 instantiate for each result object
 
-::
-
-    $query = $db->query("SELECT * FROM users;");
-
-    foreach ($query->getResult('User') as $user) {
-        echo $user->name; // access attributes
-        echo $user->reverseName(); // or methods defined on the 'User' class
-    }
+.. literalinclude:: results/003.php
 
 The above method is an alias of ``getCustomResultObject()``.
 
-**getResultArray()**
+getResultArray()
+================
 
 This method returns the query result as a pure array, or an empty
 array when no result is produced. Typically you'll use this in a foreach
-loop, like this::
+loop, like this:
 
-    $query = $db->query("YOUR QUERY");
-
-    foreach ($query->getResultArray() as $row) {
-        echo $row['title'];
-        echo $row['name'];
-        echo $row['body'];
-    }
+.. literalinclude:: results/004.php
 
 ***********
 Result Rows
 ***********
 
-**getRow()**
+getRow()
+========
 
 This method returns a single result row. If your query has more than
 one row, it returns only the first row. The result is returned as an
-**object**. Here's a usage example::
+**object**. Here's a usage example:
 
-    $query = $db->query("YOUR QUERY");
-
-    $row = $query->getRow();
-
-    if (isset($row)) {
-        echo $row->title;
-        echo $row->name;
-        echo $row->body;
-    }
+.. literalinclude:: results/005.php
 
 If you want a specific row returned you can submit the row number as a
-digit in the first parameter::
+digit in the first parameter:
 
-    $row = $query->getRow(5);
+.. literalinclude:: results/006.php
 
 You can also add a second String parameter, which is the name of a class
-to instantiate the row with::
+to instantiate the row with:
 
-    $query = $db->query("SELECT * FROM users LIMIT 1;");
-    $row = $query->getRow(0, 'User');
+.. literalinclude:: results/007.php
 
-    echo $row->name; // access attributes
-    echo $row->reverse_name(); // or methods defined on the 'User' class
-
-**getRowArray()**
+getRowArray()
+=============
 
 Identical to the above ``row()`` method, except it returns an array.
-Example::
+Example:
 
-    $query = $db->query("YOUR QUERY");
-
-    $row = $query->getRowArray();
-
-    if (isset($row)) {
-        echo $row['title'];
-        echo $row['name'];
-        echo $row['body'];
-    }
+.. literalinclude:: results/008.php
 
 If you want a specific row returned you can submit the row number as a
-digit in the first parameter::
+digit in the first parameter:
 
-    $row = $query->getRowArray(5);
+.. literalinclude:: results/009.php
 
 In addition, you can walk forward/backwards/first/last through your
 results using these variations:
 
-    | **$row = $query->getFirstRow()**
-    | **$row = $query->getLastRow()**
-    | **$row = $query->getNextRow()**
-    | **$row = $query->getPreviousRow()**
+    | ``$row = $query->getFirstRow()``
+    | ``$row = $query->getLastRow()``
+    | ``$row = $query->getNextRow()``
+    | ``$row = $query->getPreviousRow()``
 
 By default they return an object unless you put the word "array" in the
 parameter:
 
-    | **$row = $query->getFirstRow('array')**
-    | **$row = $query->getLastRow('array')**
-    | **$row = $query->getNextRow('array')**
-    | **$row = $query->getPreviousRow('array')**
+    | ``$row = $query->getFirstRow('array')``
+    | ``$row = $query->getLastRow('array')``
+    | ``$row = $query->getNextRow('array')``
+    | ``$row = $query->getPreviousRow('array')``
 
 .. note:: All the methods above will load the whole result into memory
     (prefetching). Use ``getUnbufferedRow()`` for processing large
     result sets.
 
-**getUnbufferedRow()**
+getUnbufferedRow()
+==================
 
 This method returns a single result row without prefetching the whole
 result in memory as ``row()`` does. If your query has more than one row,
 it returns the current row and moves the internal data pointer ahead.
 
-::
+.. literalinclude:: results/010.php
 
-    $query = $db->query("YOUR QUERY");
-
-    while ($row = $query->getUnbufferedRow()) {
-        echo $row->title;
-        echo $row->name;
-        echo $row->body;
-    }
-
-For use with MySQLi you may set MySQLi's result mode to 
-``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not 
-generally recommended but it can be beneficial in some circumstances 
-such as writing large queries to csv. If you change the result mode 
+For use with MySQLi you may set MySQLi's result mode to
+``MYSQLI_USE_RESULT`` for maximum memory savings. Use of this is not
+generally recommended but it can be beneficial in some circumstances
+such as writing large queries to csv. If you change the result mode
 be aware of the tradeoffs associated with it.
 
-::
+.. literalinclude:: results/011.php
 
-    $db->resultMode = MYSQLI_USE_RESULT; // for unbuffered results
-
-    $query = $db->query("YOUR QUERY");
-
-    $file = new \CodeIgniter\Files\File(WRITEPATH.'data.csv');
-
-    $csv = $file->openFile('w');
-
-    while ($row = $query->getUnbufferedRow('array'))
-    {
-        $csv->fputcsv($row);
-    }
-
-    $db->resultMode = MYSQLI_STORE_RESULT; // return to default mode
-
-.. note:: When using ``MYSQLI_USE_RESULT`` all subsequent calls on the same  
-    connection will result in error until all records have been fetched or 
-    a ``freeResult()`` call has been made. The ``getNumRows()`` method will only 
-    return the number of rows based on the current position of the data pointer. 
-    MyISAM tables will remain locked until all the records have been fetched 
+.. note:: When using ``MYSQLI_USE_RESULT`` all subsequent calls on the same
+    connection will result in error until all records have been fetched or
+    a ``freeResult()`` call has been made. The ``getNumRows()`` method will only
+    return the number of rows based on the current position of the data pointer.
+    MyISAM tables will remain locked until all the records have been fetched
     or a ``freeResult()`` call has been made.
 
 You can optionally pass 'object' (default) or 'array' in order to specify
-the returned value's type::
+the returned value's type:
 
-    $query->getUnbufferedRow();         // object
-    $query->getUnbufferedRow('object'); // object
-    $query->getUnbufferedRow('array');  // associative array
+.. literalinclude:: results/012.php
 
 *********************
 Custom Result Objects
@@ -207,115 +142,74 @@ will attempt to load it. The object will have all values returned from the
 database set as properties. If these have been declared and are non-public
 then you should provide a ``__set()`` method to allow them to be set.
 
-Example::
+Example:
 
-    class User
-    {
-        public $id;
-        public $email;
-        public $username;
-
-        protected $last_login;
-
-        public function lastLogin($format)
-        {
-            return $this->lastLogin->format($format);
-        }
-
-        public function __set($name, $value)
-        {
-            if ($name === 'lastLogin') {
-                $this->lastLogin = DateTime::createFromFormat('U', $value);
-            }
-        }
-
-        public function __get($name)
-        {
-            if (isset($this->$name)) {
-                return $this->$name;
-            }
-        }
-    }
+.. literalinclude:: results/013.php
 
 In addition to the two methods listed below, the following methods also can
 take a class name to return the results as: ``getFirstRow()``, ``getLastRow()``,
 ``getNextRow()``, and ``getPreviousRow()``.
 
-**getCustomResultObject()**
+getCustomResultObject()
+=======================
 
 Returns the entire result set as an array of instances of the class requested.
 The only parameter is the name of the class to instantiate.
 
-Example::
+Example:
 
-    $query = $db->query("YOUR QUERY");
+.. literalinclude:: results/014.php
 
-    $rows = $query->getCustomResultObject('User');
-
-    foreach ($rows as $row) {
-        echo $row->id;
-        echo $row->email;
-        echo $row->last_login('Y-m-d');
-    }
-
-**getCustomRowObject()**
+getCustomRowObject()
+====================
 
 Returns a single row from your query results. The first parameter is the row
 number of the results. The second parameter is the class name to instantiate.
 
-Example::
+Example:
 
-    $query = $db->query("YOUR QUERY");
-
-    $row = $query->getCustomRowObject(0, 'User');
-
-    if (isset($row)) {
-        echo $row->email;               // access attributes
-        echo $row->last_login('Y-m-d'); // access class methods
-    }
+.. literalinclude:: results/015.php
 
 You can also use the ``getRow()`` method in exactly the same way.
 
-Example::
+Example:
 
-    $row = $query->getCustomRowObject(0, 'User');
+.. literalinclude:: results/016.php
 
 *********************
 Result Helper Methods
 *********************
 
-**getFieldCount()**
+getFieldCount()
+===============
 
 The number of FIELDS (columns) returned by the query. Make sure to call
-the method using your query result object::
+the method using your query result object:
 
-    $query = $db->query('SELECT * FROM my_table');
+.. literalinclude:: results/017.php
 
-    echo $query->getFieldCount();
-
-**getFieldNames()**
+getFieldNames()
+===============
 
 Returns an array with the names of the FIELDS (columns) returned by the query.
-Make sure to call the method using your query result object::
+Make sure to call the method using your query result object:
 
-    $query = $db->query('SELECT * FROM my_table');
+.. literalinclude:: results/018.php
 
-    echo $query->getFieldNames();
-
-**getNumRows()**
+getNumRows()
+============
 
 The number of records returned by the query. Make sure to call
-the method using your query result object::
+the method using your query result object:
 
-    $query = $db->query('SELECT * FROM my_table');
-
-    echo $query->getNumRows();
+.. literalinclude:: results/019.php
 
 .. note:: Because SQLite3 lacks an efficient method returning a record count,
     CodeIgniter will fetch and buffer the query result records internally and
     return a count of the resulting record array, which can be inefficient.
 
-**freeResult()**
+freeResult()
+============
 
 It frees the memory associated with the result and deletes the result
 resource ID. Normally PHP frees its memory automatically at the end of
@@ -323,23 +217,12 @@ script execution. However, if you are running a lot of queries in a
 particular script you might want to free the result after each query
 result has been generated in order to cut down on memory consumption.
 
-Example::
+Example:
 
-    $query = $thisdb->query('SELECT title FROM my_table');
+.. literalinclude:: results/020.php
 
-    foreach ($query->getResult() as $row) {
-        echo $row->title;
-    }
-
-    $query->freeResult(); // The $query result object will no longer be available
-
-    $query2 = $db->query('SELECT name FROM some_table');
-
-    $row = $query2->getRow();
-    echo $row->name;
-    $query2->freeResult(); // The $query2 result object will no longer be available
-
-**dataSeek()**
+dataSeek()
+==========
 
 This method sets the internal pointer for the next result row to be
 fetched. It is only useful in combination with ``getUnbufferedRow()``.
@@ -347,11 +230,7 @@ fetched. It is only useful in combination with ``getUnbufferedRow()``.
 It accepts a positive integer value, which defaults to 0 and returns
 true on success or false on failure.
 
-::
-
-    $query = $db->query('SELECT `field_name` FROM `table_name`');
-    $query->dataSeek(5); // Skip the first 5 rows
-    $row = $query->getUnbufferedRow();
+.. literalinclude:: results/021.php
 
 .. note:: Not all database drivers support this feature and will return false.
     Most notably - you won't be able to use it with PDO.

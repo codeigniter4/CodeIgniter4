@@ -19,7 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
 
       # Build the latest User Guide
       - name: Build with Sphinx
@@ -27,9 +33,16 @@ jobs:
         with:
           docs-folder: user_guide_src/
 
+      - name: Add "Edit this page" links
+        run: |
+          cd user_guide_src
+          # Fix permissions
+          sudo chown -R runner:docker build/html/
+          php add-edit-this-page build/html/
+
       # Create an artifact of the html output
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: HTML Documentation
           path: user_guide_src/build/html/

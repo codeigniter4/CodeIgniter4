@@ -22,7 +22,7 @@ use Exception;
  */
 final class MemcachedHandlerTest extends AbstractHandlerTest
 {
-    private $config;
+    private Cache $config;
 
     private static function getKeyArray()
     {
@@ -85,9 +85,7 @@ final class MemcachedHandlerTest extends AbstractHandlerTest
      */
     public function testRemember()
     {
-        $this->handler->remember(self::$key1, 2, static function () {
-            return 'value';
-        });
+        $this->handler->remember(self::$key1, 2, static fn () => 'value');
 
         $this->assertSame('value', $this->handler->get(self::$key1));
         $this->assertNull($this->handler->get(self::$dummy));

@@ -28,17 +28,7 @@ use Config\App;
  */
 final class SiteUrlTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
-
-    public static function setUpBeforeClass(): void
-    {
-        parent::setUpBeforeClass();
-
-        helper('url');
-    }
+    private App $config;
 
     protected function setUp(): void
     {

@@ -2,6 +2,16 @@
 Upgrading from 4.1.1 to 4.1.2
 #############################
 
+Please refer to the upgrade instructions corresponding to your installation method.
+
+- :ref:`Composer Installation App Starter Upgrading <app-starter-upgrading>`
+- :ref:`Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading <adding-codeigniter4-upgrading>`
+- :ref:`Manual Installation Upgrading <installing-manual-upgrading>`
+
+.. contents::
+    :local:
+    :depth: 2
+
 **current_url() and indexPage**
 
 Due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()``,
@@ -47,26 +57,13 @@ own test cases. Most notably test extensions have moved to Traits to make them e
 pick-and-choose across various test case needs. The ``CIDatabaseTestCase`` and ``FeatureTestCase``
 classes have been deprecated and their methods moved to ``DatabaseTestTrait`` and
 ``FeatureTestTrait`` respectively. Update your test cases to extend the main test case
-and use any traits you need. For example::
+and use any traits you need. For example:
 
-    use CodeIgniter\Test\DatabaseTestCase;
+.. literalinclude:: upgrade_412/001.php
 
-    class MyDatabaseTest extends DatabaseTestCase
-    {
-        public function testBadRow()
-        {
+... becomes:
 
-... becomes::
-
-    use CodeIgniter\Test\CIUnitTestCase;
-    use CodeIgniter\Test\DatabaseTestTrait;
-
-    class MyDatabaseTest extends CIUnitTestCase
-    {
-        use DatabaseTestTrait;
-
-        public function testBadRow()
-        {
+.. literalinclude:: upgrade_412/002.php
 
 Finally, ``ControllerTester`` has been superseded by ``ControllerTestTrait`` to standardize
 approach and take advantage of the updated response testing (below).

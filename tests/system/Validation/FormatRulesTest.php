@@ -24,12 +24,8 @@ final class FormatRulesTest extends CIUnitTestCase
     public const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
     public const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
-    /**
-     * @var Validation
-     */
-    private $validation;
-
-    private $config = [
+    private Validation $validation;
+    private array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -1210,6 +1206,11 @@ final class FormatRulesTest extends CIUnitTestCase
     public function validDateProvider(): Generator
     {
         yield from [
+            [
+                null,
+                'Y-m-d',
+                false,
+            ],
             [
                 'Sun',
                 'D',

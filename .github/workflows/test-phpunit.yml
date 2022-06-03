@@ -5,19 +5,25 @@ on:
     branches:
       - develop
     paths:
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'spark'
       - composer.json
-      - spark
       - phpunit.xml.dist
-      - '**.php'
       - .github/workflows/test-phpunit.yml
+
   pull_request:
     branches:
       - develop
+      - 'v4.*'
     paths:
+      - 'app/**.php'
+      - 'system/**.php'
+      - 'tests/**.php'
+      - 'spark'
       - composer.json
-      - spark
       - phpunit.xml.dist
-      - '**.php'
       - .github/workflows/test-phpunit.yml
 
 jobs:
@@ -29,16 +35,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3', '7.4', '8.0', '8.1']
-        db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV']
+        php-versions: ['7.4', '8.0', '8.1']
+        db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV', 'OCI8']
         mysql-versions: ['5.7']
         include:
           - php-versions: '7.4'
             db-platforms: MySQLi
             mysql-versions: '8.0'
-          # @todo remove once 8.1 is stable enough
-          - php-versions: '8.1'
-            composer-flag: '--ignore-platform-req=php'
 
     services:
       mysql:
@@ -70,6 +73,14 @@ jobs:
           - 1433:1433
         options: --health-cmd="/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'" --health-interval=10s --health-timeout=5s --health-retries=3
 
+      oracle:
+        image: quillbuilduser/oracle-18-xe
+        env:
+          ORACLE_ALLOW_REMOTE: true
+        ports:
+          - 1521:1521
+        options: --health-cmd="/opt/oracle/product/18c/dbhomeXE/bin/sqlplus -s sys/Oracle18@oracledbxe/XE as sysdba <<< 'SELECT 1 FROM DUAL'" --health-interval=10s --health-timeout=5s --health-retries=3
+
       redis:
         image: redis
         ports:
@@ -86,15 +97,37 @@ jobs:
         if: matrix.db-platforms == 'SQLSRV'
         run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
 
+      - name: Install Oracle InstantClient
+        if: matrix.db-platforms == 'OCI8'
+        run: |
+          sudo apt-get install wget libaio1 alien
+          sudo wget https://download.oracle.com/otn_software/linux/instantclient/185000/oracle-instantclient18.5-basic-18.5.0.0.0-3.x86_64.rpm
+          sudo wget https://download.oracle.com/otn_software/linux/instantclient/185000/oracle-instantclient18.5-devel-18.5.0.0.0-3.x86_64.rpm
+          sudo wget https://download.oracle.com/otn_software/linux/instantclient/185000/oracle-instantclient18.5-sqlplus-18.5.0.0.0-3.x86_64.rpm
+          sudo alien oracle-instantclient18.5-basic-18.5.0.0.0-3.x86_64.rpm
+          sudo alien oracle-instantclient18.5-devel-18.5.0.0.0-3.x86_64.rpm
+          sudo alien oracle-instantclient18.5-sqlplus-18.5.0.0.0-3.x86_64.rpm
+          sudo dpkg -i oracle-instantclient18.5-basic_18.5.0.0.0-4_amd64.deb oracle-instantclient18.5-devel_18.5.0.0.0-4_amd64.deb oracle-instantclient18.5-sqlplus_18.5.0.0.0-4_amd64.deb
+          echo "LD_LIBRARY_PATH=/lib/oracle/18.5/client64/lib/" >> $GITHUB_ENV
+          echo "NLS_LANG=AMERICAN_AMERICA.UTF8" >> $GITHUB_ENV
+          echo "C_INCLUDE_PATH=/usr/include/oracle/18.5/client64" >> $GITHUB_ENV
+          echo 'NLS_DATE_FORMAT=YYYY-MM-DD HH24:MI:SS' >> $GITHUB_ENV
+          echo 'NLS_TIMESTAMP_FORMAT=YYYY-MM-DD HH24:MI:SS' >> $GITHUB_ENV
+          echo 'NLS_TIMESTAMP_TZ_FORMAT=YYYY-MM-DD HH24:MI:SS' >> $GITHUB_ENV
+
+      - name: Create database for Oracle Database
+        if: matrix.db-platforms == 'OCI8'
+        run: echo -e "ALTER SESSION SET CONTAINER = XEPDB1;\nCREATE BIGFILE TABLESPACE \"TEST\" DATAFILE '/opt/oracle/product/18c/dbhomeXE/dbs/TEST' SIZE 10M AUTOEXTEND ON MAXSIZE UNLIMITED SEGMENT SPACE MANAGEMENT AUTO EXTENT MANAGEMENT LOCAL AUTOALLOCATE;\nCREATE USER \"ORACLE\" IDENTIFIED BY \"ORACLE\" DEFAULT TABLESPACE \"TEST\" TEMPORARY TABLESPACE TEMP QUOTA UNLIMITED ON \"TEST\";\nGRANT CONNECT,RESOURCE TO \"ORACLE\";\nexit;" | /lib/oracle/18.5/client64/bin/sqlplus -s sys/Oracle18@localhost:1521/XE as sysdba
+
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
-          extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, pgsql
+          extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, oci8, pgsql
           coverage: xdebug
         env:
           update: true
@@ -111,7 +144,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composercache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -119,8 +152,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer update --ansi --no-interaction ${{ matrix.composer-flag }}
-          composer remove --ansi --dev --unused -W ${{ matrix.composer-flag }} -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
+          composer update --ansi --no-interaction
+          composer remove --ansi --dev --unused -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
@@ -128,8 +161,15 @@ jobs:
         if: matrix.php-versions == '8.0'
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
+      - name: Compute coverage option
+        uses: actions/github-script@v6
+        id: phpunit-coverage-option
+        with:
+          script: 'return "${{ matrix.php-versions }}" == "8.0" ? "" : "--no-coverage"'
+          result-encoding: string
+
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit --color=always"
+        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review ${{ steps.phpunit-coverage-option.outputs.result }}"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
@@ -137,7 +177,7 @@ jobs:
       - name: Run Coveralls
         if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
         run: |
-          composer global require --ansi php-coveralls/php-coveralls:^2.4 symfony/console:^5
+          composer global require --ansi php-coveralls/php-coveralls:^2.4
           php-coveralls --coverage_clover=build/logs/clover.xml -v
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}

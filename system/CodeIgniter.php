@@ -12,7 +12,6 @@
 namespace CodeIgniter;
 
 use Closure;
-use CodeIgniter\Debug\Kint\RichRenderer;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
@@ -30,10 +29,13 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
+use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
 use Kint;
 use Kint\Renderer\CliRenderer;
+use Kint\Renderer\RichRenderer;
+use LogicException;
 
 /**
  * This class is the core of the framework, and will analyse the
@@ -45,9 +47,9 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.1.9';
+    public const CI_VERSION = '4.2.0';
 
-    private const MIN_PHP_VERSION = '7.3';
+    private const MIN_PHP_VERSION = '7.4';
 
     /**
      * App startup time.
@@ -80,7 +82,7 @@ class CodeIgniter
     /**
      * Current request.
      *
-     * @var CLIRequest|IncomingRequest|Request
+     * @var CLIRequest|IncomingRequest|Request|null
      */
     protected $request;
 
@@ -140,6 +142,16 @@ class CodeIgniter
      * @var bool
      */
     protected $useSafeOutput = false;
+
+    /**
+     * Context
+     *  web:     Invoked by HTTP request
+     *  php-cli: Invoked by CLI via `php public/index.php`
+     *  spark:   Invoked by CLI via the `spark` command
+     *
+     * @phpstan-var 'php-cli'|'spark'|'web'
+     */
+    protected ?string $context = null;
 
     /**
      * Constructor.
@@ -236,7 +248,7 @@ class CodeIgniter
 
                 $file = SYSTEMPATH . 'ThirdParty/Kint/' . implode('/', $class) . '.php';
 
-                if (file_exists($file)) {
+                if (is_file($file)) {
                     require_once $file;
                 }
             });
@@ -247,7 +259,7 @@ class CodeIgniter
         /**
          * Config\Kint
          */
-        $config = config('Config\Kint');
+        $config = config(KintConfig::class);
 
         Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;
@@ -257,7 +269,11 @@ class CodeIgniter
             Kint::$plugins = $config->plugins;
         }
 
-        Kint::$renderers[Kint::MODE_RICH] = RichRenderer::class;
+        $csp = Services::csp();
+        if ($csp->enabled()) {
+            RichRenderer::$js_nonce  = $csp->getScriptNonce();
+            RichRenderer::$css_nonce = $csp->getStyleNonce();
+        }
 
         RichRenderer::$theme  = $config->richTheme;
         RichRenderer::$folder = $config->richFolder;
@@ -286,10 +302,14 @@ class CodeIgniter
      * @throws Exception
      * @throws RedirectException
      *
-     * @return bool|mixed|RequestInterface|ResponseInterface
+     * @return bool|mixed|RequestInterface|ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
+        if ($this->context === null) {
+            throw new LogicException('Context must be set before run() is called. If you are upgrading from 4.1.x, you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.');
+        }
+
         $this->startBenchmark();
 
         $this->getRequestObject();
@@ -299,7 +319,7 @@ class CodeIgniter
 
         $this->spoofRequestMethod();
 
-        if ($this->request instanceof IncomingRequest && $this->request->getMethod() === 'cli') {
+        if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             $this->response->setStatusCode(405)->setBody('Method Not Allowed');
 
             return $this->sendResponse();
@@ -320,6 +340,11 @@ class CodeIgniter
             $this->callExit(EXIT_SUCCESS);
 
             return;
+        }
+
+        // spark command has nothing to do with HTTP redirect and 404
+        if ($this->isSparked()) {
+            return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         }
 
         try {
@@ -356,6 +381,30 @@ class CodeIgniter
     }
 
     /**
+     * Invoked via spark command?
+     */
+    private function isSparked(): bool
+    {
+        return $this->context === 'spark';
+    }
+
+    /**
+     * Invoked via php-cli command?
+     */
+    private function isPhpCli(): bool
+    {
+        return $this->context === 'php-cli';
+    }
+
+    /**
+     * Web access?
+     */
+    private function isWeb(): bool
+    {
+        return $this->context === 'web';
+    }
+
+    /**
      * Handles the main request logic and fires the controller.
      *
      * @throws PageNotFoundException
@@ -387,7 +436,7 @@ class CodeIgniter
         }
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! $this->isSparked()) {
             // Run "before" filters
             $this->benchmark->start('before_filters');
             $possibleResponse = $filters->run($uri, 'before');
@@ -428,7 +477,7 @@ class CodeIgniter
         $this->gatherOutput($cacheConfig, $returned);
 
         // Never run filters when running through Spark cli
-        if (! defined('SPARKED')) {
+        if (! $this->isSparked()) {
             $filters->setResponse($this->response);
 
             // Run "after" filters
@@ -546,10 +595,8 @@ class CodeIgniter
             return;
         }
 
-        if (is_cli() && ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
+        if ($this->isSparked() || $this->isPhpCli()) {
             $this->request = Services::clirequest($this->config);
-        // @codeCoverageIgnoreEnd
         } else {
             $this->request = Services::request($this->config);
             // guess at protocol if needed
@@ -565,7 +612,7 @@ class CodeIgniter
     {
         $this->response = Services::response($this->config);
 
-        if (! is_cli() || ENVIRONMENT === 'testing') {
+        if ($this->isWeb()) {
             $this->response->setProtocolVersion($this->request->getProtocolVersion());
         }
 
@@ -583,7 +630,7 @@ class CodeIgniter
      * @param int $duration How long the Strict Transport Security
      *                      should be enforced for this URL.
      */
-    protected function forceSecureAccess($duration = 31536000)
+    protected function forceSecureAccess($duration = 31_536_000)
     {
         if ($this->config->forceGlobalSecureRequests !== true) {
             return;
@@ -705,7 +752,7 @@ class CodeIgniter
      *
      * @throws RedirectException
      *
-     * @return string|string[]|null
+     * @return string|string[]|null Route filters, that is, the filters specified in the routes file
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
@@ -746,6 +793,8 @@ class CodeIgniter
     /**
      * Determines the path to use for us to try to route to, based
      * on user input (setPath), or the CLI/IncomingRequest path.
+     *
+     * @return string
      */
     protected function determinePath()
     {
@@ -775,6 +824,8 @@ class CodeIgniter
      * Now that everything has been setup, this method attempts to run the
      * controller method and make the script go. If it's not able to, will
      * show the appropriate Page Not Found error.
+     *
+     * @return ResponseInterface|string|void
      */
     protected function startController()
     {
@@ -802,7 +853,7 @@ class CodeIgniter
     /**
      * Instantiates the controller class.
      *
-     * @return mixed
+     * @return Controller
      */
     protected function createController()
     {
@@ -817,19 +868,34 @@ class CodeIgniter
     /**
      * Runs the controller, allowing for _remap methods to function.
      *
+     * CI4 supports three types of requests:
+     *  1. Web: URI segments become parameters, sent to Controllers via Routes,
+     *      output controlled by Headers to browser
+     *  2. Spark: accessed by CLI via the spark command, arguments are Command arguments,
+     *      sent to Commands by CommandRunner, output controlled by CLI class
+     *  3. PHP CLI: accessed by CLI via php public/index.php, arguments become URI segments,
+     *      sent to Controllers via Routes, output varies
+     *
      * @param mixed $class
      *
-     * @return mixed
+     * @return false|ResponseInterface|string|void
      */
     protected function runController($class)
     {
-        // If this is a console request then use the input segments as parameters
-        $params = defined('SPARKED') ? $this->request->getSegments() : $this->router->params();
+        if ($this->isSparked()) {
+            // This is a Spark request
+            /** @var CLIRequest $request */
+            $request = $this->request;
+            $params  = $request->getArgs();
 
-        if (method_exists($class, '_remap')) {
-            $output = $class->_remap($this->method, ...$params);
+            $output = $class->_remap($this->method, $params);
         } else {
-            $output = $class->{$this->method}(...$params);
+            // This is a Web request or PHP CLI request
+            $params = $this->router->params();
+
+            $output = method_exists($class, '_remap')
+                ? $class->_remap($this->method, ...$params)
+                : $class->{$this->method}(...$params);
         }
 
         $this->benchmark->stop('controller');
@@ -845,6 +911,8 @@ class CodeIgniter
     {
         // Is there a 404 Override available?
         if ($override = $this->router->get404Override()) {
+            $returned = null;
+
             if ($override instanceof Closure) {
                 echo $override($e->getMessage());
             } elseif (is_array($override)) {
@@ -855,13 +923,13 @@ class CodeIgniter
                 $this->method     = $override[1];
 
                 $controller = $this->createController();
-                $this->runController($controller);
+                $returned   = $this->runController($controller);
             }
 
             unset($override);
 
             $cacheConfig = new Cache();
-            $this->gatherOutput($cacheConfig);
+            $this->gatherOutput($cacheConfig, $returned);
             $this->sendResponse();
 
             return;
@@ -882,14 +950,16 @@ class CodeIgniter
             ob_end_flush(); // @codeCoverageIgnore
         }
 
-        throw PageNotFoundException::forPageNotFound(ENVIRONMENT !== 'production' || is_cli() ? $e->getMessage() : '');
+        throw PageNotFoundException::forPageNotFound(
+            (ENVIRONMENT !== 'production' || ! $this->isWeb()) ? $e->getMessage() : ''
+        );
     }
 
     /**
      * Gathers the script output from the buffer, replaces some execution
      * time tag in the output and displays the debug toolbar, if required.
      *
-     * @param mixed|null $returned
+     * @param ResponseInterface|string|null $returned
      */
     protected function gatherOutput(?Cache $cacheConfig = null, $returned = null)
     {
@@ -901,6 +971,11 @@ class CodeIgniter
         }
 
         if ($returned instanceof DownloadResponse) {
+            // Turn off output buffering completely, even if php.ini output_buffering is not off
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+
             $this->response = $returned;
 
             return;
@@ -943,8 +1018,8 @@ class CodeIgniter
     public function storePreviousURL($uri)
     {
         // Ignore CLI requests
-        if (is_cli() && ENVIRONMENT !== 'testing') {
-            return; // @codeCoverageIgnore
+        if (! $this->isWeb()) {
+            return;
         }
         // Ignore AJAX requests
         if (method_exists($this->request, 'isAJAX') && $this->request->isAJAX()) {
@@ -953,6 +1028,11 @@ class CodeIgniter
 
         // Ignore unroutable responses
         if ($this->response instanceof DownloadResponse || $this->response instanceof RedirectResponse) {
+            return;
+        }
+
+        // Ignore non-HTML responses
+        if (strpos($this->response->getHeaderLine('Content-Type'), 'text/html') === false) {
             return;
         }
 
@@ -973,7 +1053,7 @@ class CodeIgniter
     public function spoofRequestMethod()
     {
         // Only works with POSTED forms
-        if ($this->request->getMethod() !== 'post') {
+        if (strtolower($this->request->getMethod()) !== 'post') {
             return;
         }
 
@@ -1010,5 +1090,19 @@ class CodeIgniter
     protected function callExit($code)
     {
         exit($code); // @codeCoverageIgnore
+    }
+
+    /**
+     * Sets the app context.
+     *
+     * @phpstan-param 'php-cli'|'spark'|'web' $context
+     *
+     * @return $this
+     */
+    public function setContext(string $context)
+    {
+        $this->context = $context;
+
+        return $this;
     }
 }

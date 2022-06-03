@@ -25,9 +25,9 @@ namespace CodeIgniter\Test;
  */
 final class BootstrapFCPATHTest extends CIUnitTestCase
 {
-    private $currentDir = __DIR__;
-    private $dir1       = '/tmp/dir1';
-    private $file1      = '/tmp/dir1/testFile.php';
+    private string $currentDir = __DIR__;
+    private string $dir1       = '/tmp/dir1';
+    private string $file1      = '/tmp/dir1/testFile.php';
 
     protected function setUp(): void
     {
@@ -78,7 +78,7 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
 
     private function deleteFiles(): void
     {
-        if (file_exists($this->file1)) {
+        if (is_file($this->file1)) {
             unlink($this->file1);
         }
     }
@@ -93,9 +93,8 @@ final class BootstrapFCPATHTest extends CIUnitTestCase
         $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../vendor/autoload.php';" . PHP_EOL;
         $fileContents .= "include_once '" . $this->currentDir . "' . '/../../../system/Test/bootstrap.php';" . PHP_EOL;
         $fileContents .= '// return value of FCPATH' . PHP_EOL;
-        $fileContents .= 'echo FCPATH;' . PHP_EOL;
 
-        return $fileContents;
+        return $fileContents . ('echo FCPATH;' . PHP_EOL);
     }
 
     private function readOutput($file)

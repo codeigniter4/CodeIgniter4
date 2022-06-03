@@ -18,33 +18,8 @@ Feature testing requires that all of your test classes use the ``CodeIgniter\Tes
 and ``CodeIgniter\Test\FeatureTestTrait`` traits. Since these testing tools rely on proper database
 staging you must always ensure that ``parent::setUp()`` and ``parent::tearDown()``
 are called if you implement your own methods.
-::
 
-    <?php
-
-    namespace App;
-
-    use CodeIgniter\Test\DatabaseTestTrait;
-    use CodeIgniter\Test\FeatureTestTrait;
-
-    class TestFoo extends CIUnitTestCase
-    {
-        use DatabaseTestTrait, FeatureTestTrait;
-
-        protected function setUp(): void
-        {
-            parent::setUp();
-
-            $this->myClassMethod();
-        }
-
-        protected function tearDown(): void
-        {
-            parent::tearDown();
-
-            $this->anotherClassMethod();
-        }
-    }
+.. literalinclude:: feature/001.php
 
 Requesting A Page
 =================
@@ -54,25 +29,12 @@ to do this, you use the ``call()`` method. The first parameter is the HTTP metho
 The second parameter is the path on your site to test. The third parameter accepts an array that is used to populate the
 superglobal variables for the HTTP verb you are using. So, a method of **GET** would have the **$_GET** variable
 populated, while a **post** request would have the **$_POST** array populated.
-::
 
-    // Get a simple page
-    $result = $this->call('get', '/');
+.. literalinclude:: feature/002.php
 
-    // Submit a form
-    $result = $this->call('post', 'contact'), [
-        'name'  => 'Fred Flintstone',
-        'email' => 'flintyfred@example.com'
-    ]);
+Shorthand methods for each of the HTTP verbs exist to ease typing and make things clearer:
 
-Shorthand methods for each of the HTTP verbs exist to ease typing and make things clearer::
-
-    $this->get($path, $params);
-    $this->post($path, $params);
-    $this->put($path, $params);
-    $this->patch($path, $params);
-    $this->delete($path, $params);
-    $this->options($path, $params);
+.. literalinclude:: feature/003.php
 
 .. note:: The ``$params`` array does not make sense for every HTTP verb, but is included for consistency.
 
@@ -80,17 +42,12 @@ Setting Different Routes
 ------------------------
 
 You can use a custom collection of routes by passing an array of "routes" into the ``withRoutes()`` method. This will
-override any existing routes in the system::
+override any existing routes in the system:
 
-    $routes = [
-        ['get', 'users', 'UserController::list'],
-    ];
-
-    $result = $this->withRoutes($routes)->get('users');
+.. literalinclude:: feature/004.php
 
 Each of the "routes" is a 3 element array containing the HTTP verb (or "add" for all),
 the URI to match, and the routing destination.
-
 
 Setting Session Values
 ----------------------
@@ -98,39 +55,24 @@ Setting Session Values
 You can set custom session values to use during a single test with the ``withSession()`` method. This takes an array
 of key/value pairs that should exist within the ``$_SESSION`` variable when this request is made, or ``null`` to indicate
 that the current values of ``$_SESSION`` should be used. This is handy for testing authentication and more.
-::
 
-    $values = [
-        'logged_in' => 123,
-    ];
-
-    $result = $this->withSession($values)->get('admin');
-
-    // Or...
-
-    $_SESSION['logged_in'] = 123;
-
-    $result = $this->withSession()->get('admin');
+.. literalinclude:: feature/005.php
 
 Setting Headers
 ---------------
 
 You can set header values with the ``withHeaders()`` method. This takes an array of key/value pairs that would be
-passed as a header into the call.::
+passed as a header into the call:
 
-    $headers = [
-        'CONTENT_TYPE' => 'application/json',
-    ];
-
-    $result = $this->withHeaders($headers)->post('users');
+.. literalinclude:: feature/006.php
 
 Bypassing Events
 ----------------
 
 Events are handy to use in your application, but can be problematic during testing. Especially events that are used
-to send out emails. You can tell the system to skip any event handling with the ``skipEvents()`` method::
+to send out emails. You can tell the system to skip any event handling with the ``skipEvents()`` method:
 
-    $result = $this->skipEvents()->post('users', $userInfo);
+.. literalinclude:: feature/007.php
 
 Formatting The Request
 -----------------------
@@ -139,13 +81,8 @@ You can set the format of your request's body using the ``withBodyFormat()`` met
 `json` or `xml`. This will take the parameters passed into ``call()``, ``post()``, ``get()``... and assign them to the
 body of the request in the given format. This will also set the `Content-Type` header for your request accordingly.
 This is useful when testing JSON or XML API's so that you can set the request in the form that the controller will expect.
-::
 
-    // If your feature test contains this:
-    $result = $this->withBodyFormat('json')->post('users', $userInfo);
-
-    // Your controller can then get the parameters passed in with:
-    $userInfo = $this->request->getJson();
+.. literalinclude:: feature/008.php
 
 Setting the Body
 ----------------

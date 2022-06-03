@@ -49,7 +49,7 @@ class ImageMagickHandler extends BaseHandler
 
         // We should never see this, so can't test it
         // @codeCoverageIgnoreStart
-        if (! (extension_loaded('imagick') || class_exists('Imagick'))) {
+        if (! (extension_loaded('imagick') || class_exists(Imagick::class))) {
             throw ImageException::forMissingExtension('IMAGICK');
         }
         // @codeCoverageIgnoreEnd

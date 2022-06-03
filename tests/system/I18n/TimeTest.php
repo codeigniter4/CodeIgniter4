@@ -235,12 +235,12 @@ final class TimeTest extends CIUnitTestCase
         $this->expectException(I18nException::class);
         $this->expectExceptionMessage(lang('Time.invalidFormat', [$format]));
 
-        $time = Time::createFromFormat($format, 'America/Chicago');
+        Time::createFromFormat($format, 'America/Chicago');
     }
 
     public function testCreateFromTimestamp()
     {
-        // Se the timezone temporarily to UTC to make sure the test timestamp is correct
+        // Set the timezone temporarily to UTC to make sure the test timestamp is correct
         $tz = date_default_timezone_get();
         date_default_timezone_set('UTC');
 
@@ -251,6 +251,21 @@ final class TimeTest extends CIUnitTestCase
         $time = Time::createFromTimestamp($timestamp);
 
         $this->assertSame(date('2017-03-18 00:00:00'), $time->toDateTimeString());
+    }
+
+    public function testCreateFromTimestampWithTimezone()
+    {
+        // Set the timezone temporarily to UTC to make sure the test timestamp is correct
+        $tz = date_default_timezone_get();
+        date_default_timezone_set('UTC');
+
+        $timestamp = strtotime('2017-03-18 midnight'); // in UTC
+
+        date_default_timezone_set($tz);
+
+        $time = Time::createFromTimestamp($timestamp, 'Asia/Jakarta'); // UTC +7
+
+        $this->assertSame(date('2017-03-18 07:00:00'), $time->toDateTimeString());
     }
 
     public function testTestNow()
@@ -482,7 +497,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetDayOverMaxInCurrentMonth()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('Feb 02, 2009');
         $time->setDay(29);
@@ -530,7 +545,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetMonthTooSmall()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setMonth(-5);
@@ -538,7 +553,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetMonthTooBig()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setMonth(30);
@@ -546,7 +561,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetDayTooSmall()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setDay(-5);
@@ -554,7 +569,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetDayTooBig()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setDay(80);
@@ -562,7 +577,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetHourTooSmall()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setHour(-5);
@@ -570,7 +585,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetHourTooBig()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setHour(80);
@@ -578,7 +593,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetMinuteTooSmall()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setMinute(-5);
@@ -586,7 +601,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetMinuteTooBig()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setMinute(80);
@@ -594,7 +609,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetSecondTooSmall()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setSecond(-5);
@@ -602,7 +617,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetSecondTooBig()
     {
-        $this->expectException('CodeIgniter\I18n\Exceptions\I18nException');
+        $this->expectException(I18nException::class);
 
         $time = Time::parse('May 10, 2017');
         $time->setSecond(80);

@@ -42,9 +42,9 @@ if [ "$FILES" != "" ]; then
     # Run on whole codebase to skip on unnecessary filtering
     # Run first on app, admin, public
     if [ -d /proc/cygdrive ]; then
-        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php
     else
-        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.no-header.php-cs-fixer.dist.php
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.no-header.php
     fi
 
     if [ $? != 0 ]; then
@@ -61,6 +61,18 @@ if [ "$FILES" != "" ]; then
 
     if [ $? != 0 ]; then
         echo "Files in system, tests, utils, or root are not following the coding standards. Please fix them before commit."
+        exit 1
+    fi
+
+    # Next, run on user_guide_src/source PHP files
+    if [ -d /proc/cygdrive ]; then
+        ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php
+    else
+        php ./vendor/bin/php-cs-fixer fix --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php
+    fi
+
+    if [ $? != 0 ]; then
+        echo "Files in user_guide_src/source are not following the coding standards. Please fix them before commit."
         exit 1
     fi
 fi

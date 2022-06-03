@@ -5,13 +5,11 @@ Upgrade Encryption
     :local:
     :depth: 2
 
-
 Documentations
 ==============
 
 - `Encryption Library Documentation CodeIgniter 3.X <http://codeigniter.com/userguide3/libraries/encryption.html>`_
 - :doc:`Encryption Service Documentation CodeIgniter 4.X </libraries/encryption>`
-
 
 What has been changed
 =====================
@@ -25,27 +23,12 @@ Upgrade Guide
 Code Example
 ============
 
-CodeIgniter Version 3.11
+CodeIgniter Version 3.x
 ------------------------
-::
 
-    $this->load->library('encryption');
-
-    $plain_text = 'This is a plain-text message!';
-    $ciphertext = $this->encryption->encrypt($plain_text);
-
-    // Outputs: This is a plain-text message!
-    echo $this->encryption->decrypt($ciphertext);
-
+.. literalinclude:: upgrade_encryption/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------
-::
 
-    $encrypter = service('encrypter');
-
-    $plainText = 'This is a plain-text message!';
-    $ciphertext = $encrypter->encrypt($plainText);
-
-    // Outputs: This is a plain-text message!
-    echo $encrypter->decrypt($ciphertext);
+.. literalinclude:: upgrade_encryption/001.php

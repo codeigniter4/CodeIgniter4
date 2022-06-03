@@ -292,7 +292,7 @@ class Filters
      */
     public function addFilter(string $class, ?string $alias = null, string $when = 'before', string $section = 'globals')
     {
-        $alias = $alias ?? md5($class);
+        $alias ??= md5($class);
 
         if (! isset($this->config->{$section})) {
             $this->config->{$section} = [];
@@ -355,7 +355,7 @@ class Filters
     }
 
     /**
-     * Ensures that specific filters is on and enabled for the current request.
+     * Ensures that specific filters are on and enabled for the current request.
      *
      * Filters can have "arguments". This is done by placing a colon immediately
      * after the filter name, followed by a comma-separated list of arguments that
@@ -503,7 +503,7 @@ class Filters
         // when using enableFilter() we already write the class name in ->filtersClass as well as the
         // alias in ->filters. This leads to duplicates when using route filters.
         // Since some filters like rate limiters rely on being executed once a request we filter em here.
-        $this->filtersClass[$position] = array_unique($this->filtersClass[$position]);
+        $this->filtersClass[$position] = array_values(array_unique($this->filtersClass[$position]));
     }
 
     /**

@@ -293,9 +293,9 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         /**
-         * @var Validation $validation
+         * @var Validation|null $validation
          */
-        $validation       = $validation ?? Services::validation(null, false);
+        $validation ??= Services::validation(null, false);
         $this->validation = $validation;
 
         $this->initialize();
@@ -1076,7 +1076,7 @@ abstract class BaseModel
         $pager = Services::pager(null, null, false);
 
         if ($segment) {
-            $pager->setSegment($segment);
+            $pager->setSegment($segment, $group);
         }
 
         $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
@@ -1344,7 +1344,9 @@ abstract class BaseModel
             return true;
         }
 
-        return $this->validation->setRules($rules, $this->validationMessages)->run($data, null, $this->DBGroup);
+        $this->validation->reset()->setRules($rules, $this->validationMessages);
+
+        return $this->validation->run($data, null, $this->DBGroup);
     }
 
     /**
@@ -1489,9 +1491,9 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of it's public and protected
      * properties as an array suitable for use in creates and updates.
-     * This method use objectToRawArray internally and does conversion
+     * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
      * @param object|string $data        Data
@@ -1521,7 +1523,7 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
      * @param object|string $data        Data

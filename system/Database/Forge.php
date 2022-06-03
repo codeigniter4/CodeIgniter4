@@ -179,7 +179,7 @@ class Forge
      */
     public function __construct(BaseConnection $db)
     {
-        $this->db = &$db;
+        $this->db = $db;
     }
 
     /**
@@ -804,9 +804,7 @@ class Forge
                 $fields = explode(',', $fields);
             }
 
-            $fields = array_map(function ($field) {
-                return 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field));
-            }, $fields);
+            $fields = array_map(fn ($field) => 'DROP COLUMN ' . $this->db->escapeIdentifiers(trim($field)), $fields);
 
             return $sql . implode(', ', $fields);
         }
@@ -982,6 +980,8 @@ class Forge
                 // Override the NULL attribute if that's our default
                 $attributes['NULL'] = true;
                 $field['null']      = empty($this->null) ? '' : ' ' . $this->null;
+            } elseif ($attributes['DEFAULT'] instanceof RawSql) {
+                $field['default'] = $this->default . $attributes['DEFAULT'];
             } else {
                 $field['default'] = $this->default . $this->db->escape($attributes['DEFAULT']);
             }

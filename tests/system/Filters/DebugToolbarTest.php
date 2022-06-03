@@ -22,8 +22,8 @@ use Config\Filters as FilterConfig;
  */
 final class DebugToolbarTest extends CIUnitTestCase
 {
-    protected $request;
-    protected $response;
+    private $request;
+    private $response;
 
     protected function setUp(): void
     {

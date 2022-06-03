@@ -12,13 +12,15 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Config\Filters;
+use Config\Services;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class FormHelperTest extends CIUnitTestCase
 {
@@ -836,18 +838,19 @@ final class FormHelperTest extends CIUnitTestCase
      * @runInSeparateProcess
      * @preserveGlobalState  disabled
      */
-    public function testSetRadio()
+    public function testSetRadioFromSessionOldInput()
     {
         $_SESSION = [
             '_ci_old_input' => [
                 'post' => [
-                    'foo' => 'bar',
+                    'foo' => '<bar>',
                 ],
             ],
         ];
 
-        $this->assertSame(' checked="checked"', set_radio('foo', 'bar'));
+        $this->assertSame(' checked="checked"', set_radio('foo', '<bar>'));
         $this->assertSame('', set_radio('foo', 'baz'));
+
         unset($_SESSION['_ci_old_input']);
     }
 
@@ -858,9 +861,10 @@ final class FormHelperTest extends CIUnitTestCase
     public function testSetRadioFromPost()
     {
         $_POST['bar'] = 'baz';
+
         $this->assertSame(' checked="checked"', set_radio('bar', 'baz'));
         $this->assertSame('', set_radio('bar', 'boop'));
-        $this->assertSame(' checked="checked"', set_radio('bar', 'boop', true));
+        $this->assertSame('', set_radio('bar', 'boop', true));
     }
 
     /**
@@ -869,15 +873,17 @@ final class FormHelperTest extends CIUnitTestCase
      */
     public function testSetRadioFromPostWithValueZero()
     {
-        $_POST['bar'] = 0;
+        $_POST['bar'] = '0';
+
         $this->assertSame(' checked="checked"', set_radio('bar', '0'));
         $this->assertSame('', set_radio('bar', 'boop'));
 
         $_POST = [];
+
         $this->assertSame(' checked="checked"', set_radio('bar', '0', true));
     }
 
-    public function testSetRadioFromPostArray()
+    public function testSetRadioFromSessionOldInputPostArray()
     {
         $_SESSION = [
             '_ci_old_input' => [
@@ -889,11 +895,12 @@ final class FormHelperTest extends CIUnitTestCase
                 ],
             ],
         ];
+
         $this->assertSame(' checked="checked"', set_radio('bar', 'boop'));
         $this->assertSame('', set_radio('bar', 'baz'));
     }
 
-    public function testSetRadioFromPostArrayWithValueZero()
+    public function testSetRadioFromSessionOldInputPostArrayWithValueZero()
     {
         $_SESSION = [
             '_ci_old_input' => [
@@ -905,12 +912,16 @@ final class FormHelperTest extends CIUnitTestCase
                 ],
             ],
         ];
+
         $this->assertSame(' checked="checked"', set_radio('bar', '0'));
         $this->assertSame('', set_radio('bar', 'baz'));
     }
 
     public function testSetRadioDefault()
     {
+        $_SESSION = [];
+        $_POST    = [];
+
         $this->assertSame(' checked="checked"', set_radio('code', 'alpha', true));
         $this->assertSame('', set_radio('code', 'beta', false));
     }

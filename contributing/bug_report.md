@@ -27,15 +27,7 @@ have found a bug, again - please ask on the forums first.
 
 ## Security
 
-Did you find a security issue in CodeIgniter?
-
-Please *don't* disclose it publicly, but e-mail us at
-<security@codeigniter.com>, or report it via our page on
-[HackerOne](https://hackerone.com/codeigniter).
-
-If you've found a critical vulnerability, we'd be happy to credit you in
-our
-[ChangeLog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html).
+See [SECURITY.md](../SECURITY.md).
 
 ## Tips for a Good Issue Report
 

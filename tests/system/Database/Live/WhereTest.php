@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
  * @group DatabaseLive
@@ -24,7 +25,7 @@ final class WhereTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = true;
-    protected $seed    = 'Tests\Support\Database\Seeds\CITestSeeder';
+    protected $seed    = CITestSeeder::class;
 
     public function testWhereSimpleKeyValue()
     {
@@ -127,10 +128,18 @@ final class WhereTest extends CIUnitTestCase
             ->where('name', 'Developer')
             ->getCompiledSelect();
 
-        $jobs = $this->db->table('job')
-            ->where('id not in (' . $subQuery . ')', null, false)
-            ->get()
-            ->getResult();
+        if ($this->db->DBDriver === 'OCI8') {
+            $jobs = $this->db->table('job')
+                ->where('"id" not in (' . $subQuery . ')', null, false)
+                ->orderBy('id')
+                ->get()
+                ->getResult();
+        } else {
+            $jobs = $this->db->table('job')
+                ->where('id not in (' . $subQuery . ')', null, false)
+                ->get()
+                ->getResult();
+        }
 
         $this->assertCount(3, $jobs);
         $this->assertSame('Politician', $jobs[0]->name);
@@ -145,10 +154,17 @@ final class WhereTest extends CIUnitTestCase
             ->where('name', 'Developer')
             ->getCompiledSelect();
 
-        $jobs = $this->db->table('job')
-            ->where('id = (' . $subQuery . ')', null, false)
-            ->get()
-            ->getResult();
+        if ($this->db->DBDriver === 'OCI8') {
+            $jobs = $this->db->table('job')
+                ->where('"id" = (' . $subQuery . ')', null, false)
+                ->get()
+                ->getResult();
+        } else {
+            $jobs = $this->db->table('job')
+                ->where('id = (' . $subQuery . ')', null, false)
+                ->get()
+                ->getResult();
+        }
 
         $this->assertCount(1, $jobs);
         $this->assertSame('Developer', $jobs[0]->name);
@@ -215,8 +231,15 @@ final class WhereTest extends CIUnitTestCase
             'description' => null,
         ]);
 
+        $ANSISQLDriverNames = ['OCI8'];
+        $lowerJobName       = sprintf('LOWER(%s.name)', $this->db->prefixTable('job'));
+
+        if (in_array($this->db->DBDriver, $ANSISQLDriverNames, true)) {
+            $lowerJobName = sprintf('LOWER("%s"."name")', $this->db->prefixTable('job'));
+        }
+
         $job = $builder
-            ->where(sprintf('LOWER(%s.name)', $this->db->prefixTable('job')), 'brewmaster')
+            ->where($lowerJobName, 'brewmaster')
             ->get()
             ->getResult();
         $this->assertCount(1, $job);

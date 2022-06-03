@@ -120,6 +120,10 @@ class Connection extends BaseConnection
             unset($connection['UID'], $connection['PWD']);
         }
 
+        if (strpos($this->hostname, ',') === false && $this->port !== '') {
+            $this->hostname .= ', ' . $this->port;
+        }
+
         sqlsrv_configure('WarningsReturnAsErrors', 0);
         $this->connID = sqlsrv_connect($this->hostname, $connection);
 
@@ -229,9 +233,7 @@ class Connection extends BaseConnection
             $obj->name = $row->index_name;
 
             $_fields     = explode(',', trim($row->index_keys));
-            $obj->fields = array_map(static function ($v) {
-                return trim($v);
-            }, $_fields);
+            $obj->fields = array_map(static fn ($v) => trim($v), $_fields);
 
             if (strpos($row->index_description, 'primary key located on') !== false) {
                 $obj->type = 'PRIMARY';
@@ -467,6 +469,8 @@ class Connection extends BaseConnection
      * Returns the last error encountered by this connection.
      *
      * @return mixed
+     *
+     * @deprecated Use `error()` instead.
      */
     public function getError()
     {

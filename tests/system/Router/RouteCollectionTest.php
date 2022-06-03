@@ -15,16 +15,19 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Tests\Support\Controllers\Hello;
 
 /**
- * @backupGlobals enabled
- *
  * @internal
  */
 final class RouteCollectionTest extends CIUnitTestCase
 {
-    protected function tearDown(): void
+    protected function setUp(): void
     {
+        parent::setUp();
+
+        $this->resetServices(true);
+        $this->resetFactories();
     }
 
     protected function getCollector(array $config = [], array $files = [], $moduleConfig = null)
@@ -59,6 +62,45 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $routes = $routes->getRoutes();
 
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testBasicAddCallable()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('home', [Hello::class, 'index']);
+
+        $routes  = $routes->getRoutes();
+        $expects = [
+            'home' => '\Tests\Support\Controllers\Hello::index',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testBasicAddCallableWithParamsString()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('product/(:num)/(:num)', [[Hello::class, 'index'], '$2/$1']);
+
+        $routes  = $routes->getRoutes();
+        $expects = [
+            'product/([0-9]+)/([0-9]+)' => '\Tests\Support\Controllers\Hello::index/$2/$1',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testBasicAddCallableWithParamsWithoutString()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('product/(:num)/(:num)', [Hello::class, 'index']);
+
+        $routes  = $routes->getRoutes();
+        $expects = [
+            'product/([0-9]+)/([0-9]+)' => '\Tests\Support\Controllers\Hello::index/$1/$2',
+        ];
         $this->assertSame($expects, $routes);
     }
 
@@ -813,6 +855,30 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
+    public function testReverseRoutingDefaultNamespaceAppController()
+    {
+        $routes = $this->getCollector();
+        $routes->setDefaultNamespace('App\Controllers');
+
+        $routes->get('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
+
+        $match = $routes->reverseRoute('Galleries::showUserGallery', 15, 12);
+
+        $this->assertSame('/users/15/gallery12', $match);
+    }
+
+    public function testReverseRoutingDefaultNamespaceAppControllerSubNamespace()
+    {
+        $routes = $this->getCollector();
+        $routes->setDefaultNamespace('App\Controllers');
+
+        $routes->get('admin/(:num)/gallery(:any)', 'Admin\Galleries::showUserGallery/$1/$2');
+
+        $match = $routes->reverseRoute('Admin\Galleries::showUserGallery', 15, 12);
+
+        $this->assertSame('/admin/15/gallery12', $match);
+    }
+
     public function testNamedRoutes()
     {
         $routes = $this->getCollector();
@@ -1002,9 +1068,9 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testWithSubdomain()
     {
-        $routes = $this->getCollector();
-
         $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1012,15 +1078,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expects = [
             'objects/([a-zA-Z0-9]+)' => '\Admin::objectsList/$1',
         ];
-
         $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithSubdomainMissing()
     {
-        $routes = $this->getCollector();
+        $_SERVER['HTTP_HOST'] = 'www.example.com';
 
-        //      $_SERVER['HTTP_HOST'] = 'adm.example.com';
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1028,15 +1093,14 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expects = [
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
-
         $this->assertSame($expects, $routes->getRoutes());
     }
 
     public function testWithDifferentSubdomain()
     {
-        $routes = $this->getCollector();
-
         $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1044,7 +1108,6 @@ final class RouteCollectionTest extends CIUnitTestCase
         $expects = [
             'objects/([a-zA-Z0-9]+)' => '\App::objectsList/$1',
         ];
-
         $this->assertSame($expects, $routes->getRoutes());
     }
 
@@ -1068,7 +1131,7 @@ final class RouteCollectionTest extends CIUnitTestCase
     {
         $routes = $this->getCollector();
 
-        $_SERVER['HTTP_HOST'] = 'example.uk.co';
+        $_SERVER['HTTP_HOST'] = 'example.co.uk';
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'sales']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
@@ -1082,9 +1145,9 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testWithDifferentSubdomainMissing()
     {
-        $routes = $this->getCollector();
-
         $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'nothere']);
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1', ['subdomain' => '*']);
@@ -1097,13 +1160,27 @@ final class RouteCollectionTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5959
+     */
+    public function testWithNoSubdomainAndDot()
+    {
+        $_SERVER['HTTP_HOST'] = 'example.com';
+
+        $routes = $this->getCollector();
+
+        $routes->add('/objects/(:alphanum)', 'App::objectsList/$1', ['subdomain' => '*']);
+
+        $this->assertSame([], $routes->getRoutes());
+    }
+
+    /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1692
      */
     public function testWithSubdomainOrdered()
     {
-        $routes = $this->getCollector();
-
         $_SERVER['HTTP_HOST'] = 'adm.example.com';
+
+        $routes = $this->getCollector();
 
         $routes->add('/objects/(:alphanum)', 'App::objectsList/$1');
         $routes->add('/objects/(:alphanum)', 'Admin::objectsList/$1', ['subdomain' => 'adm']);
@@ -1254,8 +1331,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertTrue($routes->isFiltered('admin/users'));
         $this->assertFalse($routes->isFiltered('admin/franky'));
-        $this->assertSame('role', $routes->getFilterForRoute('admin/users'));
-        $this->assertSame('', $routes->getFilterForRoute('admin/bosses'));
+        $this->assertSame(['role'], $routes->getFiltersForRoute('admin/users'));
+        $this->assertSame([], $routes->getFiltersForRoute('admin/bosses'));
     }
 
     public function testRouteGroupWithFilterWithParams()
@@ -1273,7 +1350,7 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $this->assertTrue($routes->isFiltered('admin/users'));
         $this->assertFalse($routes->isFiltered('admin/franky'));
-        $this->assertSame('role:admin,manager', $routes->getFilterForRoute('admin/users'));
+        $this->assertSame(['role:admin,manager'], $routes->getFiltersForRoute('admin/users'));
     }
 
     public function test404OverrideNot()
@@ -1321,10 +1398,10 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRouteToWithSubdomainMatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1333,10 +1410,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithSubdomainMismatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1345,10 +1422,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithSubdomainNot()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => 'doc', 'as' => 'doc_item']);
 
@@ -1357,10 +1434,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainMatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1369,10 +1446,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainMismatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
@@ -1381,22 +1458,22 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithGenericSubdomainNot()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['subdomain' => '*', 'as' => 'doc_item']);
 
-        $this->assertSame('/i/sth', $routes->reverseRoute('doc_item', 'sth'));
+        $this->assertFalse($routes->reverseRoute('doc_item', 'sth'));
     }
 
     public function testRouteToWithoutSubdomainMatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1405,10 +1482,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithoutSubdomainMismatch()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'dev.example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1417,10 +1494,10 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteToWithoutSubdomainNot()
     {
-        $routes = $this->getCollector();
-
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'example.com';
+        Services::request()->setMethod('get');
+
+        $routes = $this->getCollector();
 
         $routes->get('i/(:any)', 'App\Controllers\Site\CDoc::item/$1', ['hostname' => 'example.com', 'as' => 'doc_item']);
 
@@ -1434,8 +1511,8 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRouteOverwritingDifferentSubdomains()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1455,8 +1532,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingTwoRules()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1476,8 +1553,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingTwoRulesLastApplies()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1496,8 +1573,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingMatchingSubdomain()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1516,8 +1593,8 @@ final class RouteCollectionTest extends CIUnitTestCase
 
     public function testRouteOverwritingMatchingHost()
     {
-        Services::request()->setMethod('get');
         $_SERVER['HTTP_HOST'] = 'doc.domain.com';
+        Services::request()->setMethod('get');
 
         $routes = $this->getCollector();
         $router = new Router($routes, Services::request());
@@ -1599,6 +1676,7 @@ final class RouteCollectionTest extends CIUnitTestCase
      */
     public function testRoutesControllerNameReturnsFQCN($namespace)
     {
+        Services::request()->setMethod('get');
         $routes = $this->getCollector();
         $routes->setAutoRoute(false);
         $routes->setDefaultNamespace($namespace);
@@ -1637,5 +1715,98 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $collection->add('string-negative-integer', 'Controller::method', ['priority' => '-1']);
         $this->assertSame(1, $collection->getRoutesOptions('string-negative-integer')['priority']);
+    }
+
+    public function testGetRegisteredControllersReturnsControllerForHTTPverb()
+    {
+        $collection = $this->getCollector();
+        $collection->get('test', '\App\Controllers\Hello::get');
+        $collection->post('test', '\App\Controllers\Hello::post');
+
+        $routes = $collection->getRegisteredControllers('get');
+
+        $expects = [
+            '\App\Controllers\Hello',
+        ];
+        $this->assertSame($expects, $routes);
+
+        $routes = $collection->getRegisteredControllers('post');
+
+        $expects = [
+            '\App\Controllers\Hello',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testGetRegisteredControllersReturnsTwoControllers()
+    {
+        $collection = $this->getCollector();
+        $collection->post('test', '\App\Controllers\Test::post');
+        $collection->post('hello', '\App\Controllers\Hello::post');
+
+        $routes = $collection->getRegisteredControllers('post');
+
+        $expects = [
+            '\App\Controllers\Test',
+            '\App\Controllers\Hello',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testGetRegisteredControllersReturnsOneControllerWhenTwoRoutsWithDiffernetMethods()
+    {
+        $collection = $this->getCollector();
+        $collection->post('test', '\App\Controllers\Test::test');
+        $collection->post('hello', '\App\Controllers\Test::hello');
+
+        $routes = $collection->getRegisteredControllers('post');
+
+        $expects = [
+            '\App\Controllers\Test',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testGetRegisteredControllersReturnsAllControllers()
+    {
+        $collection = $this->getCollector();
+        $collection->get('test', '\App\Controllers\Hello::get');
+        $collection->post('test', '\App\Controllers\Hello::post');
+        $collection->post('hello', '\App\Controllers\Test::hello');
+
+        $routes = $collection->getRegisteredControllers('*');
+
+        $expects = [
+            '\App\Controllers\Hello',
+            '\App\Controllers\Test',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testGetRegisteredControllersReturnsControllerByAddMethod()
+    {
+        $collection = $this->getCollector();
+        $collection->get('test', '\App\Controllers\Hello::get');
+        $collection->add('hello', '\App\Controllers\Test::hello');
+
+        $routes = $collection->getRegisteredControllers('get');
+
+        $expects = [
+            '\App\Controllers\Hello',
+            '\App\Controllers\Test',
+        ];
+        $this->assertSame($expects, $routes);
+    }
+
+    public function testGetRegisteredControllersDoesNotReturnClosures()
+    {
+        $collection = $this->getCollector();
+        $collection->get('feed', static function () {
+        });
+
+        $routes = $collection->getRegisteredControllers('*');
+
+        $expects = [];
+        $this->assertSame($expects, $routes);
     }
 }

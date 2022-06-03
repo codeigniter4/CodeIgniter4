@@ -5,7 +5,7 @@ Working with Uploaded Files
 CodeIgniter makes working with files uploaded through a form much simpler and more secure than using PHP's ``$_FILES``
 array directly. This extends the :doc:`File class </libraries/files>` and thus gains all of the features of that class.
 
-.. note:: This is not the same as the File Uploading class in previous versions of CodeIgniter. This provides a raw
+.. note:: This is not the same as the File Uploading class in CodeIgniter v3.x. This provides a raw
     interface to the uploaded files with a few small features.
 
 .. contents::
@@ -33,31 +33,9 @@ Creating the Upload Form
 ========================
 
 Using a text editor, create a form called upload_form.php. In it, place
-this code and save it to your **app/Views/** directory::
+this code and save it to your **app/Views/** directory:
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Upload Form</title>
-    </head>
-    <body>
-
-    <?php foreach ($errors as $error): ?>
-        <li><?= esc($error) ?></li>
-    <?php endforeach ?>
-
-    <?= form_open_multipart('upload/upload') ?>
-
-    <input type="file" name="userfile" size="20" />
-
-    <br /><br />
-
-    <input type="submit" value="upload" />
-
-    </form>
-
-    </body>
-    </html>
+.. literalinclude:: uploaded_files/001.php
 
 You'll notice we are using a form helper to create the opening form tag.
 File uploads require a multipart form, so the helper creates the proper
@@ -95,56 +73,9 @@ The Controller
 ==============
 
 Using a text editor, create a controller called Upload.php. In it, place
-this code and save it to your **app/Controllers/** directory::
+this code and save it to your **app/Controllers/** directory:
 
-    <?php
-
-    namespace App\Controllers;
-
-    use CodeIgniter\Files\File;
-
-    class Upload extends BaseController
-    {
-        protected $helpers = ['form'];
-
-        public function index()
-        {
-            return view('upload_form', ['errors' => []]);
-        }
-
-        public function upload()
-        {
-            $validationRule = [
-                'userfile' => [
-                    'label' => 'Image File',
-                    'rules' => 'uploaded[userfile]'
-                        . '|is_image[userfile]'
-                        . '|mime_in[userfile,image/jpg,image/jpeg,image/gif,image/png,image/webp]'
-                        . '|max_size[userfile,100]'
-                        . '|max_dims[userfile,1024,768]',
-                ],
-            ];
-            if (! $this->validate($validationRule)) {
-                $data = ['errors' => $this->validator->getErrors()];
-
-                return view('upload_form', $data);
-            }
-
-            $img = $this->request->getFile('userfile');
-
-            if (! $img->hasMoved()) {
-                $filepath = WRITEPATH . 'uploads/' . $img->store();
-
-                $data = ['uploaded_flleinfo' => new File($filepath)];
-
-                return view('upload_success', $data);
-            } else {
-                $data = ['errors' => 'The file has already been moved.'];
-
-                return view('upload_form', $data);
-            }
-        }
-    }
+.. literalinclude:: uploaded_files/002.php
 
 .. note:: Since the value of a file upload HTML field doesn't exist, and is stored in the ``$_FILES`` global,
     only :ref:`rules-for-file-uploads` can be used to validate upload file with :doc:`validation`.
@@ -166,6 +97,8 @@ You should see an upload form. Try uploading an image file (either a
 **jpg**, **gif**, **png**, or **webp**). If the path in your controller is correct it should
 work.
 
+.. _uploaded-files-accessing-files:
+
 ***************
 Accessing Files
 ***************
@@ -179,9 +112,9 @@ are not aware of. CodeIgniter helps with both of these situations by standardizi
 common interface.
 
 Files are accessed through the current ``IncomingRequest`` instance. To retrieve all files that were uploaded with this
-request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``::
+request, use ``getFiles()``. This will return an array of files represented by instances of ``CodeIgniter\HTTP\Files\UploadedFile``:
 
-    $files = $this->request->getFiles();
+.. literalinclude:: uploaded_files/003.php
 
 Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results.
 The array returns in a manner that you would expect. With the simplest usage, a single file might be submitted like::
@@ -191,8 +124,8 @@ The array returns in a manner that you would expect. With the simplest usage, a 
 Which would return a simple array like::
 
     [
-        'avatar' => // UploadedFile instance
-    ]
+        'avatar' => // UploadedFile instance,
+    ];
 
 .. note:: The UploadedFile instance corresponds to ``$_FILES``. Even if a user just clicks the submit button and does not upload any file, the instance will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file`.
 
@@ -203,12 +136,13 @@ If you used an array notation for the name, the input would look something like:
 The array returned by ``getFiles()`` would look more like this::
 
     [
-        'my-form' => [
+         'my-form' => [
             'details' => [
                 'avatar' => // UploadedFile instance
-            ]
-        ]
+            ],
+        ],
     ]
+
 
 In some cases, you may specify an array of files to upload::
 
@@ -221,10 +155,11 @@ In this case, the returned array of files would be more like::
         'my-form' => [
             'details' => [
                 'avatar' => [
-                    0 => /* UploadedFile instance */,
-                    1 => /* UploadedFile instance */
-            ]
-        ]
+                    0 => // UploadedFile instance,
+                    1 => // UploadedFile instance,
+                ],
+            ],
+        ],
     ]
 
 Single File
@@ -239,9 +174,9 @@ With the simplest usage, a single file might be submitted like::
 
     <input type="file" name="userfile" />
 
-Which would return a simple file instance like::
+Which would return a simple file instance like:
 
-    $file = $this->request->getFile('userfile');
+.. literalinclude:: uploaded_files/004.php
 
 Array notation
 --------------
@@ -250,9 +185,9 @@ If you used an array notation for the name, the input would look something like:
 
     <input type="file" name="my-form[details][avatar]" />
 
-For get the file instance::
+For get the file instance:
 
-    $file = $this->request->getFile('my-form.details.avatar');
+.. literalinclude:: uploaded_files/005.php
 
 Multiple files
 ==============
@@ -261,40 +196,30 @@ Multiple files
 
     <input type="file" name="images[]" multiple />
 
-In controller::
+In controller:
 
-    if ($imagefile = $this->request->getFiles()) {
-        foreach($imagefile['images'] as $img) {
-            if ($img->isValid() && ! $img->hasMoved()) {
-                $newName = $img->getRandomName();
-                $img->move(WRITEPATH . 'uploads', $newName);
-            }
-        }
-    }
+.. literalinclude:: uploaded_files/006.php
 
 where the ``images`` is a loop from the form field name.
 
 If there are multiple files with the same name you can use ``getFile()`` to retrieve every file individually.
 
-In controller::
+In controller:
 
-    $file1 = $this->request->getFile('images.0');
-    $file2 = $this->request->getFile('images.1');
+.. literalinclude:: uploaded_files/007.php
 
-You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name::
+You might find it easier to use ``getFileMultiple()``, to get an array of uploaded files with the same name:
 
-    $files = $this->request->getFileMultiple('images');
-
+.. literalinclude:: uploaded_files/008.php
 
 Another example::
 
     Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
     Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
 
-In controller::
+In controller:
 
-    $file1 = $this->request->getFile('my-form.details.avatars.0');
-    $file2 = $this->request->getFile('my-form.details.avatars.1');
+.. literalinclude:: uploaded_files/009.php
 
 .. note:: Using ``getFiles()`` is more appropriate.
 
@@ -310,11 +235,9 @@ move the file to a new location.
 Verify a File
 =============
 
-You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method::
+You can check that a file was actually uploaded via HTTP with no errors by calling the ``isValid()`` method:
 
-    if (! $file->isValid()) {
-        throw new \RuntimeException($file->getErrorString() . '(' . $file->getError() . ')');
-    }
+.. literalinclude:: uploaded_files/010.php
 
 As seen in this example, if a file had an upload error, you can retrieve the error code (an integer) and the error
 message with the ``getError()`` and ``getErrorString()`` methods. The following errors can be discovered through
@@ -335,61 +258,56 @@ File Names
 
 You can retrieve the original filename provided by the client with the ``getName()`` method. This will typically be the
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
-the moved file::
+the moved file:
 
-    $name = $file->getName();
+.. literalinclude:: uploaded_files/011.php
 
 **getClientName()**
 
-Always returns the original name of the uploaded file as sent by the client, even if the file has been moved::
+Always returns the original name of the uploaded file as sent by the client, even if the file has been moved:
 
-  $originalName = $file->getClientName();
+.. literalinclude:: uploaded_files/012.php
 
 **getTempName()**
 
-To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method::
+To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method:
 
-    $tempfile = $file->getTempName();
+.. literalinclude:: uploaded_files/013.php
 
 Other File Info
 ===============
 
 **getClientExtension()**
 
-Returns the original file extension, based on the file name that was uploaded::
+Returns the original file extension, based on the file name that was uploaded:
 
-    $ext = $file->getClientExtension();
+.. literalinclude:: uploaded_files/014.php
 
 .. warning:: This is NOT a trusted source. For a trusted version, use ``guessExtension()`` instead.
 
 **getClientMimeType()**
 
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
-version, use ``getMimeType()`` instead::
+version, use ``getMimeType()`` instead:
 
-    $type = $file->getClientMimeType();
-
-    echo $type; // image/png
+.. literalinclude:: uploaded_files/015.php
 
 Moving Files
 ============
 
 Each file can be moved to its new location with the aptly named ``move()`` method. This takes the directory to move
-the file to as the first parameter::
+the file to as the first parameter:
 
-    $file->move(WRITEPATH . 'uploads');
+.. literalinclude:: uploaded_files/016.php
 
-By default, the original filename was used. You can specify a new filename by passing it as the second parameter::
+By default, the original filename was used. You can specify a new filename by passing it as the second parameter:
 
-    $newName = $file->getRandomName();
-    $file->move(WRITEPATH . 'uploads', $newName);
+.. literalinclude:: uploaded_files/017.php
 
 Once the file has been removed the temporary file is deleted. You can check if a file has been moved already with
-the ``hasMoved()`` method, which returns a boolean::
+the ``hasMoved()`` method, which returns a boolean:
 
-    if ($file->isValid() && ! $file->hasMoved()) {
-        $file->move($path);
-    }
+.. literalinclude:: uploaded_files/018.php
 
 Moving an uploaded file can fail, with an HTTPException, under several circumstances:
 
@@ -407,14 +325,14 @@ With the simplest usage, a single file might be submitted like::
     <input type="file" name="userfile" />
 
 By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
-and random file name will be created. Returns a file path::
+and random file name will be created. Returns a file path:
 
-    $path = $this->request->getFile('userfile')->store();
+.. literalinclude:: uploaded_files/019.php
 
 You can specify a directory to move the file to as the first parameter. A new filename by
-passing it as the second parameter::
+passing it as the second parameter:
 
-    $path = $this->request->getFile('userfile')->store('head_img/', 'user_name.jpg');
+.. literalinclude:: uploaded_files/020.php
 
 Moving an uploaded file can fail, with an ``HTTPException``, under several circumstances:
 

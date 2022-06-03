@@ -57,7 +57,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     public function __construct(BaseConnection $db)
     {
-        $this->db = &$db;
+        $this->db = $db;
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      *
      * @return mixed
      */
-    public function prepare(string $sql, array $options = [], string $queryClass = 'CodeIgniter\\Database\\Query')
+    public function prepare(string $sql, array $options = [], string $queryClass = Query::class)
     {
         // We only supports positional placeholders (?)
         // in order to work with the execute method below, so we

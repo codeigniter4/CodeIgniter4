@@ -18,13 +18,9 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class UserAgentTest extends CIUnitTestCase
 {
-    protected $_user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27';
-    protected $_mobile_ua  = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8B117 Safari/6531.22.7';
-
-    /**
-     * @var UserAgent
-     */
-    protected $agent;
+    private string $_user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27';
+    private string $_mobile_ua  = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_1 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8B117 Safari/6531.22.7';
+    private UserAgent $agent;
 
     protected function setUp(): void
     {
@@ -34,8 +30,6 @@ final class UserAgentTest extends CIUnitTestCase
         $_SERVER['HTTP_USER_AGENT'] = $this->_user_agent;
 
         $this->agent = new UserAgent();
-
-        helper('url');
     }
 
     public function testMobile()

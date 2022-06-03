@@ -19,7 +19,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class SeederGeneratorTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {
@@ -35,7 +35,7 @@ final class SeederGeneratorTest extends CIUnitTestCase
 
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        if (file_exists($file)) {
+        if (is_file($file)) {
             unlink($file);
         }
     }

@@ -7,21 +7,9 @@ using `Composer <https://getcomposer.org>`_, or using
 `Git <https://git-scm.com/>`_.
 Which is right for you?
 
+- We recommend the Composer installation because it keeps CodeIgniter up to date easily.
 - If you would like the simple "download & go" install that CodeIgniter3
   is known for, choose the manual installation.
-- If you plan to add third party packages to your project, or want to keep
-  CodeIgniter up to date easily, we recommend the Composer installation.
-
-.. toctree::
-    :titlesonly:
-
-    installing_composer
-    installing_manual
-    running
-    upgrading
-    ../changelogs/index
-    troubleshooting
-    repositories
 
 However you choose to install and run CodeIgniter4, the
 `user guide <https://codeigniter4.github.io/userguide/>`_ is accessible online.
@@ -31,3 +19,14 @@ However you choose to install and run CodeIgniter4, the
     version and the PHP extensions that are needed.
     You may find that you have to uncomment the ``php.ini`` "extension"
     lines to enable "curl" and "intl", for instance.
+
+.. toctree::
+    :titlesonly:
+
+    installing_composer
+    installing_manual
+    running
+    ../changelogs/index
+    upgrading
+    troubleshooting
+    repositories

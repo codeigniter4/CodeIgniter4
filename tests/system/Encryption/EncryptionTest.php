@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Encryption;
 
+use CodeIgniter\Encryption\Exceptions\EncryptionException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Encryption as EncryptionConfig;
 use Config\Services;
@@ -20,10 +21,7 @@ use Config\Services;
  */
 final class EncryptionTest extends CIUnitTestCase
 {
-    /**
-     * @var \CodeIgniter\Encryption\Encryption
-     */
-    protected $encryption;
+    private Encryption $encryption;
 
     protected function setUp(): void
     {
@@ -57,7 +55,7 @@ final class EncryptionTest extends CIUnitTestCase
      */
     public function testBadDriver()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         // ask for a bad driver
         $config         = new EncryptionConfig();
@@ -72,7 +70,7 @@ final class EncryptionTest extends CIUnitTestCase
      */
     public function testMissingDriver()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         // ask for a bad driver
         $config         = new EncryptionConfig();
@@ -101,7 +99,7 @@ final class EncryptionTest extends CIUnitTestCase
 
     public function testServiceFailure()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         // ask for a bad driver
         $config         = new EncryptionConfig();
@@ -113,7 +111,7 @@ final class EncryptionTest extends CIUnitTestCase
 
     public function testServiceWithoutKey()
     {
-        $this->expectException('CodeIgniter\Encryption\Exceptions\EncryptionException');
+        $this->expectException(EncryptionException::class);
 
         Services::encrypter();
     }

@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Models\UserModel;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
 
@@ -132,7 +133,7 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testGetsBasenameByAbsoluteClassname()
     {
-        $this->assertSame('UserModel', Factories::getBasename('\Tests\Support\Models\UserModel'));
+        $this->assertSame('UserModel', Factories::getBasename(UserModel::class));
     }
 
     public function testGetsBasenameInvalid()
@@ -156,9 +157,9 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testCreatesByAbsoluteClassname()
     {
-        $result = Factories::models('\Tests\Support\Models\UserModel', ['getShared' => false]);
+        $result = Factories::models(UserModel::class, ['getShared' => false]);
 
-        $this->assertInstanceOf('Tests\Support\Models\UserModel', $result);
+        $this->assertInstanceOf(UserModel::class, $result);
     }
 
     public function testCreatesInvalid()
@@ -189,7 +190,7 @@ final class FactoriesTest extends CIUnitTestCase
 
         $result = Factories::widgets('Banana');
 
-        $this->assertInstanceOf(stdClass::class, $result);
+        $this->assertInstanceOf('stdClass', $result);
     }
 
     public function testRespectsComponentAlias()
@@ -210,7 +211,7 @@ final class FactoriesTest extends CIUnitTestCase
 
     public function testRespectsInstanceOf()
     {
-        Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
+        Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
         $result = Factories::widgets('SomeWidget');
         $this->assertInstanceOf(SomeWidget::class, $result);
@@ -223,13 +224,13 @@ final class FactoriesTest extends CIUnitTestCase
     {
         Factories::injectMock('widgets', 'SomeWidget', new OtherWidget());
 
-        $result = Factories::widgets('SomeWidget', ['instanceOf' => stdClass::class]);
+        $result = Factories::widgets('SomeWidget', ['instanceOf' => 'stdClass']);
         $this->assertInstanceOf(SomeWidget::class, $result);
     }
 
     public function testPrioritizesParameterOptions()
     {
-        Factories::setOptions('widgets', ['instanceOf' => stdClass::class]);
+        Factories::setOptions('widgets', ['instanceOf' => 'stdClass']);
 
         $result = Factories::widgets('OtherWidget', ['instanceOf' => null]);
         $this->assertInstanceOf(OtherWidget::class, $result);

@@ -15,6 +15,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
+use Tests\Support\Log\Handlers\TestHandler;
 
 /**
  * @internal
@@ -32,20 +33,20 @@ final class FileHandlerTest extends CIUnitTestCase
     {
         $config = new LoggerConfig();
 
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
+        $config->handlers[TestHandler::class]['handles'] = ['critical'];
 
-        $logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+        $logger = new MockFileLogger($config->handlers[TestHandler::class]);
         $logger->setDateFormat('Y-m-d H:i:s:u');
         $this->assertTrue($logger->handle('warning', 'This is a test log'));
     }
 
     public function testBasicHandle()
     {
-        $config                                                                = new LoggerConfig();
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['path']    = $this->start . 'charlie/';
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['handles'] = ['critical'];
+        $config                                          = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path']    = $this->start . 'charlie/';
+        $config->handlers[TestHandler::class]['handles'] = ['critical'];
 
-        $logger = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+        $logger = new MockFileLogger($config->handlers[TestHandler::class]);
         $logger->setDateFormat('Y-m-d H:i:s:u');
         $expected = 'log-' . date('Y-m-d') . '.log';
         vfsStream::newFile($expected)->at(vfsStream::setup('root/charlie'))->withContent('This is a test log');
@@ -54,16 +55,16 @@ final class FileHandlerTest extends CIUnitTestCase
 
     public function testHandleCreateFile()
     {
-        $config                                                             = new LoggerConfig();
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
-        $logger                                                             = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+        $config                                       = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path'] = $this->start;
+        $logger                                       = new MockFileLogger($config->handlers[TestHandler::class]);
 
         $logger->setDateFormat('Y-m-d H:i:s:u');
         $expected = 'log-' . date('Y-m-d') . '.log';
         vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('This is a test log');
         $logger->handle('warning', 'This is a test log');
 
-        $fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'rb');
+        $fp   = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
         $line = fgets($fp);
         fclose($fp);
 
@@ -74,15 +75,15 @@ final class FileHandlerTest extends CIUnitTestCase
 
     public function testHandleDateTimeCorrectly()
     {
-        $config                                                             = new LoggerConfig();
-        $config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] = $this->start;
-        $logger                                                             = new MockFileLogger($config->handlers['Tests\Support\Log\Handlers\TestHandler']);
+        $config                                       = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path'] = $this->start;
+        $logger                                       = new MockFileLogger($config->handlers[TestHandler::class]);
 
         $logger->setDateFormat('Y-m-d');
         $expected = 'log-' . date('Y-m-d') . '.log';
         vfsStream::newFile($expected)->at(vfsStream::setup('root'))->withContent('Test message');
         $logger->handle('debug', 'Test message');
-        $fp   = fopen($config->handlers['Tests\Support\Log\Handlers\TestHandler']['path'] . $expected, 'rb');
+        $fp   = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
         $line = fgets($fp); // and get the second line
         fclose($fp);
 

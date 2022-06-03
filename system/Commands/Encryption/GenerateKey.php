@@ -151,8 +151,8 @@ class GenerateKey extends BaseCommand
         $baseEnv = ROOTPATH . 'env';
         $envFile = ROOTPATH . '.env';
 
-        if (! file_exists($envFile)) {
-            if (! file_exists($baseEnv)) {
+        if (! is_file($envFile)) {
+            if (! is_file($baseEnv)) {
                 CLI::write('Both default shipped `env` file and custom `.env` are missing.', 'yellow');
                 CLI::write('Here\'s your new key instead: ' . CLI::color($newKey, 'yellow'));
                 CLI::newLine();

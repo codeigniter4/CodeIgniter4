@@ -20,15 +20,8 @@ use Config\App;
  */
 final class NegotiateTest extends CIUnitTestCase
 {
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
-     * @var Negotiate
-     */
-    protected $negotiate;
+    private ?Request $request;
+    private ?Negotiate $negotiate;
 
     protected function setUp(): void
     {

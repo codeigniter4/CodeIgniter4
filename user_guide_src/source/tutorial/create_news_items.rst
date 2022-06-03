@@ -1,4 +1,4 @@
-Create news items
+Create News Items
 #################
 
 You now know how you can read data from a database using CodeIgniter, but
@@ -7,29 +7,29 @@ you'll expand your news controller and model created earlier to include
 this functionality.
 
 Enable CSRF Filter
-------------------
+******************
 
 Before creating a form, let's enable the CSRF protection.
 
-Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following::
+Open the **app/Config/Filters.php** file and update the ``$methods`` property like the following:
 
-    public $methods = [
-        'post' => ['csrf'],
-    ];
+.. literalinclude:: create_news_items/001.php
 
 It configures the CSRF filter to be enabled for all **POST** requests.
 You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
 
-Create a form
--------------
+.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
+    because auto-routing permits any HTTP method to access a controller.
+    Accessing the controller with a method you don't expect could bypass the filter.
+
+Create a Form
+*************
 
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
 the slug from our title in the model. Create a new view at
-**app/Views/news/create.php**.
-
-::
+**app/Views/news/create.php**::
 
     <h2><?= esc($title) ?></h2>
 
@@ -50,7 +50,7 @@ the slug from our title in the model. Create a new view at
 
 There are probably only three things here that look unfamiliar.
 
-The ``<?= session()->getFlashdata('error') ?>`` function is used to report
+The ``session()->getFlashdata('error')`` function is used to report
 errors related to CSRF protection.
 
 The ``service('validation')->listErrors()`` function is used to report
@@ -60,32 +60,10 @@ The ``csrf_field()`` function creates a hidden input with a CSRF token that help
 
 Go back to your ``News`` controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
-passed the validation rules. You'll use the :doc:`form
-validation <../libraries/validation>` library to do this.
+passed the validation rules.
+You'll use the :ref:`validation method in Controller <controller-validate>` to do this.
 
-::
-
-    public function create()
-    {
-        $model = model(NewsModel::class);
-
-        if ($this->request->getMethod() === 'post' && $this->validate([
-            'title' => 'required|min_length[3]|max_length[255]',
-            'body'  => 'required',
-        ])) {
-            $model->save([
-                'title' => $this->request->getPost('title'),
-                'slug'  => url_title($this->request->getPost('title'), '-', true),
-                'body'  => $this->request->getPost('body'),
-            ]);
-
-            echo view('news/success');
-        } else {
-            echo view('templates/header', ['title' => 'Create a news item']);
-            echo view('news/create');
-            echo view('templates/footer');
-        }
-    }
+.. literalinclude:: create_news_items/002.php
 
 The code above adds a lot of functionality. First we load the NewsModel.
 After that, we check if we deal with the **POST** request and then
@@ -109,14 +87,12 @@ slug, perfect for creating URIs.
 After this, a view is loaded to display a success message. Create a view at
 **app/Views/news/success.php** and write a success message.
 
-This could be as simple as:
-
-::
+This could be as simple as::
 
     News item created successfully.
 
 Model Updating
--------------------------------------------------------
+**************
 
 The only thing that remains is ensuring that your model is set up
 to allow data to be saved properly. The ``save()`` method that was
@@ -130,20 +106,7 @@ not actually save any data because it doesn't know what fields are
 safe to be updated. Edit the **NewsModel** to provide it a list of updatable
 fields in the ``$allowedFields`` property.
 
-::
-
-    <?php
-
-    namespace App\Models;
-
-    use CodeIgniter\Model;
-
-    class NewsModel extends Model
-    {
-        protected $table = 'news';
-
-        protected $allowedFields = ['title', 'slug', 'body'];
-    }
+.. literalinclude:: create_news_items/003.php
 
 This new property now contains the fields that we allow to be saved to the
 database. Notice that we leave out the ``id``? That's because you will almost
@@ -152,20 +115,15 @@ This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.
 
 Routing
--------------------------------------------------------
+*******
 
 Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
-file contains the following. This makes sure CodeIgniter sees ``create``
+file contains the following. This makes sure CodeIgniter sees ``create()``
 as a method instead of a news item's slug. You can read more about different
 routing types :doc:`here </incoming/routing>`.
 
-::
-
-    $routes->match(['get', 'post'], 'news/create', 'News::create');
-    $routes->get('news/(:segment)', 'News::view/$1');
-    $routes->get('news', 'News::index');
-    $routes->get('(:any)', 'Pages::view/$1');
+.. literalinclude:: create_news_items/004.php
 
 Now point your browser to your local development environment where you
 installed CodeIgniter and add ``/news/create`` to the URL.
@@ -182,7 +140,7 @@ Add some news and check out the different pages you made.
     :width: 45%
 
 Congratulations
--------------------------------------------------------
+***************
 
 You just completed your first CodeIgniter4 application!
 

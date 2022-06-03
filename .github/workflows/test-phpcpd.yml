@@ -6,20 +6,21 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - '4.*'
+      - 'v4.*'
     paths:
-      - 'app/**'
-      - 'public/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'public/**.php'
+      - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
+
   push:
     branches:
       - 'develop'
-      - '4.*'
+      - 'v4.*'
     paths:
-      - 'app/**'
-      - 'public/**'
-      - 'system/**'
+      - 'app/**.php'
+      - 'public/**.php'
+      - 'system/**.php'
       - '.github/workflows/test-phpcpd.yml'
 
 jobs:
@@ -28,7 +29,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2

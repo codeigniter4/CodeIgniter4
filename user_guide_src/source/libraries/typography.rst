@@ -14,9 +14,9 @@ Loading the Library
 *******************
 
 Like all services in CodeIgniter, it can be loaded via ``Config\Services``, though you usually will not need
-to load it manually::
+to load it manually:
 
-    $typography = \Config\Services::typography();
+.. literalinclude:: typography/001.php
 
 **************************
 Available static functions
@@ -34,9 +34,9 @@ The following functions are available:
     Formats text so that it is semantically and typographically correct
     HTML.
 
-    Usage example::
+    Usage example:
 
-        $string = $typography->autoTypography($string);
+    .. literalinclude:: typography/002.php
 
     .. note:: Typographic formatting can be processor intensive, particularly if
         you have a lot of content being formatted. If you choose to use this
@@ -53,9 +53,9 @@ The following functions are available:
     to curly entities, but it also converts em-dashes,
     double spaces, and ampersands.
 
-    Usage example::
+    Usage example:
 
-        $string = $typography->formatCharacters($string);
+    .. literalinclude:: typography/003.php
 
 .. php:function:: nl2brExceptPre($str)
 
@@ -67,6 +67,6 @@ The following functions are available:
     This function is identical to the native PHP ``nl2br()`` function,
     except that it ignores ``<pre>`` tags.
 
-    Usage example::
+    Usage example:
 
-        $string = $typography->nl2brExceptPre($string);
+    .. literalinclude:: typography/004.php

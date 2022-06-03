@@ -19,7 +19,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class DatabaseCommandsTest extends CIUnitTestCase
 {
-    protected $streamFilter;
+    private $streamFilter;
 
     protected function setUp(): void
     {
@@ -52,12 +52,12 @@ final class DatabaseCommandsTest extends CIUnitTestCase
     public function testMigrate()
     {
         command('migrate --all');
-        $this->assertStringContainsString('Done migrations.', $this->getBuffer());
+        $this->assertStringContainsString('Migrations complete.', $this->getBuffer());
         command('migrate:rollback');
 
         $this->clearBuffer();
         command('migrate -n Tests\\\\Support');
-        $this->assertStringContainsString('Done migrations.', $this->getBuffer());
+        $this->assertStringContainsString('Migrations complete.', $this->getBuffer());
     }
 
     public function testMigrateRollback()
@@ -75,7 +75,7 @@ final class DatabaseCommandsTest extends CIUnitTestCase
         $this->clearBuffer();
 
         command('migrate:refresh');
-        $this->assertStringContainsString('Done migrations.', $this->getBuffer());
+        $this->assertStringContainsString('Migrations complete.', $this->getBuffer());
     }
 
     public function testMigrateStatus()

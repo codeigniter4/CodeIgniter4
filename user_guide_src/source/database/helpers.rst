@@ -7,9 +7,10 @@ Query Helper Methods
     :depth: 2
 
 Information From Executing a Query
-==================================
+**********************************
 
-**$db->insertID()**
+$db->insertID()
+===============
 
 The insert ID number when performing database inserts.
 
@@ -17,7 +18,8 @@ The insert ID number when performing database inserts.
     driver, this function requires a $name parameter, which specifies the
     appropriate sequence to check for the insert id.
 
-**$db->affectedRows()**
+$db->affectedRows()
+===================
 
 Displays the number of affected rows, when doing "write" type queries
 (insert, update, etc.).
@@ -27,42 +29,43 @@ Displays the number of affected rows, when doing "write" type queries
     affected rows. By default this hack is enabled but it can be turned off
     in the database driver file.
 
-**$db->getLastQuery()**
+$db->getLastQuery()
+===================
 
 Returns a Query object that represents the last query that was run (the query string, not the result).
 
 Information About Your Database
-===============================
+*******************************
 
-**$db->countAll()**
+$db->countAll()
+===============
 
 Permits you to determine the number of rows in a particular table.
 Submit the table name in the first parameter. This is part of Query Builder.
-Example::
+Example:
 
-    echo $db->table('my_table')->countAll();
+.. literalinclude:: helpers/001.php
 
-    // Produces an integer, like 25
-
-**$db->countAllResults()**
+$db->countAllResults()
+======================
 
 Permits you to determine the number of rows in a particular result set.
 Submit the table name in the first parameter. This is part of Query Builder.
-Example::
+Example:
 
-    echo $db->table('my_table')->like('title', 'match')->countAllResults();
+.. literalinclude:: helpers/002.php
 
-    // Produces an integer, like 5
-
-**$db->getPlatform()**
+$db->getPlatform()
+==================
 
 Outputs the database platform you are running (MySQL, MS SQL, Postgres,
-etc...)::
+etc...):
 
-    echo $db->getPlatform();
+.. literalinclude:: helpers/003.php
 
-**$db->getVersion()**
+$db->getVersion()
+=================
 
-Outputs the database version you are running::
+Outputs the database version you are running:
 
-    echo $db->getVersion();
+.. literalinclude:: helpers/004.php

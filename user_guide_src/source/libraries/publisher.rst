@@ -13,9 +13,9 @@ Loading the Library
 *******************
 
 Because Publisher instances are specific to their source and destination this library is not available
-through ``Services`` but should be instantiated or extended directly. E.g.::
+through ``Services`` but should be instantiated or extended directly. E.g.:
 
-    $publisher = new \CodeIgniter\Publisher\Publisher();
+.. literalinclude:: publisher/001.php
 
 *****************
 Concept and Usage
@@ -36,43 +36,20 @@ the class and leveraging its discovery with ``spark publish``.
 On Demand
 =========
 
-Access ``Publisher`` directly by instantiating a new instance of the class::
+Access ``Publisher`` directly by instantiating a new instance of the class:
 
-    $publisher = new \CodeIgniter\Publisher\Publisher();
+.. literalinclude:: publisher/002.php
 
 By default the source and destination will be set to ``ROOTPATH`` and ``FCPATH`` respectively, giving ``Publisher``
 easy access to take any file from your project and make it web-accessible. Alternatively you may pass a new source
-or source and destination into the constructor::
+or source and destination into the constructor:
 
-    use CodeIgniter\Publisher\Publisher;
-    
-    $vendorPublisher = new Publisher(ROOTPATH . 'vendor');
-    $filterPublisher = new Publisher('/path/to/module/Filters', APPPATH . 'Filters');
-
-    // Once the source and destination are set you may start adding relative input files
-    $frameworkPublisher = new Publisher(ROOTPATH . 'vendor/codeigniter4/codeigniter4');
-
-    // All "path" commands are relative to $source
-    $frameworkPublisher->addPath('app/Config/Cookie.php');
-
-    // You may also add from outside the source, but the files will not be merged into subdirectories
-    $frameworkPublisher->addFiles([
-        '/opt/mail/susan',
-        '/opt/mail/ubuntu',
-    ]);
-    $frameworkPublisher->addDirectory(SUPPORTPATH . 'Images');
+.. literalinclude:: publisher/003.php
 
 Once all the files are staged use one of the output commands (**copy()** or **merge()**) to process the staged files
-to their destination(s)::
+to their destination(s):
 
-    // Place all files into $destination
-    $frameworkPublisher->copy();
-
-    // Place all files into $destination, overwriting existing files
-    $frameworkPublisher->copy(true);
-
-    // Place files into their relative $destination directories, overwriting and saving the boolean result
-    $result = $frameworkPublisher->merge(true);
+.. literalinclude:: publisher/004.php
 
 See the :ref:`reference` for a full description of available methods.
 
@@ -80,25 +57,14 @@ Automation and Discovery
 ========================
 
 You may have regular publication tasks embedded as part of your application deployment or upkeep. ``Publisher`` leverages
-the powerful ``Autoloader`` to locate any child classes primed for publication::
+the powerful ``Autoloader`` to locate any child classes primed for publication:
 
-    use CodeIgniter\CLI\CLI;
-    use CodeIgniter\Publisher\Publisher;
-    
-    foreach (Publisher::discover() as $publisher)
-    {
-        $result = $publisher->publish();
-
-        if ($result === false)
-        {
-            CLI::error(get_class($publisher) . ' failed to publish!', 'red');
-        }
-    }
+.. literalinclude:: publisher/005.php
 
 By default ``discover()`` will search for the "Publishers" directory across all namespaces, but you may specify a
-different directory and it will return any child classes found::
+different directory and it will return any child classes found:
 
-    $memePublishers = Publisher::discover('CatGIFs');
+.. literalinclude:: publisher/006.php
 
 Most of the time you will not need to handle your own discovery, just use the provided "publish" command::
 
@@ -114,12 +80,13 @@ In order to prevent modules from injecting malicious code into your projects, ``
 that defines which directories and file patterns are allowed as destinations. By default, files may only be published
 to your project (to prevent access to the rest of the filesystem), and the **public/** folder (``FCPATH``) will only
 receive files with the following extensions:
+
 * Web assets: css, scss, js, map
 * Non-executable web files: htm, html, xml, json, webmanifest
-* Fonts: tff, eot, woff
-* Images: gif, jpg, jpeg, tiff, png, webp, bmp, ico, svg
+* Fonts: ttf, eot, woff, woff2
+* Images: gif, jpg, jpeg, tif, tiff, png, webp, bmp, ico, svg
 
-If you need to add or adjust the security for your project then alter the ``$restrictions`` property of ``Config\Publisher``.
+If you need to add or adjust the security for your project then alter the ``$restrictions`` property of ``Config\Publisher`` in **app/Config/Publisher.php**.
 
 ********
 Examples
@@ -132,92 +99,24 @@ File Sync Example
 
 You want to display a "photo of the day" image on your homepage. You have a feed for daily photos but you
 need to get the actual file into a browsable location in your project at **public/images/daily_photo.jpg**.
-You can set up :doc:`Custom Command </cli/cli_commands>` to run daily that will handle this for you::
+You can set up :doc:`Custom Command </cli/cli_commands>` to run daily that will handle this for you:
 
-    <?php
-
-    namespace App\Commands;
-
-    use CodeIgniter\CLI\BaseCommand;
-    use CodeIgniter\Publisher\Publisher;
-    use Throwable;
-
-    class DailyPhoto extends BaseCommand
-    {
-        protected $group       = 'Publication';
-        protected $name        = 'publish:daily';
-        protected $description = 'Publishes the latest daily photo to the homepage.';
-
-        public function run(array $params)
-        {
-            $publisher = new Publisher('/path/to/photos/', FCPATH . 'assets/images');
-
-            try {
-                $publisher->addPath('daily_photo.jpg')->copy(true); // `true` to enable overwrites
-            } catch (Throwable $e) {
-                $this->showError($e);
-            }
-        }
-    }
+.. literalinclude:: publisher/007.php
 
 Now running ``spark publish:daily`` will keep your homepage's image up-to-date. What if the photo is
 coming from an external API? You can use ``addUri()`` in place of ``addPath()`` to download the remote
-resource and publish it out instead::
+resource and publish it out instead:
 
-    $publisher->addUri('https://example.com/feeds/daily_photo.jpg')->copy(true);
+.. literalinclude:: publisher/008.php
 
 Asset Dependencies Example
 ==========================
 
 You want to integrate the frontend library "Bootstrap" into your project, but the frequent updates makes it a hassle
 to keep up with. You can create a publication definition in your project to sync frontend assets by extending
-``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this::
+``Publisher`` in your project. So **app/Publishers/BootstrapPublisher.php** might look like this:
 
-    <?php
-    
-    namespace App\Publishers;
-
-    use CodeIgniter\Publisher\Publisher;
-
-    class BootstrapPublisher extends Publisher
-    {
-        /**
-         * Tell Publisher where to get the files.
-         * Since we will use Composer to download
-         * them we point to the "vendor" directory.
-         *
-         * @var string
-         */
-        protected $source = 'vendor/twbs/bootstrap/';
-
-        /**
-         * FCPATH is always the default destination,
-         * but we may want them to go in a sub-folder
-         * to keep things organized.
-         *
-         * @var string
-         */
-        protected $destination = FCPATH . 'bootstrap';
-
-        /**
-         * Use the "publish" method to indicate that this
-         * class is ready to be discovered and automated.
-         *
-         * @return boolean
-         */
-        public function publish(): bool
-        {
-            return $this
-                // Add all the files relative to $source
-                ->addPath('dist')
-
-                // Indicate we only want the minimized versions
-                ->retainPattern('*.min.*')
-
-                // Merge-and-replace to retain the original directory structure
-                ->merge(true);
-        }
-    }
+.. literalinclude:: publisher/009.php
 
 Now add the dependency via Composer and call ``spark publish`` to run the publication::
 
@@ -255,50 +154,9 @@ Module Deployment Example
 
 You want to allow developers using your popular authentication module the ability to expand on the default behavior
 of your Migration, Controller, and Model. You can create your own module "publish" command to inject these components
-into an application for use::
+into an application for use:
 
-    <?php
-
-    namespace Math\Auth\Commands;
-
-    use CodeIgniter\CLI\BaseCommand;
-    use CodeIgniter\Publisher\Publisher;
-    use Throwable;
-
-    class AuthPublish extends BaseCommand
-    {
-        protected $group       = 'Auth';
-        protected $name        = 'auth:publish';
-        protected $description = 'Publish Auth components into the current application.';
-
-        public function run(array $params)
-        {
-            // Use the Autoloader to figure out the module path
-            $source = service('autoloader')->getNamespace('Math\\Auth');
-
-            $publisher = new Publisher($source, APPATH);
-
-            try {
-                // Add only the desired components
-                $publisher->addPaths([
-                    'Controllers',
-                    'Database/Migrations',
-                    'Models',
-                ])->merge(false); // Be careful not to overwrite anything
-            } catch (Throwable $e) {
-                $this->showError($e);
-                return;
-            }
-
-            // If publication succeeded then update namespaces
-            foreach ($publisher->getPublished() as $file) {
-                // Replace the namespace
-                $contents = file_get_contents($file);
-                $contents = str_replace('namespace Math\\Auth', 'namespace ' . APP_NAMESPACE, $contents);
-                file_put_contents($file, $contents);
-            }
-        }
-    }
+.. literalinclude:: publisher/010.php
 
 Now when your module users run ``php spark auth:publish`` they will have the following added to their project::
 
@@ -371,16 +229,9 @@ Copies all files into the ``$destination``. This does not recreate the directory
 from the current list will end up in the same destination directory. Using ``$replace`` will cause files
 to overwrite when there is already an existing file. Returns success or failure, use ``getPublished()``
 and ``getErrors()`` to troubleshoot failures.
-Be mindful of duplicate basename collisions, for example::
+Be mindful of duplicate basename collisions, for example:
 
-    $publisher = new Publisher('/home/source', '/home/destination');
-    $publisher->addPaths([
-        'pencil/lead.png',
-        'metal/lead.png',
-    ]);
-
-    // This is bad! Only one file will remain at /home/destination/lead.png
-    $publisher->copy(true);
+.. literalinclude:: publisher/011.php
 
 **merge(bool $replace = true): bool**
 
@@ -391,13 +242,6 @@ to overwrite when there is already an existing file; since directories are merge
 affect other files in the destination. Returns success or failure, use ``getPublished()`` and
 ``getErrors()`` to troubleshoot failures.
 
-Example::
+Example:
 
-    $publisher = new Publisher('/home/source', '/home/destination');
-    $publisher->addPaths([
-        'pencil/lead.png',
-        'metal/lead.png',
-    ]);
-
-    // Results in "/home/destination/pencil/lead.png" and "/home/destination/metal/lead.png"
-    $publisher->merge();
+.. literalinclude:: publisher/012.php

@@ -16,13 +16,17 @@ use Encryption;
 use RegistrarConfig;
 use RuntimeException;
 use SimpleConfig;
+use Tests\Support\Config\BadRegistrar;
+use Tests\Support\Config\TestRegistrar;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class BaseConfigTest extends CIUnitTestCase
 {
-    protected $fixturesFolder;
+    private $fixturesFolder;
 
     protected function setUp(): void
     {
@@ -53,6 +57,25 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('', $config->echo);
         $this->assertTrue($config->foxtrot);
         $this->assertSame(18, $config->golf);
+    }
+
+    public function testUseDefaultValueTypeIntAndFloatValues()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
+
+        $this->assertSame(0.0, $config->float);
+        $this->assertSame(999, $config->int);
+    }
+
+    public function testUseDefaultValueTypeStringValue()
+    {
+        $dotenv = new DotEnv($this->fixturesFolder, '.env');
+        $dotenv->load();
+        $config = new SimpleConfig();
+
+        $this->assertSame('123456', $config->password);
     }
 
     /**
@@ -98,6 +121,9 @@ final class BaseConfigTest extends CIUnitTestCase
         $this->assertSame('bar', $config->onedeep_value);
         // array property name with underscore and key with underscore
         $this->assertSame('foo', $config->one_deep['under_deep']);
+
+        // The default property value is null but has type
+        $this->assertSame(20, $config->size);
     }
 
     public function testPrefixedValues()
@@ -214,7 +240,7 @@ final class BaseConfigTest extends CIUnitTestCase
     public function testRegistrars()
     {
         $config              = new RegistrarConfig();
-        $config::$registrars = ['\Tests\Support\Config\TestRegistrar'];
+        $config::$registrars = [TestRegistrar::class];
         $this->setPrivateProperty($config, 'didDiscovery', true);
         $method = $this->getPrivateMethodInvoker($config, 'registerProperties');
         $method();
@@ -233,7 +259,7 @@ final class BaseConfigTest extends CIUnitTestCase
     {
         // Shouldn't change any values.
         $config              = new RegistrarConfig();
-        $config::$registrars = ['\Tests\Support\Config\BadRegistrar'];
+        $config::$registrars = [BadRegistrar::class];
         $this->setPrivateProperty($config, 'didDiscovery', true);
 
         $this->expectException(RuntimeException::class);

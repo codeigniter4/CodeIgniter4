@@ -6,10 +6,10 @@ Running Your App
     :depth: 2
 
 A CodeIgniter 4 app can be run in a number of different ways: hosted on a web server,
-using virtualization, or using CodeIgniter’s command line tool for testing.
+using virtualization, or using CodeIgniter's command line tool for testing.
 This section addresses how to use each technique, and explains some of the pros and cons of them.
 
-If you’re new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
+If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
 Initial Configuration & Set Up
@@ -74,7 +74,7 @@ Hosting with Apache
 ===================
 
 A CodeIgniter4 webapp is normally hosted on a web server.
-Apache’s ``httpd`` is the "standard" platform, and assumed in much of our documentation.
+Apache's ``httpd`` is the "standard" platform, and assumed in much of our documentation.
 
 Apache is bundled with many platforms, but can also be downloaded in a bundle
 with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrastructure>`_.
@@ -82,7 +82,7 @@ with a database engine and PHP from `Bitnami <https://bitnami.com/stacks/infrast
 .htaccess
 ---------
 
-The “mod_rewrite” module enables URLs without “index.php” in them, and is assumed
+The "mod_rewrite" module enables URLs without "index.php" in them, and is assumed
 in our user guide.
 
 Make sure that the rewrite module is enabled (uncommented) in the main
@@ -102,7 +102,7 @@ in the "AllowOverride" setting::
 Virtual Hosting
 ---------------
 
-We recommend using “virtual hosting” to run your apps.
+We recommend using "virtual hosting" to run your apps.
 You can set up different aliases for each of the apps you work on,
 
 Make sure that the virtual hosting module is enabled (uncommented) in the main
@@ -110,7 +110,7 @@ configuration file, e.g., ``apache2/conf/httpd.conf``::
 
     LoadModule vhost_alias_module modules/mod_vhost_alias.so
 
-Add a host alias in your “hosts” file, typically ``/etc/hosts`` on unix-type platforms,
+Add a host alias in your "hosts" file, typically ``/etc/hosts`` on unix-type platforms,
 or ``c:/Windows/System32/drivers/etc/hosts`` on Windows.
 Add a line to the file. This could be "myproject.local" or "myproject.test", for instance::
 
@@ -129,6 +129,72 @@ e.g., ``apache2/conf/extra/httpd-vhost.conf``::
 If your project folder is not a subfolder of the Apache document root, then your
 <VirtualHost> element may need a nested <Directory> element to grant the web server access to the files.
 
+With mod_userdir (shared hosts)
+--------------------------------
+
+A common practice in shared hosting environments is to use the Apache module "mod_userdir" to enable per-user Virtual Hosts automatically. Additional configuration is required to allow CodeIgniter4 to be run from these per-user directories.
+
+The following assumes that the server is already configured for mod_userdir. A guide to enabling this module is available `in the Apache documentation <https://httpd.apache.org/docs/2.4/howto/public_html.html>`_.
+
+Because CodeIgniter4 expects the server to find the framework front controller at ``/public/index.php`` by default, you must specify this location as an alternative to search for the request (even if CodeIgniter4 is installed within the per-user web directory).
+
+The default user web directory ``~/public_html`` is specified by the ``UserDir`` directive, typically in ``/apache2/mods-available/userdir.conf`` or ``/apache2/conf/extra/httpd-userdir.conf``::
+
+    UserDir public_html
+
+So you will need to configure Apache to look for CodeIgniter's public directory first before trying to serve the default::
+
+    UserDir "public_html/public" "public_html"
+
+Be sure to specify options and permissions for the CodeIgniter public directory as well. A ``userdir.conf`` might look like::
+
+    <IfModule mod_userdir.c>
+        UserDir "public_html/public" "public_html"
+        UserDir disabled root
+
+        <Directory /home/*/public_html>
+                AllowOverride All
+                Options MultiViews Indexes FollowSymLinks
+                <Limit GET POST OPTIONS>
+                        # Apache <= 2.2:
+                        # Order allow,deny
+                        # Allow from all
+
+                        # Apache >= 2.4:
+                        Require all granted
+                </Limit>
+                <LimitExcept GET POST OPTIONS>
+                        # Apache <= 2.2:
+                        # Order deny,allow
+                        # Deny from all
+
+                        # Apache >= 2.4:
+                        Require all denied
+                </LimitExcept>
+        </Directory>
+
+        <Directory /home/*/public_html/public>
+                AllowOverride All
+                Options MultiViews Indexes FollowSymLinks
+                <Limit GET POST OPTIONS>
+                        # Apache <= 2.2:
+                        # Order allow,deny
+                        # Allow from all
+
+                        # Apache >= 2.4:
+                        Require all granted
+                </Limit>
+                <LimitExcept GET POST OPTIONS>
+                        # Apache <= 2.2:
+                        # Order deny,allow
+                        # Deny from all
+
+                        # Apache >= 2.4:
+                        Require all denied
+                </LimitExcept>
+        </Directory>
+    </IfModule>
+
 Testing
 -------
 
@@ -141,7 +207,7 @@ Hosting with Nginx
 Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.
 
-This configuration enables URLs without “index.php” in them and using CodeIgniter's “404 - File Not Found” for URLs ending with “.php”.
+This configuration enables URLs without "index.php" in them and using CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
 
 .. code-block:: nginx
 

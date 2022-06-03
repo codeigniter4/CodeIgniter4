@@ -15,6 +15,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class CommonFunctionsSendTest extends CIUnitTestCase
 {

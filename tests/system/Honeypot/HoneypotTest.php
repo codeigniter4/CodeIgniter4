@@ -23,10 +23,10 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class HoneypotTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $honeypot;
-    protected $request;
-    protected $response;
+    private $config;
+    private $honeypot;
+    private $request;
+    private $response;
 
     protected function setUp(): void
     {
@@ -103,7 +103,7 @@ final class HoneypotTest extends CIUnitTestCase
     public function testHoneypotFilterBefore()
     {
         $config = [
-            'aliases' => ['trap' => '\CodeIgniter\Filters\Honeypot'],
+            'aliases' => ['trap' => \CodeIgniter\Filters\Honeypot::class],
             'globals' => [
                 'before' => ['trap'],
                 'after'  => [],
@@ -114,13 +114,13 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $this->expectException(HoneypotException::class);
-        $request = $filters->run($uri, 'before');
+        $filters->run($uri, 'before');
     }
 
     public function testHoneypotFilterAfter()
     {
         $config = [
-            'aliases' => ['trap' => '\CodeIgniter\Filters\Honeypot'],
+            'aliases' => ['trap' => \CodeIgniter\Filters\Honeypot::class],
             'globals' => [
                 'before' => [],
                 'after'  => ['trap'],

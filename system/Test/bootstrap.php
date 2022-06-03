@@ -11,10 +11,10 @@
 
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\Router\RouteCollection;
-use CodeIgniter\Services;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
+use Config\Services;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -53,7 +53,7 @@ defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
 // Load Common.php from App then System
-if (file_exists(APPPATH . 'Common.php')) {
+if (is_file(APPPATH . 'Common.php')) {
     require_once APPPATH . 'Common.php';
 }
 
@@ -75,11 +75,6 @@ require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
-
-// Use Config\Services as CodeIgniter\Services
-if (! class_exists('CodeIgniter\Services', false)) {
-    class_alias('Config\Services', 'CodeIgniter\Services');
-}
 
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();

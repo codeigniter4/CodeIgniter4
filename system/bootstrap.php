@@ -9,7 +9,6 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use CodeIgniter\Config\DotEnv;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -67,6 +66,7 @@ if (! defined('TESTPATH')) {
  * GRAB OUR CONSTANTS & COMMON
  * ---------------------------------------------------------------
  */
+
 if (! defined('APP_NAMESPACE')) {
     require_once APPPATH . 'Config/Constants.php';
 }
@@ -89,7 +89,7 @@ require_once SYSTEMPATH . 'Common.php';
  * files can use the path constants.
  */
 
-if (! class_exists('Config\Autoload', false)) {
+if (! class_exists(Autoload::class, false)) {
     require_once SYSTEMPATH . 'Config/AutoloadConfig.php';
     require_once APPPATH . 'Config/Autoload.php';
     require_once SYSTEMPATH . 'Modules/Modules.php';
@@ -100,11 +100,6 @@ require_once SYSTEMPATH . 'Autoloader/Autoloader.php';
 require_once SYSTEMPATH . 'Config/BaseService.php';
 require_once SYSTEMPATH . 'Config/Services.php';
 require_once APPPATH . 'Config/Services.php';
-
-// Use Config\Services as CodeIgniter\Services
-if (! class_exists('CodeIgniter\Services', false)) {
-    class_alias('Config\Services', 'CodeIgniter\Services');
-}
 
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
@@ -123,26 +118,5 @@ if (is_file(COMPOSER_PATH)) {
     require_once COMPOSER_PATH;
 }
 
-// Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
-
-$env = new DotEnv(ROOTPATH);
-$env->load();
-
 // Always load the URL helper, it should be used in most of apps.
 helper('url');
-
-/*
- * ---------------------------------------------------------------
- * GRAB OUR CODEIGNITER INSTANCE
- * ---------------------------------------------------------------
- *
- * The CodeIgniter class contains the core functionality to make
- * the application run, and does all of the dirty work to get
- * the pieces all working together.
- */
-
-$app = Services::codeigniter();
-$app->initialize();
-
-return $app;

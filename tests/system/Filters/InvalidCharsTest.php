@@ -24,15 +24,8 @@ use CodeIgniter\Test\Mock\MockAppConfig;
  */
 final class InvalidCharsTest extends CIUnitTestCase
 {
-    /**
-     * @var InvalidChars
-     */
-    private $invalidChars;
-
-    /**
-     * @var IncomingRequest
-     */
-    private $request;
+    private InvalidChars $invalidChars;
+    private IncomingRequest $request;
 
     protected function setUp(): void
     {

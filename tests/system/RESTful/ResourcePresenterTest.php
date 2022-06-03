@@ -13,6 +13,7 @@ namespace CodeIgniter\RESTful;
 
 use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\Services;
+use CodeIgniter\Model;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -20,6 +21,7 @@ use CodeIgniter\Test\Mock\MockResourcePresenter;
 use Config\App;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\UserModel;
+use Tests\Support\RESTful\Worker2;
 
 /**
  * Exercise our core ResourcePresenter class.
@@ -31,13 +33,12 @@ use Tests\Support\Models\UserModel;
  * @preserveGlobalState         disabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class ResourcePresenterTest extends CIUnitTestCase
 {
-    /**
-     * @var CodeIgniter
-     */
-    protected $codeigniter;
+    private CodeIgniter $codeigniter;
 
     /**
      * @var RouteCollection
@@ -48,13 +49,17 @@ final class ResourcePresenterTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->resetServices();
+        $this->resetServices(true);
+        $this->resetFactories();
+    }
 
+    private function createCodeigniter(): void
+    {
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         // Inject mock router.
         $this->routes = Services::routes();
-        $this->routes->presenter('work', ['controller' => 'Tests\Support\RESTful\Worker2']);
+        $this->routes->presenter('work', ['controller' => Worker2::class]);
         Services::injectMock('routes', $this->routes);
 
         $config            = new App();
@@ -81,6 +86,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -101,6 +108,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/show/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -120,6 +129,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/new';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -138,6 +149,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI']    = '/work/create';
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->createCodeigniter();
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
@@ -159,6 +172,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/remove/123';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -178,6 +193,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI']    = '/work/delete/123';
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->createCodeigniter();
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
@@ -200,6 +217,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI']    = '/work/edit/1';
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
+        $this->createCodeigniter();
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
         $output = ob_get_clean();
@@ -219,6 +238,8 @@ final class ResourcePresenterTest extends CIUnitTestCase
 
         $_SERVER['REQUEST_URI']    = '/work/update/123';
         $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $this->createCodeigniter();
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run($this->routes);
@@ -246,9 +267,9 @@ final class ResourcePresenterTest extends CIUnitTestCase
     public function testModelByName()
     {
         $resource = new MockResourcePresenter();
-        $resource->setModel('\Tests\Support\Models\UserModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $resource->setModel(UserModel::class);
+        $this->assertInstanceOf(Model::class, $resource->getModel());
+        $this->assertSame(UserModel::class, $resource->getModelName());
     }
 
     public function testModelByObject()
@@ -256,34 +277,34 @@ final class ResourcePresenterTest extends CIUnitTestCase
         $resource = new MockResourcePresenter();
         $model    = new UserModel();
         $resource->setModel($model);
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
 
         // Note that the leading backslash is missing if we build it this way
-        $this->assertSame('Tests\Support\Models\UserModel', $resource->getModelName());
+        $this->assertSame(UserModel::class, $resource->getModelName());
     }
 
     public function testChangeSetModelByObject()
     {
         $resource = new MockResourcePresenter();
-        $resource->setModel('\Tests\Support\Models\UserModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $resource->setModel(UserModel::class);
+        $this->assertInstanceOf(Model::class, $resource->getModel());
+        $this->assertSame(UserModel::class, $resource->getModelName());
 
         $model = new EntityModel();
         $resource->setModel($model);
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertSame('Tests\Support\Models\EntityModel', $resource->getModelName());
+        $this->assertInstanceOf(Model::class, $resource->getModel());
+        $this->assertSame(EntityModel::class, $resource->getModelName());
     }
 
     public function testChangeSetModelByName()
     {
         $resource = new MockResourcePresenter();
-        $resource->setModel('\Tests\Support\Models\UserModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\UserModel', $resource->getModelName());
+        $resource->setModel(UserModel::class);
+        $this->assertInstanceOf(Model::class, $resource->getModel());
+        $this->assertSame(UserModel::class, $resource->getModelName());
 
-        $resource->setModel('\Tests\Support\Models\EntityModel');
-        $this->assertInstanceOf('CodeIgniter\Model', $resource->getModel());
-        $this->assertSame('\Tests\Support\Models\EntityModel', $resource->getModelName());
+        $resource->setModel(EntityModel::class);
+        $this->assertInstanceOf(Model::class, $resource->getModel());
+        $this->assertSame(EntityModel::class, $resource->getModelName());
     }
 }

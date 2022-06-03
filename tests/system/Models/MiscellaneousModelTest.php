@@ -12,7 +12,7 @@
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DataException;
-use InvalidArgumentException;
+use CodeIgniter\I18n\Time;
 use Tests\Support\Models\EntityModel;
 use Tests\Support\Models\JobModel;
 use Tests\Support\Models\SimpleEntity;
@@ -50,8 +50,11 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
         $this->assertTrue($this->model->save($entity));
 
-        $result = $this->model->where('name', 'Senior Developer')->get()->getFirstRow();
-        $this->assertSame(date('Y-m-d', $time), date('Y-m-d', $result->created_at));
+        $result = $this->model->where('name', 'Senior Developer')->first();
+        $this->assertSame(
+            Time::createFromTimestamp($time)->toDateTimeString(),
+            $result->created_at->toDateTimeString()
+        );
     }
 
     /**
@@ -98,7 +101,7 @@ final class MiscellaneousModelTest extends LiveModelTestCase
 
     public function testUndefinedTypeInTransformDataToArray(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Invalid type "whatever" used upon transforming data to array.');
 
         $this->createModel(JobModel::class);

@@ -12,9 +12,9 @@ cookies.
 Loading this Helper
 ===================
 
-This helper is loaded using the following code::
+This helper is loaded using the following code:
 
-    helper('cookie');
+.. literalinclude:: cookie_helper/001.php
 
 Available Functions
 ===================
@@ -31,18 +31,18 @@ The following functions are available:
     :param    string    $prefix: Cookie name prefix
     :param    bool    $secure: Whether to only send the cookie through HTTPS
     :param    bool    $httpOnly: Whether to hide the cookie from JavaScript
-    :param    string    $sameSite: The value for the SameSite cookie parameter. If null, the default from `config/App.php` is used
+    :param    string    $sameSite: The value for the SameSite cookie parameter. If ``null``, the default from **app/Config/Cookie.php** is used
     :rtype:    void
 
     This helper function gives you friendlier syntax to set browser
     cookies. Refer to the :doc:`Response Library </outgoing/response>` for
     a description of its use, as this function is an alias for
-    ``Response::setCookie()``.
+    :php:func:`Response::setCookie() <setCookie>`.
 
 .. php:function:: get_cookie($index[, $xssClean = false])
 
     :param    string    $index: Cookie name
-    :param    bool    $xss_clean: Whether to apply XSS filtering to the returned value
+    :param    bool    $xssClean: Whether to apply XSS filtering to the returned value
     :returns:    The cookie value or null if not found
     :rtype:    mixed
 
@@ -50,8 +50,8 @@ The following functions are available:
     cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
     detailed description of its use, as this function acts very
     similarly to ``IncomingRequest::getCookie()``, except it will also prepend
-    the ``$cookiePrefix`` that you might've set in your
-    **app/Config/App.php** file.
+    the ``Config\Cookie::$prefix`` that you might've set in your
+    **app/Config/Cookie.php** file.
 
 .. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
 
@@ -65,17 +65,21 @@ The following functions are available:
 
     Lets you delete a cookie. Unless you've set a custom path or other
     values, only the name of the cookie is needed.
-    ::
 
-        delete_cookie('name');
+    .. literalinclude:: cookie_helper/002.php
 
     This function is otherwise identical to ``set_cookie()``, except that it
-    does not have the value and expiration parameters. You can submit an
+    does not have the ``value`` and ``expire`` parameters.
+
+    .. note:: When you use ``set_cookie()``,
+        if the ``value`` is set to empty string and the ``expire`` is set to ``0``, the cookie will be deleted.
+        If the ``value`` is set to non-empty string and the ``expire`` is set to ``0``, the cookie will only last as long as the browser is open.
+
+    You can submit an
     array of values in the first parameter or you can set discrete
     parameters.
-    ::
 
-        delete_cookie($name, $domain, $path, $prefix);
+    .. literalinclude:: cookie_helper/003.php
 
 .. php:function:: has_cookie(string $name[, ?string $value = null[, string $prefix = '']])
 

@@ -20,13 +20,15 @@ use Config\Honeypot;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group SeparateProcess
  */
 final class HoneypotTest extends CIUnitTestCase
 {
-    protected $config;
-    protected $honey;
-    protected $request;
-    protected $response;
+    private $config;
+    private $honey;
+    private $request;
+    private $response;
 
     protected function setUp(): void
     {
@@ -53,7 +55,7 @@ final class HoneypotTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
 
         $this->expectException(HoneypotException::class);
-        $request = $filters->run($uri, 'before');
+        $filters->run($uri, 'before');
     }
 
     public function testBeforeClean()

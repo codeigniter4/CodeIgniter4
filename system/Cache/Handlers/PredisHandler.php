@@ -222,6 +222,6 @@ class PredisHandler extends BaseHandler
      */
     public function isSupported(): bool
     {
-        return class_exists('Predis\Client');
+        return class_exists(Client::class);
     }
 }

@@ -107,7 +107,6 @@ tests /
         - ParserTest #1311
     - EntityTest #1319
 
-
 user_guide_src /source/
     - cli/
         - cli_request #1303
@@ -171,20 +170,20 @@ PRs merged:
 - #1316 Refactor TimeTest
 - #1314 Fix & expand Honeypot & its tests
 - #1313 Clean exception
-- #1311 Entities store an original stack of values to compare against so we d…
+- #1311 Entities store an original stack of values to compare against so we d...
 - #1306 Testing3/http
 - #1305 Change chdir('public') to chdir($public)
 - #1304 Refactor script name stripping in parseRequestURI()
 - #1303 Testing/http
-- #1302 Exception：No Formatter defined for mime type ''
+- #1302 Exception: No Formatter defined for mime type ''
 - #1300 Allow redirect with Query Vars from the current request.
 - #1295 Fix grammar in front controller comment.
 - #1294 Updated final tutorial page. Fixes #1292
 - #1291 Allows extending of helpers. Fixes #1264
 - #1286 Cookies
-- #1285 Ensure current HTTP verb routes are matched prior to any * matched ro…
+- #1285 Ensure current HTTP verb routes are matched prior to any * matched ro...
 - #1283 Entities
-- #1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block…
+- #1282 system/Test/FeatureTestCase::setupRequest(), minor fixes phpdoc block...
 - #1281 Tut
 - #1280 Add contributing reference to user guide
 - #1273 Fix/timing
@@ -194,6 +193,6 @@ PRs merged:
 - #1266 Adjusting the release build scripts
 - #1265 WIP Fix docs re PHP server
 - #1245 Fix #1244 (form_hidden declaration)
-- #1239 【Unsolicited PR】I changed the download method to testable.
+- #1239 [Unsolicited PR] I changed the download method to testable.
 - #1217 Optional parameter for resetSelect() call in Builder's countAll();
 - #1209 Fix undefined function xml_convert at Database\BaseUtils

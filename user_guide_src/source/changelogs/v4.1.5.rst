@@ -23,7 +23,7 @@ Enhancements
 - Added Cache config for reserved characters
 - The :ref:`addForeignKey()<adding-foreign-keys>` function of the ``Forge`` class can now define composite foreign keys in an array
 - The ``dropKey`` function of the ``Forge`` class can remove key
-- Now ``_`` can be used as separators in environment variable
+- Now ``_`` can be used as separators in environment variable. See :ref:`env-var-namespace-separator`.
 - Added Multiple filters for a route and Classname filter
 - Reduced memory usage of ``insertBatch()`` and ``updateBatch()``
 - Added :ref:`Session based CSRF Protection <csrf-protection-methods>`
