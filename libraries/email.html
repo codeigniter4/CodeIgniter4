@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Email Class &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Email Class &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -539,25 +542,25 @@ message like this:</p>
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id8">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\Email\Email</code></dt>
-<dd><dl class="method">
-<dt id="setFrom">
-<code class="sig-name descname">setFrom</code><span class="sig-paren">(</span><em class="sig-param">$from</em><span class="optional">[</span>, <em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$returnPath = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setFrom" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\Email\\Email</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="setFrom">
+<span class="sig-name descname"><span class="pre">setFrom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$from</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$returnPath</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setFrom" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$from</strong> (<em>string</em>) – “From” e-mail address</p></li>
-<li><p><strong>$name</strong> (<em>string</em>) – “From” display name</p></li>
-<li><p><strong>$returnPath</strong> (<em>string</em>) – Optional email address to redirect undelivered e-mail to</p></li>
+<li><p><strong>$from</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – “From” e-mail address</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – “From” display name</p></li>
+<li><p><strong>$returnPath</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional email address to redirect undelivered e-mail to</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the email address and name of the person sending the email:</p>
@@ -579,21 +582,21 @@ your protocol.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setReplyTo">
-<code class="sig-name descname">setReplyTo</code><span class="sig-paren">(</span><em class="sig-param">$replyto</em><span class="optional">[</span>, <em class="sig-param">$name = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setReplyTo" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setReplyTo">
+<span class="sig-name descname"><span class="pre">setReplyTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$replyto</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setReplyTo" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$replyto</strong> (<em>string</em>) – E-mail address for replies</p></li>
-<li><p><strong>$name</strong> (<em>string</em>) – Display name for the reply-to e-mail address</p></li>
+<li><p><strong>$replyto</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – E-mail address for replies</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Display name for the reply-to e-mail address</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the reply-to address. If the information is not provided the
@@ -605,20 +608,20 @@ information in the <a class="reference external" href="#setFrom">setFrom</a> met
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setTo">
-<code class="sig-name descname">setTo</code><span class="sig-paren">(</span><em class="sig-param">$to</em><span class="sig-paren">)</span><a class="headerlink" href="#setTo" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setTo">
+<span class="sig-name descname"><span class="pre">setTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$to</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setTo" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$to</strong> (<em>mixed</em>) – Comma-delimited string or an array of e-mail addresses</p></li>
+<li><p><strong>$to</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of e-mail addresses</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the email address(s) of the recipient(s). Can be a single e-mail,
@@ -640,41 +643,41 @@ a comma-delimited list or an array:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setCC">
-<code class="sig-name descname">setCC</code><span class="sig-paren">(</span><em class="sig-param">$cc</em><span class="sig-paren">)</span><a class="headerlink" href="#setCC" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setCC">
+<span class="sig-name descname"><span class="pre">setCC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$cc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setCC" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$cc</strong> (<em>mixed</em>) – Comma-delimited string or an array of e-mail addresses</p></li>
+<li><p><strong>$cc</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of e-mail addresses</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the CC email address(s). Just like the “to”, can be a single e-mail,
 a comma-delimited list or an array.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="setBCC">
-<code class="sig-name descname">setBCC</code><span class="sig-paren">(</span><em class="sig-param">$bcc</em><span class="optional">[</span>, <em class="sig-param">$limit = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setBCC" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setBCC">
+<span class="sig-name descname"><span class="pre">setBCC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$bcc</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setBCC" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$bcc</strong> (<em>mixed</em>) – Comma-delimited string or an array of e-mail addresses</p></li>
-<li><p><strong>$limit</strong> (<em>int</em>) – Maximum number of e-mails to send per batch</p></li>
+<li><p><strong>$bcc</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of e-mail addresses</p></li>
+<li><p><strong>$limit</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Maximum number of e-mails to send per batch</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the BCC email address(s). Just like the <code class="docutils literal notranslate"><span class="pre">setTo()</span></code> method, can be a single
@@ -684,20 +687,20 @@ the emails to batches, with each batch not exceeding the specified
 <code class="docutils literal notranslate"><span class="pre">$limit</span></code>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="setSubject">
-<code class="sig-name descname">setSubject</code><span class="sig-paren">(</span><em class="sig-param">$subject</em><span class="sig-paren">)</span><a class="headerlink" href="#setSubject" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setSubject">
+<span class="sig-name descname"><span class="pre">setSubject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$subject</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setSubject" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$subject</strong> (<em>string</em>) – E-mail subject line</p></li>
+<li><p><strong>$subject</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – E-mail subject line</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the email subject:</p>
@@ -708,20 +711,20 @@ the emails to batches, with each batch not exceeding the specified
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setMessage">
-<code class="sig-name descname">setMessage</code><span class="sig-paren">(</span><em class="sig-param">$body</em><span class="sig-paren">)</span><a class="headerlink" href="#setMessage" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setMessage">
+<span class="sig-name descname"><span class="pre">setMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setMessage" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$body</strong> (<em>string</em>) – E-mail message body</p></li>
+<li><p><strong>$body</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – E-mail message body</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the e-mail message body:</p>
@@ -732,20 +735,20 @@ the emails to batches, with each batch not exceeding the specified
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setAltMessage">
-<code class="sig-name descname">setAltMessage</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#setAltMessage" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setAltMessage">
+<span class="sig-name descname"><span class="pre">setAltMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setAltMessage" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Alternative e-mail message body</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Alternative e-mail message body</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the alternative e-mail message body:</p>
@@ -762,21 +765,21 @@ message CodeIgniter will extract the message from your HTML email
 and strip the tags.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">setHeader</code><span class="sig-paren">(</span><em class="sig-param">$header</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">setHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$header</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$header</strong> (<em>string</em>) – Header name</p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – Header value</p></li>
+<li><p><strong>$header</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Header name</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Header value</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Appends additional headers to the e-mail:</p>
@@ -788,20 +791,20 @@ and strip the tags.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="clear">
-<code class="sig-name descname">clear</code><span class="sig-paren">(</span><em class="sig-param">$clearAttachments = false</em><span class="sig-paren">)</span><a class="headerlink" href="#clear" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$clearAttachments</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="sig-paren">)</span><a class="headerlink" href="#clear" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$clearAttachments</strong> (<em>bool</em>) – Whether or not to clear attachments</p></li>
+<li><p><strong>$clearAttachments</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether or not to clear attachments</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Initializes all the email variables to an empty state. This method
@@ -829,20 +832,20 @@ well:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="send">
-<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param">$autoClear = true</em><span class="sig-paren">)</span><a class="headerlink" href="#send" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$autoClear</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="sig-paren">)</span><a class="headerlink" href="#send" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$autoClear</strong> (<em>bool</em>) – Whether to clear message data automatically</p></li>
+<li><p><strong>$autoClear</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to clear message data automatically</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>The e-mail sending method. Returns boolean true or false based on
@@ -876,25 +879,25 @@ boolean <code class="docutils literal notranslate"><span class="pre">true</span>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="attach">
-<code class="sig-name descname">attach</code><span class="sig-paren">(</span><em class="sig-param">$filename</em><span class="optional">[</span>, <em class="sig-param">$disposition = ''</em><span class="optional">[</span>, <em class="sig-param">$newname = null</em><span class="optional">[</span>, <em class="sig-param">$mime = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#attach" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="attach">
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$filename</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$disposition</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$newname</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$mime</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#attach" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$filename</strong> (<em>string</em>) – File name</p></li>
-<li><p><strong>$disposition</strong> (<em>string</em>) – ‘disposition’ of the attachment. Most
+<li><p><strong>$filename</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – File name</p></li>
+<li><p><strong>$disposition</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – ‘disposition’ of the attachment. Most
 email clients make their own decision regardless of the MIME
 specification used here. <a class="reference external" href="https://www.iana.org/assignments/cont-disp/cont-disp.xhtml">https://www.iana.org/assignments/cont-disp/cont-disp.xhtml</a></p></li>
-<li><p><strong>$newname</strong> (<em>string</em>) – Custom file name to use in the e-mail</p></li>
-<li><p><strong>$mime</strong> (<em>string</em>) – MIME type to use (useful for buffered data)</p></li>
+<li><p><strong>$newname</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Custom file name to use in the e-mail</p></li>
+<li><p><strong>$mime</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – MIME type to use (useful for buffered data)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniter\Email\Email instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Email\Email</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code></span></p>
 </dd>
 </dl>
 <p>Enables you to send an attachment. Put the file path/name in the first
@@ -936,20 +939,20 @@ parameter as mime-type:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setAttachmentCID">
-<code class="sig-name descname">setAttachmentCID</code><span class="sig-paren">(</span><em class="sig-param">$filename</em><span class="sig-paren">)</span><a class="headerlink" href="#setAttachmentCID" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setAttachmentCID">
+<span class="sig-name descname"><span class="pre">setAttachmentCID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setAttachmentCID" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$filename</strong> (<em>string</em>) – Existing attachment filename</p></li>
+<li><p><strong>$filename</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Existing attachment filename</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Attachment Content-ID or false if not found</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Sets and returns an attachment’s Content-ID, which enables your to embed an inline
@@ -973,20 +976,20 @@ parameter as mime-type:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="printDebugger">
-<code class="sig-name descname">printDebugger</code><span class="sig-paren">(</span><em class="sig-param">$include = ['headers', 'subject', 'body']</em><span class="sig-paren">)</span><a class="headerlink" href="#printDebugger" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="printDebugger">
+<span class="sig-name descname"><span class="pre">printDebugger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$include</span> <span class="pre">=</span> <span class="pre">['headers',</span> <span class="pre">'subject',</span> <span class="pre">'body']</span></em><span class="sig-paren">)</span><a class="headerlink" href="#printDebugger" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$include</strong> (<em>array</em>) – Which parts of the message to print out</p></li>
+<li><p><strong>$include</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Which parts of the message to print out</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Formatted debug data</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns a string containing any server messages, the email headers, and

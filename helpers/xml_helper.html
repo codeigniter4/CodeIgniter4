@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XML Helper &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>XML Helper &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -292,21 +295,21 @@ data.</p>
 <section id="available-functions">
 <h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
-<dl class="function">
-<dt id="xml_convert">
-<code class="sig-name descname">xml_convert</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$protect_all = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml_convert" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="xml_convert">
+<span class="sig-name descname"><span class="pre">xml_convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$protect_all</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#xml_convert" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – the text string to convert</p></li>
-<li><p><strong>$protect_all</strong> (<em>bool</em>) – Whether to protect all content that looks like a potential entity instead of just numbered entities, e.g., &amp;foo;</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – the text string to convert</p></li>
+<li><p><strong>$protect_all</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to protect all content that looks like a potential entity instead of just numbered entities, e.g., &amp;foo;</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>XML-converted string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Takes a string as input and converts the following reserved XML

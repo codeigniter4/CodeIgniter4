@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Database Migrations &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Database Migrations &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -585,58 +588,58 @@ creates is the Pascal case version of the filename.</p>
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id10">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\Database\MigrationRunner</code></dt>
-<dd><dl class="method">
-<dt id="findMigrations">
-<code class="sig-name descname">findMigrations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findMigrations" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\Database\\MigrationRunner</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="findMigrations">
+<span class="sig-name descname"><span class="pre">findMigrations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findMigrations" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>An array of migration files</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>array</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
 <p>An array of migration filenames are returned that are found in the <strong>path</strong> property.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="latest">
-<code class="sig-name descname">latest</code><span class="sig-paren">(</span><em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#latest" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="latest">
+<span class="sig-name descname"><span class="pre">latest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#latest" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</p></li>
+<li><p><strong>$group</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – database group name, if null default database group will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>This locates migrations for a namespace (or all namespaces), determines which migrations
 have not yet been run, and runs them in order of their version (namespaces intermingled).</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="regress">
-<code class="sig-name descname">regress</code><span class="sig-paren">(</span><em class="sig-param">$targetBatch</em>, <em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#regress" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="regress">
+<span class="sig-name descname"><span class="pre">regress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$targetBatch</span></em>, <em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#regress" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$targetBatch</strong> (<em>int</em>) – previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means “three batches back”)</p></li>
-<li><p><strong>$group</strong> (<em>?string</em>) – database group name, if null default database group will be used.</p></li>
+<li><p><strong>$targetBatch</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – previous batch to migrate down to; 1+ specifies the batch, 0 reverts all, negative refers to the relative batch (e.g., -3 means “three batches back”)</p></li>
+<li><p><strong>$group</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">?string</span></code></span>) – database group name, if null default database group will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure or no migrations are found</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Regress can be used to roll back changes to a previous state, batch by batch.</p>
@@ -648,22 +651,22 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="force">
-<code class="sig-name descname">force</code><span class="sig-paren">(</span><em class="sig-param">$path</em>, <em class="sig-param">$namespace</em>, <em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#force" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="force">
+<span class="sig-name descname"><span class="pre">force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$path</span></em>, <em class="sig-param"><span class="pre">$namespace</span></em>, <em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#force" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$path</strong> (<em>mixed</em>) – path to a valid migration file.</p></li>
-<li><p><strong>$namespace</strong> (<em>mixed</em>) – namespace of the provided migration.</p></li>
-<li><p><strong>$group</strong> (<em>mixed</em>) – database group name, if null default database group will be used.</p></li>
+<li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – path to a valid migration file.</p></li>
+<li><p><strong>$namespace</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – namespace of the provided migration.</p></li>
+<li><p><strong>$group</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – database group name, if null default database group will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>This forces a single file to migrate regardless of order or batches. Method “up” or “down” is detected based on whether it has already been migrated.</p>
@@ -673,20 +676,20 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setNamespace">
-<code class="sig-name descname">setNamespace</code><span class="sig-paren">(</span><em class="sig-param">$namespace</em><span class="sig-paren">)</span><a class="headerlink" href="#setNamespace" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setNamespace">
+<span class="sig-name descname"><span class="pre">setNamespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$namespace</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setNamespace" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$namespace</strong> (<em>string|null</em>) – application namespace. <code class="docutils literal notranslate"><span class="pre">null</span></code> is all namespaces.</p></li>
+<li><p><strong>$namespace</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – application namespace. <code class="docutils literal notranslate"><span class="pre">null</span></code> is all namespaces.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current MigrationRunner instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Database\MigrationRunner</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Database\MigrationRunner</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the namespace the library should look for migration files:</p>
@@ -701,20 +704,20 @@ have not yet been run, and runs them in order of their version (namespaces inter
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setGroup">
-<code class="sig-name descname">setGroup</code><span class="sig-paren">(</span><em class="sig-param">$group</em><span class="sig-paren">)</span><a class="headerlink" href="#setGroup" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setGroup">
+<span class="sig-name descname"><span class="pre">setGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$group</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setGroup" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$group</strong> (<em>string</em>) – database group name.</p></li>
+<li><p><strong>$group</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – database group name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current MigrationRunner instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\Database\MigrationRunner</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\Database\MigrationRunner</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the group the library should look for migration files:</p>

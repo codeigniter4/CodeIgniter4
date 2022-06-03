@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cookies &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Cookies &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -778,20 +781,20 @@ objects. However, you may wish to define your own settings by changing the follo
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\HTTP\Cookie\Cookie</code></dt>
-<dd><dl class="staticmethod">
-<dt id="setDefaults">
-<em class="property">static </em><code class="sig-name descname">setDefaults</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$config = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setDefaults" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\HTTP\\Cookie\\Cookie</span></span></dt>
+<dd><dl class="php staticmethod">
+<dt class="sig sig-object php" id="setDefaults">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">setDefaults</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$config</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setDefaults" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$config</strong> (<em>ConfigCookie|array</em>) – The configuration array or instance</p></li>
+<li><p><strong>$config</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ConfigCookie|array</span></code></span>) – The configuration array or instance</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>array&lt;string, mixed&gt;</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The old defaults</p>
@@ -800,14 +803,14 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Set the default attributes to a Cookie instance by injecting the values from the <code class="docutils literal notranslate"><span class="pre">\Config\Cookie</span></code> config or an array.</p>
 </dd></dl>
 
-<dl class="staticmethod">
-<dt id="fromHeaderString">
-<em class="property">static </em><code class="sig-name descname">fromHeaderString</code><span class="sig-paren">(</span><em class="sig-param">string $header</em><span class="optional">[</span>, <em class="sig-param">bool $raw = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fromHeaderString" title="Permalink to this definition"></a></dt>
+<dl class="php staticmethod">
+<dt class="sig sig-object php" id="fromHeaderString">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">fromHeaderString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$header</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fromHeaderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$header</strong> (<em>string</em>) – The <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> header string</p></li>
-<li><p><strong>$raw</strong> (<em>bool</em>) – Whether this cookie is not to be URL encoded and sent via <code class="docutils literal notranslate"><span class="pre">setrawcookie()</span></code></p></li>
+<li><p><strong>$header</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> header string</p></li>
+<li><p><strong>$raw</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether this cookie is not to be URL encoded and sent via <code class="docutils literal notranslate"><span class="pre">setrawcookie()</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -823,15 +826,15 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Create a new Cookie instance from a <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> header.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="__construct">
-<code class="sig-name descname">__construct</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="optional">[</span>, <em class="sig-param">string $value = ''</em><span class="optional">[</span>, <em class="sig-param">array $options = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#__construct" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="__construct">
+<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#__construct" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The cookie name</p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – The cookie value</p></li>
-<li><p><strong>$options</strong> (<em>array</em>) – The cookie options</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The cookie name</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The cookie value</p></li>
+<li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The cookie options</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -847,12 +850,12 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Construct a new Cookie instance.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="getId">
-<code class="sig-name descname">getId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getId" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getId">
+<span class="sig-name descname"><span class="pre">getId</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getId" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The ID used in indexing in the cookie collection.</p>
@@ -860,88 +863,88 @@ objects. However, you may wish to define your own settings by changing the follo
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getPrefix(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getPrefix():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getName(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getName():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getPrefixedName(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getPrefixedName():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getValue(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getValue():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getExpiresTimestamp(): int</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getExpiresTimestamp():</span> <span class="pre">int</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getExpiresString(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getExpiresString():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">isExpired(): bool</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">isExpired():</span> <span class="pre">bool</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getMaxAge(): int</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getMaxAge():</span> <span class="pre">int</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getDomain(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getDomain():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getPath(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getPath():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">isSecure(): bool</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">isSecure():</span> <span class="pre">bool</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">isHTTPOnly(): bool</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">isHTTPOnly():</span> <span class="pre">bool</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getSameSite(): string</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getSameSite():</span> <span class="pre">string</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">isRaw(): bool</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">isRaw():</span> <span class="pre">bool</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">getOptions(): array</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">getOptions():</span> <span class="pre">array</span></span></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="withRaw">
-<code class="sig-name descname">withRaw</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">bool $raw = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withRaw" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withRaw">
+<span class="sig-name descname"><span class="pre">withRaw</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withRaw" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$raw</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>$raw</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -954,13 +957,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with URL encoding option updated.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withPrefix">
-<code class="sig-name descname">withPrefix</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">string $prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withPrefix" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withPrefix">
+<span class="sig-name descname"><span class="pre">withPrefix</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withPrefix" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$prefix</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -973,13 +976,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new prefix.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withName">
-<code class="sig-name descname">withName</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="sig-paren">)</span><a class="headerlink" href="#withName" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withName">
+<span class="sig-name descname"><span class="pre">withName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#withName" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -992,13 +995,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new name.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withValue">
-<code class="sig-name descname">withValue</code><span class="sig-paren">(</span><em class="sig-param">string $value</em><span class="sig-paren">)</span><a class="headerlink" href="#withValue" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withValue">
+<span class="sig-name descname"><span class="pre">withValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#withValue" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$value</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1011,13 +1014,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new value.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withExpires">
-<code class="sig-name descname">withExpires</code><span class="sig-paren">(</span><em class="sig-param">$expires</em><span class="sig-paren">)</span><a class="headerlink" href="#withExpires" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withExpires">
+<span class="sig-name descname"><span class="pre">withExpires</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$expires</span></em><span class="sig-paren">)</span><a class="headerlink" href="#withExpires" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$expires</strong> (<em>DateTimeInterface|string|int</em>) – </p></li>
+<li><p><strong>$expires</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">DateTimeInterface|string|int</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1030,9 +1033,9 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new cookie expires time.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withExpired">
-<code class="sig-name descname">withExpired</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#withExpired" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withExpired">
+<span class="sig-name descname"><span class="pre">withExpired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#withExpired" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
@@ -1044,13 +1047,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie that will expire from the browser.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withNeverExpiring">
-<code class="sig-name descname">withNeverExpiring</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#withNeverExpiring" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withNeverExpiring">
+<span class="sig-name descname"><span class="pre">withNeverExpiring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#withNeverExpiring" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1063,13 +1066,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie that will virtually never expire.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withDomain">
-<code class="sig-name descname">withDomain</code><span class="sig-paren">(</span><em class="sig-param">?string $domain</em><span class="sig-paren">)</span><a class="headerlink" href="#withDomain" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withDomain">
+<span class="sig-name descname"><span class="pre">withDomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?string</span> <span class="pre">$domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#withDomain" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$domain</strong> (<em>string|null</em>) – </p></li>
+<li><p><strong>$domain</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1082,13 +1085,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new domain.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withPath">
-<code class="sig-name descname">withPath</code><span class="sig-paren">(</span><em class="sig-param">?string $path</em><span class="sig-paren">)</span><a class="headerlink" href="#withPath" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withPath">
+<span class="sig-name descname"><span class="pre">withPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?string</span> <span class="pre">$path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#withPath" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$path</strong> (<em>string|null</em>) – </p></li>
+<li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1101,13 +1104,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new path.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withSecure">
-<code class="sig-name descname">withSecure</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">bool $secure = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withSecure" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withSecure">
+<span class="sig-name descname"><span class="pre">withSecure</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withSecure" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$secure</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>$secure</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1120,13 +1123,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new “Secure” attribute.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withHTTPOnly">
-<code class="sig-name descname">withHTTPOnly</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">bool $httponly = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withHTTPOnly" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withHTTPOnly">
+<span class="sig-name descname"><span class="pre">withHTTPOnly</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#withHTTPOnly" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$httponly</strong> (<em>bool</em>) – </p></li>
+<li><p><strong>$httponly</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1139,13 +1142,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new “HttpOnly” attribute.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="withSameSite">
-<code class="sig-name descname">withSameSite</code><span class="sig-paren">(</span><em class="sig-param">string $samesite</em><span class="sig-paren">)</span><a class="headerlink" href="#withSameSite" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="withSameSite">
+<span class="sig-name descname"><span class="pre">withSameSite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$samesite</span></em><span class="sig-paren">)</span><a class="headerlink" href="#withSameSite" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$samesite</strong> (<em>string</em>) – </p></li>
+<li><p><strong>$samesite</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1158,12 +1161,12 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a new Cookie with new “SameSite” attribute.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="toHeaderString">
-<code class="sig-name descname">toHeaderString</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toHeaderString" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="toHeaderString">
+<span class="sig-name descname"><span class="pre">toHeaderString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toHeaderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns the string representation that can be passed as a header string.</p>
@@ -1171,12 +1174,12 @@ objects. However, you may wish to define your own settings by changing the follo
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="toArray">
-<code class="sig-name descname">toArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toArray" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="toArray">
+<span class="sig-name descname"><span class="pre">toArray</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toArray" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns the array representation of the Cookie instance.</p>
@@ -1186,17 +1189,17 @@ objects. However, you may wish to define your own settings by changing the follo
 
 </dd></dl>
 
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\HTTP\Cookie\CookieStore</code></dt>
-<dd><dl class="staticmethod">
-<dt id="fromCookieHeaders">
-<em class="property">static </em><code class="sig-name descname">fromCookieHeaders</code><span class="sig-paren">(</span><em class="sig-param">array $headers</em><span class="optional">[</span>, <em class="sig-param">bool $raw = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fromCookieHeaders" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\HTTP\\Cookie\\CookieStore</span></span></dt>
+<dd><dl class="php staticmethod">
+<dt class="sig sig-object php" id="fromCookieHeaders">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">fromCookieHeaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$headers</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fromCookieHeaders" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$header</strong> (<em>array</em>) – Array of <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> headers</p></li>
-<li><p><strong>$raw</strong> (<em>bool</em>) – Whether not to use URL encoding</p></li>
+<li><p><strong>$header</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Array of <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> headers</p></li>
+<li><p><strong>$raw</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether not to use URL encoding</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1212,13 +1215,13 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Creates a CookieStore from an array of <code class="docutils literal notranslate"><span class="pre">Set-Cookie</span></code> headers.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">__construct</code><span class="sig-paren">(</span><em class="sig-param">array $cookies</em><span class="sig-paren">)</span></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$cookies</span></em><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$cookies</strong> (<em>array</em>) – Array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects</p></li>
+<li><p><strong>$cookies</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Array of <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> objects</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1233,19 +1236,19 @@ objects. However, you may wish to define your own settings by changing the follo
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">has(string $name[, string $prefix = ''[, ?string $value = null]]): bool</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">has(string</span> <span class="pre">$name[,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''[,</span> <span class="pre">?string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null]]):</span> <span class="pre">bool</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
-<li><p><strong>$value</strong> (<em>string|null</em>) – Cookie value</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie prefix</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – Cookie value</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Checks if a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> object identified by name and prefix is present in the collection.</p>
@@ -1253,14 +1256,14 @@ objects. However, you may wish to define your own settings by changing the follo
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">get(string $name[, string $prefix = '']): Cookie</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">get(string</span> <span class="pre">$name[,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'']):</span> <span class="pre">Cookie</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1275,13 +1278,13 @@ objects. However, you may wish to define your own settings by changing the follo
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">put(Cookie $cookie): CookieStore</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">put(Cookie</span> <span class="pre">$cookie):</span> <span class="pre">CookieStore</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$cookie</strong> (<em>Cookie</em>) – A Cookie object</p></li>
+<li><p><strong>$cookie</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Cookie</span></code></span>) – A Cookie object</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1294,14 +1297,14 @@ objects. However, you may wish to define your own settings by changing the follo
 <p>Store a new cookie and return a new collection. The original collection is left unchanged.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">remove(string $name[, string $prefix = '']): CookieStore</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">remove(string</span> <span class="pre">$name[,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'']):</span> <span class="pre">CookieStore</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie prefix</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1315,23 +1318,23 @@ objects. However, you may wish to define your own settings by changing the follo
 The original collection is left unchanged.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">dispatch(): void</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">dispatch():</span> <span class="pre">void</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>void</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
 <p>Dispatches all cookies in store.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">display(): array</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">display():</span> <span class="pre">array</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns all cookie instances in store.</p>
@@ -1339,12 +1342,12 @@ The original collection is left unchanged.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">clear(): void</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">clear():</span> <span class="pre">void</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>void</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
 <p>Clears the cookie collection.</p>

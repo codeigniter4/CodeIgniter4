@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Text Helper &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Text Helper &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -291,21 +294,21 @@
 <section id="available-functions">
 <h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
-<dl class="function">
-<dt id="random_string">
-<code class="sig-name descname">random_string</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$type = 'alnum'</em><span class="optional">[</span>, <em class="sig-param">$len = 8</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random_string" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="random_string">
+<span class="sig-name descname"><span class="pre">random_string</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$type</span> <span class="pre">=</span> <span class="pre">'alnum'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$len</span> <span class="pre">=</span> <span class="pre">8</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#random_string" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$type</strong> (<em>string</em>) – Randomization type</p></li>
-<li><p><strong>$len</strong> (<em>int</em>) – Output string length</p></li>
+<li><p><strong>$type</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Randomization type</p></li>
+<li><p><strong>$len</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Output string length</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A random string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Generates a random string based on the type and length you specify.
@@ -330,22 +333,22 @@ specifies the length. The following choices are available:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="increment_string">
-<code class="sig-name descname">increment_string</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$separator = '_'</em><span class="optional">[</span>, <em class="sig-param">$first = 1</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment_string" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="increment_string">
+<span class="sig-name descname"><span class="pre">increment_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$separator</span> <span class="pre">=</span> <span class="pre">'_'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$first</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment_string" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$separator</strong> (<em>string</em>) – Separator to append a duplicate number with</p></li>
-<li><p><strong>$first</strong> (<em>int</em>) – Starting number</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$separator</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Separator to append a duplicate number with</p></li>
+<li><p><strong>$first</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Starting number</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An incremented string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Increments a string by appending a number to it or increasing the
@@ -361,20 +364,20 @@ content which has unique titles or slugs.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="alternator">
-<code class="sig-name descname">alternator</code><span class="sig-paren">(</span><em class="sig-param">$args</em><span class="sig-paren">)</span><a class="headerlink" href="#alternator" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="alternator">
+<span class="sig-name descname"><span class="pre">alternator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#alternator" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$args</strong> (<em>mixed</em>) – A variable number of arguments</p></li>
+<li><p><strong>$args</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – A variable number of arguments</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Alternated string(s)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Allows two or more items to be alternated between, when cycling through
@@ -402,20 +405,20 @@ function with no arguments to re-initialize.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="reduce_double_slashes">
-<code class="sig-name descname">reduce_double_slashes</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#reduce_double_slashes" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="reduce_double_slashes">
+<span class="sig-name descname"><span class="pre">reduce_double_slashes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#reduce_double_slashes" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A string with normalized slashes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Converts double slashes in a string to a single slash, except those
@@ -429,20 +432,20 @@ found in URL protocol prefixes (e.g., http&amp;#58;//).</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="strip_slashes">
-<code class="sig-name descname">strip_slashes</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="sig-paren">)</span><a class="headerlink" href="#strip_slashes" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="strip_slashes">
+<span class="sig-name descname"><span class="pre">strip_slashes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#strip_slashes" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>mixed</em>) – Input string or an array of strings</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Input string or an array of strings</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String(s) with stripped slashes</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Removes any slashes from an array of strings.</p>
@@ -474,22 +477,22 @@ alias for <code class="docutils literal notranslate"><span class="pre">stripslas
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="reduce_multiples">
-<code class="sig-name descname">reduce_multiples</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$character = ''</em><span class="optional">[</span>, <em class="sig-param">$trim = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce_multiples" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="reduce_multiples">
+<span class="sig-name descname"><span class="pre">reduce_multiples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$character</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$trim</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#reduce_multiples" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Text to search in</p></li>
-<li><p><strong>$character</strong> (<em>string</em>) – Character to reduce</p></li>
-<li><p><strong>$trim</strong> (<em>bool</em>) – Whether to also trim the specified character</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Text to search in</p></li>
+<li><p><strong>$character</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Character to reduce</p></li>
+<li><p><strong>$trim</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to also trim the specified character</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Reduced string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Reduces multiple instances of a particular character occurring directly
@@ -510,20 +513,20 @@ character at the beginning and the end of the string. Example:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="quotes_to_entities">
-<code class="sig-name descname">quotes_to_entities</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#quotes_to_entities" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="quotes_to_entities">
+<span class="sig-name descname"><span class="pre">quotes_to_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#quotes_to_entities" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String with quotes converted to HTML entities</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Converts single and double quotes in a string to the corresponding HTML
@@ -536,20 +539,20 @@ entities. Example:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="strip_quotes">
-<code class="sig-name descname">strip_quotes</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#strip_quotes" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="strip_quotes">
+<span class="sig-name descname"><span class="pre">strip_quotes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#strip_quotes" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String with quotes stripped</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Removes single and double quotes from a string. Example:</p>
@@ -561,22 +564,22 @@ entities. Example:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="word_limiter">
-<code class="sig-name descname">word_limiter</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$limit = 100</em><span class="optional">[</span>, <em class="sig-param">$end_char = '&amp;#8230;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_limiter" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="word_limiter">
+<span class="sig-name descname"><span class="pre">word_limiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$end_char</span> <span class="pre">=</span> <span class="pre">'&amp;#8230;'</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_limiter" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$limit</strong> (<em>int</em>) – Limit</p></li>
-<li><p><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$limit</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Limit</p></li>
+<li><p><strong>$end_char</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – End character (usually an ellipsis)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Word-limited string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Truncates a string to the number of <em>words</em> specified. Example:</p>
@@ -591,22 +594,22 @@ entities. Example:</p>
 default it adds an ellipsis.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="character_limiter">
-<code class="sig-name descname">character_limiter</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$n = 500</em><span class="optional">[</span>, <em class="sig-param">$end_char = '&amp;#8230;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#character_limiter" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="character_limiter">
+<span class="sig-name descname"><span class="pre">character_limiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$n</span> <span class="pre">=</span> <span class="pre">500</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$end_char</span> <span class="pre">=</span> <span class="pre">'&amp;#8230;'</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#character_limiter" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$n</strong> (<em>int</em>) – Number of characters</p></li>
-<li><p><strong>$end_char</strong> (<em>string</em>) – End character (usually an ellipsis)</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$n</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of characters</p></li>
+<li><p><strong>$end_char</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – End character (usually an ellipsis)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Character-limited string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Truncates a string to the number of <em>characters</em> specified. It
@@ -629,20 +632,20 @@ see the <a class="reference internal" href="#ellipsize" title="ellipsize"><code 
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="ascii_to_entities">
-<code class="sig-name descname">ascii_to_entities</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#ascii_to_entities" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="ascii_to_entities">
+<span class="sig-name descname"><span class="pre">ascii_to_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ascii_to_entities" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A string with ASCII values converted to entities</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Converts ASCII values to character entities, including high ASCII and MS
@@ -660,41 +663,41 @@ the normal range (like accented characters).</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="entities_to_ascii">
-<code class="sig-name descname">entities_to_ascii</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$all = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#entities_to_ascii" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="entities_to_ascii">
+<span class="sig-name descname"><span class="pre">entities_to_ascii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$all</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#entities_to_ascii" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$all</strong> (<em>bool</em>) – Whether to convert unsafe entities as well</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$all</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to convert unsafe entities as well</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A string with HTML entities converted to ASCII characters</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>This function does the opposite of <a class="reference internal" href="#ascii_to_entities" title="ascii_to_entities"><code class="xref php php-func docutils literal notranslate"><span class="pre">ascii_to_entities()</span></code></a>.
 It turns character entities back into ASCII.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="convert_accented_characters">
-<code class="sig-name descname">convert_accented_characters</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#convert_accented_characters" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="convert_accented_characters">
+<span class="sig-name descname"><span class="pre">convert_accented_characters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#convert_accented_characters" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A string with accented characters converted</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Transliterates high ASCII characters to low ASCII equivalents. Useful
@@ -714,22 +717,22 @@ from array for transliteration.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="word_censor">
-<code class="sig-name descname">word_censor</code><span class="sig-paren">(</span><em class="sig-param">$str</em>, <em class="sig-param">$censored</em><span class="optional">[</span>, <em class="sig-param">$replacement = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_censor" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="word_censor">
+<span class="sig-name descname"><span class="pre">word_censor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em>, <em class="sig-param"><span class="pre">$censored</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$replacement</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_censor" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$censored</strong> (<em>array</em>) – List of bad words to censor</p></li>
-<li><p><strong>$replacement</strong> (<em>string</em>) – What to replace bad words with</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$censored</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – List of bad words to censor</p></li>
+<li><p><strong>$replacement</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – What to replace bad words with</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Censored string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Enables you to censor words within a text string. The first parameter
@@ -746,20 +749,20 @@ with pound signs: ####.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="highlight_code">
-<code class="sig-name descname">highlight_code</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="sig-paren">)</span><a class="headerlink" href="#highlight_code" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="highlight_code">
+<span class="sig-name descname"><span class="pre">highlight_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#highlight_code" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String with code highlighted via HTML</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Colorizes a string of code (PHP, HTML, etc.). Example:</p>
@@ -772,23 +775,23 @@ with pound signs: ####.</p>
 colors used are the ones specified in your php.ini file.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="highlight_phrase">
-<code class="sig-name descname">highlight_phrase</code><span class="sig-paren">(</span><em class="sig-param">$str</em>, <em class="sig-param">$phrase</em><span class="optional">[</span>, <em class="sig-param">$tag_open = '&lt;mark&gt;'</em><span class="optional">[</span>, <em class="sig-param">$tag_close = '&lt;/mark&gt;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#highlight_phrase" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="highlight_phrase">
+<span class="sig-name descname"><span class="pre">highlight_phrase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em>, <em class="sig-param"><span class="pre">$phrase</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$tag_open</span> <span class="pre">=</span> <span class="pre">'&lt;mark&gt;'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$tag_close</span> <span class="pre">=</span> <span class="pre">'&lt;/mark&gt;'</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#highlight_phrase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$phrase</strong> (<em>string</em>) – Phrase to highlight</p></li>
-<li><p><strong>$tag_open</strong> (<em>string</em>) – Opening tag used for the highlight</p></li>
-<li><p><strong>$tag_close</strong> (<em>string</em>) – Closing tag for the highlight</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$phrase</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Phrase to highlight</p></li>
+<li><p><strong>$tag_open</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Opening tag used for the highlight</p></li>
+<li><p><strong>$tag_close</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Closing tag for the highlight</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String with a phrase highlighted via HTML</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Will highlight a phrase within a text string. The first parameter will
@@ -821,21 +824,21 @@ such browsers:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="word_wrap">
-<code class="sig-name descname">word_wrap</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$charlim = 76</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_wrap" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="word_wrap">
+<span class="sig-name descname"><span class="pre">word_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$charlim</span> <span class="pre">=</span> <span class="pre">76</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#word_wrap" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$charlim</strong> (<em>int</em>) – Character limit</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$charlim</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Character limit</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Word-wrapped string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Wraps text at the specified <em>character</em> count while maintaining
@@ -858,23 +861,23 @@ complete words.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="ellipsize">
-<code class="sig-name descname">ellipsize</code><span class="sig-paren">(</span><em class="sig-param">$str</em>, <em class="sig-param">$max_length</em><span class="optional">[</span>, <em class="sig-param">$position = 1</em><span class="optional">[</span>, <em class="sig-param">$ellipsis = '&amp;hellip;'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ellipsize" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="ellipsize">
+<span class="sig-name descname"><span class="pre">ellipsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em>, <em class="sig-param"><span class="pre">$max_length</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$position</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$ellipsis</span> <span class="pre">=</span> <span class="pre">'&amp;hellip;'</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ellipsize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$max_length</strong> (<em>int</em>) – String length limit</p></li>
-<li><p><strong>$position</strong> (<em>mixed</em>) – Position to split at (int or float)</p></li>
-<li><p><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$max_length</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – String length limit</p></li>
+<li><p><strong>$position</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Position to split at (int or float)</p></li>
+<li><p><strong>$ellipsis</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – What to use as the ellipsis character</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Ellipsized string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>This function will strip tags from a string, split it at a defined
@@ -899,23 +902,23 @@ string, .5 in the middle, and 0 at the left.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="excerpt">
-<code class="sig-name descname">excerpt</code><span class="sig-paren">(</span><em class="sig-param">$text</em>, <em class="sig-param">$phrase = false</em>, <em class="sig-param">$radius = 100</em>, <em class="sig-param">$ellipsis = '...'</em><span class="sig-paren">)</span><a class="headerlink" href="#excerpt" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="excerpt">
+<span class="sig-name descname"><span class="pre">excerpt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$text</span></em>, <em class="sig-param"><span class="pre">$phrase</span> <span class="pre">=</span> <span class="pre">false</span></em>, <em class="sig-param"><span class="pre">$radius</span> <span class="pre">=</span> <span class="pre">100</span></em>, <em class="sig-param"><span class="pre">$ellipsis</span> <span class="pre">=</span> <span class="pre">'...'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#excerpt" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$text</strong> (<em>string</em>) – Text to extract an excerpt</p></li>
-<li><p><strong>$phrase</strong> (<em>string</em>) – Phrase or word to extract the text around</p></li>
-<li><p><strong>$radius</strong> (<em>int</em>) – Number of characters before and after $phrase</p></li>
-<li><p><strong>$ellipsis</strong> (<em>string</em>) – What to use as the ellipsis character</p></li>
+<li><p><strong>$text</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Text to extract an excerpt</p></li>
+<li><p><strong>$phrase</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Phrase or word to extract the text around</p></li>
+<li><p><strong>$radius</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of characters before and after $phrase</p></li>
+<li><p><strong>$ellipsis</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – What to use as the ellipsis character</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Excerpt.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>This function will extract $radius number of characters before and after the

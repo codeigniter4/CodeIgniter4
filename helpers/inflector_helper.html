@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inflector Helper &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Inflector Helper &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -292,20 +295,20 @@
 <section id="available-functions">
 <h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
-<dl class="function">
-<dt id="singular">
-<code class="sig-name descname">singular</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#singular" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="singular">
+<span class="sig-name descname"><span class="pre">singular</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#singular" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A singular word</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Changes a plural word to singular. Example:</p>
@@ -316,20 +319,20 @@
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="plural">
-<code class="sig-name descname">plural</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#plural" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="plural">
+<span class="sig-name descname"><span class="pre">plural</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#plural" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A plural word</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Changes a singular word to plural. Example:</p>
@@ -340,21 +343,21 @@
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="counted">
-<code class="sig-name descname">counted</code><span class="sig-paren">(</span><em class="sig-param">$count</em>, <em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#counted" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="counted">
+<span class="sig-name descname"><span class="pre">counted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$count</span></em>, <em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#counted" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$count</strong> (<em>int</em>) – Number of items</p></li>
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$count</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of items</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A singular or plural phrase</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Changes a word and its count to a phrase. Example:</p>
@@ -365,20 +368,20 @@
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="camelize">
-<code class="sig-name descname">camelize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#camelize" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="camelize">
+<span class="sig-name descname"><span class="pre">camelize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#camelize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Camel case string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Changes a string of words separated by spaces or underscores to camel
@@ -390,20 +393,20 @@ case. Example:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="pascalize">
-<code class="sig-name descname">pascalize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#pascalize" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="pascalize">
+<span class="sig-name descname"><span class="pre">pascalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pascalize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Pascal case string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Changes a string of words separated by spaces or underscores to Pascal
@@ -415,20 +418,20 @@ case, which is camel case with the first letter capitalized. Example:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="underscore">
-<code class="sig-name descname">underscore</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#underscore" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="underscore">
+<span class="sig-name descname"><span class="pre">underscore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#underscore" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String containing underscores instead of spaces</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Takes multiple words separated by spaces and underscores them.
@@ -440,21 +443,21 @@ Example:</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="humanize">
-<code class="sig-name descname">humanize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="optional">[</span>, <em class="sig-param">$separator = '_'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#humanize" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="humanize">
+<span class="sig-name descname"><span class="pre">humanize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$separator</span> <span class="pre">=</span> <span class="pre">'_'</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#humanize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$separator</strong> (<em>string</em>) – Input separator</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$separator</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input separator</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Humanized string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Takes multiple words separated by underscores and adds spaces between
@@ -473,20 +476,20 @@ them. Each word is capitalized.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="is_pluralizable">
-<code class="sig-name descname">is_pluralizable</code><span class="sig-paren">(</span><em class="sig-param">$word</em><span class="sig-paren">)</span><a class="headerlink" href="#is_pluralizable" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="is_pluralizable">
+<span class="sig-name descname"><span class="pre">is_pluralizable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$word</span></em><span class="sig-paren">)</span><a class="headerlink" href="#is_pluralizable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$word</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$word</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if the word is countable or false if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Checks if the given word has a plural version. Example:</p>
@@ -497,20 +500,20 @@ them. Each word is capitalized.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="dasherize">
-<code class="sig-name descname">dasherize</code><span class="sig-paren">(</span><em class="sig-param">$string</em><span class="sig-paren">)</span><a class="headerlink" href="#dasherize" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="dasherize">
+<span class="sig-name descname"><span class="pre">dasherize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dasherize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$string</strong> (<em>string</em>) – Input string</p></li>
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Dasherized string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Replaces underscores with dashes in the string. Example:</p>
@@ -521,20 +524,20 @@ them. Each word is capitalized.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="ordinal">
-<code class="sig-name descname">ordinal</code><span class="sig-paren">(</span><em class="sig-param">$integer</em><span class="sig-paren">)</span><a class="headerlink" href="#ordinal" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="ordinal">
+<span class="sig-name descname"><span class="pre">ordinal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$integer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ordinal" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$integer</strong> (<em>int</em>) – The integer to determine the suffix</p></li>
+<li><p><strong>$integer</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The integer to determine the suffix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Ordinal suffix</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the suffix that should be added to a
@@ -547,20 +550,20 @@ number to denote the position such as
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="ordinalize">
-<code class="sig-name descname">ordinalize</code><span class="sig-paren">(</span><em class="sig-param">$integer</em><span class="sig-paren">)</span><a class="headerlink" href="#ordinalize" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="ordinalize">
+<span class="sig-name descname"><span class="pre">ordinalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$integer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#ordinalize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$integer</strong> (<em>int</em>) – The integer to ordinalize</p></li>
+<li><p><strong>$integer</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The integer to ordinalize</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Ordinalized integer</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Turns a number into an ordinal string used

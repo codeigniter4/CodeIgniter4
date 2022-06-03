@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Date Helper &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Date Helper &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -292,20 +295,20 @@ dates.</p>
 <section id="available-functions">
 <h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
-<dl class="function">
-<dt id="now">
-<code class="sig-name descname">now</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$timezone = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#now" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="now">
+<span class="sig-name descname"><span class="pre">now</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$timezone</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#now" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$timezone</strong> (<em>string</em>) – Timezone</p></li>
+<li><p><strong>$timezone</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Timezone</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>UNIX timestamp</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the current time as a UNIX timestamp, referenced either to your server’s
@@ -323,16 +326,16 @@ this function over PHP’s <code class="docutils literal notranslate"><span clas
 <strong>time_reference</strong> setting.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="timezone_select">
-<code class="sig-name descname">timezone_select</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$class = ''</em>, <em class="sig-param">$default = ''</em>, <em class="sig-param">$what = DateTimeZone::ALL</em>, <em class="sig-param">$country = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timezone_select" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="timezone_select">
+<span class="sig-name descname"><span class="pre">timezone_select</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$class</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">$default</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">$what</span> <span class="pre">=</span> <span class="pre">\DateTimeZone::ALL</span></em>, <em class="sig-param"><span class="pre">$country</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timezone_select" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$class</strong> (<em>string</em>) – Optional class to apply to the select field</p></li>
-<li><p><strong>$default</strong> (<em>string</em>) – Default value for initial selection</p></li>
-<li><p><strong>$what</strong> (<em>int</em>) – DateTimeZone class constants (see <a class="reference external" href="https://www.php.net/manual/en/datetimezone.listidentifiers.php">listIdentifiers</a>)</p></li>
-<li><p><strong>$country</strong> (<em>string</em>) – <p>A two-letter ISO 3166-1 compatible country code (see <a class="reference external" href="https://www.php.net/manual/en/datetimezone.listidentifiers.php">listIdentifiers</a>)</p>
+<li><p><strong>$class</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional class to apply to the select field</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Default value for initial selection</p></li>
+<li><p><strong>$what</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – DateTimeZone class constants (see <a class="reference external" href="https://www.php.net/manual/en/datetimezone.listidentifiers.php">listIdentifiers</a>)</p></li>
+<li><p><strong>$country</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – <p>A two-letter ISO 3166-1 compatible country code (see <a class="reference external" href="https://www.php.net/manual/en/datetimezone.listidentifiers.php">listIdentifiers</a>)</p>
 </p></li>
 </ul>
 </dd>
@@ -340,7 +343,7 @@ this function over PHP’s <code class="docutils literal notranslate"><span clas
 <dd class="field-even"><p>Preformatted HTML select field</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Generates a <cite>select</cite> form field of available timezones (optionally filtered by <cite>$what</cite> and <cite>$country</cite>).

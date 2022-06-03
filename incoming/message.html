@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTTP Messages &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>HTTP Messages &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -297,18 +300,18 @@ likely choosing a JPEG image to return.</p>
 </ul>
 <section id="class-reference">
 <h3>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h3>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\HTTP\Message</code></dt>
-<dd><dl class="method">
-<dt id="getBody">
-<code class="sig-name descname">getBody</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getBody" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\HTTP\\Message</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="getBody">
+<span class="sig-name descname"><span class="pre">getBody</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getBody" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current message body</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>mixed</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the current message body, if any has been set. If not body exists, returns null:</p>
@@ -319,47 +322,47 @@ likely choosing a JPEG image to return.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setBody">
-<code class="sig-name descname">setBody</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="sig-paren">)</span><a class="headerlink" href="#setBody" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setBody">
+<span class="sig-name descname"><span class="pre">setBody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setBody" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>mixed</em>) – The body of the message.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The body of the message.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the Message|Response instance to allow methods to be chained together.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the body of the current request.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="appendBody">
-<code class="sig-name descname">appendBody</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="sig-paren">)</span><a class="headerlink" href="#appendBody" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="appendBody">
+<span class="sig-name descname"><span class="pre">appendBody</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#appendBody" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>mixed</em>) – The body of the message.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The body of the message.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the Message|Response instance to allow methods to be chained together.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</span></code></span></p>
 </dd>
 </dl>
 <p>Appends data to the body of the current request.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="populateHeaders">
-<code class="sig-name descname">populateHeaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#populateHeaders" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="populateHeaders">
+<span class="sig-name descname"><span class="pre">populateHeaders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#populateHeaders" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>void</p>
@@ -374,34 +377,34 @@ The preceding <code class="docutils literal notranslate"><span class="pre">HTTP_
 <code class="docutils literal notranslate"><span class="pre">Accept-Language</span></code>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="headers">
-<code class="sig-name descname">headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#headers" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#headers" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>An array of all of the headers found.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>array</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 </dl>
 <p>Returns an array of all headers found or previously set.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="header">
-<code class="sig-name descname">header</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#header" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="header">
+<span class="sig-name descname"><span class="pre">header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#header" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header you want to retrieve the value of.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header you want to retrieve the value of.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns a single header object. If multiple headers with the same name exist, then will return an array of header objects.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Header|array</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header|array</span></code></span></p>
 </dd>
 </dl>
 <p>Allows you to retrieve the current value of a single message header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive header name.
@@ -448,38 +451,38 @@ method to retrieve the values as a string:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="hasHeader">
-<code class="sig-name descname">hasHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#hasHeader" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="hasHeader">
+<span class="sig-name descname"><span class="pre">hasHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#hasHeader" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header you want to see if it exists.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header you want to see if it exists.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns true if it exists, false otherwise.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="getHeaderLine">
-<code class="sig-name descname">getHeaderLine</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#getHeaderLine" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getHeaderLine">
+<span class="sig-name descname"><span class="pre">getHeaderLine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#getHeaderLine" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to retrieve.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header to retrieve.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A string representing the header value.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the value(s) of the header as a string. This method allows you to easily get a string representation
@@ -495,21 +498,21 @@ of the header values when the header has multiple values. The values are appropr
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setHeader">
-<code class="sig-name descname">setHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setHeader" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setHeader">
+<span class="sig-name descname"><span class="pre">setHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setHeader" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to set the value for.</p></li>
-<li><p><strong>$value</strong> (<em>mixed</em>) – The value to set the header to.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header to set the value for.</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The value to set the header to.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current Message|Response instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message|CodeIgniter\HTTP\Response</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the value of a single header. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header. If the header
@@ -522,20 +525,20 @@ or an array of strings:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="removeHeader">
-<code class="sig-name descname">removeHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="sig-paren">)</span><a class="headerlink" href="#removeHeader" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="removeHeader">
+<span class="sig-name descname"><span class="pre">removeHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#removeHeader" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to remove.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header to remove.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current message instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message</span></code></span></p>
 </dd>
 </dl>
 <p>Removes the header from the Message. <code class="docutils literal notranslate"><span class="pre">$name</span></code> is the case-insensitive name of the header:</p>
@@ -546,21 +549,21 @@ or an array of strings:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="appendHeader">
-<code class="sig-name descname">appendHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#appendHeader" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="appendHeader">
+<span class="sig-name descname"><span class="pre">appendHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#appendHeader" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to modify</p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – The value to add to the header.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header to modify</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The value to add to the header.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current message instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message</span></code></span></p>
 </dd>
 </dl>
 <p>Adds a value to an existing header. The header must already be an array of values instead of a single string.
@@ -572,21 +575,21 @@ If it is a string then a LogicException will be thrown.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="prependHeader">
-<code class="sig-name descname">prependHeader</code><span class="sig-paren">(</span><em class="sig-param">$name</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#prependHeader" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="prependHeader">
+<span class="sig-name descname"><span class="pre">prependHeader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#prependHeader" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the header to modify</p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – The value to prepend to the header.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the header to modify</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The value to prepend to the header.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current message instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message</span></code></span></p>
 </dd>
 </dl>
 <p>Prepends a value to an existing header. The header must already be an array of values instead of a single string.
@@ -598,35 +601,35 @@ If it is a string then a LogicException will be thrown.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="getProtocolVersion">
-<code class="sig-name descname">getProtocolVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getProtocolVersion" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getProtocolVersion">
+<span class="sig-name descname"><span class="pre">getProtocolVersion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getProtocolVersion" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current HTTP protocol version</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the message’s current HTTP protocol. If none has been set, will return <code class="docutils literal notranslate"><span class="pre">null</span></code>.
 Acceptable values are <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.1</span></code> and <code class="docutils literal notranslate"><span class="pre">2.0</span></code>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="setProtocolVersion">
-<code class="sig-name descname">setProtocolVersion</code><span class="sig-paren">(</span><em class="sig-param">$version</em><span class="sig-paren">)</span><a class="headerlink" href="#setProtocolVersion" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setProtocolVersion">
+<span class="sig-name descname"><span class="pre">setProtocolVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$version</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setProtocolVersion" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$version</strong> (<em>string</em>) – The HTTP protocol version</p></li>
+<li><p><strong>$version</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The HTTP protocol version</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The current message instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\HTTP\Message</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message</span></code></span></p>
 </dd>
 </dl>
 <p>Sets the HTTP protocol version this Message uses. Valid values are <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">1.1</span></code> and <code class="docutils literal notranslate"><span class="pre">2.0</span></code>:</p>

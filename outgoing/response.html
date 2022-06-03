@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTTP Responses &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>HTTP Responses &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -603,18 +606,18 @@ life, and is most secure when generated on the fly. To make this simple, you can
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></p></li>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::negotiateLanguage()</span></code></p></li>
 </ul>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\HTTP\Response</code></dt>
-<dd><dl class="method">
-<dt id="getStatusCode">
-<code class="sig-name descname">getStatusCode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStatusCode" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\HTTP\\Response</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="getStatusCode">
+<span class="sig-name descname"><span class="pre">getStatusCode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getStatusCode" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current HTTP status code for this response</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>int</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the currently status code for this response. If no status code has been set, a BadMethodCallException
@@ -626,14 +629,14 @@ will be thrown:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setStatusCode">
-<code class="sig-name descname">setStatusCode</code><span class="sig-paren">(</span><em class="sig-param">$code</em><span class="optional">[</span>, <em class="sig-param">$reason=''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setStatusCode" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setStatusCode">
+<span class="sig-name descname"><span class="pre">setStatusCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$code</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$reason=''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setStatusCode" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$code</strong> (<em>int</em>) – The HTTP status code</p></li>
-<li><p><strong>$reason</strong> (<em>string</em>) – An optional reason phrase.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The HTTP status code</p></li>
+<li><p><strong>$reason</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – An optional reason phrase.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -658,15 +661,15 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="getReasonPhrase">
-<code class="sig-name descname">getReasonPhrase</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReasonPhrase" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getReasonPhrase">
+<span class="sig-name descname"><span class="pre">getReasonPhrase</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getReasonPhrase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current reason phrase.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the current status code for this response. If not status has been set, will return an empty string:</p>
@@ -677,13 +680,13 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setDate">
-<code class="sig-name descname">setDate</code><span class="sig-paren">(</span><em class="sig-param">$date</em><span class="sig-paren">)</span><a class="headerlink" href="#setDate" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setDate">
+<span class="sig-name descname"><span class="pre">setDate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setDate" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$date</strong> (<em>DateTime</em>) – A DateTime instance with the time to set for this response.</p></li>
+<li><p><strong>$date</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">DateTime</span></code></span>) – A DateTime instance with the time to set for this response.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -702,14 +705,14 @@ for a custom status code, you can pass the reason phrase as the second parameter
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setContentType">
-<code class="sig-name descname">setContentType</code><span class="sig-paren">(</span><em class="sig-param">$mime</em><span class="optional">[</span>, <em class="sig-param">$charset='UTF-8'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setContentType" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setContentType">
+<span class="sig-name descname"><span class="pre">setContentType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$mime</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$charset='UTF-8'</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setContentType" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$mime</strong> (<em>string</em>) – The content type this response represents.</p></li>
-<li><p><strong>$charset</strong> (<em>string</em>) – The character set this response uses.</p></li>
+<li><p><strong>$mime</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The content type this response represents.</p></li>
+<li><p><strong>$charset</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The character set this response uses.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -736,9 +739,9 @@ pass the character set as the second parameter:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="noCache">
-<code class="sig-name descname">noCache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noCache" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="noCache">
+<span class="sig-name descname"><span class="pre">noCache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#noCache" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current response instance.</p>
@@ -760,13 +763,13 @@ of all response messages:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setCache">
-<code class="sig-name descname">setCache</code><span class="sig-paren">(</span><em class="sig-param">$options</em><span class="sig-paren">)</span><a class="headerlink" href="#setCache" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setCache">
+<span class="sig-name descname"><span class="pre">setCache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setCache" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$options</strong> (<em>array</em>) – An array of key/value cache control settings</p></li>
+<li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An array of key/value cache control settings</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -791,13 +794,13 @@ of all response messages:</p>
 <p>When passing the last-modified option, it can be either a date string, or a DateTime object.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="setLastModified">
-<code class="sig-name descname">setLastModified</code><span class="sig-paren">(</span><em class="sig-param">$date</em><span class="sig-paren">)</span><a class="headerlink" href="#setLastModified" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setLastModified">
+<span class="sig-name descname"><span class="pre">setLastModified</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$date</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setLastModified" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$date</strong> (<em>string|DateTime</em>) – The date to set the Last-Modified header to</p></li>
+<li><p><strong>$date</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|DateTime</span></code></span>) – The date to set the Last-Modified header to</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -817,9 +820,9 @@ instance:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">send(): Response</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">send():</span> <span class="pre">Response</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current response instance.</p>
@@ -833,25 +836,25 @@ followed by the response body. For the main application response, you do not nee
 this as it is handled automatically by CodeIgniter.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="setCookie">
-<code class="sig-name descname">setCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = ''</em><span class="optional">[</span>, <em class="sig-param">$expire = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">[</span>, <em class="sig-param">$secure = false</em><span class="optional">[</span>, <em class="sig-param">$httponly = false</em><span class="optional">[</span>, <em class="sig-param">$samesite = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setCookie" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setCookie">
+<span class="sig-name descname"><span class="pre">setCookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$expire</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$samesite</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>array|Cookie|string</em>) – Cookie name or an array of parameters or an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie</span></code></p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – Cookie value</p></li>
-<li><p><strong>$expire</strong> (<em>int</em>) – Cookie expiration time in seconds</p></li>
-<li><p><strong>$domain</strong> (<em>string</em>) – Cookie domain</p></li>
-<li><p><strong>$path</strong> (<em>string</em>) – Cookie path</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
-<li><p><strong>$secure</strong> (<em>bool</em>) – Whether to only transfer the cookie through HTTPS</p></li>
-<li><p><strong>$httponly</strong> (<em>bool</em>) – Whether to only make the cookie accessible for HTTP requests (no JavaScript)</p></li>
-<li><p><strong>$samesite</strong> (<em>string</em>) – The value for the SameSite cookie parameter. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, no SameSite attribute will be set on the cookie. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|Cookie|string</span></code></span>) – Cookie name or an array of parameters or an instance of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Cookie\Cookie</span></code></p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie value</p></li>
+<li><p><strong>$expire</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Cookie expiration time in seconds</p></li>
+<li><p><strong>$domain</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie domain</p></li>
+<li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie path</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix</p></li>
+<li><p><strong>$secure</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to only transfer the cookie through HTTPS</p></li>
+<li><p><strong>$httponly</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to only make the cookie accessible for HTTP requests (no JavaScript)</p></li>
+<li><p><strong>$samesite</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The value for the SameSite cookie parameter. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, no SameSite attribute will be set on the cookie. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>void</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
 <p>Sets a cookie containing the values you specify. There are two ways to
@@ -909,20 +912,20 @@ parameters:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="deleteCookie">
-<code class="sig-name descname">deleteCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$domain = ''</em><span class="optional">[</span>, <em class="sig-param">$path = '/'</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#deleteCookie" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="deleteCookie">
+<span class="sig-name descname"><span class="pre">deleteCookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#deleteCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>mixed</em>) – Cookie name or an array of parameters</p></li>
-<li><p><strong>$domain</strong> (<em>string</em>) – Cookie domain</p></li>
-<li><p><strong>$path</strong> (<em>string</em>) – Cookie path</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Cookie name or an array of parameters</p></li>
+<li><p><strong>$domain</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie domain</p></li>
+<li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie path</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>void</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
 </dd>
 </dl>
 <p>Delete an existing cookie.</p>
@@ -942,19 +945,19 @@ cookie will be deleted across all that apply.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="hasCookie">
-<code class="sig-name descname">hasCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hasCookie" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="hasCookie">
+<span class="sig-name descname"><span class="pre">hasCookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#hasCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>mixed</em>) – Cookie name or an array of parameters</p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – cookie value</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Cookie name or an array of parameters</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – cookie value</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Checks to see if the Response has a specified cookie or not.</p>
@@ -973,14 +976,14 @@ has the prescribed value.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="getCookie">
-<code class="sig-name descname">getCookie</code><span class="sig-paren">(</span><em class="sig-param">$name = ''</em><span class="optional">[</span>, <em class="sig-param">$prefix = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getCookie">
+<span class="sig-name descname"><span class="pre">getCookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Cookie name prefix</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -997,9 +1000,9 @@ If no <code class="docutils literal notranslate"><span class="pre">name</span></
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="getCookies">
-<code class="sig-name descname">getCookies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookies" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getCookies">
+<span class="sig-name descname"><span class="pre">getCookies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCookies" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie[]</span></code></p>

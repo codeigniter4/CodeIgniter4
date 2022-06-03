@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Array Helper &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Array Helper &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -292,21 +295,21 @@ any of the existing functionality that PHP provides - unless it is to vastly sim
 <section id="available-functions">
 <h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
-<dl class="function">
-<dt id="dot_array_search">
-<code class="sig-name descname">dot_array_search</code><span class="sig-paren">(</span><em class="sig-param">string $search</em>, <em class="sig-param">array $values</em><span class="sig-paren">)</span><a class="headerlink" href="#dot_array_search" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="dot_array_search">
+<span class="sig-name descname"><span class="pre">dot_array_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$search</span></em>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$values</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dot_array_search" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$search</strong> (<em>string</em>) – The dot-notation string describing how to search the array</p></li>
-<li><p><strong>$values</strong> (<em>array</em>) – The array to search</p></li>
+<li><p><strong>$search</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The dot-notation string describing how to search the array</p></li>
+<li><p><strong>$values</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The array to search</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The value found within the array, or null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>This method allows you to use dot-notation to search through an array for a specific-key,
@@ -370,34 +373,34 @@ have a numeric index:</p>
 <p>Prior to v4.2.0, <code class="docutils literal notranslate"><span class="pre">dot_array_search('foo.bar.baz',</span> <span class="pre">['foo'</span> <span class="pre">=&gt;</span> <span class="pre">['bar'</span> <span class="pre">=&gt;</span> <span class="pre">23]])</span></code> returned <code class="docutils literal notranslate"><span class="pre">23</span></code>
 due to a bug. v4.2.0 and later returns <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </div>
-<dl class="function">
-<dt id="array_deep_search">
-<code class="sig-name descname">array_deep_search</code><span class="sig-paren">(</span><em class="sig-param">$key</em>, <em class="sig-param">array $array</em><span class="sig-paren">)</span><a class="headerlink" href="#array_deep_search" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="array_deep_search">
+<span class="sig-name descname"><span class="pre">array_deep_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$array</span></em><span class="sig-paren">)</span><a class="headerlink" href="#array_deep_search" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>mixed</em>) – The target key</p></li>
-<li><p><strong>$array</strong> (<em>array</em>) – The array to search</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The target key</p></li>
+<li><p><strong>$array</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The array to search</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The value found within the array, or null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the value of an element with a key value in an array of uncertain depth</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="array_sort_by_multiple_keys">
-<code class="sig-name descname">array_sort_by_multiple_keys</code><span class="sig-paren">(</span><em class="sig-param">array &amp;$array</em>, <em class="sig-param">array $sortColumns</em><span class="sig-paren">)</span><a class="headerlink" href="#array_sort_by_multiple_keys" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="array_sort_by_multiple_keys">
+<span class="sig-name descname"><span class="pre">array_sort_by_multiple_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">&amp;$array</span></em>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$sortColumns</span></em><span class="sig-paren">)</span><a class="headerlink" href="#array_sort_by_multiple_keys" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$array</strong> (<em>array</em>) – The array to be sorted (passed by reference).</p></li>
-<li><p><strong>$sortColumns</strong> (<em>array</em>) – The array keys to sort after and the respective PHP
+<li><p><strong>$array</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The array to be sorted (passed by reference).</p></li>
+<li><p><strong>$sortColumns</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – The array keys to sort after and the respective PHP
 sort flags as an associative array.</p></li>
 </ul>
 </dd>
@@ -405,7 +408,7 @@ sort flags as an associative array.</p></li>
 <dd class="field-even"><p>Whether sorting was successful or not.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>This method sorts the elements of a multidimensional array by the values of one or
@@ -496,18 +499,18 @@ while the ‘teams’ are objects. The method will detect the type of elements i
 each nesting level and handle it accordingly.</p>
 </dd></dl>
 
-<dl class="function">
-<dt>
-<code class="sig-name descname">array_flatten_with_dots(iterable $array[, string $id = '']): array</code></dt>
+<dl class="php function">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">array_flatten_with_dots(iterable</span> <span class="pre">$array[,</span> <span class="pre">string</span> <span class="pre">$id</span> <span class="pre">=</span> <span class="pre">'']):</span> <span class="pre">array</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$array</strong> (<em>iterable</em>) – The multidimensional array to flatten</p></li>
-<li><p><strong>$id</strong> (<em>string</em>) – Optional ID to prepend to the outer keys. Used internally for flattening keys.</p></li>
+<li><p><strong>$array</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">iterable</span></code></span>) – The multidimensional array to flatten</p></li>
+<li><p><strong>$id</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional ID to prepend to the outer keys. Used internally for flattening keys.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>array</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The flattened array</p>

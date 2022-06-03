@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Database Forge Class &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Database Forge Class &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -753,36 +756,36 @@ change the name, you can add a “name” key into the field defining array.</p>
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id20">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\Database\Forge</code></dt>
-<dd><dl class="method">
-<dt id="addColumn">
-<code class="sig-name descname">addColumn</code><span class="sig-paren">(</span><em class="sig-param">$table</em><span class="optional">[</span>, <em class="sig-param">$field = []</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addColumn" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\Database\\Forge</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="addColumn">
+<span class="sig-name descname"><span class="pre">addColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$field</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addColumn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$table</strong> (<em>string</em>) – Table name to add the column to</p></li>
-<li><p><strong>$field</strong> (<em>array</em>) – Column definition(s)</p></li>
+<li><p><strong>$table</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Table name to add the column to</p></li>
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Column definition(s)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Adds a column to a table. Usage:  See <a class="reference internal" href="#adding-a-column-to-a-table">Adding a Column to a Table</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="addField">
-<code class="sig-name descname">addField</code><span class="sig-paren">(</span><em class="sig-param">$field</em><span class="sig-paren">)</span><a class="headerlink" href="#addField" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="addField">
+<span class="sig-name descname"><span class="pre">addField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#addField" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$field</strong> (<em>array</em>) – Field definition to add</p></li>
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Field definition to add</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -796,223 +799,223 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="addForeignKey">
-<code class="sig-name descname">addForeignKey</code><span class="sig-paren">(</span><em class="sig-param">$fieldName</em>, <em class="sig-param">$tableName</em>, <em class="sig-param">$tableField</em><span class="optional">[</span>, <em class="sig-param">$onUpdate = ''</em>, <em class="sig-param">$onDelete = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addForeignKey" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="addForeignKey">
+<span class="sig-name descname"><span class="pre">addForeignKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$fieldName</span></em>, <em class="sig-param"><span class="pre">$tableName</span></em>, <em class="sig-param"><span class="pre">$tableField</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$onUpdate</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">$onDelete</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addForeignKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$fieldName</strong> (<em>string|string[]</em>) – Name of a key field or an array of fields</p></li>
-<li><p><strong>$tableName</strong> (<em>string</em>) – Name of a parent table</p></li>
-<li><p><strong>$tableField</strong> (<em>string|string[]</em>) – Name of a parent table field or an array of fields</p></li>
-<li><p><strong>$onUpdate</strong> (<em>string</em>) – Desired action for the “on update”</p></li>
-<li><p><strong>$onDelete</strong> (<em>string</em>) – Desired action for the “on delete”</p></li>
+<li><p><strong>$fieldName</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|string[]</span></code></span>) – Name of a key field or an array of fields</p></li>
+<li><p><strong>$tableName</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Name of a parent table</p></li>
+<li><p><strong>$tableField</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|string[]</span></code></span>) – Name of a parent table field or an array of fields</p></li>
+<li><p><strong>$onUpdate</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Desired action for the “on update”</p></li>
+<li><p><strong>$onDelete</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Desired action for the “on delete”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniterDatabaseForge</span></code></span></p>
 </dd>
 </dl>
 <p>Adds a foreign key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#id1">Adding Foreign Keys</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="addKey">
-<code class="sig-name descname">addKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$primary = false</em><span class="optional">[</span>, <em class="sig-param">$unique = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="addKey">
+<span class="sig-name descname"><span class="pre">addKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$primary</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$unique</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
-<li><p><strong>$primary</strong> (<em>bool</em>) – Set to true if it should be a primary key or a regular one</p></li>
-<li><p><strong>$unique</strong> (<em>bool</em>) – Set to true if it should be a unique key or a regular one</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Name of a key field or an array of fields</p></li>
+<li><p><strong>$primary</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Set to true if it should be a primary key or a regular one</p></li>
+<li><p><strong>$unique</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Set to true if it should be a unique key or a regular one</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniterDatabaseForge</span></code></span></p>
 </dd>
 </dl>
 <p>Adds a key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-keys">Adding Keys</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="addPrimaryKey">
-<code class="sig-name descname">addPrimaryKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addPrimaryKey" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="addPrimaryKey">
+<span class="sig-name descname"><span class="pre">addPrimaryKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#addPrimaryKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Name of a key field or an array of fields</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniterDatabaseForge</span></code></span></p>
 </dd>
 </dl>
 <p>Adds a primary key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-keys">Adding Keys</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="addUniqueKey">
-<code class="sig-name descname">addUniqueKey</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="sig-paren">)</span><a class="headerlink" href="#addUniqueKey" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="addUniqueKey">
+<span class="sig-name descname"><span class="pre">addUniqueKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#addUniqueKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>mixed</em>) – Name of a key field or an array of fields</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Name of a key field or an array of fields</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>CodeIgniterDatabaseForge instance (method chaining)</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterDatabaseForge</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniterDatabaseForge</span></code></span></p>
 </dd>
 </dl>
 <p>Adds a unique key to the set that will be used to create a table. Usage:  See <a class="reference internal" href="#adding-keys">Adding Keys</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="createDatabase">
-<code class="sig-name descname">createDatabase</code><span class="sig-paren">(</span><em class="sig-param">$dbName</em><span class="optional">[</span>, <em class="sig-param">$ifNotExists = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="createDatabase">
+<span class="sig-name descname"><span class="pre">createDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$dbName</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$ifNotExists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$db_name</strong> (<em>string</em>) – Name of the database to create</p></li>
-<li><p><strong>$ifNotExists</strong> (<em>string</em>) – Set to true to add an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code> clause or check if database exists</p></li>
+<li><p><strong>$db_name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Name of the database to create</p></li>
+<li><p><strong>$ifNotExists</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Set to true to add an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code> clause or check if database exists</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Creates a new database. Usage:  See <a class="reference internal" href="#creating-and-dropping-databases">Creating and Dropping Databases</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="createTable">
-<code class="sig-name descname">createTable</code><span class="sig-paren">(</span><em class="sig-param">$table</em><span class="optional">[</span>, <em class="sig-param">$if_not_exists = false</em><span class="optional">[</span>, <em class="sig-param">array $attributes = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="createTable">
+<span class="sig-name descname"><span class="pre">createTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$if_not_exists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$attributes</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$table</strong> (<em>string</em>) – Name of the table to create</p></li>
-<li><p><strong>$if_not_exists</strong> (<em>string</em>) – Set to true to add an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code> clause</p></li>
-<li><p><strong>$attributes</strong> (<em>string</em>) – An associative array of table attributes</p></li>
+<li><p><strong>$table</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Name of the table to create</p></li>
+<li><p><strong>$if_not_exists</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Set to true to add an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code> clause</p></li>
+<li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – An associative array of table attributes</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Query object on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Creates a new table. Usage:  See <a class="reference internal" href="#creating-a-table">Creating a Table</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="dropColumn">
-<code class="sig-name descname">dropColumn</code><span class="sig-paren">(</span><em class="sig-param">$table</em>, <em class="sig-param">$column_name</em><span class="sig-paren">)</span><a class="headerlink" href="#dropColumn" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="dropColumn">
+<span class="sig-name descname"><span class="pre">dropColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$column_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dropColumn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$table</strong> (<em>string</em>) – Table name</p></li>
-<li><p><strong>$column_names</strong> (<em>mixed</em>) – Comma-delimited string or an array of column names</p></li>
+<li><p><strong>$table</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Table name</p></li>
+<li><p><strong>$column_names</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Comma-delimited string or an array of column names</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Drops single or multiple columns from a table. Usage:  See <a class="reference internal" href="#dropping-columns-from-a-table">Dropping Columns From a Table</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="dropDatabase">
-<code class="sig-name descname">dropDatabase</code><span class="sig-paren">(</span><em class="sig-param">$dbName</em><span class="sig-paren">)</span><a class="headerlink" href="#dropDatabase" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="dropDatabase">
+<span class="sig-name descname"><span class="pre">dropDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$dbName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dropDatabase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$dbName</strong> (<em>string</em>) – Name of the database to drop</p></li>
+<li><p><strong>$dbName</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Name of the database to drop</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Drops a database. Usage:  See <a class="reference internal" href="#creating-and-dropping-databases">Creating and Dropping Databases</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="dropTable">
-<code class="sig-name descname">dropTable</code><span class="sig-paren">(</span><em class="sig-param">$table_name</em><span class="optional">[</span>, <em class="sig-param">$if_exists = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="dropTable">
+<span class="sig-name descname"><span class="pre">dropTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table_name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$if_exists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$table</strong> (<em>string</em>) – Name of the table to drop</p></li>
-<li><p><strong>$if_exists</strong> (<em>string</em>) – Set to true to add an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">EXISTS</span></code> clause</p></li>
+<li><p><strong>$table</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Name of the table to drop</p></li>
+<li><p><strong>$if_exists</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Set to true to add an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">EXISTS</span></code> clause</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Drops a table. Usage:  See <a class="reference internal" href="#dropping-a-table">Dropping a Table</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="modifyColumn">
-<code class="sig-name descname">modifyColumn</code><span class="sig-paren">(</span><em class="sig-param">$table</em>, <em class="sig-param">$field</em><span class="sig-paren">)</span><a class="headerlink" href="#modifyColumn" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="modifyColumn">
+<span class="sig-name descname"><span class="pre">modifyColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#modifyColumn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$table</strong> (<em>string</em>) – Table name</p></li>
-<li><p><strong>$field</strong> (<em>array</em>) – Column definition(s)</p></li>
+<li><p><strong>$table</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Table name</p></li>
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Column definition(s)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Modifies a table column. Usage:  See <a class="reference internal" href="#modifying-a-column-in-a-table">Modifying a Column in a Table</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="renameTable">
-<code class="sig-name descname">renameTable</code><span class="sig-paren">(</span><em class="sig-param">$table_name</em>, <em class="sig-param">$new_table_name</em><span class="sig-paren">)</span><a class="headerlink" href="#renameTable" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="renameTable">
+<span class="sig-name descname"><span class="pre">renameTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table_name</span></em>, <em class="sig-param"><span class="pre">$new_table_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#renameTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$table</strong> (<em>string</em>) – Current of the table</p></li>
-<li><p><strong>$new_table_name</strong> (<em>string</em>) – New name of the table</p></li>
+<li><p><strong>$table</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Current of the table</p></li>
+<li><p><strong>$new_table_name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – New name of the table</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Query object on success, false on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Renames a table. Usage:  See <a class="reference internal" href="#renaming-a-table">Renaming a Table</a>.</p>

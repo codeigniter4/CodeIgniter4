@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Request Class &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Request Class &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -281,19 +284,19 @@ from the Request class to add specific functionality.</p>
 <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest Class</span></a> for more usage details.</p>
 <section id="class-reference">
 <h2>Class Reference<a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\HTTP\Request</code></dt>
-<dd><dl class="method">
-<dt id="getIPAddress">
-<code class="sig-name descname">getIPAddress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getIPAddress" title="Permalink to this definition"></a></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\HTTP\\Request</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php" id="getIPAddress">
+<span class="sig-name descname"><span class="pre">getIPAddress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getIPAddress" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The user’s IP Address, if it can be detected, or null. If the IP address
 is not a valid IP address, then will return 0.0.0.0</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the IP address for the current user. If the IP address is not valid, the method
@@ -311,9 +314,9 @@ HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="isValidIP">
-<code class="sig-name descname">isValidIP</code><span class="sig-paren">(</span><em class="sig-param">$ip</em><span class="optional">[</span>, <em class="sig-param">$which = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isValidIP" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="isValidIP">
+<span class="sig-name descname"><span class="pre">isValidIP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$ip</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$which</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#isValidIP" title="Permalink to this definition"></a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This method is deprecated.</p>
@@ -321,15 +324,15 @@ HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$ip</strong> (<em>string</em>) – IP address</p></li>
-<li><p><strong>$which</strong> (<em>string</em>) – IP protocol (‘ipv4’ or ‘ipv6’)</p></li>
+<li><p><strong>$ip</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – IP address</p></li>
+<li><p><strong>$which</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – IP protocol (‘ipv4’ or ‘ipv6’)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if the address is valid, false if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Takes an IP address as input and returns true or false (boolean) depending
@@ -351,9 +354,9 @@ on whether it is valid or not.</p>
 an IP format. The default checks for both formats.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="getMethod">
-<code class="sig-name descname">getMethod</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$upper = false</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getMethod" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getMethod">
+<span class="sig-name descname"><span class="pre">getMethod</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$upper</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getMethod" title="Permalink to this definition"></a></dt>
 <dd><div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Use of the <code class="docutils literal notranslate"><span class="pre">$upper</span></code> parameter is deprecated.</p>
@@ -361,14 +364,14 @@ an IP format. The default checks for both formats.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$upper</strong> (<em>bool</em>) – Whether to return the request method name in upper or lower case</p></li>
+<li><p><strong>$upper</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to return the request method name in upper or lower case</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>HTTP request method</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the <code class="docutils literal notranslate"><span class="pre">$_SERVER['REQUEST_METHOD']</span></code>, with the option to set it
@@ -382,40 +385,40 @@ in uppercase or lowercase.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setMethod">
-<code class="sig-name descname">setMethod</code><span class="sig-paren">(</span><em class="sig-param">$method</em><span class="sig-paren">)</span><a class="headerlink" href="#setMethod" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setMethod">
+<span class="sig-name descname"><span class="pre">setMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setMethod" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$upper</strong> (<em>string</em>) – Sets the request method. Used when spoofing the request.</p></li>
+<li><p><strong>$upper</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Sets the request method. Used when spoofing the request.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>HTTP request method</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Request</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Request</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="getServer">
-<code class="sig-name descname">getServer</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getServer" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getServer">
+<span class="sig-name descname"><span class="pre">getServer</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getServer" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$index</strong> (<em>mixed</em>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int|array</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>$_SERVER item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
@@ -434,22 +437,22 @@ as an array.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="getEnv">
-<code class="sig-name descname">getEnv</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getEnv" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getEnv">
+<span class="sig-name descname"><span class="pre">getEnv</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getEnv" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$index</strong> (<em>mixed</em>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int|array</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>$_ENV item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
@@ -468,40 +471,40 @@ as an array.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="setGlobal">
-<code class="sig-name descname">setGlobal</code><span class="sig-paren">(</span><em class="sig-param">$method</em>, <em class="sig-param">$value</em><span class="sig-paren">)</span><a class="headerlink" href="#setGlobal" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setGlobal">
+<span class="sig-name descname"><span class="pre">setGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em>, <em class="sig-param"><span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setGlobal" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$method</strong> (<em>string</em>) – Method name</p></li>
-<li><p><strong>$value</strong> (<em>mixed</em>) – Data to be added</p></li>
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Method name</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Data to be added</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>HTTP request method</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Request</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Request</span></code></span></p>
 </dd>
 </dl>
 <p>Allows manually setting the value of PHP global, like $_GET, $_POST, etc.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="fetchGlobal">
-<code class="sig-name descname">fetchGlobal</code><span class="sig-paren">(</span><em class="sig-param">$method</em><span class="optional">[</span>, <em class="sig-param">$index = null</em><span class="optional">[</span>, <em class="sig-param">$filter = null</em><span class="optional">[</span>, <em class="sig-param">$flags = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fetchGlobal" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="fetchGlobal">
+<span class="sig-name descname"><span class="pre">fetchGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$index</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$filter</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$flags</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fetchGlobal" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$method</strong> (<em>string</em>) – Input filter constant</p></li>
-<li><p><strong>$index</strong> (<em>mixed</em>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<em>int</em>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<em>int|array</em>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input filter constant</p></li>
+<li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>mixed</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Fetches one or more items from a global, like cookies, get, post, etc.

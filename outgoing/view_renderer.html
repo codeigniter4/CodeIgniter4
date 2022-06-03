@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>View Renderer &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>View Renderer &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -391,25 +394,25 @@ classes (like <code class="docutils literal notranslate"><span class="pre">View<
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id6">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="class">
-<dt>
-<code class="sig-name descname">CodeIgniter\View\View</code></dt>
-<dd><dl class="method">
-<dt>
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dl class="php class">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">CodeIgniter\\View\\View</span></span></dt>
+<dd><dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$view</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$saveData</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$view</strong> (<em>string</em>) – File name of the view source</p></li>
-<li><p><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</p></li>
-<li><p><strong>$saveData</strong> (<em>boolean|null</em>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
+<li><p><strong>$view</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – File name of the view source</p></li>
+<li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Array of options, as key/value pairs</p></li>
+<li><p><strong>$saveData</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean|null</span></code></span>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The rendered text for the chosen view</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Builds the output based upon a file name and any data that has already been set:</p>
@@ -420,22 +423,22 @@ classes (like <code class="docutils literal notranslate"><span class="pre">View<
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">renderString</code><span class="sig-paren">(</span><em class="sig-param">$view</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">[</span>, <em class="sig-param">$saveData = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">renderString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$view</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$saveData</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$view</strong> (<em>string</em>) – Contents of the view to render, for instance content retrieved from a database</p></li>
-<li><p><strong>$options</strong> (<em>array</em>) – Array of options, as key/value pairs</p></li>
-<li><p><strong>$saveData</strong> (<em>boolean|null</em>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
+<li><p><strong>$view</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Contents of the view to render, for instance content retrieved from a database</p></li>
+<li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Array of options, as key/value pairs</p></li>
+<li><p><strong>$saveData</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean|null</span></code></span>) – If true, will save data for use with any other calls. If false, will clean the data after rendering the view. If null, uses the config setting.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The rendered text for the chosen view</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Builds the output based upon a view fragment and any data that has already been set:</p>
@@ -453,21 +456,21 @@ but you need to be aware that this is a potential security vulnerability,
 and that you <strong>must</strong> validate any such data, and probably escape it
 appropriately!</p>
 </div>
-<dl class="method">
-<dt>
-<code class="sig-name descname">setData</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">setData</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>array</em>) – Array of view data strings, as key/value pairs</p></li>
-<li><p><strong>$context</strong> (<em>string</em>) – The context to use for data escaping.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Array of view data strings, as key/value pairs</p></li>
+<li><p><strong>$context</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The context to use for data escaping.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Renderer, for method chaining</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\View\RendererInterface.</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\View\RendererInterface.</span></code></span></p>
 </dd>
 </dl>
 <p>Sets several pieces of view data at once:</p>
@@ -482,22 +485,22 @@ If <code class="docutils literal notranslate"><span class="pre">'raw'</span></co
 until the view is rendered.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">setVar</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$value = null</em><span class="optional">[</span>, <em class="sig-param">$context = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">setVar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – Name of the view data variable</p></li>
-<li><p><strong>$value</strong> (<em>mixed</em>) – The value of this view data</p></li>
-<li><p><strong>$context</strong> (<em>string</em>) – The context to use for data escaping.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Name of the view data variable</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The value of this view data</p></li>
+<li><p><strong>$context</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The context to use for data escaping.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Renderer, for method chaining</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniter\View\RendererInterface.</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniter\View\RendererInterface.</span></code></span></p>
 </dd>
 </dl>
 <p>Sets a single piece of view data:</p>

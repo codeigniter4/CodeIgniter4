@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Global Functions and Constants &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Global Functions and Constants &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -294,20 +297,20 @@ These do not require loading any additional libraries or helpers.</p>
 <h2><a class="toc-backref" href="#id1">Global Functions</a><a class="headerlink" href="#global-functions" title="Permalink to this headline"></a></h2>
 <section id="service-accessors">
 <h3><a class="toc-backref" href="#id2">Service Accessors</a><a class="headerlink" href="#service-accessors" title="Permalink to this headline"></a></h3>
-<dl class="function">
-<dt id="cache">
-<code class="sig-name descname">cache</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cache" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="cache">
+<span class="sig-name descname"><span class="pre">cache</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cache" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – The cache name of the item to retrieve from cache (Optional)</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The cache name of the item to retrieve from cache (Optional)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Either the cache object, or the item retrieved from the cache</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>If no $key is provided, will return the Cache engine instance. If a $key
@@ -322,15 +325,15 @@ or null if no value is found.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="cookie">
-<code class="sig-name descname">cookie</code><span class="sig-paren">(</span><em class="sig-param">string $name</em><span class="optional">[</span>, <em class="sig-param">string $value = ''</em><span class="optional">[</span>, <em class="sig-param">array $options = []</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookie" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="cookie">
+<span class="sig-name descname"><span class="pre">cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – Cookie name</p></li>
-<li><p><strong>$value</strong> (<em>string</em>) – Cookie value</p></li>
-<li><p><strong>$options</strong> (<em>array</em>) – Cookie options</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
+<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie value</p></li>
+<li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Cookie options</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -346,14 +349,14 @@ or null if no value is found.</p>
 <p>Simpler way to create a new Cookie instance.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="cookies">
-<code class="sig-name descname">cookies</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">array $cookies = []</em><span class="optional">[</span>, <em class="sig-param">bool $getGlobal = true</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookies" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="cookies">
+<span class="sig-name descname"><span class="pre">cookies</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$cookies</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$getGlobal</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#cookies" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$cookies</strong> (<em>array</em>) – If <code class="docutils literal notranslate"><span class="pre">getGlobal</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, this is passed to <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>’s constructor.</p></li>
-<li><p><strong>$getGlobal</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">false</span></code>, creates a new instance of <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>.</p></li>
+<li><p><strong>$cookies</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – If <code class="docutils literal notranslate"><span class="pre">getGlobal</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, this is passed to <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>’s constructor.</p></li>
+<li><p><strong>$getGlobal</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – If <code class="docutils literal notranslate"><span class="pre">false</span></code>, creates a new instance of <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -366,21 +369,21 @@ or null if no value is found.</p>
 <p>Fetches the global <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code> instance held by <code class="docutils literal notranslate"><span class="pre">Response</span></code>.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="env">
-<code class="sig-name descname">env</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$default = null</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#env" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="env">
+<span class="sig-name descname"><span class="pre">env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$default</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#env" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – The name of the environment variable to retrieve</p></li>
-<li><p><strong>$default</strong> (<em>mixed</em>) – The default value to return if no value is found.</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the environment variable to retrieve</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The default value to return if no value is found.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The environment variable, the default value, or null.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Used to retrieve values that have previously been set to the environment,
@@ -391,22 +394,22 @@ values that are specific to the environment itself, like database
 settings, API keys, etc.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="esc">
-<code class="sig-name descname">esc</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$context = 'html'</em><span class="optional">[</span>, <em class="sig-param">$encoding</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#esc" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="esc">
+<span class="sig-name descname"><span class="pre">esc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span> <span class="pre">=</span> <span class="pre">'html'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$encoding</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#esc" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>string|array</em>) – The information to be escaped.</p></li>
-<li><p><strong>$context</strong> (<em>string</em>) – The escaping context. Default is ‘html’.</p></li>
-<li><p><strong>$encoding</strong> (<em>string</em>) – The character encoding of the string.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|array</span></code></span>) – The information to be escaped.</p></li>
+<li><p><strong>$context</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The escaping context. Default is ‘html’.</p></li>
+<li><p><strong>$encoding</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The character encoding of the string.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The escaped data.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Escapes data for inclusion in web pages, to help prevent XSS attacks.
@@ -416,13 +419,13 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 <p>Valid context values: html, js, css, url, attr, raw</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="helper">
-<code class="sig-name descname">helper</code><span class="sig-paren">(</span><em class="sig-param">$filename</em><span class="sig-paren">)</span><a class="headerlink" href="#helper" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="helper">
+<span class="sig-name descname"><span class="pre">helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#helper" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$filename</strong> (<em>string|array</em>) – The name of the helper file to load, or an array of names.</p></li>
+<li><p><strong>$filename</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|array</span></code></span>) – The name of the helper file to load, or an array of names.</p></li>
 </ul>
 </dd>
 </dl>
@@ -430,15 +433,15 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 <p>For full details, see the <a class="reference internal" href="helpers.html"><span class="doc">Helper Functions</span></a> page.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="lang">
-<code class="sig-name descname">lang</code><span class="sig-paren">(</span><em class="sig-param">$line</em><span class="optional">[</span>, <em class="sig-param">$args</em><span class="optional">[</span>, <em class="sig-param">$locale</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#lang" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="lang">
+<span class="sig-name descname"><span class="pre">lang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$line</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$args</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$locale</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#lang" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$line</strong> (<em>string</em>) – The line of text to retrieve</p></li>
-<li><p><strong>$args</strong> (<em>array</em>) – An array of data to substitute for placeholders.</p></li>
-<li><p><strong>$locale</strong> (<em>string</em>) – Specify a different locale to be used instead of default one.</p></li>
+<li><p><strong>$line</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The line of text to retrieve</p></li>
+<li><p><strong>$args</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An array of data to substitute for placeholders.</p></li>
+<li><p><strong>$locale</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Specify a different locale to be used instead of default one.</p></li>
 </ul>
 </dd>
 </dl>
@@ -446,42 +449,42 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 <p>For more information, see the <a class="reference internal" href="../outgoing/localization.html"><span class="doc">Localization</span></a> page.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="model">
-<code class="sig-name descname">model</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$getShared = true</em><span class="optional">[</span>, <em class="sig-param">&amp;$conn = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#model" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="model">
+<span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$getShared</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">&amp;$conn</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#model" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – </p></li>
-<li><p><strong>$getShared</strong> (<em>boolean</em>) – </p></li>
-<li><p><strong>$conn</strong> (<em>ConnectionInterface|null</em>) – </p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
+<li><p><strong>$getShared</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – </p></li>
+<li><p><strong>$conn</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ConnectionInterface|null</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>More simple way of getting model instances</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="old">
-<code class="sig-name descname">old</code><span class="sig-paren">(</span><em class="sig-param">$key</em><span class="optional">[</span>, <em class="sig-param">$default = null</em><span class="optional">[</span>, <em class="sig-param">$escape = 'html'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#old" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="old">
+<span class="sig-name descname"><span class="pre">old</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$default</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">'html'</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#old" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – The name of the old form data to check for.</p></li>
-<li><p><strong>$default</strong> (<em>mixed</em>) – The default value to return if $key doesn’t exist.</p></li>
-<li><p><strong>$escape</strong> (<em>mixed</em>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the old form data to check for.</p></li>
+<li><p><strong>$default</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The default value to return if $key doesn’t exist.</p></li>
+<li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – An <a class="reference external" href="#esc">escape</a> context or false to disable it.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The value of the defined key, or the default value.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Provides a simple way to access “old input data” from submitting a form.</p>
@@ -511,40 +514,40 @@ If $data is an array, then it loops over it, escaping each ‘value’ of the ke
 <p>If you are using the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a>, this feature is built-in. You only
 need to use this function when not using the form helper.</p>
 </div>
-<dl class="function">
-<dt id="session">
-<code class="sig-name descname">session</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$key</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#session" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="session">
+<span class="sig-name descname"><span class="pre">session</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#session" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – The name of the session item to check for.</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the session item to check for.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An instance of the Session object if no $key, the value found in the session for $key, or null.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Provides a convenient way to access the session class and to retrieve a
 stored value. For more information, see the <a class="reference internal" href="../libraries/sessions.html"><span class="doc">Sessions</span></a> page.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="timer">
-<code class="sig-name descname">timer</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">$name</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timer" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="timer">
+<span class="sig-name descname"><span class="pre">timer</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#timer" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the benchmark point.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the benchmark point.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Timer instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CodeIgniterDebugTimer</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">CodeIgniterDebugTimer</span></code></span></p>
 </dd>
 </dl>
 <p>A convenience method that provides quick access to the Timer class. You can pass in the name
@@ -564,22 +567,22 @@ timing if a timer with this name is already running.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="view">
-<code class="sig-name descname">view</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$options</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="view">
+<span class="sig-name descname"><span class="pre">view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$options</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the file to load</p></li>
-<li><p><strong>$data</strong> (<em>array</em>) – An array of key/value pairs to make available within the view.</p></li>
-<li><p><strong>$options</strong> (<em>array</em>) – An array of options that will be passed to the rendering class.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the file to load</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An array of key/value pairs to make available within the view.</p></li>
+<li><p><strong>$options</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An array of options that will be passed to the rendering class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The output from the view.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Grabs the current RendererInterface-compatible class
@@ -605,23 +608,23 @@ libraries like Twig.</p>
 <p>For more details, see the <a class="reference internal" href="../outgoing/views.html"><span class="doc">Views</span></a> page.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="view_cell">
-<code class="sig-name descname">view_cell</code><span class="sig-paren">(</span><em class="sig-param">$library</em><span class="optional">[</span>, <em class="sig-param">$params = null</em><span class="optional">[</span>, <em class="sig-param">$ttl = 0</em><span class="optional">[</span>, <em class="sig-param">$cacheName = null</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view_cell" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="view_cell">
+<span class="sig-name descname"><span class="pre">view_cell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$library</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$params</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$ttl</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$cacheName</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#view_cell" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$library</strong> (<em>string</em>) – </p></li>
-<li><p><strong>$params</strong> (<em>null</em>) – </p></li>
-<li><p><strong>$ttl</strong> (<em>integer</em>) – </p></li>
-<li><p><strong>$cacheName</strong> (<em>string|null</em>) – </p></li>
+<li><p><strong>$library</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
+<li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">null</span></code></span>) – </p></li>
+<li><p><strong>$ttl</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span>) – </p></li>
+<li><p><strong>$cacheName</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>View cells are used within views to insert HTML chunks that are managed by other classes.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>For more details, see the <a class="reference internal" href="../outgoing/view_cells.html"><span class="doc">View Cells</span></a> page.</p>
@@ -630,101 +633,101 @@ libraries like Twig.</p>
 </section>
 <section id="miscellaneous-functions">
 <h3><a class="toc-backref" href="#id3">Miscellaneous Functions</a><a class="headerlink" href="#miscellaneous-functions" title="Permalink to this headline"></a></h3>
-<dl class="function">
-<dt id="app_timezone">
-<code class="sig-name descname">app_timezone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app_timezone" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="app_timezone">
+<span class="sig-name descname"><span class="pre">app_timezone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#app_timezone" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The timezone the application has been set to display dates in.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the timezone the application has been set to display dates in.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="csp_script_nonce">
-<code class="sig-name descname">csp_script_nonce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_script_nonce" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csp_script_nonce">
+<span class="sig-name descname"><span class="pre">csp_script_nonce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_script_nonce" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The CSP nonce attribute for script tag.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the nonce attribute for a script tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>.
 See <a class="reference internal" href="../outgoing/response.html#content-security-policy"><span class="std std-ref">Content Security Policy</span></a>.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="csp_style_nonce">
-<code class="sig-name descname">csp_style_nonce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_style_nonce" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csp_style_nonce">
+<span class="sig-name descname"><span class="pre">csp_style_nonce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csp_style_nonce" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The CSP nonce attribute for style tag.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the nonce attribute for a style tag. For example: <code class="docutils literal notranslate"><span class="pre">nonce=&quot;Eskdikejidojdk978Ad8jf&quot;</span></code>.
 See <a class="reference internal" href="../outgoing/response.html#content-security-policy"><span class="std std-ref">Content Security Policy</span></a>.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="csrf_token">
-<code class="sig-name descname">csrf_token</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_token" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csrf_token">
+<span class="sig-name descname"><span class="pre">csrf_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_token" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The name of the current CSRF token.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the name of the current CSRF token.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="csrf_header">
-<code class="sig-name descname">csrf_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_header" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csrf_header">
+<span class="sig-name descname"><span class="pre">csrf_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_header" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The name of the header for current CSRF token.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>The name of the header for current CSRF token.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="csrf_hash">
-<code class="sig-name descname">csrf_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_hash" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csrf_hash">
+<span class="sig-name descname"><span class="pre">csrf_hash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_hash" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The current value of the CSRF hash.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns the current CSRF hash value.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="csrf_field">
-<code class="sig-name descname">csrf_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_field" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csrf_field">
+<span class="sig-name descname"><span class="pre">csrf_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_field" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A string with the HTML for hidden input with all required CSRF information.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns a hidden input with the CSRF information already inserted:</p>
@@ -733,15 +736,15 @@ See <a class="reference internal" href="../outgoing/response.html#content-securi
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="csrf_meta">
-<code class="sig-name descname">csrf_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_meta" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="csrf_meta">
+<span class="sig-name descname"><span class="pre">csrf_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csrf_meta" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A string with the HTML for meta tag with all required CSRF information.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>string</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Returns a meta tag with the CSRF information already inserted:</p>
@@ -750,15 +753,15 @@ See <a class="reference internal" href="../outgoing/response.html#content-securi
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="force_https">
-<code class="sig-name descname">force_https</code><span class="sig-paren">(</span><em class="sig-param">$duration = 31536000</em><span class="optional">[</span>, <em class="sig-param">$request = null</em><span class="optional">[</span>, <em class="sig-param">$response = null</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#force_https" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="force_https">
+<span class="sig-name descname"><span class="pre">force_https</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$duration</span> <span class="pre">=</span> <span class="pre">31536000</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$request</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$response</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#force_https" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$duration</strong> (<em>int</em>) – The number of seconds browsers should convert links to this resource to HTTPS.</p></li>
-<li><p><strong>$request</strong> (<em>RequestInterface</em>) – An instance of the current Request object.</p></li>
-<li><p><strong>$response</strong> (<em>ResponseInterface</em>) – An instance of the current Response object.</p></li>
+<li><p><strong>$duration</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The number of seconds browsers should convert links to this resource to HTTPS.</p></li>
+<li><p><strong>$request</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">RequestInterface</span></code></span>) – An instance of the current Request object.</p></li>
+<li><p><strong>$response</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">ResponseInterface</span></code></span>) – An instance of the current Response object.</p></li>
 </ul>
 </dd>
 </dl>
@@ -768,71 +771,71 @@ but through HTTPS. Will set the HTTP Strict Transport Security header, which ins
 modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="function_usable">
-<code class="sig-name descname">function_usable</code><span class="sig-paren">(</span><em class="sig-param">$function_name</em><span class="sig-paren">)</span><a class="headerlink" href="#function_usable" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="function_usable">
+<span class="sig-name descname"><span class="pre">function_usable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$function_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#function_usable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$function_name</strong> (<em>string</em>) – Function to check for</p></li>
+<li><p><strong>$function_name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Function to check for</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if the function exists and is safe to call, false otherwise.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="is_cli">
-<code class="sig-name descname">is_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_cli" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="is_cli">
+<span class="sig-name descname"><span class="pre">is_cli</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#is_cli" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>true if the script is being executed from the command line or false otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="is_really_writable">
-<code class="sig-name descname">is_really_writable</code><span class="sig-paren">(</span><em class="sig-param">$file</em><span class="sig-paren">)</span><a class="headerlink" href="#is_really_writable" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="is_really_writable">
+<span class="sig-name descname"><span class="pre">is_really_writable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#is_really_writable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$file</strong> (<em>string</em>) – The filename being checked.</p></li>
+<li><p><strong>$file</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The filename being checked.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if you can write to the file, false otherwise.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="log_message">
-<code class="sig-name descname">log_message</code><span class="sig-paren">(</span><em class="sig-param">$level</em>, <em class="sig-param">$message</em><span class="optional">[</span>, <em class="sig-param">$context</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#log_message" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="log_message">
+<span class="sig-name descname"><span class="pre">log_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$level</span></em>, <em class="sig-param"><span class="pre">$message</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#log_message" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$level</strong> (<em>string</em>) – The level of severity</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – The message that is to be logged.</p></li>
-<li><p><strong>$context</strong> (<em>array</em>) – An associative array of tags and their values that should be replaced in $message</p></li>
+<li><p><strong>$level</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The level of severity</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The message that is to be logged.</p></li>
+<li><p><strong>$context</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An associative array of tags and their values that should be replaced in $message</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>true if was logged successfully or false if there was a problem logging it</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>Logs a message using the Log Handlers defined in <strong>app/Config/Logger.php</strong>.</p>
@@ -842,13 +845,13 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <a class="reference internal" href="logging.html"><span class="doc">Logging Information</span></a> page.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="redirect">
-<code class="sig-name descname">redirect</code><span class="sig-paren">(</span><em class="sig-param">string $route</em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="redirect">
+<span class="sig-name descname"><span class="pre">redirect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$route</span></em><span class="sig-paren">)</span><a class="headerlink" href="#redirect" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$route</strong> (<em>string</em>) – The reverse-routed or named route to redirect the user to.</p></li>
+<li><p><strong>$route</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The reverse-routed or named route to redirect the user to.</p></li>
 </ul>
 </dd>
 </dl>
@@ -893,21 +896,21 @@ treating it the same as using <code class="docutils literal notranslate"><span c
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="remove_invisible_characters">
-<code class="sig-name descname">remove_invisible_characters</code><span class="sig-paren">(</span><em class="sig-param">$str</em><span class="optional">[</span>, <em class="sig-param">$urlEncoded = true</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#remove_invisible_characters" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="remove_invisible_characters">
+<span class="sig-name descname"><span class="pre">remove_invisible_characters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$str</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$urlEncoded</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#remove_invisible_characters" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$str</strong> (<em>string</em>) – Input string</p></li>
-<li><p><strong>$urlEncoded</strong> (<em>bool</em>) – Whether to remove URL-encoded characters as well</p></li>
+<li><p><strong>$str</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+<li><p><strong>$urlEncoded</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to remove URL-encoded characters as well</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Sanitized string</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>This function prevents inserting null characters between ASCII
@@ -921,14 +924,14 @@ characters, like Java\0script.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="route_to">
-<code class="sig-name descname">route_to</code><span class="sig-paren">(</span><em class="sig-param">$method</em><span class="optional">[</span>, <em class="sig-param">...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#route_to" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="route_to">
+<span class="sig-name descname"><span class="pre">route_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">...$params</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#route_to" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$method</strong> (<em>string</em>) – The named route alias, or name of the controller/method to match.</p></li>
-<li><p><strong>$params</strong> (<em>mixed</em>) – One or more parameters to be passed to be matched in the route.</p></li>
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The named route alias, or name of the controller/method to match.</p></li>
+<li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – One or more parameters to be passed to be matched in the route.</p></li>
 </ul>
 </dd>
 </dl>
@@ -941,21 +944,21 @@ or a controller::method combination. Will take parameters into effect, if provid
 <p>For full details, see the <a class="reference internal" href="../incoming/routing.html"><span class="doc">URI Routing</span></a> page.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="service">
-<code class="sig-name descname">service</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#service" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="service">
+<span class="sig-name descname"><span class="pre">service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">...$params</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#service" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the service to load</p></li>
-<li><p><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the service to load</p></li>
+<li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – One or more parameters to pass to the service method.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An instance of the service class specified.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Provides easy access to any of the <a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a> defined in the system.
@@ -970,21 +973,21 @@ during a single request, only one class instance will be created.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="single_service">
-<code class="sig-name descname">single_service</code><span class="sig-paren">(</span><em class="sig-param">$name</em><span class="optional">[</span>, <em class="sig-param">...$params</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#single_service" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="single_service">
+<span class="sig-name descname"><span class="pre">single_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">...$params</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#single_service" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$name</strong> (<em>string</em>) – The name of the service to load</p></li>
-<li><p><strong>$params</strong> (<em>mixed</em>) – One or more parameters to pass to the service method.</p></li>
+<li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The name of the service to load</p></li>
+<li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – One or more parameters to pass to the service method.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An instance of the service class specified.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Identical to the <strong>service()</strong> function described above, except that all calls to this
@@ -992,40 +995,40 @@ function will return a new instance of the class, where <strong>service</strong>
 instance every time.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="slash_item">
-<code class="sig-name descname">slash_item</code><span class="sig-paren">(</span><em class="sig-param">$item</em><span class="sig-paren">)</span><a class="headerlink" href="#slash_item" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="slash_item">
+<span class="sig-name descname"><span class="pre">slash_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#slash_item" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$item</strong> (<em>string</em>) – Config item name</p></li>
+<li><p><strong>$item</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Config item name</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The configuration item or null if the item doesn’t exist</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string|null</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span></p>
 </dd>
 </dl>
 <p>Fetch a config file item with slash appended (if not empty)</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="stringify_attributes">
-<code class="sig-name descname">stringify_attributes</code><span class="sig-paren">(</span><em class="sig-param">$attributes</em><span class="optional">[</span>, <em class="sig-param">$js</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#stringify_attributes" title="Permalink to this definition"></a></dt>
+<dl class="php function">
+<dt class="sig sig-object php" id="stringify_attributes">
+<span class="sig-name descname"><span class="pre">stringify_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$attributes</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$js</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#stringify_attributes" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$attributes</strong> (<em>mixed</em>) – string, array of key value pairs, or object</p></li>
-<li><p><strong>$js</strong> (<em>boolean</em>) – true if values do not need quotes (Javascript-style)</p></li>
+<li><p><strong>$attributes</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – string, array of key value pairs, or object</p></li>
+<li><p><strong>$js</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – true if values do not need quotes (Javascript-style)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>String containing the attribute key/value pairs, comma-separated</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>Helper function used to convert a string, array, or object of attributes to a string.</p>
@@ -1038,84 +1041,84 @@ instance every time.</p>
 <p>The following constants are always available anywhere within your application.</p>
 <section id="core-constants">
 <h3><a class="toc-backref" href="#id5">Core Constants</a><a class="headerlink" href="#core-constants" title="Permalink to this headline"></a></h3>
-<dl class="const">
-<dt id="APPPATH">
-<em class="property">constant </em><code class="sig-name descname">APPPATH</code><a class="headerlink" href="#APPPATH" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="APPPATH">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">APPPATH</span></span><a class="headerlink" href="#APPPATH" title="Permalink to this definition"></a></dt>
 <dd><p>The path to the <strong>app</strong> directory.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="ROOTPATH">
-<em class="property">constant </em><code class="sig-name descname">ROOTPATH</code><a class="headerlink" href="#ROOTPATH" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="ROOTPATH">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">ROOTPATH</span></span><a class="headerlink" href="#ROOTPATH" title="Permalink to this definition"></a></dt>
 <dd><p>The path to the project root directory. Just above <code class="docutils literal notranslate"><span class="pre">APPPATH</span></code>.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="SYSTEMPATH">
-<em class="property">constant </em><code class="sig-name descname">SYSTEMPATH</code><a class="headerlink" href="#SYSTEMPATH" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="SYSTEMPATH">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">SYSTEMPATH</span></span><a class="headerlink" href="#SYSTEMPATH" title="Permalink to this definition"></a></dt>
 <dd><p>The path to the <strong>system</strong> directory.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="FCPATH">
-<em class="property">constant </em><code class="sig-name descname">FCPATH</code><a class="headerlink" href="#FCPATH" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="FCPATH">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">FCPATH</span></span><a class="headerlink" href="#FCPATH" title="Permalink to this definition"></a></dt>
 <dd><p>The path to the directory that holds the front controller.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="WRITEPATH">
-<em class="property">constant </em><code class="sig-name descname">WRITEPATH</code><a class="headerlink" href="#WRITEPATH" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="WRITEPATH">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">WRITEPATH</span></span><a class="headerlink" href="#WRITEPATH" title="Permalink to this definition"></a></dt>
 <dd><p>The path to the <strong>writable</strong> directory.</p>
 </dd></dl>
 
 </section>
 <section id="time-constants">
 <h3><a class="toc-backref" href="#id6">Time Constants</a><a class="headerlink" href="#time-constants" title="Permalink to this headline"></a></h3>
-<dl class="const">
-<dt id="SECOND">
-<em class="property">constant </em><code class="sig-name descname">SECOND</code><a class="headerlink" href="#SECOND" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="SECOND">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">SECOND</span></span><a class="headerlink" href="#SECOND" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 1.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="MINUTE">
-<em class="property">constant </em><code class="sig-name descname">MINUTE</code><a class="headerlink" href="#MINUTE" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="MINUTE">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">MINUTE</span></span><a class="headerlink" href="#MINUTE" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 60.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="HOUR">
-<em class="property">constant </em><code class="sig-name descname">HOUR</code><a class="headerlink" href="#HOUR" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="HOUR">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">HOUR</span></span><a class="headerlink" href="#HOUR" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 3600.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="DAY">
-<em class="property">constant </em><code class="sig-name descname">DAY</code><a class="headerlink" href="#DAY" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="DAY">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">DAY</span></span><a class="headerlink" href="#DAY" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 86400.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="WEEK">
-<em class="property">constant </em><code class="sig-name descname">WEEK</code><a class="headerlink" href="#WEEK" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="WEEK">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">WEEK</span></span><a class="headerlink" href="#WEEK" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 604800.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="MONTH">
-<em class="property">constant </em><code class="sig-name descname">MONTH</code><a class="headerlink" href="#MONTH" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="MONTH">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">MONTH</span></span><a class="headerlink" href="#MONTH" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 2592000.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="YEAR">
-<em class="property">constant </em><code class="sig-name descname">YEAR</code><a class="headerlink" href="#YEAR" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="YEAR">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">YEAR</span></span><a class="headerlink" href="#YEAR" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 31536000.</p>
 </dd></dl>
 
-<dl class="const">
-<dt id="DECADE">
-<em class="property">constant </em><code class="sig-name descname">DECADE</code><a class="headerlink" href="#DECADE" title="Permalink to this definition"></a></dt>
+<dl class="php const">
+<dt class="sig sig-object php" id="DECADE">
+<em class="property"><span class="pre">constant</span> </em><span class="sig-name descname"><span class="pre">DECADE</span></span><a class="headerlink" href="#DECADE" title="Permalink to this definition"></a></dt>
 <dd><p>Equals 315360000.</p>
 </dd></dl>
 

@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Response Trait &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>API Response Trait &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -409,13 +412,13 @@ JSON data will be sent back to the client.</p>
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="method">
-<dt id="setResponseFormat">
-<code class="sig-name descname">setResponseFormat</code><span class="sig-paren">(</span><em class="sig-param">$format</em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="setResponseFormat">
+<span class="sig-name descname"><span class="pre">setResponseFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$format</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setResponseFormat" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$format</strong> (<em>string</em>) – The type of response to return, either <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">xml</span></code></p></li>
+<li><p><strong>$format</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The type of response to return, either <code class="docutils literal notranslate"><span class="pre">json</span></code> or <code class="docutils literal notranslate"><span class="pre">xml</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -428,15 +431,15 @@ JSON data will be sent back to the client.</p>
 <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setResponseFormat</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">respond</span><span class="p">([</span><span class="s1">&#39;error&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
 </pre></div>
 </div>
-<dl class="method">
-<dt id="respond">
-<code class="sig-name descname">respond</code><span class="sig-paren">(</span><em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">$statusCode = 200</em><span class="optional">[</span>, <em class="sig-param">$message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="respond">
+<span class="sig-name descname"><span class="pre">respond</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$statusCode</span> <span class="pre">=</span> <span class="pre">200</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respond" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</p></li>
-<li><p><strong>$statusCode</strong> (<em>int</em>) – The HTTP status code to return. Defaults to 200</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The data to return to the client. Either string or array.</p></li>
+<li><p><strong>$statusCode</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The HTTP status code to return. Defaults to 200</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 </dl>
@@ -454,16 +457,16 @@ be the final method in the script execution.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="fail">
-<code class="sig-name descname">fail</code><span class="sig-paren">(</span><em class="sig-param">$messages</em><span class="optional">[</span>, <em class="sig-param">int $status = 400</em><span class="optional">[</span>, <em class="sig-param">string $code = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="fail">
+<span class="sig-name descname"><span class="pre">fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$messages</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$status</span> <span class="pre">=</span> <span class="pre">400</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#fail" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$messages</strong> (<em>mixed</em>) – A string or array of strings that contain error messages encountered.</p></li>
-<li><p><strong>$status</strong> (<em>int</em>) – The HTTP status code to return. Defaults to 400.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$messages</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – A string or array of strings that contain error messages encountered.</p></li>
+<li><p><strong>$status</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The HTTP status code to return. Defaults to 400.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -494,14 +497,14 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="respondCreated">
-<code class="sig-name descname">respondCreated</code><span class="sig-paren">(</span><em class="sig-param">$data = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="respondCreated">
+<span class="sig-name descname"><span class="pre">respondCreated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondCreated" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The data to return to the client. Either string or array.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -518,14 +521,14 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="respondDeleted">
-<code class="sig-name descname">respondDeleted</code><span class="sig-paren">(</span><em class="sig-param">$data = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="respondDeleted">
+<span class="sig-name descname"><span class="pre">respondDeleted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#respondDeleted" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$data</strong> (<em>mixed</em>) – The data to return to the client. Either string or array.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The data to return to the client. Either string or array.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -542,13 +545,13 @@ code of the error. The <code class="docutils literal notranslate"><span class="p
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="respondNoContent">
-<code class="sig-name descname">respondNoContent</code><span class="sig-paren">(</span><em class="sig-param">string $message = 'No Content'</em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="respondNoContent">
+<span class="sig-name descname"><span class="pre">respondNoContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">'No</span> <span class="pre">Content'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#respondNoContent" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -566,15 +569,15 @@ meaningful reply to send back to the client, typically 204.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failUnauthorized">
-<code class="sig-name descname">failUnauthorized</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Unauthorized'</em><span class="optional">[</span>, <em class="sig-param">string $code = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failUnauthorized">
+<span class="sig-name descname"><span class="pre">failUnauthorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Unauthorized'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failUnauthorized" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -590,15 +593,15 @@ or has incorrect authorization. Status code is 401.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failForbidden">
-<code class="sig-name descname">failForbidden</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Forbidden'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failForbidden">
+<span class="sig-name descname"><span class="pre">failForbidden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Forbidden'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failForbidden" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -615,15 +618,15 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failNotFound">
-<code class="sig-name descname">failNotFound</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Not Found'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failNotFound">
+<span class="sig-name descname"><span class="pre">failNotFound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Not</span> <span class="pre">Found'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failNotFound" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -638,15 +641,15 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failValidationErrors">
-<code class="sig-name descname">failValidationErrors</code><span class="sig-paren">(</span><em class="sig-param">$errors</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationErrors" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failValidationErrors">
+<span class="sig-name descname"><span class="pre">failValidationErrors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$errors</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failValidationErrors" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$errors</strong> (<em>mixed</em>) – The error message or array of messages to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$errors</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – The error message or array of messages to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -661,15 +664,15 @@ the client should not try again because it won’t help. Status code is 403.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failResourceExists">
-<code class="sig-name descname">failResourceExists</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Conflict'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failResourceExists">
+<span class="sig-name descname"><span class="pre">failResourceExists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Conflict'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceExists" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -685,15 +688,15 @@ Status code is typically 409.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failResourceGone">
-<code class="sig-name descname">failResourceGone</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Gone'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failResourceGone">
+<span class="sig-name descname"><span class="pre">failResourceGone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Gone'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failResourceGone" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -709,15 +712,15 @@ is no longer available. Status code is typically 410.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failTooManyRequests">
-<code class="sig-name descname">failTooManyRequests</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Too Many Requests'</em><span class="optional">[</span>, <em class="sig-param">string $code=null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failTooManyRequests">
+<span class="sig-name descname"><span class="pre">failTooManyRequests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Too</span> <span class="pre">Many</span> <span class="pre">Requests'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code=null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failTooManyRequests" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -733,15 +736,15 @@ This might be due to some form of throttling or rate limiting. Status code is ty
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="failServerError">
-<code class="sig-name descname">failServerError</code><span class="sig-paren">(</span><em class="sig-param">string $description = 'Internal Server Error'</em><span class="optional">[</span>, <em class="sig-param">string $code = null</em><span class="optional">[</span>, <em class="sig-param">string $message = ''</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="failServerError">
+<span class="sig-name descname"><span class="pre">failServerError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$description</span> <span class="pre">=</span> <span class="pre">'Internal</span> <span class="pre">Server</span> <span class="pre">Error'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$message</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#failServerError" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$description</strong> (<em>string</em>) – The error message to show the user.</p></li>
-<li><p><strong>$code</strong> (<em>string</em>) – A custom, API-specific, error code.</p></li>
-<li><p><strong>$message</strong> (<em>string</em>) – A custom “reason” message to return.</p></li>
+<li><p><strong>$description</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The error message to show the user.</p></li>
+<li><p><strong>$code</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom, API-specific, error code.</p></li>
+<li><p><strong>$message</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – A custom “reason” message to return.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

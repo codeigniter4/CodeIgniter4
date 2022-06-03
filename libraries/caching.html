@@ -4,16 +4,18 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Caching Driver &mdash; CodeIgniter 4.1.9 documentation</title><link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <title>Caching Driver &mdash; CodeIgniter 4.1.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
         <script src="../_static/js/citheme.js"></script>
         <script src="../_static/js/carbon.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -28,7 +30,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search"  style="background: #DD4814" >
-            <a href="../index.html"><img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
+            <a href="../index.html">
+            <img src="../_static/ci-logo-text.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -348,33 +351,33 @@ to projects and modules. This will replace the hard-coded value in a future rele
 </section>
 <section id="class-reference">
 <h2><a class="toc-backref" href="#id3">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
-<dl class="method">
-<dt id="isSupported">
-<code class="sig-name descname">isSupported</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isSupported" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="isSupported">
+<span class="sig-name descname"><span class="pre">isSupported</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#isSupported" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> if supported, <code class="docutils literal notranslate"><span class="pre">false</span></code> if not</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">get($key): mixed</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">get($key):</span> <span class="pre">mixed</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Cache item name</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cache item name</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Item value or <code class="docutils literal notranslate"><span class="pre">null</span></code> if not found</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>This method will attempt to fetch an item from the cache store. If the
@@ -387,45 +390,45 @@ item does not exist, the method will return null.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="remember">
-<code class="sig-name descname">remember</code><span class="sig-paren">(</span><em class="sig-param">string $key</em>, <em class="sig-param">int $ttl</em>, <em class="sig-param">Closure $callback</em><span class="sig-paren">)</span><a class="headerlink" href="#remember" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="remember">
+<span class="sig-name descname"><span class="pre">remember</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$key</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$ttl</span></em>, <em class="sig-param"><span class="pre">Closure</span> <span class="pre">$callback</span></em><span class="sig-paren">)</span><a class="headerlink" href="#remember" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Cache item name</p></li>
-<li><p><strong>$ttl</strong> (<em>int</em>) – Time to live in seconds</p></li>
-<li><p><strong>$callback</strong> (<em>Closure</em>) – Callback to invoke when the cache item returns null</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cache item name</p></li>
+<li><p><strong>$ttl</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Time to live in seconds</p></li>
+<li><p><strong>$callback</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Closure</span></code></span>) – Callback to invoke when the cache item returns null</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The value of the cache item</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Gets an item from the cache. If <code class="docutils literal notranslate"><span class="pre">null</span></code> was returned, this will invoke the callback
 and save the result. Either way, this will return the value.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="save">
-<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param">string $key</em>, <em class="sig-param">$data</em><span class="optional">[</span>, <em class="sig-param">int $ttl = 60</em><span class="optional">[</span>, <em class="sig-param">$raw = false</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#save" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$key</span></em>, <em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">int</span> <span class="pre">$ttl</span> <span class="pre">=</span> <span class="pre">60</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#save" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Cache item name</p></li>
-<li><p><strong>$data</strong> (<em>mixed</em>) – the data to save</p></li>
-<li><p><strong>$ttl</strong> (<em>int</em>) – Time To Live, in seconds (default 60)</p></li>
-<li><p><strong>$raw</strong> (<em>bool</em>) – Whether to store the raw value</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cache item name</p></li>
+<li><p><strong>$data</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – the data to save</p></li>
+<li><p><strong>$ttl</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Time To Live, in seconds (default 60)</p></li>
+<li><p><strong>$raw</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to store the raw value</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>This method will save an item to the cache store. If saving fails, the
@@ -443,20 +446,20 @@ method will return <code class="docutils literal notranslate"><span class="pre">
 <p>The <code class="docutils literal notranslate"><span class="pre">$raw</span></code> parameter is only utilized by Memcache,
 in order to allow usage of <code class="docutils literal notranslate"><span class="pre">increment()</span></code> and <code class="docutils literal notranslate"><span class="pre">decrement()</span></code>.</p>
 </div>
-<dl class="method">
-<dt>
-<code class="sig-name descname">delete($key): bool</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">delete($key):</span> <span class="pre">bool</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – name of cached item</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – name of cached item</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>This method will delete a specific item from the cache store. If item
@@ -469,20 +472,20 @@ deletion fails, the method will return false.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">deleteMatching($pattern): integer</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">deleteMatching($pattern):</span> <span class="pre">integer</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$pattern</strong> (<em>string</em>) – glob-style pattern to match cached items keys</p></li>
+<li><p><strong>$pattern</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – glob-style pattern to match cached items keys</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>number of deleted items</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">integer</span></code></span></p>
 </dd>
 </dl>
 <p>This method will delete multiple items from the cache store at once by
@@ -503,21 +506,21 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 <a class="reference external" href="https://en.wikipedia.org/wiki/Glob_(programming)#Syntax">Glob (programming)</a>.</p>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">increment($key[, $offset = 1]): mixed</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">increment($key[,</span> <span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">1]):</span> <span class="pre">mixed</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Cache ID</p></li>
-<li><p><strong>$offset</strong> (<em>int</em>) – Step/value to add</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cache ID</p></li>
+<li><p><strong>$offset</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Step/value to add</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>New value on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Performs atomic incrementation of a raw stored value.</p>
@@ -531,21 +534,21 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt>
-<code class="sig-name descname">decrement($key[, $offset = 1]): mixed</code></dt>
+<dl class="php method">
+<dt class="sig sig-object php">
+<span class="sig-name descname"><span class="pre">decrement($key[,</span> <span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">1]):</span> <span class="pre">mixed</span></span></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Cache ID</p></li>
-<li><p><strong>$offset</strong> (<em>int</em>) – Step/value to reduce by</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cache ID</p></li>
+<li><p><strong>$offset</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Step/value to reduce by</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>New value on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>mixed</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>Performs atomic decrementation of a raw stored value.</p>
@@ -559,15 +562,15 @@ Due to limitations, it couldn’t be implemented for Memcached and Wincache hand
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="clean">
-<code class="sig-name descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#clean" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#clean" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
 </dd>
 </dl>
 <p>This method will ‘clean’ the entire cache. If the deletion of the
@@ -580,15 +583,15 @@ cache files fails, the method will return false.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="getCacheInfo">
-<code class="sig-name descname">getCacheInfo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCacheInfo" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getCacheInfo">
+<span class="sig-name descname"><span class="pre">getCacheInfo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getCacheInfo" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Information on the entire cache database</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>mixed</p>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
 <p>This method will return information on the entire cache.</p>
@@ -605,20 +608,20 @@ cache files fails, the method will return false.</p>
 <p>The information returned and the structure of the data is dependent
 on which adapter is being used.</p>
 </div>
-<dl class="method">
-<dt id="getMetadata">
-<code class="sig-name descname">getMetadata</code><span class="sig-paren">(</span><em class="sig-param">string $key</em><span class="sig-paren">)</span><a class="headerlink" href="#getMetadata" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="getMetadata">
+<span class="sig-name descname"><span class="pre">getMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#getMetadata" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Cache item name</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cache item name</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Metadata for the cached item. <code class="docutils literal notranslate"><span class="pre">null</span></code> for missing items, or an array with at least the “expire” key for absolute epoch expiry (<code class="docutils literal notranslate"><span class="pre">null</span></code> for never expires).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>array|null</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method will return detailed information on a specific item in the
@@ -637,21 +640,21 @@ cache.</p>
 on which adapter is being used. Some adapters (File, Memcached, Wincache)
 still return <code class="docutils literal notranslate"><span class="pre">false</span></code> for missing items.</p>
 </div>
-<dl class="staticmethod">
-<dt id="validateKey">
-<em class="property">static </em><code class="sig-name descname">validateKey</code><span class="sig-paren">(</span><em class="sig-param">string $key</em>, <em class="sig-param">string $prefix</em><span class="sig-paren">)</span><a class="headerlink" href="#validateKey" title="Permalink to this definition"></a></dt>
+<dl class="php staticmethod">
+<dt class="sig sig-object php" id="validateKey">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">validateKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$key</span></em>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#validateKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$key</strong> (<em>string</em>) – Potential cache key</p></li>
-<li><p><strong>$prefix</strong> (<em>string</em>) – Optional prefix</p></li>
+<li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Potential cache key</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Optional prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The verified and prefixed key. If the key exceeds the driver’s max key length it will be hashed.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
 <p>This method is used by handler methods to check that keys are valid. It will throw
