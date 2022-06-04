@@ -1558,7 +1558,8 @@ method. Here is an example using an array:</p>
 <h4>$builder-&gt;ignore()<a class="headerlink" href="#builder-ignore" title="Permalink to this headline"></a></h4>
 <p>Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won’t be inserted.
-You can optionally pass an <strong>boolean</strong> to the method. Here is an example using the array of the above example:</p>
+You can optionally pass an <strong>boolean</strong> to the method. Can also be used on <strong>insertBatch</strong>, <strong>update</strong> and <strong>delete</strong> (when supported).
+Here is an example using the array of the above example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
@@ -3374,7 +3375,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 03, 2022.
+      <span class="lastupdated">Last updated on Jun 04, 2022.
       </span></p>
   </div>
 
