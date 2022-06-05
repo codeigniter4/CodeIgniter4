@@ -383,7 +383,7 @@ class CodeIgniter
     /**
      * Invoked via spark command?
      */
-    private function isSparked(): bool
+    public function isSparked(): bool
     {
         return $this->context === 'spark';
     }
@@ -391,7 +391,7 @@ class CodeIgniter
     /**
      * Invoked via php-cli command?
      */
-    private function isPhpCli(): bool
+    public function isPhpCli(): bool
     {
         return $this->context === 'php-cli';
     }
@@ -399,7 +399,7 @@ class CodeIgniter
     /**
      * Web access?
      */
-    private function isWeb(): bool
+    public function isWeb(): bool
     {
         return $this->context === 'web';
     }
