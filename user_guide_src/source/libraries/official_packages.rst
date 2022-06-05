@@ -11,6 +11,8 @@ additional functionality that not every site will need or want.
     :local:
     :depth: 2
 
+.. _shield:
+
 ******
 Shield
 ******

@@ -1,9 +1,12 @@
-Authentication 
+Authentication
 #####################################
 
-CodeIgniter intentionally does not provide an internal authentication or authorization class. There are a number
-of great third-party modules that provide these services, as well as resources in the community for writing
-your own. The following are recommended guidelines to encourage consistency among developers of
+CodeIgniter provides an official authentication and authorization framework
+:ref:`CodeIgniter Shield <shield>` for CodeIgniter 4,
+It is designed to be secure, flexible, and easily extendable to meet the needs
+of many different types of websites.
+
+The following are recommended guidelines to encourage consistency among developers of
 modules, projects, and the framework itself.
 
 Recommendations
