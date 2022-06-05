@@ -55,6 +55,12 @@ Application Structure
 - There is no longer a nested **application/core** folder, as we have
   a different mechanism for extending framework components (see below).
 
+Routing
+=======
+
+- The Auto Routing is disabled by default. If you want to use the Auto Routing in the same way as CI3, you need to enable :ref:`auto-routing`.
+- CI4 also has an optional new more secure :ref:`auto-routing-improved`.
+
 Model, View and Controller
 ==========================
 
