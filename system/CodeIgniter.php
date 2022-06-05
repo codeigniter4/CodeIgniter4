@@ -1105,4 +1105,12 @@ class CodeIgniter
 
         return $this;
     }
+
+    /**
+     * Gets the app context.
+     */
+    public function getContext(): ?string
+    {
+        return $this->context;
+    }
 }
