@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
@@ -19,6 +20,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
+use Config\Cookie as CookieConfig;
 use Config\Services;
 
 /**
@@ -33,6 +35,8 @@ final class CookieHelperTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $_COOKIE = [];
+
         parent::setUp();
 
         $this->name   = 'greetings';
@@ -121,6 +125,39 @@ final class CookieHelperTest extends CIUnitTestCase
         $_COOKIE['TEST'] = 5;
 
         $this->assertSame('5', get_cookie('TEST'));
+    }
+
+    public function testGetCookieDefaultPrefix()
+    {
+        $_COOKIE['prefix_TEST'] = '5';
+
+        $config         = new CookieConfig();
+        $config->prefix = 'prefix_';
+        Factories::injectMock('config', CookieConfig::class, $config);
+
+        $this->assertSame('5', get_cookie('TEST', false, ''));
+    }
+
+    public function testGetCookiePrefix()
+    {
+        $_COOKIE['abc_TEST'] = '5';
+
+        $config         = new CookieConfig();
+        $config->prefix = 'prefix_';
+        Factories::injectMock('config', CookieConfig::class, $config);
+
+        $this->assertSame('5', get_cookie('TEST', false, 'abc_'));
+    }
+
+    public function testGetCookieNoPrefix()
+    {
+        $_COOKIE['abc_TEST'] = '5';
+
+        $config         = new CookieConfig();
+        $config->prefix = 'prefix_';
+        Factories::injectMock('config', CookieConfig::class, $config);
+
+        $this->assertSame('5', get_cookie('abc_TEST', false, null));
     }
 
     public function testDeleteCookieAfterLastSet()

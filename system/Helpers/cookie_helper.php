@@ -56,21 +56,25 @@ if (! function_exists('get_cookie')) {
     /**
      * Fetch an item from the $_COOKIE array
      *
-     * @param string $index
+     * @param string      $index
+     * @param string|null $prefix Cookie prefix.
+     *                            '': the prefix in Config\Cookie
+     *                            null: no prefix
      *
-     * @return mixed
+     * @return array|string|null
      *
      * @see \CodeIgniter\HTTP\IncomingRequest::getCookie()
      */
-    function get_cookie($index, bool $xssClean = false)
+    function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
-        /** @var Cookie|null $cookie */
-        $cookie = config('Cookie');
+        if ($prefix === '') {
+            /** @var Cookie|null $cookie */
+            $cookie = config('Cookie');
 
-        // @TODO Remove Config\App fallback when deprecated `App` members are removed.
-        $cookiePrefix = $cookie instanceof Cookie ? $cookie->prefix : config(App::class)->cookiePrefix;
+            // @TODO Remove Config\App fallback when deprecated `App` members are removed.
+            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config(App::class)->cookiePrefix;
+        }
 
-        $prefix  = isset($_COOKIE[$index]) ? '' : $cookiePrefix;
         $request = Services::request();
         $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_DEFAULT;
 
