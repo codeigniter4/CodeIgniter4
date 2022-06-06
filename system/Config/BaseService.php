@@ -293,6 +293,18 @@ class BaseService
     }
 
     /**
+     * Inject object.
+     *
+     * @param object $obj
+     *
+     * @internal
+     */
+    public static function inject(string $name, $obj)
+    {
+        static::$instances[strtolower($name)] = $obj;
+    }
+
+    /**
      * Inject mock object for testing.
      *
      * @param mixed $mock

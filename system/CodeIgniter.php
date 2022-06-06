@@ -595,6 +595,9 @@ class CodeIgniter
 
         if ($this->isSparked() || $this->isPhpCli()) {
             $this->request = Services::clirequest($this->config);
+
+            // Inject the request object into Services::request().
+            Services::inject('request', $this->request);
         } else {
             $this->request = Services::request($this->config);
             // guess at protocol if needed

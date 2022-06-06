@@ -472,7 +472,9 @@ class Services extends BaseService
     /**
      * The Request class models an HTTP request.
      *
-     * @return IncomingRequest
+     * CodeIgniter::getRequestObject() injects CLIRequest if $this->request is CLIRequest.
+     *
+     * @return CLIRequest|IncomingRequest
      */
     public static function request(?App $config = null, bool $getShared = true)
     {
