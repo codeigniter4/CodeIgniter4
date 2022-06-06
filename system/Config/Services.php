@@ -472,10 +472,14 @@ class Services extends BaseService
     /**
      * The Request class models an HTTP request.
      *
-     * @return IncomingRequest
+     * @return Request
      */
     public static function request(?App $config = null, bool $getShared = true)
     {
+        if (is_cli()) {
+            return AppServices::clirequest($config, $getShared);
+        }
+
         if ($getShared) {
             return static::getSharedInstance('request', $config);
         }

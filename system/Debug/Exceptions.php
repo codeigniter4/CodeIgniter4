@@ -13,7 +13,7 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
@@ -50,9 +50,9 @@ class Exceptions
     protected $config;
 
     /**
-     * The incoming request.
+     * The request.
      *
-     * @var IncomingRequest
+     * @var Request
      */
     protected $request;
 
@@ -63,7 +63,7 @@ class Exceptions
      */
     protected $response;
 
-    public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
+    public function __construct(ExceptionsConfig $config, Request $request, Response $response)
     {
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;

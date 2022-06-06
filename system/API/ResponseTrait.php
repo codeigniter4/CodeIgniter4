@@ -321,7 +321,10 @@ trait ResponseTrait
 
         // Determine correct response type through content negotiation if not explicitly declared
         if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true)) {
-            $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
+            if (! is_cli()) {
+                // @phpstan-ignore-next-line
+                $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
+            }
         }
 
         $this->response->setContentType($mime);
