@@ -10,6 +10,7 @@
  */
 
 use Config\App;
+use Config\Cookie;
 use Config\Services;
 
 //=============================================================================
@@ -63,7 +64,13 @@ if (! function_exists('get_cookie')) {
      */
     function get_cookie($index, bool $xssClean = false)
     {
-        $prefix  = isset($_COOKIE[$index]) ? '' : config(App::class)->cookiePrefix;
+        /** @var Cookie|null $cookie */
+        $cookie = config('Cookie');
+
+        // @TODO Remove Config\App fallback when deprecated `App` members are removed.
+        $cookiePrefix = $cookie instanceof Cookie ? $cookie->prefix : config(App::class)->cookiePrefix;
+
+        $prefix  = isset($_COOKIE[$index]) ? '' : $cookiePrefix;
         $request = Services::request();
         $filter  = $xssClean ? FILTER_SANITIZE_FULL_SPECIAL_CHARS : FILTER_DEFAULT;
 
