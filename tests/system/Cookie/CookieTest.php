@@ -56,9 +56,6 @@ final class CookieTest extends CIUnitTestCase
 
     public function testConfigInjectionForDefaults(): void
     {
-        /**
-         * @var CookieConfig $config
-         */
         $config = new CookieConfig();
 
         $old = Cookie::setDefaults($config);
