@@ -251,11 +251,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         $c = count($segments);
 
         while ($c-- > 0) {
-            $segmentConvert = ucfirst(
-                $this->translateURIDashes === true
-                    ? str_replace('-', '_', $segments[0])
-                    : $segments[0]
-            );
+            $segmentConvert = $this->translateURIDashes(ucfirst($segments[0]));
 
             // as soon as we encounter any segment that is not PSR-4 compliant, stop searching
             if (! $this->isValidSegment($segmentConvert)) {
