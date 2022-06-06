@@ -122,7 +122,7 @@ final class CookieHelperTest extends CIUnitTestCase
 
     public function testGetCookie()
     {
-        $_COOKIE['TEST'] = 5;
+        $_COOKIE['TEST'] = '5';
 
         $this->assertSame('5', get_cookie('TEST'));
     }
