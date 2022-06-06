@@ -12,6 +12,7 @@
 namespace CodeIgniter\Session\Handlers;
 
 use Config\App as AppConfig;
+use Config\Cookie as CookieConfig;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
@@ -102,14 +103,27 @@ abstract class BaseHandler implements SessionHandlerInterface
 
     public function __construct(AppConfig $config, string $ipAddress)
     {
-        $this->cookiePrefix = $config->cookiePrefix;
-        $this->cookieDomain = $config->cookieDomain;
-        $this->cookiePath   = $config->cookiePath;
-        $this->cookieSecure = $config->cookieSecure;
-        $this->cookieName   = $config->sessionCookieName;
-        $this->matchIP      = $config->sessionMatchIP;
-        $this->savePath     = $config->sessionSavePath;
-        $this->ipAddress    = $ipAddress;
+        /** @var CookieConfig|null $cookie */
+        $cookie = config('Cookie');
+
+        if ($cookie instanceof CookieConfig) {
+            $this->cookiePrefix = $cookie->prefix;
+            $this->cookieDomain = $cookie->domain;
+            $this->cookiePath   = $cookie->path;
+            $this->cookieSecure = $cookie->secure;
+        } else {
+            // @TODO Remove this fallback when deprecated `App` members are removed.
+            // `Config/Cookie.php` is absence
+            $this->cookiePrefix = $config->cookiePrefix;
+            $this->cookieDomain = $config->cookieDomain;
+            $this->cookiePath   = $config->cookiePath;
+            $this->cookieSecure = $config->cookieSecure;
+        }
+
+        $this->cookieName = $config->sessionCookieName;
+        $this->matchIP    = $config->sessionMatchIP;
+        $this->savePath   = $config->sessionSavePath;
+        $this->ipAddress  = $ipAddress;
     }
 
     /**
