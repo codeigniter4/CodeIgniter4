@@ -16,6 +16,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Cookie as CookieConfig;
 use DateTimeImmutable;
 use DateTimeZone;
+use Generator;
 use LogicException;
 
 /**
@@ -74,6 +75,38 @@ final class CookieTest extends CIUnitTestCase
         $this->assertSame($config->raw, $cookie->isRaw());
 
         Cookie::setDefaults($old);
+    }
+
+    /**
+     * @dataProvider prefixProvider
+     */
+    public function testConfigPrefix(string $configPrefix, string $optionPrefix, string $expected): void
+    {
+        $config         = new CookieConfig();
+        $config->prefix = $configPrefix;
+        Cookie::setDefaults($config);
+
+        $cookie = new Cookie(
+            'test',
+            'value',
+            [
+                'prefix' => $optionPrefix,
+            ]
+        );
+
+        $this->assertSame($expected, $cookie->getPrefixedName());
+    }
+
+    public function prefixProvider(): Generator
+    {
+        yield from [
+            ['prefix_', '', 'prefix_test'],
+            ['prefix_', '0', '0test'],
+            ['prefix_', 'new_', 'new_test'],
+            ['', '', 'test'],
+            ['', '0', '0test'],
+            ['', 'new_', 'new_test'],
+        ];
     }
 
     public function testValidationOfRawCookieName(): void
