@@ -24,7 +24,7 @@ trait ViewDecoratorTrait
         $decorators = \config('View')->decorators;
 
         foreach ($decorators as $decorator) {
-            if (! in_array(ViewDecoratorInterface::class, class_implements($decorator))) {
+            if (! in_array(ViewDecoratorInterface::class, class_implements($decorator), true)) {
                 throw ViewException::forInvalidDecorator($decorator);
             }
 
