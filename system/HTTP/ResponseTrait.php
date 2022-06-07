@@ -543,7 +543,7 @@ trait ResponseTrait
      * @param string              $expire   Cookie expiration time in seconds
      * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string              $path     Cookie path (default: '/')
-     * @param string              $prefix   Cookie name prefix
+     * @param string              $prefix   Cookie name prefix ('': the default prefix)
      * @param bool                $secure   Whether to only transfer cookies via SSL
      * @param bool                $httponly Whether only make the cookie accessible via HTTP (no javascript)
      * @param string|null         $samesite
@@ -617,6 +617,9 @@ trait ResponseTrait
 
     /**
      * Returns the cookie
+     *
+     * @param string $prefix Cookie prefix.
+     *                       '': the default prefix
      *
      * @return Cookie|Cookie[]|null
      */

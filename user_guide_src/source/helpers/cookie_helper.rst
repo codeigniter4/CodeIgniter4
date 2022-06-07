@@ -28,7 +28,7 @@ The following functions are available:
     :param    int    $expire: Number of seconds until expiration
     :param    string    $domain: Cookie domain (usually: .yourdomain.com)
     :param    string    $path: Cookie path
-    :param    string    $prefix: Cookie name prefix
+    :param    string    $prefix: Cookie name prefix. If ``''``, the default from **app/Config/Cookie.php** is used
     :param    bool    $secure: Whether to only send the cookie through HTTPS
     :param    bool    $httpOnly: Whether to hide the cookie from JavaScript
     :param    string    $sameSite: The value for the SameSite cookie parameter. If ``null``, the default from **app/Config/Cookie.php** is used
