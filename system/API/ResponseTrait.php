@@ -324,7 +324,11 @@ trait ResponseTrait
             (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true))
             && $this->request instanceof IncomingRequest
         ) {
-            $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
+            $mime = $this->request->negotiate(
+                'media',
+                $format->getConfig()->supportedResponseFormats,
+                false
+            );
         }
 
         $this->response->setContentType($mime);
