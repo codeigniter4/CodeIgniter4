@@ -320,10 +320,11 @@ trait ResponseTrait
         $mime   = "application/{$this->format}";
 
         // Determine correct response type through content negotiation if not explicitly declared
-        if (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true)) {
-            if ($this->request instanceof IncomingRequest) {
-                $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
-            }
+        if (
+            (empty($this->format) || ! in_array($this->format, ['json', 'xml'], true))
+            && $this->request instanceof IncomingRequest
+        ) {
+            $mime = $this->request->negotiate('media', $format->getConfig()->supportedResponseFormats, false);
         }
 
         $this->response->setContentType($mime);
