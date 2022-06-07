@@ -40,6 +40,9 @@ abstract class BaseHandler implements SessionHandlerInterface
     /**
      * Cookie prefix
      *
+     * The Config\Cookie::$prefix setting is completely ignored.
+     * See https://codeigniter4.github.io/CodeIgniter4/libraries/sessions.html#session-preferences
+     *
      * @var string
      */
     protected $cookiePrefix = '';
@@ -107,14 +110,14 @@ abstract class BaseHandler implements SessionHandlerInterface
         $cookie = config('Cookie');
 
         if ($cookie instanceof CookieConfig) {
-            $this->cookiePrefix = $cookie->prefix;
+            // Session cookies have no prefix.
             $this->cookieDomain = $cookie->domain;
             $this->cookiePath   = $cookie->path;
             $this->cookieSecure = $cookie->secure;
         } else {
             // @TODO Remove this fallback when deprecated `App` members are removed.
             // `Config/Cookie.php` is absence
-            $this->cookiePrefix = $config->cookiePrefix;
+            // Session cookies have no prefix.
             $this->cookieDomain = $config->cookieDomain;
             $this->cookiePath   = $config->cookiePath;
             $this->cookieSecure = $config->cookieSecure;
