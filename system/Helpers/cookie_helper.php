@@ -57,7 +57,7 @@ if (! function_exists('get_cookie')) {
      * Fetch an item from the $_COOKIE array
      *
      * @param string      $index
-     * @param string|null $prefix Cookie prefix.
+     * @param string|null $prefix Cookie name prefix.
      *                            '': the prefix in Config\Cookie
      *                            null: no prefix
      *
