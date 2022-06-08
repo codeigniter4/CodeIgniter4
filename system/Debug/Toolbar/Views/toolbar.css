@@ -303,7 +303,6 @@
   #debug-bar .ci-label img {
     margin: unset;
   }
-
   .hide-sm {
     display: none !important;
   }
@@ -432,7 +431,6 @@
 #debug-icon a:visited {
     color: #DD8615;
   }
-
   #debug-bar {
     background-color: #252525;
     color: #DFDFDF;
@@ -526,11 +524,9 @@
   #debug-bar .timeline .timer {
     background-color: #DD8615;
   }
-
   .debug-view.show-view {
     border-color: #DD8615;
   }
-
   .debug-view-path {
     background-color: #FDC894;
     color: #434343;
