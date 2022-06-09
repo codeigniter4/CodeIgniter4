@@ -13,6 +13,7 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use ZipArchive;
 
 /**
  * @internal
@@ -44,10 +45,34 @@ final class FileTest extends CIUnitTestCase
     {
         $file = new File(SYSTEMPATH . 'Common.php');
         $this->assertSame('php', $file->guessExtension());
+
         $file = new File(SYSTEMPATH . 'index.html');
         $this->assertSame('html', $file->guessExtension());
+
         $file = new File(ROOTPATH . 'phpunit.xml.dist');
         $this->assertSame('xml', $file->guessExtension());
+
+        $tmp  = tempnam(SUPPORTPATH, 'foo');
+        $file = new File($tmp, true);
+        $this->assertNull($file->guessExtension());
+        unlink($tmp);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6046
+     */
+    public function testGuessExtensionOnZip(): void
+    {
+        $tmp = SUPPORTPATH . 'foobar.zip';
+
+        $zip = new ZipArchive();
+        $zip->open($tmp, ZipArchive::CREATE | ZipArchive::CHECKCONS | ZipArchive::EXCL);
+        $zip->addFile(SYSTEMPATH . 'Common.php');
+        $zip->close();
+
+        $file = new File($tmp, true);
+        $this->assertSame('zip', $file->guessExtension());
+        unlink($tmp);
     }
 
     public function testRandomName()

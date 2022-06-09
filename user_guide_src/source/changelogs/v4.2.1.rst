@@ -1,0 +1,18 @@
+Version 4.2.1
+#############
+
+Release Date: Unreleased
+
+**4.2.1 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+- Guessing the file extension from the MIME type has been changed if the proposed extension is not valid. Previously, the guessing will early terminate and return ``null``. Now, if a proposed extension is given and is invalid, the MIME guessing will continue checking using the mapping of extension to MIME types.

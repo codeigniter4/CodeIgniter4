@@ -194,7 +194,7 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertInstanceOf(UploadedFile::class, $file);
         $this->assertSame('txt', $file->getExtension());
         // but not client mime type
-        $this->assertNull(Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
+        $this->assertSame('csv', Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
 
         // proposed extension does not match finfo_open mime type (text/plain)
         // but can be resolved by reverse searching
@@ -208,14 +208,12 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('zip', $file->getExtension());
 
         // proposed extension matches client mime type, but not finfo_open mime type (application/zip)
-        // this is a zip file (userFile4) but hat been renamed to 'rar'
+        // this is a zip file (userFile4) but has been renamed to 'rar'
         $file = $collection->getFile('userfile5');
         $this->assertInstanceOf(UploadedFile::class, $file);
-        // getExtension falls back to clientExtension (insecure)
-        $this->assertSame('rar', $file->getExtension());
+        $this->assertSame('zip', $file->getExtension());
         $this->assertSame('rar', Mimes::guessExtensionFromType($file->getClientMimeType(), $file->getClientExtension()));
-        // guessExtension is secure and does not returns empty
-        $this->assertSame('', $file->guessExtension());
+        $this->assertSame('zip', $file->guessExtension());
     }
 
     /**
