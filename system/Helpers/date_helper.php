@@ -37,6 +37,39 @@ if (! function_exists('now')) {
     }
 }
 
+if (! function_exists('later')) {
+    /**
+     * Get "later" time
+     *
+     * Returns time() based on the timezone parameter or on the
+     * app_timezone() setting
+     *
+     * @param string $dateSet     j-n-Y or now
+     * @param int    $amountLater Number
+     * @param string $typeLater   D/W/M/Y
+     * @param string $timezone
+     *
+     * @throws Exception
+     */
+    function later(string $dateSet = 'now', int $amountLater = 1, string $typeLater = 'D', ?string $timezone = null): int
+    {
+        $timezone = empty($timezone) ? app_timezone() : $timezone;
+
+        if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
+            return time();
+        }
+
+        $datetime = new DateTime($dateSet, new DateTimeZone($timezone));
+
+        // Add by Params
+        $datetime->add(new DateInterval('P' . $amountLater . $typeLater));
+
+        sscanf($datetime->format('j-n-Y G:i:s'), '%d-%d-%d %d:%d:%d', $day, $month, $year, $hour, $minute, $second);
+
+        return mktime($hour, $minute, $second, $month, $day, $year);
+    }
+}
+
 if (! function_exists('timezone_select')) {
     /**
      * Generates a select field of all available timezones
