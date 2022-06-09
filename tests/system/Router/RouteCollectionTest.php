@@ -12,6 +12,7 @@
 namespace CodeIgniter\Router;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
 use Tests\Support\Controllers\Hello;
@@ -1677,5 +1678,19 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $expects = [];
         $this->assertSame($expects, $routes);
+    }
+
+    public function testUseSupportedLocalesOnly()
+    {
+        config('App')->supportedLocales = ['en'];
+
+        $routes = $this->getCollector();
+        $routes->useSupportedLocalesOnly(true);
+        $routes->get('{locale}/products', 'Products::list');
+
+        $router = new Router($routes, Services::request());
+
+        $this->expectException(PageNotFoundException::class);
+        $router->handle('fr/products');
     }
 }
