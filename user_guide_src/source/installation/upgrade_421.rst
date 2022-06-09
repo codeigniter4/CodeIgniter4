@@ -16,7 +16,7 @@ Mandatory File Changes
 **********************
 
 app/Config/Mimes.php
-===================
+====================
 
 - The mapping of file extensions to MIME types in **app/Config/Mimes.php** was updated to fix a bug. Also, the logic of ``Mimes::getExtensionFromType()`` was changed.
 
