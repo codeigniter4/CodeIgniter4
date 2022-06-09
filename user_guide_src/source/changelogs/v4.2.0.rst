@@ -9,6 +9,14 @@ Release Date: June 3, 2022
     :local:
     :depth: 2
 
+Highlights
+**********
+
+- Update minimal PHP requirement to 7.4.
+- **OCI8 Driver for Oracle Database** (*contributed by* `ytetsuro <https://github.com/ytetsuro>`_). See `Database`_.
+- **Improved Auto Routing** (opt-in) (*contributed by* `kenjis <https://github.com/kenjis>`_). See `New Improved Auto Routing`_.
+- Query Builder **Subqueries** and **UNION** support (*contributed by* `Andrey Pyzhikov <https://github.com/iRedds>`_). See `Database`_.
+
 BREAKING
 ********
 
