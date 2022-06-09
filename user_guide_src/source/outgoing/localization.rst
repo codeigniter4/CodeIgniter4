@@ -81,8 +81,12 @@ segment will be your locale:
 In this example, if the user tried to visit ``http://example.com/fr/books``, then the locale would be
 set to ``fr``, assuming it was configured as a valid locale.
 
-.. note:: If the value doesn't match a valid locale as defined in the App configuration file, the default
-    locale will be used in it's place.
+If the value doesn't match a valid locale as defined in the App configuration file, the default
+locale will be used in it's place, unless you set to use only the supported locales defined in the App configuration
+file:
+
+.. literalinclude:: localization/018.php
+
 
 Retrieving the Current Locale
 =============================
