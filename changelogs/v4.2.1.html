@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Security Guidelines &mdash; CodeIgniter 4.2.0 documentation</title>
+  <title>Version 4.2.1 &mdash; CodeIgniter 4.2.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="General Topics" href="../general/index.html" />
-    <link rel="prev" title="Working With HTTP Requests" href="http.html" /> 
+    <link rel="next" title="Version 4.2.0" href="v4.2.0.html" />
+    <link rel="prev" title="Change Logs" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,12 +51,12 @@
 </ul>
 </li>
 </ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../installation/index.html">Installation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
@@ -72,15 +72,15 @@
 </ul>
 </li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">CodeIgniter4 Overview</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="structure.html">Application Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mvc.html">Models, Views, and Controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoloader.html">Autoloading Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
-<li class="toctree-l2"><a class="reference internal" href="factories.html">Factories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="http.html">Working With HTTP Requests</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Security Guidelines</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working With HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
 </ul>
 </li>
 </ul>
@@ -258,13 +258,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/concepts/security.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/changelogs/v4.2.1.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">CodeIgniter4 Overview</a> &raquo;</li>
-      <li>Security Guidelines</li>
+          <li><a href="../installation/index.html">Installation</a> &raquo;</li>
+          <li><a href="index.html">Change Logs</a> &raquo;</li>
+      <li>Version 4.2.1</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -273,234 +274,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="security-guidelines">
-<h1>Security Guidelines<a class="headerlink" href="#security-guidelines" title="Permalink to this headline"></a></h1>
-<p>We take security seriously.
-CodeIgniter incorporates a number of features and techniques to either enforce
-good security practices, or to enable you to do so easily.</p>
-<p>We respect the <a class="reference external" href="https://owasp.org">Open Web Application Security Project (OWASP)</a>
-and follow their recommendations as much as possible.</p>
-<p>The following comes from
-<a class="reference external" href="https://owasp.org/www-project-top-ten/">OWASP Top Ten Cheat Sheet</a>,
-identifying the top vulnerabilities for web applications.
-For each, we provide a brief description, the OWASP recommendations, and then
-the CodeIgniter provisions to address the problem.</p>
+  <section id="version-4-2-1">
+<h1>Version 4.2.1<a class="headerlink" href="#version-4-2-1" title="Permalink to this headline"></a></h1>
+<p>Release Date: Unreleased</p>
+<p><strong>4.2.1 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#a1-injection" id="id19">A1 Injection</a></p></li>
-<li><p><a class="reference internal" href="#a2-weak-authentication-and-session-management" id="id20">A2 Weak authentication and session management</a></p></li>
-<li><p><a class="reference internal" href="#a3-cross-site-scripting-xss" id="id21">A3 Cross Site Scripting (XSS)</a></p></li>
-<li><p><a class="reference internal" href="#a4-insecure-direct-object-reference" id="id22">A4 Insecure Direct Object Reference</a></p></li>
-<li><p><a class="reference internal" href="#a5-security-misconfiguration" id="id23">A5 Security Misconfiguration</a></p></li>
-<li><p><a class="reference internal" href="#a6-sensitive-data-exposure" id="id24">A6 Sensitive Data Exposure</a></p></li>
-<li><p><a class="reference internal" href="#a7-missing-function-level-access-control" id="id25">A7 Missing Function Level Access Control</a></p></li>
-<li><p><a class="reference internal" href="#a8-cross-site-request-forgery-csrf" id="id26">A8 Cross Site Request Forgery (CSRF)</a></p></li>
-<li><p><a class="reference internal" href="#a9-using-components-with-known-vulnerabilities" id="id27">A9 Using Components with Known Vulnerabilities</a></p></li>
-<li><p><a class="reference internal" href="#a10-unvalidated-redirects-and-forwards" id="id28">A10 Unvalidated Redirects and Forwards</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p>
+<ul>
+<li><p><a class="reference internal" href="#behavior-changes" id="id2">Behavior Changes</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
-<section id="a1-injection">
-<h2><a class="toc-backref" href="#id19">A1 Injection</a><a class="headerlink" href="#a1-injection" title="Permalink to this headline"></a></h2>
-<p>An injection is the inappropriate insertion of partial or complete data via
-the input data from the client to the application. Attack vectors include SQL,
-XML, ORM, code &amp; buffer overflows.</p>
-<section id="owasp-recommendations">
-<h3>OWASP recommendations<a class="headerlink" href="#owasp-recommendations" title="Permalink to this headline"></a></h3>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<section id="behavior-changes">
+<h3><a class="toc-backref" href="#id2">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Presentation: set correct content type, character set &amp; locale</p></li>
-<li><p>Submission: validate fields and provide feedback</p></li>
-<li><p>Controller: sanitize input; positive input validation using correct character set</p></li>
-<li><p>Model: parameterized queries</p></li>
-</ul>
-</section>
-<section id="codeigniter-provisions">
-<h3>CodeIgniter provisions<a class="headerlink" href="#codeigniter-provisions" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for input field filtering &amp; content metadata</p></li>
-<li><p>Validation library</p></li>
-</ul>
-</section>
-</section>
-<section id="a2-weak-authentication-and-session-management">
-<h2><a class="toc-backref" href="#id20">A2 Weak authentication and session management</a><a class="headerlink" href="#a2-weak-authentication-and-session-management" title="Permalink to this headline"></a></h2>
-<p>Inadequate authentication or improper session management can lead to a user
-getting more privileges than they are entitled to.</p>
-<section id="id1">
-<h3>OWASP recommendations<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: validate authentication &amp; role; send CSRF token with forms</p></li>
-<li><p>Design: only use built-in session management</p></li>
-<li><p>Controller: validate user, role, CSRF token</p></li>
-<li><p>Model: validate role</p></li>
-<li><p>Tip: consider the use of a request governor</p></li>
-</ul>
-</section>
-<section id="id2">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library</p></li>
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
-<li><p>Easy to add third party authentication</p></li>
-</ul>
-</section>
-</section>
-<section id="a3-cross-site-scripting-xss">
-<h2><a class="toc-backref" href="#id21">A3 Cross Site Scripting (XSS)</a><a class="headerlink" href="#a3-cross-site-scripting-xss" title="Permalink to this headline"></a></h2>
-<p>Insufficient input validation where one user can add content to a web site
-that can be malicious when viewed by other users to the web site.</p>
-<section id="id3">
-<h3>OWASP recommendations<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: output encode all user data as per output context; set input constraints</p></li>
-<li><p>Controller: positive input validation</p></li>
-<li><p>Tips: only process trustworthy data; do not store data HTML encoded in DB</p></li>
-</ul>
-</section>
-<section id="id4">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>esc function</p></li>
-<li><p>Validation library</p></li>
-</ul>
-</section>
-</section>
-<section id="a4-insecure-direct-object-reference">
-<h2><a class="toc-backref" href="#id22">A4 Insecure Direct Object Reference</a><a class="headerlink" href="#a4-insecure-direct-object-reference" title="Permalink to this headline"></a></h2>
-<p>Insecure Direct Object References occur when an application provides direct
-access to objects based on user-supplied input. As a result of this vulnerability
-attackers can bypass authorization and access resources in the system directly,
-for example database records or files.</p>
-<section id="id5">
-<h3>OWASP recommendations<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: don’t expose internal data; use random reference maps</p></li>
-<li><p>Controller: obtain data from trusted sources or random reference maps</p></li>
-<li><p>Model: validate user roles before updating data</p></li>
-</ul>
-</section>
-<section id="id6">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Validation library</p></li>
-<li><p>Easy to add third party authentication</p></li>
-</ul>
-</section>
-</section>
-<section id="a5-security-misconfiguration">
-<h2><a class="toc-backref" href="#id23">A5 Security Misconfiguration</a><a class="headerlink" href="#a5-security-misconfiguration" title="Permalink to this headline"></a></h2>
-<p>Improper configuration of an application architecture can lead to mistakes
-that might compromise the security of the whole architecture.</p>
-<section id="id7">
-<h3>OWASP recommendations<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: harden web and application servers; use HTTP strict transport security</p></li>
-<li><p>Controller: harden web and application servers; protect your XML stack</p></li>
-<li><p>Model: harden database servers</p></li>
-</ul>
-</section>
-<section id="id8">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Sanity checks during bootstrap</p></li>
-</ul>
-</section>
-</section>
-<section id="a6-sensitive-data-exposure">
-<h2><a class="toc-backref" href="#id24">A6 Sensitive Data Exposure</a><a class="headerlink" href="#a6-sensitive-data-exposure" title="Permalink to this headline"></a></h2>
-<p>Sensitive data must be protected when it is transmitted through the network.
-Such data can include user credentials and credit cards. As a rule of thumb,
-if data must be protected when it is stored, it must be protected also during
-transmission.</p>
-<section id="id9">
-<h3>OWASP recommendations<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: use TLS1.2; use strong ciphers and hashes; do not send keys or hashes to browser</p></li>
-<li><p>Controller: use strong ciphers and hashes</p></li>
-<li><p>Model: mandate strong encrypted communications with servers</p></li>
-</ul>
-</section>
-<section id="id10">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Session keys stored encrypted</p></li>
-</ul>
-</section>
-</section>
-<section id="a7-missing-function-level-access-control">
-<h2><a class="toc-backref" href="#id25">A7 Missing Function Level Access Control</a><a class="headerlink" href="#a7-missing-function-level-access-control" title="Permalink to this headline"></a></h2>
-<p>Sensitive data must be protected when it is transmitted through the network.
-Such data can include user credentials and credit cards. As a rule of thumb,
-if data must be protected when it is stored, it must be protected also during
-transmission.</p>
-<section id="id11">
-<h3>OWASP recommendations<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: ensure that non-web data is outside the web root; validate users and roles; send CSRF tokens</p></li>
-<li><p>Controller: validate users and roles; validate CSRF tokens</p></li>
-<li><p>Model: validate roles</p></li>
-</ul>
-</section>
-<section id="id12">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id12" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Public folder, with application and system outside</p></li>
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
-</ul>
-</section>
-</section>
-<section id="a8-cross-site-request-forgery-csrf">
-<h2><a class="toc-backref" href="#id26">A8 Cross Site Request Forgery (CSRF)</a><a class="headerlink" href="#a8-cross-site-request-forgery-csrf" title="Permalink to this headline"></a></h2>
-<p>CSRF is an attack that forces an end user to execute unwanted actions on a web
-application in which he/she is currently authenticated.</p>
-<section id="id13">
-<h3>OWASP recommendations<a class="headerlink" href="#id13" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: validate users and roles; send CSRF tokens</p></li>
-<li><p>Controller: validate users and roles; validate CSRF tokens</p></li>
-<li><p>Model: validate roles</p></li>
-</ul>
-</section>
-<section id="id14">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id14" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p><a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library provides for CSRF validation</p></li>
-</ul>
-</section>
-</section>
-<section id="a9-using-components-with-known-vulnerabilities">
-<h2><a class="toc-backref" href="#id27">A9 Using Components with Known Vulnerabilities</a><a class="headerlink" href="#a9-using-components-with-known-vulnerabilities" title="Permalink to this headline"></a></h2>
-<p>Many applications have known vulnerabilities and known attack strategies that
-can be exploited in order to gain remote control or to exploit data.</p>
-<section id="id15">
-<h3>OWASP recommendations<a class="headerlink" href="#id15" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Don’t use any of these</p></li>
-</ul>
-</section>
-<section id="id16">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id16" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Third party libraries incorporated must be vetted</p></li>
-</ul>
-</section>
-</section>
-<section id="a10-unvalidated-redirects-and-forwards">
-<h2><a class="toc-backref" href="#id28">A10 Unvalidated Redirects and Forwards</a><a class="headerlink" href="#a10-unvalidated-redirects-and-forwards" title="Permalink to this headline"></a></h2>
-<p>Faulty business logic or injected actionable code could redirect the user
-inappropriately.</p>
-<section id="id17">
-<h3>OWASP recommendations<a class="headerlink" href="#id17" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Presentation: don’t use URL redirection; use random indirect references</p></li>
-<li><p>Controller: don’t use URL redirection; use random indirect references</p></li>
-<li><p>Model: validate roles</p></li>
-</ul>
-</section>
-<section id="id18">
-<h3>CodeIgniter provisions<a class="headerlink" href="#id18" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p><a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">HTTP library</span></a> provides for …</p></li>
-<li><p><a class="reference internal" href="../libraries/sessions.html"><span class="doc">Session</span></a> library provides flashdata</p></li>
+<li><p>Guessing the file extension from the MIME type has been changed if the proposed extension is not valid. Previously, the guessing will early terminate and return <code class="docutils literal notranslate"><span class="pre">null</span></code>. Now, if a proposed extension is given and is invalid, the MIME guessing will continue checking using the mapping of extension to MIME types.</p></li>
 </ul>
 </section>
 </section>
@@ -510,8 +302,8 @@ inappropriately.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="http.html" class="btn btn-neutral float-left" title="Working With HTTP Requests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../general/index.html" class="btn btn-neutral float-right" title="General Topics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Change Logs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v4.2.0.html" class="btn btn-neutral float-right" title="Version 4.2.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
