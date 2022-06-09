@@ -439,6 +439,11 @@ class Router implements RouterInterface
                         $matched
                     );
 
+                    if ($this->collection->shouldUseSupportedLocalesOnly()
+                        && ! in_array($matched['locale'], config('App')->supportedLocales, true)) {
+                        return false;
+                    }
+
                     $this->detectedLocale = $matched['locale'];
                     unset($matched);
                 }
