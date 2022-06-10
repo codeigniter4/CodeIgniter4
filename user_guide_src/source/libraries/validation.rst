@@ -686,6 +686,8 @@ valid_url_strict        Yes        Fails if field does not contain a valid URL. 
 valid_date              No         Fails if field does not contain a valid date. valid_date[d/m/Y]
                                    Accepts an optional parameter to matches
                                    a date format.
+valid_token             No         Fails if field contains anything other than
+                                   JWT Format.
 valid_cc_number         Yes        Verifies that the credit card number matches  valid_cc_number[amex]
                                    the format used by the specified provider.
                                    Current supported providers are:
