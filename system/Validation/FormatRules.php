@@ -352,7 +352,7 @@ class FormatRules
      *
      * @param string $str String
      */
-    public function valid_token(string $str = ''): bool
+    public function valid_jwt(string $str = ''): bool
     {
         $newString = explode('.', $str);
 
