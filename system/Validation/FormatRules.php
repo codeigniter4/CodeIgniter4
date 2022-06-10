@@ -346,4 +346,22 @@ class FormatRules
 
         return $date !== false && $errors !== false && $errors['warning_count'] === 0 && $errors['error_count'] === 0;
     }
+
+    /**
+     * Token JWT Validator
+     * 
+     * @param string $str String
+     */
+    public function valid_token(string $str = ''): bool
+    {
+        $newString = explode('.', $str);
+
+        if (count($newString) === 3) {
+            foreach ($newString as $key => $value) {
+                return base64_encode(base64_decode($value, true)) === $value;
+            }
+        }
+
+        return false;
+    }
 }
