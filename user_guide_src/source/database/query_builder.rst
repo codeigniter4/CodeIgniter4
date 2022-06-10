@@ -879,6 +879,22 @@ will be deleted with our new row data replacing it.
 Usage of the ``set()`` method is also allowed and all fields are
 automatically escaped, just like with ``insert()``.
 
+replaceBatch
+===========
+
+$builder->replaceBatch()
+-----------------------
+
+Generates an insert/on duplicate key update string based on the data you supply, and runs the
+query. You can either pass an **array** or an **object** to the
+method. Here is an example using an array:
+
+.. literalinclude:: query_builder/105.php
+
+The first parameter is an associative array of values.
+
+.. note:: All values are escaped automatically producing safer queries.
+
 $builder->set()
 ---------------
 
@@ -1631,6 +1647,20 @@ Class Reference
         :rtype:    bool
 
         Compiles and executes a ``REPLACE`` statement.
+
+    .. php:method:: replaceBatch([$set = null[, $escape = null[, $batch_size = 100]]])
+
+        :param array $set: Data to insert
+        :param bool $escape: Whether to escape values
+        :param int $batch_size: Count of rows to insert at once
+        :returns: Number of rows inserted/updated or ``false`` on failure
+        :rtype:    int|false
+
+        Compiles and executes batch ``INSERT.. ON DUPLICATE KEY UPDATE`` statements.
+
+        .. note:: When more than ``$batch_size`` rows are provided, multiple
+            ``INSERT.. ON DUPLICATE KEY UPDATE`` queries will be executed, each trying to insert
+            /update up to ``$batch_size`` rows.
 
     .. php:method:: delete([$where = ''[, $limit = null[, $reset_data = true]]])
 

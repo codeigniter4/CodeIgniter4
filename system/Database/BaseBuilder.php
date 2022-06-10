@@ -1971,6 +1971,86 @@ class BaseBuilder
     }
 
     /**
+     * Compiles batch replace strings and runs the queries
+     *
+     * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of rows replaced or FALSE on failure, SQL array when testMode
+     */
+    public function replaceBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
+    {
+        if ($set === null) {
+            if (empty($this->QBSet)) {
+                if (CI_DEBUG) {
+                    throw new DatabaseException('You must use the "set" method to update an entry.');
+                }
+
+                return false; // @codeCoverageIgnore
+            }
+        } elseif (empty($set)) {
+            if (CI_DEBUG) {
+                throw new DatabaseException('replaceBatch() called with no data');
+            }
+
+            return false; // @codeCoverageIgnore
+        }
+
+        $hasQBSet = $set === null;
+
+        $table = $this->QBFrom[0];
+
+        $affectedRows = 0;
+        $savedSQL     = [];
+
+        if ($hasQBSet) {
+            $set = $this->QBSet;
+        }
+
+        for ($i = 0, $total = count($set); $i < $total; $i += $batchSize) {
+            if ($hasQBSet) {
+                $QBSet = array_slice($this->QBSet, $i, $batchSize);
+            } else {
+                $this->setInsertBatch(array_slice($set, $i, $batchSize), '', $escape);
+                $QBSet = $this->QBSet;
+            }
+            $sql = $this->_replaceBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, $QBSet);
+
+            if ($this->testMode) {
+                $savedSQL[] = $sql;
+            } else {
+                $this->db->query($sql, null, false);
+                $affectedRows += $this->db->affectedRows();
+            }
+
+            if (! $hasQBSet) {
+                $this->resetRun([
+                    'QBSet'  => [],
+                    'QBKeys' => [],
+                ]);
+            }
+        }
+
+        $this->resetWrite();
+
+        return $this->testMode ? $savedSQL : $affectedRows;
+    }
+
+    /**
+     * Generates a platform-specific replace string from the supplied data.
+     * Using INSERT ON DUPLICATE KEY UPDATE rather than REPLACE to avoid foreign key constraint problems
+     */
+    protected function _replaceBatch(string $table, array $keys, array $values): string
+    {
+		$updateString = '';
+
+		foreach($keys as $key){
+			$updateString .= $key . ' = VALUES(' . $key . '), ';
+		}
+
+        return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values) . ' ON DUPLICATE KEY UPDATE ' . rtrim($updateString, ', ');
+    }
+
+    /**
      * Groups tables in FROM clauses if needed, so there is no confusion
      * about operator precedence.
      *
