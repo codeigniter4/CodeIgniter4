@@ -358,25 +358,19 @@ class FormatRules
 
         if (count($newString) === 3) {
             foreach ($newString as $index => $value) {
-                if (count($newString) === 3) {
-                    foreach ($newString as $index => $value) {
-                        if ($index < 2) {
-                            $encoded = rtrim(base64_encode(base64_decode($value, true)), '==');
-                            $isValid = $encoded === $value;
+                if ($index < 2) {
+                    $encoded = rtrim(base64_encode(base64_decode($value, true)), '==');
+                    $isValid = $encoded === $value;
 
-                            if (! $isValid) {
-                                return false;
-                            }
-                        }
+                    if (! $isValid) {
+                        return false;
                     }
-
+                    
                     return true;
                 }
 
                 return false;
             }
-            
-            return true;
         }
 
         return false;
