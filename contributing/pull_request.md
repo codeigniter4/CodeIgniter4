@@ -43,11 +43,15 @@ as the existing code and ensures that the codebase will be as readable as possib
 
 You can fix most of the coding style violations by running this command in your terminal:
 
-	composer cs-fix
+```
+> composer cs-fix
+```
 
 You can check the coding style violations:
 
-	composer cs
+```
+> composer cs
+```
 
 ### Unit Testing
 
@@ -194,15 +198,21 @@ so that you can fix whatever errors that pop up with your submission.
 
 PHPStan is expected to scan the entire framework by running this command in your terminal:
 
-	vendor/bin/phpstan analyse
+```
+> vendor/bin/phpstan analyse
+```
 
 Rector, on the other hand, can be run on the specific files you modified or added:
 
-	vendor/bin/rector process --dry-run path/to/file
+```
+> vendor/bin/rector process --dry-run path/to/file
+```
 
 If you run it without `--dry-run`, Rector will fix the code:
 
-	vendor/bin/rector process path/to/file
+```
+> vendor/bin/rector process path/to/file
+```
 
 [1]: https://github.com/phpstan/phpstan-src
 [2]: https://github.com/rector/rector
