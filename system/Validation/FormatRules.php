@@ -359,7 +359,7 @@ class FormatRules
         if (count($newString) === 3) {
             foreach ($newString as $value) {
                 $encoded = rtrim(base64_encode(base64_decode($value, true)), '==');
-                $isValid =  $encoded === $value;
+                $isValid = $encoded === $value;
                 
                 if (! $isValid) {
                     return false;
