@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  */
-
 /*
  * System URI Routing
  *
@@ -20,4 +19,4 @@
  */
 
 // CLI Catchall - uses a _remap to call Commands
-$routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
+// $routes->cli('ci(:any)', '\CodeIgniter\CLI\CommandRunner::index/$1');
