@@ -34,7 +34,7 @@ final class DateHelperTest extends CIUnitTestCase
         // Chicago should be two hours ahead of Vancouver
         $this->assertCloseEnough(7200, now('America/Chicago') - now('America/Vancouver'));
     }
-    
+
     public function testLaterDefault()
     {
         $date = date('j-n-Y G:i:s', strtotime('2022-06-09 15:00:00' . '+1 days'));
