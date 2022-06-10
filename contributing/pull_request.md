@@ -18,8 +18,8 @@ The [Open Source Guide](https://opensource.guide/) is a good first read for thos
 
 ## CodeIgniter Internals Overview
 
-[CodeIgniter Internals Overview](./internals.md) should help contributors 
-understand how the core of the framework works. Specifically, it details the 
+[CodeIgniter Internals Overview](./internals.md) should help contributors
+understand how the core of the framework works. Specifically, it details the
 information needed to create new packages for the core.
 
 ## Guidelines
@@ -27,7 +27,7 @@ information needed to create new packages for the core.
 Before we look into how to contribute to CodeIgniter4, here are some guidelines.
 Your Pull Requests (PRs) need to meet our guidelines.
 
-If your Pull Requests fail to pass these guidelines, they will be declined, 
+If your Pull Requests fail to pass these guidelines, they will be declined,
 and you will need to re-submit when you’ve made the changes.
 This might sound a bit tough, but it is required for us to maintain the quality of the codebase.
 
@@ -38,7 +38,7 @@ This might sound a bit tough, but it is required for us to maintain the quality 
 All code must conform to our [Style Guide](./styleguide.md), which is
 based on PSR-12.
 
-This makes certain that all submitted code is of the same format 
+This makes certain that all submitted code is of the same format
 as the existing code and ensures that the codebase will be as readable as possible.
 
 You can fix most of the coding style violations by running this command in your terminal:
@@ -63,7 +63,7 @@ class would test the `Banana` class. There will be occasions when it is
 more convenient to have separate classes to test different functionality
 of a single CodeIgniter component.
 
-See [Running System Tests](../tests/README.md) 
+See [Running System Tests](../tests/README.md)
 and the [PHPUnit website](https://phpunit.de/) for more information.
 
 ### Comments
@@ -92,11 +92,11 @@ Each framework component or group of components needs a corresponding
 section in the User Guide. Some of the more fundamental components will
 show up in more than one place.
 
-If you change anything that requires a change to documentation, 
-then you will need to add to the documentation. 
-New classes, methods, parameters, changing default values, etc. 
-are all changes that require a change to documentation. 
-Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change, 
+If you change anything that requires a change to documentation,
+then you will need to add to the documentation.
+New classes, methods, parameters, changing default values, etc.
+are all changes that require a change to documentation.
+Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change,
 and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
 
 See [Writing CodeIgniter Documentation](./documentation.rst).
