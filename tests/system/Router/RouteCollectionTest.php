@@ -15,6 +15,7 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\Router\Exceptions\RouterException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
+use Generator;
 use Tests\Support\Controllers\Hello;
 
 /**
@@ -855,14 +856,26 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame('/en/contact', $routes->reverseRoute('myController::goto'));
     }
 
-    public function testReverseRoutingDefaultNamespaceAppController()
+    public function reverseRoutingHandlerProvider(): Generator
+    {
+        return yield from [
+            'Omit namespace'                  => ['Galleries::showUserGallery'],
+            'Specify full ns starting with /' => ['\App\Controllers\Galleries::showUserGallery'],
+            'Specify full ns w/o staring /'   => ['App\Controllers\Galleries::showUserGallery'],
+        ];
+    }
+
+    /**
+     * @dataProvider reverseRoutingHandlerProvider
+     */
+    public function testReverseRoutingDefaultNamespaceAppController(string $controller)
     {
         $routes = $this->getCollector();
         $routes->setDefaultNamespace('App\Controllers');
 
         $routes->get('users/(:num)/gallery(:any)', 'Galleries::showUserGallery/$1/$2');
 
-        $match = $routes->reverseRoute('Galleries::showUserGallery', 15, 12);
+        $match = $routes->reverseRoute($controller, 15, 12);
 
         $this->assertSame('/users/15/gallery12', $match);
     }
