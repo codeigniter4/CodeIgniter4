@@ -83,11 +83,11 @@ final class FormatRulesTest extends CIUnitTestCase
     public function testValidTokenTrue(): void
     {
         $data = [
-            'token'   => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
         ];
 
         $this->validation->setRules([
-            'token'   => 'valid_token',
+            'token' => 'valid_token',
         ]);
 
         $this->assertTrue($this->validation->run($data));
@@ -96,11 +96,11 @@ final class FormatRulesTest extends CIUnitTestCase
     public function testValidTokenFalse(): void
     {
         $data = [
-            'token'   => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
         ];
 
         $this->validation->setRules([
-            'token'   => 'valid_token',
+            'token' => 'valid_token',
         ]);
 
         $this->assertFalse($this->validation->run($data));
