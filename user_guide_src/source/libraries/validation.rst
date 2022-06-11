@@ -687,7 +687,8 @@ valid_date              No         Fails if field does not contain a valid date.
                                    Accepts an optional parameter to matches
                                    a date format.
 valid_jwt               No         Fails if field contains anything other than
-                                   JWT Format.
+                                   JWT Format. Note: this does not verify the
+                                   token itself, just the string format.
 valid_cc_number         Yes        Verifies that the credit card number matches  valid_cc_number[amex]
                                    the format used by the specified provider.
                                    Current supported providers are:
