@@ -48,14 +48,13 @@ The following functions are available:
     :returns:    UNIX timestamp
     :rtype:    int
 
-    Returns the current time as a UNIX timestamp, referenced either to your server's
+    Returns the additional datetime as a UNIX timestamp, referenced either to your server's
     local time or any PHP supported timezone, based on the "time reference" setting
     in your config file.
 
     .. literalinclude:: date_helper/004.php
 
-    If a timezone is not provided, it will return timestamp by timezone `date_default_timezone_get()` based on the
-    **time_reference** setting.
+    If a timezone is not provided, it will return timestamp by timezone `date_default_timezone_get()`.
 
 .. php:function:: timezone_select([$class = '', $default = '', $what = \DateTimeZone::ALL, $country = null])
 
