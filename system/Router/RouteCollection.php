@@ -1008,7 +1008,7 @@ class RouteCollection implements RouteCollectionInterface
         $namespace = trim($this->defaultNamespace, '\\') . '\\';
         if (
             substr($search, 0, 1) !== '\\'
-            || substr($search, 0, strlen($namespace)) !== $namespace
+            && substr($search, 0, strlen($namespace)) !== $namespace
         ) {
             $search = $namespace . $search;
         }
