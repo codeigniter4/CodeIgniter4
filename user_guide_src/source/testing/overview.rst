@@ -253,10 +253,26 @@ component name:
 Stream Filters
 ==============
 
-**CITestStreamFilter** provides an alternate to these helper methods.
+**StreamFilterTrait** provides an alternate to these helper methods.
 
 You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
-might be helpful. The ``CITestStreamFilter`` helps you capture the output from the stream of your choice.
+might be helpful. The ``StreamFilterTrait`` helps you capture the output from the stream of your choice.
+
+**Overview of methods**
+
+``StreamFilterTrait::registerStreamFilterClass()`` Registering a filter to capture streams.
+
+``StreamFilterTrait::appendStreamOutputFilter()`` Adding a filter to the output stream.
+
+``StreamFilterTrait::appendStreamErrorFilter()`` Adding a filter to the error stream.
+
+``StreamFilterTrait::removeStreamOutputFilter()`` Removing the filter from the output stream.
+
+``StreamFilterTrait::removeStreamErrorFilter()`` Removing the filter from the error stream.
+
+``StreamFilterTrait::getStreamFilterBuffer()`` Get the captured data from the buffer.
+
+``StreamFilterTrait::resetStreamFilterBuffer()`` Reset captured data.
 
 An example demonstrating this inside one of your test cases:
 
