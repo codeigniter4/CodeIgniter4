@@ -352,11 +352,15 @@ class FormatRules
      *
      * @param string $str String
      */
-    public function valid_jwt(string $str = ''): bool
+    public function valid_jwt(?string $str = null): bool
     {
+        if (empty($str)) {
+            return false;
+        }
+
         $segments = explode('.', $str);
 
-        if (count($segments) !== 3) {
+        if (count($segments) !== 3 || in_array('', $segments, true)) {
             return false;
         }
 
