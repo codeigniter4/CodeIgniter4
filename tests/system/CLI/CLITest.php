@@ -12,7 +12,7 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use ReflectionProperty;
 use RuntimeException;
 
@@ -21,19 +21,20 @@ use RuntimeException;
  */
 final class CLITest extends CIUnitTestCase
 {
-    private $stream_filter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()
+            ->appendStreamOutputFilter()
+            ->appendStreamErrorFilter();
     }
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->stream_filter);
+        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
     }
 
     public function testNew()
@@ -172,7 +173,7 @@ final class CLITest extends CIUnitTestCase
         CLI::print('test');
 
         $expected = 'test';
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testPrintForeground()
@@ -180,7 +181,7 @@ final class CLITest extends CIUnitTestCase
         CLI::print('test', 'red');
 
         $expected = "\033[0;31mtest\033[0m";
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testPrintBackground()
@@ -188,7 +189,7 @@ final class CLITest extends CIUnitTestCase
         CLI::print('test', 'red', 'green');
 
         $expected = "\033[0;31m\033[42mtest\033[0m";
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testWrite()
@@ -196,7 +197,7 @@ final class CLITest extends CIUnitTestCase
         CLI::write('test');
 
         $expected = PHP_EOL . 'test' . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testWriteForeground()
@@ -204,7 +205,7 @@ final class CLITest extends CIUnitTestCase
         CLI::write('test', 'red');
 
         $expected = "\033[0;31mtest\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testWriteForegroundWithColorBefore()
@@ -212,7 +213,7 @@ final class CLITest extends CIUnitTestCase
         CLI::write(CLI::color('green', 'green') . ' red', 'red');
 
         $expected = "\033[0;32mgreen\033[0m\033[0;31m red\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testWriteForegroundWithColorAfter()
@@ -220,7 +221,7 @@ final class CLITest extends CIUnitTestCase
         CLI::write('red ' . CLI::color('green', 'green'), 'red');
 
         $expected = "\033[0;31mred \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     /**
@@ -234,7 +235,7 @@ final class CLITest extends CIUnitTestCase
         );
 
         $expected = "\033[0;32mgreen\033[0m\033[0;31m red \033[0m\033[0;32mgreen\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testWriteBackground()
@@ -242,38 +243,32 @@ final class CLITest extends CIUnitTestCase
         CLI::write('test', 'red', 'green');
 
         $expected = "\033[0;31m\033[42mtest\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testError()
     {
-        $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
         CLI::error('test');
 
         // red expected cuz stderr
         $expected = "\033[1;31mtest\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testErrorForeground()
     {
-        $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
         CLI::error('test', 'purple');
 
         $expected = "\033[0;35mtest\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testErrorBackground()
     {
-        $this->stream_filter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
         CLI::error('test', 'purple', 'green');
 
         $expected = "\033[0;35m\033[42mtest\033[0m" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testShowProgress()
@@ -299,7 +294,7 @@ final class CLITest extends CIUnitTestCase
                     "\033[1A[\033[32m##########\033[0m] 100% Complete" . PHP_EOL .
                     'third.' . PHP_EOL .
                     "[\033[32m#.........\033[0m]   5% Complete" . PHP_EOL;
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testShowProgressWithoutBar()
@@ -310,7 +305,7 @@ final class CLITest extends CIUnitTestCase
         CLI::showProgress(false, 20);
 
         $expected = 'first.' . PHP_EOL . "\007\007\007";
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     public function testWrap()
@@ -450,7 +445,7 @@ final class CLITest extends CIUnitTestCase
     {
         CLI::table($tbody, $thead);
 
-        $this->assertSame(CITestStreamFilter::$buffer, $expected);
+        $this->assertSame($this->getStreamFilterBuffer(), $expected);
     }
 
     public function tableProvider()

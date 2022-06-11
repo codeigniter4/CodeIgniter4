@@ -15,23 +15,22 @@ use CodeIgniter\CodeIgniter;
 use CodeIgniter\Config\DotEnv;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCLIConfig;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class ConsoleTest extends CIUnitTestCase
 {
-    private $stream_filter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()->appendStreamOutputFilter();
 
         $this->env = new DotEnv(ROOTPATH);
         $this->env->load();
@@ -54,7 +53,7 @@ final class ConsoleTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->stream_filter);
+        $this->removeStreamOutputFilter();
     }
 
     public function testNew()
@@ -67,16 +66,20 @@ final class ConsoleTest extends CIUnitTestCase
     {
         $console = new Console($this->app);
         $console->showHeader();
-        $result = CITestStreamFilter::$buffer;
-        $this->assertGreaterThan(0, strpos($result, sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)));
+        $this->assertGreaterThan(
+            0,
+            strpos(
+                $this->getStreamFilterBuffer(),
+                sprintf('CodeIgniter v%s Command Line Tool', CodeIgniter::CI_VERSION)
+            )
+        );
     }
 
     public function testNoHeader()
     {
         $console = new Console($this->app);
         $console->showHeader(true);
-        $result = CITestStreamFilter::$buffer;
-        $this->assertSame('', $result);
+        $this->assertSame('', $this->getStreamFilterBuffer());
     }
 
     public function testRun()
@@ -86,13 +89,12 @@ final class ConsoleTest extends CIUnitTestCase
 
         $console = new Console($this->app);
         $console->run(true);
-        $result = CITestStreamFilter::$buffer;
 
         // close open buffer
         ob_end_clean();
 
         // make sure the result looks like a command list
-        $this->assertStringContainsString('Lists the available commands.', $result);
-        $this->assertStringContainsString('Displays basic usage information.', $result);
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 }

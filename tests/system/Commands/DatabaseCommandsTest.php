@@ -12,21 +12,20 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class DatabaseCommandsTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()
+            ->appendStreamOutputFilter()
+            ->appendStreamErrorFilter();
 
         parent::setUp();
     }
@@ -34,19 +33,19 @@ final class DatabaseCommandsTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         command('migrate:rollback');
-        stream_filter_remove($this->streamFilter);
+        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
 
         parent::tearDown();
     }
 
     protected function getBuffer(): string
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     protected function clearBuffer(): void
     {
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
     }
 
     public function testMigrate()

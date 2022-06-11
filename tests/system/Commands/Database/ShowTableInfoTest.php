@@ -13,7 +13,7 @@ namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -23,25 +23,24 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 final class ShowTableInfoTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+    use StreamFilterTrait;
 
-    private $streamFilter;
     protected $migrateOnce = true;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()
+            ->appendStreamOutputFilter()
+            ->appendStreamErrorFilter();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        stream_filter_remove($this->streamFilter);
+        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
     }
 
     private function getResultWithoutControlCode(): string
@@ -49,7 +48,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
         return str_replace(
             ["\033[0;30m", "\033[0;33m", "\033[43m", "\033[0m"],
             '',
-            CITestStreamFilter::$buffer
+            $this->getStreamFilterBuffer()
         );
     }
 

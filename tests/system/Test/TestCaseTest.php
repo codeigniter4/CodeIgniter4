@@ -14,7 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+
 use Config\App;
 
 /**
@@ -22,6 +22,8 @@ use Config\App;
  */
 final class TestCaseTest extends CIUnitTestCase
 {
+    use StreamFilterTrait;
+
     public function testGetPrivatePropertyWithObject()
     {
         $obj    = new __TestForReflectionHelper();
@@ -48,12 +50,11 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testStreamFilter()
     {
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()->appendStreamOutputFilter();
         CLI::write('first.');
         $expected = "first.\n";
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
-        stream_filter_remove($this->stream_filter);
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
+        $this->removeStreamOutputFilter();
     }
 
     /**

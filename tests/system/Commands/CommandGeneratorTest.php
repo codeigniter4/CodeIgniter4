@@ -12,28 +12,27 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class CommandGeneratorTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()
+            ->appendStreamOutputFilter()
+            ->appendStreamErrorFilter();
     }
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
+        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
 
@@ -98,7 +97,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     {
         command('make:command deliver -group Deliverables');
         $file = APPPATH . 'Commands/Deliver.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
 
         $contents = $this->getFileContents($file);
@@ -108,7 +107,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     public function testGenerateCommandWithOptionSuffix()
     {
         command('make:command publish -suffix');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Commands/PublishCommand.php';
         $this->assertFileExists($file);
     }
@@ -119,7 +118,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     public function testGeneratorPreservesCase(): void
     {
         command('make:model TestModule');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Models/TestModule.php');
     }
 
@@ -129,7 +128,7 @@ final class CommandGeneratorTest extends CIUnitTestCase
     public function testGeneratorPreservesCaseButChangesComponentName(): void
     {
         command('make:controller TestModulecontroller');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/TestModuleController.php');
     }
 

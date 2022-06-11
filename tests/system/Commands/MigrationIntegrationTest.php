@@ -12,14 +12,15 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class MigrationIntegrationTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
+
     private string $migrationFileFrom = SUPPORTPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
     private string $migrationFileTo   = APPPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
 
@@ -41,10 +42,9 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         $contents = str_replace('namespace Tests\Support\Database\Migrations;', 'namespace App\Database\Migrations;', $contents);
         file_put_contents($this->migrationFileTo, $contents);
 
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
+        $this->registerStreamFilterClass()
+            ->appendStreamOutputFilter()
+            ->appendStreamErrorFilter();
     }
 
     protected function tearDown(): void
@@ -55,7 +55,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
             @unlink($this->migrationFileTo);
         }
 
-        stream_filter_remove($this->streamFilter);
+        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
     }
 
     public function testMigrationWithRollbackHasSameNameFormat(): void
@@ -63,15 +63,15 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         command('migrate -n App');
         $this->assertStringContainsString(
             '(App) 20160428212500_App\Database\Migrations\Migration_Create_test_tables',
-            CITestStreamFilter::$buffer
+            $this->getStreamFilterBuffer()
         );
 
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('migrate:rollback -n App');
         $this->assertStringContainsString(
             '(App) 20160428212500_App\Database\Migrations\Migration_Create_test_tables',
-            CITestStreamFilter::$buffer
+            $this->getStreamFilterBuffer()
         );
     }
 }

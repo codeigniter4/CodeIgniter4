@@ -16,7 +16,7 @@ use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 
 /**
@@ -24,16 +24,17 @@ use Config\Database;
  */
 final class CreateDatabaseTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
+
     private BaseConnection $connection;
 
     protected function setUp(): void
     {
-        CITestStreamFilter::$buffer = '';
+        $this->registerStreamFilterClass()
+            ->appendStreamOutputFilter()
+            ->appendStreamErrorFilter();
 
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-        $this->connection   = Database::connect();
+        $this->connection = Database::connect();
 
         parent::setUp();
 
@@ -53,14 +54,14 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
+        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
 
         parent::tearDown();
     }
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     public function testCreateDatabase()
@@ -80,7 +81,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         }
 
         command('db:create foobar');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('db:create foobar --ext db');
         $this->assertStringContainsString('already exists.', $this->getBuffer());
@@ -93,7 +94,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         }
 
         command('db:create foobar');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('db:create foobar');
         $this->assertStringContainsString('Unable to create the specified database.', $this->getBuffer());
