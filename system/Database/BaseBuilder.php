@@ -1923,7 +1923,7 @@ class BaseBuilder
     {
         if (empty($this->QBSet)) {
             if (CI_DEBUG) {
-                throw new DatabaseException('You must use the "set" method to update an entry.');
+                throw new DatabaseException('You must use the "set" method to insert an entry.');
             }
 
             return false; // @codeCoverageIgnore
