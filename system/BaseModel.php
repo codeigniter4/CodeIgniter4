@@ -314,6 +314,11 @@ abstract class BaseModel
      */
     protected $afterDelete = [];
 
+    /**
+     * Whether to prohibit inserting empty data.
+     */
+    protected bool $prohibitInsertEmpty = true;
+
     public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
@@ -742,7 +747,7 @@ abstract class BaseModel
 
         // doProtectFields() can further remove elements from
         // $data so we need to check for empty dataset again
-        if (empty($data)) {
+        if ($this->prohibitInsertEmpty && empty($data)) {
             throw DataException::forEmptyDataset('insert');
         }
 
@@ -764,6 +769,9 @@ abstract class BaseModel
         }
 
         $result = $this->doInsert($eventData['data']);
+
+        // Reset $prohibitInsertEmpty value.
+        $this->prohibitInsertEmpty = true;
 
         $eventData = [
             'id'     => $this->insertID,
@@ -1640,7 +1648,7 @@ abstract class BaseModel
             throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
         }
 
-        if (empty($data)) {
+        if ($this->prohibitInsertEmpty && empty($data)) {
             throw DataException::forEmptyDataset($type);
         }
 
@@ -1659,7 +1667,7 @@ abstract class BaseModel
         }
 
         // If it's still empty here, means $data is no change or is empty object
-        if (empty($data)) {
+        if ($this->prohibitInsertEmpty && empty($data)) {
             throw DataException::forEmptyDataset($type);
         }
 
@@ -1764,5 +1772,15 @@ abstract class BaseModel
         }
 
         return $rules;
+    }
+
+    /**
+     * Permits inserting empty date in the next insertion.
+     */
+    public function permitInsertEmpty(): self
+    {
+        $this->prohibitInsertEmpty = false;
+
+        return $this;
     }
 }

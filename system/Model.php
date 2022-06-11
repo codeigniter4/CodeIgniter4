@@ -275,7 +275,18 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        $result = $builder->insert();
+        if (! $this->prohibitInsertEmpty && empty($data)) {
+            $table = $this->db->protectIdentifiers($this->table, true, null, false);
+            if ($this->db->getPlatform() === 'MySQLi') {
+                $sql = 'INSERT INTO ' . $table . ' VALUES ()';
+            } else {
+                $sql = 'INSERT INTO ' . $table . ' DEFAULT VALUES';
+            }
+
+            $result = $this->db->query($sql);
+        } else {
+            $result = $builder->insert();
+        }
 
         // If insertion succeeded then save the insert ID
         if ($result) {
