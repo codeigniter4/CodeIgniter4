@@ -80,43 +80,50 @@ final class FormatRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
-    public function testValidJWTValid(): void
+    /**
+     * @dataProvider tokenJWTProvider
+     */
+    public function testValidJWT(?string $token, bool $expected): void
     {
         $data = [
-            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+            'token' => $token,
         ];
 
         $this->validation->setRules([
             'token' => 'valid_jwt',
         ]);
 
-        $this->assertTrue($this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
-    public function testValidJWTUnformatted(): void
+    public function tokenJWTProvider(): Generator
     {
-        $data = [
-            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+        yield from [
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+                true,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.INVALID.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+                false,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+                false,
+            ],
+            [
+                null,
+                false,
+            ],
+            [
+                '..',
+                false,
+            ],
+            [
+                'RGVubnk',
+                false,
+            ],
         ];
-
-        $this->validation->setRules([
-            'token' => 'valid_jwt',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
-    }
-
-    public function testValidJWTInvalidBase64(): void
-    {
-        $data = [
-            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.INVALID.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
-        ];
-
-        $this->validation->setRules([
-            'token' => 'valid_jwt',
-        ]);
-
-        $this->assertFalse($this->validation->run($data));
     }
 
     /**
