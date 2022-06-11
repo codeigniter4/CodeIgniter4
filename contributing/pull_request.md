@@ -160,7 +160,7 @@ working on your contribution.
 
 All bug fixes should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
 
-PRs with any enhancement should be sent to __"4.3"__ branch, this is where the next minor upgrade version will be developed.
+PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
 
 The __"master"__ branch will always contain the latest stable version and is kept clean so a "hotfix" (e.g. an
 emergency security patch) can be applied to the "master" branch to create a new version, without worrying
