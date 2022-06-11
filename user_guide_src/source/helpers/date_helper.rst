@@ -49,8 +49,7 @@ The following functions are available:
     :rtype:    int
 
     Returns the additional datetime as a UNIX timestamp, referenced either to your server's
-    local time or any PHP supported timezone, based on the "time reference" setting
-    in your config file.
+    local time or any PHP supported timezone.
 
     .. literalinclude:: date_helper/004.php
 
