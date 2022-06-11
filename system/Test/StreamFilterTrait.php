@@ -18,12 +18,12 @@ trait StreamFilterTrait
     /**
      * @var resource|null
      */
-    protected $streamFilterOutResource;
+    private $streamFilterOutResource;
 
     /**
      * @var resource|null
      */
-    protected $streamFilterErrResource;
+    private $streamFilterErrResource;
 
     /**
      * @return $this
