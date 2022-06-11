@@ -50,14 +50,11 @@ The following functions are available:
 
     Returns the current time as a UNIX timestamp, referenced either to your server's
     local time or any PHP supported timezone, based on the "time reference" setting
-    in your config file. If you do not intend to set your master time reference to
-    any other PHP supported timezone (which you'll typically do if you run a site
-    that lets each user set their own timezone settings) there is no benefit to using
-    this function over PHP's ``time()`` function.
+    in your config file.
 
     .. literalinclude:: date_helper/004.php
 
-    If a timezone is not provided, it will return ``time()`` based on the
+    If a timezone is not provided, it will return timestamp by timezone `date_default_timezone_get()` based on the
     **time_reference** setting.
 
 .. php:function:: timezone_select([$class = '', $default = '', $what = \DateTimeZone::ALL, $country = null])
