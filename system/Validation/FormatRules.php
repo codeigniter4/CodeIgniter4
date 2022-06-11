@@ -354,21 +354,21 @@ class FormatRules
      */
     public function valid_jwt(string $str = ''): bool
     {
-        $newString = explode('.', $str);
+        $segments = explode('.', $str);
 
-        if (count($newString) === 3) {
-            foreach ($newString as $index => $value) {
-                if ($index < 2) {
-                    $encoded = rtrim(base64_encode(base64_decode($value, true)), '==');
-                    $isValid = $encoded === $value;
+        if (count($segments) !== 3) {
+            return false;
+        }
 
-                    return ! (! $isValid);
+        foreach ($segments as $index => $value) {
+            if ($index < 2) {
+                $encoded = rtrim(base64_encode(base64_decode($value, true)), '==');
+                if ($encoded !== $value) {
+                    return false;
                 }
-
-                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
