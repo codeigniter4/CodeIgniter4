@@ -43,8 +43,8 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         file_put_contents($this->migrationFileTo, $contents);
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
@@ -55,7 +55,7 @@ final class MigrationIntegrationTest extends CIUnitTestCase
             @unlink($this->migrationFileTo);
         }
 
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     public function testMigrationWithRollbackHasSameNameFormat(): void

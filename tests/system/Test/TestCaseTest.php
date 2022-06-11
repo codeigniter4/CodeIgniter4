@@ -50,11 +50,11 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testStreamFilter()
     {
-        $this->registerStreamFilterClass()->appendStreamOutputFilter();
+        $this->registerStreamFilterClass()->appendOutputStreamFilter();
         CLI::write('first.');
         $expected = "first.\n";
         $this->assertSame($expected, $this->getStreamFilterBuffer());
-        $this->removeStreamOutputFilter();
+        $this->removeOutputStreamFilter();
     }
 
     /**

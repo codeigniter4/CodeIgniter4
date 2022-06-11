@@ -33,8 +33,8 @@ final class CommandTest extends CIUnitTestCase
         parent::setUp();
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
 
         $this->logger   = Services::logger();
         $this->commands = Services::commands();
@@ -42,7 +42,7 @@ final class CommandTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     protected function getBuffer()

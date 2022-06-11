@@ -28,15 +28,15 @@ final class ClearDebugbarTest extends CIUnitTestCase
         parent::setUp();
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
 
         $this->time = time();
     }
 
     protected function tearDown(): void
     {
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     protected function createDummyDebugbarJson()

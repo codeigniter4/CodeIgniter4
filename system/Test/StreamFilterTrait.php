@@ -18,21 +18,21 @@ trait StreamFilterTrait
     /**
      * @var resource|null
      */
-    private $streamFilterOutResource;
+    private $outputStreamFilterResource;
 
     /**
      * @var resource|null
      */
-    private $streamFilterErrResource;
+    private $errorStreamFilterResource;
 
     /**
      * @return $this
      */
-    protected function appendStreamOutputFilter()
+    protected function appendOutputStreamFilter()
     {
-        $this->removeStreamOutputFilter();
+        $this->removeOutputStreamFilter();
 
-        $this->streamFilterOutResource = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->outputStreamFilterResource = stream_filter_append(STDOUT, 'CITestStreamFilter');
 
         return $this;
     }
@@ -40,11 +40,11 @@ trait StreamFilterTrait
     /**
      * @return $this
      */
-    protected function appendStreamErrorFilter()
+    protected function appendErrorStreamFilter()
     {
-        $this->removeStreamErrorFilter();
+        $this->removeErrorStreamFilter();
 
-        $this->streamFilterErrResource = stream_filter_append(STDERR, 'CITestStreamFilter');
+        $this->errorStreamFilterResource = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         return $this;
     }
@@ -52,11 +52,11 @@ trait StreamFilterTrait
     /**
      * @return $this
      */
-    protected function removeStreamOutputFilter()
+    protected function removeOutputStreamFilter()
     {
-        if (is_resource($this->streamFilterOutResource)) {
-            stream_filter_remove($this->streamFilterOutResource);
-            $this->streamFilterOutResource = null;
+        if (is_resource($this->outputStreamFilterResource)) {
+            stream_filter_remove($this->outputStreamFilterResource);
+            $this->outputStreamFilterResource = null;
         }
 
         return $this;
@@ -65,11 +65,11 @@ trait StreamFilterTrait
     /**
      * @return $this
      */
-    protected function removeStreamErrorFilter()
+    protected function removeErrorStreamFilter()
     {
-        if (is_resource($this->streamFilterErrResource)) {
-            stream_filter_remove($this->streamFilterErrResource);
-            $this->streamFilterErrResource = null;
+        if (is_resource($this->errorStreamFilterResource)) {
+            stream_filter_remove($this->errorStreamFilterResource);
+            $this->errorStreamFilterResource = null;
         }
 
         return $this;

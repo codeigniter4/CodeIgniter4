@@ -32,15 +32,15 @@ final class ShowTableInfoTest extends CIUnitTestCase
         parent::setUp();
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     private function getResultWithoutControlCode(): string

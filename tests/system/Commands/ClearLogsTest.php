@@ -28,8 +28,8 @@ final class ClearLogsTest extends CIUnitTestCase
         parent::setUp();
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
 
         // test runs on other tests may log errors since default threshold
         // is now 4, so set this to a safe distance
@@ -38,7 +38,7 @@ final class ClearLogsTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     protected function createDummyLogFiles()

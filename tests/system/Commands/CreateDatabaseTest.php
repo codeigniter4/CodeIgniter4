@@ -31,8 +31,8 @@ final class CreateDatabaseTest extends CIUnitTestCase
     protected function setUp(): void
     {
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
 
         $this->connection = Database::connect();
 
@@ -54,7 +54,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
 
         parent::tearDown();
     }

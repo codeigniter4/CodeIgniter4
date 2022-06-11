@@ -24,8 +24,8 @@ final class DatabaseCommandsTest extends CIUnitTestCase
     protected function setUp(): void
     {
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
 
         parent::setUp();
     }
@@ -33,7 +33,7 @@ final class DatabaseCommandsTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         command('migrate:rollback');
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
 
         parent::tearDown();
     }

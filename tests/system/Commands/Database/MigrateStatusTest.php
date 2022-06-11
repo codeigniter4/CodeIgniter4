@@ -47,8 +47,8 @@ final class MigrateStatusTest extends CIUnitTestCase
         file_put_contents($this->migrationFileTo, $contents);
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
@@ -62,7 +62,7 @@ final class MigrateStatusTest extends CIUnitTestCase
             @unlink($this->migrationFileTo);
         }
 
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     public function testMigrateAllWithWithTwoNamespaces(): void

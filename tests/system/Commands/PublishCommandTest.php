@@ -27,15 +27,15 @@ final class PublishCommandTest extends CIUnitTestCase
         parent::setUp();
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
         TestPublisher::setResult(true);
     }
 

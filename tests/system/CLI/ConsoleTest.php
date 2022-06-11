@@ -30,7 +30,7 @@ final class ConsoleTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()->appendStreamOutputFilter();
+        $this->registerStreamFilterClass()->appendOutputStreamFilter();
 
         $this->env = new DotEnv(ROOTPATH);
         $this->env->load();
@@ -53,7 +53,7 @@ final class ConsoleTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $this->removeStreamOutputFilter();
+        $this->removeOutputStreamFilter();
     }
 
     public function testNew()

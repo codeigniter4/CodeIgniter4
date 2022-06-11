@@ -262,13 +262,13 @@ might be helpful. The ``StreamFilterTrait`` helps you capture the output from th
 
 ``StreamFilterTrait::registerStreamFilterClass()`` Registering a filter to capture streams.
 
-``StreamFilterTrait::appendStreamOutputFilter()`` Adding a filter to the output stream.
+``StreamFilterTrait::appendOutputStreamFilter()`` Adding a filter to the output stream.
 
-``StreamFilterTrait::appendStreamErrorFilter()`` Adding a filter to the error stream.
+``StreamFilterTrait::appendErrorStreamFilter()`` Adding a filter to the error stream.
 
-``StreamFilterTrait::removeStreamOutputFilter()`` Removing the filter from the output stream.
+``StreamFilterTrait::removeOutputStreamFilter()`` Removing the filter from the output stream.
 
-``StreamFilterTrait::removeStreamErrorFilter()`` Removing the filter from the error stream.
+``StreamFilterTrait::removeErrorStreamFilter()`` Removing the filter from the error stream.
 
 ``StreamFilterTrait::getStreamFilterBuffer()`` Get the captured data from the buffer.
 

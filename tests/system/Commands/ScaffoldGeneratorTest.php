@@ -30,13 +30,13 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
         Services::autoloader()->initialize(new Autoload(), new Modules());
 
         $this->registerStreamFilterClass()
-            ->appendStreamOutputFilter()
-            ->appendStreamErrorFilter();
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
     {
-        $this->removeStreamOutputFilter()->removeStreamErrorFilter();
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     protected function getFileContents(string $filepath): string
