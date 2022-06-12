@@ -108,6 +108,10 @@ final class FormatRulesTest extends CIUnitTestCase
                 false,
             ],
             [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.INVALID',
+                false,
+            ],
+            [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
                 false,
             ],
