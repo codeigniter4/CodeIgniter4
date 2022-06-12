@@ -315,9 +315,9 @@ abstract class BaseModel
     protected $afterDelete = [];
 
     /**
-     * Whether to prohibit inserting empty data.
+     * Whether to allow inserting empty data.
      */
-    protected bool $prohibitInsertEmpty = true;
+    protected bool $allowEmptyInserts = false;
 
     public function __construct(?ValidationInterface $validation = null)
     {
@@ -747,7 +747,7 @@ abstract class BaseModel
 
         // doProtectFields() can further remove elements from
         // $data so we need to check for empty dataset again
-        if ($this->prohibitInsertEmpty && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($data)) {
             throw DataException::forEmptyDataset('insert');
         }
 
@@ -769,9 +769,6 @@ abstract class BaseModel
         }
 
         $result = $this->doInsert($eventData['data']);
-
-        // Reset $prohibitInsertEmpty value.
-        $this->prohibitInsertEmpty = true;
 
         $eventData = [
             'id'     => $this->insertID,
@@ -1648,7 +1645,7 @@ abstract class BaseModel
             throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
         }
 
-        if ($this->prohibitInsertEmpty && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($data)) {
             throw DataException::forEmptyDataset($type);
         }
 
@@ -1667,7 +1664,7 @@ abstract class BaseModel
         }
 
         // If it's still empty here, means $data is no change or is empty object
-        if ($this->prohibitInsertEmpty && empty($data)) {
+        if (! $this->allowEmptyInserts && empty($data)) {
             throw DataException::forEmptyDataset($type);
         }
 
@@ -1775,11 +1772,11 @@ abstract class BaseModel
     }
 
     /**
-     * Permits inserting empty date in the next insertion.
+     * Sets $allowEmptyInserts.
      */
-    public function permitInsertEmpty(): self
+    public function allowEmptyInserts(bool $value = true): self
     {
-        $this->prohibitInsertEmpty = false;
+        $this->allowEmptyInserts = $value;
 
         return $this;
     }

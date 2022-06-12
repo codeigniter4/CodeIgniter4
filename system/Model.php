@@ -275,7 +275,7 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        if (! $this->prohibitInsertEmpty && empty($data)) {
+        if ($this->allowEmptyInserts && empty($data)) {
             $table = $this->db->protectIdentifiers($this->table, true, null, false);
             if ($this->db->getPlatform() === 'MySQLi') {
                 $sql = 'INSERT INTO ' . $table . ' VALUES ()';

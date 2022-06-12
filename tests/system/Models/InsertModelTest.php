@@ -220,7 +220,7 @@ final class InsertModelTest extends LiveModelTestCase
             ];
         };
 
-        $model->permitInsertEmpty()->insert([]);
+        $model->allowEmptyInserts()->insert([]);
 
         $this->seeInDatabase('insert_no_data', ['id' => $model->getInsertID()]);
 
@@ -229,6 +229,7 @@ final class InsertModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to insert.');
 
+        $model->allowEmptyInserts(false);
         $model->insert([]);
     }
 
