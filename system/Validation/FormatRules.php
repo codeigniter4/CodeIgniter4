@@ -373,6 +373,6 @@ class FormatRules
             }
         }
 
-        return true;
+        return mb_strlen($segments[$index], '8bit') >= 32 && mb_strlen($segments[$index], '8bit') <= 64;
     }
 }
