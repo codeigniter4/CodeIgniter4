@@ -279,6 +279,22 @@ class Model extends BaseModel
             $table = $this->db->protectIdentifiers($this->table, true, null, false);
             if ($this->db->getPlatform() === 'MySQLi') {
                 $sql = 'INSERT INTO ' . $table . ' VALUES ()';
+            } elseif ($this->db->getPlatform() === 'OCI8') {
+                $allFields = $this->db->protectIdentifiers(
+                    array_map(
+                        static fn ($row) => $row->name,
+                        $this->db->getFieldData($this->table)
+                    ),
+                    false,
+                    true
+                );
+
+                $sql = sprintf(
+                    'INSERT INTO %s (%s) VALUES (%s)',
+                    $table,
+                    implode(',', $allFields),
+                    substr(str_repeat(',DEFAULT', count($allFields)), 1)
+                );
             } else {
                 $sql = 'INSERT INTO ' . $table . ' DEFAULT VALUES';
             }
