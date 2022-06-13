@@ -26,6 +26,12 @@ use Tests\Support\Models\WithoutAutoIncrementModel;
  */
 final class InsertModelTest extends LiveModelTestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->setPrivateProperty($this->db, 'DBDebug', true);
+    }
+
     public function testSetWorksWithInsert(): void
     {
         $this->dontSeeInDatabase('user', [
