@@ -34,7 +34,8 @@ final class DeleteModelTest extends LiveModelTestCase
 
     public function testDeleteFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
         $this->createModel(JobModel::class);
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
@@ -68,7 +69,8 @@ final class DeleteModelTest extends LiveModelTestCase
 
     public function testDeleteWithSoftDeleteFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
         $this->createModel(UserModel::class);
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 

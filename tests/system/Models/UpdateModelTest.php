@@ -96,7 +96,8 @@ final class UpdateModelTest extends LiveModelTestCase
 
     public function testUpdateResultFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
 
         $data = [
             'name'    => 'Foo',
