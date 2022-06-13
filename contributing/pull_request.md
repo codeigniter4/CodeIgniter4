@@ -18,8 +18,8 @@ The [Open Source Guide](https://opensource.guide/) is a good first read for thos
 
 ## CodeIgniter Internals Overview
 
-[CodeIgniter Internals Overview](./internals.md) should help contributors 
-understand how the core of the framework works. Specifically, it details the 
+[CodeIgniter Internals Overview](./internals.md) should help contributors
+understand how the core of the framework works. Specifically, it details the
 information needed to create new packages for the core.
 
 ## Guidelines
@@ -27,7 +27,7 @@ information needed to create new packages for the core.
 Before we look into how to contribute to CodeIgniter4, here are some guidelines.
 Your Pull Requests (PRs) need to meet our guidelines.
 
-If your Pull Requests fail to pass these guidelines, they will be declined, 
+If your Pull Requests fail to pass these guidelines, they will be declined,
 and you will need to re-submit when you’ve made the changes.
 This might sound a bit tough, but it is required for us to maintain the quality of the codebase.
 
@@ -38,16 +38,20 @@ This might sound a bit tough, but it is required for us to maintain the quality 
 All code must conform to our [Style Guide](./styleguide.md), which is
 based on PSR-12.
 
-This makes certain that all submitted code is of the same format 
+This makes certain that all submitted code is of the same format
 as the existing code and ensures that the codebase will be as readable as possible.
 
 You can fix most of the coding style violations by running this command in your terminal:
 
-	composer cs-fix
+```console
+> composer cs-fix
+```
 
 You can check the coding style violations:
 
-	composer cs
+```console
+> composer cs
+```
 
 ### Unit Testing
 
@@ -63,7 +67,7 @@ class would test the `Banana` class. There will be occasions when it is
 more convenient to have separate classes to test different functionality
 of a single CodeIgniter component.
 
-See [Running System Tests](../tests/README.md) 
+See [Running System Tests](../tests/README.md)
 and the [PHPUnit website](https://phpunit.de/) for more information.
 
 ### Comments
@@ -92,11 +96,11 @@ Each framework component or group of components needs a corresponding
 section in the User Guide. Some of the more fundamental components will
 show up in more than one place.
 
-If you change anything that requires a change to documentation, 
-then you will need to add to the documentation. 
-New classes, methods, parameters, changing default values, etc. 
-are all changes that require a change to documentation. 
-Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change, 
+If you change anything that requires a change to documentation,
+then you will need to add to the documentation.
+New classes, methods, parameters, changing default values, etc.
+are all changes that require a change to documentation.
+Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change,
 and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
 
 See [Writing CodeIgniter Documentation](./documentation.rst).
@@ -154,8 +158,9 @@ working on your contribution.
 
 ### Branching
 
-CodeIgniter4 uses the [Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model
-which requires all Pull Requests to be sent to the __"develop"__ branch; this is where the next planned version will be developed.
+All bug fixes should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+
+PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
 
 The __"master"__ branch will always contain the latest stable version and is kept clean so a "hotfix" (e.g. an
 emergency security patch) can be applied to the "master" branch to create a new version, without worrying
@@ -193,15 +198,21 @@ so that you can fix whatever errors that pop up with your submission.
 
 PHPStan is expected to scan the entire framework by running this command in your terminal:
 
-	vendor/bin/phpstan analyse
+```console
+> vendor/bin/phpstan analyse
+```
 
 Rector, on the other hand, can be run on the specific files you modified or added:
 
-	vendor/bin/rector process --dry-run path/to/file
+```console
+> vendor/bin/rector process --dry-run path/to/file
+```
 
 If you run it without `--dry-run`, Rector will fix the code:
 
-	vendor/bin/rector process path/to/file
+```console
+> vendor/bin/rector process path/to/file
+```
 
 [1]: https://github.com/phpstan/phpstan-src
 [2]: https://github.com/rector/rector

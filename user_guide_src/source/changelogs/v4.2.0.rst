@@ -9,6 +9,28 @@ Release Date: June 3, 2022
     :local:
     :depth: 2
 
+Highlights
+**********
+
+- Update minimal PHP requirement to 7.4.
+- **OCI8 Driver for Oracle Database** (*contributed by* `ytetsuro <https://github.com/ytetsuro>`_). See `Database`_.
+- **Improved Auto Routing** (opt-in) (*contributed by* `kenjis <https://github.com/kenjis>`_). See `New Improved Auto Routing`_.
+- Query Builder **Subqueries** and **UNION** support (*contributed by* `Andrey Pyzhikov <https://github.com/iRedds>`_). See `Database`_.
+
+New Contributors
+================
+
+* `@fdomgjoni99 <https://github.com/fdomgjoni99>`_ made their first contribution in `#5608 <https://github.com/codeigniter4/CodeIgniter4/pull/5608>`_
+* `@Nudasoft <https://github.com/Nudasoft>`_ made their first contribution in `#5715 <https://github.com/codeigniter4/CodeIgniter4/pull/5715>`_
+* `@beganovich <https://github.com/beganovich>`_ made their first contribution in `#5823 <https://github.com/codeigniter4/CodeIgniter4/pull/5823>`_
+* `@tcgumus <https://github.com/tcgumus>`_ made their first contribution in `#5851 <https://github.com/codeigniter4/CodeIgniter4/pull/5851>`_
+* `@michaelrk02 <https://github.com/michaelrk02>`_ made their first contribution in `#5878 <https://github.com/codeigniter4/CodeIgniter4/pull/5878>`_
+* `@datamweb <https://github.com/datamweb>`_ made their first contribution in `#5894 <https://github.com/codeigniter4/CodeIgniter4/pull/5894>`_
+* `@xlii-chl <https://github.com/xlii-chl>`_ made their first contribution in `#5884 <https://github.com/codeigniter4/CodeIgniter4/pull/5884>`_
+* `@valmorflores <https://github.com/valmorflores>`_ made their first contribution in `#6051 <https://github.com/codeigniter4/CodeIgniter4/pull/6051>`_
+* `@tearoom6 <https://github.com/tearoom6>`_ made their first contribution in `#6012 <https://github.com/codeigniter4/CodeIgniter4/pull/6012>`_
+* `@lonnie-vault <https://github.com/lonnie-vault>`_ made their first contribution in `#6060 <https://github.com/codeigniter4/CodeIgniter4/pull/6060>`_
+
 BREAKING
 ********
 

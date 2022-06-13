@@ -65,7 +65,7 @@ final class AutoRouteCollector
 
         foreach ($finder->find() as $class) {
             // Exclude controllers in Defined Routes.
-            if (in_array($class, $this->protectedControllers, true)) {
+            if (in_array('\\' . $class, $this->protectedControllers, true)) {
                 continue;
             }
 
