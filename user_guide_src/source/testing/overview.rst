@@ -101,8 +101,9 @@ parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
 
-In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property for
-parameter-free methods you want run during set up and tear down:
+In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property
+``$setUpMethods`` and ``$tearDownMethods`` for
+parameter-free methods you want to run during set up and tear down:
 
 .. literalinclude:: overview/004.php
 
@@ -111,12 +112,25 @@ that or provide their own:
 
 .. literalinclude:: overview/005.php
 
+.. note:: When you override ``$setUpMethods`` properties, do not remove the following items that are set in the parent class by default unless you know they are truly unnecessary.
+
+    .. code-block:: php
+
+        protected $setUpMethods = [
+            'resetFactories',
+            'mockCache',
+            'mockEmail',
+            'mockSession',
+        ];
+
 Traits
 ------
 
 A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
-to run named for the trait itself. For example, if you needed to add authentication to some
+to run named for the trait itself.
+
+For example, if you needed to add authentication to some
 of your test cases you could create an authentication trait with a set up method to fake a
 logged in user:
 
