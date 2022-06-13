@@ -21,7 +21,7 @@
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.3",
         "phpunit/phpunit": "^9.1",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {
         "ext-fileinfo": "Improves mime type detection for files"
