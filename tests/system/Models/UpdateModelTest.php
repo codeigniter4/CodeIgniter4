@@ -330,6 +330,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $entity->id      = 1;
         $entity->name    = 'Jones Martin';
+        $entity->email   = 'jones@example.org';
         $entity->country = 'India';
         $entity->deleted = 0;
 
