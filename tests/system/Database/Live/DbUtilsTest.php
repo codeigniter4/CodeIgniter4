@@ -118,6 +118,7 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
         $util->optimizeDatabase();
 
         // this point in code execution will never be reached

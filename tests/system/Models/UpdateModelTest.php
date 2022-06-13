@@ -98,6 +98,7 @@ final class UpdateModelTest extends LiveModelTestCase
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();
+        $this->createModel(UserModel::class);
 
         $data = [
             'name'    => 'Foo',
@@ -105,12 +106,12 @@ final class UpdateModelTest extends LiveModelTestCase
             'country' => 'US',
             'deleted' => 0,
         ];
-
-        $this->createModel(UserModel::class);
         $this->model->insert($data);
 
         $this->setPrivateProperty($this->model, 'allowedFields', ['name123']);
+
         $result = $this->model->update(1, ['name123' => 'Foo Bar 1']);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
 

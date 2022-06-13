@@ -31,8 +31,10 @@ final class BadQueryTest extends CIUnitTestCase
     public function testBadQueryDebugTrue()
     {
         $this->enableDBDebug();
+
         // expect an exception, class and message varies by DBMS
         $this->expectException(Exception::class);
+
         $this->db->query('SELECT * FROM table_does_not_exist');
 
         // this code is never executed
@@ -42,8 +44,10 @@ final class BadQueryTest extends CIUnitTestCase
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();
+
         // this throws an exception when DBDebug is true, but it'll return FALSE when DBDebug is false
         $query = $this->db->query('SELECT * FROM table_does_not_exist');
+
         $this->assertFalse($query);
 
         $this->enableDBDebug();

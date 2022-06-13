@@ -28,7 +28,9 @@ final class DbDebugTest extends CIUnitTestCase
     public function testDBDebugTrue()
     {
         $this->enableDBDebug();
+
         $this->expectException('Exception');
+
         $this->db->simpleQuery('SELECT * FROM db_error');
     }
 
@@ -36,13 +38,16 @@ final class DbDebugTest extends CIUnitTestCase
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();
+
         $result = $this->db->simpleQuery('SELECT * FROM db_error');
+
         $this->assertFalse($result);
     }
 
     protected function tearDown(): void
     {
         $this->enableDBDebug();
+
         parent::tearDown();
     }
 }

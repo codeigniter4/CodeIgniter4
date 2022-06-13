@@ -36,10 +36,13 @@ final class DeleteModelTest extends LiveModelTestCase
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();
+
         $this->createModel(JobModel::class);
+
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
         $result = $this->model->where('name123', 'Developer')->delete();
+
         $this->assertFalse($result);
         $this->seeInDatabase('job', ['name' => 'Developer']);
 
@@ -73,10 +76,13 @@ final class DeleteModelTest extends LiveModelTestCase
     {
         // WARNING this value will persist! take care to roll it back.
         $this->disableDBDebug();
+
         $this->createModel(UserModel::class);
+
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
         $result = $this->model->where('name123', 'Derek Jones')->delete();
+
         $this->assertFalse($result);
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 

@@ -63,8 +63,8 @@ final class SaveModelTest extends LiveModelTestCase
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $result = $this->model->protect(false)->save($data);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
 
@@ -96,8 +96,8 @@ final class SaveModelTest extends LiveModelTestCase
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $result = $this->model->protect(false)->save($data);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
 
