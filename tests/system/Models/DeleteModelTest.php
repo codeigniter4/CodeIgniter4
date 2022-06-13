@@ -42,6 +42,8 @@ final class DeleteModelTest extends LiveModelTestCase
         $result = $this->model->where('name123', 'Developer')->delete();
         $this->assertFalse($result);
         $this->seeInDatabase('job', ['name' => 'Developer']);
+
+        $this->enableDBDebug();
     }
 
     public function testDeleteStringPrimaryKey(): void
@@ -77,6 +79,8 @@ final class DeleteModelTest extends LiveModelTestCase
         $result = $this->model->where('name123', 'Derek Jones')->delete();
         $this->assertFalse($result);
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
+        $this->enableDBDebug();
     }
 
     public function testDeleteWithSoftDeletesPurge(): void

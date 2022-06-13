@@ -67,6 +67,8 @@ final class SaveModelTest extends LiveModelTestCase
         $result = $this->model->protect(false)->save($data);
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+
+        $this->enableDBDebug();
     }
 
     public function testSaveUpdateRecordArray(): void
@@ -98,6 +100,8 @@ final class SaveModelTest extends LiveModelTestCase
         $result = $this->model->protect(false)->save($data);
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+
+        $this->enableDBDebug();
     }
 
     public function testSaveUpdateRecordObject(): void

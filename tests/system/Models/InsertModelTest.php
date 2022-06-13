@@ -26,12 +26,6 @@ use Tests\Support\Models\WithoutAutoIncrementModel;
  */
 final class InsertModelTest extends LiveModelTestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
-    }
-
     public function testSetWorksWithInsert(): void
     {
         $this->dontSeeInDatabase('user', [
@@ -162,6 +156,8 @@ final class InsertModelTest extends LiveModelTestCase
         $lastInsertId = $this->model->getInsertID();
         $this->assertSame(0, $lastInsertId);
         $this->dontSeeInDatabase('job', ['id' => $lastInsertId]);
+
+        $this->enableDBDebug();
     }
 
     public function testInsertBatchNewEntityWithDateTime(): void

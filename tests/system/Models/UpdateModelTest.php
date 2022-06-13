@@ -113,6 +113,8 @@ final class UpdateModelTest extends LiveModelTestCase
         $result = $this->model->update(1, ['name123' => 'Foo Bar 1']);
         $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
+
+        $this->enableDBDebug();
     }
 
     public function testUpdateBatchSuccess(): void
