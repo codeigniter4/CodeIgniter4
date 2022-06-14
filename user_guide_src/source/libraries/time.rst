@@ -7,7 +7,7 @@ extension's features to convert times across timezones and display the output co
 is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
 .. note:: Since the Time class extends DateTime, if there are features that you need that this class doesn't provide,
-    you can likely find them within the DateTime class itself.
+    you can likely find them within the `DateTime <https://www.php.net/manual/en/class.datetime.php>`_  class itself.
 
 .. contents::
     :local:
@@ -136,7 +136,7 @@ not aware of locales:
 Displaying the Value
 ********************
 
-Since the Time class extends DateTime, you get all of the output methods that provides, including the format() method.
+Since the Time class extends DateTime, you get all of the output methods that provides, including the ``format()`` method.
 However, the DateTime methods do not provide a localized result. The Time class does provide a number of helper methods
 to display localized versions of the value, though.
 
@@ -152,22 +152,22 @@ A full listing of values can be found `here <https://unicode-org.github.io/icu-d
 toDateTimeString()
 ==================
 
-This is the first of three helper methods to work with the IntlDateFormatter without having to remember their values.
-This will return a string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s):
+This is the first of three helper methods to work with the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`_ without having to remember their values.
+This will return a localized version of string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s):
 
 .. literalinclude:: time/016.php
 
 toDateString()
 ==============
 
-Displays just the date portion of the Time:
+Displays just the localized version of date portion of the Time:
 
 .. literalinclude:: time/017.php
 
 toTimeString()
 ==============
 
-Displays just the time portion of the value:
+Displays just the localized version of time portion of the value:
 
 .. literalinclude:: time/018.php
 
