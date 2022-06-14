@@ -412,8 +412,9 @@ to help with staging and clean up:</p>
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 </pre></div>
 </div>
-<p>The static methods run before and after the entire test case, whereas the local methods run
-between each test. If you implement any of these special functions make sure you run their
+<p>The static methods <code class="docutils literal notranslate"><span class="pre">setUpBeforeClass()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDownAfterClass()</span></code> run before and after the entire test case, whereas the protected methods <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> and <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> run
+between each test.</p>
+<p>If you implement any of these special functions make sure you run their
 parent as well so extended test cases do not interfere with staging:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -425,50 +426,12 @@ parent as well so extended test cases do not interfere with staging:</p>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span> <span class="c1">// Do not forget</span>
 
         <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>In addition to these methods, <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> also comes with a convenience property for
-parameter-free methods you want run during set up and tear down:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
-
-<span class="k">final</span> <span class="k">class</span> <span class="nc">OneOfMyModelsTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$setUpMethods</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;mockEmail&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;mockSession&#39;</span><span class="p">,</span>
-    <span class="p">];</span>
-
-    <span class="k">protected</span> <span class="nv">$tearDownMethods</span> <span class="o">=</span> <span class="p">[];</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>You can see by default these handle the mocking of intrusive services, but your class may override
-that or provide their own:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
-
-<span class="k">final</span> <span class="k">class</span> <span class="nc">OneOfMyModelsTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$tearDownMethods</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;purgeRows&#39;</span><span class="p">,</span>
-    <span class="p">];</span>
-
-    <span class="k">protected</span> <span class="k">function</span> <span class="nf">purgeRows</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">model</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">();</span>
-    <span class="p">}</span>
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -477,7 +440,8 @@ that or provide their own:</p>
 <h4><a class="toc-backref" href="#id10">Traits</a><a class="headerlink" href="#traits" title="Permalink to this headline"></a></h4>
 <p>A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
-to run named for the trait itself. For example, if you needed to add authentication to some
+to run named for the trait itself (i.e. <cite>setUp{NameOfTrait}()</cite> and <cite>tearDown{NameOfTrait}()</cite>).</p>
+<p>For example, if you needed to add authentication to some
 of your test cases you could create an authentication trait with a set up method to fake a
 logged in user:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
