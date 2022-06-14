@@ -108,7 +108,7 @@ Traits
 
 A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
-to run named for the trait itself.
+to run named for the trait itself (i.e. `setUp{NameOfTrait}()` and `tearDown{NameOfTrait}()`).
 
 For example, if you needed to add authentication to some
 of your test cases you could create an authentication trait with a set up method to fake a
