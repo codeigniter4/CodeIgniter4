@@ -170,4 +170,44 @@ final class EventsModelTest extends LiveModelTestCase
         $this->expectExceptionMessage('anotherBeforeInsertMethod is not a valid Model Event callback.');
         $this->model->insert($data);
     }
+
+    public function testInsertBatchEvent(): void
+    {
+        $data = [
+            [
+                'name'    => 'Foo',
+                'email'   => 'foo@example.com',
+                'country' => 'US',
+                'deleted' => 0,
+            ],
+            [
+                'name'    => 'Bar',
+                'email'   => 'bar@example.com',
+                'country' => 'US',
+                'deleted' => 0,
+            ],
+        ];
+
+        $this->model->insertBatch($data);
+        $this->assertTrue($this->model->hasToken('beforeInsertBatch'));
+        $this->assertTrue($this->model->hasToken('afterInsertBatch'));
+    }
+
+    public function testUpdateBatchEvent(): void
+    {
+        $data = [
+            [
+                'name'    => 'Derek Jones',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Ahmadinejad',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $this->model->updateBatch($data, 'name');
+        $this->assertTrue($this->model->hasToken('beforeUpdateBatch'));
+        $this->assertTrue($this->model->hasToken('afterUpdateBatch'));
+    }
 }
