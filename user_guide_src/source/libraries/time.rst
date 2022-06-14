@@ -153,7 +153,7 @@ toDateTimeString()
 ==================
 
 This is the first of three helper methods to work with the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`_ without having to remember their values.
-This will return a localized version of string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s):
+This will return a localized version of string formatted as (Y-m-d H:i:s):
 
 .. literalinclude:: time/016.php
 
