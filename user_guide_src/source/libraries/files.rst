@@ -140,7 +140,7 @@ Inputting Files
 ***************
 
 add(string[]|string $paths, bool $recursive = true)
----------------------------------------------------
+===================================================
 
 Adds all files indicated by the path or array of paths. If the path resolves to a directory then ``$recursive``
 will include sub-directories.
