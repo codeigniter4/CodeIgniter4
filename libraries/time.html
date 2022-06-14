@@ -281,7 +281,7 @@ is the <code class="docutils literal notranslate"><span class="pre">Time</span><
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since the Time class extends DateTime, if there are features that you need that this class doesn’t provide,
-you can likely find them within the DateTime class itself.</p>
+you can likely find them within the <a class="reference external" href="https://www.php.net/manual/en/class.datetime.php">DateTime</a>  class itself.</p>
 </div>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -313,19 +313,10 @@ you can likely find them within the DateTime class itself.</p>
 <li><p><a class="reference internal" href="#working-with-individual-values" id="id21">Working with Individual Values</a></p>
 <ul>
 <li><p><a class="reference internal" href="#getters" id="id22">Getters</a></p></li>
-<li><p><a class="reference internal" href="#getage" id="id23">getAge()</a></p></li>
-<li><p><a class="reference internal" href="#getdst" id="id24">getDST()</a></p></li>
-<li><p><a class="reference internal" href="#getlocal" id="id25">getLocal()</a></p></li>
-<li><p><a class="reference internal" href="#getutc" id="id26">getUtc()</a></p></li>
-<li><p><a class="reference internal" href="#gettimezone" id="id27">getTimezone()</a></p></li>
-<li><p><a class="reference internal" href="#gettimezonename" id="id28">getTimezoneName()</a></p></li>
-<li><p><a class="reference internal" href="#settimezone" id="id29">setTimezone()</a></p></li>
-<li><p><a class="reference internal" href="#settimestamp" id="id30">setTimestamp()</a></p></li>
-<li><p><a class="reference internal" href="#equals" id="id31">equals()</a></p></li>
-<li><p><a class="reference internal" href="#sameas" id="id32">sameAs()</a></p></li>
-<li><p><a class="reference internal" href="#isbefore" id="id33">isBefore()</a></p></li>
-<li><p><a class="reference internal" href="#isafter" id="id34">isAfter()</a></p></li>
-<li><p><a class="reference internal" href="#id1" id="id35">humanize()</a></p></li>
+<li><p><a class="reference internal" href="#setters" id="id23">Setters</a></p></li>
+<li><p><a class="reference internal" href="#modifying-the-value" id="id24">Modifying the Value</a></p></li>
+<li><p><a class="reference internal" href="#comparing-two-times" id="id25">Comparing Two Times</a></p></li>
+<li><p><a class="reference internal" href="#viewing-differences" id="id26">Viewing Differences</a></p></li>
 </ul>
 </li>
 </ul>
@@ -485,7 +476,7 @@ not aware of locales:</p>
 </section>
 <section id="displaying-the-value">
 <h2><a class="toc-backref" href="#id15">Displaying the Value</a><a class="headerlink" href="#displaying-the-value" title="Permalink to this headline"></a></h2>
-<p>Since the Time class extends DateTime, you get all of the output methods that provides, including the format() method.
+<p>Since the Time class extends DateTime, you get all of the output methods that provides, including the <code class="docutils literal notranslate"><span class="pre">format()</span></code> method.
 However, the DateTime methods do not provide a localized result. The Time class does provide a number of helper methods
 to display localized versions of the value, though.</p>
 <section id="tolocalizedstring">
@@ -495,39 +486,59 @@ you must use values acceptable to the <a class="reference external" href="https:
 A full listing of values can be found <a class="reference external" href="https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details">here</a>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// Locale: en</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toLocalizedString</span><span class="p">(</span><span class="s1">&#39;MMM d, yyyy&#39;</span><span class="p">);</span> <span class="c1">// March 9, 2016</span>
+
+<span class="c1">// Locale: fa</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toLocalizedString</span><span class="p">(</span><span class="s1">&#39;MMM d, yyyy&#39;</span><span class="p">);</span> <span class="c1">// مارس ۹, ۲۰۱۶</span>
 </pre></div>
 </div>
 </section>
 <section id="todatetimestring">
 <h3><a class="toc-backref" href="#id17">toDateTimeString()</a><a class="headerlink" href="#todatetimestring" title="Permalink to this headline"></a></h3>
-<p>This is the first of three helper methods to work with the IntlDateFormatter without having to remember their values.
-This will return a string formatted as you would commonly use for datetime columns in a database (Y-m-d H:i:s):</p>
+<p>This is the first of three helper methods to work with the <a class="reference external" href="https://www.php.net/manual/en/class.intldateformatter.php">IntlDateFormatter</a> without having to remember their values.
+This will return a localized version of string formatted as (Y-m-d H:i:s):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// Locale: en</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2016-03-09 12:00:00</span>
+
+<span class="c1">// Locale: fa</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// ۲۰۱۶-۰۳-۰۹ ۱۲:۰۰:۰۰</span>
 </pre></div>
 </div>
 </section>
 <section id="todatestring">
 <h3><a class="toc-backref" href="#id18">toDateString()</a><a class="headerlink" href="#todatestring" title="Permalink to this headline"></a></h3>
-<p>Displays just the date portion of the Time:</p>
+<p>Displays just the localized version of date portion of the Time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// Locale: en</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateString</span><span class="p">();</span> <span class="c1">// 2016-03-09</span>
+
+<span class="c1">// Locale: fa</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toDateString</span><span class="p">();</span> <span class="c1">// ۲۰۱۶-۰۳-۰۹</span>
 </pre></div>
 </div>
 </section>
 <section id="totimestring">
 <h3><a class="toc-backref" href="#id19">toTimeString()</a><a class="headerlink" href="#totimestring" title="Permalink to this headline"></a></h3>
-<p>Displays just the time portion of the value:</p>
+<p>Displays just the localized version of time portion of the value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="c1">// Locale: en</span>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toTimeString</span><span class="p">();</span> <span class="c1">// 12:00:00</span>
+
+<span class="c1">// Locale: fa</span>
+<span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">parse</span><span class="p">(</span><span class="s1">&#39;March 9, 2016 12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">toTimeString</span><span class="p">();</span> <span class="c1">// ۱۲:۰۰:۰۰</span>
 </pre></div>
 </div>
 </section>
@@ -634,9 +645,8 @@ like <code class="docutils literal notranslate"><span class="pre">getYear()</spa
 <span class="k">echo</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">quarter</span><span class="p">;</span>     <span class="c1">// 3</span>
 </pre></div>
 </div>
-</section>
 <section id="getage">
-<h3><a class="toc-backref" href="#id23">getAge()</a><a class="headerlink" href="#getage" title="Permalink to this headline"></a></h3>
+<h4>getAge()<a class="headerlink" href="#getage" title="Permalink to this headline"></a></h4>
 <p>Returns the age, in years, of between the Time’s instance and the current time. Perfect for checking
 the age of someone based on their birthday:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -649,7 +659,7 @@ the age of someone based on their birthday:</p>
 </div>
 </section>
 <section id="getdst">
-<h3><a class="toc-backref" href="#id24">getDST()</a><a class="headerlink" href="#getdst" title="Permalink to this headline"></a></h3>
+<h4>getDST()<a class="headerlink" href="#getdst" title="Permalink to this headline"></a></h4>
 <p>Returns boolean true/false based on whether the Time instance is currently observing Daylight Savings Time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -659,7 +669,7 @@ the age of someone based on their birthday:</p>
 </div>
 </section>
 <section id="getlocal">
-<h3><a class="toc-backref" href="#id25">getLocal()</a><a class="headerlink" href="#getlocal" title="Permalink to this headline"></a></h3>
+<h4>getLocal()<a class="headerlink" href="#getlocal" title="Permalink to this headline"></a></h4>
 <p>Returns boolean true if the Time instance is in the same timezone as the application is currently running in:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -669,7 +679,7 @@ the age of someone based on their birthday:</p>
 </div>
 </section>
 <section id="getutc">
-<h3><a class="toc-backref" href="#id26">getUtc()</a><a class="headerlink" href="#getutc" title="Permalink to this headline"></a></h3>
+<h4>getUtc()<a class="headerlink" href="#getutc" title="Permalink to this headline"></a></h4>
 <p>Returns boolean true if the Time instance is in UTC time:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -679,7 +689,7 @@ the age of someone based on their birthday:</p>
 </div>
 </section>
 <section id="gettimezone">
-<h3><a class="toc-backref" href="#id27">getTimezone()</a><a class="headerlink" href="#gettimezone" title="Permalink to this headline"></a></h3>
+<h4>getTimezone()<a class="headerlink" href="#gettimezone" title="Permalink to this headline"></a></h4>
 <p>Returns a new <a class="reference external" href="https://www.php.net/manual/en/class.datetimezone.php">DateTimeZone</a> object set the timezone of the Time
 instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -693,7 +703,7 @@ instance:</p>
 </div>
 </section>
 <section id="gettimezonename">
-<h3><a class="toc-backref" href="#id28">getTimezoneName()</a><a class="headerlink" href="#gettimezonename" title="Permalink to this headline"></a></h3>
+<h4>getTimezoneName()<a class="headerlink" href="#gettimezonename" title="Permalink to this headline"></a></h4>
 <p>Returns the full <a class="reference external" href="https://www.php.net/manual/en/timezones.php">timezone string</a> of the Time instance:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -701,8 +711,10 @@ instance:</p>
 <span class="k">echo</span> <span class="nx">Time</span><span class="o">::</span><span class="na">now</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">timezoneName</span><span class="p">;</span>        <span class="c1">// Europe/London</span>
 </pre></div>
 </div>
+</section>
+</section>
 <section id="setters">
-<h4>Setters<a class="headerlink" href="#setters" title="Permalink to this headline"></a></h4>
+<h3><a class="toc-backref" href="#id23">Setters</a><a class="headerlink" href="#setters" title="Permalink to this headline"></a></h3>
 <p>The following basic setters exist. If any of the values set are out of range, an <code class="docutils literal notranslate"><span class="pre">InvalidArgumentExeption</span></code> will be
 thrown.</p>
 <div class="admonition note">
@@ -725,10 +737,8 @@ thrown.</p>
 <span class="nv">$time</span> <span class="o">=</span> <span class="nv">$time</span><span class="o">-&gt;</span><span class="na">setSecond</span><span class="p">(</span><span class="mi">54</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-</section>
 <section id="settimezone">
-<h3><a class="toc-backref" href="#id29">setTimezone()</a><a class="headerlink" href="#settimezone" title="Permalink to this headline"></a></h3>
+<h4>setTimezone()<a class="headerlink" href="#settimezone" title="Permalink to this headline"></a></h4>
 <p>Converts the time from it’s current timezone into the new one:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -744,7 +754,7 @@ thrown.</p>
 </div>
 </section>
 <section id="settimestamp">
-<h3><a class="toc-backref" href="#id30">setTimestamp()</a><a class="headerlink" href="#settimestamp" title="Permalink to this headline"></a></h3>
+<h4>setTimestamp()<a class="headerlink" href="#settimestamp" title="Permalink to this headline"></a></h4>
 <p>Returns a new instance with the date set to the new timestamp:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -755,8 +765,10 @@ thrown.</p>
 <span class="k">echo</span> <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">toDateTimeString</span><span class="p">();</span> <span class="c1">// 2017-04-01 00:00:00</span>
 </pre></div>
 </div>
+</section>
+</section>
 <section id="modifying-the-value">
-<h4>Modifying the Value<a class="headerlink" href="#modifying-the-value" title="Permalink to this headline"></a></h4>
+<h3><a class="toc-backref" href="#id24">Modifying the Value</a><a class="headerlink" href="#modifying-the-value" title="Permalink to this headline"></a></h3>
 <p>The following methods allow you to modify the date by adding or subtracting values to the current Time. This will not
 modify the existing Time instance, but will return a new instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -778,13 +790,11 @@ modify the existing Time instance, but will return a new instance.</p>
 </div>
 </section>
 <section id="comparing-two-times">
-<h4>Comparing Two Times<a class="headerlink" href="#comparing-two-times" title="Permalink to this headline"></a></h4>
+<h3><a class="toc-backref" href="#id25">Comparing Two Times</a><a class="headerlink" href="#comparing-two-times" title="Permalink to this headline"></a></h3>
 <p>The following methods allow you to compare one Time instance with another. All comparisons are first converted to UTC
 before comparisons are done, to ensure that different timezones respond correctly.</p>
-</section>
-</section>
 <section id="equals">
-<h3><a class="toc-backref" href="#id31">equals()</a><a class="headerlink" href="#equals" title="Permalink to this headline"></a></h3>
+<h4>equals()<a class="headerlink" href="#equals" title="Permalink to this headline"></a></h4>
 <p>Determines if the datetime passed in is equal to the current instance. Equal in this case means that they represent the
 same moment in time, and are not required to be in the same timezone, as both times are converted to UTC and compared
 that way:</p>
@@ -806,7 +816,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </div>
 </section>
 <section id="sameas">
-<h3><a class="toc-backref" href="#id32">sameAs()</a><a class="headerlink" href="#sameas" title="Permalink to this headline"></a></h3>
+<h4>sameAs()<a class="headerlink" href="#sameas" title="Permalink to this headline"></a></h4>
 <p>This is identical to the <code class="docutils literal notranslate"><span class="pre">equals()</span></code> method, except that it only returns true when the date, time, AND timezone are
 all identical:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -820,7 +830,7 @@ all identical:</p>
 </div>
 </section>
 <section id="isbefore">
-<h3><a class="toc-backref" href="#id33">isBefore()</a><a class="headerlink" href="#isbefore" title="Permalink to this headline"></a></h3>
+<h4>isBefore()<a class="headerlink" href="#isbefore" title="Permalink to this headline"></a></h4>
 <p>Checks if the passed in time is before the current instance. The comparison is done against the UTC versions of
 both times:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -842,7 +852,7 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 </div>
 </section>
 <section id="isafter">
-<h3><a class="toc-backref" href="#id34">isAfter()</a><a class="headerlink" href="#isafter" title="Permalink to this headline"></a></h3>
+<h4>isAfter()<a class="headerlink" href="#isafter" title="Permalink to this headline"></a></h4>
 <p>Works exactly the same as <code class="docutils literal notranslate"><span class="pre">isBefore()</span></code> except checks if the time is after the time passed in:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -853,8 +863,10 @@ a timezone string in as the second parameter. If no timezone is given, the syste
 <span class="nv">$time2</span><span class="o">-&gt;</span><span class="na">isAfter</span><span class="p">(</span><span class="nv">$time1</span><span class="p">);</span> <span class="c1">// true</span>
 </pre></div>
 </div>
+</section>
+</section>
 <section id="viewing-differences">
-<h4>Viewing Differences<a class="headerlink" href="#viewing-differences" title="Permalink to this headline"></a></h4>
+<h3><a class="toc-backref" href="#id26">Viewing Differences</a><a class="headerlink" href="#viewing-differences" title="Permalink to this headline"></a></h3>
 <p>To compare two Times directly, you would use the <code class="docutils literal notranslate"><span class="pre">difference()</span></code> method, which returns a <code class="docutils literal notranslate"><span class="pre">CodeIgniter\I18n\TimeDifference</span></code>
 instance. The first parameter is either a Time instance, a DateTime instance, or a string with the date/time. If
 a string is passed in the first parameter, the second parameter can be a timezone string:</p>
@@ -898,10 +910,8 @@ the original time:</p>
 <span class="k">echo</span> <span class="nv">$diff</span><span class="o">-&gt;</span><span class="na">seconds</span><span class="p">;</span> <span class="c1">// -220924800</span>
 </pre></div>
 </div>
-</section>
-</section>
 <section id="id1">
-<h3><a class="toc-backref" href="#id35">humanize()</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
+<h4>humanize()<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
 <p>Much like Time’s <code class="docutils literal notranslate"><span class="pre">humanize()</span></code> method, this returns a string that displays the difference between the times in a
 human readable format that is geared towards being easily understood. It can create strings like ‘3 hours ago’,
 ‘in 1 month’, etc. The biggest differences are in how very recent dates are handled:</p>
@@ -951,6 +961,7 @@ human readable format that is geared towards being easily understood. It can cre
 </tbody>
 </table>
 <p>The exact language used is controlled through the language file, <strong>Time.php</strong>.</p>
+</section>
 </section>
 </section>
 </section>
