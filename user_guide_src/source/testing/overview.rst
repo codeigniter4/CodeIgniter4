@@ -95,8 +95,10 @@ to help with staging and clean up::
     protected function setUp(): void
     protected function tearDown(): void
 
-The static methods run before and after the entire test case, whereas the local methods run
-between each test. If you implement any of these special functions make sure you run their
+The static methods ``setUpBeforeClass()`` and ``tearDownAfterClass()`` run before and after the entire test case, whereas the protected methods ``setUp()`` and ``tearDown()`` run
+between each test.
+
+If you implement any of these special functions make sure you run their
 parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
