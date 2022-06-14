@@ -1058,4 +1058,18 @@ final class TimeTest extends CIUnitTestCase
         $this->assertTrue($time2->equals($time1));
         $this->assertNotSame($time1, $time2);
     }
+
+    public function testSetTestNowWithFaLocale()
+    {
+        $currentLocale = Locale::getDefault();
+        Locale::setDefault('fa');
+
+        Time::setTestNow('2017/03/10 12:00', 'Asia/Tokyo');
+
+        $now = Time::now()->format('c');
+
+        $this->assertSame('2017-03-10T12:00:00+09:00', $now);
+
+        Locale::setDefault($currentLocale);
+    }
 }
