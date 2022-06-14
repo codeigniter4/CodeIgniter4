@@ -101,28 +101,6 @@ parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
 
-In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property
-``$setUpMethods`` and ``$tearDownMethods`` for
-parameter-free methods you want to run during set up and tear down:
-
-.. literalinclude:: overview/004.php
-
-You can see by default these handle the mocking of intrusive services, but your class may override
-that or provide their own:
-
-.. literalinclude:: overview/005.php
-
-.. note:: When you override ``$setUpMethods`` properties, do not remove the following items that are set in the parent class by default unless you know they are truly unnecessary.
-
-    .. code-block:: php
-
-        protected $setUpMethods = [
-            'resetFactories',
-            'mockCache',
-            'mockEmail',
-            'mockSession',
-        ];
-
 Traits
 ------
 
