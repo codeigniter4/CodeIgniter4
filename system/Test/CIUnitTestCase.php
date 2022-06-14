@@ -45,6 +45,9 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Methods to run during setUp.
      *
+     * WARNING: Do not override unless you know exactly what you are doing.
+     *          This property may be deprecated in the future.
+     *
      * @var array of methods
      */
     protected $setUpMethods = [
@@ -56,6 +59,8 @@ abstract class CIUnitTestCase extends TestCase
 
     /**
      * Methods to run during tearDown.
+     *
+     * WARNING: This property may be deprecated in the future.
      *
      * @var array of methods
      */
