@@ -11,11 +11,12 @@ uses this to collect the queries to display in the Toolbar.
     :local:
     :depth: 2
 
-==========
+**********
 The Events
-==========
+**********
 
-**DBQuery**
+DBQuery
+=======
 
 This event is triggered whenever a new query has been run, whether successful or not. The only parameter is
 a :doc:`Query </database/queries>` instance of the current query. You could use this to display all queries
