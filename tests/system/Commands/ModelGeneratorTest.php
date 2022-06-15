@@ -12,30 +12,20 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class ModelGeneratorTest extends CIUnitTestCase
 {
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
         parent::tearDown();
-        stream_filter_remove($this->streamFilter);
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
 
         if (is_file($file)) {
@@ -55,7 +45,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testGenerateModel()
     {
         command('make:model user --table users');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('extends Model', $this->getFileContent($file));
@@ -67,7 +57,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testGenerateModelWithOptionTable()
     {
         command('make:model cars -table utilisateur');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/Cars.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('protected $table            = \'utilisateur\';', $this->getFileContent($file));
@@ -76,7 +66,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testGenerateModelWithOptionDBGroup()
     {
         command('make:model user -dbgroup testing');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('protected $DBGroup          = \'testing\';', $this->getFileContent($file));
@@ -85,7 +75,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testGenerateModelWithOptionReturnArray()
     {
         command('make:model user --return array');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('protected $returnType       = \'array\';', $this->getFileContent($file));
@@ -94,7 +84,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testGenerateModelWithOptionReturnObject()
     {
         command('make:model user --return object');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);
         $this->assertStringContainsString('protected $returnType       = \'object\';', $this->getFileContent($file));
@@ -103,7 +93,7 @@ final class ModelGeneratorTest extends CIUnitTestCase
     public function testGenerateModelWithOptionReturnEntity()
     {
         command('make:model user --return entity');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
 
         $file = APPPATH . 'Models/User.php';
         $this->assertFileExists($file);

@@ -12,7 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
 
 /**
@@ -20,30 +20,23 @@ use Config\Services;
  */
 final class RoutesTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
         $this->resetServices();
-
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
         $this->resetServices();
+        parent::tearDown();
     }
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     public function testRoutesCommand()

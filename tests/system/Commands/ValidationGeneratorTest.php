@@ -12,28 +12,20 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class ValidationGeneratorTest extends CIUnitTestCase
 {
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
+        parent::tearDown();
 
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         $dir    = dirname($file);
         if (is_file($file)) {

@@ -12,7 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
@@ -22,22 +22,14 @@ use Config\Services;
  */
 final class ScaffoldGeneratorTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
         $this->resetServices();
         Services::autoloader()->initialize(new Autoload(), new Modules());
 
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
+        parent::setUp();
     }
 
     protected function getFileContents(string $filepath): string
@@ -55,14 +47,14 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
 
         $dir       = '\\' . DIRECTORY_SEPARATOR;
         $migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
-        preg_match('/' . $migration . '/u', CITestStreamFilter::$buffer, $matches);
+        preg_match('/' . $migration . '/u', $this->getStreamFilterBuffer(), $matches);
         $matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
         // Files check
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/People.php');
         $this->assertFileExists(APPPATH . 'Models/People.php');
-        $this->assertStringContainsString('_People.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_People.php', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/People.php');
 
         // Options check
@@ -78,13 +70,13 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
 
         $dir       = '\\' . DIRECTORY_SEPARATOR;
         $migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
-        preg_match('/' . $migration . '/u', CITestStreamFilter::$buffer, $matches);
+        preg_match('/' . $migration . '/u', $this->getStreamFilterBuffer(), $matches);
         $matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
         // Files check
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/User.php');
-        $this->assertStringContainsString('_User.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_User.php', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/User.php');
         $this->assertFileExists(APPPATH . 'Entities/User.php');
         $this->assertFileExists(APPPATH . 'Models/User.php');
@@ -107,13 +99,13 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
 
         $dir       = '\\' . DIRECTORY_SEPARATOR;
         $migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
-        preg_match('/' . $migration . '/u', CITestStreamFilter::$buffer, $matches);
+        preg_match('/' . $migration . '/u', $this->getStreamFilterBuffer(), $matches);
         $matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
         // Files check
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/OrderController.php');
-        $this->assertStringContainsString('_OrderMigration.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_OrderMigration.php', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/OrderSeeder.php');
         $this->assertFileExists(APPPATH . 'Models/OrderModel.php');
 
@@ -127,28 +119,28 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
     public function testCreateComponentWithOptionForce()
     {
         command('make:controller fixer');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('extends BaseController', $this->getFileContents(APPPATH . 'Controllers/Fixer.php'));
         $this->assertFileExists(APPPATH . 'Controllers/Fixer.php');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('make:scaffold fixer -bare -force');
 
         $dir       = '\\' . DIRECTORY_SEPARATOR;
         $migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
-        preg_match('/' . $migration . '/u', CITestStreamFilter::$buffer, $matches);
+        preg_match('/' . $migration . '/u', $this->getStreamFilterBuffer(), $matches);
         $matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
         // Files check
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/Fixer.php');
-        $this->assertStringContainsString('_Fixer.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_Fixer.php', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/Fixer.php');
         $this->assertFileExists(APPPATH . 'Models/Fixer.php');
 
         // Options check
         $this->assertStringContainsString('extends Controller', $this->getFileContents(APPPATH . 'Controllers/Fixer.php'));
-        $this->assertStringContainsString('File overwritten: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File overwritten: ', $this->getStreamFilterBuffer());
 
         // Clean up
         unlink(APPPATH . 'Controllers/Fixer.php');
@@ -163,13 +155,13 @@ final class ScaffoldGeneratorTest extends CIUnitTestCase
 
         $dir       = '\\' . DIRECTORY_SEPARATOR;
         $migration = "APPPATH{$dir}Database{$dir}Migrations{$dir}(.*)\\.php";
-        preg_match('/' . $migration . '/u', CITestStreamFilter::$buffer, $matches);
+        preg_match('/' . $migration . '/u', $this->getStreamFilterBuffer(), $matches);
         $matches[0] = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, $matches[0]);
 
         // Files check
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Controllers/Product.php');
-        $this->assertStringContainsString('_Product.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_Product.php', $this->getStreamFilterBuffer());
         $this->assertFileExists(APPPATH . 'Database/Seeds/Product.php');
         $this->assertFileExists(APPPATH . 'Models/Product.php');
 

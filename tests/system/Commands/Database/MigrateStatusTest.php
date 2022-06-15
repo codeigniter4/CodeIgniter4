@@ -12,14 +12,15 @@
 namespace CodeIgniter\Commands\Database;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class MigrateStatusTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
+
     private string $migrationFileFrom = SUPPORTPATH . 'MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php';
     private string $migrationFileTo   = APPPATH . 'Database/Migrations/2018-01-24-102301_Some_migration.php';
 
@@ -44,11 +45,6 @@ final class MigrateStatusTest extends CIUnitTestCase
             $contents
         );
         file_put_contents($this->migrationFileTo, $contents);
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
     protected function tearDown(): void
@@ -61,18 +57,16 @@ final class MigrateStatusTest extends CIUnitTestCase
         if (is_file($this->migrationFileTo)) {
             @unlink($this->migrationFileTo);
         }
-
-        stream_filter_remove($this->streamFilter);
     }
 
     public function testMigrateAllWithWithTwoNamespaces(): void
     {
         command('migrate --all');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('migrate:status');
 
-        $result   = str_replace(["\033[0;33m", "\033[0m"], '', CITestStreamFilter::$buffer);
+        $result   = str_replace(["\033[0;33m", "\033[0m"], '', $this->getStreamFilterBuffer());
         $result   = preg_replace('/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/', 'YYYY-MM-DD HH:MM:SS', $result);
         $expected = <<<'EOL'
             +---------------+-------------------+--------------------+-------+---------------------+-------+
@@ -91,11 +85,11 @@ final class MigrateStatusTest extends CIUnitTestCase
     {
         command('migrate -n App');
         command('migrate -n Tests\\\\Support');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('migrate:status');
 
-        $result   = str_replace(["\033[0;33m", "\033[0m"], '', CITestStreamFilter::$buffer);
+        $result   = str_replace(["\033[0;33m", "\033[0m"], '', $this->getStreamFilterBuffer());
         $result   = preg_replace('/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/', 'YYYY-MM-DD HH:MM:SS', $result);
         $expected = <<<'EOL'
             +---------------+-------------------+--------------------+-------+---------------------+-------+

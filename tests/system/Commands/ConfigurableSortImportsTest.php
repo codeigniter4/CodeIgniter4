@@ -12,36 +12,21 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class ConfigurableSortImportsTest extends CIUnitTestCase
 {
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
+    use StreamFilterTrait;
 
     public function testPublishLanguageWithoutOptions()
     {
         command('publish:language');
 
         $file = APPPATH . 'Language/en/Foobar.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
@@ -54,7 +39,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         command('publish:language --lang es');
 
         $file = APPPATH . 'Language/es/Foobar.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
         $this->assertNotSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         if (is_file($file)) {
@@ -71,7 +56,7 @@ final class ConfigurableSortImportsTest extends CIUnitTestCase
         command('publish:language --lang ar --sort off');
 
         $file = APPPATH . 'Language/ar/Foobar.php';
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
         $this->assertSame(sha1_file(SUPPORTPATH . 'Commands/Foobar.php'), sha1_file($file));
         if (is_file($file)) {

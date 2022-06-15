@@ -1,0 +1,35 @@
+Version 4.3.0
+#############
+
+Release Date: Unreleased
+
+**4.3.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+none.
+
+Enhancements
+************
+
+- Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-overview-stream-filters`.
+
+Changes
+*******
+
+none.
+
+Deprecations
+************
+
+none.
+
+Bugs Fixed
+**********
+
+none.

@@ -103,6 +103,8 @@ parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
 
+.. _testing-overview-traits:
+
 Traits
 ------
 
@@ -250,14 +252,27 @@ component name:
 
 .. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
+.. _testing-overview-stream-filters:
+
 Stream Filters
 ==============
 
-**CITestStreamFilter** provides an alternate to these helper methods.
+**StreamFilterTrait** provides an alternate to these helper methods.
 
 You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
-might be helpful. The ``CITestStreamFilter`` helps you capture the output from the stream of your choice.
+might be helpful. The ``StreamFilterTrait`` helps you capture the output from the stream of your choice.
+
+**Overview of methods**
+
+- ``StreamFilterTrait::getStreamFilterBuffer()`` Get the captured data from the buffer.
+- ``StreamFilterTrait::resetStreamFilterBuffer()`` Reset captured data.
 
 An example demonstrating this inside one of your test cases:
 
 .. literalinclude:: overview/018.php
+
+The ``StreamFilterTrait`` has a configurator that is called automatically.
+See :ref:`Testing Traits <testing-overview-traits>`.
+
+If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you must call the ``parent::setUp()`` and
+``parent::tearDown()`` methods respectively to configure the ``StreamFilterTrait``.

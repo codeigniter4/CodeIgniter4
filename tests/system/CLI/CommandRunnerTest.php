@@ -13,7 +13,7 @@ namespace CodeIgniter\CLI;
 
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
 
 /**
@@ -21,10 +21,7 @@ use Config\Services;
  */
 final class CommandRunnerTest extends CIUnitTestCase
 {
-    /**
-     * @var resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     private static Logger $logger;
     private static CommandRunner $runner;
@@ -37,60 +34,41 @@ final class CommandRunnerTest extends CIUnitTestCase
         self::$runner->initController(service('request'), service('response'), self::$logger);
     }
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
-
     public function testGoodCommand()
     {
         self::$runner->index(['list']);
-        $result = CITestStreamFilter::$buffer;
 
         // make sure the result looks like a command list
-        $this->assertStringContainsString('Lists the available commands.', $result);
-        $this->assertStringContainsString('Displays basic usage information.', $result);
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
     public function testDefaultCommand()
     {
         self::$runner->index([]);
-        $result = CITestStreamFilter::$buffer;
 
         // make sure the result looks like basic help
-        $this->assertStringContainsString('Lists the available commands.', $result);
-        $this->assertStringContainsString('Displays basic usage information.', $result);
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
     }
 
     public function testHelpCommand()
     {
         self::$runner->index(['help']);
-        $result = CITestStreamFilter::$buffer;
 
         // make sure the result looks like basic help
-        $this->assertStringContainsString('Displays basic usage information.', $result);
-        $this->assertStringContainsString('help command_name', $result);
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('help command_name', $this->getStreamFilterBuffer());
     }
 
     public function testHelpCommandDetails()
     {
         self::$runner->index(['help', 'session:migration']);
-        $result = CITestStreamFilter::$buffer;
 
         // make sure the result looks like more detailed help
-        $this->assertStringContainsString('Description:', $result);
-        $this->assertStringContainsString('Usage:', $result);
-        $this->assertStringContainsString('Options:', $result);
+        $this->assertStringContainsString('Description:', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Usage:', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString('Options:', $this->getStreamFilterBuffer());
     }
 
     public function testCommandProperties()
@@ -107,7 +85,7 @@ final class CommandRunnerTest extends CIUnitTestCase
         self::$runner->index([null, 'list']);
 
         // make sure the result looks like a command list
-        $this->assertStringContainsString('Lists the available commands.', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
     }
 
     public function testBadCommand()
@@ -115,6 +93,6 @@ final class CommandRunnerTest extends CIUnitTestCase
         self::$runner->index(['bogus']);
 
         // make sure the result looks like a command list
-        $this->assertStringContainsString('Command "bogus" not found', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Command "bogus" not found', $this->getStreamFilterBuffer());
     }
 }

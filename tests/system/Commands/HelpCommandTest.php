@@ -12,32 +12,18 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class HelpCommandTest extends CIUnitTestCase
 {
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
+    use StreamFilterTrait;
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     public function testHelpCommand()

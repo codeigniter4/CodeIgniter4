@@ -12,7 +12,7 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use DateTime;
 
 /**
@@ -20,18 +20,15 @@ use DateTime;
  */
 final class HistoryTest extends CIUnitTestCase
 {
+    use StreamFilterTrait;
+
     private const STEP = 0.000001;
 
     private float $time;
-    private $streamFilter;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         $this->time = (float) sprintf('%.6f', microtime(true));
     }
@@ -40,7 +37,7 @@ final class HistoryTest extends CIUnitTestCase
     {
         command('debugbar:clear');
 
-        stream_filter_remove($this->streamFilter);
+        parent::tearDown();
     }
 
     private function createDummyDebugbarJson()

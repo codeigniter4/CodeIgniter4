@@ -12,32 +12,19 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class GeneratorsTest extends CIUnitTestCase
 {
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
+    use StreamFilterTrait;
 
     public function testGenerateFileCreated()
     {
         command('make:seeder categories');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Database/Seeds/Categories.php';
         if (is_file($file)) {
             unlink($file);
@@ -47,10 +34,10 @@ final class GeneratorsTest extends CIUnitTestCase
     public function testGenerateFileExists()
     {
         command('make:filter items');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
-        CITestStreamFilter::$buffer = '';
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->resetStreamFilterBuffer();
         command('make:filter items');
-        $this->assertStringContainsString('File exists: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File exists: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Filters/Items.php';
         if (is_file($file)) {
             unlink($file);
@@ -60,10 +47,10 @@ final class GeneratorsTest extends CIUnitTestCase
     public function testGenerateFileOverwritten()
     {
         command('make:controller products');
-        $this->assertStringContainsString('File created: ', CITestStreamFilter::$buffer);
-        CITestStreamFilter::$buffer = '';
+        $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
+        $this->resetStreamFilterBuffer();
         command('make:controller products -force');
-        $this->assertStringContainsString('File overwritten: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('File overwritten: ', $this->getStreamFilterBuffer());
         $file = APPPATH . 'Controllers/Products.php';
         if (is_file($file)) {
             unlink($file);
@@ -79,7 +66,7 @@ final class GeneratorsTest extends CIUnitTestCase
         chmod(APPPATH . 'Filters', 0444);
 
         command('make:filter permissions');
-        $this->assertStringContainsString('Error while creating file: ', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Error while creating file: ', $this->getStreamFilterBuffer());
 
         chmod(APPPATH . 'Filters', 0755);
     }
@@ -87,7 +74,7 @@ final class GeneratorsTest extends CIUnitTestCase
     public function testGenerateFailsOnUndefinedNamespace()
     {
         command('make:model cars -namespace CodeIgnite');
-        $this->assertStringContainsString('Namespace "CodeIgnite" is not defined.', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Namespace "CodeIgnite" is not defined.', $this->getStreamFilterBuffer());
     }
 
     public function testGenerateFileInSubfolders()

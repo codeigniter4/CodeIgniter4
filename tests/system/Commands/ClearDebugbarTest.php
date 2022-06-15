@@ -12,29 +12,22 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
  */
 final class ClearDebugbarTest extends CIUnitTestCase
 {
-    private $streamFilter;
+    use StreamFilterTrait;
+
     private $time;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-        $this->time                 = time();
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
+        $this->time = time();
     }
 
     protected function createDummyDebugbarJson()
@@ -61,7 +54,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
 
         command('debugbar:clear');
-        $result = CITestStreamFilter::$buffer;
+        $result = $this->getStreamFilterBuffer();
 
         $this->assertFileDoesNotExist(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$this->time}.json");
         $this->assertFileExists(WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . '.gitkeep');

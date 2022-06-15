@@ -26,6 +26,8 @@ class CITestStreamFilter extends php_user_filter
      */
     public static $buffer = '';
 
+    protected static bool $registered = false;
+
     /**
      * This method is called whenever data is read from or written to the
      * attached stream (such as with fread() or fwrite()).
@@ -45,6 +47,13 @@ class CITestStreamFilter extends php_user_filter
 
         return PSFS_PASS_ON;
     }
-}
 
-stream_filter_register('CITestStreamFilter', CITestStreamFilter::class); // @codeCoverageIgnore
+    public static function registration(): void
+    {
+        if (! static::$registered) {
+            static::$registered = stream_filter_register('CITestStreamFilter', self::class); // @codeCoverageIgnore
+        }
+
+        static::$buffer = '';
+    }
+}
