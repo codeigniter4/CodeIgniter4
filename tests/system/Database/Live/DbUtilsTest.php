@@ -28,17 +28,6 @@ final class DbUtilsTest extends CIUnitTestCase
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
-    private static $origDebug;
-
-    /**
-     * This test must run first to store the inital debug value before we tinker with it below
-     */
-    public function testFirst()
-    {
-        $this::$origDebug = $this->getPrivateProperty($this->db, 'DBDebug');
-
-        $this->assertIsBool($this::$origDebug);
-    }
 
     public function testUtilsBackup()
     {
@@ -125,11 +114,11 @@ final class DbUtilsTest extends CIUnitTestCase
         $util = (new Database())->loadUtils($this->db);
         $this->setPrivateProperty($util, 'optimizeTable', false);
 
-        // set debug to true -- WARNING this change will persist!
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
+        $this->enableDBDebug();
 
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('Unsupported feature of the database platform you are using.');
+
         $util->optimizeDatabase();
 
         // this point in code execution will never be reached
@@ -140,14 +129,13 @@ final class DbUtilsTest extends CIUnitTestCase
         $util = (new Database())->loadUtils($this->db);
         $this->setPrivateProperty($util, 'optimizeTable', false);
 
-        // set debug to false -- WARNING this change will persist!
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
 
         $result = $util->optimizeDatabase();
         $this->assertFalse($result);
 
-        // restore original value grabbed from testFirst -- WARNING this change will persist!
-        $this->setPrivateProperty($this->db, 'DBDebug', self::$origDebug);
+        $this->enableDBDebug();
     }
 
     public function testUtilsOptimizeTable()

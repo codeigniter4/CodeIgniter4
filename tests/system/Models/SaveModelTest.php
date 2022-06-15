@@ -55,17 +55,20 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveNewRecordArrayFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
         $this->createModel(JobModel::class);
 
         $data = [
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $result = $this->model->protect(false)->save($data);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+
+        $this->enableDBDebug();
     }
 
     public function testSaveUpdateRecordArray(): void
@@ -84,7 +87,8 @@ final class SaveModelTest extends LiveModelTestCase
 
     public function testSaveUpdateRecordArrayFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
         $this->createModel(JobModel::class);
 
         $data = [
@@ -92,10 +96,12 @@ final class SaveModelTest extends LiveModelTestCase
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $result = $this->model->protect(false)->save($data);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('job', ['name' => 'Apprentice']);
+
+        $this->enableDBDebug();
     }
 
     public function testSaveUpdateRecordObject(): void

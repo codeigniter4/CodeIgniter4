@@ -27,21 +27,27 @@ final class DbDebugTest extends CIUnitTestCase
 
     public function testDBDebugTrue()
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
+        $this->enableDBDebug();
+
         $this->expectException('Exception');
+
         $this->db->simpleQuery('SELECT * FROM db_error');
     }
 
     public function testDBDebugFalse()
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
+
         $result = $this->db->simpleQuery('SELECT * FROM db_error');
+
         $this->assertFalse($result);
     }
 
     protected function tearDown(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', true);
+        $this->enableDBDebug();
+
         parent::tearDown();
     }
 }
