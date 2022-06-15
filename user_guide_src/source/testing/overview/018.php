@@ -10,11 +10,14 @@ final class SomeTest extends CIUnitTestCase
 
     public function testSomeOutput(): void
     {
-        $this->resetStreamFilterBuffer();
-
         CLI::write('first.');
 
-        $expected = "first.\n";
-        $this->assertSame($expected, $this->getStreamFilterBuffer());
+        $this->assertSame("\nfirst.\n", $this->getStreamFilterBuffer());
+
+        $this->resetStreamFilterBuffer();
+
+        CLI::write('second.');
+
+        $this->assertSame("second.\n", $this->getStreamFilterBuffer());
     }
 }
