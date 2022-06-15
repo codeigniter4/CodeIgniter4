@@ -259,6 +259,34 @@ abstract class BaseModel
     protected $afterUpdate = [];
 
     /**
+     * Callbacks for beforeInsertBatch
+     *
+     * @var array
+     */
+    protected $beforeInsertBatch = [];
+
+    /**
+     * Callbacks for afterInsertBatch
+     *
+     * @var array
+     */
+    protected $afterInsertBatch = [];
+
+    /**
+     * Callbacks for beforeUpdateBatch
+     *
+     * @var array
+     */
+    protected $beforeUpdateBatch = [];
+
+    /**
+     * Callbacks for afterUpdateBatch
+     *
+     * @var array
+     */
+    protected $afterUpdateBatch = [];
+
+    /**
      * Callbacks for beforeFind
      *
      * @var array
@@ -811,7 +839,27 @@ abstract class BaseModel
             }
         }
 
-        return $this->doInsertBatch($set, $escape, $batchSize, $testing);
+        $eventData = ['data' => $set];
+
+        if ($this->tempAllowCallbacks) {
+            $eventData = $this->trigger('beforeInsertBatch', $eventData);
+        }
+
+        $result = $this->doInsertBatch($eventData['data'], $escape, $batchSize, $testing);
+
+        $eventData = [
+            'data'   => $eventData['data'],
+            'result' => $result,
+        ];
+
+        if ($this->tempAllowCallbacks) {
+            // Trigger afterInsert events with the inserted data and new ID
+            $this->trigger('afterInsertBatch', $eventData);
+        }
+
+        $this->tempAllowCallbacks = $this->allowCallbacks;
+
+        return $result;
     }
 
     /**
@@ -928,7 +976,27 @@ abstract class BaseModel
             }
         }
 
-        return $this->doUpdateBatch($set, $index, $batchSize, $returnSQL);
+        $eventData = ['data' => $set];
+
+        if ($this->tempAllowCallbacks) {
+            $eventData = $this->trigger('beforeUpdateBatch', $eventData);
+        }
+
+        $result = $this->doUpdateBatch($eventData['data'], $index, $batchSize, $returnSQL);
+
+        $eventData = [
+            'data'   => $eventData['data'],
+            'result' => $result,
+        ];
+
+        if ($this->tempAllowCallbacks) {
+            // Trigger afterInsert events with the inserted data and new ID
+            $this->trigger('afterUpdateBatch', $eventData);
+        }
+
+        $this->tempAllowCallbacks = $this->allowCallbacks;
+
+        return $result;
     }
 
     /**

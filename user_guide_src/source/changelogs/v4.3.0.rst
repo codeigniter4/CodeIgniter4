@@ -18,6 +18,7 @@ Enhancements
 ************
 
 - Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-overview-stream-filters`.
+- Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 
 Changes
 *******
