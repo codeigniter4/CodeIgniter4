@@ -11,8 +11,10 @@
 
 namespace CodeIgniter\I18n;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
@@ -1023,6 +1025,31 @@ final class TimeTest extends CIUnitTestCase
         $time = Time::parse('March 10, 2017', 'America/Chicago');
 
         $this->assertSame('Just now', $time->humanize());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4708
+     */
+    public function testHumanizeWithArLocale()
+    {
+        $this->resetServices();
+
+        $currentLocale = Locale::getDefault();
+        Locale::setDefault('ar');
+
+        $config                   = new App();
+        $config->supportedLocales = ['ar'];
+        $config->defaultLocale    = 'ar';
+        Factories::injectMock('config', 'App', $config);
+
+        Time::setTestNow('2022-06-14 12:00', 'America/Chicago');
+
+        $date = '2022-06-07 12:00';
+        $time = Time::parse($date, 'America/Chicago');
+
+        $this->assertSame('١ week ago', $time->humanize());
+
+        Locale::setDefault($currentLocale);
     }
 
     public function testSetTimezoneDate()

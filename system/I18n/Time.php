@@ -1005,7 +1005,7 @@ class Time extends DateTime
      */
     public function humanize()
     {
-        $now  = IntlCalendar::fromDateTime(self::now($this->timezone)->toDateTimeString());
+        $now  = IntlCalendar::fromDateTime(self::now($this->timezone));
         $time = $this->getCalendar()->getTime();
 
         $years   = $now->fieldDifference($time, IntlCalendar::FIELD_YEAR);
@@ -1106,7 +1106,7 @@ class Time extends DateTime
      */
     public function getCalendar()
     {
-        return IntlCalendar::fromDateTime($this->toDateTimeString());
+        return IntlCalendar::fromDateTime($this);
     }
 
     /**
