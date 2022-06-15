@@ -137,7 +137,7 @@ parameters:
 
 		-
 			message: "#^Negated boolean expression is always true\\.$#"
-			count: 1
+			count: 2
 			path: system/Database/BaseConnection.php
 
 		-
