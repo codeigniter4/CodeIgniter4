@@ -281,22 +281,28 @@ be used to collect data for analysis and reporting. The <a class="reference inte
 uses this to collect the queries to display in the Toolbar.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#the-events" id="id1">The Events</a></p></li>
+<li><p><a class="reference internal" href="#the-events" id="id1">The Events</a></p>
+<ul>
+<li><p><a class="reference internal" href="#dbquery" id="id2">DBQuery</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="the-events">
 <h2><a class="toc-backref" href="#id1">The Events</a><a class="headerlink" href="#the-events" title="Permalink to this headline"></a></h2>
-<p><strong>DBQuery</strong></p>
+<section id="dbquery">
+<h3><a class="toc-backref" href="#id2">DBQuery</a><a class="headerlink" href="#dbquery" title="Permalink to this headline"></a></h3>
 <p>This event is triggered whenever a new query has been run, whether successful or not. The only parameter is
 a <a class="reference internal" href="queries.html"><span class="doc">Query</span></a> instance of the current query. You could use this to display all queries
 in STDOUT, or logging to a file, or even creating tools to do automatic query analysis to help you spot
 potentially missing indexes, slow queries, etc. An example usage might be:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// In Config\Events.php</span>
+<span class="c1">// In app/Config/Events.php</span>
 <span class="nx">Events</span><span class="o">::</span><span class="na">on</span><span class="p">(</span><span class="s1">&#39;DBQuery&#39;</span><span class="p">,</span> <span class="s1">&#39;CodeIgniter\Debug\Toolbar\Collectors\Database::collect&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 
@@ -312,7 +318,7 @@ potentially missing indexes, slow queries, etc. An example usage might be:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 14, 2022.
+      <span class="lastupdated">Last updated on Jun 15, 2022.
       </span></p>
   </div>
 
