@@ -339,6 +339,31 @@ class Model extends BaseModel
     }
 
     /**
+     * Compiles batch upsert strings and runs the queries, validating each row prior.
+     * This methods works only with dbCalls
+     *
+     * @param array|null $set       An associative array of upsert values
+     * @param bool|null  $escape    Whether to escape values
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     *
+     * @return bool|int Number of rows inserted or FALSE on failure
+     */
+    protected function doUpsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
+    {
+        if (is_array($set)) {
+            foreach ($set as $row) {
+                // Require non empty primaryKey when
+                // not using auto-increment feature
+                if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
+                    throw DataException::forEmptyPrimaryKey('insertBatch');
+                }
+            }
+        }
+
+        return $this->builder()->testMode($testing)->upsertBatch($set, $escape, $batchSize);
+    }
+    /**
      * Updates a single record in $this->table.
      * This methods works only with dbCalls
      *

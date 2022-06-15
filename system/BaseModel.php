@@ -408,6 +408,18 @@ abstract class BaseModel
     abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
     /**
+     * Compiles batch upsert and runs the queries, validating each row prior.
+     * This methods works only with dbCalls
+     *
+     * @param array|null $set       An associative array of insert values
+     * @param bool|null  $escape    Whether to escape values
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     *
+     * @return bool|int Number of rows inserted or FALSE on failure
+     */
+    abstract protected function doUpsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
+    /**
      * Updates a single record in the database.
      * This methods works only with dbCalls
      *
@@ -865,6 +877,78 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         return $result;
+    }
+
+    /**
+     * Converts upsert to batchUpsert call
+     *
+     * @param array|null $set       an associative array of upsert values
+     * @param bool|null  $escape    Whether to escape values
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     *
+     * @throws ReflectionException
+     *
+     * @return bool|int Number of rows inserted or FALSE on failure
+     */
+    public function upsert($data = null, ?bool $escape = null, bool $testing = false)
+    {
+		return $this->upsertBatch( [$data], $escape, 1, $testing);
+    }
+
+    /**
+     * Compiles batch upsert runs the queries, validating each row prior.
+     *
+     * @param array|null $set       an associative array of upsert values
+     * @param bool|null  $escape    Whether to escape values
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     *
+     * @throws ReflectionException
+     *
+     * @return bool|int Number of rows inserted or FALSE on failure
+     */
+    public function upsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
+    {
+        if (is_array($set)) {
+            foreach ($set as &$row) {
+                // If $data is using a custom class with public or protected
+                // properties representing the collection elements, we need to grab
+                // them as an array.
+                if (is_object($row) && ! $row instanceof stdClass) {
+                    $row = $this->objectToArray($row, false, true);
+                }
+
+                // If it's still a stdClass, go ahead and convert to
+                // an array so doProtectFields and other model methods
+                // don't have to do special checks.
+                if (is_object($row)) {
+                    $row = (array) $row;
+                }
+
+                // Validate every row..
+                if (! $this->skipValidation && ! $this->cleanRules()->validate($row)) {
+                    return false;
+                }
+
+                // Must be called first so we don't
+                // strip out created_at values.
+                $row = $this->doProtectFields($row);
+
+                // Set created_at and updated_at with same time
+                $date = $this->setDate();
+
+                if ($this->useTimestamps && $this->createdField && ! array_key_exists($this->createdField, $row)) {
+                    $row[$this->createdField] = $date;
+                }
+
+                if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $row)) {
+                    $row[$this->updatedField] = $date;
+                }
+            }
+        }
+
+        return $this->doUpsertBatch($set, $escape, $batchSize, $testing);
     }
 
     /**

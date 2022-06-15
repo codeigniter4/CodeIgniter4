@@ -334,12 +334,13 @@ class Connection extends BaseConnection implements ConnectionInterface
             $owner = $this->username;
         }
 
-        $sql = 'SELECT AIC.INDEX_NAME, UC.CONSTRAINT_TYPE, AIC.COLUMN_NAME '
-            . ' FROM ALL_IND_COLUMNS AIC '
-            . ' LEFT JOIN USER_CONSTRAINTS UC ON AIC.INDEX_NAME = UC.CONSTRAINT_NAME AND AIC.TABLE_NAME = UC.TABLE_NAME '
-            . 'WHERE AIC.TABLE_NAME = ' . $this->escape(strtolower($table)) . ' '
+        $sql = "SELECT AIC.INDEX_NAME, CASE WHEN AI.UNIQUENESS = 'UNIQUE' AND UC.CONSTRAINT_TYPE IS NULL THEN 'U' ELSE UC.CONSTRAINT_TYPE END CONSTRAINT_TYPE, AIC.COLUMN_NAME "
+            . 'FROM ALL_IND_COLUMNS AIC '
+            . 'LEFT JOIN USER_CONSTRAINTS UC ON AIC.INDEX_NAME = UC.CONSTRAINT_NAME AND AIC.TABLE_NAME = UC.TABLE_NAME '
+			. 'LEFT JOIN ALL_INDEXES AI ON AI.TABLE_OWNER = AIC.TABLE_OWNER AND AI.TABLE_NAME = '. $this->escape(strtoupper($table)) .' AND AI.OWNER = AIC.TABLE_OWNER AND AI.INDEX_NAME = AIC.INDEX_NAME '
+            . 'WHERE AIC.TABLE_NAME = ' . $this->escape(strtoupper($table)) . ' '
             . 'AND AIC.TABLE_OWNER = ' . $this->escape(strtoupper($owner)) . ' '
-            . ' ORDER BY UC.CONSTRAINT_TYPE, AIC.COLUMN_POSITION';
+            . 'ORDER BY UC.CONSTRAINT_TYPE, AIC.COLUMN_POSITION';
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
