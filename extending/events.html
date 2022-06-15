@@ -409,7 +409,7 @@ When <strong>true</strong>, all events will be skipped over during the trigger m
 <li><p><strong>post_controller_constructor</strong> Called immediately after your controller is instantiated, but prior to any method calls happening.</p></li>
 <li><p><strong>post_system</strong> Called after the final rendered page is sent to the browser, at the end of system execution after the finalized data is sent to the browser.</p></li>
 <li><p><strong>email</strong> Called after an email sent successfully from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Email\Email</span></code>. Receives an array of the <code class="docutils literal notranslate"><span class="pre">Email</span></code> class’s properties as a parameter.</p></li>
-<li><p><strong>DBQuery</strong> Called after a successfully-completed database query. Receives the <code class="docutils literal notranslate"><span class="pre">Query</span></code> object.</p></li>
+<li><p><strong>DBQuery</strong> Called after a database query whether successful or not. Receives the <code class="docutils literal notranslate"><span class="pre">Query</span></code> object.</p></li>
 <li><p><strong>migrate</strong> Called after a successful migration call to <code class="docutils literal notranslate"><span class="pre">latest()</span></code> or <code class="docutils literal notranslate"><span class="pre">regress()</span></code>. Receives the current properties of <code class="docutils literal notranslate"><span class="pre">MigrationRunner</span></code> as well as the name of the method.</p></li>
 </ul>
 </section>
