@@ -103,6 +103,8 @@ parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
 
+.. _testing-overview-traits:
+
 Traits
 ------
 
@@ -250,6 +252,8 @@ component name:
 
 .. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
+.. _testing-overview-stream-filters:
+
 Stream Filters
 ==============
 
@@ -260,20 +264,15 @@ might be helpful. The ``StreamFilterTrait`` helps you capture the output from th
 
 **Overview of methods**
 
-``StreamFilterTrait::registerStreamFilterClass()`` Registering a filter to capture streams.
-
-``StreamFilterTrait::appendOutputStreamFilter()`` Adding a filter to the output stream.
-
-``StreamFilterTrait::appendErrorStreamFilter()`` Adding a filter to the error stream.
-
-``StreamFilterTrait::removeOutputStreamFilter()`` Removing the filter from the output stream.
-
-``StreamFilterTrait::removeErrorStreamFilter()`` Removing the filter from the error stream.
-
-``StreamFilterTrait::getStreamFilterBuffer()`` Get the captured data from the buffer.
-
-``StreamFilterTrait::resetStreamFilterBuffer()`` Reset captured data.
+- ``StreamFilterTrait::getStreamFilterBuffer()`` Get the captured data from the buffer.
+- ``StreamFilterTrait::resetStreamFilterBuffer()`` Reset captured data.
 
 An example demonstrating this inside one of your test cases:
 
 .. literalinclude:: overview/018.php
+
+The ``StreamFilterTrait`` has a configurator that is called automatically.
+See :ref:`Testing Traits <testing-overview-traits>`.
+
+If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you must call the ``parent::setUp()`` and
+``parent::tearDown()`` methods respectively to configure the ``StreamFilterTrait``.

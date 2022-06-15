@@ -25,6 +25,18 @@ trait StreamFilterTrait
      */
     private $errorStreamFilterResource;
 
+    protected function setUpStreamFilterTrait(): void
+    {
+        $this->registerStreamFilterClass()
+            ->appendOutputStreamFilter()
+            ->appendErrorStreamFilter();
+    }
+
+    protected function tearDownStreamFilterTrait(): void
+    {
+        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
+    }
+
     /**
      * @return $this
      */
@@ -80,7 +92,7 @@ trait StreamFilterTrait
      */
     protected function registerStreamFilterClass()
     {
-        CITestStreamFilter::init();
+        CITestStreamFilter::registration();
 
         return $this;
     }

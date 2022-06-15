@@ -25,19 +25,13 @@ final class RoutesTest extends CIUnitTestCase
     protected function setUp(): void
     {
         $this->resetServices();
-
         parent::setUp();
-
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
     {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-
         $this->resetServices();
+        parent::tearDown();
     }
 
     protected function getBuffer()

@@ -30,10 +30,6 @@ final class HistoryTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
         $this->time = (float) sprintf('%.6f', microtime(true));
     }
 
@@ -41,7 +37,7 @@ final class HistoryTest extends CIUnitTestCase
     {
         command('debugbar:clear');
 
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
+        parent::tearDown();
     }
 
     private function createDummyDebugbarJson()

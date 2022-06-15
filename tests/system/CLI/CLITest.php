@@ -23,20 +23,6 @@ final class CLITest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-    }
-
     public function testNew()
     {
         $actual = new CLI();

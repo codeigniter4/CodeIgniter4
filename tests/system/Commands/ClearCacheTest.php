@@ -27,17 +27,8 @@ final class ClearCacheTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
         // Make sure we are testing with the correct handler (override injections)
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     public function testClearCacheInvalidHandler()

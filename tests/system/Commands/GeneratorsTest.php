@@ -21,18 +21,6 @@ final class GeneratorsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-    }
-
     public function testGenerateFileCreated()
     {
         command('make:seeder categories');

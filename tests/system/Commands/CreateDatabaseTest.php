@@ -30,10 +30,6 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
         $this->connection = Database::connect();
 
         parent::setUp();
@@ -50,13 +46,6 @@ final class CreateDatabaseTest extends CIUnitTestCase
                 Database::forge()->dropDatabase('foobar');
             }
         }
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-
-        parent::tearDown();
     }
 
     protected function getBuffer()

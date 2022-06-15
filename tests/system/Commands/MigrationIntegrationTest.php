@@ -41,10 +41,6 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         $contents = file_get_contents($this->migrationFileTo);
         $contents = str_replace('namespace Tests\Support\Database\Migrations;', 'namespace App\Database\Migrations;', $contents);
         file_put_contents($this->migrationFileTo, $contents);
-
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
     }
 
     protected function tearDown(): void
@@ -54,8 +50,6 @@ final class MigrationIntegrationTest extends CIUnitTestCase
         if (is_file($this->migrationFileTo)) {
             @unlink($this->migrationFileTo);
         }
-
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     public function testMigrationWithRollbackHasSameNameFormat(): void

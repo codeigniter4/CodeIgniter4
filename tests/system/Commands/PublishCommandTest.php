@@ -22,20 +22,10 @@ final class PublishCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-    }
-
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
         TestPublisher::setResult(true);
     }
 

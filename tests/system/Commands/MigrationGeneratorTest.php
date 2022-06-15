@@ -21,17 +21,8 @@ final class MigrationGeneratorTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        $this->registerStreamFilterClass()
-            ->appendErrorStreamFilter()
-            ->appendOutputStreamFilter();
-    }
-
     protected function tearDown(): void
     {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-
         $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {

@@ -30,8 +30,6 @@ final class ConsoleTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()->appendOutputStreamFilter();
-
         $this->env = new DotEnv(ROOTPATH);
         $this->env->load();
 
@@ -49,11 +47,6 @@ final class ConsoleTest extends CIUnitTestCase
 
         $this->app = new MockCodeIgniter(new MockCLIConfig());
         $this->app->setContext('spark');
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter();
     }
 
     public function testNew()

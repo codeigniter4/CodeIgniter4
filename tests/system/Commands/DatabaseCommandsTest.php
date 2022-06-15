@@ -21,19 +21,9 @@ final class DatabaseCommandsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
-        parent::setUp();
-    }
-
     protected function tearDown(): void
     {
         command('migrate:rollback');
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
 
         parent::tearDown();
     }

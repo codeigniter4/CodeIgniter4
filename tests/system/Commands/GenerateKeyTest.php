@@ -30,10 +30,6 @@ final class GenerateKeyTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
         $this->envPath       = ROOTPATH . '.env';
         $this->backupEnvPath = ROOTPATH . '.env.backup';
 
@@ -46,8 +42,6 @@ final class GenerateKeyTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-
         if (is_file($this->envPath)) {
             unlink($this->envPath);
         }

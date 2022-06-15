@@ -27,18 +27,12 @@ final class InfoCacheTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
         // Make sure we are testing with the correct handler (override injections)
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
     }
 
     protected function tearDown(): void
     {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-
         // restore default cache handler
         config('Cache')->handler = 'file';
     }

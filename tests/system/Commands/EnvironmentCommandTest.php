@@ -27,9 +27,6 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
 
         if (is_file($this->envPath)) {
             rename($this->envPath, $this->backupEnvPath);
@@ -39,7 +36,6 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
 
         if (is_file($this->envPath)) {
             unlink($this->envPath);

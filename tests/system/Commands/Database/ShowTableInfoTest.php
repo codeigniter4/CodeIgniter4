@@ -27,22 +27,6 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     protected $migrateOnce = true;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-    }
-
     private function getResultWithoutControlCode(): string
     {
         return str_replace(

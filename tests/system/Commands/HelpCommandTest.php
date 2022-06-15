@@ -21,20 +21,6 @@ final class HelpCommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
-    }
-
     protected function getBuffer()
     {
         return $this->getStreamFilterBuffer();

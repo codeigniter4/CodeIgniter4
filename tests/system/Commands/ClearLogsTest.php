@@ -27,18 +27,9 @@ final class ClearLogsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->registerStreamFilterClass()
-            ->appendOutputStreamFilter()
-            ->appendErrorStreamFilter();
-
         // test runs on other tests may log errors since default threshold
         // is now 4, so set this to a safe distance
         $this->date = date('Y-m-d', strtotime('+1 year'));
-    }
-
-    protected function tearDown(): void
-    {
-        $this->removeOutputStreamFilter()->removeErrorStreamFilter();
     }
 
     protected function createDummyLogFiles()
