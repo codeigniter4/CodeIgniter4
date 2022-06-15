@@ -224,6 +224,11 @@ class RouteCollection implements RouteCollectionInterface
     private ?string $httpHost = null;
 
     /**
+     * Flag to limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    protected bool $useSupportedLocalesOnly = false;
+
+    /**
      * Constructor
      */
     public function __construct(FileLocator $locator, Modules $moduleConfig)
@@ -1465,5 +1470,23 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         return array_unique($controllers);
+    }
+
+    /**
+     * Set The flag that limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    public function useSupportedLocalesOnly(bool $useOnly): self
+    {
+        $this->useSupportedLocalesOnly = $useOnly;
+
+        return $this;
+    }
+
+    /**
+     * Get the flag that limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    public function shouldUseSupportedLocalesOnly(): bool
+    {
+        return $this->useSupportedLocalesOnly;
     }
 }
