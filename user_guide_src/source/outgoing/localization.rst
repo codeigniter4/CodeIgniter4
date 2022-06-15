@@ -69,6 +69,8 @@ the following example, the **en** locale would be used if no match is found:
 
 .. literalinclude:: localization/003.php
 
+.. _localization-in-routes:
+
 In Routes
 ---------
 
@@ -87,6 +89,7 @@ file:
 
 .. literalinclude:: localization/018.php
 
+.. note:: ``useSupportedLocalesOnly()`` can be used since v4.3.0.
 
 Retrieving the Current Locale
 =============================
