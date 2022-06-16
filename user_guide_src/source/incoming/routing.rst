@@ -327,6 +327,9 @@ available from the command line:
 .. warning:: If you enable auto-routing and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
+.. note:: It is recommended to use Spark Commands instead of CLI routes.
+    See the :doc:`spark_commands` page for detailed information.
+
 Global Options
 ==============
 
@@ -716,7 +719,6 @@ The output is like the following:
     +--------+------------------+------------------------------------------+----------------+-----------------------+
     | GET    | /                | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
     | GET    | feed             | (Closure)                                | invalidchars   | secureheaders toolbar |
-    | CLI    | ci(.*)           | \CodeIgniter\CLI\CommandRunner::index/$1 |                |                       |
     | auto   | /                | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
     | auto   | home             | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
     | auto   | home/index[/...] | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
@@ -734,7 +736,6 @@ When you use Auto Routing (Improved), the output is like the following:
     +-----------+-------------------------+------------------------------------------+----------------+---------------+
     | Method    | Route                   | Handler                                  | Before Filters | After Filters |
     +-----------+-------------------------+------------------------------------------+----------------+---------------+
-    | CLI       | ci(.*)                  | \CodeIgniter\CLI\CommandRunner::index/$1 |                |               |
     | GET(auto) | product/list/../..[/..] | \App\Controllers\Product::getList        |                | toolbar       |
     +-----------+-------------------------+------------------------------------------+----------------+---------------+
 

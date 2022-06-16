@@ -41,12 +41,6 @@ final class ConsoleTest extends CIUnitTestCase
         $this->app->initialize();
     }
 
-    public function testNew()
-    {
-        $console = new Console();
-        $this->assertInstanceOf(Console::class, $console);
-    }
-
     public function testHeader()
     {
         $console = new Console();
