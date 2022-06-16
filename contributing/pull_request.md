@@ -98,24 +98,31 @@ show up in more than one place.
 
 If you change anything that requires a change to documentation,
 then you will need to add to the documentation.
-New classes, methods, parameters, changing default values, etc.
+New classes, methods, parameters, changing default values, changing behavior etc.
 are all changes that require a change to documentation.
-Also, the [changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change,
+
+Also, the [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html) must be updated for every change,
 and [PHPDoc](https://github.com/codeigniter4/CodeIgniter4/blob/develop/phpdoc.dist.xml) blocks must be maintained.
 
 See [Writing CodeIgniter Documentation](./documentation.rst).
 
-### Changelog
+#### Changelog
 
-The changelog, in the user guide root, needs to be kept up-to-date. Not
-all changes will need an entry in it, but new classes, major or BC
-changes to existing classes should. Once we have a stable release, bug
-fixes would appear in the changelog too.
+The [Changelog](https://codeigniter4.github.io/CodeIgniter4/changelogs/index.html), in the user guide, needs to be kept up-to-date. Not
+all changes will need an entry in it, but the following items should.
 
-The changelog is independently maintained by the framework release
-manager Make sure that your PR descriptions help us decide if the
-contribution should be highlighted in the next release after it has been
-merged.
+- all breaking changes (BCs)
+- all enhancements (new features, new classes, new APIs)
+- other behavior changes
+- deprecations
+- major bug fixes
+
+#### Upgrading Guide
+
+If your PR requires users to do something when they upgrade CodeIgniter, the
+[Upgrading Guide](https://codeigniter4.github.io/CodeIgniter4/installation/upgrading.html) is also needed.
+
+Add an instruction what to do.
 
 ### CSS
 
@@ -138,7 +145,7 @@ break with earlier versions of the framework.
 
 #### Breaking Changes
 
-In general, any change that would disrupt existing uses of the framework is considered a "breaking change" and will not be favorably considered. A few specific examples to pay attention to:
+In general, any change that would disrupt existing uses of the framework is considered a "Breaking Change" (BC) and will not be favorably considered. A few specific examples to pay attention to:
 
 1. New classes/properties/constants in `system` are acceptable, but anything in the `app` directory that will be used in `system` should be backwards-compatible.
 2. Any changes to non-private methods must be backwards-compatible with the original definition.

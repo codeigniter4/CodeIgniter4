@@ -347,7 +347,7 @@ class IncomingRequest extends Request
      */
     public function isCLI(): bool
     {
-        return false;
+        return is_cli();
     }
 
     /**

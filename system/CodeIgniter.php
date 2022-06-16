@@ -47,7 +47,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.2.0';
+    public const CI_VERSION = '4.2.1';
 
     private const MIN_PHP_VERSION = '7.4';
 
@@ -256,9 +256,7 @@ class CodeIgniter
             require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
         }
 
-        /**
-         * Config\Kint
-         */
+        /** @var \Config\Kint $config */
         $config = config(KintConfig::class);
 
         Kint::$depth_limit         = $config->maxDepth;
