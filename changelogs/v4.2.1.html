@@ -293,6 +293,7 @@
 <h3><a class="toc-backref" href="#id2">Behavior Changes</a><a class="headerlink" href="#behavior-changes" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Guessing the file extension from the MIME type has been changed if the proposed extension is not valid. Previously, the guessing will early terminate and return <code class="docutils literal notranslate"><span class="pre">null</span></code>. Now, if a proposed extension is given and is invalid, the MIME guessing will continue checking using the mapping of extension to MIME types.</p></li>
+<li><p>If there is a cookie with a prefixed name and a cookie with the same name without a prefix, the previous <code class="docutils literal notranslate"><span class="pre">get_cookie()</span></code> had the tricky behavior of returning the cookie without the prefix. Now the behavior has been fixed as a bug, and has been changed. See <a class="reference internal" href="../installation/upgrade_421.html#upgrade-421-get-cookie"><span class="std std-ref">Upgrading</span></a> for details.</p></li>
 </ul>
 </section>
 </section>

@@ -324,12 +324,13 @@ a description of its use, as this function is an alias for
 
 <dl class="php function">
 <dt class="sig sig-object php" id="get_cookie">
-<span class="sig-name descname"><span class="pre">get_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$index</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$xssClean</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_cookie" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$index</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$xssClean</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#get_cookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name</p></li>
 <li><p><strong>$xssClean</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to apply XSS filtering to the returned value</p></li>
+<li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – Cookie name prefix. If set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, the default value from <strong>app/Config/Cookie.php</strong> will be used. If set to <code class="docutils literal notranslate"><span class="pre">null</span></code>, no prefix</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -339,18 +340,22 @@ a description of its use, as this function is an alias for
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.2.1, the third parameter <code class="docutils literal notranslate"><span class="pre">$prefix</span></code> has been introduced and the behavior has been changed a bit due to a bug fix. See <a class="reference internal" href="../installation/upgrade_421.html#upgrade-421-get-cookie"><span class="std std-ref">Upgrading</span></a> for details.</p>
+</div>
 <p>This helper function gives you friendlier syntax to get browser
 cookies. Refer to the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest Library</span></a> for
 detailed description of its use, as this function acts very
 similarly to <code class="docutils literal notranslate"><span class="pre">IncomingRequest::getCookie()</span></code>, except it will also prepend
 the <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> that you might’ve set in your
 <strong>app/Config/Cookie.php</strong> file.</p>
-</dd></dl>
-
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using <code class="docutils literal notranslate"><span class="pre">esc()</span></code> with the correct <code class="docutils literal notranslate"><span class="pre">$context</span></code> in the views is recommended.</p>
 </div>
+</dd></dl>
+
 <dl class="php function">
 <dt class="sig sig-object php" id="delete_cookie">
 <span class="sig-name descname"><span class="pre">delete_cookie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#delete_cookie" title="Permalink to this definition"></a></dt>
