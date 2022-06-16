@@ -256,9 +256,7 @@ class CodeIgniter
             require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
         }
 
-        /**
-         * Config\Kint
-         */
+        /** @var \Config\Kint $config */
         $config = config(KintConfig::class);
 
         Kint::$depth_limit         = $config->maxDepth;
