@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use Exception;
 use stdClass;
 use Throwable;
 
@@ -603,7 +604,14 @@ abstract class BaseConnection implements ConnectionInterface
         $this->lastQuery = $query;
 
         // Run the query for real
-        if (! $this->pretend && false === ($this->resultID = $this->simpleQuery($query->getQuery()))) {
+        try {
+            $exception      = null;
+            $this->resultID = $this->simpleQuery($query->getQuery());
+        } catch (Exception $exception) {
+            $this->resultID = false;
+        }
+
+        if (! $this->pretend && $this->resultID === false) {
             $query->setDuration($startTime, $startTime);
 
             // This will trigger a rollback if transactions are being used
@@ -624,6 +632,15 @@ abstract class BaseConnection implements ConnectionInterface
                         log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
                         break;
                     }
+                }
+
+                if (! $this->pretend) {
+                    // Let others do something with this query.
+                    Events::trigger('DBQuery', $query);
+                }
+
+                if ($exception !== null) {
+                    throw $exception;
                 }
 
                 return false;

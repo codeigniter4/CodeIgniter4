@@ -11,8 +11,10 @@
 
 namespace CodeIgniter\I18n;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\I18n\Exceptions\I18nException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 use DateTime;
 use DateTimeZone;
 use IntlDateFormatter;
@@ -1025,6 +1027,31 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame('Just now', $time->humanize());
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4708
+     */
+    public function testHumanizeWithArLocale()
+    {
+        $this->resetServices();
+
+        $currentLocale = Locale::getDefault();
+        Locale::setDefault('ar');
+
+        $config                   = new App();
+        $config->supportedLocales = ['ar'];
+        $config->defaultLocale    = 'ar';
+        Factories::injectMock('config', 'App', $config);
+
+        Time::setTestNow('2022-06-14 12:00', 'America/Chicago');
+
+        $date = '2022-06-07 12:00';
+        $time = Time::parse($date, 'America/Chicago');
+
+        $this->assertSame('١ week ago', $time->humanize());
+
+        Locale::setDefault($currentLocale);
+    }
+
     public function testSetTimezoneDate()
     {
         $time  = Time::parse('13 May 2020 10:00', 'GMT');
@@ -1057,5 +1084,19 @@ final class TimeTest extends CIUnitTestCase
         $this->assertInstanceOf(Time::class, $time2);
         $this->assertTrue($time2->equals($time1));
         $this->assertNotSame($time1, $time2);
+    }
+
+    public function testSetTestNowWithFaLocale()
+    {
+        $currentLocale = Locale::getDefault();
+        Locale::setDefault('fa');
+
+        Time::setTestNow('2017/03/10 12:00', 'Asia/Tokyo');
+
+        $now = Time::now()->format('c');
+
+        $this->assertSame('2017-03-10T12:00:00+09:00', $now);
+
+        Locale::setDefault($currentLocale);
     }
 }

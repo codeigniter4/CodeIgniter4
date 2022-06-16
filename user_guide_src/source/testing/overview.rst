@@ -95,28 +95,22 @@ to help with staging and clean up::
     protected function setUp(): void
     protected function tearDown(): void
 
-The static methods run before and after the entire test case, whereas the local methods run
-between each test. If you implement any of these special functions make sure you run their
+The static methods ``setUpBeforeClass()`` and ``tearDownAfterClass()`` run before and after the entire test case, whereas the protected methods ``setUp()`` and ``tearDown()`` run
+between each test.
+
+If you implement any of these special functions make sure you run their
 parent as well so extended test cases do not interfere with staging:
 
 .. literalinclude:: overview/003.php
-
-In addition to these methods, ``CIUnitTestCase`` also comes with a convenience property for
-parameter-free methods you want run during set up and tear down:
-
-.. literalinclude:: overview/004.php
-
-You can see by default these handle the mocking of intrusive services, but your class may override
-that or provide their own:
-
-.. literalinclude:: overview/005.php
 
 Traits
 ------
 
 A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. ``CIUnitTestCase`` will detect any class traits and look for staging methods
-to run named for the trait itself. For example, if you needed to add authentication to some
+to run named for the trait itself (i.e. `setUp{NameOfTrait}()` and `tearDown{NameOfTrait}()`).
+
+For example, if you needed to add authentication to some
 of your test cases you could create an authentication trait with a set up method to fake a
 logged in user:
 

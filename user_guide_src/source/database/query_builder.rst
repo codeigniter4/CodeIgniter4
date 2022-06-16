@@ -809,7 +809,8 @@ $builder->ignore()
 
 Generates an insert ignore string based on the data you supply, and runs the
 query. So if an entry with the same primary key already exists, the query won't be inserted.
-You can optionally pass an **boolean** to the method. Here is an example using the array of the above example:
+You can optionally pass an **boolean** to the method. Can also be used on **insertBatch**, **update** and **delete** (when supported).
+Here is an example using the array of the above example:
 
 .. literalinclude:: query_builder/078.php
 

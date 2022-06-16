@@ -141,20 +141,25 @@ final class InsertModelTest extends LiveModelTestCase
 
     public function testInsertResultFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
 
         $data = [
             'name123'     => 'Apprentice',
             'description' => 'That thing you do.',
         ];
-
         $this->createModel(JobModel::class);
+
         $result = $this->model->protect(false)->insert($data, false);
+
         $this->assertFalse($result);
 
         $lastInsertId = $this->model->getInsertID();
+
         $this->assertSame(0, $lastInsertId);
         $this->dontSeeInDatabase('job', ['id' => $lastInsertId]);
+
+        $this->enableDBDebug();
     }
 
     public function testInsertBatchNewEntityWithDateTime(): void

@@ -119,6 +119,8 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      * Set the default attributes to a Cookie instance by injecting
      * the values from the `CookieConfig` config or an array.
      *
+     * This method is called from Response::__construct().
+     *
      * @param array<string, mixed>|CookieConfig $config
      *
      * @return array<string, mixed> The old defaults array. Useful for resetting.
@@ -209,7 +211,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         }
 
         // to preserve backward compatibility with array-based cookies in previous CI versions
-        $prefix = $options['prefix'] ?: self::$defaults['prefix'];
+        $prefix = ($options['prefix'] === '') ? self::$defaults['prefix'] : $options['prefix'];
         $path   = $options['path'] ?: self::$defaults['path'];
         $domain = $options['domain'] ?: self::$defaults['domain'];
 

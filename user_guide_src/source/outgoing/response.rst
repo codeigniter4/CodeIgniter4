@@ -367,7 +367,7 @@ The methods provided by the parent class that are available are:
         :param int $expire: Cookie expiration time in seconds
         :param string $domain: Cookie domain
         :param string $path: Cookie path
-        :param string $prefix: Cookie name prefix
+        :param string $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used
         :param bool $secure: Whether to only transfer the cookie through HTTPS
         :param bool $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
         :param string $samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to ``null``, the default value from **app/Config/Cookie.php** will be used

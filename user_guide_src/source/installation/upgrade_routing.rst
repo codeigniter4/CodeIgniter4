@@ -13,11 +13,16 @@ Documentations
 
 What has been changed
 =====================
+
+- In CI4 the Auto Routing is disabled by default.
+- In CI4 the new more secure :ref:`auto-routing-improved` is introduced.
 - In CI4 the routing is no longer configured by setting the routes as array.
 
 Upgrade Guide
 =============
-1. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
+
+1. If you use the Auto Routing in the same way as CI3, you need to enable :ref:`auto-routing`.
+2. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
 
     - ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'Blogs::index');``. This would map to the ``index()`` method in the ``Blogs`` controller.
     - ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``

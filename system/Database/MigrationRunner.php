@@ -402,6 +402,10 @@ class MigrationRunner
         $migrations = [];
 
         foreach ($namespaces as $namespace) {
+            if (ENVIRONMENT !== 'testing' && $namespace === 'Tests\Support') {
+                continue;
+            }
+
             foreach ($this->findNamespaceMigrations($namespace) as $migration) {
                 $migrations[$migration->uid] = $migration;
             }

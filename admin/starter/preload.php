@@ -41,15 +41,14 @@ if (! function_exists('str_contains')) {
     }
 }
 
-class Preload
+class preload
 {
     /**
      * @var array Paths to preload.
      */
     private array $paths = [
         [
-            'include' => // __DIR__ . '/vendor/codeigniter4/framework/system',
-                __DIR__ . '/system',
+            'include' => __DIR__ . '/vendor/codeigniter4/framework/system',
             'exclude' => [
                 // Not needed if you don't use them.
                 '/system/Database/OCI8/',
@@ -110,4 +109,4 @@ class Preload
     }
 }
 
-(new Preload())->load();
+(new preload())->load();

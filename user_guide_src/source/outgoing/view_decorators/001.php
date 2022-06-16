@@ -2,7 +2,7 @@
 
 namespace App\Views\Decorators;
 
-use CodeIgniter\Views\ViewDecoratorInterface;
+use CodeIgniter\View\ViewDecoratorInterface;
 
 class MyDecorator implements ViewDecoratorInterface
 {

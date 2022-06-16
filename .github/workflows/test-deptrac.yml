@@ -6,7 +6,7 @@ on:
   pull_request:
     branches:
       - 'develop'
-      - 'v4.*'
+      - '4.*'
     paths:
       - 'app/**.php'
       - 'system/**.php'
@@ -16,7 +16,7 @@ on:
   push:
     branches:
       - 'develop'
-      - 'v4.*'
+      - '4.*'
     paths:
       - 'app/**.php'
       - 'system/**.php'

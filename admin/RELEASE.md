@@ -87,11 +87,11 @@ composer test && composer info codeigniter4/framework
 	* Description: "CodeIgniter 4.x.x User Guide"
 * Watch for the "github pages" Environment to make sure the deployment succeeds
 
-## Website
+### Website
 
-Currently the User Guide on the website has to be updated manually. Visit Jim's user home
-where the served directory **codeigniter.com** exists. Copy the latest **docs** folder from
-the User Guide repo to **public/userguide4** and browse to the website to make sure it works.
+The User Guide website should update itself via the deploy GitHub Action. Should this fail
+the server must be updated manually. See repo and hosting details in the deploy script
+at the User Guide repo.
 
 ## Announcement
 

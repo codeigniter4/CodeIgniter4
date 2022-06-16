@@ -96,7 +96,9 @@ final class UpdateModelTest extends LiveModelTestCase
 
     public function testUpdateResultFail(): void
     {
-        $this->setPrivateProperty($this->db, 'DBDebug', false);
+        // WARNING this value will persist! take care to roll it back.
+        $this->disableDBDebug();
+        $this->createModel(UserModel::class);
 
         $data = [
             'name'    => 'Foo',
@@ -104,14 +106,16 @@ final class UpdateModelTest extends LiveModelTestCase
             'country' => 'US',
             'deleted' => 0,
         ];
-
-        $this->createModel(UserModel::class);
         $this->model->insert($data);
 
         $this->setPrivateProperty($this->model, 'allowedFields', ['name123']);
+
         $result = $this->model->update(1, ['name123' => 'Foo Bar 1']);
+
         $this->assertFalse($result);
         $this->dontSeeInDatabase('user', ['id' => 1, 'name' => 'Foo Bar 1']);
+
+        $this->enableDBDebug();
     }
 
     public function testUpdateBatchSuccess(): void
@@ -326,6 +330,7 @@ final class UpdateModelTest extends LiveModelTestCase
 
         $entity->id      = 1;
         $entity->name    = 'Jones Martin';
+        $entity->email   = 'jones@example.org';
         $entity->country = 'India';
         $entity->deleted = 0;
 

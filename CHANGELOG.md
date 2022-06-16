@@ -1,5 +1,33 @@
 # Changelog
 
+## [v4.2.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.1) (2022-06-16)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.0...v4.2.1)
+
+### Breaking Changes
+* Fix MIME guessing of extension from type by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6059
+* fix: get_cookie() may not use the cookie prefix by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6082
+
+### Fixed Bugs
+* fix: get_cookie() does not take Config\Cookie::$prefix by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6080
+* fix: session cookie name bug by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6091
+* fix: Session Handlers do not take Config\Cookie by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6081
+* fix: reverse routing does not work with full classname starting with `\` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6104
+* fix: insert error message in QueryBuilder by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6108
+* fix: `spark routes` shows "ERROR: 404" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6098
+* fix: Time::setTestNow() does not work with fa Locale by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6116
+* fix: `migrate --all` causes `Class "SQLite3" not found` error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6117
+* fix: event DBQuery is not fired on failed query when DBDebug is true by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6127
+* fix: `Time::humanize()` causes error with ar locale by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6120
+* Fix decorators by @lonnieezell in https://github.com/codeigniter4/CodeIgniter4/pull/6090
+* Fix lost error message by test when after testInsertResultFail. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/6113
+* test: fix forgetting to restore DBDebug value by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6115
+
+### Refactoring
+* Apply AutoRouterImproved::translateURIDashes() by @pjsde in https://github.com/codeigniter4/CodeIgniter4/pull/6084
+* Remove useless catch by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6095
+* Move preload.php example to starter app by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/6088
+* style: compile sass by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6099
+
 ## [v4.2.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.0) (2022-06-03)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.1.9...v4.2.0)
 

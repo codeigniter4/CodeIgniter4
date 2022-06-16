@@ -8,8 +8,10 @@ final class OneOfMyModelsTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
-        parent::setUp();
+        parent::setUp(); // Do not forget
 
         helper('text');
     }
+
+    // ...
 }

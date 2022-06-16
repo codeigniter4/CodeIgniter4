@@ -23,7 +23,7 @@ in it:
 
 .. literalinclude:: cli_controllers/001.php
 
-.. note:: If you use :ref:`auto-routing-improved`, change the method name to ``cli_message()``.
+.. note:: If you use :ref:`auto-routing-improved`, change the method name to ``cliMessage()``.
 
 Then save the file to your **app/Controllers/** directory.
 

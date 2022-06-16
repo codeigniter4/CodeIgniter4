@@ -323,4 +323,22 @@ trait DatabaseTestTrait
 
         $this->assertEquals($expected, $count, 'Wrong number of matching rows in database.');
     }
+
+    /**
+     * Sets $DBDebug to false.
+     *
+     * WARNING: this value will persist! take care to roll it back.
+     */
+    protected function disableDBDebug(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBDebug', false);
+    }
+
+    /**
+     * Sets $DBDebug to true.
+     */
+    protected function enableDBDebug(): void
+    {
+        $this->setPrivateProperty($this->db, 'DBDebug', true);
+    }
 }

@@ -28,7 +28,7 @@ The following functions are available:
     :param    int    $expire: Number of seconds until expiration
     :param    string    $domain: Cookie domain (usually: .yourdomain.com)
     :param    string    $path: Cookie path
-    :param    string    $prefix: Cookie name prefix
+    :param    string    $prefix: Cookie name prefix. If ``''``, the default from **app/Config/Cookie.php** is used
     :param    bool    $secure: Whether to only send the cookie through HTTPS
     :param    bool    $httpOnly: Whether to hide the cookie from JavaScript
     :param    string    $sameSite: The value for the SameSite cookie parameter. If ``null``, the default from **app/Config/Cookie.php** is used
@@ -39,12 +39,15 @@ The following functions are available:
     a description of its use, as this function is an alias for
     :php:func:`Response::setCookie() <setCookie>`.
 
-.. php:function:: get_cookie($index[, $xssClean = false])
+.. php:function:: get_cookie($index[, $xssClean = false[, $prefix = '']])
 
     :param    string    $index: Cookie name
     :param    bool    $xssClean: Whether to apply XSS filtering to the returned value
+    :param    string|null  $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used. If set to ``null``, no prefix
     :returns:    The cookie value or null if not found
     :rtype:    mixed
+
+    .. note:: Since v4.2.1, the third parameter ``$prefix`` has been introduced and the behavior has been changed a bit due to a bug fix. See :ref:`Upgrading <upgrade-421-get_cookie>` for details.
 
     This helper function gives you friendlier syntax to get browser
     cookies. Refer to the :doc:`IncomingRequest Library </incoming/incomingrequest>` for
@@ -53,7 +56,7 @@ The following functions are available:
     the ``Config\Cookie::$prefix`` that you might've set in your
     **app/Config/Cookie.php** file.
 
-.. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
+    .. warning:: Using XSS filtering is a bad practice. It does not prevent XSS attacks perfectly. Using ``esc()`` with the correct ``$context`` in the views is recommended.
 
 .. php:function:: delete_cookie($name[, $domain = ''[, $path = '/'[, $prefix = '']]])
 
