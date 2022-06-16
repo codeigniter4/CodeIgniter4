@@ -488,7 +488,8 @@ will still work the same as before.</p>
 the resulting data, instead of the Result object. This setting allows you to define
 the type of data that is returned. Valid values are ‘<strong>array</strong>’ (the default), ‘<strong>object</strong>’, or the <strong>fully
 qualified name of a class</strong> that can be used with the Result object’s <code class="docutils literal notranslate"><span class="pre">getCustomResultObject()</span></code>
-method.</p>
+method. Using the special <code class="docutils literal notranslate"><span class="pre">::class</span></code> constant of the class will allow most IDEs to
+auto-complete the name and allow functions like refactoring to better understand your code.</p>
 </section>
 <section id="usesoftdeletes">
 <h4>$useSoftDeletes<a class="headerlink" href="#usesoftdeletes" title="Permalink to this headline"></a></h4>
@@ -801,7 +802,7 @@ simplest, they might look like this:</p>
 <span class="k">class</span> <span class="nc">JobModel</span> <span class="k">extends</span> <span class="nx">Model</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">&#39;jobs&#39;</span><span class="p">;</span>
-    <span class="k">protected</span> <span class="nv">$returnType</span>    <span class="o">=</span> <span class="s1">&#39;\App\Entities\Job&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$returnType</span>    <span class="o">=</span> <span class="nx">\App\Entities\Job</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
     <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span>
     <span class="p">];</span>
@@ -1455,7 +1456,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jun 15, 2022.
+      <span class="lastupdated">Last updated on Jun 16, 2022.
       </span></p>
   </div>
 
