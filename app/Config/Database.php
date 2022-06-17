@@ -39,7 +39,7 @@ class Database extends Config
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
-        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -65,7 +65,7 @@ class Database extends Config
         'DBDriver'    => 'SQLite3',
         'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
         'pConnect'    => false,
-        'DBDebug'     => (ENVIRONMENT !== 'production'),
+        'DBDebug'     => true,
         'charset'     => 'utf8',
         'DBCollat'    => 'utf8_general_ci',
         'swapPre'     => '',
