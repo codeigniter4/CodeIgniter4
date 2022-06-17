@@ -66,32 +66,14 @@ composer test && composer info codeigniter4/framework
 
 ## User Guide
 
-> See "Sphinx Installation" below if you run into issues during `make`
+**This is now handled by GitHub Actions!**
 
-* Still in the **CodeIgniter4** repo enter the **user_guide_src** directory
-* Clear out any old build files: `rm -rf build/`
-* Build the HTML version of the User Guide: `make html`
-* Build the ePub version of the User Guide: `make epub`
-* Switch to the **userguide** repo and create a new branch `release-4.x.x`
-* Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
-* Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders with an underscore prefix
-* Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter4.x.x.epub**
-* Commit the changes with "Update for 4.x.x" and push to origin
-* Create a new PR from `release-4.x.x` to `develop`:
-	* Title: "Update for 4.x.x"
-	* Description: blank
-* Merge the PR
-* Create a new Release:
-	* Version: "v4.x.x"
-	* Title: "CodeIgniter 4.x.x User Guide"
-	* Description: "CodeIgniter 4.x.x User Guide"
-* Watch for the "github pages" Environment to make sure the deployment succeeds
+Verify that the Actions succeeded:
+* "Deploy User Guide", this repo
+* "Deploy Production", UG repo
+* "pages-build-deployment", both repos 
 
-### Website
-
-The User Guide website should update itself via the deploy GitHub Action. Should this fail
-the server must be updated manually. See repo and hosting details in the deploy script
-at the User Guide repo.
+See the legacy notes in Appendix for reference or to help manually recover from workflow failures.
 
 ## Announcement
 
@@ -118,3 +100,28 @@ sudo apt install python3-sphinx
 sudo pip3 install sphinxcontrib-phpdomain
 sudo pip3 install sphinx_rtd_theme
 ```
+
+### Manual User Guide Process
+
+* Still in the **CodeIgniter4** repo enter the **user_guide_src** directory
+* Clear out any old build files: `rm -rf build/`
+* Build the HTML version of the User Guide: `make html`
+* Build the ePub version of the User Guide: `make epub`
+* Switch to the **userguide** repo and create a new branch `release-4.x.x`
+* Replace **docs/** with **CodeIgniter4/user_guide_src/build/html**
+* Ensure the file **docs/.nojekyll** exists or GitHub Pages will ignore folders with an underscore prefix
+* Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter4.x.x.epub**
+* Commit the changes with "Update for 4.x.x" and push to origin
+* Create a new PR from `release-4.x.x` to `develop`:
+	* Title: "Update for 4.x.x"
+	* Description: blank
+* Merge the PR
+* Create a new Release:
+	* Version: "v4.x.x"
+	* Title: "CodeIgniter 4.x.x User Guide"
+	* Description: "CodeIgniter 4.x.x User Guide"
+* Watch for the "github pages" Environment to make sure the deployment succeeds
+
+The User Guide website should update itself via the deploy GitHub Action. Should this fail
+the server must be updated manually. See repo and hosting details in the deploy script
+at the User Guide repo.
