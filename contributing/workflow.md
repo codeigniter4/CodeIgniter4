@@ -16,16 +16,16 @@ values for when you try these:
 
 ## Branching
 
-CodeIgniter uses the
-[Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/)
-branching model, which requires all pull requests to be sent to the
-"develop" branch. This is where the next planned version will be
-developed. The "master" branch will always contain the latest stable
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
+
+The "master" branch will always contain the latest stable
 version and is kept clean so a "hotfix" (e.g: an emergency security
 patch) can be applied to master to create a new version, without
-worrying about other features holding it up. For this reason, all
-commits need to be made to "develop" and any sent to "master" will be
-closed automatically. If you have multiple changes to submit, please
+worrying about other features holding it up. Any sent to "master" will be
+closed automatically.
+
+If you have multiple changes to submit, please
 place each change into their own branch on your fork.
 
 One thing at a time: a pull request should only contain one change. That
@@ -64,7 +64,7 @@ Clone your repository, leaving a local folder for you to work with:
     cd ALL_PROJECTS
     git clone ORIGIN_URL
 
-## Syncing develop
+## Syncing your repository
 
 Within your local repository, Git will have created an alias,
 **origin**, for the GitHub repository it is bound to. You want to create
@@ -177,7 +177,7 @@ On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
 "New pull request".
 
-Make sure the pull request is for the shared **develop** branch, or it
+Make sure the pull request is for the shared __"develop"__ or next minor version branch, e.g. __"4.3"__, or it
 may be rejected.
 
 Make sure that the PR title is helpful for the maintainers and other
@@ -218,7 +218,7 @@ And if your PRs have the breaking changes, label the following label:
 
 If you are asked for changes in the review, commit the fix in your branch and push it to GitHub again.
 
-If the `develop` branch progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
+If the __"develop"__ or next minor version branch, e.g. __"4.3"__, progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
 do the following:
 
 Synchronize your repository:
