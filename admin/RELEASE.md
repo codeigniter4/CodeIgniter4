@@ -48,7 +48,7 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
     * Description: blank
 * Merge the PR then fast-forward `develop` to catch the merge commit
 * Update the next minor upgrade branch `4.x`
-```bash
+```console
 git fetch upstream
 git checkout 4.x
 git merge upstream/develop
@@ -65,7 +65,7 @@ See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHA
 ```
 * Watch for the "Deploy Framework" Action to make sure **framework** and **appstarter** get updated
 * Run the following commands to install and test AppStarter and verify the new version:
-```bash
+```console
 composer create-project codeigniter4/appstarter release-test
 cd release-test
 composer test && composer info codeigniter4/framework
@@ -102,7 +102,7 @@ See the legacy notes in Appendix for reference or to help manually recover from 
 
 You may need to install Sphinx and its dependencies prior to building the User Guide.
 This worked seamlessly on Ubuntu 20.04:
-```
+```console
 sudo apt install python3-sphinx
 sudo pip3 install sphinxcontrib-phpdomain
 sudo pip3 install sphinx_rtd_theme
