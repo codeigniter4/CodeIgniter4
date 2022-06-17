@@ -40,12 +40,12 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
 * Create **user_guide_src/source/installation/upgrade_{ver}.rst**, fill in the "All Changes" section, and add it to **upgrading.rst**
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
-	* Title: "Prep for 4.x.x release"
-	* Decription: "Updates changelog and version references for `4.x.x`." (plus checklist)
+    * Title: "Prep for 4.x.x release"
+    * Decription: "Updates changelog and version references for `4.x.x`." (plus checklist)
 * Let all tests run, then review and merge the PR
 * Create a new PR from `develop` to `master`:
-	* Title: "4.x.x Ready code"
-	* Description: blank
+    * Title: "4.x.x Ready code"
+    * Description: blank
 * Merge the PR then fast-forward `develop` to catch the merge commit
 * Update the next minor upgrade branch `4.x`
 ```bash
@@ -55,11 +55,11 @@ git merge upstream/develop
 git push upstream HEAD
 ```
 * Create a new Release:
-	* Version: "v4.x.x"
-	* Title: "CodeIgniter 4.x.x"
-	* Description:
+    * Version: "v4.x.x"
+    * Title: "CodeIgniter 4.x.x"
+    * Description:
 ```
-CodeIgniter 4.x.x release. 
+CodeIgniter 4.x.x release.
 
 See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
 ```
@@ -78,7 +78,7 @@ composer test && composer info codeigniter4/framework
 Verify that the Actions succeeded:
 * "Deploy User Guide", this repo
 * "Deploy Production", UG repo
-* "pages-build-deployment", both repos 
+* "pages-build-deployment", both repos
 
 See the legacy notes in Appendix for reference or to help manually recover from workflow failures.
 
@@ -120,13 +120,13 @@ sudo pip3 install sphinx_rtd_theme
 * Copy **CodeIgniter4/user_guide_src/build/epub/CodeIgniter.epub** to **./CodeIgniter4.x.x.epub**
 * Commit the changes with "Update for 4.x.x" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
-	* Title: "Update for 4.x.x"
-	* Description: blank
+    * Title: "Update for 4.x.x"
+    * Description: blank
 * Merge the PR
 * Create a new Release:
-	* Version: "v4.x.x"
-	* Title: "CodeIgniter 4.x.x User Guide"
-	* Description: "CodeIgniter 4.x.x User Guide"
+    * Version: "v4.x.x"
+    * Title: "CodeIgniter 4.x.x User Guide"
+    * Description: "CodeIgniter 4.x.x User Guide"
 * Watch for the "github pages" Environment to make sure the deployment succeeds
 
 The User Guide website should update itself via the deploy GitHub Action. Should this fail
