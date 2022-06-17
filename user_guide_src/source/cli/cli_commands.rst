@@ -83,10 +83,16 @@ Our demo command might have a ``run()`` method something like:
 See the :doc:`CLI Library </cli/cli_library>` page for detailed information.
 
 Command termination
-===================
+-------------------
 
-By default, the command terminates with a success code of ``0``. To change the exit code, for example on error,
-the ``run()`` method must return an integer in the range 0 - 254. `PHP exit <https://www.php.net/manual/en/function.exit.php>`_.
+By default, the command exits with a success code of ``0``. If an error is encountered while executing a command,
+you can terminate the command by using the ``return`` language construct with an exit code in the ``run()`` method.
+
+For example, ``return EXIT_ERROR;``
+
+This approach can help with debugging at the system level, if the command, for example, is run via crontab.
+
+You can use the ``EXIT_*`` exit code constants defined in the ``app/Config/Constants.php`` file.
 
 ***********
 BaseCommand

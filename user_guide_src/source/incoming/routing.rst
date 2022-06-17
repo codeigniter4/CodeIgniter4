@@ -328,7 +328,7 @@ available from the command line:
     anyone could access the command with the help of auto-routing via HTTP.
 
 .. note:: It is recommended to use Spark Commands instead of CLI routes.
-    See the :doc:`spark_commands` page for detailed information.
+    See the :doc:`../cli/spark_commands` page for detailed information.
 
 Global Options
 ==============
