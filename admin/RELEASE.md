@@ -47,6 +47,13 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
 	* Title: "4.x.x Ready code"
 	* Description: blank
 * Merge the PR then fast-forward `develop` to catch the merge commit
+* Update the next minor upgrade branch `4.x`
+```bash
+git fetch upstream
+git checkout 4.x
+git merge upstream/develop
+git push upstream HEAD
+```
 * Create a new Release:
 	* Version: "v4.x.x"
 	* Title: "CodeIgniter 4.x.x"
