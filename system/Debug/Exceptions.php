@@ -300,18 +300,23 @@ class Exceptions
      */
     protected function determineCodes(Throwable $exception): array
     {
-        $statusCode = abs($exception->getCode());
+        $statusCode = $exception->getCode();
+        if(is_numeric($statusCode)){
+            $statusCode = abs($statusCode);
+            if ($statusCode < 100 || $statusCode > 599) {
+                $exitStatus = $statusCode + EXIT__AUTO_MIN;
 
-        if ($statusCode < 100 || $statusCode > 599) {
-            $exitStatus = $statusCode + EXIT__AUTO_MIN;
+                if ($exitStatus > EXIT__AUTO_MAX) {
+                    $exitStatus = EXIT_ERROR;
+                }
 
-            if ($exitStatus > EXIT__AUTO_MAX) {
+                $statusCode = 500;
+            } else {
                 $exitStatus = EXIT_ERROR;
             }
-
-            $statusCode = 500;
-        } else {
+        }else{
             $exitStatus = EXIT_ERROR;
+            $statusCode = 500;
         }
 
         return [$statusCode, $exitStatus];
