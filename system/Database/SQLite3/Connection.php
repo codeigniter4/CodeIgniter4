@@ -151,6 +151,10 @@ class Connection extends BaseConnection
      */
     protected function _escapeString(string $str): string
     {
+        if (! $this->connID) {
+            $this->initialize();
+        }
+
         return $this->connID->escapeString($str);
     }
 
