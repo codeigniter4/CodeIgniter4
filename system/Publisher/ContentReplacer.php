@@ -32,7 +32,7 @@ class ContentReplacer
      *
      * @return bool|string true: already updated, false: regexp error.
      */
-    public function add(string $content, string $text, string $pattern, string $replace)
+    private function add(string $content, string $text, string $pattern, string $replace)
     {
         $return = preg_match('/' . preg_quote($text, '/') . '/u', $content);
 
