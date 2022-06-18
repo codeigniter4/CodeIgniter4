@@ -82,7 +82,7 @@ Our demo command might have a ``run()`` method something like:
 
 See the :doc:`CLI Library </cli/cli_library>` page for detailed information.
 
-Command termination
+Command Termination
 -------------------
 
 By default, the command exits with a success code of ``0``. If an error is encountered while executing a command,
