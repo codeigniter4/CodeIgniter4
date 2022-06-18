@@ -431,15 +431,15 @@ class Publisher extends FileCollection
 
         $content = file_get_contents($file);
 
-        $newContent = $this->replacer->addAfter($content, $line, $after);
+        $result = $this->replacer->addAfter($content, $line, $after);
 
-        if (is_bool($newContent)) {
-            return $newContent;
+        if ($result->updated) {
+            $return = file_put_contents($file, $result->content);
+
+            return $return !== false;
         }
 
-        $return = file_put_contents($file, $newContent);
-
-        return $return !== false;
+        return false;
     }
 
     /**
@@ -453,15 +453,15 @@ class Publisher extends FileCollection
 
         $content = file_get_contents($file);
 
-        $newContent = $this->replacer->addBefore($content, $line, $before);
+        $result = $this->replacer->addBefore($content, $line, $before);
 
-        if (is_bool($newContent)) {
-            return $newContent;
+        if ($result->updated) {
+            $return = file_put_contents($file, $result->content);
+
+            return $return !== false;
         }
 
-        $return = file_put_contents($file, $newContent);
-
-        return $return !== false;
+        return false;
     }
 
     /**
