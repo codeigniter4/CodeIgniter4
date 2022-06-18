@@ -12,6 +12,7 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\CodeIgniter;
+use Config\Services;
 use Exception;
 
 /**
@@ -20,32 +21,19 @@ use Exception;
 class Console
 {
     /**
-     * Main CodeIgniter instance.
-     *
-     * @var CodeIgniter
-     */
-    protected $app;
-
-    public function __construct(CodeIgniter $app)
-    {
-        $this->app = $app;
-    }
-
-    /**
      * Runs the current command discovered on the CLI.
      *
      * @throws Exception
      *
      * @return mixed
      */
-    public function run(bool $useSafeOutput = false)
+    public function run()
     {
-        $path = CLI::getURI() ?: 'list';
+        $runner  = Services::commands();
+        $params  = array_merge(CLI::getSegments(), CLI::getOptions());
+        $command = array_shift($params) ?? 'list';
 
-        // Set the path for the application to route to.
-        $this->app->setPath("ci{$path}");
-
-        return $this->app->useSafeOutput($useSafeOutput)->run();
+        return $runner->run($command, $params);
     }
 
     /**
@@ -57,7 +45,12 @@ class Console
             return;
         }
 
-        CLI::write(sprintf('CodeIgniter v%s Command Line Tool - Server Time: %s UTC%s', CodeIgniter::CI_VERSION, date('Y-m-d H:i:s'), date('P')), 'green');
+        CLI::write(sprintf(
+            'CodeIgniter v%s Command Line Tool - Server Time: %s UTC%s',
+            CodeIgniter::CI_VERSION,
+            date('Y-m-d H:i:s'),
+            date('P')
+        ), 'green');
         CLI::newLine();
     }
 }

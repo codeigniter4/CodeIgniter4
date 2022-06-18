@@ -147,9 +147,8 @@ class CodeIgniter
      * Context
      *  web:     Invoked by HTTP request
      *  php-cli: Invoked by CLI via `php public/index.php`
-     *  spark:   Invoked by CLI via the `spark` command
      *
-     * @phpstan-var 'php-cli'|'spark'|'web'
+     * @phpstan-var 'php-cli'|'web'
      */
     protected ?string $context = null;
 
@@ -305,7 +304,10 @@ class CodeIgniter
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
         if ($this->context === null) {
-            throw new LogicException('Context must be set before run() is called. If you are upgrading from 4.1.x, you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.');
+            throw new LogicException(
+                'Context must be set before run() is called. If you are upgrading from 4.1.x, '
+                . 'you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.'
+            );
         }
 
         $this->startBenchmark();
@@ -340,11 +342,6 @@ class CodeIgniter
             return;
         }
 
-        // spark command has nothing to do with HTTP redirect and 404
-        if ($this->isSparked()) {
-            return $this->handleRequest($routes, $cacheConfig, $returnResponse);
-        }
-
         try {
             return $this->handleRequest($routes, $cacheConfig, $returnResponse);
         } catch (RedirectException $e) {
@@ -376,14 +373,6 @@ class CodeIgniter
         $this->useSafeOutput = $safe;
 
         return $this;
-    }
-
-    /**
-     * Invoked via spark command?
-     */
-    private function isSparked(): bool
-    {
-        return $this->context === 'spark';
     }
 
     /**
@@ -433,21 +422,18 @@ class CodeIgniter
             }
         }
 
-        // Never run filters when running through Spark cli
-        if (! $this->isSparked()) {
-            // Run "before" filters
-            $this->benchmark->start('before_filters');
-            $possibleResponse = $filters->run($uri, 'before');
-            $this->benchmark->stop('before_filters');
+        // Run "before" filters
+        $this->benchmark->start('before_filters');
+        $possibleResponse = $filters->run($uri, 'before');
+        $this->benchmark->stop('before_filters');
 
-            // If a ResponseInterface instance is returned then send it back to the client and stop
-            if ($possibleResponse instanceof ResponseInterface) {
-                return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
-            }
+        // If a ResponseInterface instance is returned then send it back to the client and stop
+        if ($possibleResponse instanceof ResponseInterface) {
+            return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
+        }
 
-            if ($possibleResponse instanceof Request) {
-                $this->request = $possibleResponse;
-            }
+        if ($possibleResponse instanceof Request) {
+            $this->request = $possibleResponse;
         }
 
         $returned = $this->startController();
@@ -474,22 +460,12 @@ class CodeIgniter
         // so it can be used with the output.
         $this->gatherOutput($cacheConfig, $returned);
 
-        // Never run filters when running through Spark cli
-        if (! $this->isSparked()) {
-            $filters->setResponse($this->response);
+        $filters->setResponse($this->response);
 
-            // Run "after" filters
-            $this->benchmark->start('after_filters');
-            $response = $filters->run($uri, 'after');
-            $this->benchmark->stop('after_filters');
-        } else {
-            $response = $this->response;
-
-            // Set response code for CLI command failures
-            if (is_numeric($returned) || $returned === false) {
-                $response->setStatusCode(400);
-            }
-        }
+        // Run "after" filters
+        $this->benchmark->start('after_filters');
+        $response = $filters->run($uri, 'after');
+        $this->benchmark->stop('after_filters');
 
         if ($response instanceof ResponseInterface) {
             $this->response = $response;
@@ -593,7 +569,7 @@ class CodeIgniter
             return;
         }
 
-        if ($this->isSparked() || $this->isPhpCli()) {
+        if ($this->isPhpCli()) {
             $this->request = Services::clirequest($this->config);
         } else {
             $this->request = Services::request($this->config);
@@ -869,9 +845,7 @@ class CodeIgniter
      * CI4 supports three types of requests:
      *  1. Web: URI segments become parameters, sent to Controllers via Routes,
      *      output controlled by Headers to browser
-     *  2. Spark: accessed by CLI via the spark command, arguments are Command arguments,
-     *      sent to Commands by CommandRunner, output controlled by CLI class
-     *  3. PHP CLI: accessed by CLI via php public/index.php, arguments become URI segments,
+     *  2. PHP CLI: accessed by CLI via php public/index.php, arguments become URI segments,
      *      sent to Controllers via Routes, output varies
      *
      * @param mixed $class
@@ -880,21 +854,12 @@ class CodeIgniter
      */
     protected function runController($class)
     {
-        if ($this->isSparked()) {
-            // This is a Spark request
-            /** @var CLIRequest $request */
-            $request = $this->request;
-            $params  = $request->getArgs();
+        // This is a Web request or PHP CLI request
+        $params = $this->router->params();
 
-            $output = $class->_remap($this->method, $params);
-        } else {
-            // This is a Web request or PHP CLI request
-            $params = $this->router->params();
-
-            $output = method_exists($class, '_remap')
-                ? $class->_remap($this->method, ...$params)
-                : $class->{$this->method}(...$params);
-        }
+        $output = method_exists($class, '_remap')
+            ? $class->_remap($this->method, ...$params)
+            : $class->{$this->method}(...$params);
 
         $this->benchmark->stop('controller');
 
@@ -1093,7 +1058,7 @@ class CodeIgniter
     /**
      * Sets the app context.
      *
-     * @phpstan-param 'php-cli'|'spark'|'web' $context
+     * @phpstan-param 'php-cli'|'web' $context
      *
      * @return $this
      */

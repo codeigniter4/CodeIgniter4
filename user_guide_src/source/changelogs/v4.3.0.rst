@@ -12,7 +12,9 @@ Release Date: Unreleased
 BREAKING
 ********
 
-none.
+Behavior Changes
+================
+- The ``spark`` file has been changed due to a change in the processing of Spark commands.
 
 Enhancements
 ************
@@ -20,11 +22,17 @@ Enhancements
 - Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-overview-stream-filters`.
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
+- The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
 
 Changes
 *******
 
-none.
+- Changed the processing of Spark commands:
+    - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
+    - The ``CodeIgniter::isSparked()`` method has been removed.
+    - The ``CodeIgniter\CLI\CommandRunner`` class has been removed due to a change in Spark commands processing.
+    - The system route configuration file ``system/Config/Routes.php`` has been removed.
+    - The route configuration file ``app/Config/Routes.php`` has been changed. Removed include of system routes configuration file.
 
 Deprecations
 ************
