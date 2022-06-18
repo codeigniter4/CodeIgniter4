@@ -51,6 +51,7 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
 ```console
 git fetch upstream
 git checkout 4.x
+git merge upstream/4.x
 git merge upstream/develop
 git push upstream HEAD
 ```
