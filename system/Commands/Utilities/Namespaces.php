@@ -14,6 +14,7 @@ namespace CodeIgniter\Commands\Utilities;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Config\Autoload;
+use Config\Services;
 
 /**
  * Lists namespaces set in Config\Autoload with their
@@ -63,26 +64,20 @@ class Namespaces extends BaseCommand
      *
      * @var array
      */
-    protected $options = [];
+    protected $options = [
+        '-c' => 'Show only CodeIgniter config namespaces.',
+        '-r' => 'Show raw path strings.',
+        '-m' => 'Specify max length of the path strings to output. Default: 60.',
+    ];
 
     /**
      * Displays the help for the spark cli script itself.
      */
     public function run(array $params)
     {
-        $config = new Autoload();
+        $params['m'] = (int) ($params['m'] ?? 60);
 
-        $tbody = [];
-
-        foreach ($config->psr4 as $ns => $path) {
-            $path = realpath($path) ?: $path;
-
-            $tbody[] = [
-                $ns,
-                realpath($path) ?: $path,
-                is_dir($path) ? 'Yes' : 'MISSING',
-            ];
-        }
+        $tbody = array_key_exists('c', $params) ? $this->outputCINamespaces($params) : $this->outputAllNamespaces($params);
 
         $thead = [
             'Namespace',
@@ -91,5 +86,68 @@ class Namespaces extends BaseCommand
         ];
 
         CLI::table($tbody, $thead);
+    }
+
+    private function outputAllNamespaces(array $params): array
+    {
+        $maxLength = $params['m'];
+
+        $autoloader = Services::autoloader();
+
+        $tbody = [];
+
+        foreach ($autoloader->getNamespace() as $ns => $paths) {
+            foreach ($paths as $path) {
+                if (array_key_exists('r', $params)) {
+                    $pathOutput = $this->truncate($path, $maxLength);
+                } else {
+                    $pathOutput = $this->truncate(clean_path($path), $maxLength);
+                }
+
+                $tbody[] = [
+                    $ns,
+                    $pathOutput,
+                    is_dir($path) ? 'Yes' : 'MISSING',
+                ];
+            }
+        }
+
+        return $tbody;
+    }
+
+    private function truncate(string $string, int $max): string
+    {
+        $length = strlen($string);
+
+        if ($length > $max) {
+            return substr($string, 0, $max - 3) . '...';
+        }
+
+        return $string;
+    }
+
+    private function outputCINamespaces(array $params): array
+    {
+        $maxLength = $params['m'];
+
+        $config = new Autoload();
+
+        $tbody = [];
+
+        foreach ($config->psr4 as $ns => $path) {
+            if (array_key_exists('r', $params)) {
+                $pathOutput = $this->truncate($path, $maxLength);
+            } else {
+                $pathOutput = $this->truncate(clean_path($path), $maxLength);
+            }
+
+            $tbody[] = [
+                $ns,
+                $pathOutput,
+                is_dir($path) ? 'Yes' : 'MISSING',
+            ];
+        }
+
+        return $tbody;
     }
 }
