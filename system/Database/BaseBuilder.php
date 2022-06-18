@@ -2102,7 +2102,7 @@ class BaseBuilder
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
-    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100)
+    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, ?bool $escape = null)
     {
         if ($index === null) {
             if (CI_DEBUG) {
@@ -2144,7 +2144,7 @@ class BaseBuilder
             if ($hasQBSet) {
                 $QBSet = array_slice($this->QBSet, $i, $batchSize);
             } else {
-                $this->setUpdateBatch(array_slice($set, $i, $batchSize), $index);
+                $this->setUpdateBatch(array_slice($set, $i, $batchSize), $index, $escape);
                 $QBSet = $this->QBSet;
             }
 
