@@ -171,8 +171,9 @@ PRs with any enhancement should be sent to next minor version branch, e.g. __"4.
 
 The __"master"__ branch will always contain the latest stable version and is kept clean so a "hotfix" (e.g. an
 emergency security patch) can be applied to the "master" branch to create a new version, without worrying
-about other features holding it up. For this reason, all commits need to be made to the "develop" branch,
-and any sent to the "master" branch will be closed automatically. If you have multiple changes to submit,
+about other features holding it up. Any sent to the "master" branch will be closed automatically.
+
+If you have multiple changes to submit,
 please place all changes into their own branch on your fork.
 
 **One thing at a time:** A pull request should only contain one change. That does not mean only one commit,

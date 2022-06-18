@@ -22,7 +22,7 @@ use Locale;
 /**
  * Class IncomingRequest
  *
- * Represents an incoming, getServer-side HTTP request.
+ * Represents an incoming, server-side HTTP request.
  *
  * Per the HTTP specification, this interface includes properties for
  * each of the following:
