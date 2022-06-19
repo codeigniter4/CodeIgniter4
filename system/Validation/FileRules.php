@@ -133,7 +133,7 @@ class FileRules
 
             // We know that our mimes list always has the first mime
             // start with `image` even when then are multiple accepted types.
-            $type = Mimes::guessTypeFromExtension($file->getExtension());
+            $type = Mimes::guessTypeFromExtension($file->getExtension()) ?? '';
 
             if (mb_strpos($type, 'image') !== 0) {
                 return false;
