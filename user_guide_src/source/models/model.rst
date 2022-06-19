@@ -310,6 +310,17 @@ the array's values are the values to save for that key:
 
 You can retrieve the last inserted row's primary key using the ``getInsertID()`` method.
 
+.. _model-allow-empty-inserts:
+
+allowEmptyInserts()
+-------------------
+
+Since v4.3.0, you can use ``allowEmptyInserts()`` method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.
+
+.. literalinclude:: model/056.php
+
+You can enable the check again by calling ``allowEmptyInserts(false)``.
+
 update()
 --------
 

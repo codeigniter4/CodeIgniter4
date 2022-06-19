@@ -314,6 +314,11 @@ abstract class BaseModel
      */
     protected $afterDelete = [];
 
+    /**
+     * Whether to allow inserting empty data.
+     */
+    protected bool $allowEmptyInserts = false;
+
     public function __construct(?ValidationInterface $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
@@ -742,7 +747,7 @@ abstract class BaseModel
 
         // doProtectFields() can further remove elements from
         // $data so we need to check for empty dataset again
-        if (empty($data)) {
+        if (! $this->allowEmptyInserts && empty($data)) {
             throw DataException::forEmptyDataset('insert');
         }
 
@@ -1640,7 +1645,7 @@ abstract class BaseModel
             throw new InvalidArgumentException(sprintf('Invalid type "%s" used upon transforming data to array.', $type));
         }
 
-        if (empty($data)) {
+        if (! $this->allowEmptyInserts && empty($data)) {
             throw DataException::forEmptyDataset($type);
         }
 
@@ -1659,7 +1664,7 @@ abstract class BaseModel
         }
 
         // If it's still empty here, means $data is no change or is empty object
-        if (empty($data)) {
+        if (! $this->allowEmptyInserts && empty($data)) {
             throw DataException::forEmptyDataset($type);
         }
 
@@ -1764,5 +1769,15 @@ abstract class BaseModel
         }
 
         return $rules;
+    }
+
+    /**
+     * Sets $allowEmptyInserts.
+     */
+    public function allowEmptyInserts(bool $value = true): self
+    {
+        $this->allowEmptyInserts = $value;
+
+        return $this;
     }
 }
