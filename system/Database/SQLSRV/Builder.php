@@ -255,7 +255,13 @@ class Builder extends BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], $values);
 
-        return $this->db->query($sql, $this->binds, false);
+        if (! $this->testMode) {
+            $this->resetWrite();
+
+            return $this->db->query($sql, $this->binds, false);
+        }
+
+        return true;
     }
 
     /**
@@ -275,7 +281,13 @@ class Builder extends BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], $values);
 
-        return $this->db->query($sql, $this->binds, false);
+        if (! $this->testMode) {
+            $this->resetWrite();
+
+            return $this->db->query($sql, $this->binds, false);
+        }
+
+        return true;
     }
 
     /**

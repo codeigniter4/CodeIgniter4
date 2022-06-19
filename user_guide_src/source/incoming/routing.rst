@@ -318,13 +318,16 @@ Command-Line Only Routes
 ========================
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
-``cli()`` method. This is great for building cron jobs or CLI-only tools. Any route created by any of the HTTP-verb-based
+``cli()`` method. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line:
 
 .. literalinclude:: routing/032.php
 
-.. warning:: If you enable auto-routing and place the command file in **app/Controllers**,
+.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
+    See the :doc:`../cli/spark_commands` page for detailed information.
+
+.. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 .. note:: It is recommended to use Spark Commands instead of CLI routes.
