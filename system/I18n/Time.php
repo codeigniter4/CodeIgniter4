@@ -452,7 +452,7 @@ class Time extends DateTime
     }
 
     /**
-     * Returns the age in years from the "current" date and 'now'
+     * Returns the age in years from the date and 'now'
      *
      * @throws Exception
      *
@@ -460,11 +460,12 @@ class Time extends DateTime
      */
     public function getAge()
     {
-        $now  = self::now()->getTimestamp();
-        $time = $this->getTimestamp();
+        $now = self::now();
+
+        $age = (int) (((int) $now->format('Ymd') - (int) $this->format('Ymd')) / 10000);
 
         // future dates have no age
-        return max(0, date('Y', $now) - date('Y', $time));
+        return max(0, $age);
     }
 
     /**
