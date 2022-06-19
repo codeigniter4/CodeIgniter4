@@ -41,7 +41,9 @@ final class FileRulesTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
+
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
 
@@ -229,6 +231,7 @@ final class FileRulesTest extends CIUnitTestCase
             'type'     => 'application/address',
             'error'    => UPLOAD_ERR_OK,
         ];
+
         $this->validation->setRules(['avatar' => 'is_image[stuff]']);
         $this->assertFalse($this->validation->run([]));
     }
