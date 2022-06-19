@@ -13,6 +13,7 @@ Highlights
 **********
 
 - Update minimal PHP requirement to 7.4.
+- To make the default configuration more secure, auto-routing has been changed to disabled by default.
 - **OCI8 Driver for Oracle Database** (*contributed by* `ytetsuro <https://github.com/ytetsuro>`_). See `Database`_.
 - **Improved Auto Routing** (opt-in) (*contributed by* `kenjis <https://github.com/kenjis>`_). See `New Improved Auto Routing`_.
 - Query Builder **Subqueries** and **UNION** support (*contributed by* `Andrey Pyzhikov <https://github.com/iRedds>`_). See `Database`_.
