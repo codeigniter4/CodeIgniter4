@@ -395,6 +395,7 @@ final class TimeTest extends CIUnitTestCase
 
     public function testAgeFuture()
     {
+        Time::setTestNow('June 20, 2022', 'America/Chicago');
         $time = Time::parse('August 12, 2116 4:15:23pm');
 
         $this->assertSame(0, $time->age);
