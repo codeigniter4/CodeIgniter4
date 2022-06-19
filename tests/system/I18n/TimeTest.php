@@ -382,18 +382,21 @@ final class TimeTest extends CIUnitTestCase
     public function testGetAge()
     {
         $time = Time::parse('5 years ago');
+
         $this->assertSame(5, $time->age);
     }
 
     public function testAgeNow()
     {
         $time = new Time();
+
         $this->assertSame(0, $time->age);
     }
 
     public function testAgeFuture()
     {
         $time = Time::parse('August 12, 2116 4:15:23pm');
+
         $this->assertSame(0, $time->age);
     }
 
