@@ -309,6 +309,7 @@
 <h2><a class="toc-backref" href="#id12">Highlights</a><a class="headerlink" href="#highlights" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Update minimal PHP requirement to 7.4.</p></li>
+<li><p>To make the default configuration more secure, auto-routing has been changed to disabled by default.</p></li>
 <li><p><strong>OCI8 Driver for Oracle Database</strong> (<em>contributed by</em> <a class="reference external" href="https://github.com/ytetsuro">ytetsuro</a>). See <a class="reference internal" href="#database">Database</a>.</p></li>
 <li><p><strong>Improved Auto Routing</strong> (opt-in) (<em>contributed by</em> <a class="reference external" href="https://github.com/kenjis">kenjis</a>). See <a class="reference internal" href="#new-improved-auto-routing">New Improved Auto Routing</a>.</p></li>
 <li><p>Query Builder <strong>Subqueries</strong> and <strong>UNION</strong> support (<em>contributed by</em> <a class="reference external" href="https://github.com/iRedds">Andrey Pyzhikov</a>). See <a class="reference internal" href="#database">Database</a>.</p></li>
@@ -517,11 +518,11 @@
 <h2><a class="toc-backref" href="#id23">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Update minimal PHP requirement to 7.4.</p></li>
-<li><p>The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.</p></li>
-<li><p>The process of sending cookies has been moved to the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class. Now the <code class="docutils literal notranslate"><span class="pre">Session</span></code> class doesn’t send cookies, set them to the Response.</p></li>
+<li><p>To make the default configuration more secure, auto-routing has been changed to disabled by default.</p></li>
 <li><p>Validation. Changed generation of errors when using fields with a wildcard (*). Now the error key contains the full path. See <a class="reference internal" href="../libraries/validation.html#validation-getting-all-errors"><span class="std std-ref">Getting All Errors</span></a>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Validation::getError()</span></code> when using a wildcard will return all found errors matching the mask as a string.</p></li>
-<li><p>To make the default configuration more secure, auto-routing has been changed to disabled by default.</p></li>
+<li><p>The current version of Content Security Policy (CSP) outputs one nonce for script and one for style tags. The previous version outputted one nonce for each tag.</p></li>
+<li><p>The process of sending cookies has been moved to the <code class="docutils literal notranslate"><span class="pre">Response</span></code> class. Now the <code class="docutils literal notranslate"><span class="pre">Session</span></code> class doesn’t send cookies, set them to the Response.</p></li>
 </ul>
 </section>
 <section id="deprecations">
