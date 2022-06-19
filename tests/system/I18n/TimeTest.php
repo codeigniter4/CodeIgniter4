@@ -383,6 +383,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = Time::parse('5 years ago');
 
+        $this->assertSame(5, $time->getAge());
         $this->assertSame(5, $time->age);
     }
 
@@ -390,7 +391,7 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = new Time();
 
-        $this->assertSame(0, $time->age);
+        $this->assertSame(0, $time->getAge());
     }
 
     public function testAgeFuture()
@@ -398,7 +399,7 @@ final class TimeTest extends CIUnitTestCase
         Time::setTestNow('June 20, 2022', 'America/Chicago');
         $time = Time::parse('August 12, 2116 4:15:23pm');
 
-        $this->assertSame(0, $time->age);
+        $this->assertSame(0, $time->getAge());
     }
 
     public function testGetQuarter()
