@@ -893,7 +893,7 @@ abstract class BaseModel
      */
     public function upsert($data = null, ?bool $escape = null, bool $testing = false)
     {
-		return $this->upsertBatch( [$data], $escape, 1, $testing);
+        return $this->upsertBatch( [$data], $escape, 1, $testing);
     }
 
     /**

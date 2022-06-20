@@ -284,7 +284,7 @@ class Connection extends BaseConnection
 
         // Get indexes
         // Don't use PRAGMA index_list, so we can preserve index order
-        $sql = "SELECT name, IIF(sql LIKE '% UNIQUE %','UNIQUE','') as indextype FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table)) . " COLLATE NOCASE";
+        $sql = "SELECT name, CASE WHEN sql LIKE '% UNIQUE %' THEN 'UNIQUE' ELSE '' END as indextype FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table)) . " COLLATE NOCASE";
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
