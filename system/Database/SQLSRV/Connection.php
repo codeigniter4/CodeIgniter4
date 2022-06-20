@@ -13,7 +13,6 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use Exception;
 use stdClass;
 
 /**
@@ -457,8 +456,9 @@ class Connection extends BaseConnection
             $error = $this->error();
 
             log_message('error', $error['message']);
+
             if ($this->DBDebug) {
-                throw new Exception($error['message']);
+                throw new DatabaseException($error['message']);
             }
         }
 

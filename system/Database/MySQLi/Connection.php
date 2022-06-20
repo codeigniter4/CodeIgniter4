@@ -294,7 +294,7 @@ class Connection extends BaseConnection
             log_message('error', $e->getMessage());
 
             if ($this->DBDebug) {
-                throw $e;
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
             }
         }
 
