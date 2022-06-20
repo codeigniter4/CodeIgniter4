@@ -451,13 +451,11 @@ class Builder extends BaseBuilder
     public function getTableIdentity(string $table): string
     {
         if (! array_key_exists($table, $this->tableIdentities)) {
-
             $this->tableIdentities[$table] = '';
 
             foreach ($this->db->query("SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1")->getResultObject() as $row) {
                 $this->tableIdentities[$table] = '"' . $row->name . '"';
             }
-
         }
 
         return $this->tableIdentities[$table];

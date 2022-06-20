@@ -275,7 +275,7 @@ class Connection extends BaseConnection
 
         $primaryKeys = array_map(static fn ($columnName) => $columnName['name'], $query);
 
-        if (count($primaryKeys)) {
+        if ($primaryKeys !== []) {
             $retVal['PRIMARY']         = new stdClass();
             $retVal['PRIMARY']->name   = 'PRIMARY';
             $retVal['PRIMARY']->fields = $primaryKeys;

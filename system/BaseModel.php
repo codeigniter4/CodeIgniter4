@@ -883,10 +883,9 @@ abstract class BaseModel
     /**
      * Converts upsert to batchUpsert call
      *
-     * @param array|null $set     an associative array of upsert values
-     * @param bool|null  $escape  Whether to escape values
-     * @param bool       $testing True means only number of records is returned, false will execute the query
-     * @param mixed|null $data
+     * @param array|object|null $data     Data
+     * @param bool|null         $escape  Whether to escape values
+     * @param bool              $testing True means only number of records is returned, false will execute the query
      *
      * @throws ReflectionException
      *

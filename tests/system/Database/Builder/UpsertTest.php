@@ -97,10 +97,6 @@ final class UpsertTest extends CIUnitTestCase
             ],
         ];
 
-        $expected = <<<'EOL'
-            INSERT INTO "jobs" ("description", "id", "name") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver') ON DUPLICATE KEY UPDATE "description" = VALUES("description"), "id" = VALUES("id"), "name" = VALUES("name")
-            EOL;
-
         $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
         $builder->upsertBatch($batchData, true);
 
