@@ -107,6 +107,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->query->execute('foo', 'foo@example.com', 'US');
         $this->query->execute('bar', 'bar@example.com', 'GB');
 
+        $this->dontSeeInDatabase($this->db->DBPrefix . 'user', ['name' => 'a', 'email' => 'b@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
     }
