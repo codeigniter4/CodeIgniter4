@@ -3,7 +3,7 @@
 // First you need to enable sorting.
 $routes->setPrioritize();
 
-// App\Config\Routes
+// Config\Routes
 $routes->get('(.*)', 'Posts::index', ['priority' => 1]);
 
 // Modules\Acme\Config\Routes
