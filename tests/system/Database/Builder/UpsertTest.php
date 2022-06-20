@@ -75,7 +75,7 @@ final class UpsertTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('You must use the "set" method to insert/upsert an entry.');
+        $this->expectExceptionMessage('You must use the "set" method to insert an entry.');
 
         $builder->upsert();
     }
