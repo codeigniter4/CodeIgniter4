@@ -161,13 +161,13 @@ class Builder extends BaseBuilder
 
         $sql = 'MERGE INTO ' . $table . "\nUSING (\n";
 
-        foreach($values as $value){
+        foreach ($values as $value) {
             $sql .= 'SELECT ' . implode(', ', array_map(static fn ($columnName, $value) => $value . ' ' . $columnName, $keys, $value)) . " FROM DUAL UNION ALL\n";
         }
 
-        $sql = substr($sql, 0, -11)."\n";
+        $sql = substr($sql, 0, -11) . "\n";
 
-        $sql .= ') "_upsert"'."\nON ( ";
+        $sql .= ') "_upsert"' . "\nON ( ";
 
         $onList   = [];
         $onList[] = '1 != 1';

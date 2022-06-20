@@ -364,6 +364,7 @@ class Model extends BaseModel
 
         return $this->builder()->testMode($testing)->upsertBatch($set, $escape, $batchSize);
     }
+
     /**
      * Updates a single record in $this->table.
      * This methods works only with dbCalls

@@ -107,7 +107,7 @@ final class AlterTableTest extends CIUnitTestCase
 
         $keys = $this->getPrivateProperty($this->table, 'keys');
 
-        $this->assertCount(3, $keys);
+        $this->assertCount(4, $keys);
         $this->assertArrayHasKey('foo_name', $keys);
         $this->assertSame(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
         $this->assertArrayHasKey('id', $keys);

@@ -450,19 +450,17 @@ class Builder extends BaseBuilder
      */
     public function getTableIdentity(string $table): string
     {
-        if(isset($this->tableIdentities[$table])){
+        if (! array_key_exists($table, $this->tableIdentities)) {
 
-            return $this->tableIdentities[$table];
+            $this->tableIdentities[$table] = '';
 
-        } else{
-            $column = '';
-
-            foreach($this->db->query("SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1")->getResultObject() as $row){
-                $column = '"' . $row->name . '"';
+            foreach ($this->db->query("SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1")->getResultObject() as $row) {
+                $this->tableIdentities[$table] = '"' . $row->name . '"';
             }
 
-		   return $this->tableIdentities[$table] = $column;
         }
+
+        return $this->tableIdentities[$table];
     }
 
     /**
@@ -513,7 +511,7 @@ class Builder extends BaseBuilder
 
         $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
 
-        $sql .= ('(' . implode(', ', array_map(static fn ($columnName) => $columnName==$tableIdentity ? 'CASE WHEN "_upsert".' . $columnName .' IS NULL THEN (SELECT IDENT_CURRENT(\'' . $fullTableName . '\')+1) ELSE "_upsert".' . $columnName . ' END' : '"_upsert".' . $columnName, $keys)) . ');');
+        $sql .= ('(' . implode(', ', array_map(static fn ($columnName) => $columnName === $tableIdentity ? 'CASE WHEN "_upsert".' . $columnName . ' IS NULL THEN (SELECT IDENT_CURRENT(\'' . $fullTableName . '\')+1) ELSE "_upsert".' . $columnName . ' END' : '"_upsert".' . $columnName, $keys)) . ');');
 
         return $identityInFields ? 'SET IDENTITY_INSERT ' . $fullTableName . ' ON ' . $sql . ' SET IDENTITY_INSERT ' . $fullTableName . ' OFF;' : $sql;
     }

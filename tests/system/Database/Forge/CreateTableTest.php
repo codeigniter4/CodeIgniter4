@@ -50,7 +50,7 @@ final class CreateTableTest extends CIUnitTestCase
             )
             SQL;
 
-		$sql = str_replace("\r\n", "\n", $sql);
+        $sql = str_replace("\r\n", "\n", $sql);
 
         $dbMock = $this->getMockBuilder(MockConnection::class)
             ->setConstructorArgs([[]])

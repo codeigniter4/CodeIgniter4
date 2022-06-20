@@ -12,9 +12,9 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
-use CodeIgniter\Database\Query;
 
 /**
  * @internal
@@ -65,9 +65,9 @@ final class UpsertTest extends CIUnitTestCase
             'date'  => 'My date',
         ];
 
-		$expected = "INSERT INTO \"jobs\" (\"date\", \"name\", \"title\") VALUES ('My date','My Name','My title') ON DUPLICATE KEY UPDATE \"date\" = VALUES(\"date\"), \"name\" = VALUES(\"name\"), \"title\" = VALUES(\"title\")";
+        $expected = "INSERT INTO \"jobs\" (\"date\", \"name\", \"title\") VALUES ('My date','My Name','My title') ON DUPLICATE KEY UPDATE \"date\" = VALUES(\"date\"), \"name\" = VALUES(\"name\"), \"title\" = VALUES(\"title\")";
 
-		$this->assertSame($expected, str_replace("\n", ' ', $builder->testMode()->set($data)->getCompiledUpsert()));
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->testMode()->set($data)->getCompiledUpsert()));
     }
 
     public function testUpsertThrowsExceptionWithNoData()
@@ -97,9 +97,9 @@ final class UpsertTest extends CIUnitTestCase
             ],
         ];
 
-		$expected = <<<'EOL'
-		INSERT INTO "jobs" ("description", "id", "name") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver') ON DUPLICATE KEY UPDATE "description" = VALUES("description"), "id" = VALUES("id"), "name" = VALUES("name")
-		EOL;
+        $expected = <<<'EOL'
+            INSERT INTO "jobs" ("description", "id", "name") VALUES ('There''s something in your teeth',2,'Commedian'), ('I am yellow',3,'Cab Driver') ON DUPLICATE KEY UPDATE "description" = VALUES("description"), "id" = VALUES("id"), "name" = VALUES("name")
+            EOL;
 
         $this->db->shouldReturn('execute', 1)->shouldReturn('affectedRows', 1);
         $builder->upsertBatch($batchData, true);

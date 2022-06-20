@@ -216,17 +216,17 @@ class Builder extends BaseBuilder
 
         $updateFields = $fieldNames;
 
-        foreach(array_map(static fn ($index) => $index->fields, $allIndexes) as $index){
-            foreach($index as $conflict){
+        foreach (array_map(static fn ($index) => $index->fields, $allIndexes) as $index) {
+            foreach ($index as $conflict) {
                 $conflicts[] = $conflict;
             }
             // only one index can be used?
             break;
         }
 
-        $sql = 'INSERT INTO ' . $table .'(' . implode(', ', array_map(static fn ($columnName) => $columnName, $keys)) . ') VALUES ' . implode(', ', $this->getValues($values)) . "\n";
+        $sql = 'INSERT INTO ' . $table . '(' . implode(', ', array_map(static fn ($columnName) => $columnName, $keys)) . ') VALUES ' . implode(', ', $this->getValues($values)) . "\n";
 
-        $sql .= 'ON CONFLICT("' . implode('","', $conflicts) .'") DO UPDATE SET ' . implode(', ', array_map(static fn ($updateField) => '"' . $updateField . '" = "excluded"."' . $updateField . '"', $updateFields));
+        $sql .= 'ON CONFLICT("' . implode('","', $conflicts) . '") DO UPDATE SET ' . implode(', ', array_map(static fn ($updateField) => '"' . $updateField . '" = "excluded"."' . $updateField . '"', $updateFields));
 
         return $sql;
     }
