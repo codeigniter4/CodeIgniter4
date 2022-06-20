@@ -49,6 +49,9 @@ final class CreateTableTest extends CIUnitTestCase
             	"ts" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
             )
             SQL;
+
+		$sql = str_replace("\r\n", "\n", $sql);
+
         $dbMock = $this->getMockBuilder(MockConnection::class)
             ->setConstructorArgs([[]])
             ->onlyMethods(['query'])

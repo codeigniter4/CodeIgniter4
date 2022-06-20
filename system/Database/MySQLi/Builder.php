@@ -53,40 +53,4 @@ class Builder extends BaseBuilder
 
         return implode(', ', $this->QBFrom);
     }
-
-	 /**
-     * Converts call to batchUpsert
-     *
-     * @throws DatabaseException
-     *
-     * @return bool|Query
-     */
-    public function upsert(?array $set = null, ?bool $escape = null)
-    {
-        if ($set !== null) {
-            $this->set([$set], '', $escape);
-        }
-
-		return $this->batchExecute([$set], 'setInsertBatch', '_upsertBatch', $escape, 1);
-    }
-
-    /**
-     * Compiles batch upsert strings and runs the queries
-     *
-     * @throws DatabaseException
-     *
-     * @return false|int|string[] Number of rows replaced or FALSE on failure, SQL array when testMode
-     */
-    public function upsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
-    {
-        return $this->batchExecute($set, 'setInsertBatch', '_upsertBatch', $escape, $batchSize);
-    }
-
-    /**
-     * Generates a platform-specific upsertBatch string from the supplied data
-     */
-    protected function _upsertBatch(string $table, array $keys, array $values): string
-    {
-        return 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values) . ' ON DUPLICATE KEY UPDATE ' . implode(', ', array_map(static fn ($columnName) => $columnName . ' = VALUES(' . $columnName . ')', $keys));
-	}
 }

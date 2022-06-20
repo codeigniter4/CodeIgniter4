@@ -53,10 +53,8 @@ final class DeleteTest extends CIUnitTestCase
         $builder->where('id', 1);
         $sql = $builder->getCompiledDelete();
 
-        $expectedSQL = <<<'EOL'
-            DELETE FROM "jobs"
-            WHERE "id" = 1
-            EOL;
+        $expectedSQL = "DELETE FROM \"jobs\"\nWHERE \"id\" = 1";
+
         $this->assertSame($expectedSQL, $sql);
     }
 
@@ -66,10 +64,8 @@ final class DeleteTest extends CIUnitTestCase
 
         $sql = $builder->where('id', 1)->limit(10)->getCompiledDelete();
 
-        $expectedSQL = <<<'EOL'
-            DELETE FROM "jobs"
-            WHERE "id" = 1 LIMIT 10
-            EOL;
+        $expectedSQL = "DELETE FROM \"jobs\"\nWHERE \"id\" = 1 LIMIT 10";
+
         $this->assertSame($expectedSQL, $sql);
     }
 }

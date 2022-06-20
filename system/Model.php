@@ -126,6 +126,7 @@ class Model extends BaseModel
         'getCompiledInsert',
         'getCompiledSelect',
         'getCompiledUpdate',
+        'getCompiledUpsert',
     ];
 
     public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)
@@ -716,6 +717,33 @@ class Model extends BaseModel
         $this->tempData = [];
 
         return parent::insert($data, $returnID);
+    }
+
+    /**
+     * Upserts data into the database. If an object is provided,
+     * it will attempt to convert it to an array.
+     *
+     * @param array|object|null $data
+     *
+     * @throws ReflectionException
+     *
+     * @return mixed Number of rows affected or FALSE on failure
+     */
+    public function upsert($data = null, ?bool $escape = null, bool $testing = false)
+    {
+        if (! empty($this->tempData['data'])) {
+            if (empty($data)) {
+                $data = $this->tempData['data'] ?? null;
+            } else {
+                $data = $this->transformDataToArray($data, 'insert');
+                $data = array_merge($this->tempData['data'], $data);
+            }
+        }
+
+        $this->escape   = $this->tempData['escape'] ?? [];
+        $this->tempData = [];
+
+        return parent::upsert($data, $escape, $testing);
     }
 
     /**

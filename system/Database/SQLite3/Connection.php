@@ -265,15 +265,30 @@ class Connection extends BaseConnection
      */
     protected function _indexData(string $table): array
     {
+		$retVal = [];
+
+		// primary keys not included in indexes below
+		if (($query = $this->query("SELECT l.name FROM pragma_table_info('" . trim($table, '`') . "') as l WHERE l.pk = 1")) === false) {
+			throw new DatabaseException(lang('Database.failGetIndexData'));
+		}
+		$query = $query->getResultArray();
+
+		$primaryKeys = array_map(static fn ($columnName) => $columnName['name'], $query);
+
+		if(count($primaryKeys)){
+			$retVal['PRIMARY'] = new stdClass();
+			$retVal['PRIMARY']->name = 'PRIMARY';
+			$retVal['PRIMARY']->fields = $primaryKeys;
+			$retVal['PRIMARY']->type = 'PRIMARY';
+		}
+
         // Get indexes
         // Don't use PRAGMA index_list, so we can preserve index order
-        $sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table));
+        $sql = "SELECT name, IIF(sql LIKE '% UNIQUE %','UNIQUE','') as indextype FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table)) . " COLLATE NOCASE";
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
         $query = $query->getResultObject();
-
-        $retVal = [];
 
         foreach ($query as $row) {
             $obj = new stdClass();
@@ -283,7 +298,9 @@ class Connection extends BaseConnection
             // Get fields for index
             $obj->fields = [];
 
-            if (false === $fields = $this->query('PRAGMA index_info(' . $this->escape(strtolower($row->name)) . ')')) {
+			$obj->type = $row->indextype;
+
+            if (false === $fields = $this->query('PRAGMA index_info(' . $this->escape(strtolower($row->name)) . ' )')) {
                 throw new DatabaseException(lang('Database.failGetIndexData'));
             }
 

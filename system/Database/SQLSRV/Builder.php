@@ -61,6 +61,13 @@ class Builder extends BaseBuilder
     public $keyPermission = false;
 
     /**
+     * Table IDENTITY columns/
+     *
+     * @var array
+     */
+    protected $tableIdentities = [];
+
+    /**
      * Groups tables in FROM clauses if needed, so there is no confusion
      * about operator precedence.
      */
@@ -180,7 +187,7 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $this->getValues($values));
     }
 
     /**
@@ -436,6 +443,80 @@ class Builder extends BaseBuilder
         }
 
         return sprintf('INSERT INTO %s (%s) VALUES (%s);', $this->getFullName($table), implode(',', $keys), implode(',', $values));
+    }
+
+    /**
+     * Get table identity column name
+     */
+    public function getTableIdentity(string $table): string
+    {
+       if(isset($this->tableIdentities[$table])){
+
+		   return $this->tableIdentities[$table];
+
+	   } else{
+
+		   $column = '';
+
+		   foreach($this->db->query("SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1")->getResultObject() as $row){
+			   $column = '"' . $row->name . '"';
+		   }
+
+		   return $this->tableIdentities[$table] = $column;
+	   }
+    }
+
+    /**
+     * Generates a platform-specific upsertBatch string from the supplied data
+     */
+    protected function _upsertBatch(string $table, array $keys, array $values): string
+    {
+		$fullTableName = $this->getFullName($table);
+
+		$tableIdentity = $this->getTableIdentity($fullTableName);
+
+		$identityInFields = in_array($tableIdentity, $keys, true);
+
+        $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
+
+        $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+            $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
+
+            return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;
+        });
+
+        $replaceableFields = array_filter($keys, static function ($columnName) use ($uniqueIndexes) {
+            foreach ($uniqueIndexes as $index) {
+                if (in_array(trim($columnName, '"'), $index->fields, true)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        $sql = 'MERGE INTO ' . $fullTableName . "\nUSING (\n VALUES " . implode(', ', $this->getValues($values)) . "\n";
+
+        $sql .= ') "_upsert" (' . implode(', ', array_map(static fn ($columnName) => '"' . $columnName . '"', $fieldNames)) . ')';
+
+		$sql .= "\nON ( ";
+
+        $onList   = [];
+        $onList[] = '1 != 1';
+
+        foreach ($uniqueIndexes as $index) {
+            $onList[] = '(' . implode(' AND ', array_map(static fn ($columnName) => $fullTableName . '."' . $columnName . '" = "_upsert"."' . $columnName . '"', $index->fields)) . ')';
+        }
+
+        $sql .= implode(' OR ', $onList) . ")\nWHEN MATCHED THEN UPDATE SET ";
+
+        $sql .= implode(', ', array_map(static fn ($columnName) => $columnName . ' = "_upsert".' . $columnName, $replaceableFields));
+
+        $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
+
+        $sql .= ('(' . implode(', ', array_map(static fn ($columnName) => $columnName==$tableIdentity ? 'CASE WHEN "_upsert".' . $columnName .' IS NULL THEN (SELECT IDENT_CURRENT(\'' . $fullTableName . '\')+1) ELSE "_upsert".' . $columnName . ' END' : '"_upsert".' . $columnName, $keys)) . ');');
+
+		return $identityInFields ? 'SET IDENTITY_INSERT ' . $fullTableName . ' ON ' . $sql . ' SET IDENTITY_INSERT ' . $fullTableName . ' OFF;' : $sql;
     }
 
     /**
