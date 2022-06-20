@@ -271,7 +271,7 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * If true, no queries will actually be
-     * ran against the database.
+     * run against the database.
      *
      * @var bool
      */
