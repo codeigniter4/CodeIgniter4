@@ -883,7 +883,7 @@ abstract class BaseModel
     /**
      * Converts upsert to batchUpsert call
      *
-     * @param array|object|null $data     Data
+     * @param array|object|null $data    Data
      * @param bool|null         $escape  Whether to escape values
      * @param bool              $testing True means only number of records is returned, false will execute the query
      *
