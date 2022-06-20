@@ -416,9 +416,10 @@ abstract class BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @return bool|int Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows upserted or FALSE on failure
      */
     abstract protected function doUpsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
+
     /**
      * Updates a single record in the database.
      * This methods works only with dbCalls
@@ -884,12 +885,11 @@ abstract class BaseModel
      *
      * @param array|null $set       an associative array of upsert values
      * @param bool|null  $escape    Whether to escape values
-     * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
      * @throws ReflectionException
      *
-     * @return bool|int Number of rows inserted or FALSE on failure
+     * @return bool|int Number of rows upserted or FALSE on failure
      */
     public function upsert($data = null, ?bool $escape = null, bool $testing = false)
     {

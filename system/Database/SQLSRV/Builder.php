@@ -477,44 +477,44 @@ class Builder extends BaseBuilder
 
 		$identityInFields = in_array($tableIdentity, $keys, true);
 
-        $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
+		$fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
 
-        $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
-            $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
+		$uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+			$hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
-            return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;
-        });
+			return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;
+		});
 
-        $replaceableFields = array_filter($keys, static function ($columnName) use ($uniqueIndexes) {
-            foreach ($uniqueIndexes as $index) {
-                if (in_array(trim($columnName, '"'), $index->fields, true)) {
-                    return false;
-                }
-            }
+		$replaceableFields = array_filter($keys, static function ($columnName) use ($uniqueIndexes) {
+			foreach ($uniqueIndexes as $index) {
+				if (in_array(trim($columnName, '"'), $index->fields, true)) {
+					return false;
+				}
+			}
 
-            return true;
-        });
+			return true;
+		});
 
-        $sql = 'MERGE INTO ' . $fullTableName . "\nUSING (\n VALUES " . implode(', ', $this->getValues($values)) . "\n";
+		$sql = 'MERGE INTO ' . $fullTableName . "\nUSING (\n VALUES " . implode(', ', $this->getValues($values)) . "\n";
 
-        $sql .= ') "_upsert" (' . implode(', ', array_map(static fn ($columnName) => '"' . $columnName . '"', $fieldNames)) . ')';
+		$sql .= ') "_upsert" (' . implode(', ', array_map(static fn ($columnName) => '"' . $columnName . '"', $fieldNames)) . ')';
 
 		$sql .= "\nON ( ";
 
-        $onList   = [];
-        $onList[] = '1 != 1';
+		$onList   = [];
+		$onList[] = '1 != 1';
 
-        foreach ($uniqueIndexes as $index) {
-            $onList[] = '(' . implode(' AND ', array_map(static fn ($columnName) => $fullTableName . '."' . $columnName . '" = "_upsert"."' . $columnName . '"', $index->fields)) . ')';
-        }
+		foreach ($uniqueIndexes as $index) {
+			$onList[] = '(' . implode(' AND ', array_map(static fn ($columnName) => $fullTableName . '."' . $columnName . '" = "_upsert"."' . $columnName . '"', $index->fields)) . ')';
+		}
 
-        $sql .= implode(' OR ', $onList) . ")\nWHEN MATCHED THEN UPDATE SET ";
+		$sql .= implode(' OR ', $onList) . ")\nWHEN MATCHED THEN UPDATE SET ";
 
-        $sql .= implode(', ', array_map(static fn ($columnName) => $columnName . ' = "_upsert".' . $columnName, $replaceableFields));
+		$sql .= implode(', ', array_map(static fn ($columnName) => $columnName . ' = "_upsert".' . $columnName, $replaceableFields));
 
-        $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
+		$sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
 
-        $sql .= ('(' . implode(', ', array_map(static fn ($columnName) => $columnName==$tableIdentity ? 'CASE WHEN "_upsert".' . $columnName .' IS NULL THEN (SELECT IDENT_CURRENT(\'' . $fullTableName . '\')+1) ELSE "_upsert".' . $columnName . ' END' : '"_upsert".' . $columnName, $keys)) . ');');
+		$sql .= ('(' . implode(', ', array_map(static fn ($columnName) => $columnName==$tableIdentity ? 'CASE WHEN "_upsert".' . $columnName .' IS NULL THEN (SELECT IDENT_CURRENT(\'' . $fullTableName . '\')+1) ELSE "_upsert".' . $columnName . ' END' : '"_upsert".' . $columnName, $keys)) . ');');
 
 		return $identityInFields ? 'SET IDENTITY_INSERT ' . $fullTableName . ' ON ' . $sql . ' SET IDENTITY_INSERT ' . $fullTableName . ' OFF;' : $sql;
     }
