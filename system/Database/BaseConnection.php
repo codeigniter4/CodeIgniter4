@@ -603,6 +603,15 @@ abstract class BaseConnection implements ConnectionInterface
         // the getLastQuery() method.
         $this->lastQuery = $query;
 
+        // If $pretend is true, then we just want to return
+        // the actual query object here. There won't be
+        // any results to return.
+        if ($this->pretend) {
+            $query->setDuration($startTime);
+
+            return $query;
+        }
+
         // Run the query for real
         try {
             $exception      = null;
@@ -611,7 +620,7 @@ abstract class BaseConnection implements ConnectionInterface
             $this->resultID = false;
         }
 
-        if (! $this->pretend && $this->resultID === false) {
+        if ($this->resultID === false) {
             $query->setDuration($startTime, $startTime);
 
             // This will trigger a rollback if transactions are being used
@@ -634,10 +643,8 @@ abstract class BaseConnection implements ConnectionInterface
                     }
                 }
 
-                if (! $this->pretend) {
-                    // Let others do something with this query.
-                    Events::trigger('DBQuery', $query);
-                }
+                // Let others do something with this query.
+                Events::trigger('DBQuery', $query);
 
                 if ($exception !== null) {
                     throw $exception;
@@ -646,27 +653,16 @@ abstract class BaseConnection implements ConnectionInterface
                 return false;
             }
 
-            if (! $this->pretend) {
-                // Let others do something with this query.
-                Events::trigger('DBQuery', $query);
-            }
+            // Let others do something with this query.
+            Events::trigger('DBQuery', $query);
 
             return false;
         }
 
         $query->setDuration($startTime);
 
-        if (! $this->pretend) {
-            // Let others do something with this query
-            Events::trigger('DBQuery', $query);
-        }
-
-        // If $pretend is true, then we just want to return
-        // the actual query object here. There won't be
-        // any results to return.
-        if ($this->pretend) {
-            return $query;
-        }
+        // Let others do something with this query
+        Events::trigger('DBQuery', $query);
 
         // resultID is not false, so it must be successful
         if ($this->isWriteType($sql)) {
