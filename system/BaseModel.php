@@ -819,9 +819,9 @@ abstract class BaseModel
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
-        if($set = $this->setBatch($set) === false) {
+        if ($set = $this->setBatch($set) === false) {
             return false;
-		}
+        }
 
         $eventData = ['data' => $set];
 
@@ -851,7 +851,7 @@ abstract class BaseModel
      *
      * @param array|null $set an associative array of insert values
      *
-     * @return array|null|bool dataset or null or false on failure
+     * @return array|bool|null dataset or null or false on failure
      */
     protected function setBatch(?array $set = null)
     {
@@ -926,11 +926,11 @@ abstract class BaseModel
      */
     public function upsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
-        if($set = $this->setBatch($set) === false) {
-            return false;
-		}
+        if ($setValidated = $this->setBatch($set) !== false) {
+            return $this->doUpsertBatch($setValidated, $escape, $batchSize, $testing);
+        }
 
-        return $this->doUpsertBatch($set, $escape, $batchSize, $testing);
+        return false;
     }
 
     /**

@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\Live\OCI8;
 
-use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use stdclass;
@@ -54,10 +53,10 @@ final class UpsertTest extends CIUnitTestCase
 
         $sql = '
         CREATE TABLE "REBATE"
-        ( "REBATEREC" NUMBER(10), 
+        ( "REBATEREC" NUMBER(10),
           "REBATE" NUMBER(10),
           "INVOICE" NUMBER(10),
-          "LINE" NUMBER(10), 
+          "LINE" NUMBER(10),
           "PRICE" NUMBER(12,2)
         )
         ';
@@ -151,11 +150,11 @@ final class UpsertTest extends CIUnitTestCase
         $this->assertCount(5, $results);
 
         // now just upsert
-        $row            = new stdclass();
-        $row->REBATE    = 101;
-        $row->INVOICE   = 12345;
-        $row->LINE      = 1;
-        $row->PRICE     = 44.99;
+        $row          = new stdclass();
+        $row->REBATE  = 101;
+        $row->INVOICE = 12345;
+        $row->LINE    = 1;
+        $row->PRICE   = 44.99;
 
         $this->db->table('REBATE')->upsert($row);
 
