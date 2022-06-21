@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
 
 /**
@@ -81,6 +82,16 @@ class PreparedQuery extends BasePreparedQuery
         }
 
         $this->result = sqlsrv_execute($this->statement);
+
+        if ($this->result === false && $this->db->DBDebug) {
+            $errors = [];
+
+            foreach (sqlsrv_errors() as $error) {
+                $errors[] = $error['message'] . ' SQLSTATE: ' . $error['SQLSTATE'] . ', code: ' . $error['code'];
+            }
+
+            throw new DatabaseException(implode("\n", $errors));
+        }
 
         return (bool) $this->result;
     }
