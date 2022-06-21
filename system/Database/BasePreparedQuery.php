@@ -11,8 +11,11 @@
 
 namespace CodeIgniter\Database;
 
+use ArgumentCountError;
 use BadMethodCallException;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use ErrorException;
 
 /**
  * Base prepared query
@@ -108,7 +111,11 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         // Execute the Query.
         $startTime = microtime(true);
 
-        $this->_execute($data);
+        try {
+            $this->_execute($data);
+        } catch (ArgumentCountError|ErrorException $e) {
+            throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+        }
 
         // Update our query object
         $query = clone $this->query;
