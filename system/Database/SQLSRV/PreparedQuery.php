@@ -36,6 +36,18 @@ class PreparedQuery extends BasePreparedQuery
     protected $result;
 
     /**
+     * A reference to the db connection to use.
+     *
+     * @var Connection
+     */
+    protected $db;
+
+    public function __construct(Connection $db)
+    {
+        parent::__construct($db);
+    }
+
+    /**
      * Prepares the query against the database, and saves the connection
      * info necessary to execute the query later.
      *
@@ -84,13 +96,7 @@ class PreparedQuery extends BasePreparedQuery
         $this->result = sqlsrv_execute($this->statement);
 
         if ($this->result === false && $this->db->DBDebug) {
-            $errors = [];
-
-            foreach (sqlsrv_errors() as $error) {
-                $errors[] = $error['message'] . ' SQLSTATE: ' . $error['SQLSTATE'] . ', code: ' . $error['code'];
-            }
-
-            throw new DatabaseException(implode("\n", $errors));
+            throw new DatabaseException($this->db->getAllErrorMessages());
         }
 
         return (bool) $this->result;
