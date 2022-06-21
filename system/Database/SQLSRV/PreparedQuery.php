@@ -71,6 +71,10 @@ class PreparedQuery extends BasePreparedQuery
         $this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
 
         if (! $this->statement) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->db->getAllErrorMessages());
+            }
+
             $info              = $this->db->error();
             $this->errorCode   = $info['code'];
             $this->errorString = $info['message'];
