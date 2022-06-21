@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\MySQLi;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Prepared query for MySQLi
@@ -40,6 +41,10 @@ class PreparedQuery extends BasePreparedQuery
         if (! $this->statement = $this->db->mysqli->prepare($sql)) {
             $this->errorCode   = $this->db->mysqli->errno;
             $this->errorString = $this->db->mysqli->error;
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         return $this;

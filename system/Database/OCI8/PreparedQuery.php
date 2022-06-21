@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\OCI8;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\PreparedQueryInterface;
 
 /**
@@ -50,6 +51,10 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
             $error             = oci_error($this->db->connID);
             $this->errorCode   = $error['code'] ?? 0;
             $this->errorString = $error['message'] ?? '';
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         $this->lastInsertTableName = $this->db->parseInsertTableName($sql);
