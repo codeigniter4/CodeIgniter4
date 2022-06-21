@@ -80,7 +80,7 @@ final class UpsertTest extends CIUnitTestCase
         END IF;
         END COLUMN_SEQUENCES;
         END;
-        /';
+        ';
         $this->db->query(trim(preg_replace('/\s+/', ' ', $sql)));
 
         $sql = 'ALTER TRIGGER "REBATE_TRG" ENABLE';
