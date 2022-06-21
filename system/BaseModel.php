@@ -408,6 +408,19 @@ abstract class BaseModel
     abstract protected function doInsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
 
     /**
+     * Compiles batch upsert and runs the queries, validating each row prior.
+     * This methods works only with dbCalls
+     *
+     * @param array|null $set       An associative array of insert values
+     * @param bool|null  $escape    Whether to escape values
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     *
+     * @return bool|int Number of rows upserted or FALSE on failure
+     */
+    abstract protected function doUpsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false);
+
+    /**
      * Updates a single record in the database.
      * This methods works only with dbCalls
      *
@@ -806,6 +819,40 @@ abstract class BaseModel
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
+        $set = $this->setBatch($set);
+
+        $eventData = ['data' => $set];
+
+        if ($this->tempAllowCallbacks) {
+            $eventData = $this->trigger('beforeInsertBatch', $eventData);
+        }
+
+        $result = $this->doInsertBatch($eventData['data'], $escape, $batchSize, $testing);
+
+        $eventData = [
+            'data'   => $eventData['data'],
+            'result' => $result,
+        ];
+
+        if ($this->tempAllowCallbacks) {
+            // Trigger afterInsert events with the inserted data and new ID
+            $this->trigger('afterInsertBatch', $eventData);
+        }
+
+        $this->tempAllowCallbacks = $this->allowCallbacks;
+
+        return $result;
+    }
+
+    /**
+     * Compiles batch data set, validating each row prior to insert/upsert.
+     *
+     * @param array|null $set an associative array of insert values
+     *
+     * @return array|null dataset or null
+     */
+    protected function setBatch(?array $set = null)
+    {
         if (is_array($set)) {
             foreach ($set as &$row) {
                 // If $data is using a custom class with public or protected
@@ -844,27 +891,40 @@ abstract class BaseModel
             }
         }
 
-        $eventData = ['data' => $set];
+        return $set;
+    }
 
-        if ($this->tempAllowCallbacks) {
-            $eventData = $this->trigger('beforeInsertBatch', $eventData);
-        }
+    /**
+     * Converts upsert to batchUpsert call
+     *
+     * @param array|object|null $data    Data
+     * @param bool|null         $escape  Whether to escape values
+     * @param bool              $testing True means only number of records is returned, false will execute the query
+     *
+     * @throws ReflectionException
+     *
+     * @return bool|int Number of rows upserted or FALSE on failure
+     */
+    public function upsert($data = null, ?bool $escape = null, bool $testing = false)
+    {
+        return $this->upsertBatch([$data], $escape, 1, $testing);
+    }
 
-        $result = $this->doInsertBatch($eventData['data'], $escape, $batchSize, $testing);
-
-        $eventData = [
-            'data'   => $eventData['data'],
-            'result' => $result,
-        ];
-
-        if ($this->tempAllowCallbacks) {
-            // Trigger afterInsert events with the inserted data and new ID
-            $this->trigger('afterInsertBatch', $eventData);
-        }
-
-        $this->tempAllowCallbacks = $this->allowCallbacks;
-
-        return $result;
+    /**
+     * Compiles batch upsert runs the queries, validating each row prior.
+     *
+     * @param array|null $set       an associative array of upsert values
+     * @param bool|null  $escape    Whether to escape values
+     * @param int        $batchSize The size of the batch to run
+     * @param bool       $testing   True means only number of records is returned, false will execute the query
+     *
+     * @throws ReflectionException
+     *
+     * @return bool|int Number of rows inserted or FALSE on failure
+     */
+    public function upsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
+    {
+        return $this->doUpsertBatch($this->setBatch($set), $escape, $batchSize, $testing);
     }
 
     /**
