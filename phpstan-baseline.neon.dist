@@ -136,11 +136,6 @@ parameters:
 			path: system/Database/BaseConnection.php
 
 		-
-			message: "#^Negated boolean expression is always true\\.$#"
-			count: 2
-			path: system/Database/BaseConnection.php
-
-		-
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 3
 			path: system/Database/BaseResult.php
