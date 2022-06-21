@@ -460,12 +460,8 @@ class Time extends DateTime
      */
     public function getAge()
     {
-        $now = self::now();
-
-        $age = (int) (((int) $now->format('Ymd') - (int) $this->format('Ymd')) / 10000);
-
         // future dates have no age
-        return max(0, $age);
+        return max(0, $this->difference(self::now())->getYears());
     }
 
     /**
