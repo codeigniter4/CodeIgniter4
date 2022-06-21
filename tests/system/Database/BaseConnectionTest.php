@@ -166,6 +166,9 @@ final class BaseConnectionTest extends CIUnitTestCase
     }
 
     /**
+     * These tests are intended to confirm the current behavior.
+     * We do not know if all of these are the correct behavior.
+     *
      * @dataProvider identifiersProvider
      */
     public function testProtectIdentifiers(
@@ -207,14 +210,14 @@ final class BaseConnectionTest extends CIUnitTestCase
             'quoted table alias'        => [false, true, false, '"jobs" "j"', '"jobs" "j"'],
             'quoted table alias prefix' => [true,  true, false, '"jobs" "j"', '"test_jobs" "j"'],
 
-            'table.*'             => [false, true, true, 'jobs.*', '"test_jobs".*'], // Why prefixed?
+            'table.*'             => [false, true, true, 'jobs.*', '"test_jobs".*'], // Prefixed because it has segments
             'table.* prefix'      => [true,  true, true, 'jobs.*', '"test_jobs".*'],
-            'table.column'        => [false, true, true, 'users.id', '"test_users"."id"'], // Why prefixed?
+            'table.column'        => [false, true, true, 'users.id', '"test_users"."id"'], // Prefixed because it has segments
             'table.column prefix' => [true,  true, true, 'users.id', '"test_users"."id"'],
             'table.column AS'     => [
                 false, true, true,
                 'users.id AS user_id',
-                '"test_users"."id" AS "user_id"', // Why prefixed?
+                '"test_users"."id" AS "user_id"', // Prefixed because it has segments
             ],
             'table.column AS prefix' => [
                 true,  true, true,
