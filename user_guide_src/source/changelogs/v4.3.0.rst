@@ -28,7 +28,7 @@ Enhancements
 Changes
 *******
 
-- Be consistent in the behaviors regardless of environments, ``Config\Database::$default['DBDebug']`` and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these settings, an exception is always thrown when a database error occurs.
+- To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']`` and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these settings, an exception is always thrown when a database error occurs.
 - Changed the processing of Spark commands:
     - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
     - The ``CodeIgniter::isSparked()`` method has been removed.
