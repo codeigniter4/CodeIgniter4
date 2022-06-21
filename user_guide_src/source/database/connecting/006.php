@@ -9,7 +9,7 @@ $custom = [
     'DBDriver' => 'MySQLi',
     'DBPrefix' => '',
     'pConnect' => false,
-    'DBDebug'  => (ENVIRONMENT !== 'production'),
+    'DBDebug'  => true,
     'charset'  => 'utf8',
     'DBCollat' => 'utf8_general_ci',
     'swapPre'  => '',

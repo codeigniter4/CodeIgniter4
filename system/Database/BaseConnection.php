@@ -124,7 +124,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Debug flag
      *
-     * Whether to display error messages.
+     * Whether to throw Exception or not when an error occurs.
      *
      * @var bool
      */

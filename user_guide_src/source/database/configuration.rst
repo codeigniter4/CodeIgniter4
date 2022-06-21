@@ -118,7 +118,7 @@ Explanation of Values:
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
 **pConnect**    true/false (boolean) - Whether to use a persistent connection.
-**DBDebug**     true/false (boolean) - Whether database errors should be displayed.
+**DBDebug**     true/false (boolean) - Whether to throw exceptions or not when database errors occur.
 **charset**     The character set used in communicating with the database.
 **DBCollat**    The character collation used in communicating with the database (``MySQLi`` only)
 **swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
