@@ -488,6 +488,11 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * The current behavior assumes MySQL.
+     * Other databases may not work well, so we may want to change the behavior
+     * to match the specifications of the database driver.
+     */
     public function testWhereValueIsTrue()
     {
         $builder = $this->db->table('users');
@@ -498,6 +503,11 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * The current behavior assumes MySQL.
+     * Other databases may not work well, so we may want to change the behavior
+     * to match the specifications of the database driver.
+     */
     public function testWhereValueIsFalse()
     {
         $builder = $this->db->table('users');
@@ -508,6 +518,9 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
     public function testWhereValueIsArray()
     {
         $builder = $this->db->table('users');
@@ -521,6 +534,9 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
     public function testWhereValueIsArrayOfArray()
     {
         $this->expectException(ErrorException::class);
@@ -533,6 +549,9 @@ final class WhereTest extends CIUnitTestCase
         $builder->getCompiledSelect();
     }
 
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
     public function testWhereValueIsArrayOfObject()
     {
         $this->expectException(Error::class);
@@ -555,6 +574,9 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
     public function testWhereValueIsStdClass()
     {
         $this->expectException(Error::class);
@@ -567,6 +589,9 @@ final class WhereTest extends CIUnitTestCase
         $builder->getCompiledSelect();
     }
 
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
     public function testWhereValueIsDateTime()
     {
         $this->expectException(Error::class);
