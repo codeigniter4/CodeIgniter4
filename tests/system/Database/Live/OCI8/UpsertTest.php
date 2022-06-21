@@ -65,7 +65,6 @@ final class UpsertTest extends CIUnitTestCase
         $sql = 'CREATE UNIQUE INDEX "REBATEREC" ON "REBATE" ("REBATEREC")';
         $this->db->query($sql);
 
-
         $sql = 'CREATE UNIQUE INDEX "REBATE" ON "REBATE" ("REBATE", "INVOICE", "LINE")';
         $this->db->query($sql);
 
