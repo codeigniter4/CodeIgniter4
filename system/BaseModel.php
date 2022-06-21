@@ -819,7 +819,7 @@ abstract class BaseModel
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
-        if ($set = $this->setBatch($set) === false) {
+        if (($set = $this->setBatch($set)) === false) {
             return false;
         }
 
@@ -926,11 +926,11 @@ abstract class BaseModel
      */
     public function upsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
-        if ($setValidated = $this->setBatch($set) !== false) {
-            return $this->doUpsertBatch($setValidated, $escape, $batchSize, $testing);
+        if (($set = $this->setBatch($set)) === false) {
+            return false;
         }
 
-        return false;
+        return $this->doUpsertBatch($set, $escape, $batchSize, $testing);
     }
 
     /**
