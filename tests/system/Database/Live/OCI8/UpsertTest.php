@@ -15,7 +15,7 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
-use stdclass();
+use stdclass;
 
 /**
  * @group DatabaseLive
