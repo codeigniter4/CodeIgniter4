@@ -403,7 +403,13 @@ for details.</p>
 <p>Allows you to provide an <strong>IncomingRequest</strong> instance tailored to your testing needs:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\IncomingRequest</span><span class="p">(</span><span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span> <span class="k">new</span> <span class="nx">URI</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">));</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\IncomingRequest</span><span class="p">(</span>
+    <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">(),</span>
+    <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\URI</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">),</span>
+    <span class="k">null</span><span class="p">,</span>
+    <span class="k">new</span> <span class="nx">\CodeIgniter\HTTP\UserAgent</span><span class="p">()</span>
+<span class="p">);</span>
+
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="nv">$locale</span><span class="p">);</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">)</span>
