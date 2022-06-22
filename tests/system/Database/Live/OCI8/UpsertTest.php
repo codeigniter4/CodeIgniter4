@@ -15,6 +15,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
+use Throwable;
+use Exception;
 
 /**
  * @group DatabaseLive
@@ -83,9 +85,10 @@ final class UpsertTest extends CIUnitTestCase
         ';
 
         try {
-            $this->db->query(trim(preg_replace('/\s+/', ' ', $sql)));
-        } catch(\Throwable $e) {
-            var_dump($this->db->query("select * from user_errors")->get()->getResultObject());
+            $this->db->query($sql);
+        } catch(Throwable $e) {
+            $error = preg_replace('/begin case declare.*?json_array/s', ' ', var_export($this->db->query("select name, line, position, text from user_errors")->getResultObject(), true));
+            throw new Exception($error);
         }
 
         $sql = 'ALTER TRIGGER "REBATE_TRG" ENABLE';
