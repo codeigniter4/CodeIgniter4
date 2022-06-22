@@ -13,10 +13,10 @@ namespace CodeIgniter\Database\Live\OCI8;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Exception;
 use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 use Throwable;
-use Exception;
 
 /**
  * @group DatabaseLive
@@ -39,7 +39,7 @@ final class UpsertTest extends CIUnitTestCase
         }
     }
 
-    public function testSimpleUpsertTest()
+    public function testSimpleUpsertBatchTest()
     {
         // A rebate table - rebate reciept REBATEREC primary key
         // One invoic/line number can have multiple rebates applied but never the same one twice
@@ -70,6 +70,23 @@ final class UpsertTest extends CIUnitTestCase
         $sql = 'CREATE UNIQUE INDEX "REBATE" ON "REBATE" ("REBATE", "INVOICE", "LINE")';
         $this->db->query($sql);
 
+        // some versions don't require this
+        $sql = '
+        BEGIN
+        EXECUTE IMMEDIATE \'CREATE SEQUENCE REBATE_SEQ START WITH 1\';
+        EXCEPTION
+        WHEN OTHERS THEN
+        IF sqlcode != -00955 THEN RAISE; END IF;
+        END;
+        ';
+        try {
+            $this->db->query($sql);
+        } catch (Throwable $e) {
+            $error = preg_replace('/begin case declare.*?json_array/s', ' ', var_export($this->db->query('select name, line, position, text from user_errors')->getResultObject(), true));
+
+            throw new Exception($error);
+        }
+
         $sql = '
         CREATE OR REPLACE NONEDITIONABLE TRIGGER "REBATE_TRG"
         BEFORE INSERT ON REBATE
@@ -86,8 +103,9 @@ final class UpsertTest extends CIUnitTestCase
 
         try {
             $this->db->query($sql);
-        } catch(Throwable $e) {
-            $error = preg_replace('/begin case declare.*?json_array/s', ' ', var_export($this->db->query("select name, line, position, text from user_errors")->getResultObject(), true));
+        } catch (Throwable $e) {
+            $error = preg_replace('/begin case declare.*?json_array/s', ' ', var_export($this->db->query('select name, line, position, text from user_errors')->getResultObject(), true));
+
             throw new Exception($error);
         }
 
@@ -149,25 +167,27 @@ final class UpsertTest extends CIUnitTestCase
         $results = $this->db->table('REBATE')->where('REBATE', 233)->where('INVOICE', 33453)->where('LINE', 2)->get()->getResultObject();
         $price   = $results[0]->PRICE;
 
-        $this->assertSame($price, 66.66);
+        $this->assertSame($price, '66.66');
 
         // see that we have inserted all records
         $results = $this->db->table('REBATE')->get()->getResultObject();
 
         $this->assertCount(5, $results);
-
-        // now just upsert
-        $row          = new stdclass();
-        $row->REBATE  = 101;
-        $row->INVOICE = 12345;
-        $row->LINE    = 1;
-        $row->PRICE   = 44.99;
+    }
+	
+    public function testSimpleUpsertTest()
+    {
+        $row            = [];
+        $row['REBATE']  = 101;
+        $row['INVOICE'] = 12345;
+        $row['LINE']    = 1;
+        $row['PRICE']   = 44.99;
 
         $this->db->table('REBATE')->upsert($row);
 
         $results = $this->db->table('REBATE')->where('REBATE', 101)->where('INVOICE', 12345)->where('LINE', 1)->get()->getResultObject();
         $price   = $results[0]->PRICE;
 
-        $this->assertSame($price, 44.99);
+        $this->assertSame($price, '44.99');
     }
 }
