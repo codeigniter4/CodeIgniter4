@@ -98,7 +98,8 @@ class Builder extends BaseBuilder
 
         $sql = 'INSERT INTO ' . $table . '(' . implode(', ', array_map(static fn ($columnName) => $columnName, $keys)) . ') VALUES ' . implode(', ', $this->getValues($values)) . "\n";
 
-        if(count($conflicts)==0) {
+        // maybe we should throw an error here if there are no indexs to update on
+        if (count($conflicts) === 0) {
             return $sql;
         }
 
