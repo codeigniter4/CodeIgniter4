@@ -165,8 +165,8 @@ final class UpsertTest extends CIUnitTestCase
         try {
             $this->db->table('REBATE')->upsertBatch($data);
         } catch (Throwable $e) {
-            $error = var_export($model->db->query("SELECT OWNER, OBJECT_NAME, STATUS FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('TABLE','table') AND OBJECT_NAME IN('rebate','REBATE','JOBS','jobs')")->getResultObject(), true); 
-            $error .= var_export($model->db->query("SELECT sys_context('USERENV', 'CURRENT_SCHEMA') CSCHEMA, sys_context('USERENV', 'CURRENT_USER') CUSER FROM DUAL")->getResultObject(), true); 
+            $error = var_export($this->db->query("SELECT OWNER, OBJECT_NAME, STATUS FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('TABLE','table') AND OBJECT_NAME IN('rebate','REBATE','JOBS','jobs')")->getResultObject(), true);
+            $error .= var_export($this->db->query("SELECT sys_context('USERENV', 'CURRENT_SCHEMA') CSCHEMA, sys_context('USERENV', 'CURRENT_USER') CUSER FROM DUAL")->getResultObject(), true);
 
             throw new Exception($error);
         }
