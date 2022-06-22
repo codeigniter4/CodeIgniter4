@@ -84,7 +84,7 @@ final class UpsertTest extends CIUnitTestCase
 
         try {
             $this->db->query(trim(preg_replace('/\s+/', ' ', $sql)));
-        catch(\Throwable $e) {
+        } catch(\Throwable $e) {
             var_dump($this->db->query("select * from user_errors")->get()->getResultObject());
         }
 
