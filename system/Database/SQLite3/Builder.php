@@ -98,6 +98,10 @@ class Builder extends BaseBuilder
 
         $sql = 'INSERT INTO ' . $table . '(' . implode(', ', array_map(static fn ($columnName) => $columnName, $keys)) . ') VALUES ' . implode(', ', $this->getValues($values)) . "\n";
 
+        if(count($conflicts)==0) {
+            return $sql;
+        }
+
         return $sql .= 'ON CONFLICT(`' . implode('`,`', $conflicts) . '`) DO UPDATE SET ' . implode(', ', array_map(static fn ($updateField) => '`' . $updateField . '` = `excluded`.`' . $updateField . '`', $updateFields));
     }
 }

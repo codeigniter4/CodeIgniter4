@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-namespace CodeIgniter\Database\Live\OCI8;
+namespace CodeIgniter\Database\Live\SQLite;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -32,8 +32,8 @@ final class UpsertTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        if ($this->db->DBDriver !== 'OCI8') {
-            $this->markTestSkipped('Only OCI8 has its own implementation.');
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $this->markTestSkipped('Only SQLite3 has its own implementation.');
         }
     }
 
@@ -42,72 +42,15 @@ final class UpsertTest extends CIUnitTestCase
         // A rebate table - rebate reciept REBATEREC primary key
         // One invoic/line number can have multiple rebates applied but never the same one twice
         $sql = '
-        BEGIN
-        EXECUTE IMMEDIATE \'DROP TABLE "db_REBATE"\';
-        EXCEPTION
-        WHEN OTHERS THEN
-        IF sqlcode != -0942 THEN RAISE; END IF;
-        END;
+        DROP TABLE IF EXISTS db_REBATE;
+        CREATE TABLE db_REBATE (
+        REBATEREC INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        REBATE INTEGER NOT NULL,
+        INVOICE INTEGER NOT NULL,
+        LINE INTEGER NOT NULL,
+        PRICE DECIMAL(10,2),
+        CONSTRAINT REBATE_IDX UNIQUE(REBATE,INVOICE,LINE))
         ';
-        $this->db->query($sql);
-
-        $sql = '
-        CREATE TABLE "db_REBATE"
-        ( "REBATEREC" NUMBER(10),
-          "REBATE" NUMBER(10),
-          "INVOICE" NUMBER(10),
-          "LINE" NUMBER(10),
-          "PRICE" NUMBER(12,2)
-        )
-        ';
-        $this->db->query($sql);
-
-        $sql = 'CREATE UNIQUE INDEX "REBATEREC" ON "db_REBATE" ("REBATEREC")';
-        $this->db->query($sql);
-
-        $sql = 'CREATE UNIQUE INDEX "REBATE" ON "db_REBATE" ("REBATE", "INVOICE", "LINE")';
-        $this->db->query($sql);
-
-        // some versions don't require this
-        $sql = '
-        BEGIN
-        EXECUTE IMMEDIATE \'CREATE SEQUENCE db_REBATE_SEQ START WITH 1\';
-        EXCEPTION
-        WHEN OTHERS THEN
-        IF sqlcode != -00955 THEN RAISE; END IF;
-        END;
-        ';
-
-        try {
-            $this->db->query($sql);
-        } catch (Throwable $e) {
-            $error = preg_replace('/begin case declare.*?json_array/s', ' ', var_export($this->db->query('select name, line, position, text from user_errors')->getResultObject(), true));
-
-            throw new Exception($error);
-        }
-
-        $sql = '
-        CREATE OR REPLACE NONEDITIONABLE TRIGGER "db_REBATE_TRG"
-        BEFORE INSERT ON "db_REBATE"
-        FOR EACH ROW
-        BEGIN
-        <<COLUMN_SEQUENCES>>
-        BEGIN
-        IF INSERTING AND :NEW.REBATEREC IS NULL THEN
-        SELECT db_REBATE_SEQ.NEXTVAL INTO :NEW.REBATEREC FROM DUAL;
-        END IF;
-        END COLUMN_SEQUENCES;
-        END;
-        ';
-        $this->db->query($sql);
-
-        $sql = 'ALTER TRIGGER "db_REBATE_TRG" ENABLE';
-        $this->db->query($sql);
-
-        $sql = 'ALTER TABLE "db_REBATE" MODIFY ("REBATEREC" NOT NULL ENABLE, "REBATE" NOT NULL ENABLE, "INVOICE" NOT NULL ENABLE, "LINE" NOT NULL ENABLE)';
-        $this->db->query($sql);
-
-        $sql = 'ALTER TABLE "db_REBATE" ADD CONSTRAINT "REBATEREC" PRIMARY KEY ("REBATEREC")';
         $this->db->query($sql);
 
         $data = [];
@@ -159,7 +102,7 @@ final class UpsertTest extends CIUnitTestCase
         $results = $this->db->table('REBATE')->where('REBATE', 233)->where('INVOICE', 33453)->where('LINE', 2)->get()->getResultObject();
         $price   = $results[0]->PRICE;
 
-        $this->assertSame($price, '66.66');
+        $this->assertSame($price, 66.66);
 
         // see that we have inserted all records
         $results = $this->db->table('REBATE')->get()->getResultObject();
@@ -180,6 +123,6 @@ final class UpsertTest extends CIUnitTestCase
         $results = $this->db->table('REBATE')->where('REBATE', 101)->where('INVOICE', 12345)->where('LINE', 1)->get()->getResultObject();
         $price   = $results[0]->PRICE;
 
-        $this->assertSame($price, '44.99');
+        $this->assertSame($price, 44.99);
     }
 }
