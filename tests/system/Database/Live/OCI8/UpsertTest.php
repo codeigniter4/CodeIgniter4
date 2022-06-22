@@ -79,6 +79,7 @@ final class UpsertTest extends CIUnitTestCase
         IF sqlcode != -00955 THEN RAISE; END IF;
         END;
         ';
+
         try {
             $this->db->query($sql);
         } catch (Throwable $e) {
@@ -161,7 +162,14 @@ final class UpsertTest extends CIUnitTestCase
         $row->PRICE     = 66.66;
         $data[]         = $row;
 
-        $this->db->table('REBATE')->upsertBatch($data);
+        try {
+            $this->db->table('REBATE')->upsertBatch($data);
+        } catch (Throwable $e) {
+            $error = var_export($model->db->query("SELECT OWNER, OBJECT_NAME, STATUS FROM ALL_OBJECTS WHERE OBJECT_TYPE IN ('TABLE','table') AND OBJECT_NAME IN('rebate','REBATE','JOBS','jobs')")->getResultObject(), true); 
+            $error .= var_export($model->db->query("SELECT sys_context('USERENV', 'CURRENT_SCHEMA') CSCHEMA, sys_context('USERENV', 'CURRENT_USER') CUSER FROM DUAL")->getResultObject(), true); 
+
+            throw new Exception($error);
+        }
 
         // see that the null record was created
         $results = $this->db->table('REBATE')->where('REBATE', 233)->where('INVOICE', 33453)->where('LINE', 2)->get()->getResultObject();
@@ -174,7 +182,7 @@ final class UpsertTest extends CIUnitTestCase
 
         $this->assertCount(5, $results);
     }
-	
+
     public function testSimpleUpsertTest()
     {
         $row            = [];
