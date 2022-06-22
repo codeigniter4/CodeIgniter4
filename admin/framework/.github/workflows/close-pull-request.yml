@@ -1,0 +1,18 @@
+name: Close Pull Request
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close PR with nice message
+        uses: superbrothers/close-pull-request@v3
+        with:
+          comment: >
+            Thank you for your pull request. However, you have submitted your PR on a read-only
+            split of `codeigniter4/CodeIgniter4`. This repository, unfortunately, does
+            not accept PRs. Please submit your PR at https://github.com/codeigniter4/CodeIgniter4
+            repository.<br/><br/>Thank you.
