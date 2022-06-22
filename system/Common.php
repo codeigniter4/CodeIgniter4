@@ -44,6 +44,7 @@ if (! function_exists('app_timezone')) {
      */
     function app_timezone(): string
     {
+        /** @var App $config */
         $config = config(App::class);
 
         return $config->appTimezone;

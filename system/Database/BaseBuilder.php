@@ -1941,7 +1941,7 @@ class BaseBuilder
     }
 
     /**
-     * Compiles an replace into string and runs the query
+     * Compiles a replace into string and runs the query
      *
      * @throws DatabaseException
      *
