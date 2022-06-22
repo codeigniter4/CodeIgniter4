@@ -76,12 +76,17 @@ final class UpsertTest extends CIUnitTestCase
         <<COLUMN_SEQUENCES>>
         BEGIN
         IF INSERTING AND :NEW.REBATEREC IS NULL THEN
-        SELECT REBATE_SEQ.NEXTVAL INTO :NEW.REBATEREC FROM SYS.DUAL;
+        SELECT REBATE_SEQ.NEXTVAL INTO :NEW.REBATEREC FROM DUAL;
         END IF;
         END COLUMN_SEQUENCES;
         END;
         ';
-        $this->db->query(trim(preg_replace('/\s+/', ' ', $sql)));
+
+        try {
+            $this->db->query(trim(preg_replace('/\s+/', ' ', $sql)));
+        catch(\Throwable $e) {
+            var_dump($this->db->query("select * from user_errors")->get()->getResultObject());
+        }
 
         $sql = 'ALTER TRIGGER "REBATE_TRG" ENABLE';
         $this->db->query($sql);
