@@ -185,6 +185,8 @@ final class InsertModelTest extends LiveModelTestCase
             ];
         };
 
+        $entityTwo = $entity;
+
         $this->createModel(UserModel::class);
 
         $entity->name       = 'Mark One';

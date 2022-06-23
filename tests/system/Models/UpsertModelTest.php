@@ -54,7 +54,7 @@ final class UpsertModelTest extends LiveModelTestCase
         ];
 
         // set batch size of one
-        $this->createModel(JobModel::class)->upsertBatch($userData, true, 1);
+        $this->createModel(UserModel::class)->upsertBatch($userData, true, 1);
         $this->seeInDatabase('user', ['email' => 'userone@test.com']);
         $this->seeInDatabase('user', ['email' => 'usertwo@test.com']);
     }
@@ -69,7 +69,7 @@ final class UpsertModelTest extends LiveModelTestCase
             ],
         ];
 
-        $this->createModel(JobModel::class);
+        $this->createModel(UserModel::class);
 
         $this->setPrivateProperty($this->model, 'validationRules', ['country' => 'required']);
         $this->assertFalse($this->model->upsertBatch($userData));

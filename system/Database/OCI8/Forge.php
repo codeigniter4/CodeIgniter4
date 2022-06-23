@@ -298,4 +298,9 @@ class Forge extends BaseForge
 
         return $sql;
     }
+
+    protected function _processIndexes(string $table)
+    {
+        return preg_replace('/ALTER.*?; /s', '', parent::_processIndexes($table));
+    }
 }
