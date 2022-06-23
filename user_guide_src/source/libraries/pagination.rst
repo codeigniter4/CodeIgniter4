@@ -18,6 +18,7 @@ to load it manually:
 
 .. literalinclude:: pagination/001.php
 
+.. _paginating-with-models:
 
 **********************
 Paginating with Models
