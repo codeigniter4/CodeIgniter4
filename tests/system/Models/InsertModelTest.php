@@ -185,7 +185,7 @@ final class InsertModelTest extends LiveModelTestCase
             ];
         };
 
-        $entityTwo = $entity;
+        $entityTwo = clone $entity;
 
         $this->createModel(UserModel::class);
 
