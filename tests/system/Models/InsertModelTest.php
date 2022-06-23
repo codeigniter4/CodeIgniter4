@@ -187,14 +187,20 @@ final class InsertModelTest extends LiveModelTestCase
 
         $this->createModel(UserModel::class);
 
-        $entity->name       = 'Mark';
-        $entity->email      = 'mark@example.com';
+        $entity->name       = 'Mark One';
+        $entity->email      = 'markone@example.com';
         $entity->country    = 'India';
         $entity->deleted    = 0;
         $entity->created_at = new Time('now');
 
+        $entityTwo->name       = 'Mark One';
+        $entityTwo->email      = 'markone@example.com';
+        $entityTwo->country    = 'India';
+        $entityTwo->deleted    = 0;
+        $entityTwo->created_at = new Time('now');
+
         $this->setPrivateProperty($this->model, 'useTimestamps', true);
-        $this->assertSame(2, $this->model->insertBatch([$entity, $entity]));
+        $this->assertSame(2, $this->model->insertBatch([$entity, $entityTwo]));
     }
 
     public function testInsertArrayWithNoDataException(): void
@@ -333,8 +339,8 @@ final class InsertModelTest extends LiveModelTestCase
         $this->createModel(UserObjModel::class);
 
         $entity             = new User();
-        $entity->name       = 'Mark';
-        $entity->email      = 'mark@example.com';
+        $entity->name       = 'Mark Three';
+        $entity->email      = 'markthree@example.com';
         $entity->country    = 'India';  // same as the default
         $entity->deleted    = 0;
         $entity->created_at = new Time('now');

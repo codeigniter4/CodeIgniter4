@@ -245,7 +245,9 @@ class Forge extends BaseForge
             }
 
             if (in_array($i, $this->uniqueKeys, true)) {
-                $sqls[] = 'ALTER TABLE '
+                $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
+                    . ' DROP CONSTRAINT IF EXISTS ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                    . '; ALTER TABLE '
                     . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
                     . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                     . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
