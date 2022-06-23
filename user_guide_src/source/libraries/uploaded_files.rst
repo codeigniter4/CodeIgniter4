@@ -254,7 +254,8 @@ this method:
 File Names
 ==========
 
-**getName()**
+getName()
+---------
 
 You can retrieve the original filename provided by the client with the ``getName()`` method. This will typically be the
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
@@ -262,13 +263,15 @@ the moved file:
 
 .. literalinclude:: uploaded_files/011.php
 
-**getClientName()**
+getClientName()
+---------------
 
 Always returns the original name of the uploaded file as sent by the client, even if the file has been moved:
 
 .. literalinclude:: uploaded_files/012.php
 
-**getTempName()**
+getTempName()
+-------------
 
 To get the full path of the temp file that was created during the upload, you can use the ``getTempName()`` method:
 
@@ -277,7 +280,8 @@ To get the full path of the temp file that was created during the upload, you ca
 Other File Info
 ===============
 
-**getClientExtension()**
+getClientExtension()
+--------------------
 
 Returns the original file extension, based on the file name that was uploaded:
 
@@ -285,7 +289,8 @@ Returns the original file extension, based on the file name that was uploaded:
 
 .. warning:: This is NOT a trusted source. For a trusted version, use ``guessExtension()`` instead.
 
-**getClientMimeType()**
+getClientMimeType()
+-------------------
 
 Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
 version, use ``getMimeType()`` instead:
