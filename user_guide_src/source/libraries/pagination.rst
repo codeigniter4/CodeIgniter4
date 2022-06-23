@@ -106,12 +106,12 @@ This will, by default, display the links in the normal manner, as a series of li
 template used by passing in the name of the template as the fourth parameter. More details can be found in the following
 sections::
 
-    <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
+    $pager->makeLinks($page, $perPage, $total, 'template_name');
 
 It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in
 the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``::
 
-    <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
+    $pager->makeLinks($page, $perPage, $total, 'template_name', $segment);
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
