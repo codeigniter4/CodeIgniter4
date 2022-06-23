@@ -24,6 +24,10 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
 
 * Work off direct clones of the repos so the release branches persist for a time
 * Clone both **codeigniter4/CodeIgniter4** and **codeigniter4/userguide** and resolve any necessary PRs
+```console
+git clone git@github.com:codeigniter4/CodeIgniter4.git
+git clone git@github.com:codeigniter4/userguide.git
+```
 * Vet the **admin/** folders for any removed hidden files (Action deploy scripts *do not remove these*)
 
 ## CodeIgniter4
@@ -49,11 +53,11 @@ Copy the resulting content into **CHANGELOG.md** and adjust the format to match 
 * Merge the PR then fast-forward `develop` to catch the merge commit
 * Update the next minor upgrade branch `4.x`
 ```console
-git fetch upstream
+git fetch origin
 git checkout 4.x
-git merge upstream/4.x
-git merge upstream/develop
-git push upstream HEAD
+git merge origin/4.x
+git merge origin/develop
+git push origin HEAD
 ```
 * Create a new Release:
     * Version: "v4.x.x"
