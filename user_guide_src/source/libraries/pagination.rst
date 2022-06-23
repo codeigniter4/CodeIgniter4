@@ -19,9 +19,9 @@ to load it manually:
 .. literalinclude:: pagination/001.php
 
 
-***************************
-Paginating Database Results
-***************************
+**********************
+Paginating with Models
+**********************
 
 In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the :doc:`Model </models/model>` class, you can use its built-in ``paginate()`` method to automatically
