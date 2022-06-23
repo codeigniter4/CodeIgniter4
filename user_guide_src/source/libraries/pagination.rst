@@ -18,6 +18,7 @@ to load it manually:
 
 .. literalinclude:: pagination/001.php
 
+
 ***************************
 Paginating Database Results
 ***************************
@@ -102,16 +103,12 @@ the total number of items as the first, second, and third parameters, respective
 
 This will, by default, display the links in the normal manner, as a series of links, but you can change the display
 template used by passing in the name of the template as the fourth parameter. More details can be found in the following
-sections.
-
-::
+sections::
 
     <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
 
 It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in
-the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``.
-
-::
+the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``::
 
     <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
 
