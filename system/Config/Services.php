@@ -487,7 +487,7 @@ class Services extends BaseService
         }
 
         // @TODO remove the following code for backward compatibility
-        return static::incommingrequest($config, $getShared);
+        return static::incomingrequest($config, $getShared);
     }
 
     /**
@@ -502,7 +502,7 @@ class Services extends BaseService
         if ($isCli) {
             $request = AppServices::clirequest($config);
         } else {
-            $request = AppServices::incommingrequest($config);
+            $request = AppServices::incomingrequest($config);
 
             // guess at protocol if needed
             $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
@@ -519,7 +519,7 @@ class Services extends BaseService
      *
      * @internal
      */
-    public static function incommingrequest(?App $config = null, bool $getShared = true)
+    public static function incomingrequest(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('request', $config);

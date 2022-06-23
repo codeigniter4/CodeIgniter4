@@ -106,7 +106,7 @@ use Config\View as ConfigView;
  * @method static Format format(ConfigFormat $config = null, $getShared = true)
  * @method static Honeypot honeypot(ConfigHoneyPot $config = null, $getShared = true)
  * @method static BaseHandler image($handler = null, Images $config = null, $getShared = true)
- * @method static IncomingRequest incommingrequest(?App $config = null, bool $getShared = true)
+ * @method static IncomingRequest incomingrequest(?App $config = null, bool $getShared = true)
  * @method static Iterator iterator($getShared = true)
  * @method static Language language($locale = null, $getShared = true)
  * @method static Logger logger($getShared = true)
