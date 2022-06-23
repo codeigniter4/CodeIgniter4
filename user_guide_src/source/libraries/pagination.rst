@@ -98,9 +98,9 @@ Manual Pagination
 
 You may find times where you just need to create pagination based on known data. You can create links manually
 with the ``makeLinks()`` method, which takes the current page, the number of results per page, and
-the total number of items as the first, second, and third parameters, respectively::
+the total number of items as the first, second, and third parameters, respectively:
 
-    <?= $pager->makeLinks($page, $perPage, $total) ?>
+.. literalinclude:: pagination/015.php
 
 This will, by default, display the links in the normal manner, as a series of links, but you can change the display
 template used by passing in the name of the template as the fourth parameter. More details can be found in the following
