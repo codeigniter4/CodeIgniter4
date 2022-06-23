@@ -871,7 +871,7 @@ abstract class BaseModel
                     $row = (array) $row;
                 }
 
-                if($row === null || $row === []) {
+                if ($row === null || $row === []) {
                     return null;
                 }
 

@@ -40,38 +40,42 @@ final class UpsertModelTest extends LiveModelTestCase
 
     public function testUpsertBatchSuccess(): void
     {
-        $jobData = [
+        $userData = [
             [
-                'name'        => 'Comedian',
-                'description' => 'There\'s something in your teeth',
+                'email'   => 'userone@test.com',
+                'name'    => 'User One',
+                'country' => 'US',
             ],
             [
-                'name'        => 'Cab Driver',
-                'description' => 'I am yellow',
+                'email'   => 'usertwo@test.com',
+                'name'    => 'User Two',
+                'country' => 'US',
             ],
         ];
 
-        $this->createModel(JobModel::class)->upsertBatch($jobData);
-        $this->seeInDatabase('job', ['name' => 'Comedian']);
-        $this->seeInDatabase('job', ['name' => 'Cab Driver']);
+        // set batch size of one
+        $this->createModel(JobModel::class)->upsertBatch($userData, true, 1);
+        $this->seeInDatabase('user', ['email' => 'userone@test.com']);
+        $this->seeInDatabase('user', ['email' => 'usertwo@test.com']);
     }
 
     public function testUpsertBatchValidationFail(): void
     {
-        $jobData = [
+        $userData = [
             [
-                'name'        => 'Comedian',
-                'description' => null,
+                'email'   => 'userthree@test.com',
+                'name'    => 'User Three',
+                'country' => null,
             ],
         ];
 
         $this->createModel(JobModel::class);
 
-        $this->setPrivateProperty($this->model, 'validationRules', ['description' => 'required']);
-        $this->assertFalse($this->model->upsertBatch($jobData));
+        $this->setPrivateProperty($this->model, 'validationRules', ['country' => 'required']);
+        $this->assertFalse($this->model->upsertBatch($userData));
 
         $error = $this->model->errors();
-        $this->assertArrayHasKey('description', $error);
+        $this->assertArrayHasKey('country', $error);
     }
 
     public function testUpsertArrayWithNoDataException(): void
