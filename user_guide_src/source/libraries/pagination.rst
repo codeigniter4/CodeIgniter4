@@ -39,8 +39,8 @@ The first element is the results from the database, **users**, which is retrieve
 the Model will hold on to the instance it used and store it in the public property, ``$pager``. So, we grab
 that and assign it to the ``$pager`` variable in the view.
 
-.. important:: It is important to understand that the Model::paginate() method uses the Model and QueryBuilder methods.
-    Therefore, trying to use ``$db->query()`` and Model::paginate() **will not work** because ``$db->query()`` executes
+.. important:: It is important to understand that the ``Model::paginate()`` method uses the **Model** and **QueryBuilder** methods.
+    Therefore, trying to use ``$db->query()`` and ``Model::paginate()`` **will not work** because ``$db->query()`` executes
     the query immediately and is not associated with a QueryBuilder.
 
 To define conditions for pagination in a model, you can:
