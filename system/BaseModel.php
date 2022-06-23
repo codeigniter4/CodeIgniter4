@@ -871,6 +871,10 @@ abstract class BaseModel
                     $row = (array) $row;
                 }
 
+                if($row === null || $row === []) {
+                    return null;
+                }
+
                 // Validate every row..
                 if (! $this->skipValidation && ! $this->cleanRules()->validate($row)) {
                     return false;
