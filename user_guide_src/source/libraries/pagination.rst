@@ -92,8 +92,9 @@ like **https://domain.tld/foo/bar/[pageNumber]** instead of **https://domain.tld
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
+*****************
 Manual Pagination
-=================
+*****************
 
 You may find times where you just need to create pagination based on known data. You can create links manually
 with the ``makeLinks()`` method, which takes the current page, the number of results per page, and
@@ -120,8 +121,9 @@ If you in need to show many pagers on one page then additional parameter which w
 
 Pagination library uses **page** query parameter for HTTP queries by default (if no group or ``default`` group name given) or ``page_[groupName]`` for custom group names.
 
+*************************************
 Paginating with Only Expected Queries
-=====================================
+*************************************
 
 By default, all GET queries are shown in the pagination links.
 
