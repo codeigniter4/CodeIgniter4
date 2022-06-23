@@ -195,8 +195,8 @@ final class InsertModelTest extends LiveModelTestCase
         $entity->deleted    = 0;
         $entity->created_at = new Time('now');
 
-        $entityTwo->name       = 'Mark One';
-        $entityTwo->email      = 'markone@example.com';
+        $entityTwo->name       = 'Mark Two';
+        $entityTwo->email      = 'marktwo@example.com';
         $entityTwo->country    = 'India';
         $entityTwo->deleted    = 0;
         $entityTwo->created_at = new Time('now');

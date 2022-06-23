@@ -13,7 +13,6 @@ namespace CodeIgniter\Models;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use stdClass;
-use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
 /**
