@@ -70,7 +70,7 @@ final class UpsertTest extends CIUnitTestCase
     public function testUpsertWithMatchingDataOnUniqueIndexandPrimaryKey()
     {
         $data = [
-            'id'      => 5,
+            'id'      => 6,
             'email'   => 'someone@something.com',
             'name'    => 'Some Name',
             'country' => 'US',
@@ -79,7 +79,7 @@ final class UpsertTest extends CIUnitTestCase
         $this->db->table('user')->upsert($data);
 
         $original = $this->db->table('user')
-            ->getwhere(['id' => 5])
+            ->getwhere(['id' => 6])
             ->getRow();
 
         $data = [
@@ -93,7 +93,7 @@ final class UpsertTest extends CIUnitTestCase
 
         // get by id
         $row = $this->db->table('user')
-            ->getwhere(['id' => 5])
+            ->getwhere(['id' => 6])
             ->getRow();
 
         $this->assertSame('Random Name 356', $row->name);
