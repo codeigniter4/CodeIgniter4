@@ -121,7 +121,8 @@ The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
 for each key associated with a table.
 
-**$db->getForeignKeyData()**
+$db->getForeignKeyData()
+------------------------
 
 Returns an array of objects containing foreign key information.
 
