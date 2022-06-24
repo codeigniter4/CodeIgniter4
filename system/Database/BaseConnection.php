@@ -380,7 +380,7 @@ abstract class BaseConnection implements ConnectionInterface
             $this->connID = $this->connect($this->pConnect);
         } catch (Throwable $e) {
             $connectionErrors[] = sprintf('Main connection [%s]: %s', $this->DBDriver, $e->getMessage());
-            log_message('error', 'Error connecting to the database: ' . $e->getMessage());
+            log_message('error', 'Error connecting to the database: ' . $e);
         }
 
         // No connection resource? Check if there is a failover else throw an error
@@ -401,7 +401,7 @@ abstract class BaseConnection implements ConnectionInterface
                         $this->connID = $this->connect($this->pConnect);
                     } catch (Throwable $e) {
                         $connectionErrors[] = sprintf('Failover #%d [%s]: %s', ++$index, $this->DBDriver, $e->getMessage());
-                        log_message('error', 'Error connecting to the database: ' . $e->getMessage());
+                        log_message('error', 'Error connecting to the database: ' . $e);
                     }
 
                     // If a connection is made break the foreach loop
