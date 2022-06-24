@@ -44,9 +44,8 @@ final class EmailTest extends CIUnitTestCase
      */
     public function testEmailSendWithClearance($autoClear)
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
 
         $this->assertTrue($email->send($autoClear));
@@ -58,9 +57,8 @@ final class EmailTest extends CIUnitTestCase
 
     public function testEmailSendStoresArchive()
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
         $email->setFrom('bar@foo.com');
         $email->setSubject('Archive Test');
@@ -75,9 +73,8 @@ final class EmailTest extends CIUnitTestCase
 
     public function testAutoClearLeavesArchive()
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
 
         $this->assertTrue($email->send(true));
@@ -89,6 +86,7 @@ final class EmailTest extends CIUnitTestCase
     {
         $config = config('Email');
         $email  = new MockEmail($config);
+
         $email->setTo('foo@foo.com');
         $email->setFrom('bar@foo.com');
 
@@ -104,9 +102,8 @@ final class EmailTest extends CIUnitTestCase
 
     public function testSuccessDoesTriggerEvent()
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
 
         $result = null;
@@ -123,9 +120,8 @@ final class EmailTest extends CIUnitTestCase
 
     public function testFailureDoesNotTriggerEvent()
     {
-        $config           = config('Email');
-        $config->validate = true;
-        $email            = new MockEmail($config);
+        $email = $this->createMockEmail();
+
         $email->setTo('foo@foo.com');
         $email->returnValue = false;
 
@@ -138,5 +134,13 @@ final class EmailTest extends CIUnitTestCase
         $this->assertFalse($email->send());
 
         $this->assertNull($result);
+    }
+
+    private function createMockEmail(): MockEmail
+    {
+        $config           = config('Email');
+        $config->validate = true;
+
+        return new MockEmail($config);
     }
 }
