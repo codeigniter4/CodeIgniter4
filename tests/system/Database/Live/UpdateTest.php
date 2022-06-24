@@ -44,7 +44,7 @@ final class UpdateTest extends CIUnitTestCase
     public function testUpdateSetsAllWithoutWhereAndLimit()
     {
         try {
-            $this->db->table('user')->update(['name' => 'Bobby'], null, 1);
+            $this->db->table('user')->orderBy('id', 'asc')->update(['name' => 'Bobby'], null, 1);
 
             $result = $this->db->table('user')
                 ->orderBy('id', 'asc')
