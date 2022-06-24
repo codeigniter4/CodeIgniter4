@@ -110,33 +110,38 @@ final class UpsertTest extends CIUnitTestCase
                 'country' => 'US',
             ],
             [
-                'id'      => null,
+                'id'      => 2,
                 'email'   => 'upserttwo@domain.com',
-                'name'    => 'Upsert Two Id Null',
+                'name'    => 'Upsert Two On Id',
                 'country' => 'US',
             ],
             [
-                'id'      => null,
+                'id'      => 3,
                 'email'   => 'upsertthree@domain.com',
-                'name'    => 'Upsert Three Id Null',
+                'name'    => 'Upsert Three On Id',
                 'country' => 'US',
             ],
         ];
 
-        // postgre and oracle doesn't support inserting null values on auto increment
-        if ($this->db->DBDriver !== 'Postgre' && $this->db->DBDriver !== 'OCI8') {
-            $this->db->table('user')->upsertBatch($userData);
+        $this->db->table('user')->upsertBatch($userData);
 
-            // get by id
-            $row = $this->db->table('user')
-                ->getwhere(['id' => 1])
-                ->getRow();
+        // get by id
+        $row1 = $this->db->table('user')
+            ->getwhere(['id' => 1])
+            ->getRow();
 
-            $this->assertSame('Upsert One On Id', $row->name);
-            $this->seeInDatabase('user', ['name' => 'Upsert Two Id Null']);
-            $this->seeInDatabase('user', ['name' => 'Upsert Three Id Null']);
-        } else {
-            $this->assertTrue(true);
-        }
+        // get by id
+        $row2 = $this->db->table('user')
+            ->getwhere(['id' => 2])
+            ->getRow();
+
+        // get by id
+        $row3 = $this->db->table('user')
+            ->getwhere(['id' => 3])
+            ->getRow();
+
+        $this->assertSame('Upsert One On Id', $row1->name);
+        $this->assertSame('Upsert Two On Id', $row2->name);
+        $this->assertSame('Upsert Three On Id', $row3->name);
     }
 }
