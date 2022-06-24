@@ -23,17 +23,17 @@ final class UpsertModelTest extends LiveModelTestCase
     public function testSetWorksWithUpsert(): void
     {
         $this->dontSeeInDatabase('user', [
-            'email' => 'foo@example.com',
+            'email' => 'foo@something.com',
         ]);
 
         $this->createModel(UserModel::class)->set([
-            'email'   => 'foo@example.com',
+            'email'   => 'foo@something.com',
             'name'    => 'Foo Bar',
             'country' => 'US',
         ])->upsert();
 
         $this->seeInDatabase('user', [
-            'email' => 'foo@example.com',
+            'email' => 'foo@something.com',
         ]);
     }
 
@@ -41,12 +41,12 @@ final class UpsertModelTest extends LiveModelTestCase
     {
         $userData = [
             [
-                'email'   => 'userone@test.com',
+                'email'   => 'userone@something.com',
                 'name'    => 'User One',
                 'country' => 'US',
             ],
             [
-                'email'   => 'usertwo@test.com',
+                'email'   => 'usertwo@something.com',
                 'name'    => 'User Two',
                 'country' => 'US',
             ],
@@ -54,15 +54,15 @@ final class UpsertModelTest extends LiveModelTestCase
 
         // set batch size of one
         $this->createModel(UserModel::class)->upsertBatch($userData, true, 1);
-        $this->seeInDatabase('user', ['email' => 'userone@test.com']);
-        $this->seeInDatabase('user', ['email' => 'usertwo@test.com']);
+        $this->seeInDatabase('user', ['email' => 'userone@something.com']);
+        $this->seeInDatabase('user', ['email' => 'usertwo@something.com']);
     }
 
     public function testUpsertBatchValidationFail(): void
     {
         $userData = [
             [
-                'email'   => 'userthree@test.com',
+                'email'   => 'userthree@something.com',
                 'name'    => 'User Three',
                 'country' => null,
             ],

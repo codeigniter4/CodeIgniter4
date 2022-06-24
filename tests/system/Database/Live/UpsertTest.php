@@ -70,7 +70,7 @@ final class UpsertTest extends CIUnitTestCase
     public function testUpsertWithMatchingData()
     {
         $original = $this->db->table('user')
-            ->getwhere(['id' => 1])
+            ->getwhere(['id' => 5])
             ->getRow();
 
         $data = [
@@ -84,11 +84,8 @@ final class UpsertTest extends CIUnitTestCase
 
         // get by id
         $row = $this->db->table('user')
-            ->getwhere(['id' => 1])
+            ->getwhere(['id' => 5])
             ->getRow();
-
-        // change name back to avoid conflict with other tests
-        $this->db->table('user')->upsert(['email' => $original->email, 'name' => $original->name]);
 
         $this->assertSame('Random Name 356', $row->name);
         $this->assertNotSame($original->name, $row->name);
