@@ -69,6 +69,15 @@ final class UpsertTest extends CIUnitTestCase
 
     public function testUpsertWithMatchingData()
     {
+        $data = [
+            'id'      => 5,
+            'email'   => 'someone@something.com',
+            'name'    => 'Some Name',
+            'country' => 'US',
+        ];
+
+        $this->db->table('user')->upsert($data);
+
         $original = $this->db->table('user')
             ->getwhere(['id' => 5])
             ->getRow();
