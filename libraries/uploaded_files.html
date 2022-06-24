@@ -634,7 +634,8 @@ this method:</p>
 </section>
 <section id="file-names">
 <h3><a class="toc-backref" href="#id14">File Names</a><a class="headerlink" href="#file-names" title="Permalink to this headline"></a></h3>
-<p><strong>getName()</strong></p>
+<section id="getname">
+<h4>getName()<a class="headerlink" href="#getname" title="Permalink to this headline"></a></h4>
 <p>You can retrieve the original filename provided by the client with the <code class="docutils literal notranslate"><span class="pre">getName()</span></code> method. This will typically be the
 filename sent by the client, and should not be trusted. If the file has been moved, this will return the final name of
 the moved file:</p>
@@ -643,14 +644,18 @@ the moved file:</p>
 <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>getClientName()</strong></p>
+</section>
+<section id="getclientname">
+<h4>getClientName()<a class="headerlink" href="#getclientname" title="Permalink to this headline"></a></h4>
 <p>Always returns the original name of the uploaded file as sent by the client, even if the file has been moved:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$originalName</span> <span class="o">=</span> <span class="nv">$file</span><span class="o">-&gt;</span><span class="na">getClientName</span><span class="p">();</span>
 </pre></div>
 </div>
-<p><strong>getTempName()</strong></p>
+</section>
+<section id="gettempname">
+<h4>getTempName()<a class="headerlink" href="#gettempname" title="Permalink to this headline"></a></h4>
 <p>To get the full path of the temp file that was created during the upload, you can use the <code class="docutils literal notranslate"><span class="pre">getTempName()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -658,9 +663,11 @@ the moved file:</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="other-file-info">
 <h3><a class="toc-backref" href="#id15">Other File Info</a><a class="headerlink" href="#other-file-info" title="Permalink to this headline"></a></h3>
-<p><strong>getClientExtension()</strong></p>
+<section id="getclientextension">
+<h4>getClientExtension()<a class="headerlink" href="#getclientextension" title="Permalink to this headline"></a></h4>
 <p>Returns the original file extension, based on the file name that was uploaded:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -671,7 +678,9 @@ the moved file:</p>
 <p class="admonition-title">Warning</p>
 <p>This is NOT a trusted source. For a trusted version, use <code class="docutils literal notranslate"><span class="pre">guessExtension()</span></code> instead.</p>
 </div>
-<p><strong>getClientMimeType()</strong></p>
+</section>
+<section id="getclientmimetype">
+<h4>getClientMimeType()<a class="headerlink" href="#getclientmimetype" title="Permalink to this headline"></a></h4>
 <p>Returns the mime type (mime type) of the file as provided by the client. This is NOT a trusted value. For a trusted
 version, use <code class="docutils literal notranslate"><span class="pre">getMimeType()</span></code> instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -681,6 +690,7 @@ version, use <code class="docutils literal notranslate"><span class="pre">getMim
 <span class="k">echo</span> <span class="nv">$type</span><span class="p">;</span> <span class="c1">// image/png</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="moving-files">
 <h3><a class="toc-backref" href="#id16">Moving Files</a><a class="headerlink" href="#moving-files" title="Permalink to this headline"></a></h3>

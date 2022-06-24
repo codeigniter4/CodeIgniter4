@@ -300,7 +300,11 @@
 <li><p><a class="reference internal" href="#the-order-of-token-sent-by-users" id="id14">The Order of Token Sent by Users</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#other-helpful-methods" id="id15">Other Helpful Methods</a></p></li>
+<li><p><a class="reference internal" href="#other-helpful-methods" id="id15">Other Helpful Methods</a></p>
+<ul>
+<li><p><a class="reference internal" href="#sanitizefilename" id="id16">sanitizeFilename()</a></p></li>
+</ul>
+</li>
 </ul>
 </div>
 <section id="loading-the-library">
@@ -582,7 +586,8 @@ meta tag for you:</p>
 <h2><a class="toc-backref" href="#id15">Other Helpful Methods</a><a class="headerlink" href="#other-helpful-methods" title="Permalink to this headline"></a></h2>
 <p>You will never need to use most of the methods in the Security class directly. The following are methods that
 you might find helpful that are not related to the CSRF protection.</p>
-<p><strong>sanitizeFilename()</strong></p>
+<section id="sanitizefilename">
+<h3><a class="toc-backref" href="#id16">sanitizeFilename()</a><a class="headerlink" href="#sanitizefilename" title="Permalink to this headline"></a></h3>
 <p>Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.</p>
 <p>If it is acceptable for the user input to include relative paths, e.g., <strong>file/in/some/approved/folder.txt</strong>, you can set
@@ -592,6 +597,7 @@ the second optional parameter, <code class="docutils literal notranslate"><span 
 <span class="nv">$path</span> <span class="o">=</span> <span class="nv">$security</span><span class="o">-&gt;</span><span class="na">sanitizeFilename</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;filepath&#39;</span><span class="p">));</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 

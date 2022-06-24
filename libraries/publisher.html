@@ -612,44 +612,67 @@ into an application for use:</p>
 </div>
 <section id="support-methods">
 <h3><a class="toc-backref" href="#id11">Support Methods</a><a class="headerlink" href="#support-methods" title="Permalink to this headline"></a></h3>
-<p><strong>[static] discover(string $directory = ‘Publishers’): Publisher[]</strong></p>
+<section id="static-discover-string-directory-publishers-publisher">
+<h4>[static] discover(string $directory = ‘Publishers’): Publisher[]<a class="headerlink" href="#static-discover-string-directory-publishers-publisher" title="Permalink to this headline"></a></h4>
 <p>Discovers and returns all Publishers in the specified namespace directory. For example, if both
 <strong>app/Publishers/FrameworkPublisher.php</strong> and <strong>myModule/src/Publishers/AssetPublisher.php</strong> exist and are
 extensions of <code class="docutils literal notranslate"><span class="pre">Publisher</span></code> then <code class="docutils literal notranslate"><span class="pre">Publisher::discover()</span></code> would return an instance of each.</p>
-<p><strong>publish(): bool</strong></p>
+</section>
+<section id="publish-bool">
+<h4>publish(): bool<a class="headerlink" href="#publish-bool" title="Permalink to this headline"></a></h4>
 <p>Processes the full input-process-output chain. By default this is the equivalent of calling <code class="docutils literal notranslate"><span class="pre">addPath($source)</span></code>
 and <code class="docutils literal notranslate"><span class="pre">merge(true)</span></code> but child classes will typically provide their own implementation. <code class="docutils literal notranslate"><span class="pre">publish()</span></code> is called
 on all discovered Publishers when running <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">publish</span></code>.
 Returns success or failure.</p>
-<p><strong>getScratch(): string</strong></p>
+</section>
+<section id="getscratch-string">
+<h4>getScratch(): string<a class="headerlink" href="#getscratch-string" title="Permalink to this headline"></a></h4>
 <p>Returns the temporary workspace, creating it if necessary. Some operations use intermediate storage to stage
 files and changes, and this provides the path to a transient, writable directory that you may use as well.</p>
-<p><strong>getErrors(): array&lt;string, Throwable&gt;</strong></p>
+</section>
+<section id="geterrors-array-string-throwable">
+<h4>getErrors(): array&lt;string, Throwable&gt;<a class="headerlink" href="#geterrors-array-string-throwable" title="Permalink to this headline"></a></h4>
 <p>Returns any errors from the last write operation. The array keys are the files that caused the error, and the
 values are the Throwable that was caught. Use <code class="docutils literal notranslate"><span class="pre">getMessage()</span></code> on the Throwable to get the error message.</p>
-<p><strong>addPath(string $path, bool $recursive = true)</strong> /
-<strong>addPaths(array $path, bool $recursive = true)</strong></p>
+</section>
+<section id="addpath-string-path-bool-recursive-true">
+<h4>addPath(string $path, bool $recursive = true)<a class="headerlink" href="#addpath-string-path-bool-recursive-true" title="Permalink to this headline"></a></h4>
+<p>Adds all files indicated by the relative path. Path is a reference to actual files or directories relative
+to <code class="docutils literal notranslate"><span class="pre">$source</span></code>. If the relative path resolves to a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code> will include sub-directories.</p>
+</section>
+<section id="addpaths-array-paths-bool-recursive-true">
+<h4>addPaths(array $paths, bool $recursive = true)<a class="headerlink" href="#addpaths-array-paths-bool-recursive-true" title="Permalink to this headline"></a></h4>
 <p>Adds all files indicated by the relative paths. Paths are references to actual files or directories relative
 to <code class="docutils literal notranslate"><span class="pre">$source</span></code>. If the relative path resolves to a directory then <code class="docutils literal notranslate"><span class="pre">$recursive</span></code> will include sub-directories.</p>
-<p><strong>addUri(string $uri)</strong> /
-<strong>addUris(array $uris)</strong></p>
+</section>
+<section id="adduri-string-uri">
+<h4>addUri(string $uri)<a class="headerlink" href="#adduri-string-uri" title="Permalink to this headline"></a></h4>
 <p>Downloads the contents of a URI using <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> into the scratch workspace then adds the resulting
 file to the list.</p>
+</section>
+<section id="adduris-array-uris">
+<h4>addUris(array $uris)<a class="headerlink" href="#adduris-array-uris" title="Permalink to this headline"></a></h4>
+<p>Downloads the contents of URIs using <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> into the scratch workspace then adds the resulting
+files to the list.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The CURL request made is a simple <code class="docutils literal notranslate"><span class="pre">GET</span></code> and uses the response body for the file contents. Some
 remote files may need a custom request to be handled properly.</p>
 </div>
 </section>
+</section>
 <section id="outputting-files">
 <h3><a class="toc-backref" href="#id12">Outputting Files</a><a class="headerlink" href="#outputting-files" title="Permalink to this headline"></a></h3>
-<p><strong>wipe()</strong></p>
+<section id="wipe">
+<h4>wipe()<a class="headerlink" href="#wipe" title="Permalink to this headline"></a></h4>
 <p>Removes all files, directories, and sub-directories from <code class="docutils literal notranslate"><span class="pre">$destination</span></code>.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Use wisely.</p>
 </div>
-<p><strong>copy(bool $replace = true): bool</strong></p>
+</section>
+<section id="copy-bool-replace-true-bool">
+<h4>copy(bool $replace = true): bool<a class="headerlink" href="#copy-bool-replace-true-bool" title="Permalink to this headline"></a></h4>
 <p>Copies all files into the <code class="docutils literal notranslate"><span class="pre">$destination</span></code>. This does not recreate the directory structure, so every file
 from the current list will end up in the same destination directory. Using <code class="docutils literal notranslate"><span class="pre">$replace</span></code> will cause files
 to overwrite when there is already an existing file. Returns success or failure, use <code class="docutils literal notranslate"><span class="pre">getPublished()</span></code>
@@ -667,7 +690,9 @@ Be mindful of duplicate basename collisions, for example:</p>
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">copy</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><strong>merge(bool $replace = true): bool</strong></p>
+</section>
+<section id="merge-bool-replace-true-bool">
+<h4>merge(bool $replace = true): bool<a class="headerlink" href="#merge-bool-replace-true-bool" title="Permalink to this headline"></a></h4>
 <p>Copies all files into the <code class="docutils literal notranslate"><span class="pre">$destination</span></code> in appropriate relative sub-directories. Any files that
 match <code class="docutils literal notranslate"><span class="pre">$source</span></code> will be placed into their equivalent directories in <code class="docutils literal notranslate"><span class="pre">$destination</span></code>, effectively
 creating a “mirror” or “rsync” operation. Using <code class="docutils literal notranslate"><span class="pre">$replace</span></code> will cause files
@@ -687,6 +712,7 @@ affect other files in the destination. Returns success or failure, use <code cla
 <span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">merge</span><span class="p">();</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 </section>
