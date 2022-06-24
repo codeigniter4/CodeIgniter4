@@ -27,7 +27,7 @@ final class UpsertTest extends CIUnitTestCase
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
 
-    public function testUpsert()
+    public function testUpsertOnUniqueIndex()
     {
         $userData = [
             'email'   => 'upsertone@test.com',
@@ -40,7 +40,7 @@ final class UpsertTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => 'Upsert One']);
     }
 
-    public function testUpsertBatch()
+    public function testUpsertBatchOnUniqueIndex()
     {
         $userData = [
             [
@@ -67,7 +67,7 @@ final class UpsertTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => 'Upsert Three']);
     }
 
-    public function testUpsertWithMatchingData()
+    public function testUpsertWithMatchingDataOnUniqueIndexandPrimaryKey()
     {
         $data = [
             'id'      => 5,
@@ -98,5 +98,45 @@ final class UpsertTest extends CIUnitTestCase
 
         $this->assertSame('Random Name 356', $row->name);
         $this->assertNotSame($original->name, $row->name);
+    }
+
+    public function testUpsertBatchOnPrimaryKey()
+    {
+        $userData = [
+            [
+                'id'      => 1,
+                'email'   => 'upsertone@domain.com',
+                'name'    => 'Upsert One On Id',
+                'country' => 'US',
+            ],
+            [
+                'id'      => null,
+                'email'   => 'upserttwo@domain.com',
+                'name'    => 'Upsert Two Id Null',
+                'country' => 'US',
+            ],
+            [
+                'id'      => null,
+                'email'   => 'upsertthree@domain.com',
+                'name'    => 'Upsert Three Id Null',
+                'country' => 'US',
+            ],
+        ];
+
+        // postgre doesn't support inserting null values on auto increment
+        if ($this->db->DBDriver !== 'Postgre') {
+            $this->db->table('user')->upsertBatch($userData);
+
+            // get by id
+            $row = $this->db->table('user')
+                ->getwhere(['id' => 1])
+                ->getRow();
+
+            $this->assertSame('Upsert One On Id', $row->name);
+            $this->seeInDatabase('user', ['name' => 'Upsert Two Id Null']);
+            $this->seeInDatabase('user', ['name' => 'Upsert Three Id Null']);
+        } else {
+            $this->assertTrue(true);
+        }
     }
 }

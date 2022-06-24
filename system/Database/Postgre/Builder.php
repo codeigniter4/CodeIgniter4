@@ -209,7 +209,7 @@ class Builder extends BaseBuilder
         $allIndexes = array_filter($this->getTableIndexData($table), static function ($index) use ($fieldNames) {
             $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
 
-            return ($index->type === 'UNIQUE') && $hasAllFields;
+            return ($index->type === 'UNIQUE' || $index->type === 'PRIMARY') && $hasAllFields;
         });
 
         $conflicts = [];
