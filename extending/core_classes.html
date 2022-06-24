@@ -280,16 +280,21 @@ framework. It is possible, however, to swap any of the core system classes with 
 the core versions.</p>
 <p><strong>Most users will never have any need to do this, but the option to replace or extend them does exist for those
 who would like to significantly alter the CodeIgniter core.</strong></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>Messing with a core system class has a lot of implications, so make sure you know what you are doing before
 attempting it.</p>
 </div>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#system-class-list" id="id1">System Class List</a></p></li>
-<li><p><a class="reference internal" href="#replacing-core-classes" id="id2">Replacing Core Classes</a></p></li>
-<li><p><a class="reference internal" href="#extending-core-classes" id="id3">Extending Core Classes</a></p></li>
+<li><p><a class="reference internal" href="#replacing-core-classes" id="id2">Replacing Core Classes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#creating-your-class" id="id3">Creating Your Class</a></p></li>
+<li><p><a class="reference internal" href="#adding-the-service" id="id4">Adding the Service</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#extending-core-classes" id="id5">Extending Core Classes</a></p></li>
 </ul>
 </div>
 <section id="system-class-list">
@@ -322,9 +327,16 @@ attempting it.</p>
 </section>
 <section id="replacing-core-classes">
 <h2><a class="toc-backref" href="#id2">Replacing Core Classes</a><a class="headerlink" href="#replacing-core-classes" title="Permalink to this headline"></a></h2>
-<p>To use one of your own system classes instead of a default one, ensure that the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a>
-can find your class, that your new class implements the appropriate interface, and modify the appropriate
-<a class="reference internal" href="../concepts/services.html"><span class="doc">Service</span></a> to load your class in place of the core class.</p>
+<p>To use one of your own system classes instead of a default one, ensure:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> can find your class,</p></li>
+<li><p>your new class implements the appropriate interface,</p></li>
+<li><p>and modify the appropriate <a class="reference internal" href="../concepts/services.html"><span class="doc">Service</span></a> to load your class in place of the core class.</p></li>
+</ol>
+</div></blockquote>
+<section id="creating-your-class">
+<h3><a class="toc-backref" href="#id3">Creating Your Class</a><a class="headerlink" href="#creating-your-class" title="Permalink to this headline"></a></h3>
 <p>For example, if you have a new <code class="docutils literal notranslate"><span class="pre">App\Libraries\RouteCollection</span></code> class that you would like to use in place of
 the core system class, you would create your class like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -339,6 +351,9 @@ the core system class, you would create your class like this:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="adding-the-service">
+<h3><a class="toc-backref" href="#id4">Adding the Service</a><a class="headerlink" href="#adding-the-service" title="Permalink to this headline"></a></h3>
 <p>Then you would add the <code class="docutils literal notranslate"><span class="pre">routes</span></code> service in <strong>app/Config/Services.php</strong> to load your class instead:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -362,11 +377,12 @@ the core system class, you would create your class like this:</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="extending-core-classes">
-<h2><a class="toc-backref" href="#id3">Extending Core Classes</a><a class="headerlink" href="#extending-core-classes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Extending Core Classes</a><a class="headerlink" href="#extending-core-classes" title="Permalink to this headline"></a></h2>
 <p>If all you need to is add some functionality to an existing library - perhaps add a method or two - then it’s overkill
 to recreate the entire library. In this case, it’s better to simply extend the class. Extending the class is nearly
-identical to replacing a class with one exception:</p>
+identical to <a class="reference internal" href="#replacing-core-classes">Replacing Core Classes</a> with one exception:</p>
 <ul class="simple">
 <li><p>The class declaration must extend the parent class.</p></li>
 </ul>
