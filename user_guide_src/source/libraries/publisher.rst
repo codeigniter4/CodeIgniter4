@@ -203,8 +203,14 @@ getErrors(): array<string, Throwable>
 Returns any errors from the last write operation. The array keys are the files that caused the error, and the
 values are the Throwable that was caught. Use ``getMessage()`` on the Throwable to get the error message.
 
-addPath(string $path, bool $recursive = true) / addPaths(array $path, bool $recursive = true)
----------------------------------------------------------------------------------------------
+addPath(string $path, bool $recursive = true)
+---------------------------------------------
+
+Adds all files indicated by the relative path. Path are references to actual files or directories relative
+to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
+
+addPaths(array $paths, bool $recursive = true)
+----------------------------------------------
 
 Adds all files indicated by the relative paths. Paths are references to actual files or directories relative
 to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
