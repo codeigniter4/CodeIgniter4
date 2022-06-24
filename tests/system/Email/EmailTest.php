@@ -14,6 +14,7 @@ namespace CodeIgniter\Email;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockEmail;
+use ErrorException;
 
 /**
  * @internal
@@ -134,6 +135,24 @@ final class EmailTest extends CIUnitTestCase
         $this->assertFalse($email->send());
 
         $this->assertNull($result);
+    }
+
+    public function testDestructDoesNotThrowException()
+    {
+        $email = $this->getMockBuilder(Email::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['sendCommand'])
+            ->getMock();
+        $email->method('sendCommand')
+            ->willThrowException(new ErrorException('SMTP Error.'));
+
+        // Force resource to be injected into the property
+        $SMTPConnect = fopen(__FILE__, 'rb');
+        $this->setPrivateProperty($email, 'SMTPConnect', $SMTPConnect);
+
+        $email->__destruct();
+
+        $this->assertTrue(true);
     }
 
     private function createMockEmail(): MockEmail
