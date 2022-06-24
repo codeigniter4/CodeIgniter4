@@ -215,11 +215,17 @@ addPaths(array $paths, bool $recursive = true)
 Adds all files indicated by the relative paths. Paths are references to actual files or directories relative
 to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
 
-addUri(string $uri) / addUris(array $uris)
-------------------------------------------
+addUri(string $uri)
+-------------------
 
 Downloads the contents of a URI using ``CURLRequest`` into the scratch workspace then adds the resulting
 file to the list.
+
+addUris(array $uris)
+--------------------
+
+Downloads the contents of URIs using ``CURLRequest`` into the scratch workspace then adds the resulting
+files to the list.
 
 .. note:: The CURL request made is a simple ``GET`` and uses the response body for the file contents. Some
     remote files may need a custom request to be handled properly.
