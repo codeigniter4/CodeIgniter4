@@ -14,6 +14,18 @@ BREAKING
 
 Behavior Changes
 ================
+
+.. _exceptions-when-database-errors-occur:
+
+Exceptions when Database Errors Occur
+-------------------------------------
+
+- The exceptions thrown by the database connection classes have been changed to ``CodeIgniter\Database\Exceptions\DatabaseException``. Previously, different database drivers threw different exception classes, but these have been unified into ``DatabaseException``.
+- The exceptions thrown by the ``execute()`` method of Prepared Queries have been changed to ``DatabaseException``. Previously, different database drivers might throw different exception classes or did not throw exceptions, but these have been unified into ``DatabaseException``.
+
+Others
+------
+
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 
 Enhancements

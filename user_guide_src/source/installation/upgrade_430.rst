@@ -30,6 +30,11 @@ The following files received significant changes and
         > composer update
         > cp vendor/codeigniter4/framework/spark .
 
+Breaking Changes
+****************
+
+- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions. See :ref:`exceptions-when-database-errors-occur` for details.
+
 Breaking Enhancements
 *********************
 
