@@ -123,8 +123,8 @@ final class UpsertTest extends CIUnitTestCase
             ],
         ];
 
-        // postgre doesn't support inserting null values on auto increment
-        if ($this->db->DBDriver !== 'Postgre') {
+        // postgre and oracle doesn't support inserting null values on auto increment
+        if ($this->db->DBDriver !== 'Postgre' && $this->db->DBDriver !== 'OCI8') {
             $this->db->table('user')->upsertBatch($userData);
 
             // get by id
