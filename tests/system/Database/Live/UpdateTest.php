@@ -44,19 +44,19 @@ final class UpdateTest extends CIUnitTestCase
     public function testUpdateSetsAllWithoutWhereAndLimit()
     {
         try {
-            $update = $this->db->table('user')->update(['name' => 'Bobby'], null, 1);
+            // updating top() can be tricky - lets use job table because it does't have a second unique constraint
+            // indexes can alter row sorting
+            $this->db->table('job')->update(['name' => 'Janitor'], null, 1);
 
-            $result = $this->db->table('user')
+            $result = $this->db->table('job')
                 ->orderBy('id', 'asc')
                 ->get()
                 ->getResult();
 
-            $this->assertTrue($update);
-
-            $this->assertSame('Bobby', $result[0]->name);
-            $this->assertSame('Ahmadinejad', $result[1]->name);
-            $this->assertSame('Richard A Causey', $result[2]->name);
-            $this->assertSame('Chris Martin', $result[3]->name);
+            $this->assertSame('Janitor', $result[0]->name);
+            $this->assertSame('Politician', $result[1]->name);
+            $this->assertSame('Accountant', $result[2]->name);
+            $this->assertSame('Musician', $result[3]->name);
         } catch (DatabaseException $e) {
             // This DB doesn't support Where and Limit together
             // but we don't want it called a "Risky" test.
