@@ -128,39 +128,60 @@ final class RulesTest extends CIUnitTestCase
     public function providePermitEmptyCases(): Generator
     {
         yield from [
+            // If the rule is only `permit_empty`, any value will pass.
             [
-                ['foo' => 'permit_empty'],
+                ['foo' => 'permit_empty|valid_email'],
                 ['foo' => ''],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => '0'],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => 0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => 0.0],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => null],
-                true,
-            ],
-            [
-                ['foo' => 'permit_empty'],
-                ['foo' => false],
                 true,
             ],
             [
                 ['foo' => 'permit_empty|valid_email'],
-                ['foo' => ''],
+                ['foo' => '0'],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => '-0'],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_emails'],
+                ['foo' => 0],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => -0],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => 0.0],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_emails'],
+                ['foo' => '0.0'],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => -0.0],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => '-0.0'],
+                false,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => null],
+                true,
+            ],
+            [
+                ['foo' => 'permit_empty|valid_email'],
+                ['foo' => false],
                 true,
             ],
             [
