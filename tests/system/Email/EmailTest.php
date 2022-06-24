@@ -143,7 +143,7 @@ final class EmailTest extends CIUnitTestCase
             ->disableOriginalConstructor()
             ->onlyMethods(['sendCommand'])
             ->getMock();
-        $email->method('sendCommand')
+        $email->expects($this->once())->method('sendCommand')
             ->willThrowException(new ErrorException('SMTP Error.'));
 
         // Force resource to be injected into the property
@@ -151,8 +151,6 @@ final class EmailTest extends CIUnitTestCase
         $this->setPrivateProperty($email, 'SMTPConnect', $SMTPConnect);
 
         $email->__destruct();
-
-        $this->assertTrue(true);
     }
 
     private function createMockEmail(): MockEmail
