@@ -1,6 +1,12 @@
 <?php
 
-$request = new \CodeIgniter\HTTP\IncomingRequest(new \Config\App(), new URI('http://example.com'));
+$request = new \CodeIgniter\HTTP\IncomingRequest(
+    new \Config\App(),
+    new \CodeIgniter\HTTP\URI('http://example.com'),
+    null,
+    new \CodeIgniter\HTTP\UserAgent()
+);
+
 $request->setLocale($locale);
 
 $results = $this->withRequest($request)

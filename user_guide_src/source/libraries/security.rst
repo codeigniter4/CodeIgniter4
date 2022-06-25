@@ -196,7 +196,8 @@ Other Helpful Methods
 You will never need to use most of the methods in the Security class directly. The following are methods that
 you might find helpful that are not related to the CSRF protection.
 
-**sanitizeFilename()**
+sanitizeFilename()
+==================
 
 Tries to sanitize filenames in order to prevent directory traversal attempts and other security threats, which is
 particularly useful for files that were supplied via user input. The first parameter is the path to sanitize.

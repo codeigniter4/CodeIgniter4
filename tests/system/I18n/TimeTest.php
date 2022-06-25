@@ -382,19 +382,48 @@ final class TimeTest extends CIUnitTestCase
     public function testGetAge()
     {
         $time = Time::parse('5 years ago');
+
+        $this->assertSame(5, $time->getAge());
         $this->assertSame(5, $time->age);
     }
 
     public function testAgeNow()
     {
         $time = new Time();
-        $this->assertSame(0, $time->age);
+
+        $this->assertSame(0, $time->getAge());
     }
 
     public function testAgeFuture()
     {
+        Time::setTestNow('June 20, 2022', 'America/Chicago');
         $time = Time::parse('August 12, 2116 4:15:23pm');
-        $this->assertSame(0, $time->age);
+
+        $this->assertSame(0, $time->getAge());
+    }
+
+    public function testGetAgeSameDayOfBirthday()
+    {
+        Time::setTestNow('December 31, 2022', 'America/Chicago');
+        $time = Time::parse('December 31, 2020');
+
+        $this->assertSame(2, $time->getAge());
+    }
+
+    public function testGetAgeNextDayOfBirthday()
+    {
+        Time::setTestNow('January 1, 2022', 'America/Chicago');
+        $time = Time::parse('December 31, 2020');
+
+        $this->assertSame(1, $time->getAge());
+    }
+
+    public function testGetAgeBeforeDayOfBirthday()
+    {
+        Time::setTestNow('December 30, 2021', 'America/Chicago');
+        $time = Time::parse('December 31, 2020');
+
+        $this->assertSame(0, $time->getAge());
     }
 
     public function testGetQuarter()

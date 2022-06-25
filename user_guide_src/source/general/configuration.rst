@@ -289,7 +289,7 @@ A sample configuration class setup for this:
 .. literalinclude:: configuration/010.php
 
 With the above example, when ``MySalesConfig`` is instantiated, it will end up with
-the two properties declared, but the value of the ``$target`` property will be overridden
+the three properties declared, but the value of the ``$target`` property will be overridden
 by treating ``RegionalSales`` as a "registrar". The resulting configuration properties:
 
 .. literalinclude:: configuration/011.php

@@ -34,7 +34,7 @@ CodeIgniter does provide a model class that provides a few nice features, includ
 - automatic database connection
 - basic CRUD methods
 - in-model validation
-- automatic pagination
+- :ref:`automatic pagination <paginating-with-models>`
 - and more
 
 This class provides a solid base from which to build your own models, allowing you to
@@ -116,7 +116,7 @@ The Model's CRUD methods will take a step of work away from you and automaticall
 the resulting data, instead of the Result object. This setting allows you to define
 the type of data that is returned. Valid values are '**array**' (the default), '**object**', or the **fully
 qualified name of a class** that can be used with the Result object's ``getCustomResultObject()``
-method. Using the special ``::class`` constant of the class will allow most IDEs to 
+method. Using the special ``::class`` constant of the class will allow most IDEs to
 auto-complete the name and allow functions like refactoring to better understand your code.
 
 $useSoftDeletes

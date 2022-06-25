@@ -657,6 +657,7 @@ trait ResponseTrait
         $store    = $this->cookieStore;
         $found    = false;
 
+        /** @var Cookie $cookie */
         foreach ($store as $cookie) {
             if ($cookie->getPrefixedName() === $prefixed) {
                 if ($domain !== $cookie->getDomain()) {

@@ -176,40 +176,56 @@ Library Reference
 Support Methods
 ===============
 
-**[static] discover(string $directory = 'Publishers'): Publisher[]**
+[static] discover(string $directory = 'Publishers'): Publisher[]
+----------------------------------------------------------------
 
 Discovers and returns all Publishers in the specified namespace directory. For example, if both
 **app/Publishers/FrameworkPublisher.php** and **myModule/src/Publishers/AssetPublisher.php** exist and are
 extensions of ``Publisher`` then ``Publisher::discover()`` would return an instance of each.
 
-**publish(): bool**
+publish(): bool
+---------------
 
 Processes the full input-process-output chain. By default this is the equivalent of calling ``addPath($source)``
 and ``merge(true)`` but child classes will typically provide their own implementation. ``publish()`` is called
 on all discovered Publishers when running ``spark publish``.
 Returns success or failure.
 
-**getScratch(): string**
+getScratch(): string
+--------------------
 
 Returns the temporary workspace, creating it if necessary. Some operations use intermediate storage to stage
 files and changes, and this provides the path to a transient, writable directory that you may use as well.
 
-**getErrors(): array<string, Throwable>**
+getErrors(): array<string, Throwable>
+-------------------------------------
 
 Returns any errors from the last write operation. The array keys are the files that caused the error, and the
 values are the Throwable that was caught. Use ``getMessage()`` on the Throwable to get the error message.
 
-**addPath(string $path, bool $recursive = true)** /
-**addPaths(array $path, bool $recursive = true)**
+addPath(string $path, bool $recursive = true)
+---------------------------------------------
+
+Adds all files indicated by the relative path. Path is a reference to actual files or directories relative
+to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
+
+addPaths(array $paths, bool $recursive = true)
+----------------------------------------------
 
 Adds all files indicated by the relative paths. Paths are references to actual files or directories relative
 to ``$source``. If the relative path resolves to a directory then ``$recursive`` will include sub-directories.
 
-**addUri(string $uri)** /
-**addUris(array $uris)**
+addUri(string $uri)
+-------------------
 
 Downloads the contents of a URI using ``CURLRequest`` into the scratch workspace then adds the resulting
 file to the list.
+
+addUris(array $uris)
+--------------------
+
+Downloads the contents of URIs using ``CURLRequest`` into the scratch workspace then adds the resulting
+files to the list.
 
 .. note:: The CURL request made is a simple ``GET`` and uses the response body for the file contents. Some
     remote files may need a custom request to be handled properly.
@@ -217,13 +233,15 @@ file to the list.
 Outputting Files
 ================
 
-**wipe()**
+wipe()
+------
 
 Removes all files, directories, and sub-directories from ``$destination``.
 
 .. important:: Use wisely.
 
-**copy(bool $replace = true): bool**
+copy(bool $replace = true): bool
+--------------------------------
 
 Copies all files into the ``$destination``. This does not recreate the directory structure, so every file
 from the current list will end up in the same destination directory. Using ``$replace`` will cause files
@@ -233,7 +251,8 @@ Be mindful of duplicate basename collisions, for example:
 
 .. literalinclude:: publisher/011.php
 
-**merge(bool $replace = true): bool**
+merge(bool $replace = true): bool
+---------------------------------
 
 Copies all files into the ``$destination`` in appropriate relative sub-directories. Any files that
 match ``$source`` will be placed into their equivalent directories in ``$destination``, effectively
