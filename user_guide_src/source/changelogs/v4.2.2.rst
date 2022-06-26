@@ -24,7 +24,7 @@ Changes
 *******
 
 - Fixed: ``BaseBuilder::increment()`` and ``BaseBuilder::decrement()`` do not reset the ``BaseBuilder`` state after a query.
-- Now ``CLIRequest::isCLI()`` always return true.
+- Now ``CLIRequest::isCLI()`` always returns true.
 - Now ``IncommingRequest::isCLI()`` always return false.
 
 Deprecations
