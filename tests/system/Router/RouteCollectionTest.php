@@ -375,6 +375,34 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
+    public function testNestedGroupingWorksWithRootPrefix()
+    {
+        $routes = $this->getCollector();
+
+        $routes->add('verify/begin', '\VerifyController::begin');
+
+        $routes->group('admin', static function ($routes) {
+            $routes->group(
+                '/',
+                static function ($routes) {
+                    $routes->add('users/list', '\Users::list');
+
+                    $routes->group('delegate', static function ($routes) {
+                        $routes->add('foo', '\Users::foo');
+                    });
+                }
+            );
+        });
+
+        $expected = [
+            'verify/begin'       => '\VerifyController::begin',
+            'admin/users/list'   => '\Users::list',
+            'admin/delegate/foo' => '\Users::foo',
+        ];
+
+        $this->assertSame($expected, $routes->getRoutes());
+    }
+
     public function testHostnameOption()
     {
         $_SERVER['HTTP_HOST'] = 'example.com';
