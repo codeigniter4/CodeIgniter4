@@ -12,7 +12,8 @@ Release Date: Unreleased
 BREAKING
 ********
 
-none.
+- Now ``Services::request()`` returns ``IncomingRequest`` or ``CLIRequest``.
+- The method signature of ``CodeIgniter\Debug\Exceptions::__construct()`` has been changed. The ``IncomingRequest`` typehint on the ``$request`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
 
 Enhancements
 ************
@@ -23,11 +24,13 @@ Changes
 *******
 
 - Fixed: ``BaseBuilder::increment()`` and ``BaseBuilder::decrement()`` do not reset the ``BaseBuilder`` state after a query.
+- Now ``CLIRequest::isCLI()`` always return true.
+- Now ``IncommingRequest::isCLI()`` always return false.
 
 Deprecations
 ************
 
-none.
+- The parameters of ``Services::request()`` are deprecated.
 
 Bugs Fixed
 **********
