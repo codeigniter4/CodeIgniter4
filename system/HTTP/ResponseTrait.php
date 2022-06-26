@@ -634,7 +634,7 @@ trait ResponseTrait
 
             return $this->cookieStore->get($name, $prefix);
         } catch (CookieException $e) {
-            log_message('error', $e->getMessage());
+            log_message('error', (string) $e);
 
             return null;
         }

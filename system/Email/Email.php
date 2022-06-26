@@ -1654,7 +1654,7 @@ class Email
             $success = $this->{$method}();
         } catch (ErrorException $e) {
             $success = false;
-            log_message('error', 'Email: ' . $method . ' throwed ' . $e->getMessage());
+            log_message('error', 'Email: ' . $method . ' throwed ' . $e);
         }
 
         if (! $success) {

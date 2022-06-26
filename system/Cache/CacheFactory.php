@@ -73,7 +73,7 @@ class CacheFactory
         try {
             $adapter->initialize();
         } catch (CriticalError $e) {
-            log_message('critical', $e->getMessage() . ' Resorting to using ' . $backup . ' handler.');
+            log_message('critical', $e . ' Resorting to using ' . $backup . ' handler.');
 
             // get the next best cache handler (or dummy if the $backup also fails)
             $adapter = self::getHandler($config, $backup, 'dummy');
