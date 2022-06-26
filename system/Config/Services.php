@@ -117,6 +117,8 @@ class Services extends BaseService
      * a command line request.
      *
      * @return CLIRequest
+     *
+     * @internal
      */
     public static function clirequest(?App $config = null, bool $getShared = true)
     {
@@ -470,11 +472,54 @@ class Services extends BaseService
     }
 
     /**
-     * The Request class models an HTTP request.
+     * Returns the current Request object.
      *
-     * @return IncomingRequest
+     * createRequest() injects IncomingRequest or CLIRequest.
+     *
+     * @return CLIRequest|IncomingRequest
+     *
+     * @deprecated The parameter $config and $getShared are deprecated.
      */
     public static function request(?App $config = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('request', $config);
+        }
+
+        // @TODO remove the following code for backward compatibility
+        return static::incomingrequest($config, $getShared);
+    }
+
+    /**
+     * Create the current Request object, either IncomingRequest or CLIRequest.
+     *
+     * This method is called from CodeIgniter::getRequestObject().
+     *
+     * @internal
+     */
+    public static function createRequest(App $config, bool $isCli = false): void
+    {
+        if ($isCli) {
+            $request = AppServices::clirequest($config);
+        } else {
+            $request = AppServices::incomingrequest($config);
+
+            // guess at protocol if needed
+            $request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
+        }
+
+        // Inject the request object into Services::request().
+        static::$instances['request'] = $request;
+    }
+
+    /**
+     * The IncomingRequest class models an HTTP request.
+     *
+     * @return IncomingRequest
+     *
+     * @internal
+     */
+    public static function incomingrequest(?App $config = null, bool $getShared = true)
     {
         if ($getShared) {
             return static::getSharedInstance('request', $config);

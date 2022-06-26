@@ -583,9 +583,7 @@ class CodeIgniter
     }
 
     /**
-     * Get our Request object, (either IncomingRequest or CLIRequest)
-     * and set the server protocol based on the information provided
-     * by the server.
+     * Get our Request object, (either IncomingRequest or CLIRequest).
      */
     protected function getRequestObject()
     {
@@ -594,12 +592,12 @@ class CodeIgniter
         }
 
         if ($this->isSparked() || $this->isPhpCli()) {
-            $this->request = Services::clirequest($this->config);
+            Services::createRequest($this->config, true);
         } else {
-            $this->request = Services::request($this->config);
-            // guess at protocol if needed
-            $this->request->setProtocolVersion($_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.1');
+            Services::createRequest($this->config);
         }
+
+        $this->request = Services::request();
     }
 
     /**
