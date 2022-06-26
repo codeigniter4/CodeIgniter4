@@ -27,6 +27,7 @@ Others
 ------
 
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
+- ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was true, the exception was suppressed.
 
 Enhancements
 ************
@@ -41,6 +42,7 @@ Changes
 *******
 
 - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']`` and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these settings, an exception is always thrown when a database error occurs.
+- ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true. Previously, it is thrown if ``CI_DEBUG`` is true.
 - The default value of ``BaseConnection::$DBDebug`` has been changed to ``true``.
 - Changed the processing of Spark commands:
     - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
