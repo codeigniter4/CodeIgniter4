@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\SQLite3;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Prepared query for SQLite3
@@ -43,6 +44,10 @@ class PreparedQuery extends BasePreparedQuery
         if (! ($this->statement = $this->db->connID->prepare($sql))) {
             $this->errorCode   = $this->db->connID->lastErrorCode();
             $this->errorString = $this->db->connID->lastErrorMsg();
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         return $this;

@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
 
 /**
@@ -33,6 +34,18 @@ class PreparedQuery extends BasePreparedQuery
      * @var bool
      */
     protected $result;
+
+    /**
+     * A reference to the db connection to use.
+     *
+     * @var Connection
+     */
+    protected $db;
+
+    public function __construct(Connection $db)
+    {
+        parent::__construct($db);
+    }
 
     /**
      * Prepares the query against the database, and saves the connection
@@ -58,6 +71,10 @@ class PreparedQuery extends BasePreparedQuery
         $this->statement = sqlsrv_prepare($this->db->connID, $sql, $parameters);
 
         if (! $this->statement) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->db->getAllErrorMessages());
+            }
+
             $info              = $this->db->error();
             $this->errorCode   = $info['code'];
             $this->errorString = $info['message'];
@@ -81,6 +98,10 @@ class PreparedQuery extends BasePreparedQuery
         }
 
         $this->result = sqlsrv_execute($this->statement);
+
+        if ($this->result === false && $this->db->DBDebug) {
+            throw new DatabaseException($this->db->getAllErrorMessages());
+        }
 
         return (bool) $this->result;
     }

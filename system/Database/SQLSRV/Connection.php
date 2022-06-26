@@ -13,7 +13,6 @@ namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use Exception;
 use stdClass;
 
 /**
@@ -138,13 +137,24 @@ class Connection extends BaseConnection
             return $this->connID;
         }
 
+        throw new DatabaseException($this->getAllErrorMessages());
+    }
+
+    /**
+     * For exception message
+     *
+     * @internal
+     */
+    public function getAllErrorMessages(): string
+    {
         $errors = [];
 
-        foreach (sqlsrv_errors(SQLSRV_ERR_ERRORS) as $error) {
-            $errors[] = preg_replace('/(\[.+\]\[.+\](?:\[.+\])?)(.+)/', '$2', $error['message']);
+        foreach (sqlsrv_errors() as $error) {
+            $errors[] = $error['message']
+                . ' SQLSTATE: ' . $error['SQLSTATE'] . ', code: ' . $error['code'];
         }
 
-        throw new DatabaseException(implode("\n", $errors));
+        return implode("\n", $errors);
     }
 
     /**
@@ -457,8 +467,9 @@ class Connection extends BaseConnection
             $error = $this->error();
 
             log_message('error', $error['message']);
+
             if ($this->DBDebug) {
-                throw new Exception($error['message']);
+                throw new DatabaseException($error['message']);
             }
         }
 

@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
 
 /**
@@ -63,6 +64,10 @@ class PreparedQuery extends BasePreparedQuery
         if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql)) {
             $this->errorCode   = 0;
             $this->errorString = pg_last_error($this->db->connID);
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         return $this;

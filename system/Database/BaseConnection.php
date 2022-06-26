@@ -14,7 +14,6 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
-use Exception;
 use stdClass;
 use Throwable;
 
@@ -616,7 +615,7 @@ abstract class BaseConnection implements ConnectionInterface
         try {
             $exception      = null;
             $this->resultID = $this->simpleQuery($query->getQuery());
-        } catch (Exception $exception) {
+        } catch (DatabaseException $exception) {
             $this->resultID = false;
         }
 
@@ -647,7 +646,11 @@ abstract class BaseConnection implements ConnectionInterface
                 Events::trigger('DBQuery', $query);
 
                 if ($exception !== null) {
-                    throw $exception;
+                    throw new DatabaseException(
+                        $exception->getMessage(),
+                        $exception->getCode(),
+                        $exception
+                    );
                 }
 
                 return false;

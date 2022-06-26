@@ -130,8 +130,9 @@ class Connection extends BaseConnection
                 : $this->connID->query($sql);
         } catch (ErrorException $e) {
             log_message('error', $e);
+
             if ($this->DBDebug) {
-                throw $e;
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
             }
         }
 

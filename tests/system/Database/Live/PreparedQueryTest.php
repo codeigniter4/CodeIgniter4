@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -133,5 +134,18 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+    }
+
+    public function testExecuteRunsInvalidQuery()
+    {
+        $this->expectException(DatabaseException::class);
+
+        // Not null `country` is missing
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'  => 'a',
+            'email' => 'b@example.com',
+        ]));
+
+        $this->query->execute('foo', 'foo@example.com', 'US');
     }
 }
