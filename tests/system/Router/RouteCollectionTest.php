@@ -375,15 +375,19 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $routes->getRoutes());
     }
 
-    public function testNestedGroupingWorksWithRootPrefix()
-    {
+    /**
+     * @dataProvider groupProvider
+     */
+    public function testNestedGroupingWorksWithRootPrefix(
+        string $group,
+        string $subgroup,
+        array $expected
+    ) {
         $routes = $this->getCollector();
 
-        $routes->add('verify/begin', '\VerifyController::begin');
-
-        $routes->group('admin', static function ($routes) {
+        $routes->group($group, static function ($routes) use ($subgroup) {
             $routes->group(
-                '/',
+                $subgroup,
                 static function ($routes) {
                     $routes->add('users/list', '\Users::list');
 
@@ -394,13 +398,29 @@ final class RouteCollectionTest extends CIUnitTestCase
             );
         });
 
-        $expected = [
-            'verify/begin'       => '\VerifyController::begin',
-            'admin/users/list'   => '\Users::list',
-            'admin/delegate/foo' => '\Users::foo',
-        ];
-
         $this->assertSame($expected, $routes->getRoutes());
+    }
+
+    public function groupProvider()
+    {
+        yield from [
+            ['admin', '/', [
+                'admin/users/list'   => '\Users::list',
+                'admin/delegate/foo' => '\Users::foo',
+            ]],
+            ['/', '', [
+                'users/list'   => '\Users::list',
+                'delegate/foo' => '\Users::foo',
+            ]],
+            ['', '', [
+                'users/list'   => '\Users::list',
+                'delegate/foo' => '\Users::foo',
+            ]],
+            ['', '/', [
+                'users/list'   => '\Users::list',
+                'delegate/foo' => '\Users::foo',
+            ]],
+        ];
     }
 
     public function testHostnameOption()
