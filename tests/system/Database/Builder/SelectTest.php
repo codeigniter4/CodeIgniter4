@@ -110,6 +110,39 @@ final class SelectTest extends CIUnitTestCase
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4311
+     */
+    public function testSelectWorksWithEscpaeFalse()
+    {
+        $builder = new BaseBuilder('users', $this->db);
+
+        $builder->select('"numericValue1" + "numericValue2" AS "numericResult"', false);
+
+        $expected = 'SELECT "numericValue1" + "numericValue2" AS "numericResult" FROM "users"';
+
+        $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/4355
+     */
+    public function testSelectRegularExpressionWorksWithEscpaeFalse()
+    {
+        $builder = new BaseBuilder('ob_human_resources', $this->db);
+
+        $builder->select(
+            'REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral',
+            false
+        );
+
+        $expected = <<<'SQL'
+            SELECT REGEXP_SUBSTR(ral_anno,"[0-9]{1,2}([,.][0-9]{1,3})([,.][0-9]{1,3})") AS ral
+            FROM "ob_human_resources"
+            SQL;
+        $this->assertSame($expected, $builder->getCompiledSelect());
+    }
+
     public function testSelectMinWithNoAlias()
     {
         $builder = new BaseBuilder('invoices', $this->db);
