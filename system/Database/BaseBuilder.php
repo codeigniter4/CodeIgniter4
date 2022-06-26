@@ -895,19 +895,11 @@ class BaseBuilder
     protected function _whereIn(?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null, string $clause = 'QBWhere')
     {
         if (empty($key) || ! is_string($key)) {
-            if ($this->db->DBDebug) {
-                throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
-            }
-
-            return $this; // @codeCoverageIgnore
+            throw new InvalidArgumentException(sprintf('%s() expects $key to be a non-empty string', debug_backtrace(0, 2)[1]['function']));
         }
 
         if ($values === null || (! is_array($values) && ! $this->isSubquery($values))) {
-            if ($this->db->DBDebug) {
-                throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
-            }
-
-            return $this; // @codeCoverageIgnore
+            throw new InvalidArgumentException(sprintf('%s() expects $values to be of type array or closure', debug_backtrace(0, 2)[1]['function']));
         }
 
         if (! is_bool($escape)) {
