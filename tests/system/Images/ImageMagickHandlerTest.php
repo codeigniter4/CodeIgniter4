@@ -31,25 +31,10 @@ use Imagick;
  */
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var string
-     */
-    private $root;
-
-    /**
-     * @var string
-     */
-    private $origin;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var BaseHandler
-     */
-    private $handler;
+    private string $root;
+    private string $origin;
+    private string $path;
+    private BaseHandler $handler;
 
     protected function setUp(): void
     {

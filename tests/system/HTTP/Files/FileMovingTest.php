@@ -21,22 +21,10 @@ use org\bovigo\vfs\vfsStreamDirectory;
  */
 final class FileMovingTest extends CIUnitTestCase
 {
-    /**
-     * @var vfsStreamDirectory|null
-     */
-    private $root;
-
-    public string $path;
-
-    /**
-     * @var string
-     */
-    private $start;
-
-    /**
-     * @var string
-     */
-    private $destination;
+    private ?vfsStreamDirectory $root;
+    private string $path;
+    private string $start;
+    private string $destination;
 
     protected function setUp(): void
     {

@@ -21,22 +21,10 @@ use org\bovigo\vfs\vfsStreamDirectory;
  */
 final class ImageTest extends CIUnitTestCase
 {
-    /**
-     * @var vfsStreamDirectory
-     */
-    private $root;
-
-    public string $origin;
-
-    /**
-     * @var string
-     */
-    private $start;
-
-    /**
-     * @var Image
-     */
-    private $image;
+    private vfsStreamDirectory $root;
+    private string $origin;
+    private string $start;
+    private Image $image;
 
     protected function setUp(): void
     {

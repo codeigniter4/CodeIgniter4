@@ -26,13 +26,9 @@ final class MetadataTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    /**
-     * @var Forge
-     */
-    private $forge;
-
-    protected $refresh = true;
-    protected $seed    = CITestSeeder::class;
+    private ?Forge $forge = null;
+    protected $refresh    = true;
+    protected $seed       = CITestSeeder::class;
 
     /**
      * Array of expected tables.

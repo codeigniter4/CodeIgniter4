@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\URI;
@@ -43,12 +44,8 @@ use Tests\Support\Models\JobModel;
  */
 final class CommonFunctionsTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
-
-    public MockIncomingRequest $request;
+    private ?App $config = null;
+    private IncomingRequest $request;
 
     protected function setUp(): void
     {

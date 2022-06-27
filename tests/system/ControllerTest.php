@@ -33,10 +33,7 @@ use Psr\Log\LoggerInterface;
  */
 final class ControllerTest extends CIUnitTestCase
 {
-    /**
-     * @var App
-     */
-    private $config;
+    private App $config;
 
     /**
      * @var Controller

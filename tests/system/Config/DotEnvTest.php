@@ -24,12 +24,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  */
 final class DotEnvTest extends CIUnitTestCase
 {
-    /**
-     * @var vfsStreamDirectory|null
-     */
-    private $root;
-
-    public string $path;
+    private ?vfsStreamDirectory $root;
+    private string $path;
     private $fixturesFolder;
 
     protected function setUp(): void

@@ -31,30 +31,11 @@ use org\bovigo\vfs\vfsStreamDirectory;
  */
 final class GDHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var vfsStreamDirectory
-     */
-    private $root;
-
-    /**
-     * @var string
-     */
-    private $origin;
-
-    /**
-     * @var string
-     */
-    private $start;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var BaseHandler
-     */
-    private $handler;
+    private vfsStreamDirectory $root;
+    private string $origin;
+    private string $start;
+    private string $path;
+    private BaseHandler $handler;
 
     protected function setUp(): void
     {

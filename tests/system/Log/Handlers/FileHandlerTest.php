@@ -23,15 +23,8 @@ use Tests\Support\Log\Handlers\TestHandler;
  */
 final class FileHandlerTest extends CIUnitTestCase
 {
-    /**
-     * @var vfsStreamDirectory
-     */
-    private $root;
-
-    /**
-     * @var string
-     */
-    private $start;
+    private vfsStreamDirectory $root;
+    private string $start;
 
     protected function setUp(): void
     {

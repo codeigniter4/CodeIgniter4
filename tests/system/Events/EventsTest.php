@@ -25,7 +25,7 @@ final class EventsTest extends CIUnitTestCase
     /**
      * Accessible event manager instance
      */
-    private MockEvents $manager;
+    private Events $manager;
 
     protected function setUp(): void
     {

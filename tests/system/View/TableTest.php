@@ -21,10 +21,7 @@ use stdClass;
  */
 final class TableTest extends CIUnitTestCase
 {
-    /**
-     * @var Table
-     */
-    private $table;
+    private Table $table;
 
     protected function setUp(): void
     {
