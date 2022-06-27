@@ -350,7 +350,7 @@ class Builder extends BaseBuilder
         }
 
         if (empty($this->QBSet)) {
-            if (CI_DEBUG) {
+            if ($this->db->DBDebug) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
 
@@ -532,7 +532,7 @@ class Builder extends BaseBuilder
         }
 
         if (empty($this->QBWhere)) {
-            if (CI_DEBUG) {
+            if ($this->db->DBDebug) {
                 throw new DatabaseException('Deletes are not allowed unless they contain a "where" or "like" clause.');
             }
 

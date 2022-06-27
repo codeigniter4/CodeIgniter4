@@ -146,7 +146,7 @@ class Builder extends BaseBuilder
         }
 
         if (! $this->QBSet) {
-            if (CI_DEBUG) {
+            if ($this->db->DBDebug) {
                 throw new DatabaseException('You must use the "set" method to update an entry.');
             }
 

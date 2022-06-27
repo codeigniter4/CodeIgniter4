@@ -121,13 +121,11 @@ abstract class BaseConnection implements ConnectionInterface
     protected $pConnect = false;
 
     /**
-     * Debug flag
-     *
      * Whether to throw Exception or not when an error occurs.
      *
      * @var bool
      */
-    protected $DBDebug = false;
+    protected $DBDebug = true;
 
     /**
      * Character set
