@@ -17,6 +17,7 @@ use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * Test the common image processing functionality.
@@ -30,6 +31,26 @@ use org\bovigo\vfs\vfsStream;
  */
 final class BaseHandlerTest extends CIUnitTestCase
 {
+    /**
+     * @var mixed|vfsStreamDirectory
+     */
+    public $root;
+
+    /**
+     * @var mixed|string
+     */
+    public $origin;
+
+    /**
+     * @var mixed|string
+     */
+    public $start;
+
+    /**
+     * @var mixed|string
+     */
+    public $path;
+
     protected function setUp(): void
     {
         if (! extension_loaded('gd')) {

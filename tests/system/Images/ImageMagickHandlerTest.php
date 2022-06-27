@@ -13,6 +13,7 @@ namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Images;
 use Imagick;
@@ -30,6 +31,26 @@ use Imagick;
  */
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
+    /**
+     * @var mixed|string
+     */
+    public $root;
+
+    /**
+     * @var mixed|string
+     */
+    public $origin;
+
+    /**
+     * @var mixed|string
+     */
+    public $path;
+
+    /**
+     * @var BaseHandler|mixed
+     */
+    public $handler;
+
     protected function setUp(): void
     {
         if (! extension_loaded('imagick')) {

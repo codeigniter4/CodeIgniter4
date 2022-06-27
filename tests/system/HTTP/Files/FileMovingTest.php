@@ -14,12 +14,30 @@ namespace CodeIgniter\HTTP\Files;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
  */
 final class FileMovingTest extends CIUnitTestCase
 {
+    /**
+     * @var mixed|vfsStreamDirectory|null
+     */
+    public $root;
+
+    public string $path;
+
+    /**
+     * @var mixed|string
+     */
+    public $start;
+
+    /**
+     * @var mixed|string
+     */
+    public $destination;
+
     protected function setUp(): void
     {
         parent::setUp();

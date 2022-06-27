@@ -21,6 +21,11 @@ use stdClass;
  */
 final class TableTest extends CIUnitTestCase
 {
+    /**
+     * @var mixed|MockTable
+     */
+    public $table;
+
     protected function setUp(): void
     {
         $this->table = new MockTable();

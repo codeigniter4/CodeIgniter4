@@ -22,6 +22,11 @@ use Config\App;
  */
 final class TestCaseTest extends CIUnitTestCase
 {
+    /**
+     * @var bool|mixed|resource
+     */
+    public $stream_filter;
+
     public function testGetPrivatePropertyWithObject()
     {
         $obj    = new __TestForReflectionHelper();

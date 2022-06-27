@@ -13,6 +13,7 @@ namespace CodeIgniter\Config;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @backupGlobals enabled
@@ -23,6 +24,12 @@ use org\bovigo\vfs\vfsStream;
  */
 final class DotEnvTest extends CIUnitTestCase
 {
+    /**
+     * @var mixed|vfsStreamDirectory|null
+     */
+    public $root;
+
+    public string $path;
     private $fixturesFolder;
 
     protected function setUp(): void

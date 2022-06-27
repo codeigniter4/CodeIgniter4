@@ -43,6 +43,13 @@ use Tests\Support\Models\JobModel;
  */
 final class CommonFunctionsTest extends CIUnitTestCase
 {
+    /**
+     * @var App|mixed
+     */
+    public $config;
+
+    public MockIncomingRequest $request;
+
     protected function setUp(): void
     {
         unset($_ENV['foo'], $_SERVER['foo']);
