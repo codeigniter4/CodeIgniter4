@@ -369,10 +369,6 @@ class BaseBuilder
      */
     public function select($select = '*', ?bool $escape = null)
     {
-        if (is_string($select)) {
-            $select = explode(',', $select);
-        }
-
         // If the escape value was not set, we will base it on the global setting
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
@@ -382,6 +378,10 @@ class BaseBuilder
             $this->QBSelect[] = $select;
 
             return $this;
+        }
+
+        if (is_string($select)) {
+            $select = $escape === false ? [$select] : explode(',', $select);
         }
 
         foreach ($select as $val) {

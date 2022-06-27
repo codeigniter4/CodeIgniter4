@@ -134,7 +134,7 @@ class Connection extends BaseConnection
         try {
             return pg_query($this->connID, $sql);
         } catch (ErrorException $e) {
-            log_message('error', $e);
+            log_message('error', (string) $e);
 
             if ($this->DBDebug) {
                 throw new DatabaseException($e->getMessage(), $e->getCode(), $e);

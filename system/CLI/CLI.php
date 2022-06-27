@@ -673,7 +673,7 @@ class CLI
             // Then let the developer know of the error.
             static::$height = null;
             static::$width  = null;
-            log_message('error', $e->getMessage());
+            log_message('error', (string) $e);
         }
     }
 
