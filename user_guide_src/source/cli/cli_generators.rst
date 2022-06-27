@@ -20,6 +20,24 @@ To view the full description and usage information on a particular generator, us
 
 where ``<generator_command>`` will be replaced with the command to check.
 
+.. note:: Do you need to have the generated code in a subfolder? Let's say if you want to create a controller
+    class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
+    to prepend the subfolder to the class name, like this: ``php spark make:controller admin/login``. This
+    command will create the ``Login`` controller in the ``Controllers/Admin`` subfolder with
+    a namespace of ``App\Controllers\Admin``.
+
+.. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``.
+    Should you need to have the generated code elsewhere in your module namespace, make sure to set
+    the ``--namespace`` option in your command, e.g., ``php spark make:model blog --namespace Acme\Blog``.
+
+.. warning:: Make sure when setting the ``--namespace`` option that the supplied namespace is a valid
+    namespace defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload
+    file. Otherwise, code generation will be interrupted.
+
+.. warning:: Use of ``migrate:create`` to create migration files is now deprecated. It will be removed in
+    future releases. Please use ``make:migration`` as replacement. Also, please use ``make:migration --session``
+    to use instead of the deprecated ``session:migration``.
+
 *******************
 Built-in Generators
 *******************
@@ -225,24 +243,6 @@ Options:
 * ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
 * ``--suffix``: Append the component suffix to the generated class name.
 * ``--force``: Set this flag to overwrite existing files on destination.
-
-.. note:: Do you need to have the generated code in a subfolder? Let's say if you want to create a controller
-    class to reside in the ``Admin`` subfolder of the main ``Controllers`` folder, you will just need
-    to prepend the subfolder to the class name, like this: ``php spark make:controller admin/login``. This
-    command will create the ``Login`` controller in the ``Controllers/Admin`` subfolder with
-    a namespace of ``App\Controllers\Admin``.
-
-.. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``.
-    Should you need to have the generated code elsewhere in your module namespace, make sure to set
-    the ``--namespace`` option in your command, e.g., ``php spark make:model blog --namespace Acme\Blog``.
-
-.. warning:: Make sure when setting the ``--namespace`` option that the supplied namespace is a valid
-    namespace defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload
-    file. Otherwise, code generation will be interrupted.
-
-.. warning:: Use of ``migrate:create`` to create migration files is now deprecated. It will be removed in
-    future releases. Please use ``make:migration`` as replacement. Also, please use ``make:migration --session``
-    to use instead of the deprecated ``session:migration``.
 
 ****************************************
 Scaffolding a Complete Set of Stock Code
