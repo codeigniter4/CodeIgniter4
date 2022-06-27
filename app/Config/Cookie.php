@@ -98,7 +98,6 @@ class Cookie extends BaseConfig
      * If this is set to `true`, cookie names should be compliant of RFC 2616's
      * list of allowed characters.
      *
-     *
      * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes
      * @see https://tools.ietf.org/html/rfc2616#section-2.2
      */

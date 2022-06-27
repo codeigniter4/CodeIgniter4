@@ -213,7 +213,6 @@ class App extends BaseConfig
      *
      * Set a cookie name prefix if you need to avoid collisions.
      *
-     *
      * @deprecated use Config\Cookie::$prefix property instead.
      */
     public string $cookiePrefix = '';
@@ -224,7 +223,6 @@ class App extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * Set to `.your-domain.com` for site-wide cookies.
-     *
      *
      * @deprecated use Config\Cookie::$domain property instead.
      */
@@ -237,7 +235,6 @@ class App extends BaseConfig
      *
      * Typically will be a forward slash.
      *
-     *
      * @deprecated use Config\Cookie::$path property instead.
      */
     public string $cookiePath = '/';
@@ -249,7 +246,6 @@ class App extends BaseConfig
      *
      * Cookie will only be set if a secure HTTPS connection exists.
      *
-     *
      * @deprecated use Config\Cookie::$secure property instead.
      */
     public bool $cookieSecure = false;
@@ -260,7 +256,6 @@ class App extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * Cookie will only be accessible via HTTP(S) (no JavaScript).
-     *
      *
      * @deprecated use Config\Cookie::$httponly property instead.
      */
@@ -285,7 +280,6 @@ class App extends BaseConfig
      * Defaults to `Lax` for compatibility with modern browsers. Setting `''`
      * (empty string) means default SameSite attribute set by browsers (`Lax`)
      * will be set on cookies. If set to `None`, `$cookieSecure` must also be set.
-     *
      *
      * @deprecated use Config\Cookie::$samesite property instead.
      */
