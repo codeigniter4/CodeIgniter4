@@ -32,24 +32,24 @@ use Imagick;
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $root;
+    private $root;
 
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $origin;
+    private $origin;
 
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $path;
+    private $path;
 
     /**
-     * @var BaseHandler|mixed
+     * @var BaseHandler
      */
-    public $handler;
+    private $handler;
 
     protected function setUp(): void
     {

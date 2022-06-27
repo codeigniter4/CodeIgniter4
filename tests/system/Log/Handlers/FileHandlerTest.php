@@ -24,14 +24,14 @@ use Tests\Support\Log\Handlers\TestHandler;
 final class FileHandlerTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|vfsStreamDirectory
+     * @var vfsStreamDirectory
      */
-    public $root;
+    private $root;
 
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $start;
+    private $start;
 
     protected function setUp(): void
     {

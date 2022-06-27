@@ -20,9 +20,9 @@ use CodeIgniter\Test\Mock\MockCache;
 final class ThrottleTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|MockCache
+     * @var Cache
      */
-    public $cache;
+    private $cache;
 
     protected function setUp(): void
     {

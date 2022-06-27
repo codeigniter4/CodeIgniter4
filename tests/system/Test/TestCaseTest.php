@@ -23,9 +23,9 @@ use Config\App;
 final class TestCaseTest extends CIUnitTestCase
 {
     /**
-     * @var bool|mixed|resource
+     * @var bool|resource
      */
-    public $stream_filter;
+    private $stream_filter;
 
     public function testGetPrivatePropertyWithObject()
     {

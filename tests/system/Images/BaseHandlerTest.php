@@ -32,24 +32,24 @@ use org\bovigo\vfs\vfsStreamDirectory;
 final class BaseHandlerTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|vfsStreamDirectory
+     * @var vfsStreamDirectory
      */
-    public $root;
+    private $root;
 
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $origin;
+    private $origin;
 
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $start;
+    private $start;
 
     /**
-     * @var mixed|string
+     * @var string
      */
-    public $path;
+    private $path;
 
     protected function setUp(): void
     {

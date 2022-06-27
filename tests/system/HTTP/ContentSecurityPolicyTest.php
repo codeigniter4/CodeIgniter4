@@ -28,14 +28,14 @@ use Config\ContentSecurityPolicy as CSPConfig;
 final class ContentSecurityPolicyTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|Response
+     * @var Response
      */
-    public $response;
+    private $response;
 
     /**
-     * @var \CodeIgniter\HTTP\ContentSecurityPolicy|mixed
+     * @var \CodeIgniter\HTTP\ContentSecurityPolicy
      */
-    public $csp;
+    private $csp;
 
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)

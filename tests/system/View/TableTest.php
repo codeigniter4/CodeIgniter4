@@ -22,9 +22,9 @@ use stdClass;
 final class TableTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|MockTable
+     * @var Table
      */
-    public $table;
+    private $table;
 
     protected function setUp(): void
     {

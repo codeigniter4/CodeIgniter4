@@ -34,9 +34,9 @@ use Psr\Log\LoggerInterface;
 final class ControllerTest extends CIUnitTestCase
 {
     /**
-     * @var App|mixed
+     * @var App
      */
-    public $config;
+    private $config;
 
     /**
      * @var Controller

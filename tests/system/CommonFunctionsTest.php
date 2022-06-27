@@ -44,9 +44,9 @@ use Tests\Support\Models\JobModel;
 final class CommonFunctionsTest extends CIUnitTestCase
 {
     /**
-     * @var App|mixed
+     * @var App
      */
-    public $config;
+    private $config;
 
     public MockIncomingRequest $request;
 

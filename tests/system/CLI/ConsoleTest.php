@@ -25,9 +25,9 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 final class ConsoleTest extends CIUnitTestCase
 {
     /**
-     * @var DotEnv|mixed
+     * @var DotEnv
      */
-    public $env;
+    private $env;
 
     private $stream_filter;
 
