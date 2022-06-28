@@ -25,7 +25,7 @@ use CURLFile;
  */
 final class CURLRequestDoNotShareOptionsTest extends CIUnitTestCase
 {
-    private MockCURLRequest $request;
+    private CURLRequest $request;
 
     protected function setUp(): void
     {
