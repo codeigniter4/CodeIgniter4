@@ -144,7 +144,7 @@ controllers. You can extend this class in any new controller.
 
 Then save the file to your **app/Controllers/** directory.
 
-.. important:: The file must be called **Helloworld.php**, with a capital ``H``. Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+.. important:: The file must be called **Helloworld.php**, with a capital ``H``. When you use Auto Routing, Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 .. important:: A controller method that will be executed by Auto Routing (Improved) needs HTTP verb (``get``, ``post``, ``put``, etc.) prefix like ``getIndex()``, ``postCreate()``.
 
@@ -315,7 +315,7 @@ For security reasons be sure to declare any new utility methods as ``protected``
 
 Then save the file to your **app/Controllers/** directory.
 
-.. important:: The file must be called **Helloworld.php**, with a capital ``H``. Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
+.. important:: The file must be called **Helloworld.php**, with a capital ``H``. When you use Auto Routing, Controller class names MUST start with an uppercase letter and ONLY the first character can be uppercase.
 
 Now visit your site using a URL similar to this::
 
