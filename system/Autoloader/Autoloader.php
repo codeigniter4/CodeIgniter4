@@ -15,6 +15,7 @@ use Composer\Autoload\ClassLoader;
 use Config\Autoload;
 use Config\Modules;
 use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * An autoloader that uses both PSR4 autoloading, and traditional classmaps.
@@ -306,13 +307,25 @@ class Autoloader
         // Plus the forward slash for directory separators since this might be a path.
         // http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
         // Modified to allow backslash and colons for on Windows machines.
-        $tmp = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
+        $result = preg_match_all('/[^0-9\p{L}\s\/\-_.:\\\\]/u', $filename, $matches);
+
+        if ($result > 0) {
+            $chars = implode('', $matches[0]);
+
+            throw new InvalidArgumentException(
+                'The file path contains special characters "' . $chars
+                . '" that are not allowed: "' . $filename . '"'
+            );
+        }
+        if ($result === false) {
+            throw new RuntimeException(preg_last_error_msg() . ' filename: "' . $filename . '"');
+        }
 
         // Clean up our filename edges.
-        $cleanFilename = trim($tmp, '.-_');
+        $cleanFilename = trim($filename, '.-_');
 
         if ($filename !== $cleanFilename) {
-            throw new InvalidArgumentException('The file path contains special character that is not allowed: "' . $filename . '"');
+            throw new InvalidArgumentException('The characters ".-_" are not allowed in filename edges: "' . $filename . '"');
         }
 
         return $cleanFilename;

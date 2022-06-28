@@ -198,11 +198,26 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertFalse($this->loader->loadClass('Modules'));
     }
 
-    public function testSanitizationSimply()
+    public function testSanitizationContailsSpecialChars()
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"'
+        );
 
         $test = '${../path}!#/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationFilenameEdges()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"'
+        );
+
+        $test = '/path/to/some/file.php_';
 
         $this->loader->sanitizeFilename($test);
     }
