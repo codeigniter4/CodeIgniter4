@@ -304,6 +304,12 @@ for <a class="reference external" href="https://codeigniter.com/userguide3/insta
 <h2><a class="toc-backref" href="#id1">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
 <p>Download the <a class="reference external" href="https://github.com/CodeIgniter4/framework/releases/latest">latest version</a>,
 and extract it to become your project root.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CodeIgniter autoloader does not allow special characters that are illegal in filenames on certain operating systems.
+The symbols that can be used are <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">\</span></code> and space.
+So if you install CodeIgniter under the folder that contains the special characters like <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, etc., CodeIgniter won’t work.</p>
+</div>
 <section id="setting-up">
 <h3><a class="toc-backref" href="#id2">Setting Up</a><a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
 <p>None</p>
