@@ -291,7 +291,7 @@ class Connection extends BaseConnection
         try {
             return $this->connID->query($this->prepQuery($sql), $this->resultMode);
         } catch (mysqli_sql_exception $e) {
-            log_message('error', (string) $e);
+            log_message('error', (string) $e, ['query' => $sql]);
 
             if ($this->DBDebug) {
                 throw $e;
