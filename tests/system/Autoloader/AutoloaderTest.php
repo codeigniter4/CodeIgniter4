@@ -16,6 +16,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use InvalidArgumentException;
 use UnnamespacedClass;
 
 /**
@@ -199,18 +200,18 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testSanitizationSimply()
     {
-        $test     = '${../path}!#/to/some/file.php_';
-        $expected = '/path/to/some/file.php';
+        $this->expectException(InvalidArgumentException::class);
 
-        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
+        $test = '${../path}!#/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
     }
 
     public function testSanitizationAllowUnicodeChars()
     {
-        $test     = 'Ä/path/to/some/file.php_';
-        $expected = 'Ä/path/to/some/file.php';
+        $test = 'Ä/path/to/some/file.php';
 
-        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
+        $this->assertSame($test, $this->loader->sanitizeFilename($test));
     }
 
     public function testSanitizationAllowsWindowsFilepaths()

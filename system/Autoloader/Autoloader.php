@@ -290,9 +290,9 @@ class Autoloader
     }
 
     /**
-     * Sanitizes a filename, replacing spaces with dashes.
+     * Check file path.
      *
-     * Removes special characters that are illegal in filenames on certain
+     * Checks special characters that are illegal in filenames on certain
      * operating systems and special characters requiring special escaping
      * to manipulate at the command line. Replaces spaces and consecutive
      * dashes with a single dash. Trim period, dash and underscore from beginning
@@ -306,10 +306,16 @@ class Autoloader
         // Plus the forward slash for directory separators since this might be a path.
         // http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
         // Modified to allow backslash and colons for on Windows machines.
-        $filename = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
+        $tmp = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
 
         // Clean up our filename edges.
-        return trim($filename, '.-_');
+        $cleanFilename = trim($tmp, '.-_');
+
+        if ($filename !== $cleanFilename) {
+            throw new InvalidArgumentException('The file path contains special character that is not allowed: "' . $filename . '"');
+        }
+
+        return $cleanFilename;
     }
 
     private function loadComposerNamespaces(ClassLoader $composer): void
