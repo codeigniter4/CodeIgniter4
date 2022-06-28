@@ -39,6 +39,8 @@ The command above will create a "project-root" folder.
 If you omit the "project-root" argument, the command will create an
 "appstarter" folder, which can be renamed as appropriate.
 
+.. note:: CodeIgniter autoloader does not allow special characters that are illegal in filenames on certain operating systems. Only allow characters deemed safe for POSIX portable filenames, plus the forward slash for directory separators. So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
+
 If you don't need or want phpunit installed, and all of its composer
 dependencies, then add the ``--no-dev`` option to the end of the above
 command line. That will result in only the framework, and the three
