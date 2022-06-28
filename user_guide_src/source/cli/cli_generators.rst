@@ -112,6 +112,13 @@ Options:
 * ``--suffix``: Append the component suffix to the generated class name.
 * ``--force``: Set this flag to overwrite existing files on destination.
 
+.. note:: If you use ``--suffix``, the generated controller name will be like
+    ``ProductController``. That violates the Controller naming convention
+    when using :ref:`Auto Routing <controller-auto-routing-improved>`
+    (Controller class names MUST start with an uppercase letter and
+    ONLY the first character can be uppercase). So ``--suffix`` can be used
+    when you use :ref:`Defined Routes <defined-route-routing>`.
+
 make:entity
 -----------
 
