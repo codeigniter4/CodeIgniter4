@@ -25,6 +25,8 @@ final class ConsoleTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    private DotEnv $env;
+
     protected function setUp(): void
     {
         parent::setUp();

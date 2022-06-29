@@ -440,6 +440,7 @@ final class ValidationTest extends CIUnitTestCase
         $data = ['foo' => ''];
         $this->validation->setRules(['foo' => $rules], $errors);
         $this->validation->run($data);
+
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
@@ -469,9 +470,20 @@ final class ValidationTest extends CIUnitTestCase
                 'The foo field must be at least 10 characters in length.',
             ],
             [
+                ['rules' => ['min_length[10]']],
+                'The foo field must be at least 10 characters in length.',
+            ],
+            [
                 [
                     'label' => 'Foo Bar',
                     'rules' => 'min_length[10]',
+                ],
+                'The Foo Bar field must be at least 10 characters in length.',
+            ],
+            [
+                [
+                    'label' => 'Foo Bar',
+                    'rules' => ['min_length[10]'],
                 ],
                 'The Foo Bar field must be at least 10 characters in length.',
             ],

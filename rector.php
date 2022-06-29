@@ -10,6 +10,7 @@
  */
 
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
+use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
@@ -160,4 +161,5 @@ return static function (RectorConfig $rectorConfig): void {
         'SQLite3',
     ]);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
+    $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
 };

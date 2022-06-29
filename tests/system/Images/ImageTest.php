@@ -14,12 +14,18 @@ namespace CodeIgniter\Images;
 use CodeIgniter\Images\Exceptions\ImageException;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
  */
 final class ImageTest extends CIUnitTestCase
 {
+    private vfsStreamDirectory $root;
+    private string $origin;
+    private string $start;
+    private Image $image;
+
     protected function setUp(): void
     {
         // create virtual file system

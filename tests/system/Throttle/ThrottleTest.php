@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Throttle;
 
+use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCache;
 
@@ -19,6 +20,8 @@ use CodeIgniter\Test\Mock\MockCache;
  */
 final class ThrottleTest extends CIUnitTestCase
 {
+    private CacheInterface $cache;
+
     protected function setUp(): void
     {
         parent::setUp();

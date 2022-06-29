@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -25,8 +26,9 @@ final class MetadataTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = true;
-    protected $seed    = CITestSeeder::class;
+    private ?Forge $forge = null;
+    protected $refresh    = true;
+    protected $seed       = CITestSeeder::class;
 
     /**
      * Array of expected tables.

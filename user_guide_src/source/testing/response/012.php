@@ -1,3 +1,3 @@
 <?php
 
-$result->assertSessionMissin('logged_in');
+$result->assertSessionMissing('logged_in');

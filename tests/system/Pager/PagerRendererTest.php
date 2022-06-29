@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class PagerRendererTest extends CIUnitTestCase
 {
+    private string $expect;
     private URI $uri;
 
     protected function setUp(): void
