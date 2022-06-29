@@ -912,7 +912,7 @@ class CodeIgniter
         }
 
         throw PageNotFoundException::forPageNotFound(
-            (ENVIRONMENT !== 'production' || ! $this->isWeb()) ? $e->getMessage() : ''
+            (ENVIRONMENT !== 'production' || ! $this->isWeb()) ? $e->getMessage() : null
         );
     }
 
