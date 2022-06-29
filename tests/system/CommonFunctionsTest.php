@@ -50,7 +50,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     protected function setUp(): void
     {
         unset($_ENV['foo'], $_SERVER['foo']);
-        Services::reset();
+        $this->resetServices();
 
         parent::setUp();
     }
@@ -593,8 +593,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCspStyleNonce()
     {
-        $this->resetServices();
-
         $config             = config('App');
         $config->CSPEnabled = true;
 
@@ -603,8 +601,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCspScriptNonce()
     {
-        $this->resetServices();
-
         $config             = config('App');
         $config->CSPEnabled = true;
 
