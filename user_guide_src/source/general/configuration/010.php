@@ -8,7 +8,6 @@ class RegionalSales
     {
         return [
             'target' => 45,
-            'actual' => 72,
         ];
     }
 }
