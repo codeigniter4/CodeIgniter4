@@ -370,8 +370,6 @@ class FormatRules
                 if ($encoded !== $value) {
                     return false;
                 }
-
-                return false;
             }
         }
 
