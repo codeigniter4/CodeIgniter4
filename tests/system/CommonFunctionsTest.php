@@ -606,4 +606,15 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->assertStringStartsWith('nonce="', csp_script_nonce());
     }
+
+    public function testLangOnCLI()
+    {
+        Services::createRequest(new App(), true);
+
+        $message = lang('CLI.generator.fileCreate', ['TestController.php']);
+
+        $this->assertSame('File created: TestController.php', $message);
+
+        $this->resetServices();
+    }
 }

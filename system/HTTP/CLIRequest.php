@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use Config\App;
+use Locale;
 use RuntimeException;
 
 /**
@@ -213,5 +214,13 @@ class CLIRequest extends Request
     public function isCLI(): bool
     {
         return true;
+    }
+
+    /**
+     * Gets the current locale.
+     */
+    public function getLocale(): string
+    {
+        return Locale::getDefault();
     }
 }
