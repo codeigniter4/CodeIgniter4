@@ -82,12 +82,16 @@ final class PaginateModelTest extends LiveModelTestCase
 
     public function testMultiplePager(): void
     {
+        $_GET = [];
+
         $validModel = $this->createModel(ValidModel::class);
         $userModel  = $this->createModel(UserModel::class);
 
         $validModel->paginate(1, 'valid');
         $userModel->paginate(1, 'user');
         $pager = $this->model->pager;
+
+        $this->assertSame($userModel->pager, $validModel->pager);
 
         $this->assertSame(4, $validModel->countAllResults());
         $this->assertSame(4, $userModel->countAllResults());
