@@ -79,4 +79,26 @@ final class PaginateModelTest extends LiveModelTestCase
         $this->model->paginate(1, 'default', 500);
         $this->assertSame($this->model->pager->getPageCount(), $this->model->pager->getCurrentPage());
     }
+
+    public function testMultiplePager(): void
+    {
+        $validModel = $this->createModel(ValidModel::class);
+        $userModel  = $this->createModel(UserModel::class);
+
+        $validModel->paginate(1, 'valid');
+        $userModel->paginate(1, 'user');
+        $pager = $this->model->pager;
+
+        $this->assertSame(4, $validModel->countAllResults());
+        $this->assertSame(4, $userModel->countAllResults());
+
+        $this->assertStringContainsString('?page_valid=1"', $pager->links('valid'));
+        $this->assertStringContainsString('?page_valid=2"', $pager->links('valid'));
+        $this->assertStringContainsString('?page_valid=3"', $pager->links('valid'));
+        $this->assertStringContainsString('?page_valid=4"', $pager->links('valid'));
+        $this->assertStringContainsString('?page_user=1"', $pager->links('user'));
+        $this->assertStringContainsString('?page_user=2"', $pager->links('user'));
+        $this->assertStringContainsString('?page_user=3"', $pager->links('user'));
+        $this->assertStringContainsString('?page_user=4"', $pager->links('user'));
+    }
 }
