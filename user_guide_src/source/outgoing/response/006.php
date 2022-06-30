@@ -1,3 +1,3 @@
 <?php
 
-$response->removeHeader('Location');
+$this->response->removeHeader('Location');
