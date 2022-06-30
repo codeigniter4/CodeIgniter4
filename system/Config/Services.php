@@ -75,6 +75,7 @@ use Config\Services as AppServices;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
+use Locale;
 
 /**
  * Services Configuration file.
@@ -363,8 +364,14 @@ class Services extends BaseService
             return static::getSharedInstance('language', $locale)->setLocale($locale);
         }
 
+        if (AppServices::request() instanceof IncomingRequest) {
+            $requestLocale = AppServices::request()->getLocale();
+        } else {
+            $requestLocale = Locale::getDefault();
+        }
+
         // Use '?:' for empty string check
-        $locale = $locale ?: AppServices::request()->getLocale();
+        $locale = $locale ?: $requestLocale;
 
         return new Language($locale);
     }
