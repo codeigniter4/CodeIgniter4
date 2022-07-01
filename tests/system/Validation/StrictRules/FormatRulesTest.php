@@ -80,7 +80,7 @@ final class FormatRulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
-    
+
     /**
      * @dataProvider tokenJWTProvider
      */
