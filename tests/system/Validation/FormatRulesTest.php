@@ -128,11 +128,11 @@ final class FormatRulesTest extends CIUnitTestCase
                 false,
             ],
             [
-                '..',
+                '..', // Manipulate format delimeter comma
                 false,
             ],
             [
-                'RGVubnk',
+                'RGVubnk', // Regular string without format delimeter comma
                 false,
             ],
         ];
