@@ -406,4 +406,18 @@ class FormatRules
 
         return $this->nonStrictFormatRules->valid_date($str, $format);
     }
+
+    /**
+     * Checks for a valid jwt formatted
+     *
+     * @param mixed $str
+     */
+    public function valid_jwt($str = null): bool
+    {
+        if (! is_string($str)) {
+            return false;
+        }
+
+        return $this->nonStrictFormatRules->valid_jwt($str);
+    }
 }
