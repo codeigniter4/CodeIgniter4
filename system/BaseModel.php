@@ -1146,7 +1146,8 @@ abstract class BaseModel
      */
     public function paginate(?int $perPage = null, string $group = 'default', ?int $page = null, int $segment = 0)
     {
-        $pager = Services::pager(null, null, false);
+        // Since multiple models may use the Pager, the Pager must be shared.
+        $pager = Services::pager();
 
         if ($segment) {
             $pager->setSegment($segment, $group);
