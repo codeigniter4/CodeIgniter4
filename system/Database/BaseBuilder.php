@@ -2014,11 +2014,12 @@ class BaseBuilder
     /**
      * Compiles an update string and runs the query.
      *
-     * @param mixed $where
+     * @param array|object|null        $set
+     * @param array|RawSql|string|null $where
      *
      * @throws DatabaseException
      */
-    public function update(?array $set = null, $where = null, ?int $limit = null): bool
+    public function update($set = null, $where = null, ?int $limit = null): bool
     {
         if ($set !== null) {
             $this->set($set);
