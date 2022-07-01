@@ -427,7 +427,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
             'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
-            'sessionSavePath'          => null,
+            'sessionSavePath'          => '',
             'sessionMatchIP'           => false,
             'sessionTimeToUpdate'      => 300,
             'sessionRegenerateDestroy' => false,
