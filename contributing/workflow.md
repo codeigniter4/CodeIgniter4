@@ -190,14 +190,14 @@ Synchronize your repository:
 Bring your feature branch up to date:
 
 ```console
-> git switch new/mind-reader
+> git switch fix/issue-123
 > git rebase upstream/develop
 ```
 
 And finally push your local branch to your GitHub repository:
 
 ```console
-> git push --force-with-lease origin new/mind-reader
+> git push --force-with-lease origin fix/issue-123
 ```
 
 ## Pull Requests
@@ -262,7 +262,7 @@ Synchronize your repository:
 Bring your feature branch up to date:
 
 ```console
-> git switch new/mind-reader
+> git switch fix/problem123
 > git rebase upstream/develop
 ```
 
@@ -273,7 +273,7 @@ collaborating with the shared repository.
 And finally push your local branch to your GitHub repository:
 
 ```console
-> git push --force-with-lease origin new/mind-reader
+> git push --force-with-lease origin fix/problem123
 ```
 
 ## Cleanup
