@@ -147,9 +147,9 @@ When enabled, the response object will contain an instance of ``CodeIgniter\HTTP
 values set in **app/Config/ContentSecurityPolicy.php** are applied to that instance, and if no changes are
 needed during runtime, then the correctly formatted header is sent and you're all done.
 
-With CSP enabled, two header lines are added to the HTTP response: a Content-Security-Policy header, with
+With CSP enabled, two header lines are added to the HTTP response: a **Content-Security-Policy** header, with
 policies identifying content types or origins that are explicitly allowed for different
-contexts, and a Content-Security-Policy-Report-Only header, which identifies content types
+contexts, and a **Content-Security-Policy-Report-Only** header, which identifies content types
 or origins that will be allowed but which will also be reported to the destination
 of your choice.
 
@@ -161,7 +161,7 @@ call basis, by providing an optional second parameter to the adding method call.
 Runtime Configuration
 ---------------------
 
-If your application needs to make changes at run-time, you can access the instance at ``$response->CSP``. The
+If your application needs to make changes at run-time, you can access the instance at ``$this->response->CSP`` in your controllers. The
 class holds a number of methods that map pretty clearly to the appropriate header value that you need to set.
 Examples are shown below, with different combinations of parameters, though all accept either a directive
 name or an array of them:

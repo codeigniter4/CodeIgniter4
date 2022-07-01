@@ -42,6 +42,11 @@ class Connection extends BaseConnection
      */
     public $escapeChar = '"';
 
+    protected $connect_timeout;
+    protected $options;
+    protected $sslmode;
+    protected $service;
+
     /**
      * Connect to the database.
      *

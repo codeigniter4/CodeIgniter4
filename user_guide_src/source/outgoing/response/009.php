@@ -1,3 +1,3 @@
 <?php
 
-return $response->download('awkwardEncryptedFileName.fakeExt', null)->setFileName('expenses.csv');
+return $this->response->download('awkwardEncryptedFileName.fakeExt', null)->setFileName('expenses.csv');
