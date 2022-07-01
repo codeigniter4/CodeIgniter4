@@ -61,8 +61,10 @@ ORIGIN\_URL.
 
 Clone your repository, leaving a local folder for you to work with:
 
-    cd ALL_PROJECTS
-    git clone ORIGIN_URL
+```console
+> cd ALL_PROJECTS
+> git clone ORIGIN_URL
+```
 
 ## Syncing your repository
 
@@ -72,16 +74,20 @@ an alias for the shared repository as well, so that you can "synch" the
 two, making sure that your repository includes any other contributions
 that have been merged by us into the shared repo:
 
-    git remote add upstream UPSTREAM_URL
+```console
+> git remote add upstream UPSTREAM_URL
+```
 
 Then synchronizing is done by pulling from us and pushing to you. This
 is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
-    git switch develop
-    git fetch upstream
-    git merge upstream/develop
-    git push origin develop
+```console
+> git switch develop
+> git fetch upstream
+> git merge upstream/develop
+> git push origin develop
+```
 
 You might get merge conflicts when you merge. It is your
 responsibility to resolve those locally, so that you can continue
@@ -112,14 +118,18 @@ For instance, if you send a PR to __"develop"__ branch, make sure you are in the
 new bugfix branch, based on *develop*, for a new feature you are
 creating:
 
-    git switch develop
-    git switch -c fix/problem123
+```console
+> git switch develop
+> git switch -c fix/problem123
+```
 
 If you send a PR with an enhancement, make sure you are in the *next minor version* branch,
 and create a new feature branch, based on, e.g., *4.3*, for a new feature you are creating:
 
-    git switch 4.3
-    git switch -c new/mind-reader
+```console
+> git switch 4.3
+> git switch -c new/mind-reader
+```
 
 Saving changes only updates your local working area.
 
@@ -132,23 +142,27 @@ in.
 You can have as many commits in a branch as you need to "get it right".
 For instance, to commit your work from a debugging session:
 
-    git add .
-    git commit -S -m "Find and fix the broken reference problem"
+```console
+> git add .
+> git commit -S -m "Find and fix the broken reference problem"
+```
 
 Just make sure that your commits in a feature branch are all related.
 
 If you are working on two features at a time, then you will want to
 switch between them to keep the contributions separate. For instance:
 
-    git switch new/mind-reader
-    // work away
-    git add .
-    git commit -S -m "Added adapter for abc"
-    git switch fix/issue-123
-    // work away
-    git add .
-    git commit -S -m "Fixed problem in DEF\Something"
-    git switch develop
+```console
+> git switch new/mind-reader
+> ## work away
+> git add .
+> git commit -S -m "Added adapter for abc"
+> git switch fix/issue-123
+> ## work away
+> git add .
+> git commit -S -m "Fixed problem in DEF\Something"
+> git switch develop
+```
 
 The last checkout makes sure that you end up in your *develop* branch as
 a starting point for your next session working with your repository.
@@ -166,19 +180,25 @@ It is a lot easier to resolve conflicts at this stage.
 
 Synchronize your repository:
 
-    git switch develop
-    git fetch upstream
-    git merge upstream/develop
-    git push origin develop
+```console
+> git switch develop
+> git fetch upstream
+> git merge upstream/develop
+> git push origin develop
+```
 
 Bring your feature branch up to date:
 
-    git switch new/mind-reader
-    git rebase upstream/develop
+```console
+> git switch new/mind-reader
+> git rebase upstream/develop
+```
 
 And finally push your local branch to your GitHub repository:
 
-    git push --force-with-lease origin new/mind-reader
+```console
+> git push --force-with-lease origin new/mind-reader
+```
 
 ## Pull Requests
 
@@ -232,15 +252,19 @@ do the following:
 
 Synchronize your repository:
 
-    git switch develop
-    git fetch upstream
-    git merge upstream/develop
-    git push origin develop
+```console
+> git switch develop
+> git fetch upstream
+> git merge upstream/develop
+> git push origin develop
+```
 
 Bring your feature branch up to date:
 
-    git switch new/mind-reader
-    git rebase upstream/develop
+```console
+> git switch new/mind-reader
+> git rebase upstream/develop
+```
 
 You might get conflicts when you rebase. It is your
 responsibility to resolve those locally, so that you can continue
@@ -248,7 +272,9 @@ collaborating with the shared repository.
 
 And finally push your local branch to your GitHub repository:
 
-    git push --force-with-lease origin new/mind-reader
+```console
+> git push --force-with-lease origin new/mind-reader
+```
 
 ## Cleanup
 
