@@ -105,11 +105,20 @@ This local branch should be named appropriately, for instance
 "fix/problem123" or "new/mind-reader". The slashes in these branch names
 is optional, and implies a sort of namespacing if used.
 
-For instance, make sure you are in the *develop* branch, and create a
-new feature branch, based on *develop*, for a new feature you are
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
+
+For instance, if you send a PR to __"develop"__ branch, make sure you are in the *develop* branch, and create a
+new bugfix branch, based on *develop*, for a new feature you are
 creating:
 
     git switch develop
+    git switch -c fix/problem123
+
+If you send a PR with an enhancement, make sure you are in the *next minor version* branch,
+and create a new feature branch, based on, e.g., *4.3*, for a new feature you are creating:
+
+    git switch 4.3
     git switch -c new/mind-reader
 
 Saving changes only updates your local working area.
