@@ -57,16 +57,6 @@ final class GetIndexDataTest extends CIUnitTestCase
 
     public function testGetIndexData()
     {
-        $this->forge->addField([
-            'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
-            'name'       => ['type' => 'VARCHAR', 'constraint' => 80],
-            'email'      => ['type' => 'VARCHAR', 'constraint' => 100],
-            'country'    => ['type' => 'VARCHAR', 'constraint' => 40],
-            'created_at' => ['type' => 'DATETIME', 'null' => true],
-            'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
-        ])->addKey(['id'], true)->createTable('userforeign', true);
-
         // INTEGER PRIMARY KEY AUTO_INCREMENT doesn't get an index by default
         $this->forge->addField([
             'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
@@ -78,10 +68,9 @@ final class GetIndexDataTest extends CIUnitTestCase
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
             'deleted_at' => ['type' => 'DATETIME', 'null' => true],
         ])
-            ->addKey(['id'], true)->addUniqueKey('email')
+            ->addKey(['id'], true)
+            ->addUniqueKey('email')
             ->addKey('country')
-            ->addForeignKey('userid', 'userforeign', 'id')
-            ->addForeignKey('email', 'userforeign', 'email')
             ->createTable('testuser', true);
 
         $expectedIndexes = [];
