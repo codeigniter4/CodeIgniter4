@@ -318,7 +318,13 @@ class Autoloader
             );
         }
         if ($result === false) {
-            throw new RuntimeException(preg_last_error_msg() . ' filename: "' . $filename . '"');
+            if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+                $message = preg_last_error_msg();
+            } else {
+                $message = 'Regex error. error code: ' . preg_last_error();
+            }
+
+            throw new RuntimeException($message . '. filename: "' . $filename . '"');
         }
 
         // Clean up our filename edges.

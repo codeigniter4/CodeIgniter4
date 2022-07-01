@@ -226,7 +226,6 @@ final class AutoloaderTest extends CIUnitTestCase
     public function testSanitizationRegexError()
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded filename:');
 
         $test = mb_convert_encoding('クラスファイル.php', 'EUC-JP', 'UTF-8');
 
