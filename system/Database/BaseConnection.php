@@ -336,7 +336,9 @@ abstract class BaseConnection implements ConnectionInterface
     public function __construct(array $params)
     {
         foreach ($params as $key => $value) {
-            $this->{$key} = $value;
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
         }
 
         $queryClass = str_replace('Connection', 'Query', static::class);
