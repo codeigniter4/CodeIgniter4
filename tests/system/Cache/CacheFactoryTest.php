@@ -54,27 +54,7 @@ final class CacheFactoryTest extends CIUnitTestCase
         $this->expectException(CacheException::class);
         $this->expectExceptionMessage('Cache config must have an array of $validHandlers.');
 
-        $this->config->validHandlers = null;
-
-        $this->cacheFactory->getHandler($this->config);
-    }
-
-    public function testGetHandlerExceptionCacheNoBackup()
-    {
-        $this->expectException(CacheException::class);
-        $this->expectExceptionMessage('Cache config must have a handler and backupHandler set.');
-
-        $this->config->backupHandler = null;
-
-        $this->cacheFactory->getHandler($this->config);
-    }
-
-    public function testGetHandlerExceptionCacheNoHandler()
-    {
-        $this->expectException(CacheException::class);
-        $this->expectExceptionMessage('Cache config must have a handler and backupHandler set.');
-
-        $this->config->handler = null;
+        $this->config->validHandlers = [];
 
         $this->cacheFactory->getHandler($this->config);
     }
