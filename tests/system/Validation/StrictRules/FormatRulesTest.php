@@ -80,6 +80,64 @@ final class FormatRulesTest extends CIUnitTestCase
 
         $this->assertFalse($this->validation->run($data));
     }
+    
+    /**
+     * @dataProvider tokenJWTProvider
+     */
+    public function testValidJWT(?string $token, bool $expected): void
+    {
+        $data = [
+            'token' => $token,
+        ];
+
+        $this->validation->setRules([
+            'token' => 'valid_jwt',
+        ]);
+
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function tokenJWTProvider(): Generator
+    {
+        yield from [
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+                true,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30XiqsYxWiNp-ArM',
+                false,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BExQdgaw-B52BzVaAt2E3YhXzxFy0uiX0Oiq97s53riONrqYxWiNpzxQwtFhUi-ArM',
+                false,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.INVALID.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+                false,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.INVALID',
+                false,
+            ],
+            [
+                'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
+                false,
+            ],
+            [
+                null,
+                false,
+            ],
+            [
+                '..',
+                false,
+            ],
+            [
+                'RGVubnk',
+                false,
+            ],
+        ];
+    }
 
     /**
      * @dataProvider urlProvider
