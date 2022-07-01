@@ -50,7 +50,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     protected function setUp(): void
     {
         unset($_ENV['foo'], $_SERVER['foo']);
-        Services::reset();
+        $this->resetServices();
 
         parent::setUp();
     }
@@ -593,8 +593,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCspStyleNonce()
     {
-        $this->resetServices();
-
         $config             = config('App');
         $config->CSPEnabled = true;
 
@@ -603,11 +601,20 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testCspScriptNonce()
     {
-        $this->resetServices();
-
         $config             = config('App');
         $config->CSPEnabled = true;
 
         $this->assertStringStartsWith('nonce="', csp_script_nonce());
+    }
+
+    public function testLangOnCLI()
+    {
+        Services::createRequest(new App(), true);
+
+        $message = lang('CLI.generator.fileCreate', ['TestController.php']);
+
+        $this->assertSame('File created: TestController.php', $message);
+
+        $this->resetServices();
     }
 }
