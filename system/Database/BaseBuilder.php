@@ -1878,11 +1878,13 @@ class BaseBuilder
     /**
      * Compiles an insert string and runs the query
      *
+     * @param array|object|null $set
+     *
      * @throws DatabaseException
      *
      * @return bool|Query
      */
-    public function insert(?array $set = null, ?bool $escape = null)
+    public function insert($set = null, ?bool $escape = null)
     {
         if ($set !== null) {
             $this->set($set, '', $escape);
