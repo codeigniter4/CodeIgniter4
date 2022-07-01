@@ -265,34 +265,50 @@ class Connection extends BaseConnection
      */
     protected function _indexData(string $table): array
     {
-        // Get indexes
-        // Don't use PRAGMA index_list, so we can preserve index order
-        $sql = "SELECT name FROM sqlite_master WHERE type='index' AND tbl_name=" . $this->escape(strtolower($table));
+        $sql = "SELECT 'PRIMARY' as indexname, l.name as fieldname, 'PRIMARY' as indextype
+                FROM pragma_table_info(" . $this->escape(strtolower($table)) . ") as l
+                WHERE l.pk <> 0
+                UNION ALL
+                SELECT sqlite_master.name as indexname, ii.name as fieldname,
+                CASE
+                WHEN ti.pk <> 0 AND sqlite_master.name LIKE 'sqlite_autoindex_%' THEN 'PRIMARY'
+                WHEN sqlite_master.name LIKE 'sqlite_autoindex_%' THEN 'UNIQUE'
+                WHEN sqlite_master.sql LIKE '% UNIQUE %' THEN 'UNIQUE'
+                ELSE ''
+                END as indextype
+                FROM sqlite_master
+                INNER JOIN pragma_index_xinfo(sqlite_master.name) ii ON ii.name IS NOT NULL
+                LEFT JOIN pragma_table_info(" . $this->escape(strtolower($table)) . ") ti ON ti.name = ii.name
+                WHERE sqlite_master.type='index' AND sqlite_master.tbl_name = " . $this->escape(strtolower($table)) . ' COLLATE NOCASE';
+
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
         }
         $query = $query->getResultObject();
 
-        $retVal = [];
+        $tempVal = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
-
-            $obj->name = $row->name;
-
-            // Get fields for index
-            $obj->fields = [];
-
-            if (false === $fields = $this->query('PRAGMA index_info(' . $this->escape(strtolower($row->name)) . ')')) {
-                throw new DatabaseException(lang('Database.failGetIndexData'));
+            if ($row->indextype === 'PRIMARY') {
+                $tempVal['PRIMARY']['indextype']               = $row->indextype;
+                $tempVal['PRIMARY']['indexname']               = $row->indexname;
+                $tempVal['PRIMARY']['fields'][$row->fieldname] = $row->fieldname;
+            } else {
+                $tempVal[$row->indexname]['indextype']               = $row->indextype;
+                $tempVal[$row->indexname]['indexname']               = $row->indexname;
+                $tempVal[$row->indexname]['fields'][$row->fieldname] = $row->fieldname;
             }
+        }
 
-            $fields = $fields->getResultObject();
+        $retVal = [];
 
-            foreach ($fields as $field) {
-                $obj->fields[] = $field->name;
-            }
+        foreach ($tempVal as $val) {
+            $fields = array_values($val['fields']);
 
+            $obj                = new stdClass();
+            $obj->name          = $val['indexname'];
+            $obj->fields        = $fields;
+            $obj->type          = $val['indextype'];
             $retVal[$obj->name] = $obj;
         }
 
