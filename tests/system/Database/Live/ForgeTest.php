@@ -879,14 +879,11 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCompositeKey()
     {
-        // SQLite3 uses auto increment different
-        $uniqueOrAuto = $this->db->DBDriver === 'SQLite3' ? 'unique' : 'auto_increment';
-
         $this->forge->addField([
             'id' => [
-                'type'        => 'INTEGER',
-                'constraint'  => 3,
-                $uniqueOrAuto => true,
+                'type'           => 'INTEGER',
+                'constraint'     => 3,
+                'auto_increment' => true,
             ],
             'code' => [
                 'type'       => 'VARCHAR',
@@ -929,8 +926,8 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
             $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'SQLite3') {
-            $this->assertSame($keys['sqlite_autoindex_db_forge_test_1_1']->name, 'sqlite_autoindex_db_forge_test_1_1');
-            $this->assertSame($keys['sqlite_autoindex_db_forge_test_1_1']->fields, ['id']);
+            $this->assertSame($keys['PRIMARY']->name, 'PRIMARY');
+            $this->assertSame($keys['PRIMARY']->fields, ['id']);
             $this->assertSame($keys['db_forge_test_1_code_company']->name, 'db_forge_test_1_code_company');
             $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
             $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
