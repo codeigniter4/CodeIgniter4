@@ -52,6 +52,7 @@ Changes
     - The ``CodeIgniter\CLI\CommandRunner`` class has been removed due to a change in Spark commands processing.
     - The system route configuration file ``system/Config/Routes.php`` has been removed.
     - The route configuration file ``app/Config/Routes.php`` has been changed. Removed include of system routes configuration file.
+- All union type properties in ``Config`` classes have been typed.
 
 Deprecations
 ************
