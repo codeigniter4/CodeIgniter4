@@ -303,11 +303,9 @@ class Connection extends BaseConnection
         $retVal = [];
 
         foreach ($tempVal as $val) {
-            $fields = array_values($val['fields']);
-
             $obj                = new stdClass();
             $obj->name          = $val['indexname'];
-            $obj->fields        = $fields;
+            $obj->fields        = array_values($val['fields']);
             $obj->type          = $val['indextype'];
             $retVal[$obj->name] = $obj;
         }
