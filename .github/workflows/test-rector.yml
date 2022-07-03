@@ -39,7 +39,7 @@ jobs:
           - app
           - system
           - tests
-          - utils/Rector
+          - utils
     steps:
       - name: Checkout
         uses: actions/checkout@v3
