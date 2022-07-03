@@ -22,14 +22,7 @@ use PHPStan\Rules\Rule;
 
 final class CheckUseStatementsAfterLicenseRule implements Rule
 {
-    /**
-     * @var string
-     */
-    private const ERROR_MESSAGE = 'Use statement must be located after license docblock';
-
-    /**
-     * @var string
-     */
+    private const ERROR_MESSAGE   = 'Use statement must be located after license docblock';
     private const COPYRIGHT_REGEX = '/\* \(c\) CodeIgniter Foundation <admin@codeigniter\.com>/m';
 
     public function getNodeType(): string

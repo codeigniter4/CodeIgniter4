@@ -11,6 +11,8 @@ declare(strict_types=1);
  * the LICENSE file that was distributed with this source code.
  */
 
+namespace Utils;
+
 require __DIR__ . '/../system/Test/bootstrap.php';
 
 use CodeIgniter\CLI\CLI;
@@ -18,7 +20,7 @@ use CodeIgniter\CLI\CLI;
 $rstFilesWithTabs = (string) shell_exec('git grep -EIPn "\t" -- "*.rst"');
 $rstFilesWithTabs = explode("\n", $rstFilesWithTabs);
 $rstFilesWithTabs = array_map(static function (string $line): array {
-    preg_match('/^(?P<file>[^:]+):(?P<line>[0-9]+):(?P<code>.+)$/', $line, $matches);
+    preg_match('/^(?P<file>[^:]+):(?P<line>\d+):(?P<code>.+)$/', $line, $matches);
 
     return [
         'file' => $matches['file'],
@@ -44,20 +46,16 @@ if ($normalizedRstFilesWithTabs !== []) {
         "%s\n\n%s\n",
         CLI::color('Tabs in RST files were detected:', 'light_gray', 'red'),
         implode("\n", array_map(
-            static function (string $file, array $parts): string {
-                return sprintf(
-                    "%s%s\n%s\n",
-                    CLI::color('* in ', 'light_red'),
-                    CLI::color($file, 'yellow'),
-                    implode("\n", array_map(static function (array $line): string {
-                        return sprintf(
-                            '%s | %s',
-                            str_pad($line['line'], 4, ' ', STR_PAD_LEFT),
-                            str_replace("\t", CLI::color('....', 'light_gray', 'red'), $line['code']),
-                        );
-                    }, $parts)),
-                );
-            },
+            static fn (string $file, array $parts): string => sprintf(
+                "%s%s\n%s\n",
+                CLI::color('* in ', 'light_red'),
+                CLI::color($file, 'yellow'),
+                implode("\n", array_map(static fn (array $line): string => sprintf(
+                    '%s | %s',
+                    str_pad($line['line'], 4, ' ', STR_PAD_LEFT),
+                    str_replace("\t", CLI::color('....', 'light_gray', 'red'), $line['code']),
+                ), $parts)),
+            ),
             array_keys($normalizedRstFilesWithTabs),
             array_values($normalizedRstFilesWithTabs),
         )),
