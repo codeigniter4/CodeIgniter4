@@ -16,6 +16,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use InvalidArgumentException;
+use RuntimeException;
 use UnnamespacedClass;
 
 /**
@@ -197,20 +199,44 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertFalse($this->loader->loadClass('Modules'));
     }
 
-    public function testSanitizationSimply()
+    public function testSanitizationContailsSpecialChars()
     {
-        $test     = '${../path}!#/to/some/file.php_';
-        $expected = '/path/to/some/file.php';
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"'
+        );
 
-        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
+        $test = '${../path}!#/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationFilenameEdges()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"'
+        );
+
+        $test = '/path/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationRegexError()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $test = mb_convert_encoding('クラスファイル.php', 'EUC-JP', 'UTF-8');
+
+        $this->loader->sanitizeFilename($test);
     }
 
     public function testSanitizationAllowUnicodeChars()
     {
-        $test     = 'Ä/path/to/some/file.php_';
-        $expected = 'Ä/path/to/some/file.php';
+        $test = 'Ä/path/to/some/file.php';
 
-        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
+        $this->assertSame($test, $this->loader->sanitizeFilename($test));
     }
 
     public function testSanitizationAllowsWindowsFilepaths()

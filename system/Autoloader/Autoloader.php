@@ -15,6 +15,7 @@ use Composer\Autoload\ClassLoader;
 use Config\Autoload;
 use Config\Modules;
 use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * An autoloader that uses both PSR4 autoloading, and traditional classmaps.
@@ -290,9 +291,9 @@ class Autoloader
     }
 
     /**
-     * Sanitizes a filename, replacing spaces with dashes.
+     * Check file path.
      *
-     * Removes special characters that are illegal in filenames on certain
+     * Checks special characters that are illegal in filenames on certain
      * operating systems and special characters requiring special escaping
      * to manipulate at the command line. Replaces spaces and consecutive
      * dashes with a single dash. Trim period, dash and underscore from beginning
@@ -306,10 +307,34 @@ class Autoloader
         // Plus the forward slash for directory separators since this might be a path.
         // http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_278
         // Modified to allow backslash and colons for on Windows machines.
-        $filename = preg_replace('/[^0-9\p{L}\s\/\-\_\.\:\\\\]/u', '', $filename);
+        $result = preg_match_all('/[^0-9\p{L}\s\/\-_.:\\\\]/u', $filename, $matches);
+
+        if ($result > 0) {
+            $chars = implode('', $matches[0]);
+
+            throw new InvalidArgumentException(
+                'The file path contains special characters "' . $chars
+                . '" that are not allowed: "' . $filename . '"'
+            );
+        }
+        if ($result === false) {
+            if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
+                $message = preg_last_error_msg();
+            } else {
+                $message = 'Regex error. error code: ' . preg_last_error();
+            }
+
+            throw new RuntimeException($message . '. filename: "' . $filename . '"');
+        }
 
         // Clean up our filename edges.
-        return trim($filename, '.-_');
+        $cleanFilename = trim($filename, '.-_');
+
+        if ($filename !== $cleanFilename) {
+            throw new InvalidArgumentException('The characters ".-_" are not allowed in filename edges: "' . $filename . '"');
+        }
+
+        return $cleanFilename;
     }
 
     private function loadComposerNamespaces(ClassLoader $composer): void
