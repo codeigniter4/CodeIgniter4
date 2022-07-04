@@ -47,10 +47,8 @@ class Logger extends BaseConfig
      *
      * Each item that is logged has an associated date. You can use PHP date
      * codes to set your own date formatting
-     *
-     * @var string
      */
-    public $dateFormat = 'Y-m-d H:i:s';
+    public string $dateFormat = 'Y-m-d H:i:s';
 
     /**
      * --------------------------------------------------------------------------
@@ -60,7 +58,7 @@ class Logger extends BaseConfig
      * The logging system supports multiple actions to be taken when something
      * is logged. This is done by allowing for multiple Handlers, special classes
      * designed to write the log to their chosen destinations, whether that is
-     * a file on the server, a cloud-based service, or even taking actions such
+     * a file on the getServer, a cloud-based service, or even taking actions such
      * as emailing the dev team.
      *
      * Each handler is defined by the class name used for that handler, and it
@@ -74,10 +72,8 @@ class Logger extends BaseConfig
      *
      * Handlers are executed in the order defined in this array, starting with
      * the handler on top and continuing down.
-     *
-     * @var array
      */
-    public $handlers = [
+    public array $handlers = [
 
         /*
          * --------------------------------------------------------------------

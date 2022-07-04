@@ -26,32 +26,12 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$backupHandler \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/CacheFactory.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$handler \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/CacheFactory.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$validHandlers \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/CacheFactory.php
-
-		-
 			message: "#^Comparison operation \"\\>\" between int\\<1, max\\> and \\(array\\|float\\|int\\) results in an error\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php
 
 		-
 			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: system/Cache/Handlers/FileHandler.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$storePath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php
 
@@ -81,11 +61,6 @@ parameters:
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$redis \\(array\\<string, int\\|string\\|null\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/Handlers/PredisHandler.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
@@ -102,16 +77,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:setLocale\\(\\)\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$appTimezone \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$defaultLocale \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/CodeIgniter.php
 
@@ -164,16 +129,6 @@ parameters:
 			message: "#^Property CodeIgniter\\\\Database\\\\Migration\\:\\:\\$DBGroup \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Database/Migration.php
-
-		-
-			message: "#^Property Config\\\\Migrations\\:\\:\\$enabled \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Database/MigrationRunner.php
-
-		-
-			message: "#^Property Config\\\\Migrations\\:\\:\\$table \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Database/MigrationRunner.php
 
 		-
 			message: "#^Cannot access property \\$errno on bool\\|object\\|resource\\.$#"
@@ -441,24 +396,9 @@ parameters:
 			path: system/Database/SQLite3/Result.php
 
 		-
-			message: "#^Property Config\\\\Database\\:\\:\\$filesPath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Database/Seeder.php
-
-		-
 			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Debug/Exceptions.php
-
-		-
-			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Exceptions.php
-
-		-
-			message: "#^Property Config\\\\Toolbar\\:\\:\\$collectVarData \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Toolbar.php
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"
@@ -486,32 +426,12 @@ parameters:
 			path: system/Email/Email.php
 
 		-
-			message: "#^Property Config\\\\Encryption\\:\\:\\$digest \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 2
-			path: system/Encryption/Encryption.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Files\\\\File\\:\\:\\$size \\(int\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Files/File.php
 
 		-
 			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Filters/Filters.php
-
-		-
-			message: "#^Property Config\\\\Filters\\:\\:\\$filters \\(array\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Filters/Filters.php
-
-		-
-			message: "#^Property Config\\\\Filters\\:\\:\\$globals \\(array\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Filters/Filters.php
-
-		-
-			message: "#^Property Config\\\\Filters\\:\\:\\$methods \\(array\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Filters/Filters.php
 
@@ -646,11 +566,6 @@ parameters:
 			path: system/Images/Handlers/ImageMagickHandler.php
 
 		-
-			message: "#^Property Config\\\\Logger\\:\\:\\$dateFormat \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Log/Logger.php
-
-		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#"
 			count: 3
 			path: system/Router/Router.php
@@ -696,87 +611,12 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRF[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 6
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 8
-			path: system/Security/Security.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
 			count: 1
 			path: system/Session/Handlers/RedisHandler.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$cookieDomain \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$cookiePath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$cookieSecure \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionCookieName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionExpiration \\(int\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionMatchIP \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionRegenerateDestroy \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionTimeToUpdate \\(int\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$domain \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$path \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$raw \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$samesite \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$secure \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Session/Session.php
 
@@ -844,11 +684,6 @@ parameters:
 			message: "#^Property Config\\\\View\\:\\:\\$plugins \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/View/Parser.php
-
-		-
-			message: "#^Result of \\|\\| is always false\\.$#"
-			paths:
-				- system/Cache/CacheFactory.php
 
 		-
 			message: "#^Binary operation \"/\" between string and 8 results in an error\\.$#"
