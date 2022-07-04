@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Database\Exceptions;
 
-use CodeIgniter\Exceptions\HasExitCodeException;
+use CodeIgniter\Exceptions\ExitExceptionInterface;
 use Error;
 
-class DatabaseException extends Error implements ExceptionInterface, HasExitCodeException
+class DatabaseException extends Error implements ExceptionInterface, ExitExceptionInterface
 {
     /**
      * Exit status code

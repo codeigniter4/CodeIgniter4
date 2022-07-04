@@ -18,7 +18,7 @@ namespace CodeIgniter\Exceptions;
  *
  * @codeCoverageIgnore
  */
-class CastException extends CriticalError implements HasExitCodeException
+class CastException extends CriticalError implements ExitExceptionInterface
 {
     use DebugTraceableTrait;
 
