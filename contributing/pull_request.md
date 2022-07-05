@@ -238,7 +238,12 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
    - `> cd CodeIgniter4/`
    - `> composer update`
 6. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
-   - `> git checkout -b <new-branch-name>`
+   - If your PR is for bug fixes:
+      - `> git switch develop`
+      - `> git switch -c <new-branch-name>`
+   - If your PR has any enhancement, create new branch from next minor version branch, e.g. __"4.3"__:
+      - `> git switch <next-minor-version-branch>`
+      - `> git switch -c <new-branch-name>`
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 8. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
    - `> git commit`

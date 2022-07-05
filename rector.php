@@ -41,6 +41,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\Rector\MethodCall\GetMockBuilderGetMockToCreateMockRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
@@ -63,7 +64,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->parallel();
 
     // paths to refactor; solid alternative to CLI arguments
-    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
+    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
 
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     $rectorConfig->bootstrapFiles([
@@ -121,6 +122,11 @@ return static function (RectorConfig $rectorConfig): void {
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
+
+        // @TODO remove if https://github.com/rectorphp/rector-phpunit/issues/86 is fixed
+        GetMockBuilderGetMockToCreateMockRector::class => [
+            __DIR__ . '/tests/system/Email/EmailTest.php',
+        ],
     ]);
 
     // auto import fully qualified class names

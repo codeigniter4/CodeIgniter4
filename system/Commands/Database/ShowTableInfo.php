@@ -129,6 +129,7 @@ class ShowTableInfo extends BaseCommand
                 $tables,
                 'required'
             );
+            CLI::newLine();
 
             $tableName = $tables[$tableNameNo];
         }
@@ -154,7 +155,6 @@ class ShowTableInfo extends BaseCommand
 
     private function showDataOfTable(string $tableName, int $limitRows, int $limitFieldValue)
     {
-        CLI::newLine();
         CLI::write("Data of Table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
@@ -245,7 +245,6 @@ class ShowTableInfo extends BaseCommand
 
     private function showFieldMetaData(string $tableName): void
     {
-        CLI::newLine();
         CLI::write("List of Metadata Information in Table \"{$tableName}\":", 'black', 'yellow');
         CLI::newLine();
 
