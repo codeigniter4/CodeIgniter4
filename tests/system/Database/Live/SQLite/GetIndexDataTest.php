@@ -90,7 +90,7 @@ final class GetIndexDataTest extends CIUnitTestCase
         $row                                 = new stdclass();
         $row->name                           = 'testuser_country';
         $row->fields                         = ['country'];
-        $row->type                           = '';
+        $row->type                           = 'INDEX';
         $expectedIndexes['testuser_country'] = $row;
 
         $indexes = $this->db->getIndexData('testuser');
@@ -105,6 +105,5 @@ final class GetIndexDataTest extends CIUnitTestCase
         $this->assertSame($expectedIndexes['testuser_country']->type, $indexes['testuser_country']->type);
 
         $this->forge->dropTable('testuser', true);
-        $this->forge->dropTable('userforeign', true);
     }
 }

@@ -107,13 +107,13 @@ final class AlterTableTest extends CIUnitTestCase
 
         $keys = $this->getPrivateProperty($this->table, 'keys');
 
-        $this->assertCount(4, $keys);
+        $this->assertCount(3, $keys);
         $this->assertArrayHasKey('foo_name', $keys);
         $this->assertSame(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
-        $this->assertArrayHasKey('id', $keys);
-        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
-        $this->assertArrayHasKey('id', $keys);
-        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
+        $this->assertArrayHasKey('foo_email', $keys);
+        $this->assertSame(['fields' => ['email'], 'type' => 'unique'], $keys['foo_email']);
+        $this->assertArrayHasKey('primary', $keys);
+        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['primary']);
     }
 
     public function testDropColumnSuccess()

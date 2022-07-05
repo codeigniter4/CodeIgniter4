@@ -274,7 +274,7 @@ class Connection extends BaseConnection
                 WHEN ti.pk <> 0 AND sqlite_master.name LIKE 'sqlite_autoindex_%' THEN 'PRIMARY'
                 WHEN sqlite_master.name LIKE 'sqlite_autoindex_%' THEN 'UNIQUE'
                 WHEN sqlite_master.sql LIKE '% UNIQUE %' THEN 'UNIQUE'
-                ELSE ''
+                ELSE 'INDEX'
                 END as indextype
                 FROM sqlite_master
                 INNER JOIN pragma_index_xinfo(sqlite_master.name) ii ON ii.name IS NOT NULL
