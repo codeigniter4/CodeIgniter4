@@ -14,4 +14,3 @@ return [
     'whoops'     => 'Whoops!',
     'weHitASnag' => 'We seem to have hit a snag. Please try again later...',
 ];
-
