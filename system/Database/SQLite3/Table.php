@@ -369,7 +369,7 @@ class Table
             return;
         }
 
-        foreach ($this->keys as $name => $key) {
+        foreach (array_keys($this->keys) as $name) {
             if ($name === 'primary') {
                 continue;
             }
