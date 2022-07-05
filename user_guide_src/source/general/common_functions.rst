@@ -329,14 +329,14 @@ Miscellaneous Functions
 .. php:function:: route_to($method[, ...$params])
 
     :param   string  $method: The named route alias, or name of the controller/method to match.
-    :param   mixed   $params: One or more parameters to be passed to be matched in the route.
+    :param   int|string   $params: One or more parameters to be passed to be matched in the route.
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
-    Generates a URI relative to the domain name (not **baseUrl**) for you based on either a named route alias,
+    Generates a URI path (route) for you based on either a named route alias,
     or a controller::method combination. Will take parameters into effect, if provided.
 
-    For full details, see the :doc:`/incoming/routing` page.
+    For full details, see the :ref:`reverse-routing` and :ref:`using-named-routes`.
 
 .. php:function:: service($name[, ...$params])
 

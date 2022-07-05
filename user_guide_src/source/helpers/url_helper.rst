@@ -346,8 +346,8 @@ The following functions are available:
 
 .. php:function:: url_to($controller[, ...$args])
 
-    :param  string  $controller: The controller class and method
-    :param  mixed   ...$args: Additional arguments to be injected into the route
+    :param  string  $controller: Named route or Controller::method
+    :param  mixed   ...$args:    One or more parameters to be passed to the route
     :returns: Absolute URL
     :rtype: string
 
@@ -361,9 +361,6 @@ The following functions are available:
     Here is an example:
 
     .. literalinclude:: url_helper/022.php
-
-    The above example would return something like:
-    *http://example.com/page/home*
 
     This is useful because you can still change your routes after putting links
     into your views.

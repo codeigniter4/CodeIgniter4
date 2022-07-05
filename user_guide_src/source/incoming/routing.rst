@@ -269,6 +269,8 @@ routes defined within this closure are only accessible from the given environmen
 
 .. literalinclude:: routing/028.php
 
+.. _reverse-routing:
+
 Reverse Routing
 ===============
 
@@ -277,11 +279,18 @@ to, and have the router lookup the current route to it. This allows route defini
 to update your application code. This is typically used within views to create links.
 
 For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
-function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
+function to get the URI path (route) that should be used. The first parameter is the fully qualified Controller and method,
 separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next:
 
 .. literalinclude:: routing/029.php
+
+.. note:: ``route_to()`` returns a URI path for the route, not a full URI path
+    for your site. If your **baseURL** contains sub folders, the return value is
+    not the same as the URI to link. In that case, you need to use :php:func:`site_url`
+    like ``site_url(route_to(...))``, or just use :php:func:`url_to` instead.
+
+.. _using-named-routes:
 
 Using Named Routes
 ==================
@@ -294,6 +303,11 @@ with the name of the route:
 .. literalinclude:: routing/030.php
 
 This has the added benefit of making the views more readable, too.
+
+.. note:: ``route_to()`` returns a URI path for the route, not a full URI path
+    for your site. If your **baseURL** contains sub folders, the return value is
+    not the same as the URI to link. In that case, you need to use :php:func:`site_url`
+    like ``site_url(route_to(...))``, or just use :php:func:`url_to` instead.
 
 Routes with any HTTP verbs
 ==========================
