@@ -64,7 +64,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->parallel();
 
     // paths to refactor; solid alternative to CLI arguments
-    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
+    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
 
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     $rectorConfig->bootstrapFiles([

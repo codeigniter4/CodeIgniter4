@@ -22,9 +22,6 @@ use PHPStan\Rules\Rule;
 
 final class CheckFrameworkExceptionInstantiationViaNamedConstructorRule implements Rule
 {
-    /**
-     * @var string
-     */
     private const ERROR_MESSAGE = 'FrameworkException instance creation via new expression is not allowed, use its named constructor instead';
 
     public function getNodeType(): string
