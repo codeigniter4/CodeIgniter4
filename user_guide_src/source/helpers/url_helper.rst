@@ -365,6 +365,8 @@ The following functions are available:
     This is useful because you can still change your routes after putting links
     into your views.
 
+    For full details, see the :ref:`reverse-routing` and :ref:`using-named-routes`.
+
 .. php:function:: url_is($path)
 
     :param string $path: The path to check the current URI path against.

@@ -333,10 +333,16 @@ Miscellaneous Functions
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
-    Generates a URI path (route) for you based on either a named route alias,
+    Generates a route for you based on either a named route alias,
     or a controller::method combination. Will take parameters into effect, if provided.
 
-    For full details, see the :ref:`reverse-routing` and :ref:`using-named-routes`.
+    .. literalinclude:: common_functions/009.php
+
+    .. literalinclude:: common_functions/010.php
+
+    .. note:: ``route_to()`` returns a route, not a full URI path for your site.
+        If your **baseURL** contains sub folders, the return value is not the same
+        as the URI to link. In that case, just use :php:func:`url_to` instead.
 
 .. php:function:: service($name[, ...$params])
 
