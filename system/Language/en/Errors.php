@@ -1,25 +1,16 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="robots" content="noindex">
+<?php
 
-    <title><?= lang('Errors.whoops') ?></title>
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
 
-    <style type="text/css">
-        <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
-    </style>
-</head>
-<body>
-
-<div class="container text-center">
-
-    <h1 class="headline"><?= lang('Errors.whoops') ?></h1>
-
-    <p class="lead"><?= lang('Errors.weHitASnag') ?></p>
-
-</div>
-
-</body>
-
-</html>
+// Errors language settings
+return [
+    'whoops'     => 'Whoops!',
+    'weHitASnag' => 'We seem to have hit a snag. Please try again later...',
+];
