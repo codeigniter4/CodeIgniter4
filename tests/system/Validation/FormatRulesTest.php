@@ -99,40 +99,60 @@ final class FormatRulesTest extends CIUnitTestCase
     public function tokenJWTProvider(): Generator
     {
         yield from [
-            [
+            'valid_HS256' => [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
                 true,
             ],
-            [
+            'valid_RS512' => [
+                'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.jYW04zLDHfR1v7xdrW3lCGZrMIsVe0vWCfVkN2DRns2c3MN-mcp_-RE6TN9umSBYoNV-mnb31wFf8iun3fB6aDS6m_OXAiURVEKrPFNGlR38JSHUtsFzqTOj-wFrJZN4RwvZnNGSMvK3wzzUriZqmiNLsG8lktlEn6KA4kYVaM61_NpmPHWAjGExWv7cjHYupcjMSmR8uMTwN5UuAwgW6FRstCJEfoxwb0WKiyoaSlDuIiHZJ0cyGhhEmmAPiCwtPAwGeaL1yZMcp0p82cpTQ5Qb-7CtRov3N4DcOHgWYk6LomPR5j5cCkePAz87duqyzSMpCB0mCOuE3CU2VMtGeQ',
+                true,
+            ],
+            'valid_ES256' => [
+                'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.tyh-VfuzIxCyGYDlkBA7DfyjrqmSHu6pQ2hoZuFqUSLPNY2N0mpHb3nk5K17HWP_3cYHBw7AhHale5wky6-sVA',
+                true,
+            ],
+            'valid_ES512' => [
+                'eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.AbVUinMiT3J_03je8WTOIl-VdggzvoFgnOsdouAs-DLOtQzau9valrq-S6pETyi9Q18HH-EuwX49Q7m3KC0GuNBJAc9Tksulgsdq8GqwIqZqDKmG7hNmDzaQG1Dpdezn2qzv-otf3ZZe-qNOXUMRImGekfQFIuH_MjD2e8RZyww6lbZk',
+                true,
+            ],
+            'valid_PS256' => [
+                'eyJhbGciOiJQUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.iOeNU4dAFFeBwNj6qdhdvm-IvDQrTa6R22lQVJVuWJxorJfeQww5Nwsra0PjaOYhAMj9jNMO5YLmud8U7iQ5gJK2zYyepeSuXhfSi8yjFZfRiSkelqSkU19I-Ja8aQBDbqXf2SAWA8mHF8VS3F08rgEaLCyv98fLLH4vSvsJGf6ueZSLKDVXz24rZRXGWtYYk_OYYTVgR1cg0BLCsuCvqZvHleImJKiWmtS0-CymMO4MMjCy_FIl6I56NqLE9C87tUVpo1mT-kbg5cHDD8I7MjCW5Iii5dethB4Vid3mZ6emKjVYgXrtkOQ-JyGMh6fnQxEFN1ft33GX2eRHluK9eg',
+                true,
+            ],
+            'valid_PS512' => [
+                'eyJhbGciOiJQUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.J5W09-rNx0pt5_HBiydR-vOluS6oD-RpYNa8PVWwMcBDQSXiw6-EPW8iSsalXPspGj3ouQjAnOP_4-zrlUUlvUIt2T79XyNeiKuooyIFvka3Y5NnGiOUBHWvWcWp4RcQFMBrZkHtJM23sB5D7Wxjx0-HFeNk-Y3UJgeJVhg5NaWXypLkC4y0ADrUBfGAxhvGdRdULZivfvzuVtv6AzW6NRuEE6DM9xpoWX_4here-yvLS2YPiBTZ8xbB3axdM99LhES-n52lVkiX5AWg2JJkEROZzLMpaacA_xlbUz_zbIaOaoqk8gB5oO7kI6sZej3QAdGigQy-hXiRnW_L98d4GQ',
+                true,
+            ],
+            'invalid_signature_length_short' => [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30XiqsYxWiNp-ArM',
                 false,
             ],
-            [
+            'invalid_signature_length' => [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BExQdgaw-B52BzVaAt2E3YhXzxFy0uiX0Oiq97s53riONrqYxWiNpzxQwtFhUi-ArM',
                 false,
             ],
-            [
+            'invalid_base64_payload' => [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.INVALID.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
                 false,
             ],
-            [
+            'invalid_signature' => [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.INVALID',
                 false,
             ],
-            [
+            'invalid_delimeter_comma_have_one' => [
                 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9eyJzbV91bmlxdWUiOjE2NTQ4NDc0MzcsInNtX2lwYWRkciI6IjEwMy44My4xNzMuMTc4Iiwic21fZW1haWwiOiJpdC4yZGV2QGFiYi5jb20ifQ.BEx-B52BzVaAt2E30X0Oiq97s53riONrqYxWiNp-ArM',
                 false,
             ],
-            [
+            'invalid_null' => [
                 null,
                 false,
             ],
-            [
-                '..', // Manipulate format delimeter comma
+            'manipulate_delimeter_comma' => [
+                '..',
                 false,
             ],
-            [
-                'RGVubnk', // Regular string without format delimeter comma
+            'invalid_string_format' => [
+                'RGVubnk',
                 false,
             ],
         ];
