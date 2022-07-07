@@ -373,6 +373,10 @@ class FormatRules
             }
         }
 
-        return (mb_strlen($segments[$index], '8bit') >= 32 && mb_strlen($segments[$index], '8bit') <= 64) || (mb_strlen($segments[$index], '8bit') >= 86 && mb_strlen($segments[$index], '8bit') <= 176) || mb_strlen($segments[$index], '8bit') === 342;
+        $strLength = mb_strlen($segments[$index], '8bit');
+
+        return ($strLength >= 32 && $strLength <= 64)
+            || $strLength >= 86 && $strLength <= 176)
+            || $strLength === 342;
     }
 }
