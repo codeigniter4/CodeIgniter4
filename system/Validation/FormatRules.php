@@ -376,7 +376,7 @@ class FormatRules
         $strLength = mb_strlen($segments[$index], '8bit');
 
         return ($strLength >= 32 && $strLength <= 64)
-            || $strLength >= 86 && $strLength <= 176)
+            || $strLength >= 86 && $strLength <= 176
             || $strLength === 342;
     }
 }
