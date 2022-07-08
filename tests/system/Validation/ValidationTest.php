@@ -1098,6 +1098,12 @@ final class ValidationTest extends CIUnitTestCase
                 ['foo' => ['boz']],
             ]],
         ];
+
+        yield 'leading-asterisk' => [
+            true,
+            ['*.foo' => 'required'],
+            [['foo' => 'bar']],
+        ];
     }
 
     /**
@@ -1323,5 +1329,18 @@ final class ValidationTest extends CIUnitTestCase
             'beneficiaries_accounts.account_2.credit_amount' => 'The CREDIT AMOUNT field is required.',
             'beneficiaries_accounts.account_2.purpose'       => 'The PURPOSE field must be at least 3 characters in length.',
         ], $this->validation->getErrors());
+    }
+
+    public function testRuleWithLeadingAsterisk(): void
+    {
+        $data = [
+            ['foo' => 1],
+            ['foo' => null],
+        ];
+
+        $this->validation->setRules(['*.foo' => 'required'], ['1.foo' => ['required' => 'Required {field}']]);
+
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame('Required *.foo', $this->validation->getError('*.foo'));
     }
 }
