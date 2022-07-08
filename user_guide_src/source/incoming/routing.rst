@@ -269,6 +269,8 @@ routes defined within this closure are only accessible from the given environmen
 
 .. literalinclude:: routing/028.php
 
+.. _reverse-routing:
+
 Reverse Routing
 ===============
 
@@ -276,12 +278,14 @@ Reverse routing allows you to define the controller and method, as well as any p
 to, and have the router lookup the current route to it. This allows route definitions to change without you having
 to update your application code. This is typically used within views to create links.
 
-For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
-function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
+For example, if you have a route to a photo gallery that you want to link to, you can use the ``url_to()`` helper
+function to get the route that should be used. The first parameter is the fully qualified Controller and method,
 separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next:
 
 .. literalinclude:: routing/029.php
+
+.. _using-named-routes:
 
 Using Named Routes
 ==================

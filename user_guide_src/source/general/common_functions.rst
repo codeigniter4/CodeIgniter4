@@ -65,7 +65,7 @@ Service Accessors
     values that are specific to the environment itself, like database
     settings, API keys, etc.
 
-.. php:function:: esc($data[, $context = 'html' [, $encoding]])
+.. php:function:: esc($data[, $context = 'html'[, $encoding]])
 
     :param   string|array   $data: The information to be escaped.
     :param   string   $context: The escaping context. Default is 'html'.
@@ -89,7 +89,7 @@ Service Accessors
 
     For full details, see the :doc:`helpers` page.
 
-.. php:function:: lang($line[, $args[, $locale ]])
+.. php:function:: lang($line[, $args[, $locale]])
 
     :param string $line: The line of text to retrieve
     :param array  $args: An array of data to substitute for placeholders.
@@ -99,7 +99,7 @@ Service Accessors
 
     For more information, see the :doc:`Localization </outgoing/localization>` page.
 
-.. php:function:: model($name [, $getShared = true [, &$conn = null ]])
+.. php:function:: model($name[, $getShared = true[, &$conn = null]])
 
     :param string                   $name:
     :param boolean                  $getShared:
@@ -107,7 +107,7 @@ Service Accessors
     :returns: More simple way of getting model instances
     :rtype: mixed
 
-.. php:function:: old( $key[, $default = null, [, $escape = 'html' ]] )
+.. php:function:: old($key[, $default = null,[, $escape = 'html']])
 
     :param string $key: The name of the old form data to check for.
     :param mixed  $default: The default value to return if $key doesn't exist.
@@ -124,7 +124,7 @@ Service Accessors
 .. note:: If you are using the :doc:`form helper </helpers/form_helper>`, this feature is built-in. You only
         need to use this function when not using the form helper.
 
-.. php:function:: session( [$key] )
+.. php:function:: session([$key])
 
     :param string $key: The name of the session item to check for.
     :returns: An instance of the Session object if no $key, the value found in the session for $key, or null.
@@ -133,7 +133,7 @@ Service Accessors
     Provides a convenient way to access the session class and to retrieve a
     stored value. For more information, see the :doc:`Sessions </libraries/sessions>` page.
 
-.. php:function:: timer( [$name] )
+.. php:function:: timer([$name])
 
     :param string $name: The name of the benchmark point.
     :returns: The Timer instance
@@ -147,7 +147,7 @@ Service Accessors
 
     .. literalinclude:: common_functions/003.php
 
-.. php:function:: view ($name [, $data [, $options ]])
+.. php:function:: view($name[, $data[, $options]])
 
     :param   string   $name: The name of the file to load
     :param   array    $data: An array of key/value pairs to make available within the view.
@@ -175,7 +175,7 @@ Service Accessors
 
     For more details, see the :doc:`Views </outgoing/views>` page.
 
-.. php:function:: view_cell ( $library [, $params = null [, $ttl = 0 [, $cacheName = null]]] )
+.. php:function:: view_cell($library[, $params = null[, $ttl = 0[, $cacheName = null]]])
 
     :param string      $library:
     :param null        $params:
@@ -189,14 +189,14 @@ Service Accessors
 Miscellaneous Functions
 =======================
 
-.. php:function:: app_timezone ()
+.. php:function:: app_timezone()
 
     :returns: The timezone the application has been set to display dates in.
     :rtype: string
 
     Returns the timezone the application has been set to display dates in.
 
-.. php:function:: csp_script_nonce ()
+.. php:function:: csp_script_nonce()
 
     :returns: The CSP nonce attribute for script tag.
     :rtype: string
@@ -204,7 +204,7 @@ Miscellaneous Functions
     Returns the nonce attribute for a script tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
     See :ref:`content-security-policy`.
 
-.. php:function:: csp_style_nonce ()
+.. php:function:: csp_style_nonce()
 
     :returns: The CSP nonce attribute for style tag.
     :rtype: string
@@ -212,28 +212,28 @@ Miscellaneous Functions
     Returns the nonce attribute for a style tag. For example: ``nonce="Eskdikejidojdk978Ad8jf"``.
     See :ref:`content-security-policy`.
 
-.. php:function:: csrf_token ()
+.. php:function:: csrf_token()
 
     :returns: The name of the current CSRF token.
     :rtype: string
 
     Returns the name of the current CSRF token.
 
-.. php:function:: csrf_header ()
+.. php:function:: csrf_header()
 
     :returns: The name of the header for current CSRF token.
     :rtype: string
 
     The name of the header for current CSRF token.
 
-.. php:function:: csrf_hash ()
+.. php:function:: csrf_hash()
 
     :returns: The current value of the CSRF hash.
     :rtype: string
 
     Returns the current CSRF hash value.
 
-.. php:function:: csrf_field ()
+.. php:function:: csrf_field()
 
     :returns: A string with the HTML for hidden input with all required CSRF information.
     :rtype: string
@@ -242,7 +242,7 @@ Miscellaneous Functions
 
         <input type="hidden" name="{csrf_token}" value="{csrf_hash}">
 
-.. php:function:: csrf_meta ()
+.. php:function:: csrf_meta()
 
     :returns: A string with the HTML for meta tag with all required CSRF information.
     :rtype: string
@@ -251,7 +251,7 @@ Miscellaneous Functions
 
         <meta name="{csrf_header}" content="{csrf_hash}">
 
-.. php:function:: force_https ( $duration = 31536000 [, $request = null [, $response = null]] )
+.. php:function:: force_https($duration = 31536000[, $request = null[, $response = null]])
 
     :param  int  $duration: The number of seconds browsers should convert links to this resource to HTTPS.
     :param  RequestInterface $request: An instance of the current Request object.
@@ -262,24 +262,24 @@ Miscellaneous Functions
     but through HTTPS. Will set the HTTP Strict Transport Security header, which instructs
     modern browsers to automatically modify any HTTP requests to HTTPS requests for the $duration.
 
-.. php:function:: function_usable ( $function_name )
+.. php:function:: function_usable($function_name)
 
     :param string $function_name: Function to check for
     :returns: true if the function exists and is safe to call, false otherwise.
     :rtype: bool
 
-.. php:function:: is_cli ()
+.. php:function:: is_cli()
 
     :returns: true if the script is being executed from the command line or false otherwise.
     :rtype: bool
 
-.. php:function:: is_really_writable ( $file )
+.. php:function:: is_really_writable($file)
 
     :param string $file: The filename being checked.
     :returns: true if you can write to the file, false otherwise.
     :rtype: bool
 
-.. php:function:: log_message ($level, $message [, $context])
+.. php:function:: log_message($level, $message [, $context])
 
     :param   string   $level: The level of severity
     :param   string   $message: The message that is to be logged.
@@ -295,7 +295,7 @@ Miscellaneous Functions
     Context can be used to substitute values in the message string. For full details, see the
     :doc:`Logging Information <logging>` page.
 
-.. php:function:: redirect( string $route )
+.. php:function:: redirect(string $route)
 
     :param  string  $route: The reverse-routed or named route to redirect the user to.
 
@@ -326,19 +326,25 @@ Miscellaneous Functions
 
     .. literalinclude:: common_functions/007.php
 
-.. php:function:: route_to ( $method [, ...$params] )
+.. php:function:: route_to($method[, ...$params])
 
     :param   string  $method: The named route alias, or name of the controller/method to match.
-    :param   mixed   $params: One or more parameters to be passed to be matched in the route.
+    :param   int|string   $params: One or more parameters to be passed to be matched in the route.
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
-    Generates a URI relative to the domain name (not **baseUrl**) for you based on either a named route alias,
+    Generates a route for you based on either a named route alias,
     or a controller::method combination. Will take parameters into effect, if provided.
 
-    For full details, see the :doc:`/incoming/routing` page.
+    .. literalinclude:: common_functions/009.php
 
-.. php:function:: service ( $name [, ...$params] )
+    .. literalinclude:: common_functions/010.php
+
+    .. note:: ``route_to()`` returns a route, not a full URI path for your site.
+        If your **baseURL** contains sub folders, the return value is not the same
+        as the URI to link. In that case, just use :php:func:`url_to` instead.
+
+.. php:function:: service($name[, ...$params])
 
     :param   string   $name: The name of the service to load
     :param   mixed    $params: One or more parameters to pass to the service method.
@@ -353,7 +359,7 @@ Miscellaneous Functions
 
     .. literalinclude:: common_functions/008.php
 
-.. php:function:: single_service ( $name [, ...$params] )
+.. php:function:: single_service($name [, ...$params])
 
     :param   string   $name: The name of the service to load
     :param   mixed    $params: One or more parameters to pass to the service method.
@@ -372,7 +378,7 @@ Miscellaneous Functions
 
     Fetch a config file item with slash appended (if not empty)
 
-.. php:function:: stringify_attributes ( $attributes [, $js] )
+.. php:function:: stringify_attributes($attributes [, $js])
 
     :param   mixed    $attributes: string, array of key value pairs, or object
     :param   boolean  $js: true if values do not need quotes (Javascript-style)

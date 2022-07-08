@@ -989,7 +989,8 @@ class RouteCollection implements RouteCollectionInterface
      *      // Equals 'path/$param1/$param2'
      *      reverseRoute('Controller::method', $param1, $param2);
      *
-     * @param mixed ...$params
+     * @param string     $search    Named route or Controller::method
+     * @param int|string ...$params One or more parameters to be passed to the route
      *
      * @return false|string
      */
