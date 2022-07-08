@@ -1053,6 +1053,13 @@ a valid class/method pair, just like you would show in any route, or a Closure:<
 <span class="p">});</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> method does not change the Response status code to <code class="docutils literal notranslate"><span class="pre">404</span></code>.
+If you don’t set the status code in the controller you set, the default status code <code class="docutils literal notranslate"><span class="pre">200</span></code>
+will be returned. See <a class="reference internal" href="../outgoing/response.html#setStatusCode" title="setStatusCode"><code class="xref php php-func docutils literal notranslate"><span class="pre">Response::setStatusCode()</span></code></a> for
+information on how to set the status code.</p>
+</div>
 </section>
 <section id="route-processing-by-priority">
 <h3><a class="toc-backref" href="#id32">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
