@@ -399,7 +399,7 @@ class Validation implements ValidationInterface
             $ruleSet[$field]['errors'] = $errors;
         }
 
-        $this->setRules($ruleSet + $this->getRules());
+        $this->setRules($ruleSet + $this->getRules(), $this->customErrors);
 
         return $this;
     }

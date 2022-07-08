@@ -324,6 +324,33 @@ final class ValidationTest extends CIUnitTestCase
         $this->assertSame('No. Not a number.', $this->validation->getError('bar'));
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6239
+     */
+    public function testSetRuleWithCustomErrors(): void
+    {
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => 'notanumber',
+        ];
+        $this->validation->setRule(
+            'foo',
+            'Foo',
+            ['foo'        => 'is_numeric'],
+            ['is_numeric' => 'Nope. Not a number.']
+        );
+        $this->validation->setRule(
+            'bar',
+            'Bar',
+            ['bar'        => 'is_numeric'],
+            ['is_numeric' => 'Nope. Not a number.']
+        );
+        $this->validation->run($data);
+
+        $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
+        $this->assertSame('Nope. Not a number.', $this->validation->getError('bar'));
+    }
+
     public function testCheck(): void
     {
         $this->assertFalse($this->validation->check('notanumber', 'is_numeric'));
