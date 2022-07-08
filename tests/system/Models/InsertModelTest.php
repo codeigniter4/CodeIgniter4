@@ -185,16 +185,24 @@ final class InsertModelTest extends LiveModelTestCase
             ];
         };
 
+        $entityTwo = clone $entity;
+
         $this->createModel(UserModel::class);
 
-        $entity->name       = 'Mark';
-        $entity->email      = 'mark@example.com';
+        $entity->name       = 'Mark One';
+        $entity->email      = 'markone@example.com';
         $entity->country    = 'India';
         $entity->deleted    = 0;
         $entity->created_at = new Time('now');
 
+        $entityTwo->name       = 'Mark Two';
+        $entityTwo->email      = 'marktwo@example.com';
+        $entityTwo->country    = 'India';
+        $entityTwo->deleted    = 0;
+        $entityTwo->created_at = $entity->created_at;
+
         $this->setPrivateProperty($this->model, 'useTimestamps', true);
-        $this->assertSame(2, $this->model->insertBatch([$entity, $entity]));
+        $this->assertSame(2, $this->model->insertBatch([$entity, $entityTwo]));
     }
 
     public function testInsertArrayWithNoDataException(): void
