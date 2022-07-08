@@ -305,17 +305,23 @@ final class ValidationTest extends CIUnitTestCase
 
     public function testRunWithCustomErrors(): void
     {
-        $data = ['foo' => 'notanumber'];
-
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => 'notanumber',
+        ];
         $messages = [
             'foo' => [
                 'is_numeric' => 'Nope. Not a number.',
             ],
+            'bar' => [
+                'is_numeric' => 'No. Not a number.',
+            ],
         ];
-
-        $this->validation->setRules(['foo' => 'is_numeric'], $messages);
+        $this->validation->setRules(['foo' => 'is_numeric', 'bar' => 'is_numeric'], $messages);
         $this->validation->run($data);
+
         $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
+        $this->assertSame('No. Not a number.', $this->validation->getError('bar'));
     }
 
     public function testCheck(): void
