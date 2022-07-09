@@ -147,7 +147,9 @@ class Validation implements ValidationInterface
 
             if (strpos($field, '*') !== false) {
                 $values = array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
-                    '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
+                    '/^'
+                    . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/'))
+                    . '$/',
                     $key
                 ), ARRAY_FILTER_USE_KEY);
                 // if keys not found
@@ -657,7 +659,7 @@ class Validation implements ValidationInterface
         }
 
         $errors = array_filter($this->getErrors(), static fn ($key) => preg_match(
-            '/^' . str_replace('\.\*', '\..+', preg_quote($field, '/')) . '$/',
+            '/^' . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/')) . '$/',
             $key
         ), ARRAY_FILTER_USE_KEY);
 
