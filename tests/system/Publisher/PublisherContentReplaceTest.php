@@ -42,14 +42,14 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
     {
         $result = $this->publisher->addLineAfter(
             $this->file,
-            '    public $myOwnConfig = 1000;',
-            'public $CSPEnabled = false;'
+            '    public int $myOwnConfig = 1000;',
+            'public bool $CSPEnabled = false;'
         );
 
         $this->assertTrue($result);
         $this->assertStringContainsString(
-            '    public $CSPEnabled = false;
-    public $myOwnConfig = 1000;',
+            '    public bool $CSPEnabled = false;
+    public int $myOwnConfig = 1000;',
             file_get_contents($this->file)
         );
     }
@@ -58,14 +58,14 @@ final class PublisherContentReplaceTest extends CIUnitTestCase
     {
         $result = $this->publisher->addLineBefore(
             $this->file,
-            '    public $myOwnConfig = 1000;',
-            'public $CSPEnabled = false;'
+            '    public int $myOwnConfig = 1000;',
+            'public bool $CSPEnabled = false;'
         );
 
         $this->assertTrue($result);
         $this->assertStringContainsString(
-            '    public $myOwnConfig = 1000;
-    public $CSPEnabled = false;',
+            '    public int $myOwnConfig = 1000;
+    public bool $CSPEnabled = false;',
             file_get_contents($this->file)
         );
     }
