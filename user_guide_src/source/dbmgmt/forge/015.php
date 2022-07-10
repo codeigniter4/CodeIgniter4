@@ -1,4 +1,4 @@
 <?php
 
 $forge->createTable('table_name', true);
-// gives CREATE TABLE IF NOT EXISTS table_name
+// creates table only if table does not exist

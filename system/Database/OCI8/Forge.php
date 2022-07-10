@@ -40,9 +40,7 @@ class Forge extends BaseForge
     protected $createTableIfStr = false;
 
     /**
-     * DROP TABLE IF EXISTS statement
-     *
-     * @var false
+     * @deprecated This is no longer used.
      */
     protected $dropTableIfStr = false;
 

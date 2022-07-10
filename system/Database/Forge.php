@@ -107,9 +107,7 @@ class Forge
     protected $createTableStr = "%s %s (%s\n)";
 
     /**
-     * CREATE TABLE IF statement
-     *
-     * @var bool|string
+     * @deprecated This is no longer used.
      */
     protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
 
@@ -495,7 +493,14 @@ class Forge
             throw new RuntimeException('Field information is required.');
         }
 
-        $sql = $this->_createTable($table, $ifNotExists, $attributes);
+        // If table exists lets stop here
+        if ($ifNotExists === true && $this->db->tableExists($table)) {
+            $this->reset();
+
+            return true;
+        }
+
+        $sql = $this->_createTable($table, false, $attributes);
 
         if (is_bool($sql)) {
             $this->reset();
@@ -530,20 +535,12 @@ class Forge
 
     /**
      * @return bool|string
+     *
+     * @deprecated $ifNotExists is no longer used, and will be removed.
      */
     protected function _createTable(string $table, bool $ifNotExists, array $attributes)
     {
-        // For any platforms that don't support Create If Not Exists...
-        if ($ifNotExists === true && $this->createTableIfStr === false) {
-            if ($this->db->tableExists($table)) {
-                return true;
-            }
-
-            $ifNotExists = false;
-        }
-
-        $sql = ($ifNotExists) ? sprintf($this->createTableIfStr, $this->db->escapeIdentifiers($table))
-            : 'CREATE TABLE';
+        $sql = 'CREATE TABLE';
 
         $columns = $this->_processFields(true);
 

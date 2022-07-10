@@ -91,23 +91,13 @@ class Forge extends BaseForge
     protected $createTableIfStr;
 
     /**
-     * CREATE TABLE statement
-     *
-     * @var string
+     * @deprecated This is no longer used.
      */
     protected $createTableStr;
 
     public function __construct(BaseConnection $db)
     {
         parent::__construct($db);
-
-        $this->createTableIfStr = 'IF NOT EXISTS'
-            . '(SELECT t.name, s.name as schema_name, t.type_desc '
-            . 'FROM sys.tables t '
-            . 'INNER JOIN sys.schemas s on s.schema_id = t.schema_id '
-            . "WHERE s.name=N'" . $this->db->schema . "' "
-            . "AND t.name=REPLACE(N'%s', '\"', '') "
-            . "AND t.type_desc='USER_TABLE')\nCREATE TABLE ";
 
         $this->createTableStr = '%s ' . $this->db->escapeIdentifiers($this->db->schema) . ".%s (%s\n) ";
         $this->renameTableStr = 'EXEC sp_rename [' . $this->db->escapeIdentifiers($this->db->schema) . '.%s] , %s ;';
