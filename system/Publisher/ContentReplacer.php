@@ -43,7 +43,7 @@ class ContentReplacer
 
         if ($return === false) {
             // Regexp error.
-            throw new RuntimeException(preg_last_error_msg());
+            throw new RuntimeException('Regex error. PCRE error code: ' . preg_last_error());
         }
 
         if ($return === 1) {
@@ -58,7 +58,7 @@ class ContentReplacer
 
         if ($return === null) {
             // Regexp error.
-            throw new RuntimeException(preg_last_error_msg());
+            throw new RuntimeException('Regex error. PCRE error code: ' . preg_last_error());
         }
 
         $result->updated = true;
