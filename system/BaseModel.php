@@ -20,7 +20,6 @@ use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
 use CodeIgniter\Validation\Validation;
-use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -319,7 +318,7 @@ abstract class BaseModel
      */
     protected bool $allowEmptyInserts = false;
 
-    public function __construct(?ValidationInterface $validation = null)
+    public function __construct(?Validation $validation = null)
     {
         $this->tempReturnType     = $this->returnType;
         $this->tempUseSoftDeletes = $this->useSoftDeletes;

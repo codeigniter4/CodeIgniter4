@@ -22,7 +22,7 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\Validation\ValidationInterface;
+use CodeIgniter\Validation\Validation;
 use Config\Database;
 use ReflectionClass;
 use ReflectionException;
@@ -128,7 +128,7 @@ class Model extends BaseModel
         'getCompiledUpdate',
     ];
 
-    public function __construct(?ConnectionInterface $db = null, ?ValidationInterface $validation = null)
+    public function __construct(?ConnectionInterface $db = null, ?Validation $validation = null)
     {
         /**
          * @var BaseConnection|null $db

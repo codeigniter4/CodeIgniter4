@@ -22,7 +22,7 @@ use TypeError;
 /**
  * Validator
  */
-class Validation implements ValidationInterface
+class Validation
 {
     /**
      * Files to load with validation functions.
@@ -344,8 +344,10 @@ class Validation implements ValidationInterface
     /**
      * Takes a Request object and grabs the input data to use from its
      * array values.
+     *
+     * @return $this
      */
-    public function withRequest(RequestInterface $request): ValidationInterface
+    public function withRequest(RequestInterface $request)
     {
         /** @var IncomingRequest $request */
         if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false) {
@@ -421,8 +423,10 @@ class Validation implements ValidationInterface
      *    ]
      *
      * @param array $errors // An array of custom error messages
+     *
+     * @return $this
      */
-    public function setRules(array $rules, array $errors = []): ValidationInterface
+    public function setRules(array $rules, array $errors = [])
     {
         $this->customErrors = $errors;
 
@@ -691,8 +695,10 @@ class Validation implements ValidationInterface
 
     /**
      * Sets the error for a specific field. Used by custom validation methods.
+     *
+     * @return $this
      */
-    public function setError(string $field, string $error): ValidationInterface
+    public function setError(string $field, string $error)
     {
         $this->errors[$field] = $error;
 
@@ -772,8 +778,10 @@ class Validation implements ValidationInterface
     /**
      * Resets the class to a blank slate. Should be called whenever
      * you need to process more than one array.
+     *
+     * @return $this
      */
-    public function reset(): ValidationInterface
+    public function reset()
     {
         $this->data         = [];
         $this->rules        = [];
