@@ -71,34 +71,9 @@ parameters:
 			path: system/Cache/Handlers/RedisHandler.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getPost\\(\\)\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:setLocale\\(\\)\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/Database/BaseBuilder.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_disableForeignKeyChecks\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_enableForeignKeyChecks\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
@@ -114,16 +89,6 @@ parameters:
 			message: "#^While loop condition is always true\\.$#"
 			count: 2
 			path: system/Database/BaseResult.php
-
-		-
-			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\ConnectionInterface\\:\\:\\$DBDriver\\.$#"
-			count: 2
-			path: system/Database/Database.php
-
-		-
-			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\ConnectionInterface\\:\\:\\$connID\\.$#"
-			count: 2
-			path: system/Database/Database.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Database\\\\Migration\\:\\:\\$DBGroup \\(string\\) on left side of \\?\\? is not nullable\\.$#"
@@ -401,24 +366,9 @@ parameters:
 			path: system/Debug/Exceptions.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"
-			count: 1
-			path: system/Debug/Toolbar/Collectors/Events.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Log\\\\Logger\\:\\:\\$logCache \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Debug/Toolbar/Collectors/Logs.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getData\\(\\)\\.$#"
-			count: 1
-			path: system/Debug/Toolbar/Collectors/Views.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"
-			count: 2
-			path: system/Debug/Toolbar/Collectors/Views.php
 
 		-
 			message: "#^Static property CodeIgniter\\\\Email\\\\Email\\:\\:\\$func_overload \\(bool\\) in isset\\(\\) is not nullable\\.$#"
@@ -566,51 +516,6 @@ parameters:
 			path: system/Images/Handlers/ImageMagickHandler.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#"
-			count: 3
-			path: system/Router/Router.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getFilterForRoute\\(\\)\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getFiltersForRoute\\(\\)\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutesOptions\\(\\)\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:isFiltered\\(\\)\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:setHTTPVerb\\(\\)\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRegisteredControllers\\(.*\\)\\.$#"
-			count: 2
-			path: system/Router/Router.php
-
-		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
-			message: "#^Method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getRoutes\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: system/Router/Router.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
 			count: 1
 			path: system/Session/Handlers/RedisHandler.php
@@ -674,11 +579,6 @@ parameters:
 			message: "#^Variable \\$error on left side of \\?\\? always exists and is always null\\.$#"
 			count: 1
 			path: system/Validation/Validation.php
-
-		-
-			message: "#^Property CodeIgniter\\\\View\\\\Cell\\:\\:\\$cache \\(CodeIgniter\\\\Cache\\\\CacheInterface\\) in empty\\(\\) is not falsy\\.$#"
-			count: 2
-			path: system/View/Cell.php
 
 		-
 			message: "#^Property Config\\\\View\\:\\:\\$plugins \\(array\\) on left side of \\?\\? is not nullable\\.$#"
