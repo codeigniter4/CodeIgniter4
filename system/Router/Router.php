@@ -126,7 +126,7 @@ class Router
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();
 
-        $this->collection->setHTTPVerb(strtolower($request->getMethod() ?? $_SERVER['REQUEST_METHOD']));
+        $this->collection->setHTTPVerb(strtolower($request->getMethod()));
 
         $this->translateURIDashes = $this->collection->shouldTranslateURIDashes();
 
