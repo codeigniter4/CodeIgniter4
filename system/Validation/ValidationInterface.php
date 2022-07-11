@@ -20,12 +20,13 @@ interface ValidationInterface
 {
     /**
      * Runs the validation process, returning true/false determining whether
-     * or not validation was successful.
+     * validation was successful or not.
      *
-     * @param array  $data  The array of data to validate.
-     * @param string $group The pre-defined group of rules to apply.
+     * @param array|null  $data    The array of data to validate.
+     * @param string|null $group   The predefined group of rules to apply.
+     * @param string|null $dbGroup The database group to use.
      */
-    public function run(?array $data = null, ?string $group = null): bool;
+    public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool;
 
     /**
      * Check; runs the validation process, returning true or false
