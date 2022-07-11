@@ -433,8 +433,8 @@ class Publisher extends FileCollection
 
         $result = $this->replacer->addAfter($content, $line, $after);
 
-        if ($result->updated) {
-            $return = file_put_contents($file, $result->content);
+        if ($result !== null) {
+            $return = file_put_contents($file, $result);
 
             return $return !== false;
         }
@@ -455,8 +455,8 @@ class Publisher extends FileCollection
 
         $result = $this->replacer->addBefore($content, $line, $before);
 
-        if ($result->updated) {
-            $return = file_put_contents($file, $result->content);
+        if ($result !== null) {
+            $return = file_put_contents($file, $result);
 
             return $return !== false;
         }

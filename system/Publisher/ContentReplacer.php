@@ -12,7 +12,6 @@
 namespace CodeIgniter\Publisher;
 
 use RuntimeException;
-use stdClass;
 
 class ContentReplacer
 {
@@ -33,12 +32,10 @@ class ContentReplacer
      * @param string $pattern Regexp search pattern.
      * @param string $replace Regexp replacement including text to add.
      *
-     * @return stdClass {updated: bool, content: string}
+     * @return string|null Updated content, or null if not updated.
      */
-    private function add(string $content, string $text, string $pattern, string $replace): stdClass
+    private function add(string $content, string $text, string $pattern, string $replace): ?string
     {
-        $result = new stdClass();
-
         $return = preg_match('/' . preg_quote($text, '/') . '/u', $content);
 
         if ($return === false) {
@@ -48,10 +45,7 @@ class ContentReplacer
 
         if ($return === 1) {
             // It has already been updated.
-            $result->updated = false;
-            $result->content = $content;
-
-            return $result;
+            return null;
         }
 
         $return = preg_replace($pattern, $replace, $content);
@@ -61,10 +55,7 @@ class ContentReplacer
             throw new RuntimeException('Regex error. PCRE error code: ' . preg_last_error());
         }
 
-        $result->updated = true;
-        $result->content = $return;
-
-        return $result;
+        return $return;
     }
 
     /**
@@ -74,9 +65,9 @@ class ContentReplacer
      * @param string $line    Line to add.
      * @param string $after   String to search.
      *
-     * @return stdClass {updated: bool, content: string}
+     * @return string|null Updated content, or null if not updated.
      */
-    public function addAfter(string $content, string $line, string $after): stdClass
+    public function addAfter(string $content, string $line, string $after): ?string
     {
         $pattern = '/(.*)(\n[^\n]*?' . preg_quote($after, '/') . '[^\n]*?\n)/su';
         $replace = '$1$2' . $line . "\n";
@@ -91,9 +82,9 @@ class ContentReplacer
      * @param string $line    Line to add.
      * @param string $before  String to search.
      *
-     * @return stdClass {updated: bool, content: string}
+     * @return string|null Updated content, or null if not updated.
      */
-    public function addBefore(string $content, string $line, string $before): stdClass
+    public function addBefore(string $content, string $line, string $before): ?string
     {
         $pattern = '/(\n)([^\n]*?' . preg_quote($before, '/') . ')(.*)/su';
         $replace = '$1' . $line . "\n" . '$2$3';

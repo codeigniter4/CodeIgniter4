@@ -73,8 +73,7 @@ final class ContentReplacerTest extends CIUnitTestCase
             service('auth')->routes($routes);
 
             FILE;
-        $this->assertSame($expected, $result->content);
-        $this->assertTrue($result->updated);
+        $this->assertSame($expected, $result);
     }
 
     public function testAddAfterAlreadyUpdated(): void
@@ -91,16 +90,7 @@ final class ContentReplacerTest extends CIUnitTestCase
         $line   = "\n" . 'service(\'auth\')->routes($routes);';
         $after  = '$routes->';
         $result = $replacer->addAfter($content, $line, $after);
-
-        $expected = <<<'FILE'
-            $routes->get('/', 'Home::index');
-            $routes->get('/login', 'Login::index');
-
-            service('auth')->routes($routes);
-
-            FILE;
-        $this->assertSame($expected, $result->content);
-        $this->assertFalse($result->updated);
+        $this->assertNull($result);
     }
 
     public function testAddBefore(): void
@@ -128,8 +118,7 @@ final class ContentReplacerTest extends CIUnitTestCase
             // Do Not Edit This Line
 
             FILE;
-        $this->assertSame($expected, $result->content);
-        $this->assertTrue($result->updated);
+        $this->assertSame($expected, $result);
     }
 
     public function testAddBeforeAlreadyUpdated(): void
@@ -148,17 +137,6 @@ final class ContentReplacerTest extends CIUnitTestCase
         $line   = '$this->helpers = array_merge($this->helpers, [\'auth\', \'setting\']);';
         $before = '// Do Not Edit This Line';
         $result = $replacer->addBefore($content, $line, $before);
-
-        $expected = <<<'FILE'
-            <?php
-
-            $this->helpers = array_merge($this->helpers, ['auth', 'setting']);
-            // Do Not Edit This Line
-            parent::initController($request, $response, $logger);
-            // Do Not Edit This Line
-
-            FILE;
-        $this->assertSame($expected, $result->content);
-        $this->assertFalse($result->updated);
+        $this->assertNull($result);
     }
 }
