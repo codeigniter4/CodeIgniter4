@@ -593,12 +593,14 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
-     * @return array|ValidationException|null
+     * @throws ValidationException
+     *
+     * @return array
      */
     public function loadRuleGroup(?string $group = null)
     {
         if (empty($group)) {
-            return null;
+            return [];
         }
 
         if (! isset($this->config->{$group})) {
