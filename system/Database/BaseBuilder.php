@@ -1863,7 +1863,7 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->QBFrom[0], true, null, false),
+            $this->db->protectIdentifiers($this->removeAlias($this->QBFrom[0]), true, null, false),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1895,7 +1895,7 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->QBFrom[0], true, $escape, false),
+            $this->db->protectIdentifiers($this->removeAlias($this->QBFrom[0]), true, $escape, false),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1912,6 +1912,19 @@ class BaseBuilder
         }
 
         return false;
+    }
+
+    protected function removeAlias(string $from): string
+    {
+        if (strpos($from, ' ') !== false) {
+            // if the alias is written with the AS keyword, remove it
+            $from = preg_replace('/\s+AS\s+/i', ' ', $from);
+
+            $parts = explode(' ', $from);
+            $from  = $parts[0];
+        }
+
+        return $from;
     }
 
     /**
