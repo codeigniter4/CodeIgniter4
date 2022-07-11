@@ -99,4 +99,19 @@ interface ValidationInterface
      * @return array
      */
     public function loadRuleGroup(?string $group = null);
+
+    /**
+     * Checks to see if an error exists for the given field.
+     */
+    public function hasError(string $field): bool;
+
+    /**
+     * Returns the rendered HTML of the errors as defined in $template.
+     */
+    public function listErrors(string $template = 'list'): string;
+
+    /**
+     * Displays a single error in formatted HTML as defined in the $template view.
+     */
+    public function showError(string $field, string $template = 'single'): string;
 }
