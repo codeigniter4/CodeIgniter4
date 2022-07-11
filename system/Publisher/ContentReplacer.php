@@ -13,6 +13,9 @@ namespace CodeIgniter\Publisher;
 
 use RuntimeException;
 
+/**
+ * Replace Text Content
+ */
 class ContentReplacer
 {
     /**
