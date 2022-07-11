@@ -12,6 +12,7 @@
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Validation\Exceptions\ValidationException;
 
 /**
  * Expected behavior of a validator
@@ -84,4 +85,18 @@ interface ValidationInterface
      * you need to process more than one array.
      */
     public function reset(): ValidationInterface;
+
+    /**
+     * Loads custom rule groups (if set) into the current rules.
+     *
+     * Rules can be pre-defined in Config\Validation and can
+     * be any name, but must all still be an array of the
+     * same format used with setRules(). Additionally, check
+     * for {group}_errors for an array of custom error messages.
+     *
+     * @throws ValidationException
+     *
+     * @return array
+     */
+    public function loadRuleGroup(?string $group = null);
 }
