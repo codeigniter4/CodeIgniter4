@@ -25,6 +25,7 @@ Changes
 *******
 
 - Fixed: ``BaseBuilder::increment()`` and ``BaseBuilder::decrement()`` do not reset the ``BaseBuilder`` state after a query.
+- Fixed: Validation of fields with a leading asterisk (wildcard).
 - Now ``CLIRequest::isCLI()`` always returns true.
 - Now ``IncommingRequest::isCLI()`` always returns false.
 
