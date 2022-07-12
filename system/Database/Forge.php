@@ -107,6 +107,10 @@ class Forge
     protected $createTableStr = "%s %s (%s\n)";
 
     /**
+     * CREATE TABLE IF statement
+     *
+     * @var bool|string
+     *
      * @deprecated This is no longer used.
      */
     protected $createTableIfStr = 'CREATE TABLE IF NOT EXISTS';
