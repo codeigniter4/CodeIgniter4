@@ -404,10 +404,8 @@ class Publisher extends FileCollection
      * Replace content
      *
      * @param array $replaces [search => replace]
-     *
-     * @return bool
      */
-    public function replace(string $file, array $replaces)
+    public function replace(string $file, array $replaces): bool
     {
         $this->verifyAllowed($file, $file);
 
