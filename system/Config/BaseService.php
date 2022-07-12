@@ -49,7 +49,7 @@ use CodeIgniter\Security\Security;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
-use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
@@ -127,7 +127,7 @@ use Config\View as ConfigView;
  * @method static Toolbar                    toolbar(ConfigToolbar $config = null, $getShared = true)
  * @method static Typography                 typography($getShared = true)
  * @method static URI                        uri($uri = null, $getShared = true)
- * @method static Validation                 validation(ConfigValidation $config = null, $getShared = true)
+ * @method static ValidationInterface        validation(ConfigValidation $config = null, $getShared = true)
  * @method static Cell                       viewcell($getShared = true)
  */
 class BaseService

@@ -19,7 +19,6 @@ use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
-use CodeIgniter\Validation\Validation;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Services;
 use InvalidArgumentException;
@@ -198,7 +197,7 @@ abstract class BaseModel
     /**
      * Our validator instance.
      *
-     * @var Validation
+     * @var ValidationInterface
      */
     protected $validation;
 
@@ -326,7 +325,7 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         /**
-         * @var Validation|null $validation
+         * @var ValidationInterface|null $validation
          */
         $validation ??= Services::validation(null, false);
         $this->validation = $validation;
