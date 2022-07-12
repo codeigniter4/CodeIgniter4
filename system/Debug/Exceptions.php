@@ -120,8 +120,8 @@ class Exceptions
                 $this->response->setStatusCode($statusCode);
             } catch (HTTPException $e) {
                 // Workaround for invalid HTTP status code.
-                $statusCoden = 500;
-                $this->response->setStatusCode($statusCoden);
+                $statusCode = 500;
+                $this->response->setStatusCode($statusCode);
             }
 
             if (! headers_sent()) {
