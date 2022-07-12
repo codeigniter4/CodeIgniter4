@@ -20,7 +20,7 @@ Breaking Changes
 ****************
 
 - The method ``Forge::createTable()`` no longer executes a ``CREATE TABLE IF NOT EXISTS``. If table is not found in ``$db->tableExists($table)`` then ``CREATE TABLE`` is executed.
-- The method signature of ``Forge::_createTable()`` is deprecated. The ``bool``  ``$ifNotExists`` is no longer used and will be removed in a future release.
+- The second parameter ``$ifNotExists`` of ``Forge::_createTable()`` is deprecated. It is no longer used and will be removed in a future release.
 
 Breaking Enhancements
 *********************
