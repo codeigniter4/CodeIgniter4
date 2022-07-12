@@ -15,9 +15,9 @@ class AuthPublish extends BaseCommand
     public function run(array $params)
     {
         // Use the Autoloader to figure out the module path
-        $source = service('autoloader')->getNamespace('Math\\Auth');
+        $source = service('autoloader')->getNamespace('Math\\Auth')[0];
 
-        $publisher = new Publisher($source, APPATH);
+        $publisher = new Publisher($source, APPPATH);
 
         try {
             // Add only the desired components

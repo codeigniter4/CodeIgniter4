@@ -264,3 +264,29 @@ affect other files in the destination. Returns success or failure, use ``getPubl
 Example:
 
 .. literalinclude:: publisher/012.php
+
+.. _publisher-modifying-files:
+
+Modifying Files
+===============
+
+replace(string $file, array $replaces): bool
+--------------------------------------------
+
+Replaces the ``$file`` contents. The second parameter ``$replaces`` array specifies the search strings as keys and the replacements as values.
+
+.. literalinclude:: publisher/013.php
+
+addLineAfter(string $file, string $line, string $after): bool
+-------------------------------------------------------------
+
+Adds ``$line`` after a line with specific string ``$after``.
+
+.. literalinclude:: publisher/014.php
+
+addLineBefore(string $file, string $line, string $after): bool
+--------------------------------------------------------------
+
+Adds ``$line`` before a line with specific string ``$after``.
+
+.. literalinclude:: publisher/015.php
