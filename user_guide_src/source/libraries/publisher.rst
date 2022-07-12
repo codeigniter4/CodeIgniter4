@@ -265,6 +265,8 @@ Example:
 
 .. literalinclude:: publisher/012.php
 
+.. _publisher-modifying-files:
+
 Modifying Files
 ===============
 
