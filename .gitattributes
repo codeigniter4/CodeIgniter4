@@ -21,7 +21,6 @@ Vagrantfile.dist export-ignore
 tests/AutoReview/ export-ignore
 tests/system/ export-ignore
 utils/ export-ignore
-depfile.yaml export-ignore
 rector.php export-ignore
 phpunit.xml.dist export-ignore
 phpstan-baseline.neon.dist export-ignore
