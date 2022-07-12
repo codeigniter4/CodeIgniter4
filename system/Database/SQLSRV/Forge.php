@@ -84,14 +84,14 @@ class Forge extends BaseForge
     ];
 
     /**
-     * CREATE TABLE IF statement
-     *
-     * @var string
+     * @deprecated This is no longer used.
      */
     protected $createTableIfStr;
 
     /**
-     * @deprecated This is no longer used.
+     * CREATE TABLE statement
+     *
+     * @var string
      */
     protected $createTableStr;
 

@@ -540,8 +540,6 @@ class Forge
      */
     protected function _createTable(string $table, bool $ifNotExists, array $attributes)
     {
-        $sql = 'CREATE TABLE';
-
         $columns = $this->_processFields(true);
 
         for ($i = 0, $c = count($columns); $i < $c; $i++) {
@@ -563,7 +561,7 @@ class Forge
 
         return sprintf(
             $this->createTableStr . '%s',
-            $sql,
+            'CREATE TABLE',
             $this->db->escapeIdentifiers($table),
             $columns,
             $this->_createTableAttributes($attributes)

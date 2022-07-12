@@ -191,8 +191,7 @@ with
 
 .. literalinclude:: forge/014.php
 
-An optional second parameter set to true will only execute create table statement if
-the table name is not in the array of know tables
+An optional second parameter set to true will create the table only if it doesn't already exist.
 
 .. literalinclude:: forge/015.php
 

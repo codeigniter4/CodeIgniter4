@@ -33,14 +33,14 @@ class Forge extends BaseForge
     protected $createDatabaseStr = false;
 
     /**
-     * CREATE TABLE IF statement
-     *
-     * @var false
+     * @deprecated This is no longer used.
      */
     protected $createTableIfStr = false;
 
     /**
-     * @deprecated This is no longer used.
+     * DROP TABLE IF EXISTS statement
+     *
+     * @var false
      */
     protected $dropTableIfStr = false;
 
