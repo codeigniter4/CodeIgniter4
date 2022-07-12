@@ -37,6 +37,7 @@ Enhancements
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
 - The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
+- Added a psuedo index named 'PRIMARY' for SQLite `AUTOINCREMENT` column. SQLite treats these in a special way which was excluding them from being retrieved by calling ``BaseConnection::getIndexData()``.
 
 Changes
 *******

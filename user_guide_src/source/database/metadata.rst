@@ -121,6 +121,10 @@ The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
 for each key associated with a table.
 
+SQLite3 includes a psuedo index named 'PRIMARY'. `AUTOINCREMENT` columns are treated
+in special way and wouldn't otherwise be returned. A drop command on this index will
+cause an error.
+
 $db->getForeignKeyData()
 ------------------------
 
