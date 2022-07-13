@@ -34,6 +34,7 @@ use Kint\Zval\ResourceValue;
 use Kint\Zval\Value;
 use ReflectionObject;
 use stdClass;
+use TypeError;
 
 class Parser
 {
@@ -524,7 +525,11 @@ class Parser
             }
 
             $stash = $val;
-            $copy[$i] = $refmarker;
+            try {
+                $copy[$i] = $refmarker;
+            } catch (TypeError $e) {
+                $child->reference = true;
+            }
             if ($val === $refmarker) {
                 $child->reference = true;
                 $val = $stash;
