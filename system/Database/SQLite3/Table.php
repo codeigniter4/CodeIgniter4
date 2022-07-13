@@ -110,6 +110,13 @@ class Table
 
         $this->keys = array_merge($this->keys, $this->formatKeys($this->db->getIndexData($table)));
 
+        // if primary key index exists twice then remove psuedo index name 'primary'.
+        $primaryIndexes = array_filter($this->keys, static fn ($index) => $index['type'] === 'primary');
+
+        if (! empty($primaryIndexes) && count($primaryIndexes) > 1 && array_key_exists('primary', $this->keys)) {
+            unset($this->keys['primary']);
+        }
+
         $this->foreignKeys = $this->db->getForeignKeyData($table);
 
         return $this;
@@ -316,7 +323,7 @@ class Table
             ];
 
             if ($field->primary_key) {
-                $this->keys[$field->name] = [
+                $this->keys['primary'] = [
                     'fields' => [$field->name],
                     'type'   => 'primary',
                 ];
@@ -343,9 +350,9 @@ class Table
         $return = [];
 
         foreach ($keys as $name => $key) {
-            $return[$name] = [
+            $return[strtolower($name)] = [
                 'fields' => $key->fields,
-                'type'   => 'index',
+                'type'   => strtolower($key->type),
             ];
         }
 
@@ -362,8 +369,8 @@ class Table
             return;
         }
 
-        foreach ($this->keys as $name => $key) {
-            if ($key['type'] === 'primary' || $key['type'] === 'unique') {
+        foreach (array_keys($this->keys) as $name) {
+            if ($name === 'primary') {
                 continue;
             }
 
