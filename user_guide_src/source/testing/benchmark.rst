@@ -90,7 +90,7 @@ to run the tests more times than that, you can pass the number as the first para
 
 .. literalinclude:: benchmark/008.php
 
-Once it has run, it will return an HTML table with the results of the test. If you don't want the results
-displayed, you can pass in ``false`` as the second parameter:
+Once it has run, it will return an HTML table with the results of the test.
+If you don't want the results, you can pass in ``false`` as the second parameter:
 
 .. literalinclude:: benchmark/009.php
