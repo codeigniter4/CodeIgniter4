@@ -161,7 +161,7 @@ class Filters
     public function run(string $uri, string $position = 'before')
     {
         $this->initialize(strtolower($uri));
-        //reversing after filters
+        // reversing after filters
         if($position === 'after') {
             $this->filtersClass[$position] = array_reverse($this->filtersClass[$position]);
         }
@@ -234,8 +234,6 @@ class Filters
         $this->processGlobals($uri);
         $this->processMethods();
         $this->processFilters($uri);
-        //reversing after filters
-        $this->filters['after'] = array_reverse($this->filters['after']);
         // Set the toolbar filter to the last position to be executed
         if (in_array('toolbar', $this->filters['after'], true)
             && ($count = count($this->filters['after'])) > 1
