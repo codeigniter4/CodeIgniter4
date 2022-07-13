@@ -81,6 +81,13 @@ this code and save it to your **app/Controllers/** directory:
     only :ref:`rules-for-file-uploads` can be used to validate upload file with :doc:`validation`.
     The rule ``required`` also can't be used, so use ``uploaded`` instead.
 
+The Routes
+==========
+
+Using a text editor, open **app/Config/Routes.php**. In it, add the following two routes:
+
+.. literalinclude:: uploaded_files/021.php
+
 The Upload Directory
 ====================
 
