@@ -14,6 +14,7 @@ namespace CodeIgniter\Debug;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
@@ -115,7 +116,14 @@ class Exceptions
         }
 
         if (! is_cli()) {
-            $this->response->setStatusCode($statusCode);
+            try {
+                $this->response->setStatusCode($statusCode);
+            } catch (HTTPException $e) {
+                // Workaround for invalid HTTP status code.
+                $statusCode = 500;
+                $this->response->setStatusCode($statusCode);
+            }
+
             if (! headers_sent()) {
                 header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
             }
