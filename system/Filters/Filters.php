@@ -162,7 +162,7 @@ class Filters
     {
         $this->initialize(strtolower($uri));
         // reversing after filters
-        if($position === 'after') {
+        if ($position === 'after') {
             $this->filtersClass[$position] = array_reverse($this->filtersClass[$position]);
         }
 
