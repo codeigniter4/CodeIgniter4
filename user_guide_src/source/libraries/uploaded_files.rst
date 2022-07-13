@@ -32,7 +32,7 @@ find reference information.
 Creating the Upload Form
 ========================
 
-Using a text editor, create a form called upload_form.php. In it, place
+Using a text editor, create a form called **upload_form.php**. In it, place
 this code and save it to your **app/Views/** directory:
 
 .. literalinclude:: uploaded_files/001.php
@@ -46,7 +46,7 @@ wrong.
 The Success Page
 ================
 
-Using a text editor, create a form called upload_success.php. In it,
+Using a text editor, create a form called **upload_success.php**. In it,
 place this code and save it to your **app/Views/** directory::
 
     <!DOCTYPE html>
@@ -72,7 +72,7 @@ place this code and save it to your **app/Views/** directory::
 The Controller
 ==============
 
-Using a text editor, create a controller called Upload.php. In it, place
+Using a text editor, create a controller called **Upload.php**. In it, place
 this code and save it to your **app/Controllers/** directory:
 
 .. literalinclude:: uploaded_files/002.php
