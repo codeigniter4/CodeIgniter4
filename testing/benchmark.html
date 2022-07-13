@@ -276,7 +276,7 @@
   <section id="benchmarking">
 <h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline"></a></h1>
 <p>CodeIgniter provides two separate tools to help you benchmark your code and test different options:
-the Timer and the Iterator. The Timer allows you to easily calculate the time between two points in the
+the <strong>Timer</strong> and the <strong>Iterator</strong>. The Timer allows you to easily calculate the time between two points in the
 execution of your script. The Iterator allows you to set up several variations and runs those tests, recording
 performance and memory statistics to help you decide which version is the best.</p>
 <p>The Timer class is always active, being started from the moment the framework is invoked until right before
@@ -360,7 +360,7 @@ the only parameter. The default value is 4 numbers behind the decimal point:</p>
 <section id="displaying-execution-time">
 <h3><a class="toc-backref" href="#id3">Displaying Execution Time</a><a class="headerlink" href="#displaying-execution-time" title="Permalink to this headline"></a></h3>
 <p>While the <code class="docutils literal notranslate"><span class="pre">getTimers()</span></code> method will give you the raw data for all of the timers in your project, you can retrieve
-the duration of a single timer, in seconds, with the <cite>getElapsedTime()</cite> method. The first parameter is the name of
+the duration of a single timer, in seconds, with the <code class="docutils literal notranslate"><span class="pre">getElapsedTime()</span></code> method. The first parameter is the name of
 the timer to display. The second is the number of decimal places to display. This defaults to 4:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -379,11 +379,11 @@ The results can then be retrieved and used by your script, or displayed as an HT
 <section id="creating-tasks-to-run">
 <h3><a class="toc-backref" href="#id5">Creating Tasks To Run</a><a class="headerlink" href="#creating-tasks-to-run" title="Permalink to this headline"></a></h3>
 <p>Tasks are defined within Closures. Any output the task creates will be discarded automatically. They are
-added to the Iterator class through the <cite>add()</cite> method. The first parameter is a name you want to refer to
+added to the Iterator class through the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method. The first parameter is a name you want to refer to
 this test by. The second parameter is the Closure, itself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Benchmark\Iterator</span><span class="p">();</span>
+<span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\Iterator</span><span class="p">();</span>
 
 <span class="c1">// Add a new task</span>
 <span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;single_concat&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -405,14 +405,14 @@ to run the tests more times than that, you can pass the number as the first para
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Run the tests 3000 times.</span>
-<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+<span class="nv">$htmlTable</span> <span class="o">=</span> <span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Once it has run, it will return an HTML table with the results of the test. If you don’t want the results
-displayed, you can pass in <cite>false</cite> as the second parameter:</p>
+<p>Once it has run, it will return an HTML table with the results of the test.
+If you don’t want the results, you can pass in <code class="docutils literal notranslate"><span class="pre">false</span></code> as the second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// Don&#39;t display the results.</span>
+<span class="c1">// Returns null.</span>
 <span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -432,7 +432,7 @@ displayed, you can pass in <cite>false</cite> as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 09, 2022.
+      <span class="lastupdated">Last updated on Jul 13, 2022.
       </span></p>
   </div>
 
