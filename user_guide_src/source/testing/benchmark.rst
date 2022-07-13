@@ -3,7 +3,7 @@ Benchmarking
 ############
 
 CodeIgniter provides two separate tools to help you benchmark your code and test different options:
-the Timer and the Iterator. The Timer allows you to easily calculate the time between two points in the
+the **Timer** and the **Iterator**. The Timer allows you to easily calculate the time between two points in the
 execution of your script. The Iterator allows you to set up several variations and runs those tests, recording
 performance and memory statistics to help you decide which version is the best.
 
@@ -58,7 +58,7 @@ Displaying Execution Time
 =========================
 
 While the ``getTimers()`` method will give you the raw data for all of the timers in your project, you can retrieve
-the duration of a single timer, in seconds, with the `getElapsedTime()` method. The first parameter is the name of
+the duration of a single timer, in seconds, with the ``getElapsedTime()`` method. The first parameter is the name of
 the timer to display. The second is the number of decimal places to display. This defaults to 4:
 
 .. literalinclude:: benchmark/006.php
@@ -76,7 +76,7 @@ Creating Tasks To Run
 =====================
 
 Tasks are defined within Closures. Any output the task creates will be discarded automatically. They are
-added to the Iterator class through the `add()` method. The first parameter is a name you want to refer to
+added to the Iterator class through the ``add()`` method. The first parameter is a name you want to refer to
 this test by. The second parameter is the Closure, itself:
 
 .. literalinclude:: benchmark/007.php
@@ -91,6 +91,6 @@ to run the tests more times than that, you can pass the number as the first para
 .. literalinclude:: benchmark/008.php
 
 Once it has run, it will return an HTML table with the results of the test. If you don't want the results
-displayed, you can pass in `false` as the second parameter:
+displayed, you can pass in ``false`` as the second parameter:
 
 .. literalinclude:: benchmark/009.php
