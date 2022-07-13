@@ -506,19 +506,6 @@ class Forge
 
         $sql = $this->_createTable($table, false, $attributes);
 
-        if (is_bool($sql)) {
-            $this->reset();
-            if ($sql === false) {
-                if ($this->db->DBDebug) {
-                    throw new DatabaseException('This feature is not available for the database you are using.');
-                }
-
-                return false;
-            }
-
-            return true;
-        }
-
         if (($result = $this->db->query($sql)) !== false) {
             if (isset($this->db->dataCache['table_names']) && ! in_array($table, $this->db->dataCache['table_names'], true)) {
                 $this->db->dataCache['table_names'][] = $table;
@@ -538,7 +525,7 @@ class Forge
     }
 
     /**
-     * @return bool|string
+     * @return string
      *
      * @deprecated $ifNotExists is no longer used, and will be removed.
      */
