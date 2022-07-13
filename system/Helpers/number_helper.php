@@ -127,7 +127,7 @@ if (! function_exists('format_number')) {
      */
     function format_number(float $num, int $precision = 1, ?string $locale = null, array $options = []): string
     {
-        // If locate is not passed, get from the default locale that is set from our config file
+        // If locale is not passed, get from the default locale that is set from our config file
         // or set by HTTP content negotiation.
         $locale ??= Locale::getDefault();
 
