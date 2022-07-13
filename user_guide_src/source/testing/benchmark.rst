@@ -14,9 +14,9 @@ sending the output to the user, enabling a very accurate timing of the entire sy
     :local:
     :depth: 2
 
-===============
+***************
 Using the Timer
-===============
+***************
 
 With the Timer, you can measure the time between two moments in the execution of your application. This makes
 it simple to measure the performance of different aspects of your application. All measurement is done using
@@ -63,9 +63,9 @@ the timer to display. The second is the number of decimal places to display. Thi
 
 .. literalinclude:: benchmark/006.php
 
-==================
+******************
 Using the Iterator
-==================
+******************
 
 The Iterator is a simple tool that is designed to allow you to try out multiple variations on a solution to
 see the speed differences and different memory usage patterns. You can add any number of "tasks" for it to
