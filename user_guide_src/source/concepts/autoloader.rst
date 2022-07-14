@@ -47,6 +47,10 @@ The key of each row is the namespace itself. This does not need a trailing back 
 The value is the location to the directory the classes can be found in. They should
 have a trailing slash.
 
+.. note:: You can check the namespace configuration by ``spark namespaces`` command::
+
+    > php spark namespaces
+
 By default, the application folder is namespace to the ``App`` namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the ``App`` namespace.
 You may change this namespace by editing the **app/Config/Constants.php** file and setting the
