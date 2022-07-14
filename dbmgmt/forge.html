@@ -602,12 +602,11 @@ with</p>
 <span class="c1">// gives CREATE TABLE table_name</span>
 </pre></div>
 </div>
-<p>An optional second parameter set to true adds an <code class="docutils literal notranslate"><span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code> clause
-into the definition</p>
+<p>An optional second parameter set to true will create the table only if it doesn’t already exist.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$forge</span><span class="o">-&gt;</span><span class="na">createTable</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// gives CREATE TABLE IF NOT EXISTS table_name</span>
+<span class="c1">// creates table only if table does not exist</span>
 </pre></div>
 </div>
 <p>You could also pass optional table attributes, such as MySQL’s <code class="docutils literal notranslate"><span class="pre">ENGINE</span></code>:</p>
@@ -1038,7 +1037,7 @@ change the name, you can add a “name” key into the field defining array.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 13, 2022.
+      <span class="lastupdated">Last updated on Jul 14, 2022.
       </span></p>
   </div>
 
