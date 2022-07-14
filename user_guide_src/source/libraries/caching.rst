@@ -23,7 +23,6 @@ You can grab an instance of the cache engine directly through the Services class
 
 .. literalinclude:: caching/002.php
 
-=====================
 Configuring the Cache
 =====================
 
@@ -242,7 +241,6 @@ Class Reference
 Drivers
 *******
 
-==================
 File-based Caching
 ==================
 
@@ -252,7 +250,6 @@ make sure to benchmark your application, as a point can come where disk
 I/O will negate positive gains by caching. This requires a cache
 directory to be really writable by the application.
 
-=================
 Memcached Caching
 =================
 
@@ -263,7 +260,6 @@ Memcached servers can be specified in the cache configuration file. Available op
 For more information on Memcached, please see
 `https://www.php.net/memcached <https://www.php.net/memcached>`_.
 
-================
 WinCache Caching
 ================
 
@@ -272,7 +268,6 @@ Under Windows, you can also utilize the WinCache driver.
 For more information on WinCache, please see
 `https://www.php.net/wincache <https://www.php.net/wincache>`_.
 
-=============
 Redis Caching
 =============
 
@@ -286,7 +281,6 @@ Config options to connect to redis server stored in the cache configuration file
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.
 
-==============
 Predis Caching
 ==============
 
@@ -298,7 +292,6 @@ To use it, from the command line inside your project root::
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
 
-===========
 Dummy Cache
 ===========
 
