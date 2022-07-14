@@ -119,8 +119,8 @@ Class Reference
 
     .. literalinclude:: caching/004.php
 
-.. note:: The ``$raw`` parameter is only utilized by Memcache,
-    in order to allow usage of ``increment()`` and ``decrement()``.
+    .. note:: The ``$raw`` parameter is only utilized by Memcache,
+        in order to allow usage of ``increment()`` and ``decrement()``.
 
 .. php:method:: delete($key): bool
 
@@ -203,8 +203,8 @@ Class Reference
 
     .. literalinclude:: caching/010.php
 
-.. note:: The information returned and the structure of the data is dependent
-    on which adapter is being used.
+    .. note:: The information returned and the structure of the data is dependent
+        on which adapter is being used.
 
 .. php:method:: getMetadata(string $key)
 
@@ -219,7 +219,7 @@ Class Reference
 
     .. literalinclude:: caching/011.php
 
-.. note:: The information returned and the structure of the data is dependent
+    .. note:: The information returned and the structure of the data is dependent
           on which adapter is being used. Some adapters (File, Memcached, Wincache)
           still return ``false`` for missing items.
 
