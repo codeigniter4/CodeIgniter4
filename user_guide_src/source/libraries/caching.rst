@@ -71,6 +71,30 @@ $redis
 
 The settings for the Redis server that you wish to use when using the ``Redis`` and ``Predis`` handler.
 
+******************
+Command-Line Tools
+******************
+
+CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available
+from the command line to help you work with Cache.
+These tools are not required to use Cache driver but might help you.
+
+cache:clear
+===========
+
+Clears the current system caches::
+
+    > php spark cache:clear
+
+cache:info
+==========
+
+Shows file cache information in the current system::
+
+    > php spark cache:info
+
+.. note:: This command only supports the File cache handler.
+
 ***************
 Class Reference
 ***************
