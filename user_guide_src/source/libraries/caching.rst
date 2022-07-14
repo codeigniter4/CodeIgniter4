@@ -23,46 +23,77 @@ You can grab an instance of the cache engine directly through the Services class
 
 .. literalinclude:: caching/002.php
 
-=====================
 Configuring the Cache
 =====================
 
 All configuration for the cache engine is done in **app/Config/Cache.php**. In that file,
 the following items are available.
 
-**$handler**
+$handler
+--------
 
 The is the name of the handler that should be used as the primary handler when starting up the engine.
 Available names are: dummy, file, memcached, redis, predis, wincache.
 
-**$backupHandler**
+$backupHandler
+--------------
 
-In the case that the first choice $handler is not available, this is the next cache handler to load.
-This is commonly the **file** handler since the file system is always available, but may not fit
+In the case that the first choice ``$handler`` is not available, this is the next cache handler to load.
+This is commonly the ``File`` handler since the file system is always available, but may not fit
 more complex, multi-server setups.
 
-**$prefix**
+$prefix
+-------
 
 If you have more than one application using the same cache storage, you can add a custom prefix
 string here that is prepended to all key names.
 
-**$ttl**
+$ttl
+----
 
 The default number of seconds to save items when none is specified.
+
 WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
 to projects and modules. This will replace the hard-coded value in a future release.
 
-**$file**
+$file
+-----
 
 This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
 
-**$memcached**
+$memcached
+----------
 
 This is an array of servers that will be used when using the ``Memcache(d)`` handler.
 
-**$redis**
+$redis
+------
 
 The settings for the Redis server that you wish to use when using the ``Redis`` and ``Predis`` handler.
+
+******************
+Command-Line Tools
+******************
+
+CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available
+from the command line to help you work with Cache.
+These tools are not required to use Cache driver but might help you.
+
+cache:clear
+===========
+
+Clears the current system caches::
+
+    > php spark cache:clear
+
+cache:info
+==========
+
+Shows file cache information in the current system::
+
+    > php spark cache:info
+
+.. note:: This command only supports the File cache handler.
 
 ***************
 Class Reference
@@ -113,8 +144,8 @@ Class Reference
 
     .. literalinclude:: caching/004.php
 
-.. note:: The ``$raw`` parameter is only utilized by Memcache,
-    in order to allow usage of ``increment()`` and ``decrement()``.
+    .. note:: The ``$raw`` parameter is only utilized by Memcache,
+        in order to allow usage of ``increment()`` and ``decrement()``.
 
 .. php:method:: delete($key): bool
 
@@ -197,8 +228,8 @@ Class Reference
 
     .. literalinclude:: caching/010.php
 
-.. note:: The information returned and the structure of the data is dependent
-    on which adapter is being used.
+    .. note:: The information returned and the structure of the data is dependent
+        on which adapter is being used.
 
 .. php:method:: getMetadata(string $key)
 
@@ -213,7 +244,7 @@ Class Reference
 
     .. literalinclude:: caching/011.php
 
-.. note:: The information returned and the structure of the data is dependent
+    .. note:: The information returned and the structure of the data is dependent
           on which adapter is being used. Some adapters (File, Memcached, Wincache)
           still return ``false`` for missing items.
 
@@ -235,7 +266,6 @@ Class Reference
 Drivers
 *******
 
-==================
 File-based Caching
 ==================
 
@@ -245,7 +275,6 @@ make sure to benchmark your application, as a point can come where disk
 I/O will negate positive gains by caching. This requires a cache
 directory to be really writable by the application.
 
-=================
 Memcached Caching
 =================
 
@@ -256,7 +285,6 @@ Memcached servers can be specified in the cache configuration file. Available op
 For more information on Memcached, please see
 `https://www.php.net/memcached <https://www.php.net/memcached>`_.
 
-================
 WinCache Caching
 ================
 
@@ -265,7 +293,6 @@ Under Windows, you can also utilize the WinCache driver.
 For more information on WinCache, please see
 `https://www.php.net/wincache <https://www.php.net/wincache>`_.
 
-=============
 Redis Caching
 =============
 
@@ -279,7 +306,6 @@ Config options to connect to redis server stored in the cache configuration file
 For more information on Redis, please see
 `https://redis.io <https://redis.io>`_.
 
-==============
 Predis Caching
 ==============
 
@@ -291,7 +317,6 @@ To use it, from the command line inside your project root::
 For more information on Redis, please see
 `https://github.com/nrk/predis <https://github.com/nrk/predis>`_.
 
-===========
 Dummy Cache
 ===========
 
