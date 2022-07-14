@@ -191,8 +191,7 @@ with
 
 .. literalinclude:: forge/014.php
 
-An optional second parameter set to true adds an ``IF NOT EXISTS`` clause
-into the definition
+An optional second parameter set to true will create the table only if it doesn't already exist.
 
 .. literalinclude:: forge/015.php
 
