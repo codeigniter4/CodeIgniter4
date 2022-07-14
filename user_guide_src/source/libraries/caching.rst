@@ -30,37 +30,44 @@ Configuring the Cache
 All configuration for the cache engine is done in **app/Config/Cache.php**. In that file,
 the following items are available.
 
-**$handler**
+$handler
+--------
 
 The is the name of the handler that should be used as the primary handler when starting up the engine.
 Available names are: dummy, file, memcached, redis, predis, wincache.
 
-**$backupHandler**
+$backupHandler
+--------------
 
 In the case that the first choice $handler is not available, this is the next cache handler to load.
 This is commonly the **file** handler since the file system is always available, but may not fit
 more complex, multi-server setups.
 
-**$prefix**
+$prefix
+-------
 
 If you have more than one application using the same cache storage, you can add a custom prefix
 string here that is prepended to all key names.
 
-**$ttl**
+$ttl
+----
 
 The default number of seconds to save items when none is specified.
 WARNING: This is not used by framework handlers where 60 seconds is hard-coded, but may be useful
 to projects and modules. This will replace the hard-coded value in a future release.
 
-**$file**
+$file
+-----
 
 This is an array of settings specific to the  ``File`` handler to determine how it should save the cache files.
 
-**$memcached**
+$memcached
+----------
 
 This is an array of servers that will be used when using the ``Memcache(d)`` handler.
 
-**$redis**
+$redis
+------
 
 The settings for the Redis server that you wish to use when using the ``Redis`` and ``Predis`` handler.
 
