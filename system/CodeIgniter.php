@@ -35,6 +35,7 @@ use Exception;
 use Kint;
 use Kint\Renderer\CliRenderer;
 use Kint\Renderer\RichRenderer;
+use Locale;
 use LogicException;
 
 /**
@@ -190,7 +191,7 @@ class CodeIgniter
         }
 
         // Set default locale on the server
-        locale_set_default($this->config->defaultLocale ?? 'en');
+        Locale::setDefault($this->config->defaultLocale ?? 'en');
 
         // Set default timezone on the server
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
