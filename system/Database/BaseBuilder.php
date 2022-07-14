@@ -1855,7 +1855,12 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->QBFrom[0], true, null, false),
+            $this->db->protectIdentifiers(
+                $this->removeAlias($this->QBFrom[0]),
+                true,
+                null,
+                false
+            ),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1887,7 +1892,12 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->QBFrom[0], true, $escape, false),
+            $this->db->protectIdentifiers(
+                $this->removeAlias($this->QBFrom[0]),
+                true,
+                $escape,
+                false
+            ),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1904,6 +1914,25 @@ class BaseBuilder
         }
 
         return false;
+    }
+
+    /**
+     * @internal This is a temporary solution.
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/5376
+     * @TODO Fix a root cause, and this method should be removed.
+     */
+    protected function removeAlias(string $from): string
+    {
+        if (strpos($from, ' ') !== false) {
+            // if the alias is written with the AS keyword, remove it
+            $from = preg_replace('/\s+AS\s+/i', ' ', $from);
+
+            $parts = explode(' ', $from);
+            $from  = $parts[0];
+        }
+
+        return $from;
     }
 
     /**
@@ -2332,7 +2361,7 @@ class BaseBuilder
             return false; // @codeCoverageIgnore
         }
 
-        $sql = $this->_delete($table);
+        $sql = $this->_delete($this->removeAlias($table));
 
         if (! empty($limit)) {
             $this->QBLimit = $limit;
