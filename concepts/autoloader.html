@@ -322,6 +322,13 @@ those classes can be found in:</p>
 <p>The key of each row is the namespace itself. This does not need a trailing back slash.
 The value is the location to the directory the classes can be found in. They should
 have a trailing slash.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can check the namespace configuration by <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">namespaces</span></code> command:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">namespaces</span>
+</pre></div>
+</div>
+</div>
 <p>By default, the application folder is namespace to the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace. While you are not forced to namespace the controllers,
 libraries, or models in the application directory, if you do, they will be found under the <code class="docutils literal notranslate"><span class="pre">App</span></code> namespace.
 You may change this namespace by editing the <strong>app/Config/Constants.php</strong> file and setting the
