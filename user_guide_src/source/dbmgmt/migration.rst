@@ -108,11 +108,13 @@ to update the schema:
 *******************
 Command-Line Tools
 *******************
-CodeIgniter ships with several :doc:`commands </cli/cli_commands>` that are available from the command line to help
+
+CodeIgniter ships with several :doc:`commands </cli/spark_commands>` that are available from the command line to help
 you work with migrations. These tools are not required to use migrations but might make things easier for those of you
 that wish to use them. The tools primarily provide access to the same methods that are available within the MigrationRunner class.
 
-**migrate**
+migrate
+=======
 
 Migrates a database group with all available migrations::
 
@@ -132,7 +134,8 @@ When using the ``--all`` option, it will scan through all namespaces attempting 
 not been run. These will all be collected and then sorted as a group by date created. This should help
 to minimize any potential conflicts between the main application and any modules.
 
-**rollback**
+rollback
+========
 
 Rolls back all migrations, taking the database group to a blank slate, effectively migration 0::
 
@@ -144,7 +147,8 @@ You can use (rollback) with the following options:
 - ``-b`` - to choose a batch: natural numbers specify the batch, negatives indicate a relative batch
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
 
-**refresh**
+refresh
+=======
 
 Refreshes the database state by first rolling back all migrations, and then migrating all::
 
@@ -157,7 +161,8 @@ You can use (refresh) with the following options:
 - ``--all`` - to refresh all namespaces
 - ``-f`` - to force a bypass confirmation question, it is only asked in a production environment
 
-**status**
+status
+======
 
 Displays a list of all migrations and the date and time they ran, or '--' if they have not been run::
 
@@ -174,7 +179,8 @@ You can use (status) with the following options:
 
 - ``-g`` - to choose database group, otherwise default database group will be used.
 
-**make:migration**
+make:migration
+==============
 
 Creates a skeleton migration file in **app/Database/Migrations**.
 It automatically prepends the current timestamp. The class name it
