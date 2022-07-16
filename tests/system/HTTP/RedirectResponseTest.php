@@ -81,15 +81,28 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertSame('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
     }
 
-    public function testRedirectRouteBad()
+    public function testRedirectRouteBadNamedRoute()
     {
         $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The route for "differentRoute" cannot be found.');
 
         $response = new RedirectResponse(new App());
 
         $this->routes->add('exampleRoute', 'Home::index');
 
         $response->route('differentRoute');
+    }
+
+    public function testRedirectRouteBadControllerMethod()
+    {
+        $this->expectException(HTTPException::class);
+        $this->expectExceptionMessage('The route for "Bad::badMethod" cannot be found.');
+
+        $response = new RedirectResponse(new App());
+
+        $this->routes->add('exampleRoute', 'Home::index');
+
+        $response->route('Bad::badMethod');
     }
 
     public function testRedirectRelativeConvertsToFullURI()
