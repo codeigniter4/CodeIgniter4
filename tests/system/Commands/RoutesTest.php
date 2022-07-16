@@ -39,6 +39,11 @@ final class RoutesTest extends CIUnitTestCase
         return $this->getStreamFilterBuffer();
     }
 
+    private function getBufferWithoutSpaces(): string
+    {
+        return str_replace(' ', '', $this->getBuffer());
+    }
+
     public function testRoutesCommand()
     {
         command('routes');
@@ -49,7 +54,7 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString('\\TestController::index', $this->getBuffer());
     }
 
-    public function testRoutesCommandRouteFilterAndAutoRoute()
+    public function testRoutesCommandRouteFilterAndAutoRouteLegacy()
     {
         $routes = Services::routes();
         $routes->setDefaultNamespace('App\Controllers');
@@ -60,8 +65,42 @@ final class RoutesTest extends CIUnitTestCase
         command('routes');
 
         $this->assertStringContainsString(
-            '|auto|/|\App\Controllers\Home::index||toolbar|',
-            str_replace(' ', '', $this->getBuffer())
+            '|auto|/||\App\Controllers\Home::index||toolbar|',
+            $this->getBufferWithoutSpaces()
+        );
+    }
+
+    public function testRoutesCommandRouteFilterAndAutoRouteImproved()
+    {
+        $routes = Services::routes();
+        $routes->resetRoutes();
+        $routes->loadRoutes();
+        $routes->setAutoRoute(true);
+        config('Feature')->autoRoutesImproved = true;
+        $namespace                            = 'Tests\Support\Controllers';
+        $routes->setDefaultNamespace($namespace);
+
+        command('routes');
+
+        $this->assertStringContainsString(
+            '|GET|/|»|\App\Controllers\Home::index||toolbar|',
+            $this->getBufferWithoutSpaces()
+        );
+        $this->assertStringContainsString(
+            '|GET|closure|»|(Closure)||toolbar|',
+            $this->getBufferWithoutSpaces()
+        );
+        $this->assertStringContainsString(
+            '|GET|testing|testing-index|\App\Controllers\TestController::index||toolbar|',
+            $this->getBufferWithoutSpaces()
+        );
+        $this->assertStringContainsString(
+            '|GET(auto)|newautorouting||\Tests\Support\Controllers\Newautorouting::getIndex||toolbar|',
+            $this->getBufferWithoutSpaces()
+        );
+        $this->assertStringContainsString(
+            '|POST(auto)|newautorouting/save/../..[/..]||\Tests\Support\Controllers\Newautorouting::postSave||toolbar|',
+            $this->getBufferWithoutSpaces()
         );
     }
 }

@@ -101,10 +101,17 @@ class Routes extends BaseCommand
                     $sampleUri = $uriGenerator->get($route);
                     $filters   = $filterCollector->get($method, $sampleUri);
 
+                    if ($handler instanceof Closure) {
+                        $handler = '(Closure)';
+                    }
+
+                    $routeName = $collection->getRoutesOptions($route)['as'] ?? '»';
+
                     $tbody[] = [
                         strtoupper($method),
                         $route,
-                        is_string($handler) ? $handler : '(Closure)',
+                        $routeName,
+                        $handler,
                         implode(' ', array_map('class_basename', $filters['before'])),
                         implode(' ', array_map('class_basename', $filters['after'])),
                     ];
@@ -149,6 +156,7 @@ class Routes extends BaseCommand
         $thead = [
             'Method',
             'Route',
+            'Name',
             'Handler',
             'Before Filters',
             'After Filters',
