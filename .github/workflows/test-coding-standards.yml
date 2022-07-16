@@ -6,11 +6,13 @@ on:
       - '**.php'
       - 'spark'
       - '.github/workflows/test-coding-standards.yml'
+      - 'composer.json'
   pull_request:
     paths:
       - '**.php'
       - 'spark'
       - '.github/workflows/test-coding-standards.yml'
+      - 'composer.json'
 
 jobs:
   lint:
