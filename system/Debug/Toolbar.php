@@ -418,7 +418,14 @@ class Toolbar
                 . PHP_EOL;
 
             if (strpos($response->getBody(), '<head>') !== false) {
-                $response->setBody(preg_replace('/<head>/', '<head>' . $script, $response->getBody(), 1));
+                $response->setBody(
+                    preg_replace(
+                        '/<head>/',
+                        '<head>' . $script,
+                        $response->getBody(),
+                        1
+                    )
+                );
 
                 return;
             }
