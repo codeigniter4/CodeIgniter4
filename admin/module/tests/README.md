@@ -16,11 +16,15 @@ writing we are running version 8.5.13. Support for this has been built into the
 **composer.json** file that ships with CodeIgniter and can easily be installed
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
-	> composer install
+```console
+> composer install
+```
 
 If running under OS X or Linux, you can create a symbolic link to make running tests a touch nicer.
 
-	> ln -s ./vendor/bin/phpunit ./phpunit
+```console
+> ln -s ./vendor/bin/phpunit ./phpunit
+```
 
 You also need to install [XDebug](https://xdebug.org/index.php) in order
 for code coverage to be calculated successfully.
@@ -37,12 +41,16 @@ on your machine. More details on a test database setup are in the
 
 The entire test suite can be run by simply typing one command-line command from the main directory.
 
-	> ./phpunit
+```console
+> ./phpunit
+```
 
 You can limit tests to those within a single test directory by specifying the
 directory name after phpunit.
 
-	> ./phpunit app/Models
+```console
+> ./phpunit app/Models
+```
 
 ## Generating Code Coverage
 
@@ -50,6 +58,9 @@ To generate coverage information, including HTML reports you can view in your br
 you can use the following command:
 
 	> ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
+```console
+> ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
+```
 
 This runs all of the tests again collecting information about how many lines,
 functions, and files are tested. It also reports the percentage of the code that is covered by tests.
