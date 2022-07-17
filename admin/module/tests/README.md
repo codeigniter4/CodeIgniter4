@@ -6,13 +6,15 @@ It is not intended to be a full description of the test features that you can
 use to test your module. Those details can be found in the documentation.
 
 ## Resources
+
 * [CodeIgniter 4 User Guide on Testing](https://codeigniter4.github.io/userguide/testing/index.html)
-* [PHPUnit docs](https://phpunit.readthedocs.io/en/8.5/index.html)
+* [PHPUnit docs](https://phpunit.de/documentation.html)
+* [Any tutorials on Unit testing in CI4?](https://forum.codeigniter.com/showthread.php?tid=81830)
 
 ## Requirements
 
 It is recommended to use the latest version of PHPUnit. At the time of this
-writing we are running version 8.5.13. Support for this has been built into the
+writing we are running version 9.x. Support for this has been built into the
 **composer.json** file that ships with CodeIgniter and can easily be installed
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
@@ -20,22 +22,23 @@ via [Composer](https://getcomposer.org/) if you don't already have it installed 
 > composer install
 ```
 
-If running under OS X or Linux, you can create a symbolic link to make running tests a touch nicer.
+If running under macOS or Linux, you can create a symbolic link to make running tests a touch nicer.
 
 ```console
 > ln -s ./vendor/bin/phpunit ./phpunit
 ```
 
-You also need to install [XDebug](https://xdebug.org/index.php) in order
-for code coverage to be calculated successfully.
+You also need to install [XDebug](https://xdebug.org/docs/install) in order
+for code coverage to be calculated successfully. After installing `XDebug`, you must add `xdebug.mode=coverage` in the **php.ini** file to enable code coverage.
 
 ## Setting Up
 
 A number of the tests use a running database.
 In order to set up the database edit the details for the `tests` group in
-**phpunit.xml**. Make sure that you provide a database engine that is currently running
-on your machine. More details on a test database setup are in the
-*Docs>>Testing>>Testing Your Database* section of the documentation.
+**phpunit.xml**.
+Make sure that you provide a database engine that is currently running on your machine.
+More details on a test database setup are in the
+[Testing Your Database](https://codeigniter4.github.io/userguide/testing/database.html) section of the documentation.
 
 ## Running the tests
 
@@ -43,6 +46,12 @@ The entire test suite can be run by simply typing one command-line command from 
 
 ```console
 > ./phpunit
+```
+
+If you are using Windows, use the following command.
+
+```console
+> vendor\bin\phpunit
 ```
 
 You can limit tests to those within a single test directory by specifying the
@@ -57,7 +66,6 @@ directory name after phpunit.
 To generate coverage information, including HTML reports you can view in your browser,
 you can use the following command:
 
-	> ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
 ```console
 > ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
 ```
