@@ -58,7 +58,7 @@ You can limit tests to those within a single test directory by specifying the
 directory name after phpunit.
 
 ```console
-> ./phpunit app/Models
+> ./phpunit tests/Models
 ```
 
 ## Generating Code Coverage
