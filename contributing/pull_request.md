@@ -55,6 +55,8 @@ You can check the coding style violations:
 
 ### Unit Testing
 
+If you are not familiar with Unit Testing, see [the forum thread](https://forum.codeigniter.com/showthread.php?tid=81830).
+
 Unit testing is expected for all CodeIgniter components. We use PHPUnit,
 and run unit tests using GitHub Actions for each PR submitted or changed.
 
