@@ -684,7 +684,3 @@ parameters:
 			message: "#^Property Config\\\\View\\:\\:\\$plugins \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/View/Parser.php
-
-		-
-			message: "#^Binary operation \"/\" between string and 8 results in an error\\.$#"
-			path: system/Encryption/Handlers/OpenSSLHandler.php
