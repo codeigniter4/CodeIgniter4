@@ -18,7 +18,6 @@ use CodeIgniter\Commands\Utilities\Routes\AutoRouteCollector;
 use CodeIgniter\Commands\Utilities\Routes\AutoRouterImproved\AutoRouteCollector as AutoRouteCollectorImproved;
 use CodeIgniter\Commands\Utilities\Routes\FilterCollector;
 use CodeIgniter\Commands\Utilities\Routes\SampleURIGenerator;
-use CodeIgniter\Exceptions\PageNotFoundException;
 use Config\Services;
 
 /**
@@ -100,15 +99,7 @@ class Routes extends BaseCommand
             foreach ($routes as $route => $handler) {
                 if (is_string($handler) || $handler instanceof Closure) {
                     $sampleUri = $uriGenerator->get($route);
-
-                    try {
-                        $filters = $filterCollector->get($method, $sampleUri);
-                    } catch (PageNotFoundException $e) {
-                        $filters = [
-                            'before' => ['<unknown>'],
-                            'after'  => ['<unknown>'],
-                        ];
-                    }
+                    $filters   = $filterCollector->get($method, $sampleUri);
 
                     $tbody[] = [
                         strtoupper($method),
