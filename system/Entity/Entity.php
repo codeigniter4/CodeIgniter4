@@ -41,7 +41,7 @@ class Entity implements JsonSerializable
      *
      * Example:
      *  $datamap = [
-     *      'class_name' => 'db_name'
+     *      'class_property_name' => 'db_column_name'
      *  ];
      */
     protected $datamap = [];
@@ -287,7 +287,7 @@ class Entity implements JsonSerializable
      * Checks the datamap to see if this property name is being mapped,
      * and returns the db column name, if any, or the original property name.
      *
-     * @return mixed|string
+     * @return string
      */
     protected function mapProperty(string $key)
     {
