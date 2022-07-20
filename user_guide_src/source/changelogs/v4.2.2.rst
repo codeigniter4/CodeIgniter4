@@ -15,6 +15,7 @@ BREAKING
 - Now ``Services::request()`` returns ``IncomingRequest`` or ``CLIRequest``.
 - The method signature of ``CodeIgniter\Debug\Exceptions::__construct()`` has been changed. The ``IncomingRequest`` typehint on the ``$request`` parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.
 - The method signature of ``BaseBuilder.php::insert()`` and ``BaseBuilder.php::update()`` have been changed. The ``?array`` typehint on the ``$set`` parameter was removed.
+- A bug that caused pages to be cached before after filters were executed when using page caching has been fixed. Adding response headers or changing the response body in after filters now caches them correctly.
 
 Enhancements
 ************
@@ -33,6 +34,7 @@ Deprecations
 ************
 
 - The parameters of ``Services::request()`` are deprecated.
+- The first parameter ``$cacheConfig`` of ``CodeIgniter::gatherOutput()`` is deprecated.
 
 Bugs Fixed
 **********
