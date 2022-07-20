@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
@@ -298,10 +297,9 @@ class CodeIgniter
      * tries to route the response, loads the controller and generally
      * makes all of the pieces work together.
      *
-     * @throws Exception
      * @throws RedirectException
      *
-     * @return bool|mixed|RequestInterface|ResponseInterface|void
+     * @return ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -409,7 +407,7 @@ class CodeIgniter
      * @throws PageNotFoundException
      * @throws RedirectException
      *
-     * @return mixed|RequestInterface|ResponseInterface
+     * @return ResponseInterface
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
@@ -641,7 +639,7 @@ class CodeIgniter
      *
      * @throws Exception
      *
-     * @return bool|ResponseInterface
+     * @return false|ResponseInterface
      */
     public function displayCache(Cache $config)
     {
@@ -1069,6 +1067,8 @@ class CodeIgniter
     /**
      * Sends the output of this request back to the client.
      * This is what they've been waiting for!
+     *
+     * @return void
      */
     protected function sendResponse()
     {
