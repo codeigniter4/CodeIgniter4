@@ -319,7 +319,9 @@ class CodeIgniter
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             $this->response->setStatusCode(405)->setBody('Method Not Allowed');
 
-            return $this->sendResponse();
+            $this->sendResponse();
+
+            return;
         }
 
         Events::trigger('pre_system');
