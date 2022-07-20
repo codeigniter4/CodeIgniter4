@@ -54,7 +54,7 @@ class CodeIgniter
     /**
      * App startup time.
      *
-     * @var mixed
+     * @var float|null
      */
     protected $startTime;
 
