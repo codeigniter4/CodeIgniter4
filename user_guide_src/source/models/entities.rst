@@ -164,6 +164,10 @@ through the original ``$user->full_name``, also, as this is needed for the model
 to the database. However, ``unset()`` and ``isset()`` only work on the mapped property, ``$user->name``, not on the database column name,
 ``$user->full_name``.
 
+.. note:: When you use Data Mapping, you must define ``set*()`` and ``get*()`` method
+    for the database column name. In this example, you must define ``setFullName()`` and
+    ``getFullName()``.
+
 Mutators
 ========
 
