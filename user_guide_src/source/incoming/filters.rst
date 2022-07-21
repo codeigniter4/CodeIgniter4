@@ -50,6 +50,8 @@ If a ``Response`` instance is returned, the Response will be sent back to the cl
 This can be useful for implementing rate limiting for APIs. See :doc:`Throttler </libraries/throttler>` for an
 example.
 
+.. _after-filters:
+
 After Filters
 =============
 
@@ -168,6 +170,8 @@ This filter prohibits user input data (``$_GET``, ``$_POST``, ``$_COOKIE``, ``ph
 
 - invalid UTF-8 characters
 - control characters except line break and tab code
+
+.. _secureheaders:
 
 SecureHeaders
 =============
