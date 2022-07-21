@@ -113,7 +113,7 @@ Commands
         - ``spark db:table my_table --limit-rows 50 --limit-field-value 20 --desc``
     - Or you can see metadata like the column type, max length of a table.
         - ``spark db:table my_table --metadata``
-- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <spark-routes>`.
+- The ``spark routes`` command now shows closure routes, auto routes, and filters. See :ref:`URI Routing <routing-spark-routes>`.
 
 Others
 ======
