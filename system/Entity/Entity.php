@@ -146,7 +146,7 @@ class Entity implements JsonSerializable
      * __get() magic method so will have any casts, etc applied to them.
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
-     * @param bool $cast        If true, properties will be casted.
+     * @param bool $cast        If true, properties will be cast.
      * @param bool $recursive   If true, inner entities will be casted as array as well.
      */
     public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
@@ -287,7 +287,7 @@ class Entity implements JsonSerializable
      * Checks the datamap to see if this property name is being mapped,
      * and returns the db column name, if any, or the original property name.
      *
-     * @return string
+     * @return string db column name
      */
     protected function mapProperty(string $key)
     {
