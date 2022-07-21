@@ -397,8 +397,7 @@ class Toolbar
             // for this response
             if ($request->isAJAX() || strpos($format, 'html') === false) {
                 $response->setHeader('Debugbar-Time', "{$time}")
-                    ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"))
-                    ->getBody();
+                    ->setHeader('Debugbar-Link', site_url("?debugbar_time={$time}"));
 
                 return;
             }
@@ -419,7 +418,14 @@ class Toolbar
                 . PHP_EOL;
 
             if (strpos($response->getBody(), '<head>') !== false) {
-                $response->setBody(preg_replace('/<head>/', '<head>' . $script, $response->getBody(), 1));
+                $response->setBody(
+                    preg_replace(
+                        '/<head>/',
+                        '<head>' . $script,
+                        $response->getBody(),
+                        1
+                    )
+                );
 
                 return;
             }

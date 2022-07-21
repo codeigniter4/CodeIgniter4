@@ -39,14 +39,14 @@ class Message implements MessageInterface
     /**
      * Message body
      *
-     * @var mixed
+     * @var string|null
      */
     protected $body;
 
     /**
      * Returns the Message's body.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getBody()
     {
