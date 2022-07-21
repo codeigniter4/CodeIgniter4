@@ -287,7 +287,7 @@ class Entity implements JsonSerializable
     {
         // If no parameter was given then check all attributes
         if ($key === null) {
-            foreach ($this->attributes as $key => $value) {
+            foreach (array_keys($this->attributes) as $key) {
                 if ($this->isChanged($key)) {
                     return true;
                 }
@@ -574,13 +574,11 @@ class Entity implements JsonSerializable
      */
     private function _getCastData(string $key, array $data)
     {
-        $result = null;
-
         if (array_key_exists($key, $data)) {
-            $result = $this->castAs($data[$key], $key);
+            return $this->castAs($data[$key], $key);
         }
 
-        return $result;
+        return null;
     }
 
     /**
