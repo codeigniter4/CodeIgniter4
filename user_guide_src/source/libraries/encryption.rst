@@ -61,20 +61,33 @@ Configuring the Library
 
 The example above uses the configuration settings found in **app/Config/Encryption.php**.
 
-========== ====================================================
-Option     Possible values (default in parentheses)
-========== ====================================================
-key        Encryption key starter
-driver     Preferred handler, e.g., OpenSSL or Sodium (``OpenSSL``)
-blockSize  Padding length in bytes for SodiumHandler (``16``)
-digest     Message digest algorithm (``SHA512``)
-========== ====================================================
+============== ========================================================
+Option         Possible values (default in parentheses)
+============== ========================================================
+key            Encryption key starter
+driver         Preferred handler, e.g., OpenSSL or Sodium (``OpenSSL``)
+blockSize      Padding length in bytes for SodiumHandler (``16``)
+digest         Message digest algorithm (``SHA512``)
+encryptKeyInfo Encryption key info (``''``). This is only used by OpenSSLHandler.
+authKeyInfo    Authentication key info (``''``). This is only used by OpenSSLHandler.
+rawData        Whether the cipher-text should be raw (``true``). This is only used by OpenSSLHandler.
+============== ========================================================
 
 You can replace the config file's settings by passing a configuration
 object of your own to the ``Services`` call. The ``$config`` variable must be
 an instance of the ``Config\Encryption`` class.
 
 .. literalinclude:: encryption/003.php
+
+.. _encryption-compatible-with-ci3:
+
+Configuration to Maintain Compatibility with CI3
+------------------------------------------------
+
+Since v4.3.0, you can decrypt data encrypted with CI3's Encryption.
+If you need to decrypt such data, use the following settings to maintain compatibility.
+
+.. literalinclude:: encryption/013.php
 
 Default Behavior
 ================

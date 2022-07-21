@@ -40,6 +40,7 @@ Enhancements
 - The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
 - SQLite ``BaseConnection::getIndexData()`` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
 - Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
+- Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
 
 Changes
 *******
