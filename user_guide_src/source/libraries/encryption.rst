@@ -98,10 +98,10 @@ usage of the SHA-2 family of algorithms:
 =========== ==================== ============================
 Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
 =========== ==================== ============================
-sha512      64                   128
-sha384      48                   96
-sha256      32                   64
-sha224      28                   56
+SHA512      64                   128
+SHA384      48                   96
+SHA256      32                   64
+SHA224      28                   56
 =========== ==================== ============================
 
 The reason for not including other popular algorithms, such as
