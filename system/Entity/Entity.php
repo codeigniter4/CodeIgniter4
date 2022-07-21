@@ -570,7 +570,7 @@ class Entity implements JsonSerializable
     /**
      * Get cast value from the data array.
      *
-     * @return mixed|null
+     * @return array|bool|float|int|object|string|null
      */
     private function _getCastData(string $key, array $data)
     {
