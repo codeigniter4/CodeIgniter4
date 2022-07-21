@@ -89,6 +89,30 @@ If you need to decrypt such data, use the following settings to maintain compati
 
 .. literalinclude:: encryption/013.php
 
+Supported HMAC Authentication Algorithms
+----------------------------------------
+
+For HMAC message authentication, the Encryption library supports
+usage of the SHA-2 family of algorithms:
+
+=========== ==================== ============================
+Algorithm   Raw length (bytes)   Hex-encoded length (bytes)
+=========== ==================== ============================
+sha512      64                   128
+sha384      48                   96
+sha256      32                   64
+sha224      28                   56
+=========== ==================== ============================
+
+The reason for not including other popular algorithms, such as
+MD5 or SHA1 is that they are no longer considered secure enough
+and as such, we don't want to encourage their usage.
+If you absolutely need to use them, it is easy to do so via PHP's
+native `hash_hmac() <http://php.net/manual/en/function.hash-hmac.php>`_ function.
+
+Stronger algorithms of course will be added in the future as they
+appear and become widely available.
+
 Default Behavior
 ================
 
