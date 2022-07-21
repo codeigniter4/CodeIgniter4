@@ -144,9 +144,9 @@ As an example, imagine you have the simplified User Entity that is used througho
 .. literalinclude:: entities/008.php
 
 Your boss comes to you and says that no one uses usernames anymore, so you're switching to just use emails for login.
-But they do want to personalize the application a bit, so they want you to change the name field to represent a user's
+But they do want to personalize the application a bit, so they want you to change the ``name`` field to represent a user's
 full name now, not their username like it does currently. To keep things tidy and ensure things continue making sense
-in the database you whip up a migration to rename the `name` field to `full_name` for clarity.
+in the database you whip up a migration to rename the ``name`` field to ``full_name`` for clarity.
 
 Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
 property from ``$name`` to ``$full_name``, but that would require changes throughout the application. Instead, we can
