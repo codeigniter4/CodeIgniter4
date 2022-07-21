@@ -32,7 +32,7 @@ A more comprehensive package like `Halite <https://github.com/paragonie/halite>`
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 .. _usage:
 
