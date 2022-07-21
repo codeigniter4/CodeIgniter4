@@ -227,7 +227,7 @@ class Entity implements JsonSerializable
         }
 
         foreach ($this->attributes as $key => $value) {
-            if (! $this->hasChanged($key)) {
+            if (! $this->hasChangedAttributes($key)) {
                 continue;
             }
 
@@ -268,22 +268,45 @@ class Entity implements JsonSerializable
     {
         // If no parameter was given then check all attributes
         if ($key === null) {
-            return $this->original !== $this->attributes;
+            return $this->hasChangedAttributes();
         }
 
-        $dbColumn = $this->mapProperty($key);
+        $key = $this->mapProperty($key);
+
+        return $this->hasChangedAttributes($key);
+    }
+
+    /**
+     * Checks a attribute to see if it has changed since the entity
+     * was created. Or, without a parameter, checks if any
+     * attributes have changed.
+     *
+     * @param string|null $key key of $this->attributes
+     */
+    private function hasChangedAttributes(?string $key = null): bool
+    {
+        // If no parameter was given then check all attributes
+        if ($key === null) {
+            foreach ($this->attributes as $key => $value) {
+                if ($this->isChanged($key)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         // Key doesn't exist in either
-        if (! array_key_exists($dbColumn, $this->original) && ! array_key_exists($dbColumn, $this->attributes)) {
+        if (! array_key_exists($key, $this->original) && ! array_key_exists($key, $this->attributes)) {
             return false;
         }
 
         // It's a new element
-        if (! array_key_exists($dbColumn, $this->original) && array_key_exists($dbColumn, $this->attributes)) {
+        if (! array_key_exists($key, $this->original) && array_key_exists($key, $this->attributes)) {
             return true;
         }
 
-        return $this->original[$dbColumn] !== $this->attributes[$dbColumn];
+        return $this->isChanged($key);
     }
 
     /**
@@ -526,7 +549,6 @@ class Entity implements JsonSerializable
             // If a "`get` + $key" method exists, it is also a getter.
             $result = $this->{$method}();
         }
-
         // Otherwise return the protected property
         // if it exists.
         elseif (array_key_exists($dbColumn, $this->attributes)) {
@@ -543,6 +565,30 @@ class Entity implements JsonSerializable
         }
 
         return $result;
+    }
+
+    /**
+     * Get cast value from the data array.
+     *
+     * @return mixed|null
+     */
+    private function _getCastData(string $key, array $data)
+    {
+        $result = null;
+
+        if (array_key_exists($key, $data)) {
+            $result = $this->castAs($data[$key], $key);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check if the key value is changed.
+     */
+    private function isChanged(string $key): bool
+    {
+        return $this->_getCastData($key, $this->original) !== $this->_getCastData($key, $this->attributes);
     }
 
     /**
