@@ -256,6 +256,8 @@ class Entity implements JsonSerializable
             return $this->original !== $this->attributes;
         }
 
+        $key = $this->mapProperty($key);
+
         // Key doesn't exist in either
         if (! array_key_exists($key, $this->original) && ! array_key_exists($key, $this->attributes)) {
             return false;
