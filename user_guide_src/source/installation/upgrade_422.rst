@@ -23,7 +23,7 @@ Web Page Caching Bug Fix
 ========================
 
 - :doc:`../general/caching` now caches the Response data after :ref:`after-filters` are executed.
-- For example, if you enables :ref:`secureheaders`, the Response headers are now sent when the page comes from the cache.
+- For example, if you enable :ref:`secureheaders`, the Response headers are now sent when the page comes from the cache.
 
 .. important:: If you have written **code based on the bug** that changes to the Response in the after filters are not cached, **sensitive information could be cached and compromised**. If this is the case, change your code to disable caching of the page.
 
