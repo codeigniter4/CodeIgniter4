@@ -57,9 +57,9 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $determineCodes = $this->getPrivateMethodInvoker($this->exception, 'determineCodes');
 
-        $this->assertSame([500, 9], $determineCodes(new RuntimeException('This.')));
-        $this->assertSame([500, 1], $determineCodes(new RuntimeException('That.', 600)));
-        $this->assertSame([404, 1], $determineCodes(new RuntimeException('There.', 404)));
+        $this->assertSame([500, EXIT__AUTO_MIN], $determineCodes(new RuntimeException('This.')));
+        $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('That.', 600)));
+        $this->assertSame([404, EXIT_ERROR], $determineCodes(new RuntimeException('There.', 404)));
     }
 
     public function testRenderBacktrace(): void
