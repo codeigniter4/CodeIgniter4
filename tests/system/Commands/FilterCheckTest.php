@@ -54,7 +54,11 @@ final class FilterCheckTest extends CIUnitTestCase
 
         $this->assertStringContainsString(
             'Can\'t find a route: "PUT product/123"',
-            str_replace(["\033[0m", "\033[0;31m", "\033[0;30m"], '', $this->getBuffer())
+            str_replace(
+                ["\033[0m", "\033[1;31m", "\033[0;30m", "\033[47m"],
+                '',
+                $this->getBuffer()
+            )
         );
     }
 }
