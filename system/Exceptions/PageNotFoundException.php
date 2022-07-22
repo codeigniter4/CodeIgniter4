@@ -19,7 +19,7 @@ class PageNotFoundException extends OutOfBoundsException implements ExceptionInt
     use DebugTraceableTrait;
 
     /**
-     * Error code
+     * HTTP status code
      *
      * @var int
      */
