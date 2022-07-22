@@ -72,7 +72,7 @@ class FilterCheck extends BaseCommand
      */
     public function run(array $params)
     {
-        if (count($params) !== 2) {
+        if (! isset($params[0], $params[1])) {
             CLI::error('You must specify a HTTP verb and a route.', 'light_gray', 'red');
             CLI::write('  Usage: ' . $this->usage);
             CLI::write('Example: filter:check get /');
