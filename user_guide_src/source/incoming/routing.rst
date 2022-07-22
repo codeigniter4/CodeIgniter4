@@ -713,7 +713,7 @@ Confirming Routes
 
 CodeIgniter has the following :doc:`command </cli/cli_commands>` to display all routes.
 
-.. _spark-routes:
+.. _routing-spark-routes:
 
 routes
 ======
@@ -756,4 +756,4 @@ The *Method* will be like ``GET(auto)``. ``/..`` in the *Route* column indicates
 
 .. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
 
-.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. But the filters defined in **app/Config/Routes.php** are always displayed correctly.
+.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.

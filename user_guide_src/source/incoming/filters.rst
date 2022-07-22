@@ -150,8 +150,29 @@ In this example, the array ``['dual', 'noreturn']`` will be passed in ``$argumen
 Confirming Filters
 ******************
 
-You can see the routes and filters by the ``spark routes`` command.
-See :ref:`URI Routing <spark-routes>`.
+CodeIgniter has the following :doc:`command </cli/spark_commands>` to check the filters for a route.
+
+.. _spark-filter-check:
+
+filter:check
+============
+
+Check the filters for the route ``/`` with **GET** method::
+
+    > php spark filter:check get /
+
+The output is like the following:
+
+.. code-block:: none
+
+    +--------+-------+----------------+---------------+
+    | Method | Route | Before Filters | After Filters |
+    +--------+-------+----------------+---------------+
+    | GET    | /     |                | toolbar       |
+    +--------+-------+----------------+---------------+
+
+You can also see the routes and filters by the ``spark routes`` command.
+See :ref:`URI Routing <routing-spark-routes>`.
 
 ****************
 Provided Filters
