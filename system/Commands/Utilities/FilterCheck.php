@@ -73,7 +73,7 @@ class FilterCheck extends BaseCommand
     public function run(array $params)
     {
         if (! isset($params[0], $params[1])) {
-            CLI::error('You must specify a HTTP verb and a route.', 'light_gray', 'red');
+            CLI::error('You must specify a HTTP verb and a route.');
             CLI::write('  Usage: ' . $this->usage);
             CLI::write('Example: filter:check get /');
             CLI::write('         filter:check put products/1');
@@ -99,7 +99,8 @@ class FilterCheck extends BaseCommand
                 "Can't find a route: " .
                 CLI::color(
                     '"' . strtoupper($method) . ' ' . $route . '"',
-                    'black'
+                    'black',
+                    'light_gray'
                 ),
             );
 
