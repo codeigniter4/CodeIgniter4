@@ -148,4 +148,35 @@ final class EncryptionTest extends CIUnitTestCase
     {
         $this->assertNull($this->encryption->bogus);
     }
+
+    public function testDecryptEncryptedDataByCI3()
+    {
+        $config                 = new EncryptionConfig();
+        $config->driver         = 'OpenSSL';
+        $config->key            = hex2bin('64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f');
+        $config->rawData        = false;
+        $config->encryptKeyInfo = 'encryption';
+        $config->authKeyInfo    = 'authentication';
+        $encrypter              = Services::encrypter($config, false);
+
+        $encrypted = 'f5eeb3f056b2dc5e8119b4a5f5ba793d724b9ca2d1ca23ab89bc72e51863f8da233a83ccb48d5daf3d6905d61f357877aaad32c8bc7a7c5e48f3268d2ba362b9UTw2A7U4CB9vb+6izrDzJHAdz1hAutIt2Ex2C2FqamJAXc8Z8RQor9UvaWy2';
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $expected = 'This is a plain-text message.';
+        $this->assertSame($expected, $decrypted);
+    }
+
+    public function testDecryptEncryptedDataByCI42()
+    {
+        $config      = new EncryptionConfig();
+        $config->key = hex2bin('64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f');
+        $encrypter   = Services::encrypter($config, false);
+
+        // Encrypted message by CI v4.2.0.
+        $encrypted = base64_decode('UB9PC3QfQIoLY5+/GU8BUQnfhEcCml6i4Sve6k0f8r6Id6IzlbkvMhfWf5E2lBH5+OTWuv5MUoTBQWv9Pd46ua07QsqS6/vHaW3rCg6cpLM/8d2IZE/VO+uXeaU6XHO5mJ8ehGKg96JITvKjxA==', true);
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $expected = 'This is a plain-text message.';
+        $this->assertSame($expected, $decrypted);
+    }
 }
