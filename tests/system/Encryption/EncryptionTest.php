@@ -165,4 +165,18 @@ final class EncryptionTest extends CIUnitTestCase
         $expected = 'This is a plain-text message.';
         $this->assertSame($expected, $decrypted);
     }
+
+    public function testDecryptEncryptedDataByCI42()
+    {
+        $config      = new EncryptionConfig();
+        $config->key = hex2bin('64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f');
+        $encrypter   = Services::encrypter($config, false);
+
+        // Encrypted message by CI v4.2.0.
+        $encrypted = base64_decode('UB9PC3QfQIoLY5+/GU8BUQnfhEcCml6i4Sve6k0f8r6Id6IzlbkvMhfWf5E2lBH5+OTWuv5MUoTBQWv9Pd46ua07QsqS6/vHaW3rCg6cpLM/8d2IZE/VO+uXeaU6XHO5mJ8ehGKg96JITvKjxA==', true);
+        $decrypted = $encrypter->decrypt($encrypted);
+
+        $expected = 'This is a plain-text message.';
+        $this->assertSame($expected, $decrypted);
+    }
 }
