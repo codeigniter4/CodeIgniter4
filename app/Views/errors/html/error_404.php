@@ -11,7 +11,7 @@
 <body>
     <div class="container text-center">
 
-        <h1 class="headline"><?= lang('Errors.404pageNotFound') ?></h1>
+        <h1 class="headline">404</h1>
 
         <p class="lead">
             <?php if (! empty($message) && $message !== '(null)') : ?>
