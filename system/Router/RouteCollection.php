@@ -240,6 +240,62 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
+     * Loads main routes file and discover routes.
+     *
+     * Loads only once unless reset.
+     *
+     * @return $this
+     */
+    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php')
+    {
+        if ($this->didDiscover) {
+            return $this;
+        }
+
+        $routes = $this;
+        require $routesFile;
+
+        $this->discoverRoutes();
+
+        return $this;
+    }
+
+    /**
+     * Will attempt to discover any additional routes, either through
+     * the local PSR4 namespaces, or through selected Composer packages.
+     */
+    protected function discoverRoutes()
+    {
+        if ($this->didDiscover) {
+            return;
+        }
+
+        // We need this var in local scope
+        // so route files can access it.
+        $routes = $this;
+
+        if ($this->moduleConfig->shouldDiscover('routes')) {
+            $files = $this->fileLocator->search('Config/Routes.php');
+
+            $excludes = [
+                APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
+                SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
+            ];
+
+            foreach ($files as $file) {
+                // Don't include our main file again...
+                if (in_array($file, $excludes, true)) {
+                    continue;
+                }
+
+                include $file;
+            }
+        }
+
+        $this->didDiscover = true;
+    }
+
+    /**
      * Registers a new constraint with the system. Constraints are used
      * by the routes as placeholders for regular expressions to make defining
      * the routes more human-friendly.
@@ -360,41 +416,6 @@ class RouteCollection implements RouteCollectionInterface
     public function get404Override()
     {
         return $this->override404;
-    }
-
-    /**
-     * Will attempt to discover any additional routes, either through
-     * the local PSR4 namespaces, or through selected Composer packages.
-     */
-    protected function discoverRoutes()
-    {
-        if ($this->didDiscover) {
-            return;
-        }
-
-        // We need this var in local scope
-        // so route files can access it.
-        $routes = $this;
-
-        if ($this->moduleConfig->shouldDiscover('routes')) {
-            $files = $this->fileLocator->search('Config/Routes.php');
-
-            $excludes = [
-                APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
-                SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
-            ];
-
-            foreach ($files as $file) {
-                // Don't include our main file again...
-                if (in_array($file, $excludes, true)) {
-                    continue;
-                }
-
-                include $file;
-            }
-        }
-
-        $this->didDiscover = true;
     }
 
     /**
@@ -1490,26 +1511,5 @@ class RouteCollection implements RouteCollectionInterface
     public function shouldUseSupportedLocalesOnly(): bool
     {
         return $this->useSupportedLocalesOnly;
-    }
-
-    /**
-     * Loads main routes file and discover routes.
-     *
-     * Loads only once unless reset.
-     *
-     * @return $this
-     */
-    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php')
-    {
-        if ($this->didDiscover) {
-            return $this;
-        }
-
-        $routes = $this;
-        require $routesFile;
-
-        $this->discoverRoutes();
-
-        return $this;
     }
 }
