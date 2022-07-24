@@ -166,8 +166,7 @@ trait FeatureTestTrait
 
         // Initialize the RouteCollection
         if (! $routes = $this->routes) {
-            $routes = Services::routes();
-            $routes->loadRoutes();
+            $routes = Services::routes()->loadRoutes();
         }
 
         $routes->setHTTPVerb($method);

@@ -1496,16 +1496,20 @@ class RouteCollection implements RouteCollectionInterface
      * Loads main routes file and discover routes.
      *
      * Loads only once unless reset.
+     *
+     * @return $this
      */
-    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php'): void
+    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php')
     {
         if ($this->didDiscover) {
-            return;
+            return $this;
         }
 
         $routes = $this;
         require $routesFile;
 
         $this->discoverRoutes();
+
+        return $this;
     }
 }

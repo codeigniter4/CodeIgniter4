@@ -85,8 +85,7 @@ class FilterCheck extends BaseCommand
         $route  = $params[1];
 
         // Load Routes
-        $routes = Services::routes();
-        $routes->loadRoutes();
+        Services::routes()->loadRoutes();
 
         $filterCollector = new FilterCollector();
 

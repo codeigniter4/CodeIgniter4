@@ -75,10 +75,7 @@ class Routes extends BaseCommand
      */
     public function run(array $params)
     {
-        $routes = Services::routes();
-        $routes->loadRoutes();
-
-        $collection = $routes;
+        $collection = Services::routes()->loadRoutes();
         $methods    = [
             'get',
             'head',
