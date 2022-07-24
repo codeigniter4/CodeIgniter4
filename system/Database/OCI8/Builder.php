@@ -93,6 +93,89 @@ class Builder extends BaseBuilder
     }
 
     /**
+     * Generates a platform-specific upsertBatch string from the supplied data
+     *
+     * @throws DatabaseException
+     */
+    protected function _upsertBatch(string $table, array $keys, array $values): string
+    {
+        $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
+
+        $constraints = $this->QBOptions['constraints'] ?? [];
+
+        $updateFields = $this->QBOptions['updateFields'] ?? [];
+
+        if (empty($constraints)) {
+            $uniqueIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+                $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
+
+                return ($index->type === 'PRIMARY' || $index->type === 'UNIQUE') && $hasAllFields;
+            });
+
+            // only take first index
+            foreach ($uniqueIndexes as $index) {
+                $constraints = $index->fields;
+                break;
+            }
+
+            $this->QBOptions['constraints'] = $constraints;
+        }
+
+        if (empty($updateFields)) {
+            $updateFields = array_filter(
+                $fieldNames,
+                static fn ($columnName) => ! (in_array($columnName, $constraints, true))
+            );
+
+            $this->QBOptions['updateFields'] = $updateFields;
+        }
+
+        if (empty($constraints)) {
+            throw new DatabaseException('No constraint found for upsert.');
+        }
+
+        $sql = 'MERGE INTO ' . $table . "\nUSING (\n";
+
+        foreach ($values as $value) {
+            $sql .= 'SELECT ';
+            $sql .= implode(', ', array_map(
+                static fn ($columnName, $value) => $value . ' ' . $columnName,
+                $keys,
+                $value
+            ));
+            $sql .= " FROM DUAL UNION ALL\n";
+        }
+
+        $sql = substr($sql, 0, -11) . "\n";
+
+        $sql .= ') "_upsert"' . "\nON ( ";
+
+        $onList   = [];
+        $onList[] = '1 != 1';
+
+        $onList[] = '(' . implode(
+            ' AND ',
+            array_map(
+                static fn ($columnName) => $table . '."' . $columnName . '" = "_upsert"."' . $columnName . '"',
+                $constraints
+            )
+        ) . ')';
+
+        $sql .= implode(' OR ', $onList) . ")\nWHEN MATCHED THEN UPDATE SET\n";
+
+        $sql .= implode(",\n", array_map(
+            static fn ($columnName) => '"' . $columnName . '"' . ' = "_upsert"."' . $columnName . '"',
+            $updateFields
+        ));
+
+        $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
+
+        return $sql . (' ('
+            . implode(', ', array_map(static fn ($columnName) => '"_upsert".' . $columnName, $keys))
+            . ')');
+    }
+
+    /**
      * Generates a platform-specific replace string from the supplied data
      */
     protected function _replace(string $table, array $keys, array $values): string
