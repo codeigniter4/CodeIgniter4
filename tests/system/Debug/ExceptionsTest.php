@@ -11,6 +11,9 @@
 
 namespace CodeIgniter\Debug;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Entity\Exceptions\CastException;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
@@ -57,9 +60,16 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $determineCodes = $this->getPrivateMethodInvoker($this->exception, 'determineCodes');
 
-        $this->assertSame([500, 9], $determineCodes(new RuntimeException('This.')));
-        $this->assertSame([500, 1], $determineCodes(new RuntimeException('That.', 600)));
-        $this->assertSame([404, 1], $determineCodes(new RuntimeException('There.', 404)));
+        $this->assertSame([500, EXIT__AUTO_MIN], $determineCodes(new RuntimeException('This.')));
+        $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('That.', 600)));
+        $this->assertSame([404, EXIT_ERROR], $determineCodes(new RuntimeException('There.', 404)));
+        $this->assertSame([167, EXIT_ERROR], $determineCodes(new RuntimeException('This.', 167)));
+        // @TODO This exit code should be EXIT_CONFIG.
+        $this->assertSame([500, 12], $determineCodes(new ConfigException('This.')));
+        // @TODO This exit code should be EXIT_CONFIG.
+        $this->assertSame([500, 9], $determineCodes(new CastException('This.')));
+        // @TODO This exit code should be EXIT_DATABASE.
+        $this->assertSame([500, 17], $determineCodes(new DatabaseException('This.')));
     }
 
     public function testRenderBacktrace(): void
