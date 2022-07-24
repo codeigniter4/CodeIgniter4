@@ -104,9 +104,9 @@ trait FilterTestTrait
         if ($this->collection === null) {
             // Load the RouteCollection from Config to gather App route info
             // (creates $routes using the Service as a starting point)
-            require APPPATH . 'Config/Routes.php';
+            $routes = Services::routes();
+            $routes->loadRoutes();
 
-            $routes->getRoutes('*'); // Triggers discovery
             $this->collection = $routes;
         }
 

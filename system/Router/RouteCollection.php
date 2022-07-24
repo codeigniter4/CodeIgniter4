@@ -1393,6 +1393,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         $this->prioritizeDetected = false;
+        $this->didDiscover        = false;
     }
 
     /**
@@ -1489,5 +1490,22 @@ class RouteCollection implements RouteCollectionInterface
     public function shouldUseSupportedLocalesOnly(): bool
     {
         return $this->useSupportedLocalesOnly;
+    }
+
+    /**
+     * Loads main routes file and discover routes.
+     *
+     * Loads only once unless reset.
+     */
+    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php'): void
+    {
+        if ($this->didDiscover) {
+            return;
+        }
+
+        $routes = $this;
+        require $routesFile;
+
+        $this->discoverRoutes();
     }
 }
