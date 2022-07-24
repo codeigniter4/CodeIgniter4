@@ -19,10 +19,10 @@ abstract class BaseCast implements CastInterface
     /**
      * Get
      *
-     * @param mixed $value  Data
-     * @param array $params Additional param
+     * @param array|bool|float|int|object|string|null $value  Data
+     * @param array                                   $params Additional param
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public static function get($value, array $params = [])
     {
@@ -32,10 +32,10 @@ abstract class BaseCast implements CastInterface
     /**
      * Set
      *
-     * @param mixed $value  Data
-     * @param array $params Additional param
+     * @param array|bool|float|int|object|string|null $value  Data
+     * @param array                                   $params Additional param
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public static function set($value, array $params = [])
     {
