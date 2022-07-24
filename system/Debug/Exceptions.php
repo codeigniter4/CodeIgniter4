@@ -12,7 +12,7 @@
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\Exceptions\ExitExceptionInterface;
+use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
@@ -321,8 +321,8 @@ class Exceptions
             $statusCode = $exception->getCode();
         }
 
-        if ($exception instanceof ExitExceptionInterface) {
-            $exitStatus = $exception->getCode();
+        if ($exception instanceof HasExitCodeInterface) {
+            $exitStatus = $exception->getExitCode();
         }
 
         return [$statusCode, $exitStatus];
