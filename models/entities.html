@@ -541,9 +541,9 @@ with the Entity class’ data mapping features.</p>
 </pre></div>
 </div>
 <p>Your boss comes to you and says that no one uses usernames anymore, so you’re switching to just use emails for login.
-But they do want to personalize the application a bit, so they want you to change the name field to represent a user’s
+But they do want to personalize the application a bit, so they want you to change the <code class="docutils literal notranslate"><span class="pre">name</span></code> field to represent a user’s
 full name now, not their username like it does currently. To keep things tidy and ensure things continue making sense
-in the database you whip up a migration to rename the <cite>name</cite> field to <cite>full_name</cite> for clarity.</p>
+in the database you whip up a migration to rename the <code class="docutils literal notranslate"><span class="pre">name</span></code> field to <code class="docutils literal notranslate"><span class="pre">full_name</span></code> for clarity.</p>
 <p>Ignoring how contrived this example is, we now have two choices on how to fix the User class. We could modify the class
 property from <code class="docutils literal notranslate"><span class="pre">$name</span></code> to <code class="docutils literal notranslate"><span class="pre">$full_name</span></code>, but that would require changes throughout the application. Instead, we can
 simply map the <code class="docutils literal notranslate"><span class="pre">full_name</span></code> column in the database to the <code class="docutils literal notranslate"><span class="pre">$name</span></code> property, and be done with the Entity changes:</p>
@@ -557,7 +557,7 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
 <span class="p">{</span>
     <span class="k">protected</span> <span class="nv">$attributes</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;id&#39;</span>         <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
-        <span class="s1">&#39;full_name&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// In the $attributes, the key is the column name</span>
+        <span class="s1">&#39;full_name&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span> <span class="c1">// In the $attributes, the key is the db column name</span>
         <span class="s1">&#39;email&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;password&#39;</span>   <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
         <span class="s1">&#39;created_at&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
@@ -565,6 +565,7 @@ simply map the <code class="docutils literal notranslate"><span class="pre">full
     <span class="p">];</span>
 
     <span class="k">protected</span> <span class="nv">$datamap</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1">// property_name =&gt; db_column_name</span>
         <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;full_name&#39;</span><span class="p">,</span>
     <span class="p">];</span>
 <span class="p">}</span>
@@ -578,6 +579,12 @@ class’ <code class="docutils literal notranslate"><span class="pre">$name</spa
 through the original <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>, also, as this is needed for the model to get the data back out and save it
 to the database. However, <code class="docutils literal notranslate"><span class="pre">unset()</span></code> and <code class="docutils literal notranslate"><span class="pre">isset()</span></code> only work on the mapped property, <code class="docutils literal notranslate"><span class="pre">$user-&gt;name</span></code>, not on the database column name,
 <code class="docutils literal notranslate"><span class="pre">$user-&gt;full_name</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you use Data Mapping, you must define <code class="docutils literal notranslate"><span class="pre">set*()</span></code> and <code class="docutils literal notranslate"><span class="pre">get*()</span></code> method
+for the database column name. In this example, you must define <code class="docutils literal notranslate"><span class="pre">setFullName()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">getFullName()</span></code>.</p>
+</div>
 </section>
 <section id="mutators">
 <h2><a class="toc-backref" href="#id9">Mutators</a><a class="headerlink" href="#mutators" title="Permalink to this headline"></a></h2>
@@ -873,7 +880,7 @@ attribute to check:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 15, 2022.
+      <span class="lastupdated">Last updated on Jul 24, 2022.
       </span></p>
   </div>
 
