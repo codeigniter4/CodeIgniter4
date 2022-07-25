@@ -196,7 +196,13 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return trim(sprintf('INSERT INTO %s (%s) VALUES %s %s', $table, implode(', ', $keys), implode(', ', $values), $this->compileIgnore('insert')));
+        return trim(sprintf(
+            'INSERT INTO %s (%s) VALUES %s %s',
+            $table,
+            implode(', ', $keys),
+            implode(', ', $this->getValues($values)),
+            $this->compileIgnore('insert')
+        ));
     }
 
     /**

@@ -180,7 +180,8 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table)
+            . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $this->getValues($values));
     }
 
     /**
