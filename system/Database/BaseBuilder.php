@@ -1981,60 +1981,7 @@ class BaseBuilder
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        if ($set === null) {
-            if (empty($this->QBSet)) {
-                if ($this->db->DBDebug) {
-                    throw new DatabaseException('You must use the "set" method to update an entry.');
-                }
-
-                return false; // @codeCoverageIgnore
-            }
-        } elseif (empty($set)) {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('insertBatch() called with no data');
-            }
-
-            return false; // @codeCoverageIgnore
-        }
-
-        $hasQBSet = $set === null;
-
-        $table = $this->QBFrom[0];
-
-        $affectedRows = 0;
-        $savedSQL     = [];
-
-        if ($hasQBSet) {
-            $set = $this->QBSet;
-        }
-
-        for ($i = 0, $total = count($set); $i < $total; $i += $batchSize) {
-            if ($hasQBSet) {
-                $QBSet = array_slice($this->QBSet, $i, $batchSize);
-            } else {
-                $this->setInsertBatch(array_slice($set, $i, $batchSize), '', $escape);
-                $QBSet = $this->QBSet;
-            }
-            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, $QBSet);
-
-            if ($this->testMode) {
-                $savedSQL[] = $sql;
-            } else {
-                $this->db->query($sql, null, false);
-                $affectedRows += $this->db->affectedRows();
-            }
-
-            if (! $hasQBSet) {
-                $this->resetRun([
-                    'QBSet'  => [],
-                    'QBKeys' => [],
-                ]);
-            }
-        }
-
-        $this->resetWrite();
-
-        return $this->testMode ? $savedSQL : $affectedRows;
+        return $this->batchExecute('_insertBatch', $set, $escape, $batchSize);
     }
 
     /**
@@ -2042,11 +1989,12 @@ class BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table
+            . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $this->getValues($values));
     }
 
     /**
-     * Allows key/value pairs to be set for batch inserts
+     * Alias for setBatch()
      *
      * @param mixed $key
      *
@@ -2054,44 +2002,7 @@ class BaseBuilder
      */
     public function setInsertBatch($key, string $value = '', ?bool $escape = null)
     {
-        $key = $this->batchObjectToArray($key);
-
-        if (! is_array($key)) {
-            $key = [$key => $value];
-        }
-
-        $escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
-
-        $keys = array_keys($this->objectToArray(current($key)));
-        sort($keys);
-
-        foreach ($key as $row) {
-            $row = $this->objectToArray($row);
-            if (array_diff($keys, array_keys($row)) !== [] || array_diff(array_keys($row), $keys) !== []) {
-                // batch function above returns an error on an empty array
-                $this->QBSet[] = [];
-
-                return null;
-            }
-
-            ksort($row); // puts $row in the same order as our keys
-
-            $clean = [];
-
-            foreach ($row as $rowValue) {
-                $clean[] = $escape ? $this->db->escape($rowValue) : $rowValue;
-            }
-
-            $row = $clean;
-
-            $this->QBSet[] = '(' . implode(',', $row) . ')';
-        }
-
-        foreach ($keys as $k) {
-            $this->QBKeys[] = $this->db->protectIdentifiers($k, false);
-        }
-
-        return $this;
+        return $this->setBatch($key, $value, $escape);
     }
 
     /**

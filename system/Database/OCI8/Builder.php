@@ -67,6 +67,8 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
+        $values = $this->getValues($values);
+
         $insertKeys    = implode(', ', $keys);
         $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
 
