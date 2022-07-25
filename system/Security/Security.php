@@ -21,6 +21,8 @@ use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Security as SecurityConfig;
 use Config\Services;
+use ErrorException;
+use InvalidArgumentException;
 use LogicException;
 
 /**
@@ -278,8 +280,13 @@ class Security implements SecurityInterface
         }
 
         $postedToken = $this->getPostedToken($request);
-        $token       = ($postedToken !== null && $this->tokenRandomize)
-            ? $this->derandomize($postedToken) : $postedToken;
+
+        try {
+            $token = ($postedToken !== null && $this->tokenRandomize)
+                ? $this->derandomize($postedToken) : $postedToken;
+        } catch (InvalidArgumentException $e) {
+            $token = null;
+        }
 
         // Do the tokens match?
         if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
@@ -359,13 +366,20 @@ class Security implements SecurityInterface
 
     /**
      * Derandomize the token.
+     *
+     * @throws InvalidArgumentException "hex2bin(): Hexadecimal input string must have an even length"
      */
     protected function derandomize(string $token): string
     {
         $key   = substr($token, -static::CSRF_HASH_BYTES * 2);
         $value = substr($token, 0, static::CSRF_HASH_BYTES * 2);
 
-        return bin2hex(hex2bin($value) ^ hex2bin($key));
+        try {
+            return bin2hex(hex2bin($value) ^ hex2bin($key));
+        } catch (ErrorException $e) {
+            // "hex2bin(): Hexadecimal input string must have an even length"
+            throw new InvalidArgumentException($e->getMessage());
+        }
     }
 
     /**
