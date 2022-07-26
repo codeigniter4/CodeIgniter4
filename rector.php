@@ -71,6 +71,8 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/system/Test/bootstrap.php',
     ]);
 
+    $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
+
     // is there a file you need to skip?
     $rectorConfig->skip([
         __DIR__ . '/app/Views',
