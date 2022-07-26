@@ -41,6 +41,8 @@ The simplest method to set the variable is in your :doc:`.env file </general/con
 
     > php spark env production
 
+.. _environment-apache:
+
 Apache
 ------
 
@@ -50,6 +52,9 @@ config using `SetEnv <https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv>
 .. code-block:: apache
 
     SetEnv CI_ENVIRONMENT development
+
+
+.. _environment-nginx:
 
 nginx
 -----

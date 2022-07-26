@@ -60,6 +60,8 @@ By default, the **index.php** file will be included in your URLs::
 If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
 by different servers, but we will show examples for the two most common web servers here.
 
+.. _urls-remove-index-php-apache:
+
 Apache Web Server
 -----------------
 
@@ -80,6 +82,8 @@ request for your index.php file.
 .. note:: These specific rules might not work for all server configurations.
 
 .. note:: Make sure to also exclude from the above rules any assets that you might need to be accessible from the outside world.
+
+.. _urls-remove-index-php-nginx:
 
 NGINX
 -----
