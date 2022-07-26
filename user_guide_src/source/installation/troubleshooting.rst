@@ -4,6 +4,10 @@ Troubleshooting
 
 Here are some common installation problems, and suggested workarounds.
 
+.. contents::
+    :local:
+    :depth: 2
+
 How do I know if my install is working?
 ---------------------------------------
 
