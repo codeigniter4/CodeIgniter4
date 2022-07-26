@@ -19,7 +19,7 @@ use Exception;
 class RedirectException extends Exception
 {
     /**
-     * Status code for redirects
+     * HTTP status code for redirects
      *
      * @var int
      */

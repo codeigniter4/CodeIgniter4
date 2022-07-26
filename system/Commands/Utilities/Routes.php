@@ -75,7 +75,10 @@ class Routes extends BaseCommand
      */
     public function run(array $params)
     {
-        $collection = Services::routes(true);
+        $routes = Services::routes(true);
+        require APPPATH . 'Config/Routes.php';
+
+        $collection = $routes;
         $methods    = [
             'get',
             'head',
