@@ -304,18 +304,17 @@ class CLI
     /**
      * * This method is the same as promptByKey(), but this method supports multiple value.
      *
-     * @param string      $text       Output "field" text or an one or two value array where the first value is the text before listing the options
-     *                                      and the second value the text before asking to select one option. Provide empty string to omit
-     * @param array             $options    A list of options (array(key => description)), the first option will be the default value
+     * @param string $text    Output "field" text or an one or two value array where the first value is the text before listing the options
+     *                        and the second value the text before asking to select one option. Provide empty string to omit
+     * @param array  $options A list of options (array(key => description)), the first option will be the default value
      *
      * @return array The selected key and value of $options
-     *
      */
     public static function promptByMultipleKey($text, array $options)
     {
         if (is_string($text)) {
             $text = [$text];
-        } elseif (!is_array($text)) {
+        } elseif (! is_array($text)) {
             throw new InvalidArgumentException('$text can only be string');
         }
 
@@ -329,10 +328,11 @@ class CLI
                 $extraOutput = $extraOutputDefault;
             } else {
                 $optsKey = [];
+
                 foreach (array_keys($opts) as $key) {
                     $optsKey[] = $key;
                 }
-                $extraOutput  = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
+                $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
             }
 
             $default = 0;
@@ -352,18 +352,19 @@ class CLI
             $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
             CLI::write(CLI::color($name, 'green') . CLI::wrap($description, 125, $keyMaxLength + 4));
         }
-        static::fwrite(STDOUT, (trim(strval(intval($text))) ? ' ' : '') . $extraOutput . ': ');
+        static::fwrite(STDOUT, (trim((string) ((int) $text)) ? ' ' : '') . $extraOutput . ': ');
         $input = trim(static::input()) ?: $default;
 
         // search alphabetic character
         // return the prompt again if it is true because the key of $options is number
         if (preg_match_all('/[a-zA-Z]/i', trim($input))) {
             static::error('Please select correctly');
+
             return $input = static::promptByMultipleKey($line, $options);
         }
 
         // separate input by comma and convert all to an int[]
-        $inputToArray = array_map(fn ($value) => intval($value), explode(',', $input));
+        $inputToArray = array_map(static fn ($value) => (int) $value, explode(',', $input));
 
         // find max from key of $options
         $maxOptions = array_key_last($options);
@@ -373,10 +374,12 @@ class CLI
         // it is mean user tried to access null value in $options
         if ($maxOptions < $maxInput) {
             static::error('Please select correctly');
+
             return $input = static::promptByMultipleKey($line, $options);
         }
 
         $input = [];
+
         foreach ($options as $key => $description) {
             foreach ($inputToArray as $inputKey) {
                 if ($key === $inputKey) {

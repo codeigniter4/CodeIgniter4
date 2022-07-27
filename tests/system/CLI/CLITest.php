@@ -532,6 +532,7 @@ final class CLITest extends CIUnitTestCase
         CLI::promptByMultipleKey('Is this a question?', $options);
 
         $expected = '' . PHP_EOL . 'Is this a question?' . PHP_EOL;
+
         foreach ($options as $key => $description) {
             $name = str_pad('  [' . $key . ']  ', 7, ' ');
             $expected .= '' . CLI::color($name, 'green') . CLI::wrap($description, 125, 7) . PHP_EOL;

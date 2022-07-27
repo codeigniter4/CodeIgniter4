@@ -8,7 +8,7 @@ $hobby = CLI::promptByKey('Select your hobbies:', ['Playing game', 'Sleep', 'Bad
  *   [2]  Badminton
  *
  * [0, 1, 2]:
- * 
+ *
  * if your answer is '0,2', the return is the key and the value of the options :
  * [
  *   [0] => "Playing game",
