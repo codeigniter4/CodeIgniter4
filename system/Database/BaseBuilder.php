@@ -1847,7 +1847,7 @@ class BaseBuilder
      *
      * @return bool|string
      */
-    public function getCompiledUpsert(bool $reset = true)
+    public function getCompiledUpsert()
     {
         $currentTestMode = $this->testMode;
 
@@ -1856,11 +1856,6 @@ class BaseBuilder
         $sql = implode(";\n", $this->upsert());
 
         $this->testMode = $currentTestMode;
-
-        // this doesn't work with current implimentation - is cleared in upsert method
-        if ($reset === true) {
-            $this->resetWrite();
-        }
 
         return $this->compileFinalQuery($sql);
     }

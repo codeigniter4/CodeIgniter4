@@ -847,6 +847,82 @@ The first parameter is an associative array of values.
 
 .. note:: All values are escaped automatically producing safer queries.
 
+**************
+Upserting Data
+**************
+
+Upsert
+======
+
+$builder->upsert()
+------------------
+
+Generates an upsert string based on the data you supply, and runs the
+query. You can either pass an **array** or an **object** to the
+method. By default a constraint will be defined in order. A primary
+key will be selected first and then unique keys. Mysql will use any
+constraint by default. Here is an example using an array:
+
+.. literalinclude:: query_builder/105.php
+
+The first parameter is an associative array of values.
+
+Here is an example using an object:
+
+.. literalinclude:: query_builder/106.php
+
+The first parameter is an object.
+
+.. note:: All values are escaped automatically producing safer queries.
+
+$builder->getCompiledUpsert()
+-----------------------------
+
+Compiles the upsert query just like ``$builder->upsert()`` but does not
+*run* the query. This method simply returns the SQL query as a string.
+
+Example:
+
+.. literalinclude:: query_builder/107.php
+
+.. note:: This method doesn't work for batch upserts.
+
+upsertBatch
+===========
+
+$builder->upsertBatch()
+-----------------------
+
+Generates an upsert string based on the data you supply, and runs the
+query. You can either pass an **array** or an **object** to the
+method. By default a constraint will be defined in order. A primary
+key will be selected first and then unique keys. Mysql will use any
+constraint by default. Here is an example using an array:
+
+.. literalinclude:: query_builder/108.php
+
+The first parameter is an associative array of values.
+
+.. note:: All values are escaped automatically producing safer queries.
+
+$builder->onConstraint()
+------------------------
+
+Allows manually setting constraint to be used for upsert. This does
+not work with MySQL because MySQL checks all constraints by default.
+
+.. literalinclude:: query_builder/109.php
+
+This method accepts a string or an array of columns.
+
+$builder->updateFields()
+------------------------
+Allows manually setting the fields to be updated when performing upserts.
+
+.. literalinclude:: query_builder/110.php
+
+This method accepts a string or an array of columns.
+
 *************
 Updating Data
 *************
@@ -1551,7 +1627,7 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        Adds field/value pairs to be passed later to ``insert()``, ``update()`` or ``replace()``.
+        Adds field/value pairs to be passed later to ``insert()``, ``upsert()``, ``update()`` or ``replace()``.
 
     .. php:method:: insert([$set = null[, $escape = null]])
 
@@ -1585,6 +1661,59 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
+
+    .. php:method:: upsert([$set = null[, $escape = null]])
+
+        :param array $set: An associative array of field/value pairs
+        :param bool $escape: Whether to escape values
+        :returns:   ``true`` on success, ``false`` on failure
+        :rtype:     bool
+
+        Compiles and executes an ``UPSERT`` statement.
+
+    .. php:method:: upsertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
+
+        :param array $set: Data to upsert
+        :param bool $escape: Whether to escape values
+        :param int $batch_size: Count of rows to upsert at once
+        :returns: Number of rows upserted or ``false`` on failure
+        :rtype:    int|false
+
+        Compiles and executes batch ``UPSERT`` statements.
+
+        .. note:: MySQL uses ``ON DUPLICATE KEY UPDATE``, the affected-rows value
+            per row is 1 if the row is inserted as a new row, 2 if an existing row
+            is updated, and 0 if an existing row is set to its current values.
+
+        .. note:: When more than ``$batch_size`` rows are provided, multiple
+            ``UPSERT`` queries will be executed, each trying to upsert
+            up to ``$batch_size`` rows.
+
+    .. php:method:: setBatch($key[, $value = ''[, $escape = null]])
+
+        :param mixed $key: Field name or an array of field/value pairs
+        :param string $value: Field value, if $key is a single field
+        :param bool $escape: Whether to escape values
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Adds field/value pairs to be upserted in a table later via ``upsertBatch()``.
+
+    .. php:method:: onConstraint($keys)
+
+        :param array|string $keys: List of columns used as constraints
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Defines fields used as constraints for ``upsert()`` and ``upsertBatch()``.
+
+    .. php:method:: updateFields($keys)
+
+        :param array|string $keys: List of fields to be updated
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Defines fields to be updated for ``upsert()`` and ``upsertBatch()``.
 
     .. php:method:: update([$set = null[, $where = null[, $limit = null]]])
 
@@ -1688,6 +1817,13 @@ Class Reference
         :rtype:     string
 
         Compiles an ``INSERT`` statement and returns it as a string.
+
+    .. php:method:: getCompiledUpsert()
+
+        :returns: The compiled SQL statement as a string
+        :rtype:     string
+
+        Compiles an ``UPSERT`` statement and returns it as a string.
 
     .. php:method:: getCompiledUpdate([$reset = true])
 
