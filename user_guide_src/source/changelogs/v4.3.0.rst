@@ -32,6 +32,12 @@ Others
 Enhancements
 ************
 
+CLI
+===
+- Added methods ``CLI::promptByMultipleKey()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-key` for details.
+
+Others
+======
 - Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-overview-stream-filters`.
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`

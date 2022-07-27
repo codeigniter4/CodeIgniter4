@@ -66,8 +66,10 @@ Named keys are also possible:
 
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
+.. _prompt-by-multiple-key:
+
 promptByMultipleKey()
-=============
+=====================
 
 This method is the same as ``promptByKey()``, but it supports multiple value.
 
