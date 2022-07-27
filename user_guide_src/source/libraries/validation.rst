@@ -62,7 +62,7 @@ example.
 The Form
 ========
 
-Using a text editor, create a form called **Signup.php**. In it, place this
+Using a text editor, create a form called **signup.php**. In it, place this
 code and save it to your **app/Views/** folder::
 
     <html>
@@ -75,21 +75,21 @@ code and save it to your **app/Views/** folder::
 
         <?= form_open('form') ?>
 
-        <h5>Username</h5>
-        <input type="text" name="username" value="" size="50" />
+            <h5>Username</h5>
+            <input type="text" name="username" value="<?= set_value('username') ?>" size="50">
 
-        <h5>Password</h5>
-        <input type="text" name="password" value="" size="50" />
+            <h5>Password</h5>
+            <input type="text" name="password" value="<?= set_value('password') ?>" size="50">
 
-        <h5>Password Confirm</h5>
-        <input type="text" name="passconf" value="" size="50" />
+            <h5>Password Confirm</h5>
+            <input type="text" name="passconf" value="<?= set_value('passconf') ?>" size="50">
 
-        <h5>Email Address</h5>
-        <input type="text" name="email" value="" size="50" />
+            <h5>Email Address</h5>
+            <input type="text" name="email" value="<?= set_value('email') ?>" size="50">
 
-        <div><input type="submit" value="Submit" /></div>
+            <div><input type="submit" value="Submit"></div>
 
-        </form>
+        <?= form_close() ?>
 
     </body>
     </html>
@@ -97,7 +97,7 @@ code and save it to your **app/Views/** folder::
 The Success Page
 ================
 
-Using a text editor, create a form called **Success.php**. In it, place
+Using a text editor, create a form called **success.php**. In it, place
 this code and save it to your **app/Views/** folder::
 
     <html>
@@ -121,6 +121,14 @@ this code and save it to your **app/Controllers/** folder:
 
 .. literalinclude:: validation/001.php
 
+The Routes
+==========
+
+Then add routes for the controller in **app/Config/Routes.php**:
+
+.. literalinclude:: validation/039.php
+   :lines: 2-
+
 Try it!
 =======
 
@@ -142,11 +150,15 @@ the **Validation class** inside. See :ref:`controllers-validating-data`.
 Explanation
 ===========
 
-You'll notice several things about the above pages:
+You'll notice several things about the above pages.
 
-The form (**Signup.php**) is a standard web form with a couple of exceptions:
+signup.php
+----------
 
-#. It uses a :doc:`form helper </helpers/form_helper>` to create the form opening. Technically, this
+The form (**signup.php**) is a standard web form with a couple of exceptions:
+
+#. It uses a :doc:`form helper </helpers/form_helper>` to create the form opening
+   and closing. Technically, this
    isn't necessary. You could create the form using standard HTML.
    However, the benefit of using the helper is that it generates the
    action URL for you, based on the URL in your config file. This makes
@@ -159,9 +171,15 @@ The form (**Signup.php**) is a standard web form with a couple of exceptions:
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
 
-The controller (**Form.php**) has one method: ``index()``. This method
-uses the Controller-provided ``validate()`` method and loads the form helper and URL
-helper used by your view files. It also runs the validation routine.
+Form.php
+--------
+
+The controller (**Form.php**) has one property: ``$helpers``.
+It loads the form helper used by your view files.
+
+The controller has one method: ``index()``. This method returns
+the **signup** view to show the form when a non-POST request comes. Otherwise, it
+uses the Controller-provided ``validate()`` method. It also runs the validation routine.
 Based on whether the validation was successful it either presents the
 form or the success page.
 
@@ -171,6 +189,7 @@ Add Validation Rules
 Then add validation rules in the controller (**Form.php**):
 
 .. literalinclude:: validation/002.php
+   :lines: 2-
 
 If you submit the form you should see the success page or the form with error messages.
 
