@@ -298,6 +298,12 @@ Miscellaneous Functions
 .. php:function:: redirect(string $route)
 
     :param  string  $route: The reverse-routed or named route to redirect the user to.
+    :rtype: RedirectResponse
+
+    .. important:: When you use this function, an instance of ``RedirectResponse`` must be returned
+        in the method of the :doc:`Controller <../incoming/controllers>` or
+        the :doc:`Controller Filter <../incoming/filters>`. If you forget to return it,
+        no redirection will occur.
 
     Returns a RedirectResponse instance allowing you to easily create redirects:
 
