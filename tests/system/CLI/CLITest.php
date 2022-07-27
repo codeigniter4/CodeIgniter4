@@ -525,4 +525,19 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame(7, CLI::strlen(CLI::color('success', 'green')));
         $this->assertSame(0, CLI::strlen(null));
     }
+
+    public function testPromptByMultipleKey()
+    {
+        $options = ['one', 'two', 'three'];
+        CLI::promptByMultipleKey('Is this a question?', $options);
+
+        $expected = '' . PHP_EOL . 'Is this a question?' . PHP_EOL;
+        foreach ($options as $key => $description) {
+            $name = str_pad('  [' . $key . ']  ', 7, ' ');
+            $expected .= '' . CLI::color($name, 'green') . CLI::wrap($description, 125, 7) . PHP_EOL;
+        }
+        $expected .= '[' . CLI::color('0', 'green') . ', 1, 2]: ';
+
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
+    }
 }
