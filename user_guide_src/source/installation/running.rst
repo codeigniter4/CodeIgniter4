@@ -99,6 +99,11 @@ in the "AllowOverride" setting::
         Require all granted
     </Directory>
 
+Removing the index.php
+----------------------
+
+See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
+
 Virtual Hosting
 ---------------
 
@@ -195,6 +200,11 @@ Be sure to specify options and permissions for the CodeIgniter public directory 
         </Directory>
     </IfModule>
 
+Setting Environment
+-------------------
+
+See :ref:`Handling Multiple Environments <environment-apache>`.
+
 Testing
 -------
 
@@ -204,8 +214,12 @@ Apache needs to be restarted whenever you change its configuration.
 
 Hosting with Nginx
 ==================
+
 Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.
+
+default.conf
+------------
 
 This configuration enables URLs without "index.php" in them and using CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
 
@@ -240,6 +254,11 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
             deny all;
         }
     }
+
+Setting Environment
+-------------------
+
+See :ref:`Handling Multiple Environments <environment-nginx>`.
 
 Hosting with Vagrant
 ====================

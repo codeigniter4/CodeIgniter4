@@ -26,7 +26,7 @@ However you choose to install and run CodeIgniter4, the
     installing_composer
     installing_manual
     running
+    troubleshooting
     ../changelogs/index
     upgrading
-    troubleshooting
     repositories
