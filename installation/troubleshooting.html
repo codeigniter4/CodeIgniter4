@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="CodeIgniter Repositories" href="repositories.html" />
-    <link rel="prev" title="Upgrade View Parser" href="upgrade_view_parser.html" /> 
+    <link rel="next" title="Change Logs" href="../changelogs/index.html" />
+    <link rel="prev" title="Running Your App" href="running.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -56,9 +56,9 @@
 <li class="toctree-l2"><a class="reference internal" href="installing_composer.html">Composer Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installing_manual.html">Manual Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
@@ -276,8 +276,18 @@
   <section id="troubleshooting">
 <h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline"></a></h1>
 <p>Here are some common installation problems, and suggested workarounds.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#how-do-i-know-if-my-install-is-working" id="id1">How do I know if my install is working?</a></p></li>
+<li><p><a class="reference internal" href="#i-have-to-include-index-php-in-my-url" id="id2">I have to include index.php in my URL</a></p></li>
+<li><p><a class="reference internal" href="#only-the-default-page-loads" id="id3">Only the default page loads</a></p></li>
+<li><p><a class="reference internal" href="#the-tutorial-gives-404-errors-everywhere" id="id4">The tutorial gives 404 errors everywhere :(</a></p></li>
+<li><p><a class="reference internal" href="#what-s-with-an-unhelpful-whoops-page" id="id5">What’s with an unhelpful “Whoops!” page?</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-error-logs" id="id6">CodeIgniter Error Logs</a></p></li>
+</ul>
+</div>
 <section id="how-do-i-know-if-my-install-is-working">
-<h2>How do I know if my install is working?<a class="headerlink" href="#how-do-i-know-if-my-install-is-working" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">How do I know if my install is working?</a><a class="headerlink" href="#how-do-i-know-if-my-install-is-working" title="Permalink to this headline"></a></h2>
 <p>From the command line, at your project root:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
 </pre></div>
@@ -287,14 +297,14 @@ welcome page:</p>
 <p><img alt="CodeIgniter4 Welcome" src="../_images/welcome.png" /></p>
 </section>
 <section id="i-have-to-include-index-php-in-my-url">
-<h2>I have to include index.php in my URL<a class="headerlink" href="#i-have-to-include-index-php-in-my-url" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">I have to include index.php in my URL</a><a class="headerlink" href="#i-have-to-include-index-php-in-my-url" title="Permalink to this headline"></a></h2>
 <p>If a URL like <code class="docutils literal notranslate"><span class="pre">/mypage/find/apple</span></code> doesn’t work, but the similar
 URL <code class="docutils literal notranslate"><span class="pre">/index.php/mypage/find/apple</span></code> does, that sounds like your <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> rules
 (for Apache) are not set up properly, or the <code class="docutils literal notranslate"><span class="pre">mod_rewrite</span></code> extension
 in Apache’s <code class="docutils literal notranslate"><span class="pre">httpd.conf</span></code> is commented out.</p>
 </section>
 <section id="only-the-default-page-loads">
-<h2>Only the default page loads<a class="headerlink" href="#only-the-default-page-loads" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Only the default page loads</a><a class="headerlink" href="#only-the-default-page-loads" title="Permalink to this headline"></a></h2>
 <p>If you find that no matter what you put in your URL only your default
 page is loading, it might be that your server does not support the
 REQUEST_URI variable needed to serve search-engine friendly URLs. As a
@@ -337,7 +347,7 @@ do this open your <strong>app/Config/App.php</strong> file and change this:</p>
 </div>
 </section>
 <section id="the-tutorial-gives-404-errors-everywhere">
-<h2>The tutorial gives 404 errors everywhere :(<a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">The tutorial gives 404 errors everywhere :(</a><a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this headline"></a></h2>
 <p>You can’t follow the tutorial using PHP’s built-in web server.
 It doesn’t process the <cite>.htaccess</cite> file needed to route
 requests properly.</p>
@@ -345,7 +355,7 @@ requests properly.</p>
 CodeIgniter equivalent, <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code> from your project root.</p>
 </section>
 <section id="what-s-with-an-unhelpful-whoops-page">
-<h2>What’s with an unhelpful “Whoops!” page?<a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">What’s with an unhelpful “Whoops!” page?</a><a class="headerlink" href="#what-s-with-an-unhelpful-whoops-page" title="Permalink to this headline"></a></h2>
 <p>You find that your app is displaying a page with “Whoops!” and
 then the text line “We seem to have hit a snag. Please try again later…”.</p>
 <p>That is a sign that you are in production mode and have hit an
@@ -356,7 +366,7 @@ the webapp, for better security.</p>
 <p>Don’t forget to reset the environment to “production” once you fix the problem!</p>
 </section>
 <section id="codeigniter-error-logs">
-<h2>CodeIgniter Error Logs<a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">CodeIgniter Error Logs</a><a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter logs error messages, according to the settings in <strong>app/Config/Logger.php</strong>.</p>
 <p>You can adjust the error threshold to see more or fewer messages.</p>
 <p>The default configuration has daily log files stored in <cite>writable/logs</cite>.
@@ -368,15 +378,15 @@ It would be a good idea to check them if things aren’t working the way you exp
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_view_parser.html" class="btn btn-neutral float-left" title="Upgrade View Parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="repositories.html" class="btn btn-neutral float-right" title="CodeIgniter Repositories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="running.html" class="btn btn-neutral float-left" title="Running Your App" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../changelogs/index.html" class="btn btn-neutral float-right" title="Change Logs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 24, 2022.
+      <span class="lastupdated">Last updated on Jul 27, 2022.
       </span></p>
   </div>
 
