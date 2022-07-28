@@ -302,7 +302,7 @@ class CLI
     }
 
     /**
-     * * This method is the same as promptByKey(), but this method supports multiple value.
+     * * This method is the same as promptByKey(), but this method supports multiple keys, separated by commas.
      *
      * @param string $text    Output "field" text or an one or two value array where the first value is the text before listing the options
      *                        and the second value the text before asking to select one option. Provide empty string to omit
@@ -310,7 +310,7 @@ class CLI
      *
      * @return array The selected key and value of $options
      */
-    public static function promptByMultipleKey($text, array $options)
+    public static function promptByMultipleKeys($text, array $options)
     {
         if (is_string($text)) {
             $text = [$text];
@@ -360,7 +360,7 @@ class CLI
         if (preg_match_all('/[a-zA-Z]/i', trim($input))) {
             static::error('Please select correctly');
 
-            return $input = static::promptByMultipleKey($line, $options);
+            return $input = static::promptByMultipleKeys($line, $options);
         }
 
         // separate input by comma and convert all to an int[]
@@ -375,7 +375,7 @@ class CLI
         if ($maxOptions < $maxInput) {
             static::error('Please select correctly');
 
-            return $input = static::promptByMultipleKey($line, $options);
+            return $input = static::promptByMultipleKeys($line, $options);
         }
 
         $input = [];
