@@ -526,10 +526,10 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame(0, CLI::strlen(null));
     }
 
-    public function testPromptByMultipleKey()
+    public function testPromptByMultipleKeys()
     {
         $options = ['one', 'two', 'three'];
-        CLI::promptByMultipleKey('Is this a question?', $options);
+        CLI::promptByMultipleKeys('Is this a question?', $options);
 
         $expected = '' . PHP_EOL . 'Is this a question?' . PHP_EOL;
 
