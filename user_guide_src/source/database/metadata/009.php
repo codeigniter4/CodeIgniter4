@@ -1,5 +1,7 @@
 <?php
 
+$db = db_connect();
+
 $keys = $db->getForeignKeyData('table_name');
 
 foreach ($keys as $key) {
