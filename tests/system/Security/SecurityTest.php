@@ -243,6 +243,32 @@ final class SecurityTest extends CIUnitTestCase
         $this->assertSame($oldHash, $newHash);
     }
 
+    public function testRegenerateWithFalseSecurityRegeneratePropertyManually()
+    {
+        $_SERVER['REQUEST_METHOD']   = 'POST';
+        $_POST['csrf_test_name']     = '8b9218a55906f9dcc1dc263dce7f005a';
+        $_COOKIE['csrf_cookie_name'] = '8b9218a55906f9dcc1dc263dce7f005a';
+
+        $config             = new SecurityConfig();
+        $config->regenerate = false;
+        Factories::injectMock('config', 'Security', $config);
+
+        $security = new MockSecurity(new MockAppConfig());
+        $request  = new IncomingRequest(
+            new MockAppConfig(),
+            new URI('http://badurl.com'),
+            null,
+            new UserAgent()
+        );
+
+        $oldHash = $security->getHash();
+        $security->verify($request);
+        $security->generateHash();
+        $newHash = $security->getHash();
+
+        $this->assertNotSame($oldHash, $newHash);
+    }
+
     public function testRegenerateWithTrueSecurityRegenerateProperty()
     {
         $_SERVER['REQUEST_METHOD']   = 'POST';
