@@ -854,7 +854,17 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 <li><p><strong>$route</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The reverse-routed or named route to redirect the user to.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">RedirectResponse</span></code></span></p>
+</dd>
 </dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When you use this function, an instance of <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> must be returned
+in the method of the <a class="reference internal" href="../incoming/controllers.html"><span class="doc">Controller</span></a> or
+the <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filter</span></a>. If you forget to return it,
+no redirection will occur.</p>
+</div>
 <p>Returns a RedirectResponse instance allowing you to easily create redirects:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
