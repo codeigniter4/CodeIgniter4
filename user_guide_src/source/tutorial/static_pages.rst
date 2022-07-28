@@ -183,18 +183,19 @@ controller you made above produces...
     +---------------------------------+-----------------------------------------------------------------+
     | URL                             | Will show                                                       |
     +=================================+=================================================================+
+    | localhost:8080/                 | the CodeIgniter "welcome" page. the results from the ``index()``|
+    |                                 | method in the ``Home`` controller.                              |
+    +---------------------------------+-----------------------------------------------------------------+
     | localhost:8080/pages            | the results from the ``index()`` method inside our ``Pages``    |
     |                                 | controller, which is to display the CodeIgniter "welcome" page. |
     +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view       | the "home" page that you made above, because it is the default  |
-    |                                 | "page" parameter to the ``view()`` method.                      |
+    | localhost:8080/home             | show the "home" page that you made above, because we explicitly |
+    |                                 | asked for it. the results from the ``view()`` method inside our |
+    |                                 | ``Pages`` controller.                                           |
     +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view/home  | show the "home" page that you made above, because we explicitly |
+    | localhost:8080/about            | the "about" page that you made above, because we explicitly     |
     |                                 | asked for it.                                                   |
     +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view/about | the "about" page that you made above, because we explicitly     |
-    |                                 | asked for it.                                                   |
-    +---------------------------------+-----------------------------------------------------------------+
-    | localhost:8080/pages/view/shop  | a "404 - File Not Found" error page, because there is no        |
+    | localhost:8080/shop             | a "404 - File Not Found" error page, because there is no        |
     |                                 | **app/Views/pages/shop.php**.                                   |
     +---------------------------------+-----------------------------------------------------------------+
