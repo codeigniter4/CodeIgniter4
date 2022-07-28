@@ -486,23 +486,24 @@ controller you made above produces…</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>localhost:8080/pages</p></td>
+<tr class="row-even"><td><p>localhost:8080/</p></td>
+<td><p>the CodeIgniter “welcome” page. the results from the <code class="docutils literal notranslate"><span class="pre">index()</span></code>
+method in the <code class="docutils literal notranslate"><span class="pre">Home</span></code> controller.</p></td>
+</tr>
+<tr class="row-odd"><td><p>localhost:8080/pages</p></td>
 <td><p>the results from the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method inside our <code class="docutils literal notranslate"><span class="pre">Pages</span></code>
 controller, which is to display the CodeIgniter “welcome” page.</p></td>
 </tr>
-<tr class="row-odd"><td><p>localhost:8080/pages/view</p></td>
-<td><p>the “home” page that you made above, because it is the default
-“page” parameter to the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method.</p></td>
-</tr>
-<tr class="row-even"><td><p>localhost:8080/pages/view/home</p></td>
+<tr class="row-even"><td><p>localhost:8080/home</p></td>
 <td><p>show the “home” page that you made above, because we explicitly
-asked for it.</p></td>
+asked for it. the results from the <code class="docutils literal notranslate"><span class="pre">view()</span></code> method inside our
+<code class="docutils literal notranslate"><span class="pre">Pages</span></code> controller.</p></td>
 </tr>
-<tr class="row-odd"><td><p>localhost:8080/pages/view/about</p></td>
+<tr class="row-odd"><td><p>localhost:8080/about</p></td>
 <td><p>the “about” page that you made above, because we explicitly
 asked for it.</p></td>
 </tr>
-<tr class="row-even"><td><p>localhost:8080/pages/view/shop</p></td>
+<tr class="row-even"><td><p>localhost:8080/shop</p></td>
 <td><p>a “404 - File Not Found” error page, because there is no
 <strong>app/Views/pages/shop.php</strong>.</p></td>
 </tr>
@@ -523,7 +524,7 @@ asked for it.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 27, 2022.
+      <span class="lastupdated">Last updated on Jul 28, 2022.
       </span></p>
   </div>
 
