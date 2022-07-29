@@ -95,13 +95,13 @@ The discovery process would look for discoverable items on that path and should,
 Enable/Disable Discover
 =======================
 
-You can turn on or off all auto-discovery in the system with the **$enabled** class variable. False will disable
+You can turn on or off all auto-discovery in the system with the ``$enabled`` class variable. False will disable
 all discovery, optimizing performance, but negating the special capabilities of your modules.
 
 Specify Discovery Items
 =======================
 
-With the **$aliases** option, you can specify which items are automatically discovered. If the item is not
+With the ``$aliases`` option, you can specify which items are automatically discovered. If the item is not
 present, then no auto-discovery will happen for that item, but the others in the array will still be discovered.
 
 Discovery and Composer
@@ -168,12 +168,12 @@ with the ``new`` command:
 
 .. literalinclude:: modules/008.php
 
-Config files are automatically discovered whenever using the **config()** function that is always available.
+Config files are automatically discovered whenever using the ``config()`` function that is always available.
 
 .. note:: We don't recommend you use the same short classname in modules.
     Modules that need to override or add to known configurations in **app/Config/** should use :ref:`registrars`.
 
-.. note:: **config()** finds the file in **app/Config/** when there is a class with the same shortname,
+.. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
     This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-options` for more information.
 
