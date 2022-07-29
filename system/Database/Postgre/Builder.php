@@ -254,7 +254,7 @@ class Builder extends BaseBuilder
             throw new DatabaseException('No constraint found for upsert.');
         }
 
-        $sql = 'INSERT INTO ' . $table . '(';
+        $sql = 'INSERT INTO ' . $table . ' (';
 
         $sql .= implode(', ', array_map(static fn ($columnName) => $columnName, $keys));
 
