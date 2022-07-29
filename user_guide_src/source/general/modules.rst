@@ -30,11 +30,11 @@ directory in the main project root::
     /tests
     /writable
 
-Open **app/Config/Autoload.php** and add the **Acme** namespace to the ``psr4`` array property:
+Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``psr4`` array property:
 
 .. literalinclude:: modules/001.php
 
-Now that this is set up, we can access any file within the **acme** folder through the ``Acme`` namespace. This alone
+Now that this is set up, we can access any file within the **acme/Blog** folder through the ``Acme\Blog`` namespace. This alone
 takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself with namespaces
 and become comfortable with their use. Several file types will be scanned for automatically through all defined namespaces - a crucial ingredient for working with modules.
 
@@ -90,12 +90,7 @@ This is configured in the file **app/Config/Modules.php**.
 
 The auto-discovery system works by scanning for particular directories and files within psr4 namespaces that have been defined in **Config/Autoload.php**.
 
-To make auto-discovery work for our **Blog** namespace, we need to make one small adjustment.
-**Acme** needs to be changed to **Acme\\Blog** because each "module" within the namespace needs to be fully defined.
-
-.. literalinclude:: modules/003.php
-
-Once your module folder path is defined, the discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
+The discovery process would look for discoverable items on that path and should, for example, find the routes file at **/acme/Blog/Config/Routes.php**.
 
 Enable/Disable Discover
 =======================
