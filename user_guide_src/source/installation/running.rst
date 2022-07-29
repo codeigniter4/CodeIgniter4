@@ -260,40 +260,6 @@ Setting Environment
 
 See :ref:`Handling Multiple Environments <environment-nginx>`.
 
-Hosting with Vagrant
-====================
-
-Virtualization is an effective way to test your webapp in the environment you
-plan to deploy on, even if you develop on a different one.
-Even if you are using the same platform for both, virtualization provides an
-isolated environment for testing.
-
-The codebase comes with a ``VagrantFile.dist``, that can be copied to ``VagrantFile``
-and tailored for your system, for instance enabling access to specific database or caching engines.
-
-Setting Up
-----------
-
-It assumes that you have installed `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_ and
-`Vagrant <https://www.vagrantup.com/downloads.html>`_
-for your platform.
-
-The Vagrant configuration file assumes you have set up a `ubuntu/bionic64 Vagrant box
-<https://app.vagrantup.com/ubuntu/boxes/bionic64>`_ on your system::
-
-    vagrant box add ubuntu/bionic64
-
-Testing
--------
-
-Once set up, you can then launch your webapp inside a VM, with the command::
-
-    vagrant up
-
-Your webapp will be accessible at ``http://localhost:8080``, with the code coverage
-report for your build at ``http://localhost:8081`` and the user guide for
-it at ``http://localhost:8082``.
-
 Bootstrapping the App
 =====================
 
