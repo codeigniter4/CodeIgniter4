@@ -112,7 +112,7 @@ final class UpsertTest extends CIUnitTestCase
 
             case 'Postgre':
                 $expected = <<<'SQL'
-                    INSERT INTO "db_user"("country", "email", "name")
+                    INSERT INTO "db_user" ("country", "email", "name")
                     VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
                     ON CONFLICT("email")
                     DO UPDATE SET
@@ -124,7 +124,7 @@ final class UpsertTest extends CIUnitTestCase
 
             case 'SQLite3':
                 $expected = <<<'SQL'
-                    INSERT INTO `db_user`(`country`, `email`, `name`)
+                    INSERT INTO `db_user` (`country`, `email`, `name`)
                     VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
                     ON CONFLICT(`email`)
                     DO UPDATE SET
