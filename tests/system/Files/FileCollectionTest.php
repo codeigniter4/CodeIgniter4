@@ -178,7 +178,24 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame($expected, $files->get());
     }
 
-    public function testAddArray()
+    public function testAddArrayFiles()
+    {
+        $files = new FileCollection();
+
+        $expected = [
+            $this->directory . 'apple.php',
+            SUPPORTPATH . 'Files/baker/banana.php',
+        ];
+
+        $files->add([
+            $this->directory . 'apple.php',
+            SUPPORTPATH . 'Files/baker/banana.php',
+        ]);
+
+        $this->assertSame($expected, $files->get());
+    }
+
+    public function testAddArrayDirectoryAndFile()
     {
         $files = new FileCollection();
 
@@ -190,7 +207,7 @@ final class FileCollectionTest extends CIUnitTestCase
         ];
 
         $files->add([
-            SUPPORTPATH . 'Files/able',
+            SUPPORTPATH . 'Files/able', // directory
             SUPPORTPATH . 'Files/baker/banana.php',
         ]);
 

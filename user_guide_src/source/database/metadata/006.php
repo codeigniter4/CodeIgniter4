@@ -1,5 +1,7 @@
 <?php
 
+$db = db_connect();
+
 $fields = $db->getFieldData('table_name');
 
 foreach ($fields as $field) {

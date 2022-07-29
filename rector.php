@@ -29,8 +29,10 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
+use Rector\DeadCode\Rector\Plus\RemoveDeadZeroAndOneOperationRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
@@ -70,6 +72,8 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->bootstrapFiles([
         __DIR__ . '/system/Test/bootstrap.php',
     ]);
+
+    $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
 
     // is there a file you need to skip?
     $rectorConfig->skip([
@@ -128,6 +132,12 @@ return static function (RectorConfig $rectorConfig): void {
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
+
+        // buggy on read based on @var on property
+        RemoveAlwaysTrueIfConditionRector::class,
+
+        // buggy on string * int
+        RemoveDeadZeroAndOneOperationRector::class,
     ]);
 
     // auto import fully qualified class names
