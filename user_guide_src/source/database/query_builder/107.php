@@ -8,7 +8,7 @@ $data = [
 
 $sql = $builder->set($data)->getCompiledUpsert();
 echo $sql;
-/* MySQLi  produces:
+/* MySQLi produces:
     INSERT INTO `db_user` (`country`, `email`, `name`)
     VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
     ON DUPLICATE KEY UPDATE

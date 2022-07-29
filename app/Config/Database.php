@@ -12,28 +12,54 @@ class Database extends Config
     /**
      * The directory that holds the Migrations
      * and Seeds directories.
+     *
+     * @var string
      */
-    public string $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
+    public $filesPath = APPPATH . 'Database' . DIRECTORY_SEPARATOR;
 
     /**
      * Lets you choose which connection group to
      * use if no other is specified.
+     *
+     * @var string
      */
-    public string $defaultGroup = 'default';
+    public $defaultGroup = 'default';
 
-    /**
-     * The default database connection.
-     */
-    public array $default = [
+    public $newdb = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => '',
+        'username' => 'root',
         'password' => '',
-        'database' => '',
+        'database' => 'newdb',
         'DBDriver' => 'MySQLi',
-        'DBPrefix' => '',
+        'DBPrefix' => 'db_',
         'pConnect' => false,
-        'DBDebug'  => true,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 3306,
+    ];
+    
+    /**
+     * The default database connection.
+     *
+     * @var array
+     */
+    public $tests = [
+        'DSN'      => '',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'test',
+        'DBDriver' => 'MySQLi',
+        'DBPrefix' => 'db_',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
         'swapPre'  => '',
@@ -44,11 +70,94 @@ class Database extends Config
         'port'     => 3306,
     ];
 
+    public $postgre = [
+        'DSN'      => '',
+        'hostname' => '10.1.5.108',
+        'username' => 'postgres',
+        'password' => 'postgres',
+        'database' => 'test',
+        'DBDriver' => 'Postgre',
+        'DBPrefix' => 'db_',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 5432,
+    ];
+
+    public $sqlite3 = [
+        'DSN'         => '',
+        'hostname'    => 'localhost',
+        'username'    => '',
+        'password'    => '',
+        'database'    => 'test.sqlite',
+        'DBDriver'    => 'SQLite3',
+        'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
+        'pConnect'    => false,
+        'DBDebug'     => (ENVIRONMENT !== 'production'),
+        'charset'     => 'utf8',
+        'DBCollat'    => 'utf8_general_ci',
+        'swapPre'     => '',
+        'encrypt'     => false,
+        'compress'    => false,
+        'strictOn'    => false,
+        'failover'    => [],
+        'port'        => 3306,
+        'foreignKeys' => true,
+    ];
+
+    public $sqlsrv = [ // sqlsrv
+        'DSN'      => '',
+        'hostname' => '10.1.5.108',
+        'username' => 'sa',
+        'password' => '@MssqlPass34',
+        'database' => 'test',
+        'DBDriver' => 'SQLSRV',
+        'DBPrefix' => 'db_',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 1433,
+    ];
+
+    public $oracle = [
+        'DSN'      => '',
+        'hostname' => '10.1.5.108/orclcdb',
+        'username' => 'system',
+        'password' => 'oracle',
+        'database' => 'SYSTEM',
+        'DBDriver' => 'OCI8',
+        'DBPrefix' => 'db_',
+        'pConnect' => false,
+        'DBDebug'  => (ENVIRONMENT !== 'production'),
+        'charset'  => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 1521,
+    ];
+
     /**
      * This database connection is used when
      * running PHPUnit database tests.
+     *
+     * @var array
      */
-    public array $tests = [
+    public $testst = [
         'DSN'         => '',
         'hostname'    => '127.0.0.1',
         'username'    => '',
@@ -57,7 +166,7 @@ class Database extends Config
         'DBDriver'    => 'SQLite3',
         'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
         'pConnect'    => false,
-        'DBDebug'     => true,
+        'DBDebug'     => (ENVIRONMENT !== 'production'),
         'charset'     => 'utf8',
         'DBCollat'    => 'utf8_general_ci',
         'swapPre'     => '',
