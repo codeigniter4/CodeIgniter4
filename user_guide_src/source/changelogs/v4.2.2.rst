@@ -28,6 +28,7 @@ Changes
 - Fixed: Validation of fields with a leading asterisk (wildcard).
 - Now ``CLIRequest::isCLI()`` always returns true.
 - Now ``IncommingRequest::isCLI()`` always returns false.
+- **Vagrantfile.dist** has been moved to `CodeIgniter DevKit <https://github.com/codeigniter4/devkit>`_.
 
 Deprecations
 ************
