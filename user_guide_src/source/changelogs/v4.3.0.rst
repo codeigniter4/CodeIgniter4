@@ -34,7 +34,7 @@ Enhancements
 
 CLI
 ===
-- Added methods ``CLI::promptByMultipleKey()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-key` for details.
+- Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
 
 Others
 ======

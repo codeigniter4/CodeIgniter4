@@ -282,21 +282,13 @@ class CLI
             throw new InvalidArgumentException('$text can only be of type string|array');
         }
 
-        if (! $options) {
-            throw new InvalidArgumentException('No options to select from were provided');
-        }
+        CLI::isZeroOptions($options);
 
         if ($line = array_shift($text)) {
             CLI::write($line);
         }
 
-        // +2 for the square brackets around the key
-        $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;
-
-        foreach ($options as $key => $description) {
-            $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
-            CLI::write(CLI::color($name, 'green') . CLI::wrap($description, 125, $keyMaxLength + 4));
-        }
+        CLI::printKeysAndValues($options);
 
         return static::prompt(PHP_EOL . array_shift($text), array_keys($options), $validation);
     }
@@ -308,59 +300,38 @@ class CLI
      *                        and the second value the text before asking to select one option. Provide empty string to omit
      * @param array  $options A list of options (array(key => description)), the first option will be the default value
      *
-     * @return array The selected key and value of $options
+     * @return array The selected key(s) and value(s) of $options
      */
     public static function promptByMultipleKeys($text, array $options)
     {
-        if (is_string($text)) {
-            $text = [$text];
-        } elseif (! is_array($text)) {
-            throw new InvalidArgumentException('$text can only be string');
-        }
+        CLI::isZeroOptions($options);
 
-        if (is_array($options) && $options) {
-            $opts               = $options;
-            $extraOutputDefault = static::color('0', 'green');
+        $extraOutputDefault = static::color('0', 'green');
+        $opts               = $options;
+        unset($opts[0]);
 
-            unset($opts[0]);
-
-            if (empty($opts)) {
-                $extraOutput = $extraOutputDefault;
-            } else {
-                $optsKey = [];
-
-                foreach (array_keys($opts) as $key) {
-                    $optsKey[] = $key;
-                }
-                $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
-            }
-
-            $default = 0;
+        if (empty($opts)) {
+            $extraOutput = $extraOutputDefault;
         } else {
-            throw new InvalidArgumentException('$options can only be array');
+            $optsKey = [];
+            foreach (array_keys($opts) as $key) {
+                $optsKey[] = $key;
+            }
+            $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
         }
 
-        if ($line = array_shift($text)) {
-            CLI::newLine();
-            CLI::write($line);
-        }
-
-        // +2 for the square brackets around the key
-        $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;
-
-        foreach ($options as $key => $description) {
-            $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
-            CLI::write(CLI::color($name, 'green') . CLI::wrap($description, 125, $keyMaxLength + 4));
-        }
+        CLI::newLine();
+        CLI::write($text);
+        CLI::printKeysAndValues($options);
         static::fwrite(STDOUT, (trim((string) ((int) $text)) ? ' ' : '') . $extraOutput . ': ');
-        $input = trim(static::input()) ?: $default;
+        $input = trim(static::input()) ?: 0; // 0 is default
 
-        // search alphabetic character
+        // search alphabetic character in $input
         // return the prompt again if it is true because the key of $options is number
         if (preg_match_all('/[a-zA-Z]/i', trim($input))) {
             static::error('Please select correctly');
 
-            return $input = static::promptByMultipleKeys($line, $options);
+            return static::promptByMultipleKeys($text, $options);
         }
 
         // separate input by comma and convert all to an int[]
@@ -369,17 +340,16 @@ class CLI
         // find max from key of $options
         $maxOptions = array_key_last($options);
         // find max from input
-        $maxInput = max($inputToArray);
+        $maxInput   = max($inputToArray);
         // if max from $options less than max from input
         // it is mean user tried to access null value in $options
         if ($maxOptions < $maxInput) {
             static::error('Please select correctly');
 
-            return $input = static::promptByMultipleKeys($line, $options);
+            return static::promptByMultipleKeys($text, $options);
         }
 
         $input = [];
-
         foreach ($options as $key => $description) {
             foreach ($inputToArray as $inputKey) {
                 if ($key === $inputKey) {
@@ -390,6 +360,38 @@ class CLI
 
         return $input;
     }
+
+    //--------------------------------------------------------------------
+    // Utility for promptBy...
+    //--------------------------------------------------------------------
+
+    /**
+     * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
+     */
+    private static function isZeroOptions(array $options) : void
+    {
+        if(!$options){
+            throw new InvalidArgumentException('No options to select from were provided');
+        }
+    }
+
+    /**
+     * Print each key and value one by one
+     */
+    private static function printKeysAndValues(array $options) : void
+    {
+        // +2 for the square brackets around the key
+        $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;
+
+        foreach ($options as $key => $description) {
+            $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
+            CLI::write(CLI::color($name, 'green') . CLI::wrap($description, 125, $keyMaxLength + 4));
+        }
+    }
+
+    //--------------------------------------------------------------------
+    // End Utility for promptBy...
+    //--------------------------------------------------------------------
 
     /**
      * Validate one prompt "field" at a time

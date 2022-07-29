@@ -1,6 +1,6 @@
 <?php
 
-$hobby = CLI::promptByKey('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
+$hobby = CLI::promptByMultipleKeys('Select your hobbies:', ['Playing game', 'Sleep', 'Badminton']);
 /*
  * Select your hobbies:
  *   [0]  Playing game
