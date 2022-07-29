@@ -8,7 +8,7 @@ $data = [
 ];
 
 $builder->updateFields('name, country')->upsert($data);
-/* SQLSRV  produces:
+/* SQLSRV produces:
     MERGE INTO "test"."dbo"."db_user"
     USING (
      VALUES ('Iran','ahmadinejad@world.com',2,'Ahmadinejad')

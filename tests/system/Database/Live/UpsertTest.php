@@ -97,90 +97,88 @@ final class UpsertTest extends CIUnitTestCase
 
     public function testGetCompiledUpsert()
     {
+        switch ($this->db->DBDriver) {
+
+            case 'MySQLi':
+                $expected = <<<'SQL'
+                    INSERT INTO `db_user` (`country`, `email`, `name`)
+                    VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
+                    ON DUPLICATE KEY UPDATE
+                    `country` = VALUES(`country`),
+                    `email` = VALUES(`email`),
+                    `name` = VALUES(`name`)
+                    SQL;
+                break;
+
+            case 'Postgre':
+                $expected = <<<'SQL'
+                    INSERT INTO "db_user"("country", "email", "name")
+                    VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
+                    ON CONFLICT("email")
+                    DO UPDATE SET
+                    "country" = "excluded"."country",
+                    "email" = "excluded"."email",
+                    "name" = "excluded"."name"
+                    SQL;
+                break;
+
+            case 'SQLite3':
+                $expected = <<<'SQL'
+                    INSERT INTO `db_user`(`country`, `email`, `name`)
+                    VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
+                    ON CONFLICT(`email`)
+                    DO UPDATE SET
+                    `country` = `excluded`.`country`,
+                    `email` = `excluded`.`email`,
+                    `name` = `excluded`.`name`
+                    SQL;
+                break;
+
+            case 'SQLSRV':
+                $expected = <<<'SQL'
+                    MERGE INTO "test"."dbo"."db_user"
+                    USING (
+                     VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
+                    ) "_upsert" ("country", "email", "name")
+                    ON ( 1 != 1 OR ("test"."dbo"."db_user"."email" = "_upsert"."email"))
+                    WHEN MATCHED THEN UPDATE SET
+                    "country" = "_upsert"."country",
+                    "name" = "_upsert"."name"
+                    WHEN NOT MATCHED THEN INSERT ("country", "email", "name")
+                    VALUES ("_upsert"."country", "_upsert"."email", "_upsert"."name");
+                    SQL;
+                break;
+
+            case 'OCI8':
+                $expected = <<<'SQL'
+                    MERGE INTO "db_user"
+                    USING (
+                    SELECT 'Iran' "country", 'ahmadinejad@world.com' "email", 'Ahmadinejad' "name" FROM DUAL
+                    ) "_upsert"
+                    ON ( 1 != 1 OR ("db_user"."email" = "_upsert"."email"))
+                    WHEN MATCHED THEN UPDATE SET
+                    "country" = "_upsert"."country",
+                    "name" = "_upsert"."name"
+                    WHEN NOT MATCHED THEN INSERT ("country", "email", "name")
+                    VALUES  ("_upsert"."country", "_upsert"."email", "_upsert"."name")
+                    SQL;
+                break;
+
+            default:
+                $expected = false;
+                break;
+
+        }
+
         $userData = [
             'email'   => 'ahmadinejad@world.com',
             'name'    => 'Ahmadinejad',
             'country' => 'Iran',
         ];
 
-        if ($this->db->DBDriver === 'MySQLi') {
-            $expected = <<<'SQL'
-                INSERT INTO `db_user` (`country`, `email`, `name`)
-                VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
-                ON DUPLICATE KEY UPDATE
-                `country` = VALUES(`country`),
-                `email` = VALUES(`email`),
-                `name` = VALUES(`name`)
-                SQL;
-
-            $this->assertSame($expected, $this->db->table('user')
-                ->set($userData)
-                ->getCompiledUpsert());
-        } elseif ($this->db->DBDriver === 'Postgre') {
-            $expected = <<<'SQL'
-                INSERT INTO "db_user"("country", "email", "name")
-                VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
-                ON CONFLICT("email")
-                DO UPDATE SET
-                "country" = "excluded"."country",
-                "email" = "excluded"."email",
-                "name" = "excluded"."name"
-                SQL;
-
-            $this->assertSame($expected, $this->db->table('user')
-                ->set($userData)
-                ->getCompiledUpsert());
-        } elseif ($this->db->DBDriver === 'SQLite3') {
-            $expected = <<<'SQL'
-                INSERT INTO `db_user`(`country`, `email`, `name`)
-                VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
-                ON CONFLICT(`email`)
-                DO UPDATE SET
-                `country` = `excluded`.`country`,
-                `email` = `excluded`.`email`,
-                `name` = `excluded`.`name`
-                SQL;
-
-            $this->assertSame($expected, $this->db->table('user')
-                ->set($userData)
-                ->getCompiledUpsert());
-        } elseif ($this->db->DBDriver === 'SQLSRV') {
-            $expected = <<<'SQL'
-                MERGE INTO "test"."dbo"."db_user"
-                USING (
-                 VALUES ('Iran','ahmadinejad@world.com','Ahmadinejad')
-                ) "_upsert" ("country", "email", "name")
-                ON ( 1 != 1 OR ("test"."dbo"."db_user"."email" = "_upsert"."email"))
-                WHEN MATCHED THEN UPDATE SET
-                "country" = "_upsert"."country",
-                "name" = "_upsert"."name"
-                WHEN NOT MATCHED THEN INSERT ("country", "email", "name")
-                VALUES ("_upsert"."country", "_upsert"."email", "_upsert"."name");
-                SQL;
-
-            $this->assertSame($expected, $this->db->table('user')
-                ->set($userData)
-                ->getCompiledUpsert());
-        } elseif ($this->db->DBDriver === 'OCI8') {
-            $expected = <<<'SQL'
-                MERGE INTO "db_user"
-                USING (
-                SELECT 'Iran' "country", 'ahmadinejad@world.com' "email", 'Ahmadinejad' "name" FROM DUAL
-                ) "_upsert"
-                ON ( 1 != 1 OR ("db_user"."email" = "_upsert"."email"))
-                WHEN MATCHED THEN UPDATE SET
-                "country" = "_upsert"."country",
-                "name" = "_upsert"."name"
-                WHEN NOT MATCHED THEN INSERT ("country", "email", "name")
-                VALUES  ("_upsert"."country", "_upsert"."email", "_upsert"."name")
-                SQL;
-
-            $this->assertSame($expected, $this->db->table('user')
-                ->set($userData)
-                ->getCompiledUpsert());
-        } else {
-            $this->assertTrue(true);
-        }
+        $this->assertSame($expected, $this->db->table('user')
+            ->set($userData)
+            ->getCompiledUpsert());
     }
 
     public function testUpsertCauseConstraintError()

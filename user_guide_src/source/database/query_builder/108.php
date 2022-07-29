@@ -15,7 +15,7 @@ $data = [
     ],
 ];
 
-$builder->insertBatch($data);
+$builder->upsertBatch($data);
 // MySQLi  produces: INSERT INTO.. ON DUPLICATE KEY UPDATE..
 // Postgre produces: INSERT INTO.. ON CONFLICT.. DO UPDATE..
 // SQLite3 produces: INSERT INTO.. ON CONFLICT.. DO UPDATE..

@@ -155,6 +155,9 @@ class BaseBuilder
 
     /**
      * QB Options data
+     * Holds additional data used to render SQL
+     *
+     * @phpstan-var array{updateFields?: array, constraints?: array, tableIdentity?: string}
      *
      * @var array
      */
@@ -1794,7 +1797,7 @@ class BaseBuilder
     /**
      * Allows key/value pairs to be set for batch inserts/upserts
      *
-     * @param mixed $key
+     * @param array|object $key
      *
      * @return $this|null
      */
@@ -1814,7 +1817,7 @@ class BaseBuilder
         foreach ($key as $row) {
             $row = $this->objectToArray($row);
             if (array_diff($keys, array_keys($row)) !== [] || array_diff(array_keys($row), $keys) !== []) {
-                // batch function above returns an error on an empty array
+                // batchExecute() function returns an error on an empty array
                 $this->QBSet[] = [];
 
                 return null;
@@ -1845,7 +1848,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return bool|string
+     * @return string
      */
     public function getCompiledUpsert()
     {

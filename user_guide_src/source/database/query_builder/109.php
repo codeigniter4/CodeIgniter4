@@ -8,7 +8,7 @@ $data = [
 ];
 
 $builder->onConstraint('email')->upsert($data);
-/* Postgre  produces:
+/* Postgre produces:
     INSERT INTO "db_user"("country", "email", "id", "name")
     VALUES ('Iran','ahmadinejad@world.com',2,'Ahmadinejad')
     ON CONFLICT("email")
