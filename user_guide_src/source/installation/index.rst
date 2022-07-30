@@ -2,9 +2,8 @@
 Installation
 ############
 
-CodeIgniter4 can be installed in a number of different ways: manually,
-using `Composer <https://getcomposer.org>`_, or using
-`Git <https://git-scm.com/>`_.
+CodeIgniter has two supported installation methods: manual download,
+using `Composer <https://getcomposer.org>`_.
 Which is right for you?
 
 - We recommend the Composer installation because it keeps CodeIgniter up to date easily.
