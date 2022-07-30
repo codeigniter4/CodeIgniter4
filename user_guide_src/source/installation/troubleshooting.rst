@@ -68,10 +68,11 @@ That is a sign that you are in production mode and have hit an
 unrecoverable error, which we don't want to show to the viewer of
 the webapp, for better security.
 
-You can see the error in the debug toolbar display by setting your environment to
-"development" (in **.env**), and reloading the page.
+You can see the error in the log file. See `CodeIgniter Error Logs`_ below.
 
-Don't forget to reset the environment to "production" once you fix the problem!
+If it is not on the production server, you should set your environment to
+"development" (in **.env**). See :ref:`setting-development-mode` for the detail.
+After that, reload the page. You will see the error and the back trace.
 
 CodeIgniter Error Logs
 ----------------------
