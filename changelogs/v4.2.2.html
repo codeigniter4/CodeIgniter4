@@ -293,6 +293,7 @@
 <li><p>Now <code class="docutils literal notranslate"><span class="pre">Services::request()</span></code> returns <code class="docutils literal notranslate"><span class="pre">IncomingRequest</span></code> or <code class="docutils literal notranslate"><span class="pre">CLIRequest</span></code>.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Debug\Exceptions::__construct()</span></code> has been changed. The <code class="docutils literal notranslate"><span class="pre">IncomingRequest</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$request</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">BaseBuilder.php::insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">BaseBuilder.php::update()</span></code> have been changed. The <code class="docutils literal notranslate"><span class="pre">?array</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$set</span></code> parameter was removed.</p></li>
+<li><p>A bug that caused pages to be cached before after filters were executed when using page caching has been fixed. Adding response headers or changing the response body in after filters now caches them correctly.</p></li>
 </ul>
 </section>
 <section id="enhancements">
@@ -312,6 +313,7 @@
 <h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The parameters of <code class="docutils literal notranslate"><span class="pre">Services::request()</span></code> are deprecated.</p></li>
+<li><p>The first parameter <code class="docutils literal notranslate"><span class="pre">$cacheConfig</span></code> of <code class="docutils literal notranslate"><span class="pre">CodeIgniter::gatherOutput()</span></code> is deprecated.</p></li>
 </ul>
 </section>
 <section id="bugs-fixed">
@@ -332,7 +334,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 29, 2022.
+      <span class="lastupdated">Last updated on Jul 30, 2022.
       </span></p>
   </div>
 
