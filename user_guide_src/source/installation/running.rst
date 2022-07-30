@@ -17,19 +17,19 @@ Initial Configuration & Set Up
 
 #. Open the **app/Config/App.php** file with a text editor and
    set your base URL. If you need more flexibility, the baseURL may
-   be set within the **.env** file as ``app.baseURL="http://example.com/"``.
+   be set within the **.env** file as ``app.baseURL = 'http://example.com/'``.
    (Always use a trailing slash on your base URL!)
 #. If you intend to use a database, open the
    **app/Config/Database.php** file with a text editor and set your
    database settings. Alternately, these could be set in your **.env** file.
+#. If it is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
+   in **.env** file to take advantage of the debugging tools provided. See
+   :ref:`setting-development-mode` for the detail.
 
-One additional measure to take in production environments is to disable
-PHP error reporting and any other development-only functionality. In
-CodeIgniter, this can be done by setting the ``ENVIRONMENT`` constant, which
-is more fully described on the :doc:`environments page </general/environments>`.
-By default, the application will run using the "production" environment. To
-take advantage of the debugging tools provided, you should set the environment
-to "development".
+.. important:: In production environments, you should disable error display and
+    any other development-only functionality. In CodeIgniter, this can be done
+    by setting the environment to "production". By default, the application will
+    run using the "production" environment. See also :ref:`environment-constant`.
 
 .. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside
