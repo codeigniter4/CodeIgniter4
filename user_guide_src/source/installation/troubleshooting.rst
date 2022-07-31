@@ -70,8 +70,8 @@ the webapp, for better security.
 
 You can see the error in the log file. See `CodeIgniter Error Logs`_ below.
 
-If it is not on the production server, you should set your environment to
-"development" (in **.env**). See :ref:`setting-development-mode` for the detail.
+If you reach this page while developing you should change your environment to
+"development" (in **.env**). See :ref:`setting-development-mode` for more details.
 After that, reload the page. You will see the error and the back trace.
 
 CodeIgniter Error Logs
