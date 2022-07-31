@@ -121,4 +121,99 @@ final class TimerTest extends CIUnitTestCase
 
         $this->assertNull($timer->getElapsedTime('test1'));
     }
+
+    /**
+     * @timeLimit 1.5
+     */
+    public function testRecordFunctionNoReturn()
+    {
+        $timer = new Timer();
+        $returnValue = $timer->record('longjohn', function() { sleep(1); });
+
+        $this->assertGreaterThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertNull($returnValue);
+    }
+
+    /**
+     * @timeLimit 1.5
+     */
+    public function testRecordFunctionWithReturn()
+    {
+        $timer = new Timer();
+        $returnValue = $timer->record('longjohn', function() { sleep(1); return 'test'; });
+
+        $this->assertGreaterThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertSame('test', $returnValue);
+    }
+
+    public function testRecordArrowFunction()
+    {
+        $timer = new Timer();
+        $returnValue = $timer->record('longjohn', fn() => strlen('CI4') );
+
+        $this->assertLessThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertSame(3, $returnValue);
+    }
+
+    public function testRecordThrowsException()
+    {
+        $this->expectException('RuntimeException');
+
+        $timer = new Timer();
+        $timer->record('ex', function() { throw new RuntimeException(); });
+    }
+
+    public function testRecordThrowsErrorOnCallableWithParams()
+    {
+        $this->expectException('Error');
+
+        $timer = new Timer();
+        $timer->record('error', 'strlen');
+    }
+
+    public function testCommonNoNameExpectTimer()
+    {
+        $returnValue = timer();
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+    }
+
+    public function testCommonWithNameExpectTimer()
+    {
+        $returnValue = timer('test');
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+        $this->assertTrue($returnValue->has('test'));
+    }
+
+    public function testCommonNoNameCallableExpectTimer()
+    {
+        $returnValue = timer(null, fn() => strlen('CI4') );
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+    }
+
+    /**
+     * @timeLimit 1.5
+     */
+    public function testCommonCallableExpectNoReturn()
+    {
+        $returnValue = timer('common', function() { sleep(1); } );
+
+        $this->assertNotInstanceOf(Timer::class, $returnValue);
+        $this->assertNull($returnValue);
+        $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('common'));
+    }
+
+    /**
+     * @timeLimit 1.5
+     */
+    public function testCommonCallableExpectWithReturn()
+    {
+        $returnValue = timer('common', function() { sleep(1); return strlen('CI4'); } );
+
+        $this->assertNotInstanceOf(Timer::class, $returnValue);
+        $this->assertSame(3, $returnValue);
+        $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('common'));
+    }
 }
