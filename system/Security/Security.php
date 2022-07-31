@@ -303,6 +303,19 @@ class Security implements SecurityInterface
             throw SecurityException::forDisallowedAction();
         }
 
+        $this->removeTokenInRequest($request);
+
+        if ($this->regenerate) {
+            $this->generateHash();
+        }
+
+        log_message('info', 'CSRF token verified.');
+
+        return $this;
+    }
+
+    private function removeTokenInRequest(RequestInterface $request)
+    {
         $json = json_decode($request->getBody() ?? '');
 
         if (isset($_POST[$this->tokenName])) {
@@ -314,14 +327,6 @@ class Security implements SecurityInterface
             unset($json->{$this->tokenName});
             $request->setBody(json_encode($json));
         }
-
-        if ($this->regenerate) {
-            $this->generateHash();
-        }
-
-        log_message('info', 'CSRF token verified.');
-
-        return $this;
     }
 
     private function getPostedToken(RequestInterface $request): ?string
