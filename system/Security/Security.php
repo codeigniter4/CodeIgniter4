@@ -155,6 +155,11 @@ class Security implements SecurityInterface
     private ?Session $session = null;
 
     /**
+     * CSRF Hash in Cookie
+     */
+    private ?string $hashInCookie = null;
+
+    /**
      * Constructor.
      *
      * Stores our configuration and fires off the init() method to setup
@@ -192,7 +197,8 @@ class Security implements SecurityInterface
             $this->configureSession();
         }
 
-        $this->request = Services::request();
+        $this->request      = Services::request();
+        $this->hashInCookie = $this->request->getCookie($this->cookieName);
 
         $this->generateHash();
     }
@@ -308,7 +314,7 @@ class Security implements SecurityInterface
         if ($this->regenerate) {
             $this->hash = null;
             if ($this->isCSRFCookie()) {
-                unset($_COOKIE[$this->cookieName]);
+                $this->hashInCookie = null;
             } else {
                 // Session based CSRF protection
                 $this->session->remove($this->tokenName);
@@ -504,7 +510,7 @@ class Security implements SecurityInterface
             // sub-pages causing this feature to fail
             if ($this->isCSRFCookie()) {
                 if ($this->isHashInCookie()) {
-                    return $this->hash = $_COOKIE[$this->cookieName];
+                    return $this->hash = $this->hashInCookie;
                 }
             } elseif ($this->session->has($this->tokenName)) {
                 // Session based CSRF protection
@@ -526,9 +532,14 @@ class Security implements SecurityInterface
 
     private function isHashInCookie(): bool
     {
-        return isset($_COOKIE[$this->cookieName])
-        && is_string($_COOKIE[$this->cookieName])
-        && preg_match('#^[0-9a-f]{32}$#iS', $_COOKIE[$this->cookieName]) === 1;
+        if ($this->hashInCookie === null) {
+            return false;
+        }
+
+        $length  = static::CSRF_HASH_BYTES * 2;
+        $pattern = '#^[0-9a-f]{' . $length . '}$#iS';
+
+        return preg_match($pattern, $this->hashInCookie) === 1;
     }
 
     private function saveHashInCookie(): void
