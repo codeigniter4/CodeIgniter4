@@ -503,6 +503,21 @@ class Security implements SecurityInterface
     }
 
     /**
+     * Restore hash from Session or Cookie
+     */
+    private function restoreHash(): void
+    {
+        if ($this->isCSRFCookie()) {
+            if ($this->isHashInCookie()) {
+                $this->hash = $this->hashInCookie;
+            }
+        } elseif ($this->session->has($this->tokenName)) {
+            // Session based CSRF protection
+            $this->hash = $this->session->get($this->tokenName);
+        }
+    }
+
+    /**
      * Generates the CSRF Hash.
      */
     protected function generateHash(): string
@@ -511,13 +526,10 @@ class Security implements SecurityInterface
         // We don't necessarily want to regenerate it with
         // each page load since a page could contain embedded
         // sub-pages causing this feature to fail
-        if ($this->isCSRFCookie()) {
-            if ($this->isHashInCookie()) {
-                return $this->hash = $this->hashInCookie;
-            }
-        } elseif ($this->session->has($this->tokenName)) {
-            // Session based CSRF protection
-            return $this->hash = $this->session->get($this->tokenName);
+        $this->restoreHash();
+
+        if ($this->hash !== null) {
+            return $this->hash;
         }
 
         $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
