@@ -200,6 +200,7 @@ class Security implements SecurityInterface
         $this->request      = Services::request();
         $this->hashInCookie = $this->request->getCookie($this->cookieName);
 
+        $this->restoreHash();
         if ($this->hash === null) {
             $this->generateHash();
         }
@@ -314,16 +315,6 @@ class Security implements SecurityInterface
         }
 
         if ($this->regenerate) {
-            $this->hash = null;
-            if ($this->isCSRFCookie()) {
-                $this->hashInCookie = null;
-            } else {
-                // Session based CSRF protection
-                $this->session->remove($this->tokenName);
-            }
-        }
-
-        if ($this->hash === null) {
             $this->generateHash();
         }
 
@@ -518,20 +509,10 @@ class Security implements SecurityInterface
     }
 
     /**
-     * Generates the CSRF Hash.
+     * Generates (Regenerate) the CSRF Hash.
      */
     protected function generateHash(): string
     {
-        // If the cookie exists we will use its value.
-        // We don't necessarily want to regenerate it with
-        // each page load since a page could contain embedded
-        // sub-pages causing this feature to fail
-        $this->restoreHash();
-
-        if ($this->hash !== null) {
-            return $this->hash;
-        }
-
         $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
 
         if ($this->isCSRFCookie()) {
