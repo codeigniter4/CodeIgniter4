@@ -141,9 +141,10 @@ final class TimerTest extends CIUnitTestCase
     public function testRecordFunctionWithReturn()
     {
         $timer       = new Timer();
-        $returnValue = $timer->record('longjohn', static function () { sleep(1);
-
-return 'test'; });
+        $returnValue = $timer->record('longjohn', static function () {
+            sleep(1);
+            return 'test';
+        });
 
         $this->assertGreaterThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
         $this->assertSame('test', $returnValue);
@@ -213,9 +214,10 @@ return 'test'; });
      */
     public function testCommonCallableExpectWithReturn()
     {
-        $returnValue = timer('common', static function () { sleep(1);
-
-return strlen('CI4'); });
+        $returnValue = timer('common', static function () {
+            sleep(1);
+            return strlen('CI4');
+        });
 
         $this->assertNotInstanceOf(Timer::class, $returnValue);
         $this->assertSame(3, $returnValue);
