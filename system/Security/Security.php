@@ -156,7 +156,7 @@ class Security implements SecurityInterface
     protected ?Session $session = null;
 
     /**
-     * CSRF Token in Cookie
+     * CSRF Token in Request Cookie
      */
     protected ?string $tokenInCookie = null;
 
