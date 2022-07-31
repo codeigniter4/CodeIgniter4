@@ -553,8 +553,19 @@ class Security implements SecurityInterface
 
     private function isTokenInCookie(): bool
     {
-        return isset($this->tokenInCookie) && is_string($this->tokenInCookie)
-            && preg_match('#^[0-9a-f]{32,64}$#iS', $this->tokenInCookie) === 1;
+        if ($this->tokenInCookie === null) {
+            return false;
+        }
+
+        if ($this->tokenRandomize) {
+            $length = static::CSRF_HASH_BYTES * 4;
+        } else {
+            $length = static::CSRF_HASH_BYTES * 2;
+        }
+
+        $pattern = '#^[0-9a-f]{' . $length . '}$#iS';
+
+        return preg_match($pattern, $this->tokenInCookie) === 1;
     }
 
     private function saveTokenInCookie(): void
