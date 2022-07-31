@@ -143,22 +143,22 @@ class Security implements SecurityInterface
      */
     protected $samesite = Cookie::SAMESITE_LAX;
 
-    private IncomingRequest $request;
+    protected IncomingRequest $request;
 
     /**
      * CSRF Cookie Name without Prefix
      */
-    private ?string $rawCookieName = null;
+    protected ?string $rawCookieName = null;
 
     /**
      * Session instance.
      */
-    private ?Session $session = null;
+    protected ?Session $session = null;
 
     /**
      * CSRF Token in Cookie
      */
-    private ?string $tokenInCookie = null;
+    protected ?string $tokenInCookie = null;
 
     /**
      * Constructor.
