@@ -1083,7 +1083,7 @@ if (! function_exists('timer')) {
      *
      * @return mixed|Timer
      */
-    function timer(?string $name = null, ?callable $callable)
+    function timer(?string $name = null, ?callable $callable = null)
     {
         $timer = Services::timer();
 

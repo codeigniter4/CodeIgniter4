@@ -160,7 +160,7 @@ final class TimerTest extends CIUnitTestCase
         $this->expectException('RuntimeException');
 
         $timer = new Timer();
-        $timer->record('ex', function() { throw new RuntimeException(); });
+        $timer->record('ex', function() { throw new \RuntimeException(); });
     }
 
     public function testRecordThrowsErrorOnCallableWithParams()
