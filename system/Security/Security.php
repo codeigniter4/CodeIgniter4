@@ -527,7 +527,7 @@ class Security implements SecurityInterface
         // each page load since a page could contain embedded
         // sub-pages causing this feature to fail
         if ($this->isCSRFCookie()) {
-            if ($this->isHashInCookie()) {
+            if ($this->isTokenInCookie()) {
                 return $this->hash = $this->tokenInCookie;
             }
         } elseif ($this->session->has($this->tokenName)) {
@@ -547,7 +547,7 @@ class Security implements SecurityInterface
         return $this->hash;
     }
 
-    private function isHashInCookie(): bool
+    private function isTokenInCookie(): bool
     {
         return isset($this->tokenInCookie) && is_string($this->tokenInCookie)
             && preg_match('#^[0-9a-f]{32}$#iS', $this->tokenInCookie) === 1;
