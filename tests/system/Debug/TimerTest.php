@@ -143,6 +143,7 @@ final class TimerTest extends CIUnitTestCase
         $timer       = new Timer();
         $returnValue = $timer->record('longjohn', static function () {
             sleep(1);
+
             return 'test';
         });
 
@@ -169,7 +170,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testRecordThrowsErrorOnCallableWithParams()
     {
-        $this->expectException('Error');
+        $this->expectException('Throwable');
 
         $timer = new Timer();
         $timer->record('error', 'strlen');
@@ -216,6 +217,7 @@ final class TimerTest extends CIUnitTestCase
     {
         $returnValue = timer('common', static function () {
             sleep(1);
+
             return strlen('CI4');
         });
 
