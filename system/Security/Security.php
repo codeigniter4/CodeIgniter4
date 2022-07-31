@@ -544,7 +544,7 @@ class Security implements SecurityInterface
         $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
 
         if ($this->isCSRFCookie()) {
-            $this->saveHashInCookie();
+            $this->saveTokenInCookie();
         } else {
             // Session based CSRF protection
             $this->saveHashInSession();
@@ -559,7 +559,7 @@ class Security implements SecurityInterface
             && preg_match('#^[0-9a-f]{32,64}$#iS', $this->tokenInCookie) === 1;
     }
 
-    private function saveHashInCookie(): void
+    private function saveTokenInCookie(): void
     {
         $this->cookie = new Cookie(
             $this->rawCookieName,
