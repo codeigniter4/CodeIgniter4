@@ -13,6 +13,7 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use RuntimeException;
+use Throwable;
 
 /**
  * @internal
@@ -162,7 +163,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testRecordThrowsException()
     {
-        $this->expectException('RuntimeException');
+        $this->expectException(RuntimeException::class);
 
         $timer = new Timer();
         $timer->record('ex', static function () { throw new RuntimeException(); });
@@ -170,7 +171,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testRecordThrowsErrorOnCallableWithParams()
     {
-        $this->expectException('Throwable');
+        $this->expectException(Throwable::class);
 
         $timer = new Timer();
         $timer->record('error', 'strlen');
