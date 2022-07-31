@@ -528,7 +528,13 @@ class Security implements SecurityInterface
         // sub-pages causing this feature to fail
         if ($this->isCSRFCookie()) {
             if ($this->isTokenInCookie()) {
-                return $this->hash = $this->tokenInCookie;
+                try {
+                    return $this->hash = $this->tokenRandomize
+                        ? $this->derandomize($this->tokenInCookie)
+                        : $this->tokenInCookie;
+                } catch (InvalidArgumentException $e) {
+                    // Invalid token
+                }
             }
         } elseif ($this->session->has($this->tokenName)) {
             // Session based CSRF protection
@@ -550,14 +556,14 @@ class Security implements SecurityInterface
     private function isTokenInCookie(): bool
     {
         return isset($this->tokenInCookie) && is_string($this->tokenInCookie)
-            && preg_match('#^[0-9a-f]{32}$#iS', $this->tokenInCookie) === 1;
+            && preg_match('#^[0-9a-f]{32,64}$#iS', $this->tokenInCookie) === 1;
     }
 
     private function saveHashInCookie(): void
     {
         $this->cookie = new Cookie(
             $this->rawCookieName,
-            $this->hash,
+            $this->getToken(),
             [
                 'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
             ]
