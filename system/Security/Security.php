@@ -200,7 +200,9 @@ class Security implements SecurityInterface
         $this->request      = Services::request();
         $this->hashInCookie = $this->request->getCookie($this->cookieName);
 
-        $this->generateHash();
+        if ($this->hash === null) {
+            $this->generateHash();
+        }
     }
 
     private function isCSRFCookie(): bool
@@ -321,7 +323,9 @@ class Security implements SecurityInterface
             }
         }
 
-        $this->generateHash();
+        if ($this->hash === null) {
+            $this->generateHash();
+        }
 
         log_message('info', 'CSRF token verified.');
 
@@ -503,28 +507,26 @@ class Security implements SecurityInterface
      */
     protected function generateHash(): string
     {
-        if ($this->hash === null) {
-            // If the cookie exists we will use its value.
-            // We don't necessarily want to regenerate it with
-            // each page load since a page could contain embedded
-            // sub-pages causing this feature to fail
-            if ($this->isCSRFCookie()) {
-                if ($this->isHashInCookie()) {
-                    return $this->hash = $this->hashInCookie;
-                }
-            } elseif ($this->session->has($this->tokenName)) {
-                // Session based CSRF protection
-                return $this->hash = $this->session->get($this->tokenName);
+        // If the cookie exists we will use its value.
+        // We don't necessarily want to regenerate it with
+        // each page load since a page could contain embedded
+        // sub-pages causing this feature to fail
+        if ($this->isCSRFCookie()) {
+            if ($this->isHashInCookie()) {
+                return $this->hash = $this->hashInCookie;
             }
+        } elseif ($this->session->has($this->tokenName)) {
+            // Session based CSRF protection
+            return $this->hash = $this->session->get($this->tokenName);
+        }
 
-            $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
+        $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
 
-            if ($this->isCSRFCookie()) {
-                $this->saveHashInCookie();
-            } else {
-                // Session based CSRF protection
-                $this->saveHashInSession();
-            }
+        if ($this->isCSRFCookie()) {
+            $this->saveHashInCookie();
+        } else {
+            // Session based CSRF protection
+            $this->saveHashInSession();
         }
 
         return $this->hash;
