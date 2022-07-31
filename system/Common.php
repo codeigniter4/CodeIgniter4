@@ -259,13 +259,13 @@ if (! function_exists('csrf_header')) {
 
 if (! function_exists('csrf_hash')) {
     /**
-     * Returns the current hash value for the CSRF protection.
+     * Returns the current token value for the CSRF protection.
      * Can be used in Views when building hidden inputs manually,
      * or used in javascript vars for API usage.
      */
     function csrf_hash(): string
     {
-        return Services::security()->getHash();
+        return Services::security()->getToken();
     }
 }
 
