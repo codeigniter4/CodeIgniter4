@@ -518,18 +518,14 @@ class Security implements SecurityInterface
     }
 
     /**
-     * Generates the CSRF Hash.
+     * Restore CSRF hash from Session or Request Cookie
      */
-    protected function generateHash(): string
+    private function restoreHash(): void
     {
-        // If the cookie exists we will use its value.
-        // We don't necessarily want to regenerate it with
-        // each page load since a page could contain embedded
-        // sub-pages causing this feature to fail
         if ($this->isCSRFCookie()) {
             if ($this->isTokenInCookie()) {
                 try {
-                    return $this->hash = $this->tokenRandomize
+                    $this->hash = $this->tokenRandomize
                         ? $this->derandomize($this->tokenInCookie)
                         : $this->tokenInCookie;
                 } catch (InvalidArgumentException $e) {
@@ -538,7 +534,23 @@ class Security implements SecurityInterface
             }
         } elseif ($this->session->has($this->tokenName)) {
             // Session based CSRF protection
-            return $this->hash = $this->session->get($this->tokenName);
+            $this->hash = $this->session->get($this->tokenName);
+        }
+    }
+
+    /**
+     * Generates the CSRF Hash.
+     */
+    protected function generateHash(): string
+    {
+        // If the cookie exists we will use its value.
+        // We don't necessarily want to regenerate it with
+        // each page load since a page could contain embedded
+        // sub-pages causing this feature to fail
+        $this->restoreHash();
+
+        if ($this->hash !== null) {
+            return $this->hash;
         }
 
         $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
