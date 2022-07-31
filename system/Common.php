@@ -1091,7 +1091,7 @@ if (! function_exists('timer')) {
             return $timer;
         }
 
-        if (! is_null($callable)) {
+        if (null !== $callable) {
             return $timer->record($name, $callable);
         }
 

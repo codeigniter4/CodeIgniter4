@@ -130,16 +130,16 @@ class Timer
     /**
      * Executes callable and measures its time.
      * Returns its return value if any.
-     * 
-     * @param string $name        The name of the timer
-     * @param callable $callable  callable to be executed
-     * 
+     *
+     * @param string   $name     The name of the timer
+     * @param callable $callable callable to be executed
+     *
      * @return mixed|null
      */
     public function record(string $name, callable $callable)
     {
         $this->start($name);
-        $returnValue = call_user_func($callable);
+        $returnValue = $callable();
         $this->stop($name);
 
         return $returnValue;
