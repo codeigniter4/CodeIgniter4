@@ -354,8 +354,18 @@ class Security implements SecurityInterface
 
     /**
      * Returns the CSRF token.
+     *
+     * @deprecated Use getToken()
      */
     public function getHash(): ?string
+    {
+        return $this->getToken();
+    }
+
+    /**
+     * Returns the CSRF token.
+     */
+    public function getToken(): ?string
     {
         return $this->tokenRandomize ? $this->randomize($this->hash) : $this->hash;
     }
