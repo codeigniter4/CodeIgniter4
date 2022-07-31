@@ -291,14 +291,14 @@ class Security implements SecurityInterface
         $postedToken = $this->getPostedToken($request);
 
         try {
-            $token = ($postedToken !== null && $this->tokenRandomize)
+            $hash = ($postedToken !== null && $this->tokenRandomize)
                 ? $this->derandomize($postedToken) : $postedToken;
         } catch (InvalidArgumentException $e) {
-            $token = null;
+            $hash = null;
         }
 
         // Do the tokens match?
-        if (! isset($token, $this->hash) || ! hash_equals($this->hash, $token)) {
+        if (! isset($hash, $this->hash) || ! hash_equals($this->hash, $hash)) {
             throw SecurityException::forDisallowedAction();
         }
 
