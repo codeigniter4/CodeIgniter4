@@ -57,6 +57,7 @@ class Security implements SecurityInterface
      * CSRF Hash
      *
      * Random hash for Cross Site Request Forgery protection.
+     * The Hash value is different from the Token value when Token Randomization is true.
      *
      * @var string|null
      */
@@ -88,7 +89,7 @@ class Security implements SecurityInterface
     protected $cookie;
 
     /**
-     * CSRF Cookie Name
+     * CSRF Cookie Name (with Prefix)
      *
      * Cookie name for Cross Site Request Forgery protection.
      *
@@ -246,7 +247,7 @@ class Security implements SecurityInterface
     }
 
     /**
-     * Returns the CSRF Hash.
+     * Returns the CSRF token.
      *
      * @deprecated Use `CodeIgniter\Security\Security::getHash()` instead of using this method.
      *
@@ -348,7 +349,7 @@ class Security implements SecurityInterface
     }
 
     /**
-     * Returns the CSRF Hash.
+     * Returns the CSRF token.
      */
     public function getHash(): ?string
     {
@@ -357,6 +358,8 @@ class Security implements SecurityInterface
 
     /**
      * Randomize hash to avoid BREACH attacks.
+     *
+     * @return string CSRF token
      */
     protected function randomize(string $hash): string
     {
@@ -374,6 +377,8 @@ class Security implements SecurityInterface
      * Derandomize the token.
      *
      * @throws InvalidArgumentException "hex2bin(): Hexadecimal input string must have an even length"
+     *
+     * @return string CSRF hash
      */
     protected function derandomize(string $token): string
     {
