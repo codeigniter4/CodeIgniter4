@@ -130,6 +130,9 @@ The same `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 repository described in "Manual Installation" can also be added to an
 existing project using Composer.
 
+Installation
+------------
+
 Develop your app inside the ``app`` folder, and the ``public`` folder
 will be your document root.
 
