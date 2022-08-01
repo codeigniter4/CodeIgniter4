@@ -3,7 +3,7 @@ Installation
 ############
 
 CodeIgniter has two supported installation methods: manual download,
-using `Composer <https://getcomposer.org>`_.
+or using `Composer <https://getcomposer.org>`_.
 Which is right for you?
 
 - We recommend the Composer installation because it keeps CodeIgniter up to date easily.
