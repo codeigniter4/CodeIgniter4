@@ -61,6 +61,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             0 => [
                 'GET(auto)',
                 'newautorouting',
+                '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
                 'toolbar',
@@ -68,6 +69,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             1 => [
                 'POST(auto)',
                 'newautorouting/save/../..[/..]',
+                '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
                 'honeypot',
                 'toolbar',
@@ -87,6 +89,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             0 => [
                 'GET(auto)',
                 'newautorouting',
+                '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
                 '',
                 'toolbar',
@@ -94,6 +97,7 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
             1 => [
                 'POST(auto)',
                 'newautorouting/save/../..[/..]',
+                '',
                 '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
                 '',
                 'toolbar',
