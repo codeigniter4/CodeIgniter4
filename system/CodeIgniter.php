@@ -730,7 +730,7 @@ class CodeIgniter
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
         if ($routes === null) {
-            require APPPATH . 'Config/Routes.php';
+            $routes = Services::routes()->loadRoutes();
         }
 
         // $routes is defined in Config/Routes.php
