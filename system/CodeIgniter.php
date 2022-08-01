@@ -21,7 +21,6 @@ use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
-use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RedirectException;
@@ -55,7 +54,7 @@ class CodeIgniter
     /**
      * App startup time.
      *
-     * @var mixed
+     * @var float|null
      */
     protected $startTime;
 
@@ -297,10 +296,9 @@ class CodeIgniter
      * tries to route the response, loads the controller and generally
      * makes all of the pieces work together.
      *
-     * @throws Exception
      * @throws RedirectException
      *
-     * @return bool|mixed|RequestInterface|ResponseInterface|void
+     * @return ResponseInterface|void
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -310,6 +308,8 @@ class CodeIgniter
                 . 'you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.'
             );
         }
+
+        static::$cacheTTL = 0;
 
         $this->startBenchmark();
 
@@ -323,7 +323,9 @@ class CodeIgniter
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             $this->response->setStatusCode(405)->setBody('Method Not Allowed');
 
-            return $this->sendResponse();
+            $this->sendResponse();
+
+            return;
         }
 
         Events::trigger('pre_system');
@@ -398,7 +400,7 @@ class CodeIgniter
      * @throws PageNotFoundException
      * @throws RedirectException
      *
-     * @return mixed|RequestInterface|ResponseInterface
+     * @return ResponseInterface
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
@@ -463,6 +465,9 @@ class CodeIgniter
 
         $filters->setResponse($this->response);
 
+        // After filter debug toolbar requires 'total_execution'.
+        $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
+
         // Run "after" filters
         $this->benchmark->start('after_filters');
         $response = $filters->run($uri, 'after');
@@ -471,6 +476,17 @@ class CodeIgniter
         if ($response instanceof ResponseInterface) {
             $this->response = $response;
         }
+
+        // Cache it without the performance metrics replaced
+        // so that we can have live speed updates along the way.
+        // Must be run after filters to preserve the Response headers.
+        if (static::$cacheTTL > 0) {
+            $this->cachePage($cacheConfig);
+        }
+
+        // Update the performance metrics
+        $output = $this->displayPerformanceMetrics($this->response->getBody());
+        $this->response->setBody($output);
 
         // Save our current URI as the previous URI in the session
         // for safer, more accurate use with `previous_url()` helper function.
@@ -505,7 +521,7 @@ class CodeIgniter
     {
         // Make sure ENVIRONMENT isn't already set by other means.
         if (! defined('ENVIRONMENT')) {
-            define('ENVIRONMENT', $_SERVER['CI_ENVIRONMENT'] ?? 'production');
+            define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
         }
     }
 
@@ -617,7 +633,7 @@ class CodeIgniter
      *
      * @throws Exception
      *
-     * @return bool|ResponseInterface
+     * @return false|ResponseInterface
      */
     public function displayCache(Cache $config)
     {
@@ -640,7 +656,8 @@ class CodeIgniter
                 $this->response->setHeader($name, $value);
             }
 
-            $output = $this->displayPerformanceMetrics($output);
+            $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
+            $output          = $this->displayPerformanceMetrics($output);
             $this->response->setBody($output);
 
             return $this->response;
@@ -710,8 +727,6 @@ class CodeIgniter
      */
     public function displayPerformanceMetrics(string $output): string
     {
-        $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
-
         return str_replace('{elapsed_time}', (string) $this->totalTime, $output);
     }
 
@@ -730,7 +745,7 @@ class CodeIgniter
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {
         if ($routes === null) {
-            require APPPATH . 'Config/Routes.php';
+            $routes = Services::routes()->loadRoutes();
         }
 
         // $routes is defined in Config/Routes.php
@@ -921,7 +936,10 @@ class CodeIgniter
      * Gathers the script output from the buffer, replaces some execution
      * time tag in the output and displays the debug toolbar, if required.
      *
+     * @param Cache|null                    $cacheConfig Deprecated. No longer used.
      * @param ResponseInterface|string|null $returned
+     *
+     * @deprecated $cacheConfig is deprecated.
      */
     protected function gatherOutput(?Cache $cacheConfig = null, $returned = null)
     {
@@ -956,14 +974,6 @@ class CodeIgniter
         if (is_string($returned)) {
             $this->output .= $returned;
         }
-
-        // Cache it without the performance metrics replaced
-        // so that we can have live speed updates along the way.
-        if (static::$cacheTTL > 0) {
-            $this->cachePage($cacheConfig);
-        }
-
-        $this->output = $this->displayPerformanceMetrics($this->output);
 
         $this->response->setBody($this->output);
     }
@@ -1034,6 +1044,8 @@ class CodeIgniter
     /**
      * Sends the output of this request back to the client.
      * This is what they've been waiting for!
+     *
+     * @return void
      */
     protected function sendResponse()
     {

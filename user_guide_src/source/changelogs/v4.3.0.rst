@@ -28,6 +28,7 @@ Others
 
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 
 Enhancements
 ************
@@ -41,7 +42,8 @@ Enhancements
 - SQLite ``BaseConnection::getIndexData()`` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
 - Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
 - Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
-- Added method ``Timer::record`` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
+- Added method ``Timer::record()`` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
+- Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 
 Changes
 *******

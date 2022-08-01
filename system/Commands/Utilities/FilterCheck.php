@@ -85,9 +85,7 @@ class FilterCheck extends BaseCommand
         $route  = $params[1];
 
         // Load Routes
-        $routes = Services::routes();
-        require APPPATH . 'Config/Routes.php';
-        $routes->getRoutes('*'); // Triggers discovery
+        Services::routes()->loadRoutes();
 
         $filterCollector = new FilterCollector();
 
