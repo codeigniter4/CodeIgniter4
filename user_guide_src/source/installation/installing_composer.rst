@@ -7,9 +7,9 @@ Composer Installation
 
 Composer can be used in several ways to install CodeIgniter4 on your system.
 
-The first two techniques describe creating a skeleton project
+The first technique describes creating a skeleton project
 using CodeIgniter4, that you would then use as the base for a new webapp.
-The third technique described below lets you add CodeIgniter4 to an existing
+The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
 
 .. note:: If you are using a Git repository to store your code, or for
