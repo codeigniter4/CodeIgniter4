@@ -17,7 +17,7 @@ none.
 Enhancements
 ************
 
-none.
+- Now ``Security::generateHash()`` is public, and can be used to regenerate CSRF token manually when ``Config\Security::$regenerate`` is false.
 
 Changes
 *******
