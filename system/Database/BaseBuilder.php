@@ -1895,7 +1895,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return false|int|string[] Number of rows replaced or FALSE on failure, SQL array when testMode
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
      */
     public function upsertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
     {
