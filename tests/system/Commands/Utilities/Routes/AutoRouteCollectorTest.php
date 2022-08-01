@@ -89,12 +89,14 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
                 'popcorn/oops[/...]',
                 '',
                 '\\Tests\\Support\\Controllers\\Popcorn::oops',
-            ], [
+            ],
+            [
                 'auto',
                 'popcorn/goaway[/...]',
                 '',
                 '\\Tests\\Support\\Controllers\\Popcorn::goaway',
-            ], [
+            ],
+            [
                 'auto',
                 'popcorn/index3[/...]',
                 '',
