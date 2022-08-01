@@ -15,8 +15,10 @@ use CodeIgniter\Config\Services;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Filters\CITestStreamFilter;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
 use Config\App;
+use Config\Filters;
 use Config\Modules;
 use Tests\Support\Filters\Customfilter;
 
@@ -530,5 +532,65 @@ final class CodeIgniterTest extends CIUnitTestCase
         ob_get_clean();
 
         $this->assertSame('post', Services::request()->getMethod());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6281
+     */
+    public function testPageCacheSendSecureHeaders()
+    {
+        // Suppress command() output
+        CITestStreamFilter::$buffer = '';
+        $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $errorStreamFilter          = stream_filter_append(STDERR, 'CITestStreamFilter');
+
+        // Clear Page cache
+        command('cache:clear');
+
+        $_SERVER['REQUEST_URI'] = '/test';
+
+        $routes = Services::routes();
+        $routes->add('test', static function () {
+            CodeIgniter::cache(3600);
+
+            $response = Services::response();
+            $string = 'This is a test page. Elapsed time: {elapsed_time}';
+
+            return $response->setBody($string);
+        });
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        /** @var Filters $filterConfig */
+        $filterConfig                   = config('Filters');
+        $filterConfig->globals['after'] = ['secureheaders'];
+        Services::filters($filterConfig);
+
+        // The first response to be cached.
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('This is a test page', $output);
+        $response = Services::response();
+        $headers  = $response->headers();
+        $this->assertArrayHasKey('X-Frame-Options', $headers);
+
+        // The second response from the Page cache.
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('This is a test page', $output);
+        $response = Services::response();
+        $headers  = $response->headers();
+        $this->assertArrayHasKey('X-Frame-Options', $headers);
+
+        // Clear Page cache
+        command('cache:clear');
+
+        // Remove stream fliters
+        stream_filter_remove($outputStreamFilter);
+        stream_filter_remove($errorStreamFilter);
     }
 }

@@ -53,6 +53,9 @@ Enjoy your exploration of the CodeIgniter framework.
 Getting Up and Running
 **********************
 
+Installing CodeIgnier
+=====================
+
 You can download a release manually from the site, but for this tutorial we will
 use the recommended way and install the AppStarter package through Composer.
 From your command line type the following::
@@ -61,6 +64,11 @@ From your command line type the following::
 
 This creates a new folder, **ci-news**, which contains your application code, with
 CodeIgniter installed in the vendor folder.
+
+.. _setting-development-mode:
+
+Setting Development Mode
+========================
 
 By default, CodeIgniter starts up in production mode. This is a safety feature
 to keep your site a bit more secure in case settings are messed up once it is live.
@@ -73,6 +81,9 @@ out. So uncomment the line with ``CI_ENVIRONMENT`` on it, and change ``productio
 ``development``::
 
     CI_ENVIRONMENT = development
+
+Running Development Server
+==========================
 
 With that out of the way it's time to view your application in a browser. You can
 serve it through any server of your choice, Apache, Nginx, etc, but CodeIgniter
