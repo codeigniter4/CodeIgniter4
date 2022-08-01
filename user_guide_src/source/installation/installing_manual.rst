@@ -27,31 +27,31 @@ and extract it to become your project root.
     So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
 
 Setting Up
-----------
+=====================
 
 None
 
 .. _installing-manual-upgrading:
 
 Upgrading
----------
+=========
 
 Download a new copy of the framework, and then replace the ``system`` folder.
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
-----
+====
 
 Download and run
 
 Cons
-----
+====
 
 You are responsible for merge conflicts when updating
 
 Structure
----------
+=========
 
 Folders in your project after set up:
 app, public, system, writable
