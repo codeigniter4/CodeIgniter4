@@ -18,7 +18,7 @@ Initial Configuration
 =====================
 
 #. Open the **app/Config/App.php** file with a text editor and
-   set your base URL. If you need more flexibility, the baseURL may
+   set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
    be set within the **.env** file as ``app.baseURL = 'http://example.com/'``.
    (Always use a trailing slash on your base URL!)
 #. If you intend to use a database, open the
