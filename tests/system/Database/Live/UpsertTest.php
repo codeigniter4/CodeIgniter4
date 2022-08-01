@@ -46,27 +46,74 @@ final class UpsertTest extends CIUnitTestCase
     {
         $data = [];
 
+        // new row insert
         $row          = new stdclass();
         $row->name    = 'Pedro';
         $row->email   = 'pedro@acme.com';
         $row->country = 'El Salvador';
         $data[]       = $row;
 
+        // no change
+        $row          = new stdclass();
+        $row->name    = 'Ahmadinejad';
+        $row->email   = 'ahmadinejad@world.com';
+        $row->country = 'Iran';
+        $data[]       = $row;
+
+        // changed country for update
         $row          = new stdclass();
         $row->name    = 'Derek Jones';
         $row->email   = 'derek@world.com';
         $row->country = 'Canada';
         $data[]       = $row;
 
-        $this->db->table('user')->upsertBatch($data);
+        $affectedRows1 = $this->db->table('user')->upsertBatch($data);
 
         $this->seeInDatabase('user', ['name' => 'Pedro']);
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'country' => 'Canada']);
 
-        $row->country = 'Spain';
-        $this->db->table('user')->upsert($row);
+        $row->country  = 'Spain';
+        $affectedRows2 = $this->db->table('user')->upsert($row);
+
+        // a second upsert that does not affect rows
+        $affectedRows3 = $this->db->table('user')->upsert($row);
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'country' => 'Spain']);
+
+        switch ($this->db->DBDriver) {
+
+            case 'MySQLi':
+                // mysqli counts 2 for update
+                $this->assertSame(3, $affectedRows1);
+                // mysqli counts 2 for update
+                $this->assertSame(2, $affectedRows2);
+                $this->assertSame(0, $affectedRows3);
+                break;
+
+            case 'Postgre':
+
+            case 'SQLite3':
+
+            case 'SQLSRV':
+
+            case 'OCI8':
+                // postgre, sqlite, sqlsrv, oracle - counts row with no change
+                $this->assertSame(3, $affectedRows1);
+                $this->assertSame(1, $affectedRows2);
+                // postgre, sqlite, sqlsrv, oracle - counts row with no change
+                $this->assertSame(1, $affectedRows3);
+                break;
+
+            default:
+                // one insert + one update
+                $this->assertSame(2, $affectedRows1);
+                // one update
+                $this->assertSame(1, $affectedRows2);
+                // no change
+                $this->assertSame(0, $affectedRows3);
+                break;
+
+        }
     }
 
     public function testUpsertChangePrimaryKeyOnUniqueIndex()
@@ -92,6 +139,25 @@ final class UpsertTest extends CIUnitTestCase
                 ->getRow();
 
             $this->assertSame(5, (int) $new->id);
+        }
+    }
+
+    public function testNoConstraintFound()
+    {
+        $jobData = [
+            'name'        => 'Programmer',
+            'description' => 'General PHP Coding',
+        ];
+
+        // MySQL doesn't require a named constraint
+        if ($this->db->DBDriver === 'MySQLi') {
+            $this->assertTrue(true);
+        } else {
+            $this->expectException(DatabaseException::class);
+            $this->expectExceptionMessage('No constraint found for upsert.');
+
+            $this->db->table('job')
+                ->upsert($jobData);
         }
     }
 
@@ -222,6 +288,33 @@ final class UpsertTest extends CIUnitTestCase
 
         $this->seeInDatabase('user', ['name' => 'Upsert One New Name']);
         $this->seeInDatabase('user', ['name' => 'Upsert Two']);
+        $this->seeInDatabase('user', ['name' => 'Upsert Three']);
+    }
+
+    public function testSetBatchUpsertBatch()
+    {
+        $userData = [
+            [
+                'email'   => 'upsertone@test.com',
+                'name'    => 'Upsert One New Name',
+                'country' => 'US',
+            ],
+            [
+                'email'   => 'ahmadinejad@world.com',
+                'name'    => 'Ahmadinejad',
+                'country' => 'Iran',
+            ],
+            [
+                'email'   => 'upsertthree@test.com',
+                'name'    => 'Upsert Three',
+                'country' => 'US',
+            ],
+        ];
+
+        $this->db->table('user')->setBatch($userData)->upsertBatch(null, true, 2);
+
+        $this->seeInDatabase('user', ['name' => 'Upsert One New Name']);
+        $this->seeInDatabase('user', ['name' => 'Ahmadinejad', 'email' => 'ahmadinejad@world.com', 'country' => 'Iran']);
         $this->seeInDatabase('user', ['name' => 'Upsert Three']);
     }
 

@@ -1774,6 +1774,10 @@ class BaseBuilder
             }
             $sql = $this->{$renderMethod}($table, $this->QBKeys, $QBSet);
 
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
             if ($this->testMode) {
                 $savedSQL[] = $sql;
             } else {
