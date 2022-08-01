@@ -313,6 +313,8 @@ further reading and other resources.</p></li>
 </section>
 <section id="getting-up-and-running">
 <h2>Getting Up and Running<a class="headerlink" href="#getting-up-and-running" title="Permalink to this headline"></a></h2>
+<section id="installing-codeignier">
+<h3>Installing CodeIgnier<a class="headerlink" href="#installing-codeignier" title="Permalink to this headline"></a></h3>
 <p>You can download a release manually from the site, but for this tutorial we will
 use the recommended way and install the AppStarter package through Composer.
 From your command line type the following:</p>
@@ -321,6 +323,9 @@ From your command line type the following:</p>
 </div>
 <p>This creates a new folder, <strong>ci-news</strong>, which contains your application code, with
 CodeIgniter installed in the vendor folder.</p>
+</section>
+<section id="setting-development-mode">
+<span id="id1"></span><h3>Setting Development Mode<a class="headerlink" href="#setting-development-mode" title="Permalink to this headline"></a></h3>
 <p>By default, CodeIgniter starts up in production mode. This is a safety feature
 to keep your site a bit more secure in case settings are messed up once it is live.
 So first let’s fix that. Copy or rename the <code class="docutils literal notranslate"><span class="pre">env</span></code> file to <code class="docutils literal notranslate"><span class="pre">.env</span></code>. Open it up.</p>
@@ -332,6 +337,9 @@ out. So uncomment the line with <code class="docutils literal notranslate"><span
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">CI_ENVIRONMENT</span> <span class="o">=</span> <span class="nx">development</span>
 </pre></div>
 </div>
+</section>
+<section id="running-development-server">
+<h3>Running Development Server<a class="headerlink" href="#running-development-server" title="Permalink to this headline"></a></h3>
 <p>With that out of the way it’s time to view your application in a browser. You can
 serve it through any server of your choice, Apache, Nginx, etc, but CodeIgniter
 comes with a simple command that takes advantage of PHP’s built-in server to get
@@ -340,6 +348,7 @@ command line from the root of your project:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="the-welcome-page">
 <h2>The Welcome Page<a class="headerlink" href="#the-welcome-page" title="Permalink to this headline"></a></h2>
@@ -390,7 +399,7 @@ small news application.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 30, 2022.
+      <span class="lastupdated">Last updated on Aug 01, 2022.
       </span></p>
   </div>
 

@@ -308,19 +308,22 @@ section of the User Guide to begin learning how to build dynamic PHP application
 <ol class="arabic simple">
 <li><p>Open the <strong>app/Config/App.php</strong> file with a text editor and
 set your base URL. If you need more flexibility, the baseURL may
-be set within the <strong>.env</strong> file as <code class="docutils literal notranslate"><span class="pre">app.baseURL=&quot;http://example.com/&quot;</span></code>.
+be set within the <strong>.env</strong> file as <code class="docutils literal notranslate"><span class="pre">app.baseURL</span> <span class="pre">=</span> <span class="pre">'http://example.com/'</span></code>.
 (Always use a trailing slash on your base URL!)</p></li>
 <li><p>If you intend to use a database, open the
 <strong>app/Config/Database.php</strong> file with a text editor and set your
 database settings. Alternately, these could be set in your <strong>.env</strong> file.</p></li>
+<li><p>If it is not on the production server, set <code class="docutils literal notranslate"><span class="pre">CI_ENVIRONMENT</span></code> to <code class="docutils literal notranslate"><span class="pre">development</span></code>
+in <strong>.env</strong> file to take advantage of the debugging tools provided. See
+<a class="reference internal" href="../tutorial/index.html#setting-development-mode"><span class="std std-ref">Setting Development Mode</span></a> for the detail.</p></li>
 </ol>
-<p>One additional measure to take in production environments is to disable
-PHP error reporting and any other development-only functionality. In
-CodeIgniter, this can be done by setting the <code class="docutils literal notranslate"><span class="pre">ENVIRONMENT</span></code> constant, which
-is more fully described on the <a class="reference internal" href="../general/environments.html"><span class="doc">environments page</span></a>.
-By default, the application will run using the “production” environment. To
-take advantage of the debugging tools provided, you should set the environment
-to “development”.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In production environments, you should disable error display and
+any other development-only functionality. In CodeIgniter, this can be done
+by setting the environment to “production”. By default, the application will
+run using the “production” environment. See also <a class="reference internal" href="../general/environments.html#environment-constant"><span class="std std-ref">The ENVIRONMENT Constant</span></a>.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you will be running your site using a web server (e.g., Apache or Nginx),
@@ -565,7 +568,7 @@ paths align with the expected directory structure for your installation method.<
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jul 30, 2022.
+      <span class="lastupdated">Last updated on Aug 01, 2022.
       </span></p>
   </div>
 
