@@ -28,10 +28,10 @@ Initial Configuration
    in **.env** file to take advantage of the debugging tools provided. See
    :ref:`setting-development-mode` for the detail.
 
-.. important:: In production environments, you should disable error display and
-    any other development-only functionality. In CodeIgniter, this can be done
-    by setting the environment to "production". By default, the application will
-    run using the "production" environment. See also :ref:`environment-constant`.
+    .. important:: In production environments, you should disable error display and
+        any other development-only functionality. In CodeIgniter, this can be done
+        by setting the environment to "production". By default, the application will
+        run using the "production" environment. See also :ref:`environment-constant`.
 
 .. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside
