@@ -143,8 +143,8 @@ In your project root::
 As with the earlier two composer install methods, you can omit installing
 phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
 
-Set Up
-------
+Setting Up
+----------
 
 Copy the ``app``, ``public``, and ``writable`` folders from ``vendor/codeigniter4/framework``
 to your project root
