@@ -52,7 +52,11 @@ A sample such installation command, using the default project-root "appstarter":
 
     > composer create-project codeigniter4/appstarter --no-dev
 
-After installation you should follow the steps in the "Upgrading" section.
+Initial Configuration
+---------------------
+
+After installation, a few initial configuration is required.
+See :ref:`initial-configuration` for the detail.
 
 .. _app-starter-upgrading:
 
@@ -147,6 +151,12 @@ Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
 
 You will have to adjust the system path to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
 - the ``$systemDirectory`` variable in **app/Config/Paths.php**
+
+Initial Configuration
+---------------------
+
+A few initial configuration is required.
+See :ref:`initial-configuration` for the detail.
 
 .. _adding-codeigniter4-upgrading:
 

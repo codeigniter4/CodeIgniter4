@@ -26,10 +26,11 @@ and extract it to become your project root.
     The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
     So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
 
-Setting Up
+Initial Configuration
 =====================
 
-None
+After installation, a few initial configuration is required.
+See :ref:`initial-configuration` for the detail.
 
 .. _installing-manual-upgrading:
 

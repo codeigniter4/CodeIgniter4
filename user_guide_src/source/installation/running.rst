@@ -12,6 +12,8 @@ This section addresses how to use each technique, and explains some of the pros 
 If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
+.. _initial-configuration:
+
 Initial Configuration
 =====================
 
