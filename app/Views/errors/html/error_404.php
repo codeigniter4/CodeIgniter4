@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title><?= lang('Errors.404pageNotFound') ?></title>
+    <title><?= lang('Errors.pageNotFound') ?></title>
 
     <style>
         div.logo {
@@ -76,7 +76,7 @@
             <?php if (! empty($message) && $message !== '(null)') : ?>
                 <?= nl2br(esc($message)) ?>
             <?php else : ?>
-                <?= lang('Errors.404sorryCannotFind') ?>
+                <?= lang('Errors.sorryCannotFind') ?>
             <?php endif ?>
         </p>
     </div>
