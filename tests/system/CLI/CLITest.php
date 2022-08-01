@@ -525,5 +525,4 @@ final class CLITest extends CIUnitTestCase
         $this->assertSame(7, CLI::strlen(CLI::color('success', 'green')));
         $this->assertSame(0, CLI::strlen(null));
     }
-
 }

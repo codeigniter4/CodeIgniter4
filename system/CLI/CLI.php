@@ -302,7 +302,7 @@ class CLI
      *
      * @return array The selected key(s) and value(s) of $options
      */
-    public static function promptByMultipleKeys($text, array $options)
+    public static function promptByMultipleKeys(string $text, array $options): array
     {
         CLI::isZeroOptions($options);
 
@@ -314,6 +314,7 @@ class CLI
             $extraOutput = $extraOutputDefault;
         } else {
             $optsKey = [];
+
             foreach (array_keys($opts) as $key) {
                 $optsKey[] = $key;
             }
@@ -340,7 +341,7 @@ class CLI
         // find max from key of $options
         $maxOptions = array_key_last($options);
         // find max from input
-        $maxInput   = max($inputToArray);
+        $maxInput = max($inputToArray);
         // if max from $options less than max from input
         // it is mean user tried to access null value in $options
         if ($maxOptions < $maxInput) {
@@ -350,6 +351,7 @@ class CLI
         }
 
         $input = [];
+
         foreach ($options as $key => $description) {
             foreach ($inputToArray as $inputKey) {
                 if ($key === $inputKey) {
@@ -368,9 +370,9 @@ class CLI
     /**
      * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
      */
-    private static function isZeroOptions(array $options) : void
+    private static function isZeroOptions(array $options): void
     {
-        if(!$options){
+        if (! $options) {
             throw new InvalidArgumentException('No options to select from were provided');
         }
     }
@@ -378,7 +380,7 @@ class CLI
     /**
      * Print each key and value one by one
      */
-    private static function printKeysAndValues(array $options) : void
+    private static function printKeysAndValues(array $options): void
     {
         // +2 for the square brackets around the key
         $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;

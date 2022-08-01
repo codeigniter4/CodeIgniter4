@@ -69,7 +69,7 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 .. _prompt-by-multiple-keys:
 
 promptByMultipleKeys()
-=====================
+======================
 
 This method is the same as ``promptByKey()``, but it supports multiple value.
 
