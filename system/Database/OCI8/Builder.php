@@ -133,7 +133,11 @@ class Builder extends BaseBuilder
         }
 
         if (empty($constraints)) {
-            throw new DatabaseException('No constraint found for upsert.');
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('No constraint found for upsert.');
+            }
+
+            return ''; // @codeCoverageIgnore
         }
 
         $sql = 'MERGE INTO ' . $table . "\nUSING (\n";

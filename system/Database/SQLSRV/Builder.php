@@ -203,7 +203,7 @@ class Builder extends BaseBuilder
             $sql = "SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1";
 
             if (($query = $this->db->query($sql)) === false) {
-                throw new DatabaseException('Failed to get table identity');
+                throw new DatabaseException('Failed to get table identity'); // @codeCoverageIgnore
             }
 
             $query = $query->getResultObject();
@@ -256,7 +256,11 @@ class Builder extends BaseBuilder
         }
 
         if (empty($constraints)) {
-            throw new DatabaseException('No constraint found for upsert.');
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('No constraint found for upsert.');
+            }
+
+            return ''; // @codeCoverageIgnore
         }
 
         $sql = 'MERGE INTO ' . $fullTableName . "\nUSING (\n VALUES ";
