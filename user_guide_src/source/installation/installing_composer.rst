@@ -27,8 +27,8 @@ the latest released version of the framework.
 This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.
 
-Installation & Set Up
----------------------
+Installation
+------------
 
 In the folder above your project root::
 

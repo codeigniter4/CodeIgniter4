@@ -12,8 +12,8 @@ This section addresses how to use each technique, and explains some of the pros 
 If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
-Initial Configuration & Set Up
-==============================
+Initial Configuration
+=====================
 
 #. Open the **app/Config/App.php** file with a text editor and
    set your base URL. If you need more flexibility, the baseURL may
