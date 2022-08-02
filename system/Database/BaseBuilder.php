@@ -2003,7 +2003,7 @@ class BaseBuilder
         if (! is_array($key)) {
             $key = [[$key => $value]];
         }
-        
+
         return $this->setBatch($key, $escape);
     }
 
