@@ -55,8 +55,8 @@ A sample such installation command, using the default project-root "appstarter":
 Initial Configuration
 ---------------------
 
-After installation, a few initial configuration is required.
-See :ref:`initial-configuration` for the detail.
+After installation, a few initial configurations are required.
+See :ref:`initial-configuration` for the details. 
 
 .. _app-starter-upgrading:
 
