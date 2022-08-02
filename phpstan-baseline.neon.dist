@@ -446,11 +446,6 @@ parameters:
 			path: system/Database/Seeder.php
 
 		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Exceptions.php
-
-		-
 			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Debug/Exceptions.php

@@ -269,7 +269,7 @@ class Exceptions
             'title'   => get_class($exception),
             'type'    => get_class($exception),
             'code'    => $statusCode,
-            'message' => $exception->getMessage() ?? '(null)',
+            'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
             'line'    => $exception->getLine(),
             'trace'   => $trace,
