@@ -1769,7 +1769,7 @@ class BaseBuilder
             if ($hasQBSet) {
                 $QBSet = array_slice($this->QBSet, $i, $batchSize);
             } else {
-                $this->setBatch(array_slice($set, $i, $batchSize), '', $escape);
+                $this->setBatch(array_slice($set, $i, $batchSize), $escape);
                 $QBSet = $this->QBSet;
             }
             $sql = $this->{$renderMethod}($table, $this->QBKeys, $QBSet);
@@ -1805,13 +1805,9 @@ class BaseBuilder
      *
      * @return $this|null
      */
-    public function setBatch($key, string $value = '', ?bool $escape = null)
+    public function setBatch($key, ?bool $escape = null)
     {
         $key = $this->batchObjectToArray($key);
-
-        if (! is_array($key)) {
-            $key = [$key => $value];
-        }
 
         $escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
@@ -2004,7 +2000,11 @@ class BaseBuilder
      */
     public function setInsertBatch($key, string $value = '', ?bool $escape = null)
     {
-        return $this->setBatch($key, $value, $escape);
+        if (! is_array($key)) {
+            $key = [[$key => $value]];
+        }
+        
+        return $this->setBatch($key, $escape);
     }
 
     /**
