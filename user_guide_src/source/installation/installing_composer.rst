@@ -158,8 +158,8 @@ You will have to adjust the system path to refer to the vendor one, e.g., ``ROOT
 Initial Configuration
 ---------------------
 
-A few initial configuration is required.
-See :ref:`initial-configuration` for the detail.
+A few initial configurations are required.
+See :ref:`initial-configuration` for the details.
 
 .. _adding-codeigniter4-upgrading:
 
