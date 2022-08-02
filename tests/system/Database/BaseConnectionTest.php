@@ -165,6 +165,20 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertNull($db->foobar);
     }
 
+    public function testEscape()
+    {
+        $db = new MockConnection($this->options);
+
+        $stringArray = [' A simple string ', new RawSql('CURRENT_TIMESTAMP()'), false, null];
+
+        $escapedString = $db->escape($stringArray);
+
+        $this->assertSame("' A simple string '", $escapedString[0]);
+        $this->assertSame('CURRENT_TIMESTAMP()', $escapedString[1]);
+        $this->assertSame(0, $escapedString[2]);
+        $this->assertSame('NULL', $escapedString[3]);
+    }
+
     /**
      * These tests are intended to confirm the current behavior.
      * We do not know if all of these are the correct behavior.

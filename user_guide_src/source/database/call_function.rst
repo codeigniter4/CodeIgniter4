@@ -37,3 +37,18 @@ database result ID. The connection ID can be accessed using:
 The result ID can be accessed from within your result object, like this:
 
 .. literalinclude:: call_function/004.php
+
+$db->escape();
+============================
+
+This function enables you to escape a string for database calls. The method
+is used by ``BaseBuilder`` for many built in functions. It accepts a string,
+array, object or ``CodeIgniter\Database\RawSql``. When ``RawSql`` is used
+the string is not escaped. This allows you to call SQL functions and
+constants.
+
+.. literalinclude:: call_function/005.php
+
+Here is an example using methods such as ``insert()`` to pass a SQL function.
+
+.. literalinclude:: call_function/006.php
