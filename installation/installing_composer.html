@@ -277,32 +277,35 @@
 <h1>Composer Installation<a class="headerlink" href="#composer-installation" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#app-starter" id="id5">App Starter</a></p>
+<li><p><a class="reference internal" href="#app-starter" id="id7">App Starter</a></p>
 <ul>
-<li><p><a class="reference internal" href="#installation-set-up" id="id6">Installation &amp; Set Up</a></p></li>
-<li><p><a class="reference internal" href="#upgrading" id="id7">Upgrading</a></p></li>
-<li><p><a class="reference internal" href="#pros" id="id8">Pros</a></p></li>
-<li><p><a class="reference internal" href="#cons" id="id9">Cons</a></p></li>
-<li><p><a class="reference internal" href="#structure" id="id10">Structure</a></p></li>
-<li><p><a class="reference internal" href="#latest-dev" id="id11">Latest Dev</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id8">Installation</a></p></li>
+<li><p><a class="reference internal" href="#initial-configuration" id="id9">Initial Configuration</a></p></li>
+<li><p><a class="reference internal" href="#upgrading" id="id10">Upgrading</a></p></li>
+<li><p><a class="reference internal" href="#pros" id="id11">Pros</a></p></li>
+<li><p><a class="reference internal" href="#cons" id="id12">Cons</a></p></li>
+<li><p><a class="reference internal" href="#structure" id="id13">Structure</a></p></li>
+<li><p><a class="reference internal" href="#latest-dev" id="id14">Latest Dev</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#adding-codeigniter4-to-an-existing-project" id="id12">Adding CodeIgniter4 to an Existing Project</a></p>
+<li><p><a class="reference internal" href="#adding-codeigniter4-to-an-existing-project" id="id15">Adding CodeIgniter4 to an Existing Project</a></p>
 <ul>
-<li><p><a class="reference internal" href="#set-up" id="id13">Set Up</a></p></li>
-<li><p><a class="reference internal" href="#adding-codeigniter4-upgrading" id="id14">Upgrading</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id15">Pros</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id16">Cons</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id17">Structure</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id16">Installation</a></p></li>
+<li><p><a class="reference internal" href="#setting-up" id="id17">Setting Up</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id18">Initial Configuration</a></p></li>
+<li><p><a class="reference internal" href="#adding-codeigniter4-upgrading" id="id19">Upgrading</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id20">Pros</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id21">Cons</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id22">Structure</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#translations-installation" id="id18">Translations Installation</a></p></li>
+<li><p><a class="reference internal" href="#translations-installation" id="id23">Translations Installation</a></p></li>
 </ul>
 </div>
 <p>Composer can be used in several ways to install CodeIgniter4 on your system.</p>
-<p>The first two techniques describe creating a skeleton project
+<p>The first technique describes creating a skeleton project
 using CodeIgniter4, that you would then use as the base for a new webapp.
-The third technique described below lets you add CodeIgniter4 to an existing
+The second technique described below lets you add CodeIgniter4 to an existing
 webapp,</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -312,14 +315,14 @@ be “git ignored”. In such a case, you will need to do a <code class="docutil
 when you clone the repository to a new system.</p>
 </div>
 <section id="app-starter">
-<h2><a class="toc-backref" href="#id5">App Starter</a><a class="headerlink" href="#app-starter" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">App Starter</a><a class="headerlink" href="#app-starter" title="Permalink to this headline"></a></h2>
 <p>The <a class="reference external" href="https://github.com/codeigniter4/appstarter">CodeIgniter 4 app starter</a>
 repository holds a skeleton application, with a composer dependency on
 the latest released version of the framework.</p>
 <p>This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.</p>
-<section id="installation-set-up">
-<h3><a class="toc-backref" href="#id6">Installation &amp; Set Up</a><a class="headerlink" href="#installation-set-up" title="Permalink to this headline"></a></h3>
+<section id="installation">
+<h3><a class="toc-backref" href="#id8">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline"></a></h3>
 <p>In the folder above your project root:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span>
 </pre></div>
@@ -341,10 +344,14 @@ trusted dependencies that we bundle, being composer-installed.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
 </div>
-<p>After installation you should follow the steps in the “Upgrading” section.</p>
+</section>
+<section id="initial-configuration">
+<h3><a class="toc-backref" href="#id9">Initial Configuration</a><a class="headerlink" href="#initial-configuration" title="Permalink to this headline"></a></h3>
+<p>After installation, a few initial configurations are required.
+See <a class="reference internal" href="running.html#initial-configuration"><span class="std std-ref">Initial Configuration</span></a> for the details.</p>
 </section>
 <section id="upgrading">
-<span id="app-starter-upgrading"></span><h3><a class="toc-backref" href="#id7">Upgrading</a><a class="headerlink" href="#upgrading" title="Permalink to this headline"></a></h3>
+<span id="app-starter-upgrading"></span><h3><a class="toc-backref" href="#id10">Upgrading</a><a class="headerlink" href="#upgrading" title="Permalink to this headline"></a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
@@ -362,15 +369,15 @@ would be appropriate to do so here too, i.e., <code class="docutils literal notr
 <p>Read the <a class="reference internal" href="upgrading.html"><span class="doc">upgrade instructions</span></a>, and check Breaking Changes and Enhancements.</p>
 </section>
 <section id="pros">
-<h3><a class="toc-backref" href="#id8">Pros</a><a class="headerlink" href="#pros" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Pros</a><a class="headerlink" href="#pros" title="Permalink to this headline"></a></h3>
 <p>Simple installation; easy to update</p>
 </section>
 <section id="cons">
-<h3><a class="toc-backref" href="#id9">Cons</a><a class="headerlink" href="#cons" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Cons</a><a class="headerlink" href="#cons" title="Permalink to this headline"></a></h3>
 <p>You still need to check for <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> changes after updating</p>
 </section>
 <section id="structure">
-<h3><a class="toc-backref" href="#id10">Structure</a><a class="headerlink" href="#structure" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Structure</a><a class="headerlink" href="#structure" title="Permalink to this headline"></a></h3>
 <p>Folders in your project after set up:</p>
 <ul class="simple">
 <li><p>app, public, tests, writable</p></li>
@@ -379,7 +386,7 @@ would be appropriate to do so here too, i.e., <code class="docutils literal notr
 </ul>
 </section>
 <section id="latest-dev">
-<h3><a class="toc-backref" href="#id11">Latest Dev</a><a class="headerlink" href="#latest-dev" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Latest Dev</a><a class="headerlink" href="#latest-dev" title="Permalink to this headline"></a></h3>
 <p>The App Starter repo comes with a <code class="docutils literal notranslate"><span class="pre">builds</span></code> scripts to switch Composer sources between the
 current stable release and the latest development branch of the framework. Use this script
 for a developer who is willing to live with the latest unreleased changes, which may be unstable.</p>
@@ -401,10 +408,12 @@ folder with the latest target build.</p>
 </section>
 </section>
 <section id="adding-codeigniter4-to-an-existing-project">
-<h2><a class="toc-backref" href="#id12">Adding CodeIgniter4 to an Existing Project</a><a class="headerlink" href="#adding-codeigniter4-to-an-existing-project" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">Adding CodeIgniter4 to an Existing Project</a><a class="headerlink" href="#adding-codeigniter4-to-an-existing-project" title="Permalink to this headline"></a></h2>
 <p>The same <a class="reference external" href="https://github.com/codeigniter4/framework">CodeIgniter 4 framework</a>
 repository described in “Manual Installation” can also be added to an
 existing project using Composer.</p>
+<section id="id1">
+<h3><a class="toc-backref" href="#id16">Installation</a><a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <p>Develop your app inside the <code class="docutils literal notranslate"><span class="pre">app</span></code> folder, and the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder
 will be your document root.</p>
 <p>In your project root:</p>
@@ -413,8 +422,9 @@ will be your document root.</p>
 </div>
 <p>As with the earlier two composer install methods, you can omit installing
 phpunit and its dependencies by adding the <code class="docutils literal notranslate"><span class="pre">--no-dev</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">require</span></code> command.</p>
-<section id="set-up">
-<h3><a class="toc-backref" href="#id13">Set Up</a><a class="headerlink" href="#set-up" title="Permalink to this headline"></a></h3>
+</section>
+<section id="setting-up">
+<h3><a class="toc-backref" href="#id17">Setting Up</a><a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
 <p>Copy the <code class="docutils literal notranslate"><span class="pre">app</span></code>, <code class="docutils literal notranslate"><span class="pre">public</span></code>, and <code class="docutils literal notranslate"><span class="pre">writable</span></code> folders from <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework</span></code>
 to your project root</p>
 <p>Copy the <code class="docutils literal notranslate"><span class="pre">env</span></code>, <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> and <code class="docutils literal notranslate"><span class="pre">spark</span></code> files, from
@@ -422,24 +432,29 @@ to your project root</p>
 <p>You will have to adjust the system path to refer to the vendor one, e.g., <code class="docutils literal notranslate"><span class="pre">ROOTPATH</span> <span class="pre">.</span> <span class="pre">'/vendor/codeigniter4/framework/system'</span></code>,
 - the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> variable in <strong>app/Config/Paths.php</strong></p>
 </section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id18">Initial Configuration</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<p>A few initial configurations are required.
+See <a class="reference internal" href="running.html#initial-configuration"><span class="std std-ref">Initial Configuration</span></a> for the details.</p>
+</section>
 <section id="adding-codeigniter4-upgrading">
-<span id="id1"></span><h3><a class="toc-backref" href="#id14">Upgrading</a><a class="headerlink" href="#adding-codeigniter4-upgrading" title="Permalink to this headline"></a></h3>
+<span id="id3"></span><h3><a class="toc-backref" href="#id19">Upgrading</a><a class="headerlink" href="#adding-codeigniter4-upgrading" title="Permalink to this headline"></a></h3>
 <p>Whenever there is a new release, then from the command line in your project root:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span> <span class="o">--</span><span class="nx">prefer</span><span class="o">-</span><span class="nx">source</span>
 </pre></div>
 </div>
 <p>Read the <a class="reference internal" href="upgrading.html"><span class="doc">upgrade instructions</span></a>, and check Breaking Changes and Enhancements.</p>
 </section>
-<section id="id2">
-<h3><a class="toc-backref" href="#id15">Pros</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<section id="id4">
+<h3><a class="toc-backref" href="#id20">Pros</a><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
 <p>Relatively simple installation; easy to update</p>
 </section>
-<section id="id3">
-<h3><a class="toc-backref" href="#id16">Cons</a><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<section id="id5">
+<h3><a class="toc-backref" href="#id21">Cons</a><a class="headerlink" href="#id5" title="Permalink to this headline"></a></h3>
 <p>You still need to check for <code class="docutils literal notranslate"><span class="pre">app/Config</span></code> changes after updating</p>
 </section>
-<section id="id4">
-<h3><a class="toc-backref" href="#id17">Structure</a><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<section id="id6">
+<h3><a class="toc-backref" href="#id22">Structure</a><a class="headerlink" href="#id6" title="Permalink to this headline"></a></h3>
 <p>Folders in your project after set up:</p>
 <ul class="simple">
 <li><p>app, public, writable (when using <code class="docutils literal notranslate"><span class="pre">--prefer-source</span></code>)</p></li>
@@ -448,7 +463,7 @@ to your project root</p>
 </section>
 </section>
 <section id="translations-installation">
-<h2><a class="toc-backref" href="#id18">Translations Installation</a><a class="headerlink" href="#translations-installation" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id23">Translations Installation</a><a class="headerlink" href="#translations-installation" title="Permalink to this headline"></a></h2>
 <p>If you want to take advantage of the system message translations,
 they can be added to your project in a similar fashion.</p>
 <p>From the command line inside your project root:</p>
