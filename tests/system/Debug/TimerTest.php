@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Debug;
 
+use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
 use RuntimeException;
 use Throwable;
@@ -136,19 +137,14 @@ final class TimerTest extends CIUnitTestCase
         $this->assertNull($returnValue);
     }
 
-    /**
-     * @timeLimit 1.5
-     */
     public function testRecordFunctionWithReturn()
     {
         $timer       = new Timer();
         $returnValue = $timer->record('longjohn', static function () {
-            sleep(1);
-
             return 'test';
         });
 
-        $this->assertGreaterThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertLessThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
         $this->assertSame('test', $returnValue);
     }
 
@@ -171,7 +167,7 @@ final class TimerTest extends CIUnitTestCase
 
     public function testRecordThrowsErrorOnCallableWithParams()
     {
-        $this->expectException(Throwable::class);
+        $this->expectException(ArgumentCountError::class);
 
         $timer = new Timer();
         $timer->record('error', 'strlen');
@@ -211,19 +207,12 @@ final class TimerTest extends CIUnitTestCase
         $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('common'));
     }
 
-    /**
-     * @timeLimit 1.5
-     */
     public function testCommonCallableExpectWithReturn()
     {
-        $returnValue = timer('common', static function () {
-            sleep(1);
-
-            return strlen('CI4');
-        });
+        $returnValue = timer('common', static fn () => strlen('CI4'));
 
         $this->assertNotInstanceOf(Timer::class, $returnValue);
         $this->assertSame(3, $returnValue);
-        $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('common'));
+        $this->assertLessThanOrEqual(1.0, timer()->getElapsedTime('common'));
     }
 }
