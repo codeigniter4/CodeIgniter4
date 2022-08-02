@@ -14,7 +14,6 @@ namespace CodeIgniter\Debug;
 use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
 use RuntimeException;
-use Throwable;
 
 /**
  * @internal
@@ -125,15 +124,12 @@ final class TimerTest extends CIUnitTestCase
         $this->assertNull($timer->getElapsedTime('test1'));
     }
 
-    /**
-     * @timeLimit 1.5
-     */
     public function testRecordFunctionNoReturn()
     {
         $timer       = new Timer();
-        $returnValue = $timer->record('longjohn', static function () { sleep(1); });
+        $returnValue = $timer->record('longjohn', static function () { usleep(100000); });
 
-        $this->assertGreaterThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertGreaterThanOrEqual(0.1, $timer->getElapsedTime('longjohn'));
         $this->assertNull($returnValue);
     }
 
@@ -141,10 +137,12 @@ final class TimerTest extends CIUnitTestCase
     {
         $timer       = new Timer();
         $returnValue = $timer->record('longjohn', static function () {
+            usleep(100000);
+            
             return 'test';
         });
 
-        $this->assertLessThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertGreaterThanOrEqual(0.1, $timer->getElapsedTime('longjohn'));
         $this->assertSame('test', $returnValue);
     }
 
@@ -195,16 +193,13 @@ final class TimerTest extends CIUnitTestCase
         $this->assertInstanceOf(Timer::class, $returnValue);
     }
 
-    /**
-     * @timeLimit 1.5
-     */
     public function testCommonCallableExpectNoReturn()
     {
-        $returnValue = timer('common', static function () { sleep(1); });
+        $returnValue = timer('common', static function () { usleep(100000); });
 
         $this->assertNotInstanceOf(Timer::class, $returnValue);
         $this->assertNull($returnValue);
-        $this->assertGreaterThanOrEqual(1.0, timer()->getElapsedTime('common'));
+        $this->assertGreaterThanOrEqual(0.1, timer()->getElapsedTime('common'));
     }
 
     public function testCommonCallableExpectWithReturn()
@@ -213,6 +208,6 @@ final class TimerTest extends CIUnitTestCase
 
         $this->assertNotInstanceOf(Timer::class, $returnValue);
         $this->assertSame(3, $returnValue);
-        $this->assertLessThanOrEqual(1.0, timer()->getElapsedTime('common'));
+        $this->assertLessThanOrEqual(0.1, timer()->getElapsedTime('common'));
     }
 }
