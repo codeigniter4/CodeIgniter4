@@ -29,7 +29,7 @@ and extract it to become your project root.
 Initial Configuration
 =====================
 
-After installation, a few initial configuration is required.
+After installation, a few initial configurations are required.
 See :ref:`initial-configuration` for the detail.
 
 .. _installing-manual-upgrading:
