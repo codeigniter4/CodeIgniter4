@@ -2423,6 +2423,20 @@ class BaseBuilder
     }
 
     /**
+     * Only runs the query when $condition evaluates to true
+     */
+    public function when($condition, Closure $callback, ?Closure $defaultCallback = null): self
+    {
+        if ($condition) {
+            $callback($this, $condition);
+        } elseif ($defaultCallback) {
+            $defaultCallback($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * Generates a platform-specific delete string from the supplied data
      */
     protected function _delete(string $table): string
