@@ -78,10 +78,8 @@ will be reset (by default it will be reset, just like when using ``$builder->get
 .. literalinclude:: query_builder/006.php
 
 The key thing to notice in the above example is that the second query did not
-utilize ``$builder->from()`` and did not pass a table name into the first
-parameter. The reason for this outcome is because the query has not been
-executed using ``$builder->get()`` which resets values or reset directly
-using ``$builder->resetQuery()``.
+utilize ``limit(10, 20)`` but the generated SQL query has ``LIMIT 20, 10``.
+The reason for this outcome is because the first parameter is set to ``false``.
 
 $builder->getWhere()
 --------------------
@@ -829,9 +827,7 @@ will be reset (by default it will be--just like ``$builder->insert()``):
 
 .. literalinclude:: query_builder/080.php
 
-The reason the second query worked is that the query has not been executed
-using ``$builder->insert()`` which resets values or reset directly using
-``$builder->resetQuery()``.
+The reason the second query worked is that the first parameter is set to ``false``.
 
 .. note:: This method doesn't work for batch inserts.
 
