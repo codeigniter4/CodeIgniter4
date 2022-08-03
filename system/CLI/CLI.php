@@ -175,18 +175,17 @@ class CLI
      * php index.php user -v --v -name=John --name=John
      *
      * @param string $prefix
-     *
-     * @codeCoverageIgnore
      */
     public static function input(?string $prefix = null): string
     {
-        if (static::$readline_support) {
-            return readline($prefix);
+        // readline() can't be tested.
+        if (static::$readline_support && ENVIRONMENT !== 'testing') {
+            return readline($prefix); // @codeCoverageIgnore
         }
 
         echo $prefix;
 
-        return fgets(STDIN);
+        return fgets(fopen('php://stdin', 'rb'));
     }
 
     /**
