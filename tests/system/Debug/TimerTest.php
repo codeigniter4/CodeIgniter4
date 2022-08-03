@@ -138,7 +138,7 @@ final class TimerTest extends CIUnitTestCase
         $timer       = new Timer();
         $returnValue = $timer->record('longjohn', static function () {
             usleep(100000);
-            
+
             return 'test';
         });
 
