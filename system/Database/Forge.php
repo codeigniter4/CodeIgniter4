@@ -704,11 +704,9 @@ class Forge
             return false;
         }
 
-        if (is_array($sqls)) {
-            foreach ($sqls as $sql) {
-                if ($this->db->query($sql) === false) {
-                    return false;
-                }
+        foreach ($sqls as $sql) {
+            if ($this->db->query($sql) === false) {
+                return false;
             }
         }
 
@@ -766,9 +764,11 @@ class Forge
             return false;
         }
 
-        foreach ($sqls as $sql) {
-            if ($this->db->query($sql) === false) {
-                return false;
+        if (is_array($sqls)) {
+            foreach ($sqls as $sql) {
+                if ($this->db->query($sql) === false) {
+                    return false;
+                }
             }
         }
 
