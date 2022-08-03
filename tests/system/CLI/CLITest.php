@@ -76,6 +76,20 @@ final class CLITest extends CIUnitTestCase
         PhpStreamWrapper::restore();
     }
 
+    public function testPrompt()
+    {
+        PhpStreamWrapper::register();
+
+        $expected = 'red';
+        PhpStreamWrapper::setContent($expected);
+
+        $output = CLI::prompt('What is your favorite color?');
+
+        $this->assertSame($expected, $output);
+
+        PhpStreamWrapper::restore();
+    }
+
     public function testIsWindows()
     {
         $this->assertSame(('\\' === DIRECTORY_SEPARATOR), CLI::isWindows());
