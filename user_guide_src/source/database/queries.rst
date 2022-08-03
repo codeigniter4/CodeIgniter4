@@ -102,11 +102,16 @@ this:
 1. $db->escape()
 ================
 
-This function determines the data type so
-that it can escape only string data. It also automatically adds
-single quotes around the data so you don't have to:
+This function determines the data type so that it can escape only string
+data. It also automatically adds single quotes around the data so you
+don't have to:
 
 .. literalinclude:: queries/009.php
+
+When ``RawSql`` is used the string is not escaped. This allows you to call
+SQL functions and constants:
+
+.. literalinclude:: queries/030.php
 
 2. $db->escapeString()
 ======================
