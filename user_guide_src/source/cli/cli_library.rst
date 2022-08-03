@@ -31,6 +31,12 @@ Sometimes you need to ask the user for more information. They might not have pro
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the ``prompt()`` or ``promptByKey()`` method.
 
+.. note:: Since v4.3.0, you can write tests for these methods with ``PhpStreamWrapper``.
+    See :ref:`testing-cli-input`.
+
+prompt()
+========
+
 You can provide a question by passing it in as the first parameter:
 
 .. literalinclude:: cli_library/002.php
