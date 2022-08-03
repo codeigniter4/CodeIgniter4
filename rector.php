@@ -131,8 +131,11 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
 
-        // buggy on read based on @var on property
-        RemoveAlwaysTrueIfConditionRector::class,
+        // buggy on read based on @var on property on Trait
+        RemoveAlwaysTrueIfConditionRector::class => [
+            '**Trait.php',
+            __DIR__ . '/system/Test/ControllerTester.php',
+        ],
     ]);
 
     // auto import fully qualified class names
