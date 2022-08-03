@@ -16,7 +16,7 @@ Enhancements:
 - New Testing Feature: :doc:`Fabricator </testing/fabricator>` makes creating mock classes simple and repeatable in your tests.
 - Model class can now have the callbacks overridden at runtime. Useful for testing.
 - A number of improvements to :doc:`Feature Tests </testing/feature>` in general.
-- New :doc:`command() helper function </cli/cli_commands>` to programatically run your CLI commands. Useful for testing and cron jobs.
+- New :doc:`command() helper function </cli/spark_commands>` to programatically run your CLI commands. Useful for testing and cron jobs.
 - New command, ``make:seeder`` to generate a :doc:`Database Seed class </dbmgmt/seeds>` skeleton file.
 - Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.
 - New helper :doc:`mb_url_title </helpers/url_helper>` that functions like ``url_title`` but automatically escapes and extended URL characters.

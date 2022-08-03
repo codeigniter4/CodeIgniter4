@@ -12,13 +12,20 @@ This section addresses how to use each technique, and explains some of the pros 
 If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
-Initial Configuration & Set Up
-==============================
+.. _initial-configuration:
+
+Initial Configuration
+=====================
 
 #. Open the **app/Config/App.php** file with a text editor and
-   set your base URL. If you need more flexibility, the baseURL may
+   set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
    be set within the **.env** file as ``app.baseURL = 'http://example.com/'``.
    (Always use a trailing slash on your base URL!)
+
+    .. note:: If you don't set the ``baseURL`` correctly, in development mode,
+        the debug toolbar may not load properly and web pages may take considerably
+        longer to display.
+
 #. If you intend to use a database, open the
    **app/Config/Database.php** file with a text editor and set your
    database settings. Alternately, these could be set in your **.env** file.
@@ -26,10 +33,10 @@ Initial Configuration & Set Up
    in **.env** file to take advantage of the debugging tools provided. See
    :ref:`setting-development-mode` for the detail.
 
-.. important:: In production environments, you should disable error display and
-    any other development-only functionality. In CodeIgniter, this can be done
-    by setting the environment to "production". By default, the application will
-    run using the "production" environment. See also :ref:`environment-constant`.
+    .. important:: In production environments, you should disable error display and
+        any other development-only functionality. In CodeIgniter, this can be done
+        by setting the environment to "production". By default, the application will
+        run using the "production" environment. See also :ref:`environment-constant`.
 
 .. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside

@@ -36,7 +36,7 @@ final class SecurityTest extends CIUnitTestCase
 
         $_COOKIE = [];
 
-        Factories::reset();
+        $this->resetServices();
     }
 
     public function testBasicConfigIsSaved()

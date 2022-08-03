@@ -7,9 +7,9 @@ Composer Installation
 
 Composer can be used in several ways to install CodeIgniter4 on your system.
 
-The first two techniques describe creating a skeleton project
+The first technique describes creating a skeleton project
 using CodeIgniter4, that you would then use as the base for a new webapp.
-The third technique described below lets you add CodeIgniter4 to an existing
+The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
 
 .. note:: If you are using a Git repository to store your code, or for
@@ -27,8 +27,8 @@ the latest released version of the framework.
 This installation technique would suit a developer who wishes to start
 a new CodeIgniter4 based project.
 
-Installation & Set Up
----------------------
+Installation
+------------
 
 In the folder above your project root::
 
@@ -52,7 +52,11 @@ A sample such installation command, using the default project-root "appstarter":
 
     > composer create-project codeigniter4/appstarter --no-dev
 
-After installation you should follow the steps in the "Upgrading" section.
+Initial Configuration
+---------------------
+
+After installation, a few initial configurations are required.
+See :ref:`initial-configuration` for the details. 
 
 .. _app-starter-upgrading:
 
@@ -126,6 +130,9 @@ The same `CodeIgniter 4 framework <https://github.com/codeigniter4/framework>`_
 repository described in "Manual Installation" can also be added to an
 existing project using Composer.
 
+Installation
+------------
+
 Develop your app inside the ``app`` folder, and the ``public`` folder
 will be your document root.
 
@@ -136,8 +143,8 @@ In your project root::
 As with the earlier two composer install methods, you can omit installing
 phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
 
-Set Up
-------
+Setting Up
+----------
 
 Copy the ``app``, ``public``, and ``writable`` folders from ``vendor/codeigniter4/framework``
 to your project root
@@ -147,6 +154,12 @@ Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
 
 You will have to adjust the system path to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
 - the ``$systemDirectory`` variable in **app/Config/Paths.php**
+
+Initial Configuration
+---------------------
+
+A few initial configurations are required.
+See :ref:`initial-configuration` for the details.
 
 .. _adding-codeigniter4-upgrading:
 
