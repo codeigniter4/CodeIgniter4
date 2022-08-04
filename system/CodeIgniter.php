@@ -49,8 +49,6 @@ class CodeIgniter
      */
     public const CI_VERSION = '4.2.1';
 
-    private const MIN_PHP_VERSION = '7.4';
-
     /**
      * App startup time.
      *
@@ -157,16 +155,6 @@ class CodeIgniter
      */
     public function __construct(App $config)
     {
-        if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<')) {
-            // @codeCoverageIgnoreStart
-            $message = extension_loaded('intl')
-                ? lang('Core.invalidPhpVersion', [self::MIN_PHP_VERSION, PHP_VERSION])
-                : sprintf('Your PHP version must be %s or higher to run CodeIgniter. Current version: %s', self::MIN_PHP_VERSION, PHP_VERSION);
-
-            exit($message);
-            // @codeCoverageIgnoreEnd
-        }
-
         $this->startTime = microtime(true);
         $this->config    = $config;
     }
@@ -927,6 +915,7 @@ class CodeIgniter
             ob_end_flush(); // @codeCoverageIgnore
         }
 
+        // Throws new PageNotFoundException and remove exception message on production.
         throw PageNotFoundException::forPageNotFound(
             (ENVIRONMENT !== 'production' || ! $this->isWeb()) ? $e->getMessage() : null
         );
