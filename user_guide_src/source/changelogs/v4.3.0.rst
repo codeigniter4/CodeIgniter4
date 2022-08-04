@@ -23,6 +23,20 @@ Exceptions when Database Errors Occur
 - The exceptions thrown by the database connection classes have been changed to ``CodeIgniter\Database\Exceptions\DatabaseException``. Previously, different database drivers threw different exception classes, but these have been unified into ``DatabaseException``.
 - The exceptions thrown by the ``execute()`` method of Prepared Queries have been changed to ``DatabaseException``. Previously, different database drivers might throw different exception classes or did not throw exceptions, but these have been unified into ``DatabaseException``.
 
+HTTP Status Code and Exit Code when Exception Occurs
+----------------------------------------------------
+
+Previously, the CodeIgniter's Exception Handler used the *Exception code* as *HTTP status code* in some cases, and set calculated *Exit code* based on the Exception code. However there is essentially nothing to do with Exception code and HTTP Status Code or Exit code.
+
+- Now the Exception Handler sets HTTP status code to ``500`` and set Exit code to the constant ``EXIT_ERROR`` (= ``1``) by default.
+- You can change HTTP status code or Exit code to implements ``HTTPExceptionInterface`` or ``HasExitCodeInterface`` in your Exception class. See :ref:`error-specify-http-status-code` and :ref:`error-specify-exit-code`.
+
+For example, the Exit code has been changed like the following:
+
+- If an uncaught ``ConfigException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``12``.
+- If an uncaught ``CastException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``9``.
+- If an uncaught ``DatabaseException`` occurs, the Exit code is ``EXIT_DATABASE`` (= ``8``) instead of ``17``.
+
 Others
 ------
 
