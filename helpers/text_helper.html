@@ -325,6 +325,11 @@ specifies the length. The following choices are available:</p>
 <li><p><strong>sha1</strong>: An encrypted random number based on <code class="docutils literal notranslate"><span class="pre">sha1()</span></code> (fixed length of 40).</p></li>
 <li><p><strong>crypto</strong>: A random string based on <code class="docutils literal notranslate"><span class="pre">random_bytes()</span></code>.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you use <strong>crypto</strong>, you must set an even number to the second parameter.
+Since v4.2.2, if you set an odd number, <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> will be thrown.</p>
+</div>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
