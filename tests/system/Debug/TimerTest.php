@@ -13,6 +13,7 @@ namespace CodeIgniter\Debug;
 
 use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
+use ErrorException;
 use RuntimeException;
 
 /**
@@ -151,7 +152,7 @@ final class TimerTest extends CIUnitTestCase
         $timer       = new Timer();
         $returnValue = $timer->record('longjohn', static fn () => strlen('CI4'));
 
-        $this->assertLessThanOrEqual(1.0, $timer->getElapsedTime('longjohn'));
+        $this->assertLessThan(0.1, $timer->getElapsedTime('longjohn'));
         $this->assertSame(3, $returnValue);
     }
 
@@ -165,7 +166,11 @@ final class TimerTest extends CIUnitTestCase
 
     public function testRecordThrowsErrorOnCallableWithParams()
     {
-        $this->expectException(ArgumentCountError::class);
+        if(version_compare(PHP_VERSION, '8.0.0') >= 0) {
+            $this->expectException(ArgumentCountError::class);
+        } else {
+            $this->expectException(ErrorException::class);
+        }
 
         $timer = new Timer();
         $timer->record('error', 'strlen');
