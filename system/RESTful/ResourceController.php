@@ -24,7 +24,7 @@ class ResourceController extends BaseResource
     /**
      * Return an array of resource objects, themselves in array format
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function index()
     {
@@ -36,7 +36,7 @@ class ResourceController extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function show($id = null)
     {
@@ -46,7 +46,7 @@ class ResourceController extends BaseResource
     /**
      * Return a new resource object, with default properties
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function new()
     {
@@ -56,7 +56,7 @@ class ResourceController extends BaseResource
     /**
      * Create a new resource object, from "posted" parameters
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function create()
     {
@@ -68,7 +68,7 @@ class ResourceController extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function edit($id = null)
     {
@@ -80,7 +80,7 @@ class ResourceController extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function update($id = null)
     {
@@ -92,7 +92,7 @@ class ResourceController extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response
+     * @return Response|string|void
      */
     public function delete($id = null)
     {

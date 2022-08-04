@@ -21,7 +21,7 @@ class ResourcePresenter extends BaseResource
     /**
      * Present a view of resource objects
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function index()
     {
@@ -33,7 +33,7 @@ class ResourcePresenter extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function show($id = null)
     {
@@ -43,7 +43,7 @@ class ResourcePresenter extends BaseResource
     /**
      * Present a view to present a new single resource object
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function new()
     {
@@ -54,7 +54,7 @@ class ResourcePresenter extends BaseResource
      * Process the creation/insertion of a new resource object.
      * This should be a POST.
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function create()
     {
@@ -66,7 +66,7 @@ class ResourcePresenter extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function edit($id = null)
     {
@@ -79,7 +79,7 @@ class ResourcePresenter extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function update($id = null)
     {
@@ -91,7 +91,7 @@ class ResourcePresenter extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function remove($id = null)
     {
@@ -103,7 +103,7 @@ class ResourcePresenter extends BaseResource
      *
      * @param string|null $id
      *
-     * @return Response|string
+     * @return Response|string|void
      */
     public function delete($id = null)
     {
