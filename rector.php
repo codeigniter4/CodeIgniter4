@@ -32,7 +32,6 @@ use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
-use Rector\DeadCode\Rector\Plus\RemoveDeadZeroAndOneOperationRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
@@ -132,11 +131,11 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
 
-        // buggy on read based on @var on property
-        RemoveAlwaysTrueIfConditionRector::class,
-
-        // buggy on string * int
-        RemoveDeadZeroAndOneOperationRector::class,
+        // buggy on read based on @var on property on Trait
+        RemoveAlwaysTrueIfConditionRector::class => [
+            '**Trait.php',
+            __DIR__ . '/system/Test/ControllerTester.php',
+        ],
     ]);
 
     // auto import fully qualified class names

@@ -63,10 +63,8 @@ if (! function_exists('form_open')) {
             $form .= csrf_field($csrfId ?? null);
         }
 
-        if (is_array($hidden)) {
-            foreach ($hidden as $name => $value) {
-                $form .= form_hidden($name, $value);
-            }
+        foreach ($hidden as $name => $value) {
+            $form .= form_hidden($name, $value);
         }
 
         return $form;
