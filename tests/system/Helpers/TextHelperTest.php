@@ -12,6 +12,7 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use InvalidArgumentException;
 
 /**
  * @internal
@@ -111,6 +112,19 @@ final class TextHelperTest extends CIUnitTestCase
 
         $this->assertSame(32, strlen($random = random_string('md5')));
         $this->assertSame(40, strlen($random = random_string('sha1')));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6330
+     */
+    public function testRandomStringCryptoOddNumber()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'You must set an even number to the second parameter when you use `crypto`'
+        );
+
+        random_string('crypto', 9);
     }
 
     public function testIncrementString()

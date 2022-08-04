@@ -32,6 +32,7 @@ Others
 
 - The method ``Forge::createTable()`` no longer executes a ``CREATE TABLE IF NOT EXISTS``. If table is not found in ``$db->tableExists($table)`` then ``CREATE TABLE`` is executed.
 - The second parameter ``$ifNotExists`` of ``Forge::_createTable()`` is deprecated. It is no longer used and will be removed in a future release.
+- When you use :php:func:`random_string` with the first parameter ``'crypto'``, now if you set the second parameter ``$len`` to an odd number, ``InvalidArgumentException`` will be thrown. Change the parameter to an even number.
 
 Breaking Enhancements
 *********************
