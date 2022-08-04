@@ -435,10 +435,8 @@ will be reset (by default it will be reset, just like when using <code class="do
 </pre></div>
 </div>
 <p>The key thing to notice in the above example is that the second query did not
-utilize <code class="docutils literal notranslate"><span class="pre">$builder-&gt;from()</span></code> and did not pass a table name into the first
-parameter. The reason for this outcome is because the query has not been
-executed using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;get()</span></code> which resets values or reset directly
-using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;resetQuery()</span></code>.</p>
+utilize <code class="docutils literal notranslate"><span class="pre">limit(10,</span> <span class="pre">20)</span></code> but the generated SQL query has <code class="docutils literal notranslate"><span class="pre">LIMIT</span> <span class="pre">20,</span> <span class="pre">10</span></code>.
+The reason for this outcome is because the first parameter is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 </section>
 <section id="builder-getwhere">
 <h4>$builder-&gt;getWhere()<a class="headerlink" href="#builder-getwhere" title="Permalink to this headline"></a></h4>
@@ -1602,9 +1600,7 @@ will be reset (by default it will be–just like <code class="docutils literal n
 <span class="c1">// Produces string: INSERT INTO mytable (`title`, `content`) VALUES (&#39;My Title&#39;, &#39;My Content&#39;)</span>
 </pre></div>
 </div>
-<p>The reason the second query worked is that the query has not been executed
-using <code class="docutils literal notranslate"><span class="pre">$builder-&gt;insert()</span></code> which resets values or reset directly using
-<code class="docutils literal notranslate"><span class="pre">$builder-&gt;resetQuery()</span></code>.</p>
+<p>The reason the second query worked is that the first parameter is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This method doesn’t work for batch inserts.</p>
@@ -3375,7 +3371,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 02, 2022.
+      <span class="lastupdated">Last updated on Aug 04, 2022.
       </span></p>
   </div>
 
