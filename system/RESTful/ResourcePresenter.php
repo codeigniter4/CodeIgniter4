@@ -31,7 +31,7 @@ class ResourcePresenter extends BaseResource
     /**
      * Present a view to present a specific resource object
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -64,7 +64,7 @@ class ResourcePresenter extends BaseResource
     /**
      * Present a view to edit the properties of a specific resource object
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -77,7 +77,7 @@ class ResourcePresenter extends BaseResource
      * Process the updating, full or partial, of a specific resource object.
      * This should be a POST.
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -89,7 +89,7 @@ class ResourcePresenter extends BaseResource
     /**
      * Present a view to confirm the deletion of a specific resource object
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -101,7 +101,7 @@ class ResourcePresenter extends BaseResource
     /**
      * Process the deletion of a specific resource object
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */

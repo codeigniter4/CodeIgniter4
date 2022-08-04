@@ -34,7 +34,7 @@ class ResourceController extends BaseResource
     /**
      * Return the properties of a resource object
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -66,7 +66,7 @@ class ResourceController extends BaseResource
     /**
      * Return the editable properties of a resource object
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -78,7 +78,7 @@ class ResourceController extends BaseResource
     /**
      * Add or update a model resource, from "posted" properties
      *
-     * @param string|null $id
+     * @param string|null|int$id
      *
      * @return Response|string|void
      */
@@ -90,7 +90,7 @@ class ResourceController extends BaseResource
     /**
      * Delete the designated resource object from the model
      *
-     * @param string|null $id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
