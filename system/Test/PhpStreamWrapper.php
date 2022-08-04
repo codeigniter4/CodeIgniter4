@@ -18,7 +18,7 @@ namespace CodeIgniter\Test;
  *
  * See https://www.php.net/manual/en/class.streamwrapper.php
  */
-class PhpStreamWrapper
+final class PhpStreamWrapper
 {
     private static string $content = '';
     private int $position          = 0;
