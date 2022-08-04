@@ -99,6 +99,8 @@ It's a very good security practice to escape your data before submitting
 it into your database. CodeIgniter has three methods that help you do
 this:
 
+.. _database-queries-db_escape:
+
 1. $db->escape()
 ================
 
@@ -108,7 +110,7 @@ don't have to:
 
 .. literalinclude:: queries/009.php
 
-When ``RawSql`` is used the string is not escaped. This allows you to call
+Since v4.3.0, when ``RawSql`` is used the string is not escaped. This allows you to call
 SQL functions and constants:
 
 .. literalinclude:: queries/030.php

@@ -1,15 +1,12 @@
 <?php
 
-    $data = [
-        'id'          => new RawSql('DEFAULT'),
-        'title'       => 'My title',
-        'name'        => 'My Name',
-        'date'        => '2022-01-01',
-        'last_update' => new RawSql('CURRENT_TIMESTAMP()'),
-    ];
+use CodeIgniter\Database\RawSql;
 
-    $builder->insert($data);
-    /* Produces:
-        INSERT INTO mytable (id, title, name, date, last_update)
-        VALUES (DEFAULT, 'My title', 'My name', '2022-01-01', CURRENT_TIMESTAMP())
-    */
+$stringArray = ['A simple string', new RawSql('CURRENT_TIMESTAMP()'), false, null];
+
+$escapedString = $db->escape($stringArray);
+
+$this->assertSame("'A simple string'", $escapedString[0]); // adds quotes
+$this->assertSame('CURRENT_TIMESTAMP()', $escapedString[1]); // does not add quotes
+$this->assertSame(0, $escapedString[2]); // converts bool to 1 or 0 - postgre TRUE or FALSE
+$this->assertSame('NULL', $escapedString[3]); // null returns NULL without quotes
