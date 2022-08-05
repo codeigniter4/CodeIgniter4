@@ -353,11 +353,11 @@ abstract class BaseModel
 
     /**
      * Inserts data into the current database
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array $data Data
      *
-     * @return bool|int|string
+     * @return bool
      */
     abstract protected function doInsert(array $data);
 
@@ -695,7 +695,7 @@ abstract class BaseModel
      *
      * @throws ReflectionException
      *
-     * @return bool|int|string
+     * @return bool|int|string insert ID or true on success. false on failure.
      */
     public function insert($data = null, bool $returnID = true)
     {
