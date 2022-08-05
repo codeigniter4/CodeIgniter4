@@ -132,4 +132,4 @@ Specify Exit Code in Your Exception
 Since v4.3.0, you can specify the exit code for your Exception class to implement
 ``HasExitCodeInterface``.
 
-When an exception implemented ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will be the exit code.
+When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
