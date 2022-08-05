@@ -26,7 +26,7 @@ Exceptions when Database Errors Occur
 HTTP Status Code and Exit Code when Exception Occurs
 ----------------------------------------------------
 
-Previously, the CodeIgniter's Exception Handler used the *Exception code* as *HTTP status code* in some cases, and set calculated *Exit code* based on the Exception code. However there is essentially nothing to do with Exception code and HTTP Status Code or Exit code.
+Previously, CodeIgniter's Exception Handler used the *Exception code* as the *HTTP status code* in some cases, and calculated the *Exit code* based on the Exception code. However there should be no logical connection with Exception code and HTTP Status Code or Exit code.
 
 - Now the Exception Handler sets HTTP status code to ``500`` and set Exit code to the constant ``EXIT_ERROR`` (= ``1``) by default.
 - You can change HTTP status code or Exit code to implements ``HTTPExceptionInterface`` or ``HasExitCodeInterface`` in your Exception class. See :ref:`error-specify-http-status-code` and :ref:`error-specify-exit-code`.
