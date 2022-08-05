@@ -713,6 +713,8 @@ class Validation implements ValidationInterface
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
             $message = lang($this->customErrors[$field][$rule]);
+        } else if (strpos($label, '*') !== false && isset($this->customErrors[$label][$rule])) {
+            $message = lang($this->customErrors[$label][$rule]);
         } else {
             // Try to grab a localized version of the message...
             // lang() will return the rule name back if not found,
