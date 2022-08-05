@@ -252,10 +252,10 @@ component name:
 
 .. note:: All component Factories are reset by default between each test. Modify your test case's ``$setUpMethods`` if you need instances to persist.
 
-.. _testing-overview-stream-filters:
+.. _testing-cli-output:
 
-Stream Filters
-==============
+Testing CLI Output
+==================
 
 **StreamFilterTrait** provides an alternate to these helper methods.
 
@@ -276,3 +276,33 @@ See :ref:`Testing Traits <testing-overview-traits>`.
 
 If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you must call the ``parent::setUp()`` and
 ``parent::tearDown()`` methods respectively to configure the ``StreamFilterTrait``.
+
+.. _testing-cli-input:
+
+Testing CLI Input
+=================
+
+**PhpStreamWrapper** provides a way to write tests for methods that require user input,
+such as ``CLI::prompt()``, ``CLI::wait()``, and ``CLI::input()``.
+
+.. note:: The PhpStreamWrapper is a stream wrapper class.
+    If you don't know PHP's stream wrapper,
+    see `The streamWrapper class <https://www.php.net/manual/en/class.streamwrapper.php>`_
+    in the PHP maual.
+
+**Overview of methods**
+
+- ``PhpStreamWrapper::register()`` Register the ``PhpStreamWrapper`` to the ``php`` protocol.
+- ``PhpStreamWrapper::restore()`` Restore the php protocol wrapper back to the PHP built-in wrapper.
+- ``PhpStreamWrapper::setContent()`` Set the input data.
+
+.. important:: The PhpStreamWrapper is intended for only testing ``php://stdin``.
+    But when you register it, it handles all the `php protocol <https://www.php.net/manual/en/wrappers.php.php>`_ streams,
+    such as ``php://stdout``, ``php://stderr``, ``php://memory``.
+    So it is strongly recommended that ``PhpStreamWrapper`` be registered/unregistered
+    only when needed. Otherwise, it will interfere with other built-in php streams
+    while registered.
+
+An example demonstrating this inside one of your test cases:
+
+.. literalinclude:: overview/019.php
