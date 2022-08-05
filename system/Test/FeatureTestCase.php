@@ -176,12 +176,7 @@ class FeatureTestCase extends CIUnitTestCase
 
         // Initialize the RouteCollection
         if (! $routes = $this->routes) {
-            require APPPATH . 'Config/Routes.php';
-
-            /**
-             * @var RouteCollection $routes
-             */
-            $routes->getRoutes('*');
+            $routes = Services::routes()->loadRoutes();
         }
 
         $routes->setHTTPVerb($method);

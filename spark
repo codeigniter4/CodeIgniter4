@@ -26,6 +26,18 @@ if (strpos(PHP_SAPI, 'cgi') === 0) {
     exit("The cli tool is not supported when running php-cgi. It needs php-cli to function!\n\n");
 }
 
+// Check PHP version.
+$minPhpVersion = '7.4'; // If you update this, don't forget to update `public/index.php`.
+if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
+    $message = sprintf(
+        'Your PHP version must be %s or higher to run CodeIgniter. Current version: %s',
+        $minPhpVersion,
+        PHP_VERSION
+    );
+
+    exit($message);
+}
+
 // We want errors to be shown when using it from the CLI.
 error_reporting(-1);
 ini_set('display_errors', '1');

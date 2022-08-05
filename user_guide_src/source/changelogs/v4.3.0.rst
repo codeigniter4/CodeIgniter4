@@ -28,6 +28,7 @@ Others
 
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 
 Enhancements
 ************
@@ -38,7 +39,8 @@ CLI
 
 Others
 ======
-- Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-overview-stream-filters`.
+- Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-cli-output`.
+- Added the ``PhpStreamWrapper`` to make it easier to work with setting data to ``php://stdin``. See :ref:`testing-cli-input`.
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
@@ -47,6 +49,7 @@ Others
 - SQLite ``BaseConnection::getIndexData()`` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
 - Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
 - Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
+- Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 
 Changes
 *******

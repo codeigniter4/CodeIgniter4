@@ -13,6 +13,7 @@ upgrading from.
     :titlesonly:
 
     upgrade_430
+    upgrade_422
     upgrade_421
     upgrade_420
     upgrade_418

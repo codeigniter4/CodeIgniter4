@@ -2,20 +2,28 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
+use Config\Services;
 
-class Form extends Controller
+class Form extends BaseController
 {
+    protected $helpers = ['form'];
+
     public function index()
     {
-        helper(['form', 'url']);
+        if (strtolower($this->request->getMethod()) !== 'post') {
+            return view('signup', [
+                'validation' => Services::validation(),
+            ]);
+        }
 
-        if (! $this->validate([])) {
-            return view('Signup', [
+        $rules = [];
+
+        if (! $this->validate($rules)) {
+            return view('signup', [
                 'validation' => $this->validator,
             ]);
         }
 
-        return view('Success');
+        return view('success');
     }
 }

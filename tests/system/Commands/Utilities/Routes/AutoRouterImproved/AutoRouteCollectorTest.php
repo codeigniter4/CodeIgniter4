@@ -59,18 +59,20 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
 
         $expected = [
             0 => [
-                0 => 'GET(auto)',
-                1 => 'newautorouting',
-                2 => '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
-                3 => '',
-                4 => 'toolbar',
+                'GET(auto)',
+                'newautorouting',
+                '',
+                '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
+                '',
+                'toolbar',
             ],
             1 => [
-                0 => 'POST(auto)',
-                1 => 'newautorouting/save/../..[/..]',
-                2 => '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
-                3 => 'honeypot',
-                4 => 'toolbar',
+                'POST(auto)',
+                'newautorouting/save/../..[/..]',
+                '',
+                '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
+                'honeypot',
+                'toolbar',
             ],
         ];
         $this->assertSame($expected, $routes);
@@ -85,18 +87,20 @@ final class AutoRouteCollectorTest extends CIUnitTestCase
 
         $expected = [
             0 => [
-                0 => 'GET(auto)',
-                1 => 'newautorouting',
-                2 => '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
-                3 => '',
-                4 => 'toolbar',
+                'GET(auto)',
+                'newautorouting',
+                '',
+                '\\Tests\\Support\\Controllers\\Newautorouting::getIndex',
+                '',
+                'toolbar',
             ],
             1 => [
-                0 => 'POST(auto)',
-                1 => 'newautorouting/save/../..[/..]',
-                2 => '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
-                3 => '',
-                4 => 'toolbar',
+                'POST(auto)',
+                'newautorouting/save/../..[/..]',
+                '',
+                '\\Tests\\Support\\Controllers\\Newautorouting::postSave',
+                '',
+                'toolbar',
             ],
         ];
         $this->assertSame($expected, $routes);

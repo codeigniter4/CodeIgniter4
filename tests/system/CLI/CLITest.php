@@ -12,6 +12,7 @@
 namespace CodeIgniter\CLI;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\PhpStreamWrapper;
 use CodeIgniter\Test\StreamFilterTrait;
 use ReflectionProperty;
 use RuntimeException;
@@ -59,22 +60,34 @@ final class CLITest extends CIUnitTestCase
         $time = time();
         CLI::wait(1);
         $this->assertCloseEnough(1, time() - $time);
+    }
 
-        // Leaving the code fragment below in, to remind myself (or others)
-        // of what appears to be the most likely path to test this last
-        // bit of wait() functionality.
-        // The problem: if the block below is enabled, the phpunit tests
-        // go catatonic when it is executed, presumably because of
-        // the CLI::input() waiting for a key press
-        //
-        // // test the press any key to continue...
-        // stream_filter_register('CLITestKeyboardFilter', 'CodeIgniter\CLI\CLITestKeyboardFilter');
-        // $spoofer = stream_filter_append(STDIN, 'CLITestKeyboardFilter');
-        // $time = time();
-        // CLITestKeyboardFilter::$spoofed = ' ';
-        // CLI::wait(0);
-        // stream_filter_remove($spoofer);
-        // $this->assertEquals(0, time() - $time);
+    public function testWaitZero()
+    {
+        PhpStreamWrapper::register();
+        PhpStreamWrapper::setContent(' ');
+
+        // test the press any key to continue...
+        $time = time();
+        CLI::wait(0);
+
+        $this->assertSame(0, time() - $time);
+
+        PhpStreamWrapper::restore();
+    }
+
+    public function testPrompt()
+    {
+        PhpStreamWrapper::register();
+
+        $expected = 'red';
+        PhpStreamWrapper::setContent($expected);
+
+        $output = CLI::prompt('What is your favorite color?');
+
+        $this->assertSame($expected, $output);
+
+        PhpStreamWrapper::restore();
     }
 
     public function testIsWindows()

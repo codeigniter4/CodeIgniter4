@@ -4,6 +4,10 @@ Troubleshooting
 
 Here are some common installation problems, and suggested workarounds.
 
+.. contents::
+    :local:
+    :depth: 2
+
 How do I know if my install is working?
 ---------------------------------------
 
@@ -64,10 +68,11 @@ That is a sign that you are in production mode and have hit an
 unrecoverable error, which we don't want to show to the viewer of
 the webapp, for better security.
 
-You can see the error in the debug toolbar display by setting your environment to
-"development" (in **.env**), and reloading the page.
+You can see the error in the log file. See `CodeIgniter Error Logs`_ below.
 
-Don't forget to reset the environment to "production" once you fix the problem!
+If you reach this page while developing you should change your environment to
+"development" (in **.env**). See :ref:`setting-development-mode` for more details.
+After that, reload the page. You will see the error and the back trace.
 
 CodeIgniter Error Logs
 ----------------------
