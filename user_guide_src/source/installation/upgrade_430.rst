@@ -50,7 +50,7 @@ HTTP Status Code and Exit Code of Uncaught Exceptions
 - If you expect *Exception code* as *HTTP status code*, the HTTP status code will be changed.
   In that case, you need to implement ``HTTPExceptionInterface`` in the Exception. See :ref:`error-specify-http-status-code`.
 - If you expect *Exit code* based on *Exception code*, the Exit code will be changed.
-  In that case, you need to implements ``HasExitCodeInterface`` in the Exception. See :ref:`error-specify-exit-code`.
+  In that case, you need to implement ``HasExitCodeInterface`` in the Exception. See :ref:`error-specify-exit-code`.
 
 Others
 ======
