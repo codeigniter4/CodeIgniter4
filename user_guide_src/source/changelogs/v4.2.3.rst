@@ -1,0 +1,35 @@
+Version 4.2.3
+#############
+
+Release Date: Unreleased
+
+**4.2.3 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+********
+
+none.
+
+Enhancements
+************
+
+none.
+
+Changes
+*******
+
+none.
+
+Deprecations
+************
+
+none.
+
+Bugs Fixed
+**********
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
