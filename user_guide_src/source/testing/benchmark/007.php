@@ -1,6 +1,6 @@
 <?php
 
-$iterator = new \CodeIgniter\Benchmark\Iterator();
+$iterator = new \CodeIgniter\Debug\Iterator();
 
 // Add a new task
 $iterator->add('single_concat', static function () {

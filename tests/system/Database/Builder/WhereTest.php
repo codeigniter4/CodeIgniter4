@@ -15,6 +15,9 @@ use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use DateTime;
+use Error;
+use ErrorException;
 use stdClass;
 
 /**
@@ -459,5 +462,145 @@ final class WhereTest extends CIUnitTestCase
 
         $expectedSQL = 'SELECT * FROM "jobs" WHERE LOWER(jobs.name) = \'accountant\'';
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereValueIsString()
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('id', '1');
+
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "users" WHERE "id" = '1'
+            SQL;
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    public function testWhereValueIsFloat()
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('id', 1.234);
+
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "users" WHERE "id" = 1.234
+            SQL;
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * The current behavior assumes MySQL.
+     * Other databases may not work well, so we may want to change the behavior
+     * to match the specifications of the database driver.
+     */
+    public function testWhereValueIsTrue()
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('id', true);
+
+        $expectedSQL = 'SELECT * FROM "users" WHERE "id" = 1';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * The current behavior assumes MySQL.
+     * Other databases may not work well, so we may want to change the behavior
+     * to match the specifications of the database driver.
+     */
+    public function testWhereValueIsFalse()
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('id', false);
+
+        $expectedSQL = 'SELECT * FROM "users" WHERE "id" = 0';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
+    public function testWhereValueIsArray()
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('id', ['a', 'b']);
+
+        // SQL syntax error
+        $expectedSQL = <<<'SQL'
+            SELECT * FROM "users" WHERE "id" = ('a','b')
+            SQL;
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
+    public function testWhereValueIsArrayOfArray()
+    {
+        $this->expectException(ErrorException::class);
+        $this->expectExceptionMessage('Array to string conversion');
+
+        $builder = $this->db->table('users');
+
+        $builder->where('id', [['a', 'b'], ['c', 'd']]);
+
+        $builder->getCompiledSelect();
+    }
+
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
+    public function testWhereValueIsArrayOfObject()
+    {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Object of class stdClass could not be converted to string');
+
+        $builder = $this->db->table('users');
+
+        $builder->where('id', [(object) ['a' => 'b'], (object) ['c' => 'd']]);
+
+        $builder->getCompiledSelect();
+    }
+
+    public function testWhereValueIsNull()
+    {
+        $builder = $this->db->table('users');
+
+        $builder->where('id', null);
+
+        $expectedSQL = 'SELECT * FROM "users" WHERE "id" IS NULL';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
+    public function testWhereValueIsStdClass()
+    {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Object of class stdClass could not be converted to string');
+
+        $builder = $this->db->table('users');
+
+        $builder->where('id', (object) ['a' => 'b']);
+
+        $builder->getCompiledSelect();
+    }
+
+    /**
+     * Check if SQL injection is not possible when unexpected values are passed
+     */
+    public function testWhereValueIsDateTime()
+    {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Object of class DateTime could not be converted to string');
+
+        $builder = $this->db->table('users');
+
+        $builder->where('id', new DateTime('2022-02-19 12:00'));
+
+        $builder->getCompiledSelect();
     }
 }

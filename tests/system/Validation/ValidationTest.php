@@ -305,17 +305,50 @@ final class ValidationTest extends CIUnitTestCase
 
     public function testRunWithCustomErrors(): void
     {
-        $data = ['foo' => 'notanumber'];
-
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => 'notanumber',
+        ];
         $messages = [
             'foo' => [
                 'is_numeric' => 'Nope. Not a number.',
             ],
+            'bar' => [
+                'is_numeric' => 'No. Not a number.',
+            ],
         ];
-
-        $this->validation->setRules(['foo' => 'is_numeric'], $messages);
+        $this->validation->setRules(['foo' => 'is_numeric', 'bar' => 'is_numeric'], $messages);
         $this->validation->run($data);
+
         $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
+        $this->assertSame('No. Not a number.', $this->validation->getError('bar'));
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6239
+     */
+    public function testSetRuleWithCustomErrors(): void
+    {
+        $data = [
+            'foo' => 'notanumber',
+            'bar' => 'notanumber',
+        ];
+        $this->validation->setRule(
+            'foo',
+            'Foo',
+            ['foo'        => 'is_numeric'],
+            ['is_numeric' => 'Nope. Not a number.']
+        );
+        $this->validation->setRule(
+            'bar',
+            'Bar',
+            ['bar'        => 'is_numeric'],
+            ['is_numeric' => 'Nope. Not a number.']
+        );
+        $this->validation->run($data);
+
+        $this->assertSame('Nope. Not a number.', $this->validation->getError('foo'));
+        $this->assertSame('Nope. Not a number.', $this->validation->getError('bar'));
     }
 
     public function testCheck(): void
@@ -440,6 +473,7 @@ final class ValidationTest extends CIUnitTestCase
         $data = ['foo' => ''];
         $this->validation->setRules(['foo' => $rules], $errors);
         $this->validation->run($data);
+
         $this->assertSame($expected, $this->validation->getError('foo'));
     }
 
@@ -469,9 +503,20 @@ final class ValidationTest extends CIUnitTestCase
                 'The foo field must be at least 10 characters in length.',
             ],
             [
+                ['rules' => ['min_length[10]']],
+                'The foo field must be at least 10 characters in length.',
+            ],
+            [
                 [
                     'label' => 'Foo Bar',
                     'rules' => 'min_length[10]',
+                ],
+                'The Foo Bar field must be at least 10 characters in length.',
+            ],
+            [
+                [
+                    'label' => 'Foo Bar',
+                    'rules' => ['min_length[10]'],
                 ],
                 'The Foo Bar field must be at least 10 characters in length.',
             ],
@@ -1086,6 +1131,12 @@ final class ValidationTest extends CIUnitTestCase
                 ['foo' => ['boz']],
             ]],
         ];
+
+        yield 'leading-asterisk' => [
+            true,
+            ['*.foo' => 'required'],
+            [['foo' => 'bar']],
+        ];
     }
 
     /**
@@ -1311,5 +1362,18 @@ final class ValidationTest extends CIUnitTestCase
             'beneficiaries_accounts.account_2.credit_amount' => 'The CREDIT AMOUNT field is required.',
             'beneficiaries_accounts.account_2.purpose'       => 'The PURPOSE field must be at least 3 characters in length.',
         ], $this->validation->getErrors());
+    }
+
+    public function testRuleWithLeadingAsterisk(): void
+    {
+        $data = [
+            ['foo' => 1],
+            ['foo' => null],
+        ];
+
+        $this->validation->setRules(['*.foo' => 'required'], ['1.foo' => ['required' => 'Required {field}']]);
+
+        $this->assertFalse($this->validation->run($data));
+        $this->assertSame('Required *.foo', $this->validation->getError('*.foo'));
     }
 }

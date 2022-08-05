@@ -299,7 +299,7 @@ trait ResponseTrait
     }
 
     /**
-     * Handles conversion of the of the data into the appropriate format,
+     * Handles conversion of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
      * @param array|string $body
@@ -634,7 +634,7 @@ trait ResponseTrait
 
             return $this->cookieStore->get($name, $prefix);
         } catch (CookieException $e) {
-            log_message('error', $e->getMessage());
+            log_message('error', (string) $e);
 
             return null;
         }
@@ -657,6 +657,7 @@ trait ResponseTrait
         $store    = $this->cookieStore;
         $found    = false;
 
+        /** @var Cookie $cookie */
         foreach ($store as $cookie) {
             if ($cookie->getPrefixedName() === $prefixed) {
                 if ($domain !== $cookie->getDomain()) {
@@ -754,8 +755,9 @@ trait ResponseTrait
      * Generates the headers that force a download to happen. And
      * sends the file to the browser.
      *
-     * @param string      $filename The path to the file to send
-     * @param string|null $data     The data to be downloaded
+     * @param string      $filename The name you want the downloaded file to be named
+     *                              or the path to the file to send
+     * @param string|null $data     The data to be downloaded. Set null if the $filename is the file path
      * @param bool        $setMime  Whether to try and send the actual MIME type
      *
      * @return DownloadResponse|null

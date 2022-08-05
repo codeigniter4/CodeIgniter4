@@ -129,7 +129,7 @@ class Connection extends BaseConnection
                 ? $this->connID->exec($sql)
                 : $this->connID->query($sql);
         } catch (ErrorException $e) {
-            log_message('error', $e);
+            log_message('error', (string) $e);
             if ($this->DBDebug) {
                 throw $e;
             }
@@ -151,6 +151,10 @@ class Connection extends BaseConnection
      */
     protected function _escapeString(string $str): string
     {
+        if (! $this->connID) {
+            $this->initialize();
+        }
+
         return $this->connID->escapeString($str);
     }
 

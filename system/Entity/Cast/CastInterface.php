@@ -19,20 +19,20 @@ interface CastInterface
     /**
      * Get
      *
-     * @param mixed $value  Data
-     * @param array $params Additional param
+     * @param array|bool|float|int|object|string|null $value  Data
+     * @param array                                   $params Additional param
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public static function get($value, array $params = []);
 
     /**
      * Set
      *
-     * @param mixed $value  Data
-     * @param array $params Additional param
+     * @param array|bool|float|int|object|string|null $value  Data
+     * @param array                                   $params Additional param
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public static function set($value, array $params = []);
 }

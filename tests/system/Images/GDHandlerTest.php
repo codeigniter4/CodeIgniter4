@@ -13,8 +13,10 @@ namespace CodeIgniter\Images;
 
 use CodeIgniter\Config\Services;
 use CodeIgniter\Images\Exceptions\ImageException;
+use CodeIgniter\Images\Handlers\BaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * Unit testing for the GD image handler.
@@ -29,6 +31,12 @@ use org\bovigo\vfs\vfsStream;
  */
 final class GDHandlerTest extends CIUnitTestCase
 {
+    private vfsStreamDirectory $root;
+    private string $origin;
+    private string $start;
+    private string $path;
+    private BaseHandler $handler;
+
     protected function setUp(): void
     {
         if (! extension_loaded('gd')) {

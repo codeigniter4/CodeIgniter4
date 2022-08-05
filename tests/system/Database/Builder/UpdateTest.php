@@ -34,11 +34,35 @@ final class UpdateTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testUpdate()
+    public function testUpdateArray()
     {
         $builder = new BaseBuilder('jobs', $this->db);
 
-        $builder->testMode()->where('id', 1)->update(['name' => 'Programmer'], null, null);
+        $data = ['name' => 'Programmer'];
+        $builder->testMode()->where('id', 1)->update($data, null, null);
+
+        $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Programmer',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateObject()
+    {
+        $builder = new BaseBuilder('jobs', $this->db);
+
+        $data = (object) ['name' => 'Programmer'];
+        $builder->testMode()->where('id', 1)->update($data, null, null);
 
         $expectedSQL   = 'UPDATE "jobs" SET "name" = \'Programmer\' WHERE "id" = 1';
         $expectedBinds = [

@@ -16,7 +16,7 @@
  * See https://www.php.net/manual/en/opcache.preloading.php
  *
  * How to Use:
- *   1. Set Preload::$paths.
+ *   1. Set preload::$paths.
  *   2. Set opcache.preload in php.ini.
  *     php.ini:
  *     opcache.preload=/path/to/preload.php

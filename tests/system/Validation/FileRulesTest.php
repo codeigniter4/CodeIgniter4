@@ -13,6 +13,7 @@ namespace CodeIgniter\Validation;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
+use InvalidArgumentException;
 use Tests\Support\Validation\TestRules;
 
 /**
@@ -41,7 +42,9 @@ final class FileRulesTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        $this->resetServices();
         parent::setUp();
+
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
 
@@ -196,6 +199,15 @@ final class FileRulesTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run([]));
     }
 
+    public function testMaxSizeInvalidParam(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid max_size parameter: "avatar.100"');
+
+        $this->validation->setRules(['avatar' => 'max_size[avatar.100]']);
+        $this->validation->run([]);
+    }
+
     public function testMaxDims(): void
     {
         $this->validation->setRules(['avatar' => 'max_dims[avatar,640,480]']);
@@ -229,6 +241,7 @@ final class FileRulesTest extends CIUnitTestCase
             'type'     => 'application/address',
             'error'    => UPLOAD_ERR_OK,
         ];
+
         $this->validation->setRules(['avatar' => 'is_image[stuff]']);
         $this->assertFalse($this->validation->run([]));
     }

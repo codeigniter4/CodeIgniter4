@@ -269,6 +269,8 @@ routes defined within this closure are only accessible from the given environmen
 
 .. literalinclude:: routing/028.php
 
+.. _reverse-routing:
+
 Reverse Routing
 ===============
 
@@ -276,12 +278,14 @@ Reverse routing allows you to define the controller and method, as well as any p
 to, and have the router lookup the current route to it. This allows route definitions to change without you having
 to update your application code. This is typically used within views to create links.
 
-For example, if you have a route to a photo gallery that you want to link to, you can use the ``route_to()`` helper
-function to get the current route that should be used. The first parameter is the fully qualified Controller and method,
+For example, if you have a route to a photo gallery that you want to link to, you can use the ``url_to()`` helper
+function to get the route that should be used. The first parameter is the fully qualified Controller and method,
 separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next:
 
 .. literalinclude:: routing/029.php
+
+.. _using-named-routes:
 
 Using Named Routes
 ==================
@@ -318,13 +322,16 @@ Command-Line Only Routes
 ========================
 
 You can create routes that work only from the command-line, and are inaccessible from the web browser, with the
-``cli()`` method. This is great for building cron jobs or CLI-only tools. Any route created by any of the HTTP-verb-based
+``cli()`` method. Any route created by any of the HTTP-verb-based
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line:
 
 .. literalinclude:: routing/032.php
 
-.. warning:: If you enable auto-routing and place the command file in **app/Controllers**,
+.. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
+    See the :doc:`../cli/spark_commands` page for detailed information.
+
+.. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 Global Options
@@ -515,6 +522,11 @@ what happens by specifying an action to happen with the ``set404Override()`` met
 a valid class/method pair, just like you would show in any route, or a Closure:
 
 .. literalinclude:: routing/051.php
+
+.. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
+    If you don't set the status code in the controller you set, the default status code ``200``
+    will be returned. See :php:func:`Response::setStatusCode() <setStatusCode>` for
+    information on how to set the status code.
 
 Route processing by priority
 ============================

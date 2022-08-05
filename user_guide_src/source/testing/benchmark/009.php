@@ -1,4 +1,4 @@
 <?php
 
-// Don't display the results.
+// Returns null.
 $iterator->run(1000, false);

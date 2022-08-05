@@ -60,6 +60,20 @@ final class DeleteTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, $sql);
     }
 
+    public function testGetCompiledDeleteWithTableAlias()
+    {
+        $builder = $this->db->table('jobs j');
+
+        $builder->where('id', 1);
+        $sql = $builder->getCompiledDelete();
+
+        $expectedSQL = <<<'EOL'
+            DELETE FROM "jobs"
+            WHERE "id" = 1
+            EOL;
+        $this->assertSame($expectedSQL, $sql);
+    }
+
     public function testGetCompiledDeleteWithLimit()
     {
         $builder = $this->db->table('jobs');

@@ -15,6 +15,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use Tests\Support\Log\Handlers\TestHandler;
 
 /**
@@ -22,6 +23,9 @@ use Tests\Support\Log\Handlers\TestHandler;
  */
 final class FileHandlerTest extends CIUnitTestCase
 {
+    private vfsStreamDirectory $root;
+    private string $start;
+
     protected function setUp(): void
     {
         parent::setUp();

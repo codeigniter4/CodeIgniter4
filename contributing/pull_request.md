@@ -55,6 +55,8 @@ You can check the coding style violations:
 
 ### Unit Testing
 
+If you are not familiar with Unit Testing, see [the forum thread](https://forum.codeigniter.com/showthread.php?tid=81830).
+
 Unit testing is expected for all CodeIgniter components. We use PHPUnit,
 and run unit tests using GitHub Actions for each PR submitted or changed.
 
@@ -171,8 +173,9 @@ PRs with any enhancement should be sent to next minor version branch, e.g. __"4.
 
 The __"master"__ branch will always contain the latest stable version and is kept clean so a "hotfix" (e.g. an
 emergency security patch) can be applied to the "master" branch to create a new version, without worrying
-about other features holding it up. For this reason, all commits need to be made to the "develop" branch,
-and any sent to the "master" branch will be closed automatically. If you have multiple changes to submit,
+about other features holding it up. Any sent to the "master" branch will be closed automatically.
+
+If you have multiple changes to submit,
 please place all changes into their own branch on your fork.
 
 **One thing at a time:** A pull request should only contain one change. That does not mean only one commit,
@@ -237,7 +240,12 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
    - `> cd CodeIgniter4/`
    - `> composer update`
 6. Create a new [branch](https://help.github.com/en/articles/about-branches) in your project for each set of changes you want to make.
-   - `> git checkout -b <new-branch-name>`
+   - If your PR is for bug fixes:
+      - `> git switch develop`
+      - `> git switch -c <new-branch-name>`
+   - If your PR has any enhancement, create new branch from next minor version branch, e.g. __"4.3"__:
+      - `> git switch <next-minor-version-branch>`
+      - `> git switch -c <new-branch-name>`
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 8. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
    - `> git commit`

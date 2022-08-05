@@ -234,7 +234,7 @@ trait GeneratorTrait
         try {
             return view(config('Generators')->views[$this->name], $data, ['debug' => false]);
         } catch (Throwable $e) {
-            log_message('error', $e->getMessage());
+            log_message('error', (string) $e);
 
             return view("CodeIgniter\\Commands\\Generators\\Views\\{$this->template}", $data, ['debug' => false]);
         }

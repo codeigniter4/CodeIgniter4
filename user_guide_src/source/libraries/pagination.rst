@@ -18,9 +18,11 @@ to load it manually:
 
 .. literalinclude:: pagination/001.php
 
-***************************
-Paginating Database Results
-***************************
+.. _paginating-with-models:
+
+**********************
+Paginating with Models
+**********************
 
 In most cases, you will be using the Pager library in order to paginate results that you retrieve from the database.
 When using the :doc:`Model </models/model>` class, you can use its built-in ``paginate()`` method to automatically
@@ -37,8 +39,8 @@ The first element is the results from the database, **users**, which is retrieve
 the Model will hold on to the instance it used and store it in the public property, ``$pager``. So, we grab
 that and assign it to the ``$pager`` variable in the view.
 
-.. important:: It is important to understand that the Model::paginate() method uses the Model and QueryBuilder methods.
-    Therefore, trying to use ``$db->query()`` and Model::paginate() **will not work** because ``$db->query()`` executes
+.. important:: It is important to understand that the ``Model::paginate()`` method uses the **Model** and **QueryBuilder** methods.
+    Therefore, trying to use ``$db->query()`` and ``Model::paginate()`` **will not work** because ``$db->query()`` executes
     the query immediately and is not associated with a QueryBuilder.
 
 To define conditions for pagination in a model, you can:
@@ -91,29 +93,26 @@ like **https://domain.tld/foo/bar/[pageNumber]** instead of **https://domain.tld
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
+*****************
 Manual Pagination
-=================
+*****************
 
 You may find times where you just need to create pagination based on known data. You can create links manually
 with the ``makeLinks()`` method, which takes the current page, the number of results per page, and
-the total number of items as the first, second, and third parameters, respectively::
+the total number of items as the first, second, and third parameters, respectively:
 
-    <?= $pager->makeLinks($page, $perPage, $total) ?>
+.. literalinclude:: pagination/015.php
 
 This will, by default, display the links in the normal manner, as a series of links, but you can change the display
 template used by passing in the name of the template as the fourth parameter. More details can be found in the following
-sections.
+sections::
 
-::
-
-    <?= $pager->makeLinks($page, $perPage, $total, 'template_name') ?>
+    $pager->makeLinks($page, $perPage, $total, 'template_name');
 
 It is also possible to use a URI segment for the page number, instead of the page query parameter, as described in
-the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``.
+the previous section. Specify the segment number to use as the fifth parameter to ``makeLinks()``::
 
-::
-
-    <?= $pager->makeLinks($page, $perPage, $total, 'template_name', $segment) ?>
+    $pager->makeLinks($page, $perPage, $total, 'template_name', $segment);
 
 Please note: ``$segment`` value cannot be greater than the number of URI segments plus 1.
 
@@ -123,8 +122,9 @@ If you in need to show many pagers on one page then additional parameter which w
 
 Pagination library uses **page** query parameter for HTTP queries by default (if no group or ``default`` group name given) or ``page_[groupName]`` for custom group names.
 
+*************************************
 Paginating with Only Expected Queries
-=====================================
+*************************************
 
 By default, all GET queries are shown in the pagination links.
 

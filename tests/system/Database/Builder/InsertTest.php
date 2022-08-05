@@ -33,9 +33,64 @@ final class InsertTest extends CIUnitTestCase
         $this->db = new MockConnection([]);
     }
 
-    public function testSimpleInsert()
+    public function testInsertArray()
     {
         $builder = $this->db->table('jobs');
+
+        $insertData = [
+            'id'   => 1,
+            'name' => 'Grocery Sales',
+        ];
+        $builder->testMode()->insert($insertData, true);
+
+        $expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Grocery Sales',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testInsertObject()
+    {
+        $builder = $this->db->table('jobs');
+
+        $insertData = (object) [
+            'id'   => 1,
+            'name' => 'Grocery Sales',
+        ];
+        $builder->testMode()->insert($insertData, true);
+
+        $expectedSQL   = 'INSERT INTO "jobs" ("id", "name") VALUES (1, \'Grocery Sales\')';
+        $expectedBinds = [
+            'id' => [
+                1,
+                true,
+            ],
+            'name' => [
+                'Grocery Sales',
+                true,
+            ],
+        ];
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+        $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5365
+     */
+    public function testInsertWithTableAlias()
+    {
+        $builder = $this->db->table('jobs as j');
 
         $insertData = [
             'id'   => 1,

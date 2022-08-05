@@ -14,6 +14,7 @@ namespace CodeIgniter\Validation;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Mimes;
 use Config\Services;
+use InvalidArgumentException;
 
 /**
  * File validation rules
@@ -79,8 +80,11 @@ class FileRules
     {
         // Grab the file name off the top of the $params
         // after we split it.
-        $params = explode(',', $params);
-        $name   = array_shift($params);
+        $paramArray = explode(',', $params);
+        if (count($paramArray) !== 2) {
+            throw new InvalidArgumentException('Invalid max_size parameter: "' . $params . '"');
+        }
+        $name = array_shift($paramArray);
 
         if (! ($files = $this->request->getFileMultiple($name))) {
             $files = [$this->request->getFile($name)];
@@ -99,7 +103,7 @@ class FileRules
                 return false;
             }
 
-            if ($file->getSize() / 1024 > $params[0]) {
+            if ($file->getSize() / 1024 > $paramArray[0]) {
                 return false;
             }
         }
@@ -133,7 +137,7 @@ class FileRules
 
             // We know that our mimes list always has the first mime
             // start with `image` even when then are multiple accepted types.
-            $type = Mimes::guessTypeFromExtension($file->getExtension());
+            $type = Mimes::guessTypeFromExtension($file->getExtension()) ?? '';
 
             if (mb_strpos($type, 'image') !== 0) {
                 return false;

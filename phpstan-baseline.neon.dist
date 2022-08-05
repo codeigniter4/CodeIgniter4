@@ -71,11 +71,6 @@ parameters:
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
-			message: "#^Variable \\$config in empty\\(\\) always exists and is not falsy\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
 			message: "#^Variable \\$data might not be defined\\.$#"
 			count: 1
 			path: system/Cache/Handlers/MemcachedHandler.php
@@ -87,11 +82,6 @@ parameters:
 
 		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/Handlers/RedisHandler.php
-
-		-
-			message: "#^Variable \\$config in empty\\(\\) always exists and is not falsy\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
 
@@ -133,11 +123,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#"
 			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Negated boolean expression is always true\\.$#"
-			count: 2
 			path: system/Database/BaseConnection.php
 
 		-
@@ -342,7 +327,7 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
-			count: 14
+			count: 13
 			path: system/Database/SQLSRV/Forge.php
 
 		-
@@ -449,11 +434,6 @@ parameters:
 			message: "#^Property Config\\\\Database\\:\\:\\$filesPath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Database/Seeder.php
-
-		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Exceptions.php
 
 		-
 			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"

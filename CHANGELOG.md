@@ -1,5 +1,59 @@
 # Changelog
 
+## [v4.2.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.2) (2022-08-05)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.1...v4.2.2)
+
+### Breaking Changes
+* fix: when running on CLI, two Request objects were used in the system by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6089
+* fix: Builder insert()/update() does not accept an object by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6216
+* fix: create table if not exists when indexes already exist by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6249
+* fix: page cache saves Response data before running after filters by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6282
+* fix: random_string('crypto') may return string less than $len or ErrorException by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6334
+
+### Fixed Bugs
+* Fixed: BaseBuilder increment/decrement do not reset state after a query by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/6146
+* fix: SQLite3\Connection\getIndexData() error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6152
+* fix: `is_image` causes PHP 8.1 deprecated error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6157
+* fix: prepared query is executed when using QueryBuilder by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6164
+* fix: Time::getAge() calculation by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6159
+* fix: Session cookies are sent twice with Ajax by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6167
+* fix: QueryBuilder breaks select when escape is false by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5118
+* fix: PHPDoc return type in ControllerTestTrait methods by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/6168
+* fix: `$routes->group('/', ...)` creates the route `foo///bar` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6186
+* fix: use lang('HTTP.pageNotFound') on production 404 page by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6202
+* fix: BaseConnection may create dynamic property by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6198
+* fix: Email SMTP may throw Uncaught ErrorException by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6184
+* fix: CSP reportOnly behavior by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6201
+* fix: lang() causes Error on CLI by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6209
+* fix: multiple pagers with models do not work by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6211
+* fix: tweak empty line output of `spark db:table` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6215
+* fix:  custom validation error is cleared when calling setRule() twice by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6241
+* Fix: Validation of fields with a leading asterisk. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/6243
+* fix: Call to undefined method CodeIgniter\Pager\PagerRenderer::getDetails() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6251
+* fix: exceptionHandler may cause HTTPException: Unknown HTTP status code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6254
+* fix: invalid INSERT/DELETE query when Query Builder uses table alias by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/5376
+* fix: Add db port entry into env file. by @nalakapws in https://github.com/codeigniter4/CodeIgniter4/pull/6250
+* fix: update `.gitattributes` by @totoprayogo1916 in https://github.com/codeigniter4/CodeIgniter4/pull/6256
+* fix: format_number() can't be used on CLI by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6263
+* fix: add parameter checking for max_size by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6261
+* fix: route name is not displayed in Exception message by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6269
+* fix: `spark routes` shows 404 error when using regex by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6279
+* fix: Entity::hasChanged() returns wrong result to mapped property  by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6285
+* fix: unable to add more than one file to FileCollection constructor by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6291
+* fix: Security::derandomize() may cause hex2bin() error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6292
+* fix: use getenv() instead of $_SERVER in detectEnvironment() by @fcosrno in https://github.com/codeigniter4/CodeIgniter4/pull/6257
+* fix: OCI8 uses deprecated Entity by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6323
+* fix: Parse error occurs before PHP version check by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6327
+* fix:  404 page might display Exception message in production environment by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6333
+
+### Refactoring
+* refactor: replace $e->getMessage() with $e in log_message() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6182
+* refactor: add CompleteDynamicPropertiesRector by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6187
+* refactor: debug toolbar by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6272
+* refactor: Exception exit code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6286
+* chore: Remove Vagrant by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6314
+* refactor: CSRF protection by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6320
+
 ## [v4.2.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.1) (2022-06-16)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.0...v4.2.1)
 

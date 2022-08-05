@@ -12,24 +12,31 @@ This section addresses how to use each technique, and explains some of the pros 
 If you're new to CodeIgniter, please read the :doc:`Getting Started </intro/index>`
 section of the User Guide to begin learning how to build dynamic PHP applications. Enjoy!
 
-Initial Configuration & Set Up
-==============================
+.. _initial-configuration:
+
+Initial Configuration
+=====================
 
 #. Open the **app/Config/App.php** file with a text editor and
-   set your base URL. If you need more flexibility, the baseURL may
-   be set within the **.env** file as ``app.baseURL="http://example.com/"``.
+   set your base URL to ``$baseURL``. If you need more flexibility, the baseURL may
+   be set within the **.env** file as ``app.baseURL = 'http://example.com/'``.
    (Always use a trailing slash on your base URL!)
+
+    .. note:: If you don't set the ``baseURL`` correctly, in development mode,
+        the debug toolbar may not load properly and web pages may take considerably
+        longer to display.
+
 #. If you intend to use a database, open the
    **app/Config/Database.php** file with a text editor and set your
    database settings. Alternately, these could be set in your **.env** file.
+#. If it is not on the production server, set ``CI_ENVIRONMENT`` to ``development``
+   in **.env** file to take advantage of the debugging tools provided. See
+   :ref:`setting-development-mode` for the detail.
 
-One additional measure to take in production environments is to disable
-PHP error reporting and any other development-only functionality. In
-CodeIgniter, this can be done by setting the ``ENVIRONMENT`` constant, which
-is more fully described on the :doc:`environments page </general/environments>`.
-By default, the application will run using the "production" environment. To
-take advantage of the debugging tools provided, you should set the environment
-to "development".
+    .. important:: In production environments, you should disable error display and
+        any other development-only functionality. In CodeIgniter, this can be done
+        by setting the environment to "production". By default, the application will
+        run using the "production" environment. See also :ref:`environment-constant`.
 
 .. note:: If you will be running your site using a web server (e.g., Apache or Nginx),
     you will need to modify the permissions for the ``writable`` folder inside
@@ -98,6 +105,11 @@ in the "AllowOverride" setting::
         AllowOverride All
         Require all granted
     </Directory>
+
+Removing the index.php
+----------------------
+
+See :ref:`CodeIgniter URLs <urls-remove-index-php-apache>`.
 
 Virtual Hosting
 ---------------
@@ -195,6 +207,11 @@ Be sure to specify options and permissions for the CodeIgniter public directory 
         </Directory>
     </IfModule>
 
+Setting Environment
+-------------------
+
+See :ref:`Handling Multiple Environments <environment-apache>`.
+
 Testing
 -------
 
@@ -204,8 +221,12 @@ Apache needs to be restarted whenever you change its configuration.
 
 Hosting with Nginx
 ==================
+
 Nginx is the second most widely used HTTP server for web hosting.
 Here you can find an example configuration using PHP 7.3 FPM (unix sockets) under Ubuntu Server.
+
+default.conf
+------------
 
 This configuration enables URLs without "index.php" in them and using CodeIgniter's "404 - File Not Found" for URLs ending with ".php".
 
@@ -241,39 +262,10 @@ This configuration enables URLs without "index.php" in them and using CodeIgnite
         }
     }
 
-Hosting with Vagrant
-====================
+Setting Environment
+-------------------
 
-Virtualization is an effective way to test your webapp in the environment you
-plan to deploy on, even if you develop on a different one.
-Even if you are using the same platform for both, virtualization provides an
-isolated environment for testing.
-
-The codebase comes with a ``VagrantFile.dist``, that can be copied to ``VagrantFile``
-and tailored for your system, for instance enabling access to specific database or caching engines.
-
-Setting Up
-----------
-
-It assumes that you have installed `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_ and
-`Vagrant <https://www.vagrantup.com/downloads.html>`_
-for your platform.
-
-The Vagrant configuration file assumes you have set up a `ubuntu/bionic64 Vagrant box
-<https://app.vagrantup.com/ubuntu/boxes/bionic64>`_ on your system::
-
-    vagrant box add ubuntu/bionic64
-
-Testing
--------
-
-Once set up, you can then launch your webapp inside a VM, with the command::
-
-    vagrant up
-
-Your webapp will be accessible at ``http://localhost:8080``, with the code coverage
-report for your build at ``http://localhost:8081`` and the user guide for
-it at ``http://localhost:8082``.
+See :ref:`Handling Multiple Environments <environment-nginx>`.
 
 Bootstrapping the App
 =====================

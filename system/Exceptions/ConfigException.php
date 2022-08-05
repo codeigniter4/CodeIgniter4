@@ -19,11 +19,11 @@ class ConfigException extends CriticalError
     use DebugTraceableTrait;
 
     /**
-     * Error code
+     * Exit status code
      *
      * @var int
      */
-    protected $code = 3;
+    protected $code = EXIT_CONFIG;
 
     public static function forDisabledMigrations()
     {

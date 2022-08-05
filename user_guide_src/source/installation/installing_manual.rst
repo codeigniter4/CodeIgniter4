@@ -22,32 +22,37 @@ Installation
 Download the `latest version <https://github.com/CodeIgniter4/framework/releases/latest>`_,
 and extract it to become your project root.
 
-Setting Up
-----------
+.. note:: CodeIgniter autoloader does not allow special characters that are illegal in filenames on certain operating systems.
+    The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
+    So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
 
-None
+Initial Configuration
+=====================
+
+After installation, a few initial configurations are required.
+See :ref:`initial-configuration` for the detail.
 
 .. _installing-manual-upgrading:
 
 Upgrading
----------
+=========
 
 Download a new copy of the framework, and then replace the ``system`` folder.
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
-----
+====
 
 Download and run
 
 Cons
-----
+====
 
 You are responsible for merge conflicts when updating
 
 Structure
----------
+=========
 
 Folders in your project after set up:
 app, public, system, writable

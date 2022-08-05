@@ -9,11 +9,46 @@ CodeIgniter URLs
 By default, URLs in CodeIgniter are designed to be search-engine and human-friendly. Rather than using the standard
 "query-string" approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a **segment-based** approach::
 
-    example.com/news/article/my_article
+    https://example.com/news/article/my_article
 
 Your URLs can be defined using the :doc:`URI Routing </incoming/routing>` feature with flexibility.
 
 The :doc:`URI Library <../libraries/uri>` and the :doc:`URL Helper <../helpers/url_helper>` contain functions that make it easy to work with your URI data.
+
+URL Structure
+=============
+
+Base URL contains only the Hostname
+-----------------------------------
+
+When you have the Base URL **https://www.example.com/** and imagine the following URL::
+
+    https://www.example.com/blog/news/2022/10?page=2
+
+We use the following terms:
+
+======== ============================
+Base URL **https://www.example.com/**
+URI path /blog/news/2022/10
+Route    /blog/news/2022/10
+Query    page=2
+======== ============================
+
+Base URL contains Sub folders
+-----------------------------
+
+When you have the Base URL **https://www.example.com/ci-blog/** and imagine the following URL::
+
+    https://www.example.com/ci-blog/blog/news/2022/10?page=2
+
+We use the following terms:
+
+======== ====================================
+Base URL **https://www.example.com/ci-blog/**
+URI path /ci-blog/blog/news/2022/10
+Route    /blog/news/2022/10
+Query    page=2
+======== ====================================
 
 Removing the index.php file
 ===========================
@@ -24,6 +59,8 @@ By default, the **index.php** file will be included in your URLs::
 
 If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
 by different servers, but we will show examples for the two most common web servers here.
+
+.. _urls-remove-index-php-apache:
 
 Apache Web Server
 -----------------
@@ -45,6 +82,8 @@ request for your index.php file.
 .. note:: These specific rules might not work for all server configurations.
 
 .. note:: Make sure to also exclude from the above rules any assets that you might need to be accessible from the outside world.
+
+.. _urls-remove-index-php-nginx:
 
 NGINX
 -----

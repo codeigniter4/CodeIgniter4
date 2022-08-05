@@ -369,10 +369,6 @@ class BaseBuilder
      */
     public function select($select = '*', ?bool $escape = null)
     {
-        if (is_string($select)) {
-            $select = explode(',', $select);
-        }
-
         // If the escape value was not set, we will base it on the global setting
         if (! is_bool($escape)) {
             $escape = $this->db->protectIdentifiers;
@@ -382,6 +378,10 @@ class BaseBuilder
             $this->QBSelect[] = $select;
 
             return $this;
+        }
+
+        if (is_string($select)) {
+            $select = $escape === false ? [$select] : explode(',', $select);
         }
 
         foreach ($select as $val) {
@@ -1863,7 +1863,12 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->QBFrom[0], true, null, false),
+            $this->db->protectIdentifiers(
+                $this->removeAlias($this->QBFrom[0]),
+                true,
+                null,
+                false
+            ),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1878,11 +1883,13 @@ class BaseBuilder
     /**
      * Compiles an insert string and runs the query
      *
+     * @param array|object|null $set
+     *
      * @throws DatabaseException
      *
-     * @return bool|Query
+     * @return bool
      */
-    public function insert(?array $set = null, ?bool $escape = null)
+    public function insert($set = null, ?bool $escape = null)
     {
         if ($set !== null) {
             $this->set($set, '', $escape);
@@ -1893,7 +1900,12 @@ class BaseBuilder
         }
 
         $sql = $this->_insert(
-            $this->db->protectIdentifiers($this->QBFrom[0], true, $escape, false),
+            $this->db->protectIdentifiers(
+                $this->removeAlias($this->QBFrom[0]),
+                true,
+                $escape,
+                false
+            ),
             array_keys($this->QBSet),
             array_values($this->QBSet)
         );
@@ -1910,6 +1922,25 @@ class BaseBuilder
         }
 
         return false;
+    }
+
+    /**
+     * @internal This is a temporary solution.
+     *
+     * @see https://github.com/codeigniter4/CodeIgniter4/pull/5376
+     * @TODO Fix a root cause, and this method should be removed.
+     */
+    protected function removeAlias(string $from): string
+    {
+        if (strpos($from, ' ') !== false) {
+            // if the alias is written with the AS keyword, remove it
+            $from = preg_replace('/\s+AS\s+/i', ' ', $from);
+
+            $parts = explode(' ', $from);
+            $from  = $parts[0];
+        }
+
+        return $from;
     }
 
     /**
@@ -1941,7 +1972,7 @@ class BaseBuilder
     }
 
     /**
-     * Compiles an replace into string and runs the query
+     * Compiles a replace into string and runs the query
      *
      * @throws DatabaseException
      *
@@ -2012,11 +2043,12 @@ class BaseBuilder
     /**
      * Compiles an update string and runs the query.
      *
-     * @param mixed $where
+     * @param array|object|null        $set
+     * @param array|RawSql|string|null $where
      *
      * @throws DatabaseException
      */
-    public function update(?array $set = null, $where = null, ?int $limit = null): bool
+    public function update($set = null, $where = null, ?int $limit = null): bool
     {
         if ($set !== null) {
             $this->set($set);
@@ -2337,7 +2369,7 @@ class BaseBuilder
             return false; // @codeCoverageIgnore
         }
 
-        $sql = $this->_delete($table);
+        $sql = $this->_delete($this->removeAlias($table));
 
         if (! empty($limit)) {
             $this->QBLimit = $limit;
@@ -2369,7 +2401,13 @@ class BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], [$column => "{$column} + {$value}"]);
 
-        return $this->db->query($sql, $this->binds, false);
+        if (! $this->testMode) {
+            $this->resetWrite();
+
+            return $this->db->query($sql, $this->binds, false);
+        }
+
+        return true;
     }
 
     /**
@@ -2383,7 +2421,13 @@ class BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], [$column => "{$column}-{$value}"]);
 
-        return $this->db->query($sql, $this->binds, false);
+        if (! $this->testMode) {
+            $this->resetWrite();
+
+            return $this->db->query($sql, $this->binds, false);
+        }
+
+        return true;
     }
 
     /**

@@ -1654,7 +1654,7 @@ class Email
             $success = $this->{$method}();
         } catch (ErrorException $e) {
             $success = false;
-            log_message('error', 'Email: ' . $method . ' throwed ' . $e->getMessage());
+            log_message('error', 'Email: ' . $method . ' throwed ' . $e);
         }
 
         if (! $success) {
@@ -2144,7 +2144,13 @@ class Email
     public function __destruct()
     {
         if (is_resource($this->SMTPConnect)) {
-            $this->sendCommand('quit');
+            try {
+                $this->sendCommand('quit');
+            } catch (ErrorException $e) {
+                $protocol = $this->getProtocol();
+                $method   = 'sendWith' . ucfirst($protocol);
+                log_message('error', 'Email: ' . $method . ' throwed ' . $e);
+            }
         }
     }
 

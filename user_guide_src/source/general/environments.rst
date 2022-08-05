@@ -13,16 +13,22 @@ tools loaded that you don't in production environments, etc.
     :local:
     :depth: 2
 
+.. _environment-constant:
+
 The ENVIRONMENT Constant
 ========================
 
-By default, CodeIgniter comes with the environment constant set to use
+By default, CodeIgniter comes with the ``ENVIRONMENT`` constant set to use
 the value provided in ``$_SERVER['CI_ENVIRONMENT']``, otherwise defaulting to
-'production'. This can be set in several ways depending on your server setup.
+``production``. This can be set in several ways depending on your server setup.
 
 .. note:: The environment ``testing`` is the special one for PHPUnit testing.
     It has special conditions built into the framework at various places to assist with that.
     You can't use it for your development.
+
+.. note:: You can check the current environment by ``spark env`` command::
+
+    > php spark env
 
 .env
 ----
@@ -33,6 +39,12 @@ The simplest method to set the variable is in your :doc:`.env file </general/con
 
     CI_ENVIRONMENT = development
 
+.. note:: You can change the ``CI_ENVIRONMENT`` value in **.env** file by ``spark env`` command::
+
+    > php spark env production
+
+.. _environment-apache:
+
 Apache
 ------
 
@@ -42,6 +54,9 @@ config using `SetEnv <https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv>
 .. code-block:: apache
 
     SetEnv CI_ENVIRONMENT development
+
+
+.. _environment-nginx:
 
 nginx
 -----

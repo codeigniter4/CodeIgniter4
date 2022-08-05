@@ -16,16 +16,16 @@ values for when you try these:
 
 ## Branching
 
-CodeIgniter uses the
-[Git-Flow](http://nvie.com/posts/a-successful-git-branching-model/)
-branching model, which requires all pull requests to be sent to the
-"develop" branch. This is where the next planned version will be
-developed. The "master" branch will always contain the latest stable
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
+
+The "master" branch will always contain the latest stable
 version and is kept clean so a "hotfix" (e.g: an emergency security
 patch) can be applied to master to create a new version, without
-worrying about other features holding it up. For this reason, all
-commits need to be made to "develop" and any sent to "master" will be
-closed automatically. If you have multiple changes to submit, please
+worrying about other features holding it up. Any sent to "master" will be
+closed automatically.
+
+If you have multiple changes to submit, please
 place each change into their own branch on your fork.
 
 One thing at a time: a pull request should only contain one change. That
@@ -61,10 +61,12 @@ ORIGIN\_URL.
 
 Clone your repository, leaving a local folder for you to work with:
 
-    cd ALL_PROJECTS
-    git clone ORIGIN_URL
+```console
+> cd ALL_PROJECTS
+> git clone ORIGIN_URL
+```
 
-## Syncing develop
+## Syncing your repository
 
 Within your local repository, Git will have created an alias,
 **origin**, for the GitHub repository it is bound to. You want to create
@@ -72,16 +74,20 @@ an alias for the shared repository as well, so that you can "synch" the
 two, making sure that your repository includes any other contributions
 that have been merged by us into the shared repo:
 
-    git remote add upstream UPSTREAM_URL
+```console
+> git remote add upstream UPSTREAM_URL
+```
 
 Then synchronizing is done by pulling from us and pushing to you. This
 is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
-    git switch develop
-    git fetch upstream
-    git merge upstream/develop
-    git push origin develop
+```console
+> git switch develop
+> git fetch upstream
+> git merge upstream/develop
+> git push origin develop
+```
 
 You might get merge conflicts when you merge. It is your
 responsibility to resolve those locally, so that you can continue
@@ -105,12 +111,25 @@ This local branch should be named appropriately, for instance
 "fix/problem123" or "new/mind-reader". The slashes in these branch names
 is optional, and implies a sort of namespacing if used.
 
-For instance, make sure you are in the *develop* branch, and create a
-new feature branch, based on *develop*, for a new feature you are
+- All bug fix PRs should be sent to the __"develop"__ branch, this is where the next bug fix version will be developed.
+- PRs with any enhancement should be sent to next minor version branch, e.g. __"4.3"__
+
+For instance, if you send a PR to __"develop"__ branch, make sure you are in the *develop* branch, and create a
+new bugfix branch, based on *develop*, for a new feature you are
 creating:
 
-    git switch develop
-    git switch -c new/mind-reader
+```console
+> git switch develop
+> git switch -c fix/problem123
+```
+
+If you send a PR with an enhancement, make sure you are in the *next minor version* branch,
+and create a new feature branch, based on, e.g., *4.3*, for a new feature you are creating:
+
+```console
+> git switch 4.3
+> git switch -c new/mind-reader
+```
 
 Saving changes only updates your local working area.
 
@@ -123,23 +142,27 @@ in.
 You can have as many commits in a branch as you need to "get it right".
 For instance, to commit your work from a debugging session:
 
-    git add .
-    git commit -S -m "Find and fix the broken reference problem"
+```console
+> git add .
+> git commit -S -m "Find and fix the broken reference problem"
+```
 
 Just make sure that your commits in a feature branch are all related.
 
 If you are working on two features at a time, then you will want to
 switch between them to keep the contributions separate. For instance:
 
-    git switch new/mind-reader
-    // work away
-    git add .
-    git commit -S -m "Added adapter for abc"
-    git switch fix/issue-123
-    // work away
-    git add .
-    git commit -S -m "Fixed problem in DEF\Something"
-    git switch develop
+```console
+> git switch new/mind-reader
+> ## work away
+> git add .
+> git commit -S -m "Added adapter for abc"
+> git switch fix/issue-123
+> ## work away
+> git add .
+> git commit -S -m "Fixed problem in DEF\Something"
+> git switch develop
+```
 
 The last checkout makes sure that you end up in your *develop* branch as
 a starting point for your next session working with your repository.
@@ -157,19 +180,25 @@ It is a lot easier to resolve conflicts at this stage.
 
 Synchronize your repository:
 
-    git switch develop
-    git fetch upstream
-    git merge upstream/develop
-    git push origin develop
+```console
+> git switch develop
+> git fetch upstream
+> git merge upstream/develop
+> git push origin develop
+```
 
 Bring your feature branch up to date:
 
-    git switch new/mind-reader
-    git rebase upstream/develop
+```console
+> git switch fix/issue-123
+> git rebase upstream/develop
+```
 
 And finally push your local branch to your GitHub repository:
 
-    git push --force-with-lease origin new/mind-reader
+```console
+> git push --force-with-lease origin fix/issue-123
+```
 
 ## Pull Requests
 
@@ -177,7 +206,7 @@ On GitHub, you propose your changes one feature branch at a time, by
 switching to the branch you wish to contribute, and then clicking on
 "New pull request".
 
-Make sure the pull request is for the shared **develop** branch, or it
+Make sure the pull request is for the shared __"develop"__ or next minor version branch, e.g. __"4.3"__, or it
 may be rejected.
 
 Make sure that the PR title is helpful for the maintainers and other
@@ -218,20 +247,24 @@ And if your PRs have the breaking changes, label the following label:
 
 If you are asked for changes in the review, commit the fix in your branch and push it to GitHub again.
 
-If the `develop` branch progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
+If the __"develop"__ or next minor version branch, e.g. __"4.3"__, progresses and conflicts arise that prevent merging, or if you are asked to *rebase*,
 do the following:
 
 Synchronize your repository:
 
-    git switch develop
-    git fetch upstream
-    git merge upstream/develop
-    git push origin develop
+```console
+> git switch develop
+> git fetch upstream
+> git merge upstream/develop
+> git push origin develop
+```
 
 Bring your feature branch up to date:
 
-    git switch new/mind-reader
-    git rebase upstream/develop
+```console
+> git switch fix/problem123
+> git rebase upstream/develop
+```
 
 You might get conflicts when you rebase. It is your
 responsibility to resolve those locally, so that you can continue
@@ -239,7 +272,9 @@ collaborating with the shared repository.
 
 And finally push your local branch to your GitHub repository:
 
-    git push --force-with-lease origin new/mind-reader
+```console
+> git push --force-with-lease origin fix/problem123
+```
 
 ## Cleanup
 

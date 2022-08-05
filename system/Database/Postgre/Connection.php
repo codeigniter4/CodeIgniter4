@@ -42,6 +42,11 @@ class Connection extends BaseConnection
      */
     public $escapeChar = '"';
 
+    protected $connect_timeout;
+    protected $options;
+    protected $sslmode;
+    protected $service;
+
     /**
      * Connect to the database.
      *
@@ -134,7 +139,7 @@ class Connection extends BaseConnection
         try {
             return pg_query($this->connID, $sql);
         } catch (ErrorException $e) {
-            log_message('error', $e);
+            log_message('error', (string) $e);
             if ($this->DBDebug) {
                 throw $e;
             }

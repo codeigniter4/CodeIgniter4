@@ -10,6 +10,7 @@
  */
 
 use Rector\CodeQuality\Rector\BooleanAnd\SimplifyEmptyArrayCheckRector;
+use Rector\CodeQuality\Rector\Class_\CompleteDynamicPropertiesRector;
 use Rector\CodeQuality\Rector\Expression\InlineIfToExplicitIfRector;
 use Rector\CodeQuality\Rector\For_\ForToForeachRector;
 use Rector\CodeQuality\Rector\Foreach_\UnusedForeachValueToArrayKeysRector;
@@ -28,6 +29,7 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -40,6 +42,7 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\PHPUnit\Rector\MethodCall\GetMockBuilderGetMockToCreateMockRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
@@ -62,12 +65,14 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->parallel();
 
     // paths to refactor; solid alternative to CLI arguments
-    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils/Rector']);
+    $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
 
     // do you need to include constants, class aliases or custom autoloader? files listed will be executed
     $rectorConfig->bootstrapFiles([
         __DIR__ . '/system/Test/bootstrap.php',
     ]);
+
+    $rectorConfig->phpstanConfig(__DIR__ . '/phpstan.neon.dist');
 
     // is there a file you need to skip?
     $rectorConfig->skip([
@@ -120,6 +125,17 @@ return static function (RectorConfig $rectorConfig): void {
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,
+
+        // @TODO remove if https://github.com/rectorphp/rector-phpunit/issues/86 is fixed
+        GetMockBuilderGetMockToCreateMockRector::class => [
+            __DIR__ . '/tests/system/Email/EmailTest.php',
+        ],
+
+        // buggy on read based on @var on property on Trait
+        RemoveAlwaysTrueIfConditionRector::class => [
+            '**Trait.php',
+            __DIR__ . '/system/Test/ControllerTester.php',
+        ],
     ]);
 
     // auto import fully qualified class names
@@ -160,4 +176,5 @@ return static function (RectorConfig $rectorConfig): void {
         'SQLite3',
     ]);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
+    $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
 };

@@ -929,6 +929,24 @@ final class EntityTest extends CIUnitTestCase
         $this->assertFalse($entity->hasChanged('default'));
     }
 
+    public function testHasChangedMappedNoChange()
+    {
+        $entity = $this->getEntity();
+
+        $entity->createdAt = null;
+
+        $this->assertFalse($entity->hasChanged('createdAt'));
+    }
+
+    public function testHasChangedMappedChanged()
+    {
+        $entity = $this->getEntity();
+
+        $entity->createdAt = '2022-11-11 11:11:11';
+
+        $this->assertTrue($entity->hasChanged('createdAt'));
+    }
+
     public function testHasChangedWholeEntity()
     {
         $entity = $this->getEntity();

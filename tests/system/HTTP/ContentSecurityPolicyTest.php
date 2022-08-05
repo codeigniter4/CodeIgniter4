@@ -27,6 +27,9 @@ use Config\ContentSecurityPolicy as CSPConfig;
  */
 final class ContentSecurityPolicyTest extends CIUnitTestCase
 {
+    private ?Response $response         = null;
+    private ?ContentSecurityPolicy $csp = null;
+
     // Having this method as setUp() doesn't work - can't find Config\App !?
     protected function prepare(bool $CSPEnabled = true)
     {
@@ -129,7 +132,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('connect-src iffy.com maybe.com;', $result);
+        $this->assertStringContainsString("connect-src 'self' iffy.com maybe.com;", $result);
     }
 
     /**
@@ -162,9 +165,10 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $result = $this->work();
 
         $result = $this->getHeaderEmitted('Content-Security-Policy-Report-Only');
-        $this->assertStringContainsString('form-action surveysrus.com;', $result);
+        $this->assertStringContainsString("form-action 'self' surveysrus.com;", $result);
+
         $result = $this->getHeaderEmitted('Content-Security-Policy');
-        $this->assertStringContainsString("form-action 'self';", $result);
+        $this->assertStringNotContainsString("form-action 'self';", $result);
     }
 
     /**

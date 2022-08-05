@@ -39,9 +39,7 @@ The available Handlers are as follows:
 If using the ImageMagick library, you must set the path to the library on your
 server in **app/Config/Images.php**.
 
-.. note:: The ImageMagick handler does NOT require the imagick extension to be
-        loaded on the server. As long as your script can access the library
-        and can run ``exec()`` on the server, it should work.
+.. note:: The ImageMagick handler requires the imagick extension.
 
 *******************
 Processing an Image

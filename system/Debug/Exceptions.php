@@ -13,6 +13,8 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
@@ -50,9 +52,9 @@ class Exceptions
     protected $config;
 
     /**
-     * The incoming request.
+     * The request.
      *
-     * @var IncomingRequest
+     * @var CLIRequest|IncomingRequest
      */
     protected $request;
 
@@ -63,7 +65,10 @@ class Exceptions
      */
     protected $response;
 
-    public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
+    /**
+     * @param CLIRequest|IncomingRequest $request
+     */
+    public function __construct(ExceptionsConfig $config, $request, Response $response)
     {
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
@@ -111,7 +116,14 @@ class Exceptions
         }
 
         if (! is_cli()) {
-            $this->response->setStatusCode($statusCode);
+            try {
+                $this->response->setStatusCode($statusCode);
+            } catch (HTTPException $e) {
+                // Workaround for invalid HTTP status code.
+                $statusCode = 500;
+                $this->response->setStatusCode($statusCode);
+            }
+
             if (! headers_sent()) {
                 header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
             }
@@ -257,7 +269,7 @@ class Exceptions
             'title'   => get_class($exception),
             'type'    => get_class($exception),
             'code'    => $statusCode,
-            'message' => $exception->getMessage() ?? '(null)',
+            'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
             'line'    => $exception->getLine(),
             'trace'   => $trace,
