@@ -764,7 +764,7 @@ class Forge
             return false;
         }
 
-        if ($sqls !== null) {
+        if (is_array($sqls)) {
             foreach ($sqls as $sql) {
                 if ($this->db->query($sql) === false) {
                     return false;

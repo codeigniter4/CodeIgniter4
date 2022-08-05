@@ -32,6 +32,7 @@ Others
 
 - The method ``Forge::createTable()`` no longer executes a ``CREATE TABLE IF NOT EXISTS``. If table is not found in ``$db->tableExists($table)`` then ``CREATE TABLE`` is executed.
 - The second parameter ``$ifNotExists`` of ``Forge::_createTable()`` is deprecated. It is no longer used and will be removed in a future release.
+- When you use :php:func:`random_string` with the first parameter ``'crypto'``, now if you set the second parameter ``$len`` to an odd number, ``InvalidArgumentException`` will be thrown. Change the parameter to an even number.
 
 Breaking Enhancements
 *********************
@@ -52,6 +53,8 @@ the project space: `Explore on Packagist <https://packagist.org/explore/?query=c
 Content Changes
 ===============
 
+* app/Views/errors/html/error_404.php
+* app/Views/welcome_message.php
 
 All Changes
 ===========
@@ -59,3 +62,9 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+* app/Config/App.php
+* app/Config/Constants.php
+* app/Config/Logger.php
+* app/Config/Paths.php
+* app/Views/errors/html/error_404.php
+* app/Views/welcome_message.php

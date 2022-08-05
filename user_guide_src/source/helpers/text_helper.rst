@@ -42,6 +42,9 @@ The following functions are available:
     - **sha1**: An encrypted random number based on ``sha1()`` (fixed length of 40).
     - **crypto**: A random string based on ``random_bytes()``.
 
+    .. note:: When you use **crypto**, you must set an even number to the second parameter.
+        Since v4.2.2, if you set an odd number, ``InvalidArgumentException`` will be thrown.
+
     Usage example:
 
     .. literalinclude:: text_helper/002.php

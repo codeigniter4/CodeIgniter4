@@ -51,22 +51,12 @@ parameters:
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
-			message: "#^Variable \\$config in empty\\(\\) always exists and is not falsy\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
 			message: "#^Variable \\$data might not be defined\\.$#"
 			count: 1
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/Handlers/RedisHandler.php
-
-		-
-			message: "#^Variable \\$config in empty\\(\\) always exists and is not falsy\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
 
@@ -394,11 +384,6 @@ parameters:
 			message: "#^Cannot call method reset\\(\\) on object\\|resource\\|false\\.$#"
 			count: 2
 			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Exceptions.php
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"
