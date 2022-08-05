@@ -1887,7 +1887,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      *
-     * @return bool|Query
+     * @return bool
      */
     public function insert($set = null, ?bool $escape = null)
     {
