@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\RawSql;
 use InvalidArgumentException;
 
 /**
@@ -2698,7 +2699,7 @@ class BaseBuilder
 
         foreach (get_object_vars($object) as $key => $val) {
             // There are some built in keys we need to ignore for this conversion
-            if (! is_object($val) && ! is_array($val) && $key !== '_parent_name') {
+            if ((! is_object($val) && ! is_array($val) && $key !== '_parent_name') || is_a($val, RawSql::class)) {
                 $array[$key] = $val;
             }
         }
