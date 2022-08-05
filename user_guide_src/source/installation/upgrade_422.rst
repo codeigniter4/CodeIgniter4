@@ -53,6 +53,8 @@ the project space: `Explore on Packagist <https://packagist.org/explore/?query=c
 Content Changes
 ===============
 
+* app/Views/errors/html/error_404.php
+* app/Views/welcome_message.php
 
 All Changes
 ===========
@@ -60,3 +62,9 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+* app/Config/App.php
+* app/Config/Constants.php
+* app/Config/Logger.php
+* app/Config/Paths.php
+* app/Views/errors/html/error_404.php
+* app/Views/welcome_message.php
