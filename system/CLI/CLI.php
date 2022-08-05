@@ -323,7 +323,7 @@ class CLI
         CLI::newLine();
         CLI::write($text);
         CLI::printKeysAndValues($options);
-        static::fwrite(STDOUT, (trim((string) ((int) $text)) ? ' ' : '') . $extraOutput . ': ');
+        static::write(" {$extraOutput}");
         $input = trim(static::input()) ?: 0; // 0 is default
 
         // search alphabetic character in $input
