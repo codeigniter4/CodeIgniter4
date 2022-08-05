@@ -12,10 +12,6 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Mandatory File Changes
-**********************
-
-
 Breaking Changes
 ****************
 
@@ -55,6 +51,8 @@ Content Changes
 
 * app/Views/errors/html/error_404.php
 * app/Views/welcome_message.php
+* public/index.php
+* spark
 
 All Changes
 ===========
