@@ -110,11 +110,6 @@ don't have to:
 
 .. literalinclude:: queries/009.php
 
-Since v4.3.0, when ``RawSql`` is used the string is not escaped. This allows you to call
-SQL functions and constants:
-
-.. literalinclude:: queries/030.php
-
 2. $db->escapeString()
 ======================
 

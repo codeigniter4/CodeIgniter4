@@ -800,7 +800,9 @@ Here is an example using an object:
 
 The first parameter is an object.
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 $builder->ignore()
 ------------------
@@ -845,7 +847,9 @@ method. Here is an example using an array:
 
 The first parameter is an associative array of values.
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 *************
 Updating Data
@@ -918,7 +922,9 @@ Or you can supply an object:
 
 .. literalinclude:: query_builder/089.php
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 You'll notice the use of the ``$builder->where()`` method, enabling you
 to set the **WHERE** clause. You can optionally pass this information
@@ -947,7 +953,9 @@ Here is an example using an array:
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 .. note:: ``affectedRows()`` won't give you proper results with this method,
     due to the very nature of how it works. Instead, ``updateBatch()``
