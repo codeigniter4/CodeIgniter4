@@ -368,7 +368,7 @@ final class ValidationTest extends CIUnitTestCase
             'foo' => [
                 ['bar' => null],
                 ['bar' => null],
-            ]
+            ],
         ];
         $this->validation->setRules(
             ['foo.*.bar' => 'required'],
@@ -377,7 +377,7 @@ final class ValidationTest extends CIUnitTestCase
         $this->validation->run($data);
         $this->assertSame([
             'foo.0.bar' => 'Required',
-            'foo.1.bar' => 'Required'
+            'foo.1.bar' => 'Required',
         ], $this->validation->getErrors());
     }
 
