@@ -122,7 +122,7 @@ Specify HTTP Status Code in Your Exception
 Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
 ``HTTPExceptionInterface``.
 
-When an exception implemented ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will be the HTTP status code.
+When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
 
 .. _error-specify-exit-code:
 
