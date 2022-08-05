@@ -126,4 +126,22 @@ class Timer
     {
         return array_key_exists(strtolower($name), $this->timers);
     }
+
+    /**
+     * Executes callable and measures its time.
+     * Returns its return value if any.
+     *
+     * @param string   $name     The name of the timer
+     * @param callable $callable callable to be executed
+     *
+     * @return array|bool|float|int|object|resource|string|null
+     */
+    public function record(string $name, callable $callable)
+    {
+        $this->start($name);
+        $returnValue = $callable();
+        $this->stop($name);
+
+        return $returnValue;
+    }
 }

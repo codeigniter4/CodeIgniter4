@@ -1076,17 +1076,23 @@ if (! function_exists('stringify_attributes')) {
 if (! function_exists('timer')) {
     /**
      * A convenience method for working with the timer.
-     * If no parameter is passed, it will return the timer instance,
-     * otherwise will start or stop the timer intelligently.
+     * If no parameter is passed, it will return the timer instance.
+     * If callable is passed, it measures time of callable and
+     * returns its return value if any.
+     * Otherwise will start or stop the timer intelligently.
      *
      * @return mixed|Timer
      */
-    function timer(?string $name = null)
+    function timer(?string $name = null, ?callable $callable = null)
     {
         $timer = Services::timer();
 
         if (empty($name)) {
             return $timer;
+        }
+
+        if ($callable !== null) {
+            return $timer->record($name, $callable);
         }
 
         if ($timer->has($name)) {

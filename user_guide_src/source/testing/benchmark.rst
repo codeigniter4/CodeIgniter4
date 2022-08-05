@@ -38,6 +38,20 @@ and stop timers:
 
 .. literalinclude:: benchmark/003.php
 
+Since v4.3.0, if you use very small code blocks to benchmark, you can also use the ``record()`` method. It accepts
+a no-parameter callable and measures its execution time. Methods ``start()`` and ``stop()`` will be called
+automatically around the function call.
+
+.. literalinclude:: benchmark/010.php
+
+You can also return the callable's return value for further processing.
+
+.. literalinclude:: benchmark/011.php
+
+The same functionality is also available when passing callable to ``timer()`` as second parameter.
+
+.. literalinclude:: benchmark/012.php
+
 Viewing Your Benchmark Points
 =============================
 

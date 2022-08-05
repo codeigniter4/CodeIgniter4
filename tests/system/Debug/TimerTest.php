@@ -11,7 +11,10 @@
 
 namespace CodeIgniter\Debug;
 
+use ArgumentCountError;
 use CodeIgniter\Test\CIUnitTestCase;
+use ErrorException;
+use RuntimeException;
 
 /**
  * @internal
@@ -120,5 +123,96 @@ final class TimerTest extends CIUnitTestCase
         $timer = new Timer();
 
         $this->assertNull($timer->getElapsedTime('test1'));
+    }
+
+    public function testRecordFunctionNoReturn()
+    {
+        $timer       = new Timer();
+        $returnValue = $timer->record('longjohn', static function () { usleep(100000); });
+
+        $this->assertGreaterThanOrEqual(0.1, $timer->getElapsedTime('longjohn'));
+        $this->assertNull($returnValue);
+    }
+
+    public function testRecordFunctionWithReturn()
+    {
+        $timer       = new Timer();
+        $returnValue = $timer->record('longjohn', static function () {
+            usleep(100000);
+
+            return 'test';
+        });
+
+        $this->assertGreaterThanOrEqual(0.1, $timer->getElapsedTime('longjohn'));
+        $this->assertSame('test', $returnValue);
+    }
+
+    public function testRecordArrowFunction()
+    {
+        $timer       = new Timer();
+        $returnValue = $timer->record('longjohn', static fn () => strlen('CI4'));
+
+        $this->assertLessThan(0.1, $timer->getElapsedTime('longjohn'));
+        $this->assertSame(3, $returnValue);
+    }
+
+    public function testRecordThrowsException()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $timer = new Timer();
+        $timer->record('ex', static function () { throw new RuntimeException(); });
+    }
+
+    public function testRecordThrowsErrorOnCallableWithParams()
+    {
+        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+            $this->expectException(ArgumentCountError::class);
+        } else {
+            $this->expectException(ErrorException::class);
+        }
+
+        $timer = new Timer();
+        $timer->record('error', 'strlen');
+    }
+
+    public function testCommonNoNameExpectTimer()
+    {
+        $returnValue = timer();
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+    }
+
+    public function testCommonWithNameExpectTimer()
+    {
+        $returnValue = timer('test');
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+        $this->assertTrue($returnValue->has('test'));
+    }
+
+    public function testCommonNoNameCallableExpectTimer()
+    {
+        $returnValue = timer(null, static fn () => strlen('CI4'));
+
+        $this->assertInstanceOf(Timer::class, $returnValue);
+    }
+
+    public function testCommonCallableExpectNoReturn()
+    {
+        $returnValue = timer('common', static function () { usleep(100000); });
+
+        $this->assertNotInstanceOf(Timer::class, $returnValue);
+        $this->assertNull($returnValue);
+        $this->assertGreaterThanOrEqual(0.1, timer()->getElapsedTime('common'));
+    }
+
+    public function testCommonCallableExpectWithReturn()
+    {
+        $returnValue = timer('common', static fn () => strlen('CI4'));
+
+        $this->assertNotInstanceOf(Timer::class, $returnValue);
+        $this->assertSame(3, $returnValue);
+        $this->assertLessThanOrEqual(0.1, timer()->getElapsedTime('common'));
     }
 }
