@@ -14,7 +14,6 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
-use CodeIgniter\Database\RawSql;
 use InvalidArgumentException;
 
 /**
