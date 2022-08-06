@@ -168,7 +168,7 @@ class Validation implements ValidationInterface
             if (strpos($field, '*') !== false) {
                 // Process multiple fields
                 foreach ($values as $dotField => $value) {
-                    $this->processRules($dotField, $setup['label'] ?? $field, $value, $rules, $data);
+                    $this->processRules($dotField, $setup['label'] ?? $field, $value, $rules, $data, $field);
                 }
             } else {
                 // Process single field
@@ -203,7 +203,7 @@ class Validation implements ValidationInterface
      * @param array|null   $rules
      * @param array        $data
      */
-    protected function processRules(string $field, ?string $label, $value, $rules = null, ?array $data = null): bool
+    protected function processRules(string $field, ?string $label, $value, $rules = null, ?array $data = null, ?string $originalField = null): bool
     {
         if ($data === null) {
             throw new InvalidArgumentException('You must supply the parameter: data.');
@@ -333,7 +333,8 @@ class Validation implements ValidationInterface
                     $field,
                     $label,
                     $param,
-                    (string) $value
+                    (string) $value,
+                    $originalField
                 );
 
                 return false;
@@ -706,15 +707,15 @@ class Validation implements ValidationInterface
      *
      * @param string|null $value The value that caused the validation to fail.
      */
-    protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null): string
+    protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null, ?string $originalField = null): string
     {
         $param ??= '';
 
         // Check if custom message has been defined by user
         if (isset($this->customErrors[$field][$rule])) {
             $message = lang($this->customErrors[$field][$rule]);
-        } elseif (strpos($label, '*') !== false && isset($this->customErrors[$label][$rule])) {
-            $message = lang($this->customErrors[$label][$rule]);
+        } elseif (! is_null($originalField) && isset($this->customErrors[$originalField][$rule])) {
+            $message = lang($this->customErrors[$originalField][$rule]);
         } else {
             // Try to grab a localized version of the message...
             // lang() will return the rule name back if not found,
