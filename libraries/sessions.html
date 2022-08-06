@@ -775,7 +775,7 @@ application relied on these values, so here are alternative methods of
 accessing them:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>session_id: <code class="docutils literal notranslate"><span class="pre">session_id()</span></code></p></li>
+<li><p>session_id: <code class="docutils literal notranslate"><span class="pre">$session-&gt;session_id</span></code> or <code class="docutils literal notranslate"><span class="pre">session_id()</span></code> (PHP’s built-in function)</p></li>
 <li><p>ip_address: <code class="docutils literal notranslate"><span class="pre">$_SERVER['REMOTE_ADDR']</span></code></p></li>
 <li><p>user_agent: <code class="docutils literal notranslate"><span class="pre">$_SERVER['HTTP_USER_AGENT']</span></code> (unused by sessions)</p></li>
 <li><p>last_activity: Depends on the storage, no straightforward way. Sorry!</p></li>
