@@ -64,10 +64,10 @@ To ignore logging on other status codes, you can set the status code to ignore i
 .. note:: It is possible that logging still will not happen for exceptions if your current Log settings
     are not set up to log **critical** errors, which all exceptions are logged as.
 
-Custom Exceptions
-=================
+Framework Exceptions
+====================
 
-The following custom exceptions are available:
+The following framework exceptions are available:
 
 PageNotFoundException
 ---------------------
@@ -89,7 +89,7 @@ is not the right type, etc:
 
 .. literalinclude:: errors/008.php
 
-This provides an HTTP status code of 500 and an exit code of 3.
+This provides an exit code of 3.
 
 DatabaseException
 -----------------
@@ -99,7 +99,7 @@ or when it is temporarily lost:
 
 .. literalinclude:: errors/009.php
 
-This provides an HTTP status code of 500 and an exit code of 8.
+This provides an exit code of 8.
 
 RedirectException
 -----------------
@@ -113,3 +113,23 @@ forcing a redirect to a specific route or URL:
 redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
+
+.. _error-specify-http-status-code:
+
+Specify HTTP Status Code in Your Exception
+==========================================
+
+Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
+``HTTPExceptionInterface``.
+
+When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
+
+.. _error-specify-exit-code:
+
+Specify Exit Code in Your Exception
+===================================
+
+Since v4.3.0, you can specify the exit code for your Exception class to implement
+``HasExitCodeInterface``.
+
+When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.

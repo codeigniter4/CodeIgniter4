@@ -12,6 +12,8 @@
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Exceptions\HasExitCodeInterface;
+use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
@@ -312,18 +314,15 @@ class Exceptions
      */
     protected function determineCodes(Throwable $exception): array
     {
-        $statusCode = abs($exception->getCode());
+        $statusCode = 500;
+        $exitStatus = EXIT_ERROR;
 
-        if ($statusCode < 100 || $statusCode > 599) {
-            $exitStatus = $statusCode + EXIT__AUTO_MIN;
+        if ($exception instanceof HTTPExceptionInterface) {
+            $statusCode = $exception->getCode();
+        }
 
-            if ($exitStatus > EXIT__AUTO_MAX) {
-                $exitStatus = EXIT_ERROR;
-            }
-
-            $statusCode = 500;
-        } else {
-            $exitStatus = EXIT_ERROR;
+        if ($exception instanceof HasExitCodeInterface) {
+            $exitStatus = $exception->getExitCode();
         }
 
         return [$statusCode, $exitStatus];

@@ -14,7 +14,7 @@ namespace CodeIgniter\Exceptions;
 use Config\Services;
 use OutOfBoundsException;
 
-class PageNotFoundException extends OutOfBoundsException implements ExceptionInterface
+class PageNotFoundException extends OutOfBoundsException implements ExceptionInterface, HTTPExceptionInterface
 {
     use DebugTraceableTrait;
 
