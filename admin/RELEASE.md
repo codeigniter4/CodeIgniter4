@@ -2,7 +2,7 @@
 
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
 >
-> Updated for `4.1.6` on December 24, 2021.
+> Updated for `4.2.3` on August 6, 2022.
 >
 > -MGatner
 
@@ -29,8 +29,9 @@ git clone git@github.com:codeigniter4/CodeIgniter4.git
 git clone git@github.com:codeigniter4/userguide.git
 ```
 * Vet the **admin/** folders for any removed hidden files (Action deploy scripts *do not remove these*)
+* Merge any Security Advisory PRs in private forks
 
-## CodeIgniter4
+## Process
 
 > Note: Most changes that need noting in the User Guide and docs should have been included
 > with their PR, so this process assumes you will not be generating much new content.
@@ -75,6 +76,7 @@ composer create-project codeigniter4/appstarter release-test
 cd release-test
 composer test && composer info codeigniter4/framework
 ```
+* publish any Security Advisories that were resolved from private forks
 
 ## User Guide
 

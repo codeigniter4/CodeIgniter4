@@ -1,9 +1,9 @@
-Version 4.2.3
+Version 4.2.4
 #############
 
-Release Date: August 6, 2022
+Release Date: Unreleased
 
-**4.2.3 release of CodeIgniter4**
+**4.2.4 release of CodeIgniter4**
 
 .. contents::
     :local:
@@ -17,7 +17,7 @@ none.
 Enhancements
 ************
 
-- Now ``Security::generateHash()`` is public, and can be used to regenerate CSRF token manually when ``Config\Security::$regenerate`` is false.
+none.
 
 Changes
 *******

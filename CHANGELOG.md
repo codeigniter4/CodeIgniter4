@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.2.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.3) (2022-08-06)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.2...v4.2.3)
+
+* security: Improve CSRF protection (for Shield CSRF security fix)
+
 ## [v4.2.2](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.2) (2022-08-05)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.1...v4.2.2)
 
