@@ -371,7 +371,7 @@ final class ValidationTest extends CIUnitTestCase
             ],
         ];
         $this->validation->setRules(
-            ['foo.*.bar' => 'required'],
+            ['foo.*.bar' => ['label' => 'foo bar', 'rules' => 'required']],
             ['foo.*.bar' => ['required' => 'Required']]
         );
         $this->validation->run($data);
