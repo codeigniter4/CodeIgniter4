@@ -67,17 +67,6 @@ Whenever there is a new release, then from the command line in your project root
 
     > composer update
 
-If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with ``--prefer-source``::
-
-    > composer update codeigniter4/framework --prefer-source
-
-If ``--prefer-source`` doesn't automatically update to pull latest framework source structure, you can remove first::
-
-    rm -rf vendor/codeigniter4/framework && composer update codeigniter4/framework --prefer-source
-
-If you used the ``--no-dev`` option when you created the project, it
-would be appropriate to do so here too, i.e., ``composer update --no-dev``.
-
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
 Pros
@@ -97,7 +86,7 @@ Folders in your project after set up:
 
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
-- vendor/codeigniter4/framework/app & public (compare with yours after updating when using ``--prefer-source``)
+- vendor/codeigniter4/framework/app & public
 
 Latest Dev
 ----------
