@@ -12,6 +12,7 @@ upgrading from.
 .. toctree::
     :titlesonly:
 
+    upgrade_423
     upgrade_422
     upgrade_421
     upgrade_420
