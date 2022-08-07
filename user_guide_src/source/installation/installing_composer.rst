@@ -127,7 +127,7 @@ will be your document root.
 
 In your project root::
 
-    > composer require codeigniter4/framework --prefer-source
+    > composer require codeigniter4/framework
 
 As with the earlier two composer install methods, you can omit installing
 phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
@@ -157,7 +157,7 @@ Upgrading
 
 Whenever there is a new release, then from the command line in your project root::
 
-    > composer update --prefer-source
+    > composer update
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
