@@ -112,13 +112,13 @@ develop branch explicitly.
 
 In your project root::
 
-    php builds development
+    > php builds development
 
 The command above will update **composer.json** to point to the ``develop`` branch of the
 working repository, and update the corresponding paths in config and XML files. To revert
 these changes run::
 
-    php builds release
+    > php builds release
 
 After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
 folder with the latest target build.
