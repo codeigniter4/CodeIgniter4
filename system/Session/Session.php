@@ -25,6 +25,8 @@ use SessionHandlerInterface;
  *
  * Session configuration is done through session variables and cookie related
  * variables in app/config/App.php
+ *
+ * @property string $session_id
  */
 class Session implements SessionInterface
 {
