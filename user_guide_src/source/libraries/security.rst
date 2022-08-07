@@ -106,6 +106,9 @@ may alter this behavior by editing the following config parameter value in
 
 .. literalinclude:: security/004.php
 
+.. note:: Since v4.2.3, you can regenerate CSRF token manually with the
+    ``Security::generateHash()`` method.
+
 Redirection on Failure
 ----------------------
 
