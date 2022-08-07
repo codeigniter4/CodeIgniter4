@@ -56,7 +56,7 @@ Initial Configuration
 ---------------------
 
 After installation, a few initial configurations are required.
-See :ref:`initial-configuration` for the details. 
+See :ref:`initial-configuration` for the details.
 
 .. _app-starter-upgrading:
 
