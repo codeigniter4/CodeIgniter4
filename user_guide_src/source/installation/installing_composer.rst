@@ -135,14 +135,9 @@ phpunit and its dependencies by adding the ``--no-dev`` argument to the ``compos
 Setting Up
 ----------
 
-Copy the ``app``, ``public``, and ``writable`` folders from ``vendor/codeigniter4/framework``
-to your project root
-
-Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
-``vendor/codeigniter4/framework`` to your project root
-
-You will have to adjust the system path to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
-- the ``$systemDirectory`` variable in **app/Config/Paths.php**
+    1. Copy the ``app``, ``public``, ``tests`` and ``writable`` folders from ``vendor/codeigniter4/framework`` to your project root
+    2. Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from ``vendor/codeigniter4/framework`` to your project root
+    3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``.
 
 Initial Configuration
 ---------------------
@@ -176,7 +171,7 @@ Structure
 
 Folders in your project after set up:
 
-- app, public, writable (when using ``--prefer-source``)
+- app, public, tests, writable
 - vendor/codeigniter4/framework/system
 
 Translations Installation
