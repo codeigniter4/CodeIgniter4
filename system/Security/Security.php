@@ -528,9 +528,9 @@ class Security implements SecurityInterface
     }
 
     /**
-     * Generates (Regenerate) the CSRF Hash.
+     * Generates (Regenerates) the CSRF Hash.
      */
-    protected function generateHash(): string
+    public function generateHash(): string
     {
         $this->hash = bin2hex(random_bytes(static::CSRF_HASH_BYTES));
 
