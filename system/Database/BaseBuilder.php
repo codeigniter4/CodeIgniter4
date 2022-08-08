@@ -1801,20 +1801,20 @@ class BaseBuilder
     /**
      * Allows key/value pairs to be set for batch inserts/upserts
      *
-     * @param array|object $key
+     * @param array|object $set
      *
      * @return $this|null
      */
-    public function setBatch($key, ?bool $escape = null)
+    public function setBatch($set, ?bool $escape = null)
     {
-        $key = $this->batchObjectToArray($key);
+        $set = $this->batchObjectToArray($set);
 
         $escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
 
-        $keys = array_keys($this->objectToArray(current($key)));
+        $keys = array_keys($this->objectToArray(current($set)));
         sort($keys);
 
-        foreach ($key as $row) {
+        foreach ($set as $row) {
             $row = $this->objectToArray($row);
             if (array_diff($keys, array_keys($row)) !== [] || array_diff(array_keys($row), $keys) !== []) {
                 // batchExecute() function returns an error on an empty array

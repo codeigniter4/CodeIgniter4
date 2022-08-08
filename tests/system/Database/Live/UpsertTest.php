@@ -127,7 +127,7 @@ final class UpsertTest extends CIUnitTestCase
 
         // some databases don't allow update of auto incrememnt
         if ($this->db->DBDriver === 'SQLSRV') {
-            $this->assertTrue(true);
+            $this->markTestSkipped('SQLSRV does not support this test.');
         } else {
             $this->db->table('user')
                 ->onConstraint('email')
