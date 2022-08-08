@@ -46,6 +46,8 @@ final class RawSqlTest extends CIUnitTestCase
 
         $sql = "CREATE FUNCTION setDateTime ( setDate varchar(20) )
                 RETURNS DATETIME
+                READS SQL DATA
+                DETERMINISTIC
                 BEGIN
                 RETURN CONVERT(CONCAT(setDate,' ','01:01:11'), DATETIME);
                 END;";
