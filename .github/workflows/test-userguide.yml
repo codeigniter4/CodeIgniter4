@@ -25,3 +25,4 @@ jobs:
       - uses: ammaraskar/sphinx-action@0.4
         with:
           docs-folder: user_guide_src
+          build-command: make html SPHINXOPTS="-W"
