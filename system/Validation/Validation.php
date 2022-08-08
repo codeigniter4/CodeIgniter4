@@ -201,10 +201,17 @@ class Validation implements ValidationInterface
      *
      * @param array|string $value
      * @param array|null   $rules
-     * @param array        $data
+     * @param array        $data          The array of data to validate, with `DBGroup`.
+     * @param string|null  $originalField The original asterisk field name like "foo.*.bar".
      */
-    protected function processRules(string $field, ?string $label, $value, $rules = null, ?array $data = null, ?string $originalField = null): bool
-    {
+    protected function processRules(
+        string $field,
+        ?string $label,
+        $value,
+        $rules = null,
+        ?array $data = null,
+        ?string $originalField = null
+    ): bool {
         if ($data === null) {
             throw new InvalidArgumentException('You must supply the parameter: data.');
         }
@@ -707,8 +714,14 @@ class Validation implements ValidationInterface
      *
      * @param string|null $value The value that caused the validation to fail.
      */
-    protected function getErrorMessage(string $rule, string $field, ?string $label = null, ?string $param = null, ?string $value = null, ?string $originalField = null): string
-    {
+    protected function getErrorMessage(
+        string $rule,
+        string $field,
+        ?string $label = null,
+        ?string $param = null,
+        ?string $value = null,
+        ?string $originalField = null
+    ): string {
         $param ??= '';
 
         // Check if custom message has been defined by user
