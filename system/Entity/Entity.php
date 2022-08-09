@@ -81,7 +81,7 @@ class Entity implements JsonSerializable
         'float'     => FloatCast::class,
         'int'       => IntegerCast::class,
         'integer'   => IntegerCast::class,
-        'int_bool'  => IntBoolCast::class,
+        'int-bool'  => IntBoolCast::class,
         'json'      => JsonCast::class,
         'object'    => ObjectCast::class,
         'string'    => StringCast::class,

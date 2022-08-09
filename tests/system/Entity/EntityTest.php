@@ -297,7 +297,7 @@ final class EntityTest extends CIUnitTestCase
     {
         $entity              = new class () extends Entity {
             protected $casts = [
-                'active' => 'int_bool',
+                'active' => 'int-bool',
             ];
         };
 
