@@ -56,7 +56,7 @@ Initial Configuration
 ---------------------
 
 After installation, a few initial configurations are required.
-See :ref:`initial-configuration` for the details. 
+See :ref:`initial-configuration` for the details.
 
 .. _app-starter-upgrading:
 
@@ -66,17 +66,6 @@ Upgrading
 Whenever there is a new release, then from the command line in your project root::
 
     > composer update
-
-If you want to compare the latest framework source structure for non-system directory (app, public, etc), you can update with ``--prefer-source``::
-
-    > composer update codeigniter4/framework --prefer-source
-
-If ``--prefer-source`` doesn't automatically update to pull latest framework source structure, you can remove first::
-
-    rm -rf vendor/codeigniter4/framework && composer update codeigniter4/framework --prefer-source
-
-If you used the ``--no-dev`` option when you created the project, it
-would be appropriate to do so here too, i.e., ``composer update --no-dev``.
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
@@ -97,7 +86,6 @@ Folders in your project after set up:
 
 - app, public, tests, writable
 - vendor/codeigniter4/framework/system
-- vendor/codeigniter4/framework/app & public (compare with yours after updating when using ``--prefer-source``)
 
 Latest Dev
 ----------
@@ -112,13 +100,13 @@ develop branch explicitly.
 
 In your project root::
 
-    php builds development
+    > php builds development
 
 The command above will update **composer.json** to point to the ``develop`` branch of the
 working repository, and update the corresponding paths in config and XML files. To revert
 these changes run::
 
-    php builds release
+    > php builds release
 
 After using the ``builds`` command be sure to run ``composer update`` to sync your vendor
 folder with the latest target build.
@@ -138,22 +126,17 @@ will be your document root.
 
 In your project root::
 
-    > composer require codeigniter4/framework --prefer-source
+    > composer require codeigniter4/framework
 
-As with the earlier two composer install methods, you can omit installing
+As with the earlier composer install method, you can omit installing
 phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
 
 Setting Up
 ----------
 
-Copy the ``app``, ``public``, and ``writable`` folders from ``vendor/codeigniter4/framework``
-to your project root
-
-Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from
-``vendor/codeigniter4/framework`` to your project root
-
-You will have to adjust the system path to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``,
-- the ``$systemDirectory`` variable in **app/Config/Paths.php**
+    1. Copy the ``app``, ``public``, ``tests`` and ``writable`` folders from ``vendor/codeigniter4/framework`` to your project root
+    2. Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from ``vendor/codeigniter4/framework`` to your project root
+    3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``.
 
 Initial Configuration
 ---------------------
@@ -168,7 +151,7 @@ Upgrading
 
 Whenever there is a new release, then from the command line in your project root::
 
-    > composer update --prefer-source
+    > composer update
 
 Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and Enhancements.
 
@@ -187,7 +170,7 @@ Structure
 
 Folders in your project after set up:
 
-- app, public, writable (when using ``--prefer-source``)
+- app, public, tests, writable
 - vendor/codeigniter4/framework/system
 
 Translations Installation

@@ -55,7 +55,8 @@ Structure
 =========
 
 Folders in your project after set up:
-app, public, system, writable
+
+- app, public, tests, writable, system
 
 Translations Installation
 =========================
