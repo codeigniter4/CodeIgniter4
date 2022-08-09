@@ -489,20 +489,26 @@ class CodeIgniter
             $this->response = $response;
         }
 
-        // Cache it without the performance metrics replaced
-        // so that we can have live speed updates along the way.
-        // Must be run after filters to preserve the Response headers.
-        if (static::$cacheTTL > 0) {
-            $this->cachePage($cacheConfig);
+        // Skip unnecessary processing for special Responses.
+        if (! $response instanceof DownloadResponse && ! $response instanceof RedirectResponse) {
+            // Cache it without the performance metrics replaced
+            // so that we can have live speed updates along the way.
+            // Must be run after filters to preserve the Response headers.
+            if (static::$cacheTTL > 0) {
+                $this->cachePage($cacheConfig);
+            }
+
+            // Update the performance metrics
+            $body = $this->response->getBody();
+            if ($body !== null) {
+                $output = $this->displayPerformanceMetrics($body);
+                $this->response->setBody($output);
+            }
+
+            // Save our current URI as the previous URI in the session
+            // for safer, more accurate use with `previous_url()` helper function.
+            $this->storePreviousURL(current_url(true));
         }
-
-        // Update the performance metrics
-        $output = $this->displayPerformanceMetrics($this->response->getBody());
-        $this->response->setBody($output);
-
-        // Save our current URI as the previous URI in the session
-        // for safer, more accurate use with `previous_url()` helper function.
-        $this->storePreviousURL(current_url(true));
 
         unset($uri);
 
