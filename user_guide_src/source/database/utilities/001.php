@@ -1,9 +1,12 @@
 <?php
 
-$model                    = new class () extends \CodeIgniter\Model {
+class MyModel extends \CodeIgniter\Model
+{
     protected $table      = 'foo';
     protected $primaryKey = 'id';
-};
+}
+
+$model = new MyModel();
 
 $util = \CodeIgniter\Database\Config::utils();
 
