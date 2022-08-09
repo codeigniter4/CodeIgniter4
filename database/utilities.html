@@ -290,16 +290,19 @@
 <section id="getxmlfromresult">
 <h3><a class="toc-backref" href="#id2">getXMLFromResult()</a><a class="headerlink" href="#getxmlfromresult" title="Permalink to this headline"></a></h3>
 <p>This method returns the xml result from database result. You can do like this:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>&lt;?php
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-$model                    = new class () extends \CodeIgniter\Model {
-    protected $table      = &#39;foo&#39;;
-    protected $primaryKey = &#39;id&#39;;
-};
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">\CodeIgniter\Model</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+<span class="p">}</span>
 
-$util = \CodeIgniter\Database\Config::utils();
+<span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyModel</span><span class="p">();</span>
 
-echo $util-&gt;getXMLFromResult($model-&gt;get());
+<span class="nv">$util</span> <span class="o">=</span> <span class="nx">\CodeIgniter\Database\Config</span><span class="o">::</span><span class="na">utils</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="nv">$util</span><span class="o">-&gt;</span><span class="na">getXMLFromResult</span><span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">());</span>
 </pre></div>
 </div>
 <p>and it will get the following xml result:</p>
