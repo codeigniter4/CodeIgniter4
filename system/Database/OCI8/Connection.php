@@ -242,10 +242,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
+     *
+     * @param string $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false): string
+    protected function _listTables(bool $prefixLimit = false, string $tableName = ''): string
     {
         $sql = 'SELECT "TABLE_NAME" FROM "USER_TABLES"';
+
+        if (! empty($tableName)) {
+            return $sql . ' WHERE "TABLE_NAME" LIKE ' . $this->escape($tableName);
+        }
 
         if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . ' WHERE "TABLE_NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . "%' "

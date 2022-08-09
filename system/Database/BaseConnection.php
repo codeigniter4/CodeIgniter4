@@ -1406,9 +1406,42 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Determine if a particular table exists
      */
-    public function tableExists(string $tableName): bool
+    public function tableExists(string $tableName, bool $cached = true): bool
     {
-        return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
+        if ($cached === true) {
+            return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
+        }
+
+        if (false === ($sql = $this->_listTables(false, $tableName))) {
+            if ($this->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        $result = $this->query($sql)->getResultArray() !== [];
+
+        // if cache has been built already
+        if (! empty($this->dataCache['table_names'])) {
+            $key = array_search(
+                strtolower($tableName),
+                array_map('strtolower', $this->dataCache['table_names']),
+                true
+            );
+
+            // remove from cache
+            if ($key !== false) {
+                unset($this->dataCache['table_names'][$key]);
+            }
+
+            // if exists add back to cache (if cache has been built already)
+            if ($result) {
+                $this->dataCache['table_names'][] = strtolower($tableName);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -1575,9 +1608,11 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
+     * @param string $tableName If $tableName is provided will return only this table if exists.
+     *
      * @return false|string
      */
-    abstract protected function _listTables(bool $constrainByPrefix = false);
+    abstract protected function _listTables(bool $constrainByPrefix = false, string $tableName = '');
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
