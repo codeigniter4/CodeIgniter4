@@ -2090,8 +2090,8 @@ class Email
     }
 
     /**
-     * @param array $include List of raw data chunks to include in the output
-     *                       Valid options are: 'headers', 'subject', 'body'
+     * @param array|string $include List of raw data chunks to include in the output
+     *                              Valid options are: 'headers', 'subject', 'body'
      *
      * @return string
      */
