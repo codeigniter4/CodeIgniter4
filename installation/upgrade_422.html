@@ -315,7 +315,7 @@
 <section id="others">
 <h3><a class="toc-backref" href="#id3">Others</a><a class="headerlink" href="#others" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>The method <code class="docutils literal notranslate"><span class="pre">Forge::createTable()</span></code> no longer executes a <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code>. If table is not found in <code class="docutils literal notranslate"><span class="pre">$db-&gt;tableExists($table)</span></code> then <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> is executed.</p></li>
+<li><p>The method <code class="docutils literal notranslate"><span class="pre">Forge::createTable()</span></code> no longer executes a <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span> <span class="pre">IF</span> <span class="pre">NOT</span> <span class="pre">EXISTS</span></code>.  When <cite>$ifNotExists</cite> is true, if the table is not found in <code class="docutils literal notranslate"><span class="pre">$db-&gt;tableExists($table)</span></code> then <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> is executed.</p></li>
 <li><p>The second parameter <code class="docutils literal notranslate"><span class="pre">$ifNotExists</span></code> of <code class="docutils literal notranslate"><span class="pre">Forge::_createTable()</span></code> is deprecated. It is no longer used and will be removed in a future release.</p></li>
 <li><p>When you use <a class="reference internal" href="../helpers/text_helper.html#random_string" title="random_string"><code class="xref php php-func docutils literal notranslate"><span class="pre">random_string</span></code></a> with the first parameter <code class="docutils literal notranslate"><span class="pre">'crypto'</span></code>, now if you set the second parameter <code class="docutils literal notranslate"><span class="pre">$len</span></code> to an odd number, <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> will be thrown. Change the parameter to an even number.</p></li>
 </ul>
@@ -373,7 +373,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 09, 2022.
+      <span class="lastupdated">Last updated on Aug 10, 2022.
       </span></p>
   </div>
 
