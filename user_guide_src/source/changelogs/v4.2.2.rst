@@ -32,6 +32,7 @@ Deprecations
 
 - The parameters of ``Services::request()`` are deprecated.
 - The first parameter ``$cacheConfig`` of ``CodeIgniter::gatherOutput()`` is deprecated.
+- The second parameter ``$ifNotExists`` of ``Forge::_createTable()`` is deprecated.
 
 Bugs Fixed
 **********
