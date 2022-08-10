@@ -318,35 +318,44 @@ class CLI
                 $optsKey[] = $key;
             }
             $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
+            $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
         }
 
-        CLI::newLine();
         CLI::write($text);
         CLI::printKeysAndValues($options);
-        static::write(" {$extraOutput}");
-        $input = trim(static::input()) ?: 0; // 0 is default
+        CLI::newLine();
+        $input = static::prompt($extraOutput) ?: 0; // 0 is default
 
-        // search alphabetic character in $input
-        // return the prompt again if it is true because the key of $options is number
-        if (preg_match_all('/[a-zA-Z]/i', trim($input))) {
-            static::error('Please select correctly');
-
-            return static::promptByMultipleKeys($text, $options);
+        // validation
+        // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
+        while (true) {
+            $pattern = preg_match_all('/[^0-9|^0-9,]/', trim($input));
+            if ($pattern) {
+                static::error('Please select correctly.');
+                CLI::newLine();
+                $input = static::prompt($extraOutput) ?: 0;
+            } else {
+                break;
+            }
         }
+        // user enters a number that is not in the available options
+        while (true) {
+            // separate input by comma and convert all to an int[]
+            $inputToArray = array_map(static fn ($value) => (int) $value, explode(',', $input));
+            // find max from key of $options
+            $maxOptions = array_key_last($options);
+            // find max from input
+            $maxInput = max($inputToArray);
 
-        // separate input by comma and convert all to an int[]
-        $inputToArray = array_map(static fn ($value) => (int) $value, explode(',', $input));
-
-        // find max from key of $options
-        $maxOptions = array_key_last($options);
-        // find max from input
-        $maxInput = max($inputToArray);
-        // if max from $options less than max from input
-        // it is mean user tried to access null value in $options
-        if ($maxOptions < $maxInput) {
-            static::error('Please select correctly');
-
-            return static::promptByMultipleKeys($text, $options);
+            // if max from $options less than max from input
+            // it is mean user tried to access null value in $options
+            if ($maxOptions < $maxInput) {
+                static::error('Please select correctly.');
+                CLI::newLine();
+                $input = static::prompt($extraOutput) ?: 0;
+            } else {
+                break;
+            }
         }
 
         $input = [];
