@@ -1420,7 +1420,7 @@ abstract class BaseConnection implements ConnectionInterface
             return false;
         }
 
-        $result = $this->query($sql)->getResultArray() !== [];
+        $tableExists = $this->query($sql)->getResultArray() !== [];
 
         // if cache has been built already
         if (! empty($this->dataCache['table_names'])) {
@@ -1430,18 +1430,13 @@ abstract class BaseConnection implements ConnectionInterface
                 true
             );
 
-            // remove from cache
-            if ($key !== false) {
-                unset($this->dataCache['table_names'][$key]);
-            }
-
-            // if exists add back to cache (if cache has been built already)
-            if ($result) {
-                $this->dataCache['table_names'][] = strtolower($tableName);
+            // table doesn't exist but still in cache - lets reset cache, it can be rebuilt later
+            if ($key !== false && ! $tableExists) {
+                $this->resetDataCache();
             }
         }
 
-        return $result;
+        return $tableExists;
     }
 
     /**
