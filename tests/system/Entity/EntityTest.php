@@ -293,6 +293,33 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame(3, $entity->first);
     }
 
+    public function testCastIntBool()
+    {
+        $entity              = new class () extends Entity {
+            protected $casts = [
+                'active' => 'int-bool',
+            ];
+        };
+
+        $entity->setAttributes(['active' => '1']);
+
+        $this->assertTrue($entity->active);
+
+        $entity->setAttributes(['active' => '0']);
+
+        $this->assertFalse($entity->active);
+
+        $entity->active = true;
+
+        $this->assertTrue($entity->active);
+        $this->assertSame(['active' => 1], $entity->toRawArray());
+
+        $entity->active = false;
+
+        $this->assertFalse($entity->active);
+        $this->assertSame(['active' => 0], $entity->toRawArray());
+    }
+
     public function testCastFloat()
     {
         $entity = $this->getCastEntity();

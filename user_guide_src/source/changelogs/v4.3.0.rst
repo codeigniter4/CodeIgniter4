@@ -59,6 +59,7 @@ Enhancements
 - Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
 - Added method ``Timer::record()`` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
 - Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
+- Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
 
 Changes
 *******
