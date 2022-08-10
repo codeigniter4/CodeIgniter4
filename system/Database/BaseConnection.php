@@ -1431,7 +1431,8 @@ abstract class BaseConnection implements ConnectionInterface
             );
 
             // table doesn't exist but still in cache - lets reset cache, it can be rebuilt later
-            if ($key !== false && ! $tableExists) {
+            // OR if table does exist but is not found in cache
+            if (($key !== false && ! $tableExists) || ($key === false && $tableExists)) {
                 $this->resetDataCache();
             }
         }
