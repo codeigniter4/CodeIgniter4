@@ -81,7 +81,7 @@ This method is the same as ``promptByKey()``, but it supports multiple value.
 
 .. literalinclude:: cli_library/023.php
 
-.. important:: The method ``promptByMultipleKey()``, unlike ``promptByKey()``, does not support named keys or validation.
+.. important:: The method ``promptByMultipleKeys()``, unlike ``promptByKey()``, does not support named keys or validation.
 
 Providing Feedback
 ******************
