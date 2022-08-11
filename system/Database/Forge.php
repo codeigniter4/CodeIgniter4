@@ -398,6 +398,8 @@ class Forge
      * @param string|string[] $tableField
      * @param string[]|null   $options
      *
+     * @throws DatabaseException
+     *
      * @return Forge
      */
     public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', ?array $options = null)
