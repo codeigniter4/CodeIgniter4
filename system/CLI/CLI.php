@@ -329,8 +329,8 @@ class CLI
         // validation
         // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
         while (true) {
-            $pattern = preg_match_all('/[^0-9|^0-9,]/', trim($input));
-            if ($pattern) {
+            $pattern = preg_match_all('/^\d+(,\d+)*$/', trim($input));
+            if (! $pattern) {
                 static::error('Please select correctly.');
                 CLI::newLine();
                 $input = static::prompt($extraOutput) ?: 0;
