@@ -351,7 +351,7 @@ system.</p>
 <li><p><a class="reference internal" href="#resetquery" id="id38">ResetQuery</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id39">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id39">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="loading-the-query-builder">
@@ -1980,14 +1980,14 @@ run the query:</p>
 </section>
 </section>
 </section>
-<section id="class-reference">
-<h2><a class="toc-backref" href="#id39">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<section id="namespace-CodeIgniter\Database">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id39">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
 <dl class="php class">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">CodeIgniter\\Database\\BaseBuilder</span></span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">BaseBuilder</span></span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder" title="Permalink to this definition"></a></dt>
 <dd><dl class="php method">
-<dt class="sig sig-object php" id="db">
-<span class="sig-name descname"><span class="pre">db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#db" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::db">
+<span class="sig-name descname"><span class="pre">db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::db" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The database connection in use</p>
@@ -2002,8 +2002,8 @@ available to the Query Builder, like <code class="docutils literal notranslate">
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="resetQuery">
-<span class="sig-name descname"><span class="pre">resetQuery</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resetQuery" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::resetQuery">
+<span class="sig-name descname"><span class="pre">resetQuery</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::resetQuery" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2017,8 +2017,8 @@ to build a query that can be cancelled under certain conditions.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="countAllResults">
-<span class="sig-name descname"><span class="pre">countAllResults</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#countAllResults" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::countAllResults">
+<span class="sig-name descname"><span class="pre">countAllResults</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::countAllResults" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2037,8 +2037,8 @@ all records returned by an Query Builder query.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="countAll">
-<span class="sig-name descname"><span class="pre">countAll</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#countAll" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::countAll">
+<span class="sig-name descname"><span class="pre">countAll</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::countAll" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2057,8 +2057,8 @@ all records in the particular table.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">[$limit</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true]]]]</span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">[$limit</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true]]]]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::get" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2079,8 +2079,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="getWhere">
-<span class="sig-name descname"><span class="pre">getWhere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">[$where</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true]]]]]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#getWhere" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::getWhere">
+<span class="sig-name descname"><span class="pre">getWhere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">[$where</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">null[,</span> <span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true]]]]]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::getWhere" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2101,8 +2101,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">'*'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">'*'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::select" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2121,8 +2121,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="selectAvg">
-<span class="sig-name descname"><span class="pre">selectAvg</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectAvg" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::selectAvg">
+<span class="sig-name descname"><span class="pre">selectAvg</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::selectAvg" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2141,8 +2141,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="selectMax">
-<span class="sig-name descname"><span class="pre">selectMax</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectMax" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::selectMax">
+<span class="sig-name descname"><span class="pre">selectMax</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::selectMax" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2161,8 +2161,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="selectMin">
-<span class="sig-name descname"><span class="pre">selectMin</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectMin" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::selectMin">
+<span class="sig-name descname"><span class="pre">selectMin</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::selectMin" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2181,8 +2181,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="selectSum">
-<span class="sig-name descname"><span class="pre">selectSum</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectSum" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::selectSum">
+<span class="sig-name descname"><span class="pre">selectSum</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::selectSum" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2201,8 +2201,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="selectCount">
-<span class="sig-name descname"><span class="pre">selectCount</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#selectCount" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::selectCount">
+<span class="sig-name descname"><span class="pre">selectCount</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$select</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::selectCount" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2221,8 +2221,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="selectSubquery">
-<span class="sig-name descname"><span class="pre">selectSubquery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">BaseBuilder</span> <span class="pre">$subquery</span></em>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$as</span></em><span class="sig-paren">)</span><a class="headerlink" href="#selectSubquery" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::selectSubquery">
+<span class="sig-name descname"><span class="pre">selectSubquery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">BaseBuilder</span> <span class="pre">$subquery</span></em>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$as</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::selectSubquery" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2241,8 +2241,8 @@ called Query Builder methods.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="distinct">
-<span class="sig-name descname"><span class="pre">distinct</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$val</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#distinct" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::distinct">
+<span class="sig-name descname"><span class="pre">distinct</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$val</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::distinct" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2261,8 +2261,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$from</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$overwrite</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::from">
+<span class="sig-name descname"><span class="pre">from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$from</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$overwrite</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::from" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2281,12 +2281,12 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="fromSubquery">
-<span class="sig-name descname"><span class="pre">fromSubquery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$from</span></em>, <em class="sig-param"><span class="pre">$alias</span></em><span class="sig-paren">)</span><a class="headerlink" href="#fromSubquery" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::fromSubquery">
+<span class="sig-name descname"><span class="pre">fromSubquery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$from</span></em>, <em class="sig-param"><span class="pre">$alias</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::fromSubquery" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$from</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">BaseBuilder</span></code></span>) – Instance of the BaseBuilder class</p></li>
+<li><p><strong>$from</strong> (<span><a class="reference internal" href="#CodeIgniter\Database\BaseBuilder" title="CodeIgniter\Database\BaseBuilder"><code class="xref php php-obj docutils literal notranslate"><span class="pre">BaseBuilder</span></code></a></span>) – Instance of the BaseBuilder class</p></li>
 <li><p><strong>$alias</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Subquery alias</p></li>
 </ul>
 </dd>
@@ -2301,8 +2301,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$cond</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$type</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$cond</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$type</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::join" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2323,8 +2323,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">where</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::where">
+<span class="sig-name descname"><span class="pre">where</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::where" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2344,8 +2344,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orWhere">
-<span class="sig-name descname"><span class="pre">orWhere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhere" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orWhere">
+<span class="sig-name descname"><span class="pre">orWhere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orWhere" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2365,8 +2365,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orWhereIn">
-<span class="sig-name descname"><span class="pre">orWhereIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhereIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orWhereIn">
+<span class="sig-name descname"><span class="pre">orWhereIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orWhereIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2386,8 +2386,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orWhereNotIn">
-<span class="sig-name descname"><span class="pre">orWhereNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orWhereNotIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orWhereNotIn">
+<span class="sig-name descname"><span class="pre">orWhereNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orWhereNotIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2407,8 +2407,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="whereIn">
-<span class="sig-name descname"><span class="pre">whereIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#whereIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::whereIn">
+<span class="sig-name descname"><span class="pre">whereIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::whereIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2428,8 +2428,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="whereNotIn">
-<span class="sig-name descname"><span class="pre">whereNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#whereNotIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::whereNotIn">
+<span class="sig-name descname"><span class="pre">whereNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::whereNotIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2449,8 +2449,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="groupStart">
-<span class="sig-name descname"><span class="pre">groupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#groupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::groupStart">
+<span class="sig-name descname"><span class="pre">groupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::groupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2463,8 +2463,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orGroupStart">
-<span class="sig-name descname"><span class="pre">orGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orGroupStart">
+<span class="sig-name descname"><span class="pre">orGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2477,8 +2477,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="notGroupStart">
-<span class="sig-name descname"><span class="pre">notGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#notGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::notGroupStart">
+<span class="sig-name descname"><span class="pre">notGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::notGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2491,8 +2491,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orNotGroupStart">
-<span class="sig-name descname"><span class="pre">orNotGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orNotGroupStart">
+<span class="sig-name descname"><span class="pre">orNotGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orNotGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2505,8 +2505,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="groupEnd">
-<span class="sig-name descname"><span class="pre">groupEnd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#groupEnd" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::groupEnd">
+<span class="sig-name descname"><span class="pre">groupEnd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::groupEnd" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2519,8 +2519,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::like">
+<span class="sig-name descname"><span class="pre">like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::like" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2542,8 +2542,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orLike">
-<span class="sig-name descname"><span class="pre">orLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orLike">
+<span class="sig-name descname"><span class="pre">orLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2565,8 +2565,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="notLike">
-<span class="sig-name descname"><span class="pre">notLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#notLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::notLike">
+<span class="sig-name descname"><span class="pre">notLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::notLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2588,8 +2588,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orNotLike">
-<span class="sig-name descname"><span class="pre">orNotLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orNotLike">
+<span class="sig-name descname"><span class="pre">orNotLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orNotLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2611,8 +2611,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="having">
-<span class="sig-name descname"><span class="pre">having</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#having" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::having">
+<span class="sig-name descname"><span class="pre">having</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::having" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2632,8 +2632,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orHaving">
-<span class="sig-name descname"><span class="pre">orHaving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHaving" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orHaving">
+<span class="sig-name descname"><span class="pre">orHaving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orHaving" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2653,8 +2653,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orHavingIn">
-<span class="sig-name descname"><span class="pre">orHavingIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orHavingIn">
+<span class="sig-name descname"><span class="pre">orHavingIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orHavingIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2674,8 +2674,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orHavingNotIn">
-<span class="sig-name descname"><span class="pre">orHavingNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingNotIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orHavingNotIn">
+<span class="sig-name descname"><span class="pre">orHavingNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orHavingNotIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2695,8 +2695,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="havingIn">
-<span class="sig-name descname"><span class="pre">havingIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::havingIn">
+<span class="sig-name descname"><span class="pre">havingIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::havingIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2716,8 +2716,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="havingNotIn">
-<span class="sig-name descname"><span class="pre">havingNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingNotIn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::havingNotIn">
+<span class="sig-name descname"><span class="pre">havingNotIn</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$key</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$values</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::havingNotIn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2738,8 +2738,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="havingLike">
-<span class="sig-name descname"><span class="pre">havingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#havingLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::havingLike">
+<span class="sig-name descname"><span class="pre">havingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::havingLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2761,8 +2761,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orHavingLike">
-<span class="sig-name descname"><span class="pre">orHavingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orHavingLike">
+<span class="sig-name descname"><span class="pre">orHavingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orHavingLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2784,8 +2784,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="notHavingLike">
-<span class="sig-name descname"><span class="pre">notHavingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#notHavingLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::notHavingLike">
+<span class="sig-name descname"><span class="pre">notHavingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::notHavingLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2807,8 +2807,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orNotHavingLike">
-<span class="sig-name descname"><span class="pre">orNotHavingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotHavingLike" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orNotHavingLike">
+<span class="sig-name descname"><span class="pre">orNotHavingLike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$match</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$side</span> <span class="pre">=</span> <span class="pre">'both'</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$insensitiveSearch</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orNotHavingLike" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2829,8 +2829,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="havingGroupStart">
-<span class="sig-name descname"><span class="pre">havingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#havingGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::havingGroupStart">
+<span class="sig-name descname"><span class="pre">havingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::havingGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2843,8 +2843,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orHavingGroupStart">
-<span class="sig-name descname"><span class="pre">orHavingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orHavingGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orHavingGroupStart">
+<span class="sig-name descname"><span class="pre">orHavingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orHavingGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2857,8 +2857,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="notHavingGroupStart">
-<span class="sig-name descname"><span class="pre">notHavingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#notHavingGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::notHavingGroupStart">
+<span class="sig-name descname"><span class="pre">notHavingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::notHavingGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2871,8 +2871,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orNotHavingGroupStart">
-<span class="sig-name descname"><span class="pre">orNotHavingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#orNotHavingGroupStart" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orNotHavingGroupStart">
+<span class="sig-name descname"><span class="pre">orNotHavingGroupStart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orNotHavingGroupStart" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2885,8 +2885,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="havingGroupEnd">
-<span class="sig-name descname"><span class="pre">havingGroupEnd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#havingGroupEnd" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::havingGroupEnd">
+<span class="sig-name descname"><span class="pre">havingGroupEnd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::havingGroupEnd" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
@@ -2899,8 +2899,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="groupBy">
-<span class="sig-name descname"><span class="pre">groupBy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$by</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#groupBy" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::groupBy">
+<span class="sig-name descname"><span class="pre">groupBy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$by</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::groupBy" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2918,8 +2918,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="orderBy">
-<span class="sig-name descname"><span class="pre">orderBy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$orderby</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$direction</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#orderBy" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::orderBy">
+<span class="sig-name descname"><span class="pre">orderBy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$orderby</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$direction</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::orderBy" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2939,8 +2939,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$value</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::limit">
+<span class="sig-name descname"><span class="pre">limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$value</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$offset</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::limit" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2959,8 +2959,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="offset">
-<span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$offset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#offset" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$offset</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::offset" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2978,8 +2978,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$union</span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::union">
+<span class="sig-name descname"><span class="pre">union</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$union</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::union" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -2997,8 +2997,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="unionAll">
-<span class="sig-name descname"><span class="pre">unionAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$union</span></em><span class="sig-paren">)</span><a class="headerlink" href="#unionAll" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::unionAll">
+<span class="sig-name descname"><span class="pre">unionAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$union</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::unionAll" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3016,8 +3016,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="set">
-<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#set" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::set" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3037,8 +3037,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::insert" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3057,8 +3057,8 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="insertBatch">
-<span class="sig-name descname"><span class="pre">insertBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batch_size</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#insertBatch" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::insertBatch">
+<span class="sig-name descname"><span class="pre">insertBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batch_size</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::insertBatch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3084,8 +3084,8 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="setInsertBatch">
-<span class="sig-name descname"><span class="pre">setInsertBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setInsertBatch" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setInsertBatch">
+<span class="sig-name descname"><span class="pre">setInsertBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setInsertBatch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3105,8 +3105,8 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$where</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$where</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::update" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3126,8 +3126,8 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="updateBatch">
-<span class="sig-name descname"><span class="pre">updateBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batch_size</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#updateBatch" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::updateBatch">
+<span class="sig-name descname"><span class="pre">updateBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batch_size</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::updateBatch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3153,8 +3153,8 @@ multiple queries will be executed, each handling up to
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="setUpdateBatch">
-<span class="sig-name descname"><span class="pre">setUpdateBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#setUpdateBatch" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setUpdateBatch">
+<span class="sig-name descname"><span class="pre">setUpdateBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setUpdateBatch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3174,8 +3174,8 @@ multiple queries will be executed, each handling up to
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#replace" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::replace">
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::replace" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3193,8 +3193,8 @@ multiple queries will be executed, each handling up to
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$where</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$reset_data</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$where</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$limit</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$reset_data</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::delete" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3214,8 +3214,8 @@ multiple queries will be executed, each handling up to
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="increment">
-<span class="sig-name descname"><span class="pre">increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$column</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#increment" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::increment">
+<span class="sig-name descname"><span class="pre">increment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$column</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::increment" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3230,8 +3230,8 @@ with <code class="docutils literal notranslate"><span class="pre">$value</span><
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="decrement">
-<span class="sig-name descname"><span class="pre">decrement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$column</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#decrement" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::decrement">
+<span class="sig-name descname"><span class="pre">decrement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$column</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::decrement" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3246,8 +3246,8 @@ with <code class="docutils literal notranslate"><span class="pre">$value</span><
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="truncate">
-<span class="sig-name descname"><span class="pre">truncate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#truncate" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::truncate">
+<span class="sig-name descname"><span class="pre">truncate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::truncate" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure, string on test mode</p>
@@ -3265,8 +3265,8 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="emptyTable">
-<span class="sig-name descname"><span class="pre">emptyTable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#emptyTable" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::emptyTable">
+<span class="sig-name descname"><span class="pre">emptyTable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::emptyTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
@@ -3279,8 +3279,8 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="getCompiledSelect">
-<span class="sig-name descname"><span class="pre">getCompiledSelect</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledSelect" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::getCompiledSelect">
+<span class="sig-name descname"><span class="pre">getCompiledSelect</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::getCompiledSelect" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3298,8 +3298,8 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="getCompiledInsert">
-<span class="sig-name descname"><span class="pre">getCompiledInsert</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledInsert" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::getCompiledInsert">
+<span class="sig-name descname"><span class="pre">getCompiledInsert</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::getCompiledInsert" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3317,8 +3317,8 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="getCompiledUpdate">
-<span class="sig-name descname"><span class="pre">getCompiledUpdate</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledUpdate" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::getCompiledUpdate">
+<span class="sig-name descname"><span class="pre">getCompiledUpdate</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::getCompiledUpdate" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3336,8 +3336,8 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="getCompiledDelete">
-<span class="sig-name descname"><span class="pre">getCompiledDelete</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#getCompiledDelete" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::getCompiledDelete">
+<span class="sig-name descname"><span class="pre">getCompiledDelete</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$reset</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::getCompiledDelete" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -3371,7 +3371,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 10, 2022.
+      <span class="lastupdated">Last updated on Aug 11, 2022.
       </span></p>
   </div>
 
