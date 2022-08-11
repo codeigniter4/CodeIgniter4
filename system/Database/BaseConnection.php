@@ -1604,7 +1604,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param null|string $tableName If $tableName is provided will return only this table if exists.
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      *
      * @return false|string
      */
