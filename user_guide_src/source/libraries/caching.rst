@@ -99,168 +99,172 @@ Shows file cache information in the current system::
 Class Reference
 ***************
 
-.. php:method:: isSupported()
+.. php:namespace:: CodeIgniter\Cache
 
-    :returns: ``true`` if supported, ``false`` if not
-    :rtype: bool
+.. php:class:: CacheInterface
 
-.. php:method:: get($key): mixed
+    .. php:method:: isSupported()
 
-    :param string $key: Cache item name
-    :returns: Item value or ``null`` if not found
-    :rtype: mixed
+        :returns: ``true`` if supported, ``false`` if not
+        :rtype: bool
 
-    This method will attempt to fetch an item from the cache store. If the
-    item does not exist, the method will return null.
+    .. php:method:: get($key): mixed
 
-    Example:
+        :param string $key: Cache item name
+        :returns: Item value or ``null`` if not found
+        :rtype: mixed
 
-    .. literalinclude:: caching/003.php
+        This method will attempt to fetch an item from the cache store. If the
+        item does not exist, the method will return null.
 
-.. php:method:: remember(string $key, int $ttl, Closure $callback)
+        Example:
 
-    :param string $key: Cache item name
-    :param int $ttl: Time to live in seconds
-    :param Closure $callback: Callback to invoke when the cache item returns null
-    :returns: The value of the cache item
-    :rtype: mixed
+        .. literalinclude:: caching/003.php
 
-    Gets an item from the cache. If ``null`` was returned, this will invoke the callback
-    and save the result. Either way, this will return the value.
+    .. php:method:: remember(string $key, int $ttl, Closure $callback)
 
-.. php:method:: save(string $key, $data[, int $ttl = 60[, $raw = false]])
+        :param string $key: Cache item name
+        :param int $ttl: Time to live in seconds
+        :param Closure $callback: Callback to invoke when the cache item returns null
+        :returns: The value of the cache item
+        :rtype: mixed
 
-    :param string $key: Cache item name
-    :param mixed $data: the data to save
-    :param int $ttl: Time To Live, in seconds (default 60)
-    :param bool $raw: Whether to store the raw value
-    :returns: ``true`` on success, ``false`` on failure
-    :rtype: bool
+        Gets an item from the cache. If ``null`` was returned, this will invoke the callback
+        and save the result. Either way, this will return the value.
 
-    This method will save an item to the cache store. If saving fails, the
-    method will return ``false``.
+    .. php:method:: save(string $key, $data[, int $ttl = 60[, $raw = false]])
 
-    Example:
+        :param string $key: Cache item name
+        :param mixed $data: the data to save
+        :param int $ttl: Time To Live, in seconds (default 60)
+        :param bool $raw: Whether to store the raw value
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype: bool
 
-    .. literalinclude:: caching/004.php
+        This method will save an item to the cache store. If saving fails, the
+        method will return ``false``.
 
-    .. note:: The ``$raw`` parameter is only utilized by Memcache,
-        in order to allow usage of ``increment()`` and ``decrement()``.
+        Example:
 
-.. php:method:: delete($key): bool
+        .. literalinclude:: caching/004.php
 
-    :param string $key: name of cached item
-    :returns: ``true`` on success, ``false`` on failure
-    :rtype: bool
+        .. note:: The ``$raw`` parameter is only utilized by Memcache,
+            in order to allow usage of ``increment()`` and ``decrement()``.
 
-    This method will delete a specific item from the cache store. If item
-    deletion fails, the method will return false.
+    .. php:method:: delete($key): bool
 
-    Example:
+        :param string $key: name of cached item
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype: bool
 
-    .. literalinclude:: caching/005.php
+        This method will delete a specific item from the cache store. If item
+        deletion fails, the method will return false.
 
-.. php:method:: deleteMatching($pattern): integer
+        Example:
 
-    :param string $pattern: glob-style pattern to match cached items keys
-    :returns: number of deleted items
-    :rtype: integer
+        .. literalinclude:: caching/005.php
 
-    This method will delete multiple items from the cache store at once by
-    matching their keys against a glob-style pattern. It will return the total number of deleted items.
+    .. php:method:: deleteMatching($pattern): integer
 
-    .. important:: This method is only implemented for File, Redis and Predis handlers.
-        Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
+        :param string $pattern: glob-style pattern to match cached items keys
+        :returns: number of deleted items
+        :rtype: integer
 
-    Example:
+        This method will delete multiple items from the cache store at once by
+        matching their keys against a glob-style pattern. It will return the total number of deleted items.
 
-    .. literalinclude:: caching/006.php
+        .. important:: This method is only implemented for File, Redis and Predis handlers.
+            Due to limitations, it couldn't be implemented for Memcached and Wincache handlers.
 
-    For more information on glob-style syntax, please see
-    `Glob (programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
+        Example:
 
-.. php:method:: increment($key[, $offset = 1]): mixed
+        .. literalinclude:: caching/006.php
 
-    :param string $key: Cache ID
-    :param int $offset: Step/value to add
-    :returns: New value on success, ``false`` on failure
-    :rtype: mixed
+        For more information on glob-style syntax, please see
+        `Glob (programming) <https://en.wikipedia.org/wiki/Glob_(programming)#Syntax>`_.
 
-    Performs atomic incrementation of a raw stored value.
+    .. php:method:: increment($key[, $offset = 1]): mixed
 
-    Example:
+        :param string $key: Cache ID
+        :param int $offset: Step/value to add
+        :returns: New value on success, ``false`` on failure
+        :rtype: mixed
 
-    .. literalinclude:: caching/007.php
+        Performs atomic incrementation of a raw stored value.
 
-.. php:method:: decrement($key[, $offset = 1]): mixed
+        Example:
 
-    :param string $key: Cache ID
-    :param int $offset: Step/value to reduce by
-    :returns: New value on success, ``false`` on failure
-    :rtype: mixed
+        .. literalinclude:: caching/007.php
 
-    Performs atomic decrementation of a raw stored value.
+    .. php:method:: decrement($key[, $offset = 1]): mixed
 
-    Example:
+        :param string $key: Cache ID
+        :param int $offset: Step/value to reduce by
+        :returns: New value on success, ``false`` on failure
+        :rtype: mixed
 
-    .. literalinclude:: caching/008.php
+        Performs atomic decrementation of a raw stored value.
 
-.. php:method:: clean()
+        Example:
 
-    :returns: ``true`` on success, ``false`` on failure
-    :rtype: bool
+        .. literalinclude:: caching/008.php
 
-    This method will 'clean' the entire cache. If the deletion of the
-    cache files fails, the method will return false.
+    .. php:method:: clean()
 
-    Example:
+        :returns: ``true`` on success, ``false`` on failure
+        :rtype: bool
 
-    .. literalinclude:: caching/009.php
+        This method will 'clean' the entire cache. If the deletion of the
+        cache files fails, the method will return false.
 
-.. php:method:: getCacheInfo()
+        Example:
 
-    :returns: Information on the entire cache database
-    :rtype: mixed
+        .. literalinclude:: caching/009.php
 
-    This method will return information on the entire cache.
+    .. php:method:: getCacheInfo()
 
-    Example:
+        :returns: Information on the entire cache database
+        :rtype: mixed
 
-    .. literalinclude:: caching/010.php
+        This method will return information on the entire cache.
 
-    .. note:: The information returned and the structure of the data is dependent
-        on which adapter is being used.
+        Example:
 
-.. php:method:: getMetadata(string $key)
+        .. literalinclude:: caching/010.php
 
-    :param string $key: Cache item name
-    :returns: Metadata for the cached item. ``null`` for missing items, or an array with at least the "expire" key for absolute epoch expiry (``null`` for never expires).
-    :rtype: array|null
+        .. note:: The information returned and the structure of the data is dependent
+            on which adapter is being used.
 
-    This method will return detailed information on a specific item in the
-    cache.
+    .. php:method:: getMetadata(string $key)
 
-    Example:
+        :param string $key: Cache item name
+        :returns: Metadata for the cached item. ``null`` for missing items, or an array with at least the "expire" key for absolute epoch expiry (``null`` for never expires).
+        :rtype: array|null
 
-    .. literalinclude:: caching/011.php
+        This method will return detailed information on a specific item in the
+        cache.
 
-    .. note:: The information returned and the structure of the data is dependent
-          on which adapter is being used. Some adapters (File, Memcached, Wincache)
-          still return ``false`` for missing items.
+        Example:
 
-.. php:staticmethod:: validateKey(string $key, string $prefix)
+        .. literalinclude:: caching/011.php
 
-    :param string $key: Potential cache key
-    :param string $prefix: Optional prefix
-    :returns: The verified and prefixed key. If the key exceeds the driver's max key length it will be hashed.
-    :rtype: string
+        .. note:: The information returned and the structure of the data is dependent
+              on which adapter is being used. Some adapters (File, Memcached, Wincache)
+              still return ``false`` for missing items.
 
-    This method is used by handler methods to check that keys are valid. It will throw
-    an ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
+    .. php:staticmethod:: validateKey(string $key, string $prefix)
 
-    Example:
+        :param string $key: Potential cache key
+        :param string $prefix: Optional prefix
+        :returns: The verified and prefixed key. If the key exceeds the driver's max key length it will be hashed.
+        :rtype: string
 
-    .. literalinclude:: caching/012.php
+        This method is used by handler methods to check that keys are valid. It will throw
+        an ``InvalidArgumentException`` for non-strings, invalid characters, and empty lengths.
+
+        Example:
+
+        .. literalinclude:: caching/012.php
 
 *******
 Drivers
