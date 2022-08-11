@@ -95,19 +95,22 @@ The method accepts an array of data to validate in the first parameter:
 
 .. literalinclude:: controllers/006.php
 
-Private methods
-***************
+Protecting Methods
+******************
 
 In some cases, you may want certain methods hidden from public access.
 To achieve this, simply declare the method as ``private`` or ``protected``.
-That will prevent it from being served by a URL request. For example,
-if you were to define a method like this for the ``Helloworld`` controller:
+That will prevent it from being served by a URL request.
+
+For example, if you were to define a method like this for the ``Helloworld`` controller:
 
 .. literalinclude:: controllers/007.php
 
-then trying to access it using the following URL will not work::
+and to define a route (``helloworld/utitilty``) for the method. Then trying to access it using the following URL will not work::
 
-    example.com/index.php/helloworld/utility/
+    example.com/index.php/helloworld/utility
+
+Auto-routing also will not work.
 
 .. _controller-auto-routing-improved:
 
