@@ -161,11 +161,11 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param string $tableName If $tableName is provided will return only this table if exists.
+     * @param null|string $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false, string $tableName = ''): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
-        if (! empty($tableName)) {
+        if ($tableName !== null) {
             return 'SELECT "NAME" FROM "SQLITE_MASTER" WHERE "TYPE" = \'table\''
                    . ' AND "NAME" NOT LIKE \'sqlite!_%\' ESCAPE \'!\''
                    . ' AND "NAME" LIKE ' . $this->escape($tableName);

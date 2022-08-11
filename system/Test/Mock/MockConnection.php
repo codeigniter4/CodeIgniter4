@@ -180,9 +180,9 @@ class MockConnection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param string $tableName If $tableName is provided will return only this table if exists.
+     * @param null|string $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $constrainByPrefix = false, string $tableName = ''): string
+    protected function _listTables(bool $constrainByPrefix = false, ?string $tableName = null): string
     {
         return '';
     }

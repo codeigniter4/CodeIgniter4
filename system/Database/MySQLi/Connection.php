@@ -369,13 +369,13 @@ class Connection extends BaseConnection
      * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
      *
-     * @param string $tableName If $tableName is provided will return only this table if exists.
+     * @param null|string $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false, string $tableName = ''): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
 
-        if (! empty($tableName)) {
+        if ($tableName !== null) {
             return $sql . ' LIKE ' . $this->escape($tableName);
         }
 

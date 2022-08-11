@@ -1604,11 +1604,11 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
-     * @param string $tableName If $tableName is provided will return only this table if exists.
+     * @param null|string $tableName If $tableName is provided will return only this table if exists.
      *
      * @return false|string
      */
-    abstract protected function _listTables(bool $constrainByPrefix = false, string $tableName = '');
+    abstract protected function _listTables(bool $constrainByPrefix = false, ?string $tableName = null);
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.
