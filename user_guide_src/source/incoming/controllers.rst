@@ -13,11 +13,27 @@ What is a Controller?
 
 A Controller is simply a class file that handles a HTTP request. :doc:`URI Routing <routing>` associates a URI with a controller.
 
+Every controller you create should extend ``BaseController`` class.
+This class provides several features that are available to all of your controllers.
+
+Constructor
+***********
+
+The CodeIgniter's Controller has a special constructor ``initController()``.
+It will be called by the framework after PHP's constructor ``__construct()`` execution.
+
+If you want to override the ``initController()``, don't forget to add ``parent::initController($request, $response, $logger);`` in the method:
+
+.. literalinclude:: controllers/023.php
+
+.. important:: You cannot use ``return`` in the constructor. So ``return redirect()->to('route');`` does not work.
+
+The ``initController()`` method sets the following three properties.
+
 Included Properties
 *******************
 
-Every controller you create should extend ``CodeIgniter\Controller`` class.
-This class provides several features that are available to all of your controllers.
+The CodeIgniter's Controller provides these properties.
 
 **Request Object**
 
