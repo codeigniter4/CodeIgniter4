@@ -274,7 +274,7 @@ final class InsertTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('insertBatch() called with no data');
+        $this->expectExceptionMessage('insertBatch()/upsertBatch called with no data');
         $builder->insertBatch([]);
     }
 }

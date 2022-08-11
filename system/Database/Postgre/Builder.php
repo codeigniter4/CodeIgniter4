@@ -196,7 +196,87 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return trim(sprintf('INSERT INTO %s (%s) VALUES %s %s', $table, implode(', ', $keys), implode(', ', $values), $this->compileIgnore('insert')));
+        return trim(sprintf(
+            'INSERT INTO %s (%s) VALUES %s %s',
+            $table,
+            implode(', ', $keys),
+            implode(', ', $this->getValues($values)),
+            $this->compileIgnore('insert')
+        ));
+    }
+
+    /**
+     * Generates a platform-specific upsertBatch string from the supplied data
+     *
+     * @throws DatabaseException
+     */
+    protected function _upsertBatch(string $table, array $keys, array $values): string
+    {
+        $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
+
+        $constraints = $this->QBOptions['constraints'] ?? [];
+
+        $updateFields = $this->QBOptions['updateFields'] ?? $fieldNames;
+
+        if (empty($constraints)) {
+            $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+                $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
+
+                return ($index->type === 'UNIQUE' || $index->type === 'PRIMARY') && $hasAllFields;
+            });
+
+            foreach (array_map(static fn ($index) => $index->fields, $allIndexes) as $index) {
+                foreach ($index as $constraint) {
+                    $constraints[] = $constraint;
+                }
+                // only one index can be used?
+                break;
+            }
+
+            $this->QBOptions['constraints'] = $constraints;
+        }
+
+        // in value set - replace null with DEFAULT where constraint is presumed not null
+        // autoincrement identity field must use DEFAULT and not NULL
+        foreach ($constraints as $constraint) {
+            $key = array_search($constraint, $fieldNames, true);
+
+            if ($key !== false) {
+                foreach ($values as $arrayKey => $value) {
+                    if (strtoupper($value[$key]) === 'NULL') {
+                        $values[$arrayKey][$key] = 'DEFAULT';
+                    }
+                }
+            }
+        }
+
+        if (empty($constraints)) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('No constraint found for upsert.');
+            }
+
+            return ''; // @codeCoverageIgnore
+        }
+
+        $sql = 'INSERT INTO ' . $table . ' (';
+
+        $sql .= implode(', ', array_map(static fn ($columnName) => $columnName, $keys));
+
+        $sql .= ")\n";
+
+        $sql .= 'VALUES ' . implode(', ', $this->getValues($values)) . "\n";
+
+        $sql .= 'ON CONFLICT("' . implode('","', $constraints) . "\")\n";
+
+        $sql .= "DO UPDATE SET\n";
+
+        return $sql . implode(
+            ",\n",
+            array_map(
+                static fn ($updateField) => '"' . $updateField . '" = "excluded"."' . $updateField . '"',
+                $updateFields
+            )
+        );
     }
 
     /**
