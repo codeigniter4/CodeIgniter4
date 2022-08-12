@@ -276,6 +276,54 @@ And finally push your local branch to your GitHub repository:
 > git push --force-with-lease origin fix/problem123
 ```
 
+## If you sent to the wrong branch
+
+If you have sent a PR to the wrong branch, you need to create a new PR branch.
+
+When you have the PR branch `feat-abc` and you should have sent the PR to `4.3`,
+but you created the PR branch from `develop` and sent a PR.
+
+Update your `4.3` branch:
+
+```console
+> git switch 4.3
+> git fetch upstream
+> git merge upstream/4.3
+> git push origin 4.3
+```
+
+Create a new branch `feat-ab.new` from the correct branch `4.3`:
+
+```console
+> git switch -c feat-abc.new 4.3
+```
+
+Cherry-pick the commits you did:
+
+```console
+> git cherry-pick <commit_id> <commit_id> <commit_id> ...
+```
+
+Rename the PR branch `feat-abc`:
+
+```console
+> git branch -m feat-abc feat-abc.old
+```
+
+Rename the new branch  `feat-abc.new` to `feat-abc`.
+
+```console
+> git branch -m feat-abc.new feat-abc
+```
+
+Force push.
+
+```console
+> git push --force-with-lease origin feat-abc
+```
+
+On the GitHub PR page, change the base branch to the correct branch `4.3`.
+
 ## Cleanup
 
 If your PR is accepted and merged into the shared repository, you can
