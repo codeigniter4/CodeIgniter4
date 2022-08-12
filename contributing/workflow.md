@@ -259,6 +259,12 @@ Synchronize your repository:
 > git push origin develop
 ```
 
+(Optional) Create a new branch as a backup, just in case:
+
+```console
+> git branch fix/problem123.bk fix/problem123
+```
+
 Bring your feature branch up to date:
 
 ```console
