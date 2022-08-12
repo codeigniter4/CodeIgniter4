@@ -12,7 +12,7 @@ Release Date: Unreleased
 BREAKING
 ********
 
-none.
+- The method signature of ``Validation.php::processRules()`` and ``Validation.php::getErrorMessage()`` have been changed. Both of these methods add new ``$originalField`` parameter.
 
 Enhancements
 ************
