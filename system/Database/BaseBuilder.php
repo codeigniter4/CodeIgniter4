@@ -2203,30 +2203,44 @@ class BaseBuilder
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
-        $ids   = [];
-        $final = [];
+        $keys = array_keys(current($values));
 
-        foreach ($values as $val) {
-            $ids[] = $val[$index];
+        // make array for future use with composite keys - `field`
+        // future: $this->QBOptions['constraints']
+        $constraints = [$index];
 
-            foreach (array_keys($val) as $field) {
-                if ($field !== $index) {
-                    $final[$field][] = 'WHEN ' . $index . ' = ' . $val[$index] . ' THEN ' . $val[$field];
-                }
-            }
-        }
+        // future: $this->QBOptions['updateFields']
+        $updateFields = array_filter($keys, static fn ($index) => ! in_array($index, $constraints, true));
 
-        $cases = '';
+        $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
 
-        foreach ($final as $k => $v) {
-            $cases .= $k . " = CASE \n"
-                . implode("\n", $v) . "\n"
-                . 'ELSE ' . $k . ' END, ';
-        }
+        $sql .= 'SET' . "\n";
 
-        $this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
+        $sql .= implode(
+            ",\n",
+            array_map(static fn ($key) => $key . ' = u.' . $key, $updateFields)
+        ) . "\n";
 
-        return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+        $sql .= 'FROM (' . "\n";
+
+        $sql .= implode(
+            " UNION ALL\n",
+            array_map(
+                static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                    static fn ($key, $index) => $index . ' ' . $key,
+                    $keys,
+                    $value
+                )),
+                $values
+            )
+        ) . "\n";
+
+        $sql .= ') u' . "\n";
+
+        return $sql .= 'WHERE ' . implode(
+            ' AND ',
+            array_map(static fn ($key) => $table . '.' . $key . ' = u.' . $key, $constraints)
+        );
     }
 
     /**

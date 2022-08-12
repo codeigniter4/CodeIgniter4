@@ -242,39 +242,6 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Generates a platform-specific batch update string from the supplied data
-     */
-    protected function _updateBatch(string $table, array $values, string $index): string
-    {
-        $ids   = [];
-        $final = [];
-
-        foreach ($values as $val) {
-            $ids[] = $val[$index];
-
-            foreach (array_keys($val) as $field) {
-                if ($field !== $index) {
-                    $final[$field] ??= [];
-
-                    $final[$field][] = "WHEN {$val[$index]} THEN {$val[$field]}";
-                }
-            }
-        }
-
-        $cases = '';
-
-        foreach ($final as $k => $v) {
-            $cases .= "{$k} = (CASE {$index}\n"
-                    . implode("\n", $v)
-                    . "\nELSE {$k} END), ";
-        }
-
-        $this->where("{$index} IN(" . implode(',', $ids) . ')', null, false);
-
-        return "UPDATE {$table} SET " . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
-    }
-
-    /**
      * Generates a platform-specific delete string from the supplied data
      */
     protected function _delete(string $table): string

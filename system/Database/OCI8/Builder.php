@@ -227,4 +227,52 @@ class Builder extends BaseBuilder
         $this->limitUsed = false;
         parent::resetSelect();
     }
+
+    /**
+     * Generates a platform-specific batch update string from the supplied data
+     */
+    protected function _updateBatch(string $table, array $values, string $index): string
+    {
+        $keys = array_keys(current($values));
+
+        // make array for future use with composite keys - `field`
+        // future: $this->QBOptions['constraints']
+        $constraints = [$index];
+
+        // future: $this->QBOptions['updateFields']
+        $updateFields = array_filter($keys, static fn ($index) => ! in_array($index, $constraints, true));
+
+        // Oracle doesn't support ignore on updates so we will use MERGE
+        $sql = 'MERGE INTO ' . $table . " \"t\"\n";
+
+        $sql .= 'USING (' . "\n";
+
+        $sql .= implode(
+            " UNION ALL\n",
+            array_map(
+                static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                    static fn ($key, $index) => $index . ' ' . $key,
+                    $keys,
+                    $value
+                )) . ' FROM DUAL',
+                $values
+            )
+        ) . "\n";
+
+        $sql .= ') "u"' . "\n";
+
+        $sql .= 'ON (' . implode(
+            ' AND ',
+            array_map(static fn ($key) => '"t".' . $key . ' = "u".' . $key, $constraints)
+        ) . ")\n";
+
+        $sql .= "WHEN MATCHED THEN UPDATE\n";
+
+        $sql .= 'SET' . "\n";
+
+        return $sql .= implode(
+            ",\n",
+            array_map(static fn ($key) => '"t".' . $key . ' = "u".' . $key, $updateFields)
+        );
+    }
 }
