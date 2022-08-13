@@ -289,6 +289,12 @@ If you have sent a PR to the wrong branch, you need to create a new PR branch.
 When you have the PR branch `feat-abc` and you should have sent the PR to `4.3`,
 but you created the PR branch from `develop` and sent a PR.
 
+Copy the IDs of any commits you made that you want to keep:
+
+```console
+> git log
+```
+
 Update your `4.3` branch:
 
 ```console
