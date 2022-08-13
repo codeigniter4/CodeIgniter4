@@ -191,6 +191,33 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString("You want to see 'about' page.", $output);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6358
+     */
+    public function testControllersCanReturnDownloadResponseObject()
+    {
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/pages/about';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add('pages/(:segment)', static function ($segment) {
+            $response = Services::response();
+
+            return $response->download('some.txt', 'some text', true);
+        });
+        $router = Services::router($routes, Services::request());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->useSafeOutput(true)->run();
+        $output = ob_get_clean();
+
+        $this->assertSame('some text', $output);
+    }
+
     public function testControllersRunFilterByClassName()
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
