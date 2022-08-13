@@ -158,7 +158,9 @@ Place the item you do not want word-wrapped between: {unwrap} {/unwrap}
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\Email\\Email
+.. php:namespace:: CodeIgniter\Email
+
+.. php:class:: Email
 
     .. php:method:: setFrom($from[, $name = ''[, $returnPath = null]])
 

@@ -250,7 +250,9 @@ The methods provided by the parent classes that are available are:
 * :meth:`CodeIgniter\\HTTP\\Message::getProtocolVersion`
 * :meth:`CodeIgniter\\HTTP\\Message::setProtocolVersion`
 
-.. php:class:: CodeIgniter\\HTTP\\IncomingRequest
+.. php:namespace:: CodeIgniter\HTTP
+
+.. php:class:: IncomingRequest
 
     .. php:method:: isCLI()
 
