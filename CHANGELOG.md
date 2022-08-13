@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.2.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.4) (2022-08-13)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.3...v4.2.4)
+
+**Hotfix release to fix download errors (see https://github.com/codeigniter4/CodeIgniter4/pull/6361)**
+
 ## [v4.2.3](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.3) (2022-08-06)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.2...v4.2.3)
 
