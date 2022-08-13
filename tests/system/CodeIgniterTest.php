@@ -200,7 +200,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // Inject mock router.
         $routes = Services::routes();
-        $routes->add('pages/about', static fn () => Services::request()->url, ['filter' => Customfilter::class]);
+        $routes->add('pages/about', static fn () => Services::request()->getBody(), ['filter' => Customfilter::class]);
 
         $router = Services::router($routes, Services::request());
         Services::injectMock('router', $router);
@@ -210,6 +210,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('http://hellowworld.com', $output);
+
+        $this->resetServices();
     }
 
     public function testResponseConfigEmpty()
