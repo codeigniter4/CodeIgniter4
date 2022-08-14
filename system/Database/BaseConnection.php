@@ -1405,6 +1405,8 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Determine if a particular table exists
+     *
+     * @param bool $cached Whether to use data cache
      */
     public function tableExists(string $tableName, bool $cached = true): bool
     {

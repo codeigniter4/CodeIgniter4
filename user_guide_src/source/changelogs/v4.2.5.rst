@@ -12,7 +12,8 @@ Release Date: Unreleased
 BREAKING
 ********
 
-none.
+- The method signature of ``BaseConnection::tableExists()`` has been changed. A second optional parameter ``$cached`` was added. This directs whether to use cache data or not. Default is ``true``, use cache data.
+- The abstract method signature of ``BaseBuilder::_listTables()`` has been changed. A second optional parameter ``$tableName`` was added. Providing a table name will generate SQL listing only that table.
 
 Enhancements
 ************
