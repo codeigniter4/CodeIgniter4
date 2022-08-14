@@ -599,6 +599,8 @@ final class RouterTest extends CIUnitTestCase
         $this->assertSame('\TestController', $router->controllerName());
         $this->assertSame('foo', $router->methodName());
         $this->assertSame(Customfilter::class, $router->getFilter());
+
+        $this->resetServices();
     }
 
     public function testRouteWorksWithMultipleFilters()
