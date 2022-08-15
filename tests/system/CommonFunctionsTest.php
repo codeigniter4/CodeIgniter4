@@ -222,6 +222,27 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
     }
 
+    public function testRouteToInCliWithoutLocaleInRoute()
+    {
+        Services::createRequest(new App(), true);
+        $routes = service('routes');
+        $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+
+        $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
+    }
+
+    public function testRouteToInCliWithLocaleInRoute()
+    {
+        Services::createRequest(new App(), true);
+        $routes = service('routes');
+        $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
+
+        $this->assertSame(
+            '/en/path/string/to/13',
+            route_to('path-to', 'string', 13, 'en')
+        );
+    }
+
     public function testInvisible()
     {
         $this->assertSame('Javascript', remove_invisible_characters("Java\0script"));
