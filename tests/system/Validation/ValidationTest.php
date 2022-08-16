@@ -25,11 +25,12 @@ use TypeError;
 
 /**
  * @internal
+ * @no-final
  */
-final class ValidationTest extends CIUnitTestCase
+class ValidationTest extends CIUnitTestCase
 {
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -1206,7 +1207,7 @@ final class ValidationTest extends CIUnitTestCase
      *
      * @source https://github.com/codeigniter4/CodeIgniter4/pull/3910#issuecomment-784922913
      */
-    private function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
+    protected function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
     {
         if ($data === null) {
             $data = [$placeholder => 'placeholder-value'];
