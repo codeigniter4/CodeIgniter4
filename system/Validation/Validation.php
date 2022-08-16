@@ -695,10 +695,8 @@ class Validation implements ValidationInterface
 
         // Check the session to see if any were
         // passed along from a redirect withErrors() request.
-        if (isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
-            if (ENVIRONMENT === 'testing' || ! is_cli()) {
-                $this->errors = unserialize($_SESSION['_ci_validation_errors']);
-            }
+        if (isset($_SESSION, $_SESSION['_ci_validation_errors']) && (ENVIRONMENT === 'testing' || ! is_cli())) {
+            $this->errors = unserialize($_SESSION['_ci_validation_errors']);
         }
 
         return $this->errors;
