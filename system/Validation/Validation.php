@@ -675,20 +675,33 @@ class Validation implements ValidationInterface
      *        'field2' => 'error message',
      *    ]
      *
+     * @param bool $withSessionErrors Whether to get the validation errors in Session by redirect()->withErrors().
+     *
      * @return array<string, string>
      *
      * @codeCoverageIgnore
      */
-    public function getErrors(): array
+    public function getErrors(bool $withSessionErrors = true): array
     {
         // If we already have errors, we'll use those.
-        // If we don't, check the session to see if any were
-        // passed along from a redirect_with_input request.
-        if (empty($this->errors) && ! is_cli() && isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
-            $this->errors = unserialize($_SESSION['_ci_validation_errors']);
+        if ($this->errors !== []) {
+            return $this->errors;
         }
 
-        return $this->errors ?? [];
+        // If we don't get the errors in the Session.
+        if (! $withSessionErrors) {
+            return $this->errors;
+        }
+
+        // Check the session to see if any were
+        // passed along from a redirect withErrors() request.
+        if (isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
+            if (ENVIRONMENT === 'testing' || ! is_cli()) {
+                $this->errors = unserialize($_SESSION['_ci_validation_errors']);
+            }
+        }
+
+        return $this->errors;
     }
 
     /**

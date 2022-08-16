@@ -379,6 +379,24 @@ class ValidationTest extends CIUnitTestCase
         $this->assertSame(['foo' => 'Validation.is_numeric'], $this->validation->getErrors());
     }
 
+    public function testGetErrorsWithSession(): void
+    {
+        $_SESSION = ['_ci_validation_errors' => 'a:1:{s:3:"foo";s:3:"bar";}'];
+
+        $this->assertSame(['foo' => 'bar'], $this->validation->getErrors());
+
+        $_SESSION = [];
+    }
+
+    public function testGetErrorsWithoutSessionErrorDataWithSession(): void
+    {
+        $_SESSION = ['_ci_validation_errors' => 'a:1:{s:3:"foo";s:3:"bar";}'];
+
+        $this->assertSame([], $this->validation->getErrors(false));
+
+        $_SESSION = [];
+    }
+
     public function testGetErrorsWhenNone(): void
     {
         $data = ['foo' => 123];
