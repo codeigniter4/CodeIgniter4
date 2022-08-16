@@ -21,26 +21,6 @@ use CodeIgniter\Test\Mock\MockConnection;
  */
 final class CreateTableTest extends CIUnitTestCase
 {
-    public function testCreateTableWithExists()
-    {
-        $dbMock = $this->getMockBuilder(MockConnection::class)
-            ->setConstructorArgs([[]])
-            ->onlyMethods(['listTables'])
-            ->getMock();
-        $dbMock
-            ->method('listTables')
-            ->willReturn(['foo']);
-
-        $forge                          = new class ($dbMock) extends Forge {
-            protected $createTableIfStr = false;
-        };
-
-        $forge->addField('id');
-        $actual = $forge->createTable('foo', true);
-
-        $this->assertTrue($actual);
-    }
-
     public function testCreateTableWithDefaultRawSql()
     {
         $sql = <<<'SQL'

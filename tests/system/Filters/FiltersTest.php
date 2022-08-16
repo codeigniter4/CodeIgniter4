@@ -439,7 +439,9 @@ final class FiltersTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
         $request = $filters->run($uri, 'before');
 
-        $this->assertSame('http://hellowworld.com', $request->url);
+        $this->assertSame('http://hellowworld.com', $request->getBody());
+
+        $this->resetServices();
     }
 
     /**

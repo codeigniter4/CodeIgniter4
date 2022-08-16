@@ -155,6 +155,55 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_table', true);
     }
 
+    public function testCreateTableWithExists()
+    {
+        // create table so that it exists in database
+        $this->forge->addField([
+            'id'   => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name' => ['type' => 'VARCHAR', 'constraint' => 80],
+        ])->addKey('id', true)->createTable('test_exists', true);
+
+        // table exists in cache
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+
+        // table exists without cached results
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+
+        // try creating table when table exists
+        $result = $this->forge->addField([
+            'id'   => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name' => ['type' => 'VARCHAR', 'constraint' => 80],
+        ])->addKey('id', true)->createTable('test_exists', true);
+
+        $this->assertTrue($result);
+
+        // Delete table outside of forge. This should leave table in cache as existing.
+        $this->forge->getConnection()->query('DROP TABLE ' . $this->forge->getConnection()->protectIdentifiers('db_test_exists', true, null, false));
+
+        // table stil exists in cache
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+
+        // table does not exist without cached results - this will update the cache
+        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', false));
+
+        // the call above should update the cache - table should not exist in cache anymore
+        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', true));
+
+        // try creating table when table does not exist but still in cache
+        $result = $this->forge->addField([
+            'id'   => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name' => ['type' => 'VARCHAR', 'constraint' => 80],
+        ])->addKey('id', true)->createTable('test_exists', true);
+
+        $this->assertTrue($result);
+
+        // check that the table does now exist without cached results
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+
+        // drop table so that it doesn't mess up other tests
+        $this->forge->dropTable('test_exists');
+    }
+
     public function testCreateTableApplyBigInt()
     {
         $this->forge->dropTable('forge_test_table', true);

@@ -66,10 +66,9 @@ final class FilterTestTraitTest extends CIUnitTestCase
         $caller = $this->getFilterCaller('test-customfilter', 'before');
         $result = $caller();
 
-        $this->assertObjectNotHasAttribute('url', $this->request);
+        $this->assertSame('http://hellowworld.com', $result->getBody());
 
-        $this->assertObjectHasAttribute('url', $result);
-        $this->assertSame('http://hellowworld.com', $result->url);
+        $this->resetServices();
     }
 
     public function testGetFiltersForRoute()
