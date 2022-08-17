@@ -108,12 +108,6 @@ class Validation implements ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
-        // If there are still validation errors for redirect_with_input request, remove them.
-        // See `getErrors()` method.
-        if (isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
-            unset($_SESSION['_ci_validation_errors']);
-        }
-
         $data ??= $this->data;
 
         // i.e. is_unique
@@ -681,14 +675,7 @@ class Validation implements ValidationInterface
      */
     public function getErrors(): array
     {
-        // If we already have errors, we'll use those.
-        // If we don't, check the session to see if any were
-        // passed along from a redirect_with_input request.
-        if (empty($this->errors) && ! is_cli() && isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
-            $this->errors = unserialize($_SESSION['_ci_validation_errors']);
-        }
-
-        return $this->errors ?? [];
+        return $this->errors;
     }
 
     /**

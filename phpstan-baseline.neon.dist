@@ -656,11 +656,6 @@ parameters:
 			path: system/Throttle/Throttler.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Validation\\\\Validation\\:\\:\\$errors \\(array\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Validation/Validation.php
-
-		-
 			message: "#^Variable \\$error on left side of \\?\\? always exists and is always null\\.$#"
 			count: 1
 			path: system/Validation/Validation.php
