@@ -697,15 +697,13 @@ if (! function_exists('validation_errors')) {
     {
         session();
 
-        $errors = [];
-
         // Check the session to see if any were
         // passed along from a redirect withErrors() request.
         if (isset($_SESSION['_ci_validation_errors']) && (ENVIRONMENT === 'testing' || ! is_cli())) {
-            $errors = unserialize($_SESSION['_ci_validation_errors']);
+            return unserialize($_SESSION['_ci_validation_errors']);
         }
 
-        return $errors;
+        return [];
     }
 }
 
