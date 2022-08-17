@@ -99,6 +99,40 @@ final class ConsoleTest extends CIUnitTestCase
         $this->assertStringContainsString('Options:', $this->getStreamFilterBuffer());
     }
 
+    public function testHelpCommandUsingHelpOption()
+    {
+        $this->initCLI('env', '--help');
+
+        (new Console())->run();
+
+        $this->assertStringContainsString('env [<environment>]', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString(
+            'Retrieves the current environment, or set a new one.',
+            $this->getStreamFilterBuffer()
+        );
+    }
+
+    public function testHelpOptionIsOnlyPassed()
+    {
+        $this->initCLI('--help');
+
+        (new Console())->run();
+
+        // Since calling `php spark` is the same as calling `php spark list`,
+        // `php spark --help` should be the same as `php spark list --help`
+        $this->assertStringContainsString('Lists the available commands.', $this->getStreamFilterBuffer());
+    }
+
+    public function testHelpArgumentAndHelpOptionCombined()
+    {
+        $this->initCLI('help', '--help');
+
+        (new Console())->run();
+
+        // Same as calling `php spark help` only
+        $this->assertStringContainsString('Displays basic usage information.', $this->getStreamFilterBuffer());
+    }
+
     /**
      * @param array $command
      */
