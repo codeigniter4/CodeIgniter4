@@ -926,6 +926,15 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('code', 'beta', false));
     }
 
+    public function testValidationErrors()
+    {
+        $_SESSION = ['_ci_validation_errors' => 'a:1:{s:3:"foo";s:3:"bar";}'];
+
+        $this->assertSame(['foo' => 'bar'], validation_errors());
+
+        $_SESSION = [];
+    }
+
     public function testFormParseFormAttributesTrue()
     {
         $expected = 'readonly ';

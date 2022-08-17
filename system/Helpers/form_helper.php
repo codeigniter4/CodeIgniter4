@@ -680,11 +680,42 @@ if (! function_exists('set_radio')) {
     }
 }
 
+if (! function_exists('validation_errors')) {
+    /**
+     * Returns the validation errors that are stored in the session.
+     * To use this, you need to use `withInput()` for `redirect()`.
+     *
+     * The returned array should be in the following format:
+     *     [
+     *         'field1' => 'error message',
+     *         'field2' => 'error message',
+     *     ]
+     *
+     * @return array<string, string>
+     */
+    function validation_errors(): array
+    {
+        session();
+
+        $errors = [];
+
+        // Check the session to see if any were
+        // passed along from a redirect withErrors() request.
+        if (isset($_SESSION['_ci_validation_errors']) && (ENVIRONMENT === 'testing' || ! is_cli())) {
+            $errors = unserialize($_SESSION['_ci_validation_errors']);
+        }
+
+        return $errors;
+    }
+}
+
 if (! function_exists('parse_form_attributes')) {
     /**
      * Parse the form attributes
      *
      * Helper function used by some of the form helpers
+     *
+     * @internal
      *
      * @param array|string $attributes List of attributes
      * @param array        $default    Default values
