@@ -60,6 +60,7 @@ Enhancements
 - Added method ``Timer::record()`` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
 - Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 - Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
+- Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 
 Changes
 *******
