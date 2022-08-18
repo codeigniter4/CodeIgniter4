@@ -516,6 +516,8 @@ class Validation implements ValidationInterface
 
     /**
      * Displays a single error in formatted HTML as defined in the $template view.
+     *
+     * You can also use validation_show_error() in Form helper.
      */
     public function showError(string $field, string $template = 'single'): string
     {

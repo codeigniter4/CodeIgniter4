@@ -953,6 +953,16 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertStringContainsString('<li>The ID field is required.</li>', $html);
     }
 
+    public function testValidationShowError()
+    {
+        $validation = Services::validation();
+        $validation->setRule('id', 'ID', 'required')->run([]);
+
+        $html = validation_show_error('id');
+
+        $this->assertSame('<span class="help-block">The ID field is required.</span>' . "\n", $html);
+    }
+
     public function testFormParseFormAttributesTrue()
     {
         $expected = 'readonly ';

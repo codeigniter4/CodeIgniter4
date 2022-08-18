@@ -732,6 +732,32 @@ if (! function_exists('validation_list_errors')) {
     }
 }
 
+if (! function_exists('validation_show_error')) {
+    /**
+     * Displays a single error in formatted HTML.
+     *
+     * See Validation::showError()
+     */
+    function validation_show_error(string $field, string $template = 'single'): string
+    {
+        $config = config('Validation');
+        $view   = Services::renderer();
+
+        $errors = validation_errors();
+
+        if (! array_key_exists($field, $errors)) {
+            return '';
+        }
+
+        if (! array_key_exists($template, $config->templates)) {
+            throw ValidationException::forInvalidTemplate($template);
+        }
+
+        return $view->setVar('error', $errors[$field])
+            ->render($config->templates[$template]);
+    }
+}
+
 if (! function_exists('parse_form_attributes')) {
     /**
      * Parse the form attributes
