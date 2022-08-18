@@ -293,7 +293,7 @@ class CLI
     }
 
     /**
-     * * This method is the same as promptByKey(), but this method supports multiple keys, separated by commas.
+     * This method is the same as promptByKey(), but this method supports multiple keys, separated by commas.
      *
      * @param string $text    Output "field" text or an one or two value array where the first value is the text before listing the options
      *                        and the second value the text before asking to select one option. Provide empty string to omit
