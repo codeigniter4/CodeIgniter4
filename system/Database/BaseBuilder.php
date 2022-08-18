@@ -577,7 +577,7 @@ class BaseBuilder
     {
         $table = $this->buildSubquery($from, true, $alias);
 
-        $this->trackAliases($table);
+        $this->db->addTableAlias($alias);
         $this->QBFrom[] = $table;
 
         return $this;

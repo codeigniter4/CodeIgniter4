@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Builder;
 
+use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -50,7 +51,7 @@ final class PrefixTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    public function testPrefixWithSubquery()
+    public function testPrefixWithSubquery(): void
     {
         $expected = <<<'NOWDOC'
             SELECT "u"."id", "u"."name", (SELECT 1 FROM "ci_users" "sub" WHERE "sub"."id" = "u"."id") "one"
@@ -68,5 +69,21 @@ final class PrefixTest extends CIUnitTestCase
             ->where('u.id', 1);
 
         $this->assertSame($expected, $builder->getCompiledSelect());
+    }
+
+    public function testPrefixWithNewQuery(): void
+    {
+        $expectedSQL = <<<'NOWDOC'
+            SELECT "users_1"."id", "name"
+            FROM (SELECT "u"."id", "u"."name" FROM "ci_users" "u") "users_1"
+            WHERE "users_1"."id" > 10
+            NOWDOC;
+
+        $subquery = (new BaseBuilder('users u', $this->db))->select('u.id, u.name');
+        $builder  = $this->db->newQuery()->fromSubquery($subquery, 'users_1')
+            ->select('users_1.id, name')
+            ->where('users_1.id > ', 10);
+
+        $this->assertSame($expectedSQL, $builder->getCompiledSelect());
     }
 }
