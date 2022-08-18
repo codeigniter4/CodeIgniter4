@@ -25,7 +25,7 @@ class Console
      *
      * @throws Exception
      *
-     * @return mixed
+     * @return int|void
      */
     public function run()
     {

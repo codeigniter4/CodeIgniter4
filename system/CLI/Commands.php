@@ -48,6 +48,8 @@ class Commands
 
     /**
      * Runs a command given
+     *
+     * @return int|void
      */
     public function run(string $command, array $params)
     {
