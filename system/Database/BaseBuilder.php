@@ -2952,7 +2952,7 @@ class BaseBuilder
             throw new DatabaseException('The subquery cannot be the same object as the main query object.');
         }
 
-        $subquery = strtr($builder->getCompiledSelect(), "\n", ' ');
+        $subquery = strtr($builder->getCompiledSelect(false), "\n", ' ');
 
         if ($wrapped) {
             $subquery = '(' . $subquery . ')';

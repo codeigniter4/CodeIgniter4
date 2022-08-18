@@ -49,4 +49,24 @@ final class PrefixTest extends CIUnitTestCase
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
+
+    public function testPrefixWithSubquery()
+    {
+        $expected = <<<'NOWDOC'
+            SELECT "u"."id", "u"."name", (SELECT 1 FROM "ci_users" "sub" WHERE "sub"."id" = "u"."id") "one"
+            FROM "ci_users" "u"
+            WHERE "u"."id" = 1
+            NOWDOC;
+
+        $subquery = $this->db->table('users sub')
+            ->select('1', false)
+            ->where('sub.id = u.id');
+
+        $builder = $this->db->table('users u')
+            ->select('u.id, u.name')
+            ->selectSubquery($subquery, 'one')
+            ->where('u.id', 1);
+
+        $this->assertSame($expected, $builder->getCompiledSelect());
+    }
 }
