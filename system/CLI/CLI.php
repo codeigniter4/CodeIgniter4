@@ -327,19 +327,9 @@ class CLI
         $input = static::prompt($extraOutput) ?: 0; // 0 is default
 
         // validation
-        // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
         while (true) {
             $pattern = preg_match_all('/^\d+(,\d+)*$/', trim($input));
-            if (! $pattern) {
-                static::error('Please select correctly.');
-                CLI::newLine();
-                $input = static::prompt($extraOutput) ?: 0;
-            } else {
-                break;
-            }
-        }
-        // user enters a number that is not in the available options
-        while (true) {
+
             // separate input by comma and convert all to an int[]
             $inputToArray = array_map(static fn ($value) => (int) $value, explode(',', $input));
             // find max from key of $options
@@ -347,9 +337,10 @@ class CLI
             // find max from input
             $maxInput = max($inputToArray);
 
-            // if max from $options less than max from input
+            // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
+            // And if max from $options less than max from input
             // it is mean user tried to access null value in $options
-            if ($maxOptions < $maxInput) {
+            if (! $pattern || $maxOptions < $maxInput) {
                 static::error('Please select correctly.');
                 CLI::newLine();
                 $input = static::prompt($extraOutput) ?: 0;
