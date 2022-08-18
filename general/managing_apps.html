@@ -325,20 +325,23 @@ your main <strong>app/Config/Paths.php</strong> and set a <em>full server path</
 <p>You will need to modify two additional files in your project root, so that
 they can find the <strong>Paths</strong> configuration file:</p>
 <ul>
-<li><p><strong>/spark</strong> runs command line apps; the path is specified on or about line 49:</p>
+<li><p><strong>/spark</strong> runs command line apps.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="s1">&#39;app/Config/Paths.php&#39;</span><span class="p">;</span>
+<span class="c1">// Load our paths config file</span>
+<span class="c1">// This is the line that might need to be changed, depending on your folder structure.</span>
+<span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
 <span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
 </li>
-<li><p><strong>/public/index.php</strong> is the front controller for your webapp; the config
-path is specified on or about line 20:</p>
+<li><p><strong>/public/index.php</strong> is the front controller for your webapp.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pathsConfig</span> <span class="o">=</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
-<span class="c1">// ^^^ Change this if you move your application folder</span>
+<span class="c1">// Load our paths config file</span>
+<span class="c1">// This is the line that might need to be changed, depending on your folder structure.</span>
+<span class="k">require</span> <span class="nx">FCPATH</span> <span class="o">.</span> <span class="s1">&#39;../app/Config/Paths.php&#39;</span><span class="p">;</span>
+<span class="c1">// ^^^ Change this line if you move your application folder</span>
 </pre></div>
 </div>
 </li>
@@ -428,7 +431,7 @@ of those:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 15, 2022.
+      <span class="lastupdated">Last updated on Aug 18, 2022.
       </span></p>
   </div>
 
