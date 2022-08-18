@@ -682,8 +682,10 @@ if (! function_exists('set_radio')) {
 
 if (! function_exists('validation_errors')) {
     /**
-     * Returns the validation errors that are stored in the session.
-     * To use this, you need to use `withInput()` for `redirect()`.
+     * Returns the validation errors.
+     *
+     * First, checks the validation errors that are stored in the session.
+     * To store the errors in the session, you need to use `withInput()` with `redirect()`.
      *
      * The returned array should be in the following format:
      *     [
@@ -703,7 +705,9 @@ if (! function_exists('validation_errors')) {
             return unserialize($_SESSION['_ci_validation_errors']);
         }
 
-        return [];
+        $validation = Services::validation();
+
+        return $validation->getErrors();
     }
 }
 

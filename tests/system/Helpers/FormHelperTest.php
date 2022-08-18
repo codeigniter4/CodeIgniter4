@@ -926,13 +926,21 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('code', 'beta', false));
     }
 
-    public function testValidationErrors()
+    public function testValidationErrorsFromSession()
     {
         $_SESSION = ['_ci_validation_errors' => 'a:1:{s:3:"foo";s:3:"bar";}'];
 
         $this->assertSame(['foo' => 'bar'], validation_errors());
 
         $_SESSION = [];
+    }
+
+    public function testValidationErrorsFromValidation()
+    {
+        $validation = Services::validation();
+        $validation->setRule('id', 'ID', 'required')->run([]);
+
+        $this->assertSame(['id' => 'The ID field is required.'], validation_errors());
     }
 
     public function testFormParseFormAttributesTrue()
