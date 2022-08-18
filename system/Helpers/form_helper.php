@@ -9,6 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
 
@@ -708,6 +709,26 @@ if (! function_exists('validation_errors')) {
         $validation = Services::validation();
 
         return $validation->getErrors();
+    }
+}
+
+if (! function_exists('validation_list_errors')) {
+    /**
+     * Returns the rendered HTML of the validation errors.
+     *
+     * See Validation::listErrors()
+     */
+    function validation_list_errors(string $template = 'list'): string
+    {
+        $config = config('Validation');
+        $view   = Services::renderer();
+
+        if (! array_key_exists($template, $config->templates)) {
+            throw ValidationException::forInvalidTemplate($template);
+        }
+
+        return $view->setVar('errors', validation_errors())
+            ->render($config->templates[$template]);
     }
 }
 

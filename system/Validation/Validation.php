@@ -500,6 +500,8 @@ class Validation implements ValidationInterface
 
     /**
      * Returns the rendered HTML of the errors as defined in $template.
+     *
+     * You can also use validation_list_errors() in Form helper.
      */
     public function listErrors(string $template = 'list'): string
     {
