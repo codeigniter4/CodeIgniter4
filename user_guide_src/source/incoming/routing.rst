@@ -448,11 +448,11 @@ be used when the first parameter is a language string:
 Route Priority
 **************
 
-Routes are registered in the routing table in the order in which they are defined, and the first matching route is executed.
+Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.
 
-.. note:: If exactly the same route (the URI path) is defined more than once, only the route defined first is registered.
+.. note:: If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.
 
-You can check the routing table by the :ref:`spark routes <spark-routes>` command.
+You can check registered routes in the routing table by running the :ref:`spark routes <spark-routes>` command.
 
 Changing Route Priority
 =======================
