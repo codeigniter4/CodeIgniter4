@@ -239,7 +239,9 @@ true on success or false on failure.
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\Database\\BaseResult
+.. php:namespace:: CodeIgniter\Database
+
+.. php:class:: BaseResult
 
     .. php:method:: getResult([$type = 'object'])
 

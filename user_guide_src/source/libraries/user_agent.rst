@@ -43,7 +43,9 @@ is available:
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\HTTP\\UserAgent
+.. php:namespace:: CodeIgniter\HTTP
+
+.. php:class:: UserAgent
 
     .. php:method:: isBrowser([$key = null])
 

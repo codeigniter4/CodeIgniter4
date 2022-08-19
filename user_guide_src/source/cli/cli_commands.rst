@@ -90,7 +90,9 @@ The ``BaseCommand`` class that all commands must extend have a couple of helpful
 be familiar with when creating your own commands. It also has a :doc:`Logger </general/logging>` available at
 ``$this->logger``.
 
-.. php:class:: CodeIgniter\\CLI\\BaseCommand
+.. php:namespace:: CodeIgniter\CLI
+
+.. php:class:: BaseCommand
 
     .. php:method:: call(string $command[, array $params = []])
 
