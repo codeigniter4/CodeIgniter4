@@ -316,7 +316,7 @@ been deprecated as of PHP 7.2.</p>
 <li><p><a class="reference internal" href="#using-the-encryption-service-directly" id="id10">Using the Encryption Service Directly</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id11">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Encryption" id="id11">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="using-the-encryption-library">
@@ -553,14 +553,14 @@ you can create an “Encrypter” directly, or change the settings of an existin
 <p>Remember, that <code class="docutils literal notranslate"><span class="pre">$config</span></code> must be an instance of <code class="docutils literal notranslate"><span class="pre">Config\Encryption</span></code> class.</p>
 </section>
 </section>
-<section id="class-reference">
-<h2><a class="toc-backref" href="#id11">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<section id="namespace-CodeIgniter\Encryption">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id11">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Encryption" title="Permalink to this headline"></a></h2>
 <dl class="php class">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">CodeIgniter\\Encryption\\Encryption</span></span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Encryption\</span></span><span class="sig-name descname"><span class="pre">Encryption</span></span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption" title="Permalink to this definition"></a></dt>
 <dd><dl class="php staticmethod">
-<dt class="sig sig-object php" id="createKey">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">createKey</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$length</span> <span class="pre">=</span> <span class="pre">32</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createKey" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption::createKey">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">createKey</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$length</span> <span class="pre">=</span> <span class="pre">32</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption::createKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -579,8 +579,8 @@ the operating system’s sources (<em>i.e.</em> <code class="docutils literal no
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="initialize">
-<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">Encryption</span> <span class="pre">$config</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#initialize" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption::initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">Encryption</span> <span class="pre">$config</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption::initialize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -613,8 +613,8 @@ the operating system’s sources (<em>i.e.</em> <code class="docutils literal no
 <dt class="sig sig-object php">
 <span class="sig-name descname"><span class="pre">CodeIgniter\\Encryption\\EncrypterInterface</span></span></dt>
 <dd><dl class="php method">
-<dt class="sig sig-object php" id="encrypt">
-<span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$params</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#encrypt" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption::encrypt">
+<span class="sig-name descname"><span class="pre">encrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$params</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption::encrypt" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -651,8 +651,8 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="decrypt">
-<span class="sig-name descname"><span class="pre">decrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$params</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#decrypt" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption::decrypt">
+<span class="sig-name descname"><span class="pre">decrypt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$data</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$params</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption::decrypt" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

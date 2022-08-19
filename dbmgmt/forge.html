@@ -306,7 +306,7 @@ database.</p>
 <li><p><a class="reference internal" href="#modifying-a-column-in-a-table" id="id19">Modifying a Column in a Table</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#class-reference" id="id20">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id20">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="initializing-the-forge-class">
@@ -753,14 +753,14 @@ change the name, you can add a “name” key into the field defining array.</p>
 </section>
 </section>
 </section>
-<section id="class-reference">
-<h2><a class="toc-backref" href="#id20">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<section id="namespace-CodeIgniter\Database">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id20">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
 <dl class="php class">
-<dt class="sig sig-object php">
-<span class="sig-name descname"><span class="pre">CodeIgniter\\Database\\Forge</span></span></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">Forge</span></span><a class="headerlink" href="#CodeIgniter\Database\Forge" title="Permalink to this definition"></a></dt>
 <dd><dl class="php method">
-<dt class="sig sig-object php" id="addColumn">
-<span class="sig-name descname"><span class="pre">addColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$field</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addColumn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::addColumn">
+<span class="sig-name descname"><span class="pre">addColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$field</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::addColumn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -779,8 +779,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="addField">
-<span class="sig-name descname"><span class="pre">addField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#addField" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::addField">
+<span class="sig-name descname"><span class="pre">addField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::addField" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -799,8 +799,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="addForeignKey">
-<span class="sig-name descname"><span class="pre">addForeignKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$fieldName</span></em>, <em class="sig-param"><span class="pre">$tableName</span></em>, <em class="sig-param"><span class="pre">$tableField</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$onUpdate</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">$onDelete</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addForeignKey" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::addForeignKey">
+<span class="sig-name descname"><span class="pre">addForeignKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$fieldName</span></em>, <em class="sig-param"><span class="pre">$tableName</span></em>, <em class="sig-param"><span class="pre">$tableField</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$onUpdate</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">$onDelete</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::addForeignKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -822,8 +822,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="addKey">
-<span class="sig-name descname"><span class="pre">addKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$primary</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$unique</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#addKey" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::addKey">
+<span class="sig-name descname"><span class="pre">addKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$primary</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$unique</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::addKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -843,8 +843,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="addPrimaryKey">
-<span class="sig-name descname"><span class="pre">addPrimaryKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#addPrimaryKey" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::addPrimaryKey">
+<span class="sig-name descname"><span class="pre">addPrimaryKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::addPrimaryKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -862,8 +862,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="addUniqueKey">
-<span class="sig-name descname"><span class="pre">addUniqueKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#addUniqueKey" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::addUniqueKey">
+<span class="sig-name descname"><span class="pre">addUniqueKey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::addUniqueKey" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -881,8 +881,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="createDatabase">
-<span class="sig-name descname"><span class="pre">createDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$dbName</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$ifNotExists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createDatabase" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::createDatabase">
+<span class="sig-name descname"><span class="pre">createDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$dbName</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$ifNotExists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::createDatabase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -901,8 +901,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="createTable">
-<span class="sig-name descname"><span class="pre">createTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$if_not_exists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$attributes</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#createTable" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::createTable">
+<span class="sig-name descname"><span class="pre">createTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$if_not_exists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$attributes</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::createTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -922,8 +922,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="dropColumn">
-<span class="sig-name descname"><span class="pre">dropColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$column_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dropColumn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::dropColumn">
+<span class="sig-name descname"><span class="pre">dropColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$column_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::dropColumn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -942,8 +942,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="dropDatabase">
-<span class="sig-name descname"><span class="pre">dropDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$dbName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dropDatabase" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::dropDatabase">
+<span class="sig-name descname"><span class="pre">dropDatabase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$dbName</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::dropDatabase" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -961,8 +961,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="dropTable">
-<span class="sig-name descname"><span class="pre">dropTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table_name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$if_exists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dropTable" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::dropTable">
+<span class="sig-name descname"><span class="pre">dropTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table_name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$if_exists</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::dropTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -981,8 +981,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="modifyColumn">
-<span class="sig-name descname"><span class="pre">modifyColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#modifyColumn" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::modifyColumn">
+<span class="sig-name descname"><span class="pre">modifyColumn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table</span></em>, <em class="sig-param"><span class="pre">$field</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::modifyColumn" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1001,8 +1001,8 @@ change the name, you can add a “name” key into the field defining array.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="renameTable">
-<span class="sig-name descname"><span class="pre">renameTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table_name</span></em>, <em class="sig-param"><span class="pre">$new_table_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#renameTable" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Database\Forge::renameTable">
+<span class="sig-name descname"><span class="pre">renameTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$table_name</span></em>, <em class="sig-param"><span class="pre">$new_table_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\Forge::renameTable" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
