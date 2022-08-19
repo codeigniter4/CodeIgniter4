@@ -52,6 +52,28 @@ HTTP Status Code and Exit Code of Uncaught Exceptions
 - If you expect *Exit code* based on *Exception code*, the Exit code will be changed.
   In that case, you need to implement ``HasExitCodeInterface`` in the Exception. See :ref:`error-specify-exit-code`.
 
+redirect()->withInput() and Validation Errors
+=============================================
+
+``redirect()->withInput()`` and Validation errors had an undocumented behavior.
+If you redirect with ``withInput()``, CodeIgniter stores the validation errors
+in the session, and you can get the errors in the redirected page from
+a validation object::
+
+    // In the controller
+    if (! $this->validate($rules)) {
+        return redirect()->back()->withInput();
+    }
+
+    // In the view of the redirected page
+    <?= service('Validation')->listErrors() ?>
+
+This behavior was a bug and fixed in v4.3.0.
+
+If you have code that depends on the bug, you need to change the code.
+Use new Form helpers, :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors,
+instead of the Validation object.
+
 Others
 ======
 
