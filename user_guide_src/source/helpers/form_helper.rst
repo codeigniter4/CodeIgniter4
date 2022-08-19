@@ -510,3 +510,52 @@ The following functions are available:
         <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?> />
         <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?> />
 
+.. php:function:: validation_errors()
+
+    :returns:   The validation errors
+    :rtype:    array
+
+    Returns the validation errors. First, this function checks the validation errors
+    that are stored in the session. To store the errors in the session, you need to use ``withInput()`` with :php:func:`redirect() <redirect>`.
+
+    The returned array is the same as ``Validation::getErrors()``.
+    See :ref:`Validation <validation-getting-all-errors>` for details.
+
+    Example::
+
+        <?php $errors = validation_errors(); ?>
+
+.. php:function:: validation_list_errors($template = 'list')
+
+    :param    string    $template: Validation template name
+    :returns:    Rendered HTML of the validation errors
+    :rtype:    string
+
+    Returns the rendered HTML of the validation errors.
+
+    The parameter ``$template`` is a Validation template name.
+    See :ref:`validation-customizing-error-display` for details.
+
+    This function uses :php:func:`validation_errors()` internally.
+
+    Example::
+
+        <?= validation_list_errors() ?>
+
+.. php:function:: validation_show_error($field, $template = 'single')
+
+    :param    string    $field: Field name
+    :param    string    $template: Validation template name
+    :returns:    Rendered HTML of the validation error
+    :rtype:    string
+
+    Returns a single error for the specified field in formatted HTML.
+
+    The parameter ``$template`` is a Validation template name.
+    See :ref:`validation-customizing-error-display` for details.
+
+    This function uses :php:func:`validation_errors()` internally.
+
+    Example::
+
+        <?= validation_show_error('username') ?>

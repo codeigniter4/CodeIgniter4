@@ -505,6 +505,8 @@ When specifying a field with a wildcard, all errors matching the mask will be ch
 
 .. literalinclude:: validation/029.php
 
+.. _validation-customizing-error-display:
+
 Customizing Error Display
 *************************
 
