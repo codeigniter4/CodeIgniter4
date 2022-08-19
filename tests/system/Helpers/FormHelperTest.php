@@ -928,7 +928,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationErrorsFromSession()
     {
-        $_SESSION = ['_ci_validation_errors' => 'a:1:{s:3:"foo";s:3:"bar";}'];
+        $_SESSION = ['_ci_validation_errors' => ['foo' => 'bar']];
 
         $this->assertSame(['foo' => 'bar'], validation_errors());
 
