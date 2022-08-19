@@ -734,7 +734,7 @@ if (! function_exists('validation_list_errors')) {
 
 if (! function_exists('validation_show_error')) {
     /**
-     * Displays a single error in formatted HTML.
+     * Returns a single error for the specified field in formatted HTML.
      *
      * See Validation::showError()
      */
