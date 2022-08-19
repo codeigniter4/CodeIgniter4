@@ -297,32 +297,37 @@
 <li><p><a class="reference internal" href="#global-options" id="id26">Global Options</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#routes-configuration-options" id="id27">Routes Configuration Options</a></p>
+<li><p><a class="reference internal" href="#route-priority" id="id27">Route Priority</a></p>
 <ul>
-<li><p><a class="reference internal" href="#default-namespace" id="id28">Default Namespace</a></p></li>
-<li><p><a class="reference internal" href="#translate-uri-dashes" id="id29">Translate URI Dashes</a></p></li>
-<li><p><a class="reference internal" href="#use-defined-routes-only" id="id30">Use Defined Routes Only</a></p></li>
-<li><p><a class="reference internal" href="#override" id="id31">404 Override</a></p></li>
-<li><p><a class="reference internal" href="#route-processing-by-priority" id="id32">Route processing by priority</a></p></li>
+<li><p><a class="reference internal" href="#changing-route-priority" id="id28">Changing Route Priority</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#auto-routing-improved" id="id33">Auto Routing (Improved)</a></p>
+<li><p><a class="reference internal" href="#routes-configuration-options" id="id29">Routes Configuration Options</a></p>
 <ul>
-<li><p><a class="reference internal" href="#enable-auto-routing" id="id34">Enable Auto Routing</a></p></li>
-<li><p><a class="reference internal" href="#uri-segments" id="id35">URI Segments</a></p></li>
-<li><p><a class="reference internal" href="#configuration-options" id="id36">Configuration Options</a></p></li>
+<li><p><a class="reference internal" href="#default-namespace" id="id30">Default Namespace</a></p></li>
+<li><p><a class="reference internal" href="#translate-uri-dashes" id="id31">Translate URI Dashes</a></p></li>
+<li><p><a class="reference internal" href="#use-defined-routes-only" id="id32">Use Defined Routes Only</a></p></li>
+<li><p><a class="reference internal" href="#override" id="id33">404 Override</a></p></li>
+<li><p><a class="reference internal" href="#route-processing-by-priority" id="id34">Route Processing by Priority</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#auto-routing-legacy" id="id37">Auto Routing (Legacy)</a></p>
+<li><p><a class="reference internal" href="#auto-routing-improved" id="id35">Auto Routing (Improved)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#enable-auto-routing-legacy" id="id38">Enable Auto Routing (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#uri-segments-legacy" id="id39">URI Segments (Legacy)</a></p></li>
-<li><p><a class="reference internal" href="#configuration-options-legacy" id="id40">Configuration Options (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#enable-auto-routing" id="id36">Enable Auto Routing</a></p></li>
+<li><p><a class="reference internal" href="#uri-segments" id="id37">URI Segments</a></p></li>
+<li><p><a class="reference internal" href="#configuration-options" id="id38">Configuration Options</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#confirming-routes" id="id41">Confirming Routes</a></p>
+<li><p><a class="reference internal" href="#auto-routing-legacy" id="id39">Auto Routing (Legacy)</a></p>
 <ul>
-<li><p><a class="reference internal" href="#routes" id="id42">routes</a></p></li>
+<li><p><a class="reference internal" href="#enable-auto-routing-legacy" id="id40">Enable Auto Routing (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#uri-segments-legacy" id="id41">URI Segments (Legacy)</a></p></li>
+<li><p><a class="reference internal" href="#configuration-options-legacy" id="id42">Configuration Options (Legacy)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#confirming-routes" id="id43">Confirming Routes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#routes" id="id44">routes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -938,8 +943,18 @@ be used when the first parameter is a language string:</p>
 </pre></div>
 </div>
 </section>
-<section id="route-processing-queue">
-<span id="routing-priority"></span><h4>Route processing queue<a class="headerlink" href="#route-processing-queue" title="Permalink to this headline"></a></h4>
+</section>
+</section>
+<section id="route-priority">
+<span id="routing-priority"></span><h2><a class="toc-backref" href="#id27">Route Priority</a><a class="headerlink" href="#route-priority" title="Permalink to this headline"></a></h2>
+<p>Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.</p>
+</div>
+<p>You can check registered routes in the routing table by running the <a class="reference internal" href="#spark-routes"><span class="std std-ref">spark routes</span></a> command.</p>
+<section id="changing-route-priority">
+<h3><a class="toc-backref" href="#id28">Changing Route Priority</a><a class="headerlink" href="#changing-route-priority" title="Permalink to this headline"></a></h3>
 <p>When working with modules, it can be a problem if the routes in the application contain wildcards.
 Then the module routes will not be processed correctly.
 You can solve this problem by lowering the priority of route processing using the <code class="docutils literal notranslate"><span class="pre">priority</span></code> option. The parameter
@@ -947,7 +962,7 @@ accepts positive integers and zero. The higher the number specified in the <code
 route priority in the processing queue:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="c1">// First you need to enable sorting.</span>
+<span class="c1">// First you need to enable processing of the routes queue by priority.</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setPrioritize</span><span class="p">();</span>
 
 <span class="c1">// Config\Routes</span>
@@ -956,7 +971,7 @@ route priority in the processing queue:</p>
 <span class="c1">// Modules\Acme\Config\Routes</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;Admin::index&#39;</span><span class="p">);</span>
 
-<span class="c1">// The &quot;admin&quot; route will now be processed before the wildcard router.</span>
+<span class="c1">// The &quot;admin&quot; route will now be processed before the wildcard route.</span>
 </pre></div>
 </div>
 <p>To disable this functionality, you must call the method with the parameter <code class="docutils literal notranslate"><span class="pre">false</span></code>:</p>
@@ -972,13 +987,12 @@ Negative integers will be cast to the absolute value.</p>
 </div>
 </section>
 </section>
-</section>
 <section id="routes-configuration-options">
-<span id="id7"></span><h2><a class="toc-backref" href="#id27">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline"></a></h2>
+<span id="id7"></span><h2><a class="toc-backref" href="#id29">Routes Configuration Options</a><a class="headerlink" href="#routes-configuration-options" title="Permalink to this headline"></a></h2>
 <p>The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application’s needs. These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
 <section id="default-namespace">
-<h3><a class="toc-backref" href="#id28">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id30">Default Namespace</a><a class="headerlink" href="#default-namespace" title="Permalink to this headline"></a></h3>
 <p>When matching a controller to a route, the router will add the default namespace value to the front of the controller
 specified by the route. By default, this value is <code class="docutils literal notranslate"><span class="pre">App\Controllers</span></code>.</p>
 <p>If you set the value empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>), it leaves each route to specify the fully namespaced
@@ -1009,7 +1023,7 @@ then you can change this value to save typing:</p>
 </div>
 </section>
 <section id="translate-uri-dashes">
-<h3><a class="toc-backref" href="#id29">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id31">Translate URI Dashes</a><a class="headerlink" href="#translate-uri-dashes" title="Permalink to this headline"></a></h3>
 <p>This option enables you to automatically replace dashes (<code class="docutils literal notranslate"><span class="pre">-</span></code>) with underscores in the controller and method
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn’t a valid class or method name character and would cause a fatal error if you try to use it:</p>
@@ -1020,7 +1034,7 @@ dash isn’t a valid class or method name character and would cause a fatal erro
 </div>
 </section>
 <section id="use-defined-routes-only">
-<span id="id8"></span><h3><a class="toc-backref" href="#id30">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
+<span id="id8"></span><h3><a class="toc-backref" href="#id32">Use Defined Routes Only</a><a class="headerlink" href="#use-defined-routes-only" title="Permalink to this headline"></a></h3>
 <p>Since v4.2.0, the auto-routing is disabled by default.</p>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the
 controllers and methods when Auto Routing is enabled.</p>
@@ -1038,7 +1052,7 @@ requests. If the URI is accessible by the GET method, the CSRF protection will n
 </div>
 </section>
 <section id="override">
-<h3><a class="toc-backref" href="#id31">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id33">404 Override</a><a class="headerlink" href="#override" title="Permalink to this headline"></a></h3>
 <p>When a page is not found that matches the current URI, the system will show a generic 404 view. You can change
 what happens by specifying an action to happen with the <code class="docutils literal notranslate"><span class="pre">set404Override()</span></code> method. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:</p>
@@ -1062,10 +1076,10 @@ information on how to set the status code.</p>
 </div>
 </section>
 <section id="route-processing-by-priority">
-<h3><a class="toc-backref" href="#id32">Route processing by priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id34">Route Processing by Priority</a><a class="headerlink" href="#route-processing-by-priority" title="Permalink to this headline"></a></h3>
 <p>Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
 Disabled by default. This functionality affects all routes.
-For an example use of lowering the priority see <a class="reference internal" href="#routing-priority"><span class="std std-ref">Route processing queue</span></a>:</p>
+For an example use of lowering the priority see <a class="reference internal" href="#routing-priority"><span class="std std-ref">Route Priority</span></a>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// to enable</span>
@@ -1078,7 +1092,7 @@ For an example use of lowering the priority see <a class="reference internal" hr
 </section>
 </section>
 <section id="auto-routing-improved">
-<span id="id9"></span><h2><a class="toc-backref" href="#id33">Auto Routing (Improved)</a><a class="headerlink" href="#auto-routing-improved" title="Permalink to this headline"></a></h2>
+<span id="id9"></span><h2><a class="toc-backref" href="#id35">Auto Routing (Improved)</a><a class="headerlink" href="#auto-routing-improved" title="Permalink to this headline"></a></h2>
 <p>Since v4.2.0, the new more secure Auto Routing has been introduced.</p>
 <p>When no defined route is found that matches the URI, the system will attempt to match that URI against the controllers and methods when Auto Routing is enabled.</p>
 <div class="admonition important">
@@ -1092,7 +1106,7 @@ and execute the corresponding controller methods.</p>
 <p>Auto Routing (Improved) is disabled by default. To use it, see below.</p>
 </div>
 <section id="enable-auto-routing">
-<span id="enabled-auto-routing-improved"></span><h3><a class="toc-backref" href="#id34">Enable Auto Routing</a><a class="headerlink" href="#enable-auto-routing" title="Permalink to this headline"></a></h3>
+<span id="enabled-auto-routing-improved"></span><h3><a class="toc-backref" href="#id36">Enable Auto Routing</a><a class="headerlink" href="#enable-auto-routing" title="Permalink to this headline"></a></h3>
 <p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
@@ -1103,7 +1117,7 @@ and execute the corresponding controller methods.</p>
 </div>
 </section>
 <section id="uri-segments">
-<h3><a class="toc-backref" href="#id35">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id37">URI Segments</a><a class="headerlink" href="#uri-segments" title="Permalink to this headline"></a></h3>
 <p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
 </pre></div>
@@ -1127,7 +1141,7 @@ and executes <code class="docutils literal notranslate"><span class="pre">getHel
 <p>See <a class="reference internal" href="controllers.html#controller-auto-routing-improved"><span class="std std-ref">Auto Routing in Controllers</span></a> for more info.</p>
 </section>
 <section id="configuration-options">
-<h3><a class="toc-backref" href="#id36">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id38">Configuration Options</a><a class="headerlink" href="#configuration-options" title="Permalink to this headline"></a></h3>
 <p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
 <section id="default-controller">
 <h4>Default Controller<a class="headerlink" href="#default-controller" title="Permalink to this headline"></a></h4>
@@ -1171,7 +1185,7 @@ In the example above, you can access <strong>example.com/products</strong>, but 
 </section>
 </section>
 <section id="auto-routing-legacy">
-<span id="auto-routing"></span><h2><a class="toc-backref" href="#id37">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
+<span id="auto-routing"></span><h2><a class="toc-backref" href="#id39">Auto Routing (Legacy)</a><a class="headerlink" href="#auto-routing-legacy" title="Permalink to this headline"></a></h2>
 <p>Auto Routing (Legacy) is a routing system from CodeIgniter 3.
 It can automatically route HTTP requests based on conventions and execute the corresponding controller methods.</p>
 <p>It is recommended that all routes are defined in the <strong>app/Config/Routes.php</strong> file,
@@ -1187,7 +1201,7 @@ or CSRF protection are bypassed.</p>
 <p>Auto Routing (Legacy) routes a HTTP request with <strong>any</strong> HTTP method to a controller method.</p>
 </div>
 <section id="enable-auto-routing-legacy">
-<h3><a class="toc-backref" href="#id38">Enable Auto Routing (Legacy)</a><a class="headerlink" href="#enable-auto-routing-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id40">Enable Auto Routing (Legacy)</a><a class="headerlink" href="#enable-auto-routing-legacy" title="Permalink to this headline"></a></h3>
 <p>Since v4.2.0, the auto-routing is disabled by default.</p>
 <p>To use it, you need to change the setting <code class="docutils literal notranslate"><span class="pre">setAutoRoute()</span></code> option to true in <strong>app/Config/Routes.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">setAutoRoute</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
@@ -1195,7 +1209,7 @@ or CSRF protection are bypassed.</p>
 </div>
 </section>
 <section id="uri-segments-legacy">
-<h3><a class="toc-backref" href="#id39">URI Segments (Legacy)</a><a class="headerlink" href="#uri-segments-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id41">URI Segments (Legacy)</a><a class="headerlink" href="#uri-segments-legacy" title="Permalink to this headline"></a></h3>
 <p>The segments in the URL, in following with the Model-View-Controller approach, usually represent:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">class</span><span class="o">/</span><span class="nx">method</span><span class="o">/</span><span class="nx">ID</span>
 </pre></div>
@@ -1214,7 +1228,7 @@ and executes <code class="docutils literal notranslate"><span class="pre">index(
 <p>See <a class="reference internal" href="controllers.html#controller-auto-routing"><span class="std std-ref">Auto Routing (Legacy) in Controllers</span></a> for more info.</p>
 </section>
 <section id="configuration-options-legacy">
-<h3><a class="toc-backref" href="#id40">Configuration Options (Legacy)</a><a class="headerlink" href="#configuration-options-legacy" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id42">Configuration Options (Legacy)</a><a class="headerlink" href="#configuration-options-legacy" title="Permalink to this headline"></a></h3>
 <p>These options are available at the top of <strong>app/Config/Routes.php</strong>.</p>
 <section id="default-controller-legacy">
 <h4>Default Controller (Legacy)<a class="headerlink" href="#default-controller-legacy" title="Permalink to this headline"></a></h4>
@@ -1248,10 +1262,10 @@ when a controller is found that matches the URI, but no segment exists for the m
 </section>
 </section>
 <section id="confirming-routes">
-<h2><a class="toc-backref" href="#id41">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id43">Confirming Routes</a><a class="headerlink" href="#confirming-routes" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter has the following <a class="reference internal" href="../cli/cli_commands.html"><span class="doc">command</span></a> to display all routes.</p>
 <section id="routes">
-<span id="spark-routes"></span><h3><a class="toc-backref" href="#id42">routes</a><a class="headerlink" href="#routes" title="Permalink to this headline"></a></h3>
+<span id="spark-routes"></span><h3><a class="toc-backref" href="#id44">routes</a><a class="headerlink" href="#routes" title="Permalink to this headline"></a></h3>
 <p>Displays all routes and filters:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">routes</span>
 </pre></div>
@@ -1307,7 +1321,7 @@ But <code class="docutils literal notranslate"><span class="pre">[/...]</span></
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 18, 2022.
+      <span class="lastupdated">Last updated on Aug 19, 2022.
       </span></p>
   </div>
 
