@@ -515,6 +515,8 @@ The following functions are available:
     :returns:   The validation errors
     :rtype:    array
 
+    This function was introduced in v4.3.0.
+
     Returns the validation errors. First, this function checks the validation errors
     that are stored in the session. To store the errors in the session, you need to use ``withInput()`` with :php:func:`redirect() <redirect>`.
 
@@ -530,6 +532,8 @@ The following functions are available:
     :param    string    $template: Validation template name
     :returns:    Rendered HTML of the validation errors
     :rtype:    string
+
+    This function was introduced in v4.3.0.
 
     Returns the rendered HTML of the validation errors.
 
@@ -548,6 +552,8 @@ The following functions are available:
     :param    string    $template: Validation template name
     :returns:    Rendered HTML of the validation error
     :rtype:    string
+
+    This function was introduced in v4.3.0.
 
     Returns a single error for the specified field in formatted HTML.
 
