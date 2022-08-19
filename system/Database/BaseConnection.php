@@ -1243,7 +1243,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
-            if (is_a($str, RawSql::class)) {
+            if ($str instanceof RawSql) {
                 return $str->__toString();
             }
 
