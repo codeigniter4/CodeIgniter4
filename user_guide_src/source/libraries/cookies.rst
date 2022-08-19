@@ -382,7 +382,7 @@ Class Reference
         :rtype: array
         :returns: Returns the array representation of the Cookie instance.
 
-.. php:class:: CodeIgniter\\HTTP\\Cookie\\CookieStore
+.. php:class:: CookieStore
 
     .. php:staticmethod:: fromCookieHeaders(array $headers[, bool $raw = false])
 
