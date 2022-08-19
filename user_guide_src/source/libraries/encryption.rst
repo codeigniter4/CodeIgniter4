@@ -214,7 +214,9 @@ Remember, that ``$config`` must be an instance of ``Config\Encryption`` class.
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\Encryption\\Encryption
+.. php:namespace:: CodeIgniter\Encryption
+
+.. php:class:: Encryption
 
     .. php:staticmethod:: createKey([$length = 32])
 
