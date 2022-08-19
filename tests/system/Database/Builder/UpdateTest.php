@@ -231,17 +231,16 @@ final class UpdateTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = 2 THEN 'Comedian'
-            WHEN "id" = 3 THEN 'Cab Driver'
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = 2 THEN 'There''s something in your teeth'
-            WHEN "id" = 3 THEN 'I am yellow'
-            ELSE "description" END
-            WHERE "id" IN(2,3)
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "description" = _u."description",
+            "name" = _u."name"
+            FROM (
+            SELECT 'There''s something in your teeth' "description", 2 "id", 'Comedian' "name" UNION ALL
+            SELECT 'I am yellow' "description", 3 "id", 'Cab Driver' "name"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
@@ -271,17 +270,16 @@ final class UpdateTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = 2 THEN SUBSTRING(name, 1)
-            WHEN "id" = 3 THEN SUBSTRING(name, 2)
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = 2 THEN SUBSTRING(description, 3)
-            WHEN "id" = 3 THEN SUBSTRING(description, 4)
-            ELSE "description" END
-            WHERE "id" IN(2,3)
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "description" = _u."description",
+            "name" = _u."name"
+            FROM (
+            SELECT SUBSTRING(description, 3) "description", 2 "id", SUBSTRING(name, 1) "name" UNION ALL
+            SELECT SUBSTRING(description, 4) "description", 3 "id", SUBSTRING(name, 2) "name"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
@@ -292,7 +290,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
+        $this->expectExceptionMessage('No data availble to process.');
 
         $builder->updateBatch(null, 'id');
     }
@@ -302,7 +300,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('You must specify an index to match on for batch updates.');
+        $this->expectExceptionMessage('setBatch() has no data.');
 
         $builder->updateBatch([]);
     }
@@ -312,7 +310,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('updateBatch() called with no data');
+        $this->expectExceptionMessage('setBatch() has no data.');
 
         $builder->updateBatch([], 'id');
     }

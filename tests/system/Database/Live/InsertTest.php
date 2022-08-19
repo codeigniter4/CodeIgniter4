@@ -58,6 +58,27 @@ final class InsertTest extends CIUnitTestCase
         $this->seeInDatabase('job', ['name' => 'Cab Driver']);
     }
 
+    public function testInsertBatchWithPrimaryKey()
+    {
+        $jobData = [
+            [
+                'name'    => 'Some User',
+                'email'   => 'someuser@example.com',
+                'country' => 'US',
+            ],
+            [
+                'name'    => 'New User',
+                'email'   => 'newuser@example.com',
+                'country' => 'US',
+            ],
+        ];
+
+        $this->db->table('user')->insertBatch($jobData);
+
+        $this->seeInDatabase('user', ['name' => 'Some User']);
+        $this->seeInDatabase('user', ['name' => 'New User']);
+    }
+
     public function testReplaceWithNoMatchingData()
     {
         $data = [

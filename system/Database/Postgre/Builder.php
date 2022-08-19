@@ -196,7 +196,115 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return trim(sprintf('INSERT INTO %s (%s) VALUES %s %s', $table, implode(', ', $keys), implode(', ', $values), $this->compileIgnore('insert')));
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $sql = 'INSERT INTO ' . $table . '(' . implode(', ', $keys) . ")\n%s\n";
+
+            $sql .= $this->compileIgnore('insert');
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = 'VALUES ' . implode(', ', $this->getValues($values));
+        }
+
+        return sprintf($sql, $data);
+    }
+
+    /**
+     * Generates a platform-specific upsertBatch string from the supplied data
+     *
+     * @throws DatabaseException
+     */
+    protected function _upsertBatch(string $table, array $keys, array $values): string
+    {
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $fieldNames = array_map(static fn ($columnName) => trim($columnName, '"'), $keys);
+
+            $constraints = $this->QBOptions['constraints'] ?? [];
+
+            if (empty($constraints)) {
+                $allIndexes = array_filter($this->db->getIndexData($table), static function ($index) use ($fieldNames) {
+                    $hasAllFields = count(array_intersect($index->fields, $fieldNames)) === count($index->fields);
+
+                    return ($index->type === 'UNIQUE' || $index->type === 'PRIMARY') && $hasAllFields;
+                });
+
+                foreach (array_map(static fn ($index) => $index->fields, $allIndexes) as $index) {
+                    $constraints[] = current($index);
+                    // only one index can be used?
+                    break;
+                }
+
+                $constraints = $this->onConstraint($constraints)->QBOptions['constraints'] ?? [];
+            }
+
+            if (empty($constraints)) {
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('No constraint found for upsert.');
+                }
+
+                return ''; // @codeCoverageIgnore
+            }
+
+            // in value set - replace null with DEFAULT where constraint is presumed not null
+            // autoincrement identity field must use DEFAULT and not NULL
+            // this could be removed in favour of leaving to developer but does make things easier and function like other DBMS
+            foreach ($constraints as $constraint) {
+                $key = array_search(trim($constraint, '"'), $fieldNames, true);
+
+                if ($key !== false) {
+                    foreach ($values as $arrayKey => $value) {
+                        if (strtoupper($value[$key]) === 'NULL') {
+                            $values[$arrayKey][$key] = 'DEFAULT';
+                        }
+                    }
+                }
+            }
+
+            $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
+
+            $sql = 'INSERT INTO ' . $table . ' (';
+
+            $sql .= implode(', ', $keys);
+
+            $sql .= ")\n";
+
+            $sql .= '%s';
+
+            $sql .= 'ON CONFLICT(' . implode(',', $constraints) . ")\n";
+
+            $sql .= "DO UPDATE SET\n";
+
+            $sql .= implode(
+                ",\n",
+                array_map(
+                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                        ' = ' . $value :
+                        ' = ' . '"excluded".' . $value),
+                    array_keys($updateFields),
+                    $updateFields
+                )
+            );
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = 'VALUES ' . implode(', ', $this->getValues($values)) . "\n";
+        }
+
+        return sprintf($sql, $data);
     }
 
     /**
@@ -239,39 +347,6 @@ class Builder extends BaseBuilder
         $this->QBOrderBy = [];
 
         return parent::_update($table, $values);
-    }
-
-    /**
-     * Generates a platform-specific batch update string from the supplied data
-     */
-    protected function _updateBatch(string $table, array $values, string $index): string
-    {
-        $ids   = [];
-        $final = [];
-
-        foreach ($values as $val) {
-            $ids[] = $val[$index];
-
-            foreach (array_keys($val) as $field) {
-                if ($field !== $index) {
-                    $final[$field] ??= [];
-
-                    $final[$field][] = "WHEN {$val[$index]} THEN {$val[$field]}";
-                }
-            }
-        }
-
-        $cases = '';
-
-        foreach ($final as $k => $v) {
-            $cases .= "{$k} = (CASE {$index}\n"
-                    . implode("\n", $v)
-                    . "\nELSE {$k} END), ";
-        }
-
-        $this->where("{$index} IN(" . implode(',', $ids) . ')', null, false);
-
-        return "UPDATE {$table} SET " . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
     }
 
     /**
