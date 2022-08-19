@@ -696,7 +696,7 @@ if (! function_exists('validation_errors')) {
      *
      * @return array<string, string>
      */
-    function validation_errors(): array
+    function validation_errors()
     {
         session();
 
