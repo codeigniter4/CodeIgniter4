@@ -13,9 +13,7 @@ class Form extends Controller
         if (! $this->validate([
             // Validation rules
         ])) {
-            echo view('myform', [
-                'validation' => $this->validator,
-            ]);
+            echo view('myform');
         } else {
             echo view('formsuccess');
         }
