@@ -105,7 +105,9 @@ Several options can be passed to the ``render()`` or ``renderString()`` methods:
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\View\\View
+.. php:namespace:: CodeIgniter\View
+
+.. php:class:: View
 
     .. php:method:: render($view[, $options[, $saveData = false]])
         :noindex:

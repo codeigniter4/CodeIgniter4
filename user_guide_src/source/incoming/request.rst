@@ -13,7 +13,9 @@ See the documentation for the :doc:`IncomingRequest Class </incoming/incomingreq
 Class Reference
 ===============
 
-.. php:class:: CodeIgniter\\HTTP\\Request
+.. php:namespace:: CodeIgniter\HTTP
+
+.. php:class:: Request
 
     .. php:method:: getIPAddress()
 

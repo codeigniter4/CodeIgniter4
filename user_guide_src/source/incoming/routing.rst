@@ -448,8 +448,17 @@ be used when the first parameter is a language string:
 
 .. _routing-priority:
 
-Route processing queue
-----------------------
+Route Priority
+**************
+
+Routes are registered in the routing table in the order in which they are defined. This means that when a URI is accessed, the first matching route will be executed.
+
+.. note:: If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.
+
+You can check registered routes in the routing table by running the :ref:`spark routes <spark-routes>` command.
+
+Changing Route Priority
+=======================
 
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 Then the module routes will not be processed correctly.
@@ -531,7 +540,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:
     will be returned. See :php:func:`Response::setStatusCode() <setStatusCode>` for
     information on how to set the status code.
 
-Route processing by priority
+Route Processing by Priority
 ============================
 
 Enables or disables processing of the routes queue by priority. Lowering the priority is defined in the route option.
