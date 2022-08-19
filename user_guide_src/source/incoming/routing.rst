@@ -445,8 +445,15 @@ be used when the first parameter is a language string:
 
 .. _routing-priority:
 
-Route Processing Queue
-----------------------
+Route Priority
+**************
+
+Routes are registered in the routing table in the order in which they are defined, and the first matching route is executed.
+
+You can check the routing table by the :ref:`spark routes <spark-routes>` command.
+
+Changing Route Priority
+=======================
 
 When working with modules, it can be a problem if the routes in the application contain wildcards.
 Then the module routes will not be processed correctly.
