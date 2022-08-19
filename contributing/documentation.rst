@@ -124,6 +124,9 @@ To a URL
 To a Function
 =============
 
-    :php:func:`dot_array_search`
+    :php:func:`dot_array_search()`
 
-    :php:func:`Response::setCookie() <setCookie>`
+To a Method
+=============
+
+    :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()`
