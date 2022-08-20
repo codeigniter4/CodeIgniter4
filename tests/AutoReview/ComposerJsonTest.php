@@ -67,6 +67,15 @@ final class ComposerJsonTest extends TestCase
         }
     }
 
+    public function testFrameworkSuggestIsTheSameWithDevSuggest(): void
+    {
+        $this->assertSame(
+            $this->devComposer['suggest'],
+            $this->frameworkComposer['suggest'],
+            'The framework\'s "suggest" section is not updated with the main composer.json.'
+        );
+    }
+
     private function getComposerJson(string $path): array
     {
         try {
