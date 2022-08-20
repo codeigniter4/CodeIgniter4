@@ -31,12 +31,12 @@ class Autoload extends AutoloadConfig
      * else you will need to modify all of those classes for this to work.
      *
      * Prototype:
-     *```
+     * ```
      *   $psr4 = [
      *       'CodeIgniter' => SYSTEMPATH,
      *       'App'	       => APPPATH
      *   ];
-     *```
+     * ```
      *
      * @var array<string, string>
      */
@@ -56,11 +56,11 @@ class Autoload extends AutoloadConfig
      * were being autoloaded through a namespace.
      *
      * Prototype:
-     *```
+     * ```
      *   $classmap = [
      *       'MyClass'   => '/path/to/class/file.php'
      *   ];
-     *```
+     * ```
      *
      * @var array<string, string>
      */
@@ -76,9 +76,9 @@ class Autoload extends AutoloadConfig
      *
      * Prototype:
      * ```
-     *	  $files = [
-     *	 	   '/path/to/my/file.php',
-     *    ];
+     *  $files = [
+     *      '/path/to/my/file.php',
+     *  ];
      * ```
      *
      * @var array<int, string>
