@@ -262,11 +262,10 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader->unregister();
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, $modules);
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
     }
 
@@ -279,11 +278,10 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader->unregister();
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, $modules);
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
         $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
     }
@@ -296,14 +294,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader->unregister();
-        $this->loader = new Autoloader();
+        $loader = new Autoloader();
 
         rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
-        $this->loader->initialize($config, $modules);
+        $loader->initialize($config, $modules);
         rename(COMPOSER_PATH . '.backup', $composerPath);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
     }
 
@@ -312,15 +309,16 @@ final class AutoloaderTest extends CIUnitTestCase
         $config          = new Autoload();
         $config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
 
-        $this->loader->unregister();
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, new Modules());
-        $this->loader->register();
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+        $loader->register();
 
         $this->assertTrue(function_exists('autoload_foo'));
         $this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
         $this->assertTrue(defined('AUTOLOAD_CONSTANT'));
         $this->assertSame('foo', AUTOLOAD_CONSTANT);
+
+        $loader->unregister();
     }
 
     public function testLoadHelpers()
@@ -328,12 +326,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $config            = new Autoload();
         $config->helpers[] = 'form';
 
-        $this->loader->unregister();
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, new Modules());
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
 
-        $this->loader->loadHelpers();
+        $loader->loadHelpers();
 
         $this->assertTrue(function_exists('form_open'));
+
+        $loader->unregister();
     }
 }
