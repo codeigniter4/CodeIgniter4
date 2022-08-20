@@ -71,7 +71,8 @@ class Autoloader
     /**
      * Stores files as a list.
      *
-     * @var array<int, string>
+     * @var string[]
+     * @phpstan-var list<string>
      */
     protected $files = [];
 

@@ -81,7 +81,8 @@ class Autoload extends AutoloadConfig
      *  ];
      * ```
      *
-     * @var array<int, string>
+     * @var string[]
+     * @phpstan-var list<string>
      */
     public $files = [];
 }
