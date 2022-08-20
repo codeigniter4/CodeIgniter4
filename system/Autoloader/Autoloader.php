@@ -148,6 +148,17 @@ class Autoloader
     }
 
     /**
+     * Unregister autoloader.
+     *
+     * This method is for testing.
+     */
+    public function unregister(): void
+    {
+        spl_autoload_unregister([$this, 'loadClass']);
+        spl_autoload_unregister([$this, 'loadClassmap']);
+    }
+
+    /**
      * Registers namespaces with the autoloader.
      *
      * @param array|string $namespace
