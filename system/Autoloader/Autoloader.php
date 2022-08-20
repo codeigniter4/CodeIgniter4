@@ -77,6 +77,14 @@ class Autoloader
     protected $files = [];
 
     /**
+     * Stores helper list.
+     *
+     * @var string[]
+     * @phpstan-var list<string>
+     */
+    protected $helpers = [];
+
+    /**
      * Reads in the configuration array (described above) and stores
      * the valid parts that we'll need.
      *
@@ -104,6 +112,10 @@ class Autoloader
 
         if (isset($config->files)) {
             $this->files = $config->files;
+        }
+
+        if (isset($config->helpers)) { // @phpstan-ignore-line
+            $this->helpers = $config->helpers;
         }
 
         if (is_file(COMPOSER_PATH)) {
@@ -407,5 +419,13 @@ class Autoloader
 
         $this->prefixes = array_merge($this->prefixes, $newPaths);
         $this->classmap = array_merge($this->classmap, $classes);
+    }
+
+    /**
+     * Loads helpers
+     */
+    public function loadHelpers(): void
+    {
+        helper($this->helpers);
     }
 }

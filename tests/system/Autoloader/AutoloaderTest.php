@@ -322,4 +322,18 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertTrue(defined('AUTOLOAD_CONSTANT'));
         $this->assertSame('foo', AUTOLOAD_CONSTANT);
     }
+
+    public function testLoadHelpers()
+    {
+        $config            = new Autoload();
+        $config->helpers[] = 'form';
+
+        $this->loader->unregister();
+        $this->loader = new Autoloader();
+        $this->loader->initialize($config, new Modules());
+
+        $this->loader->loadHelpers();
+
+        $this->assertTrue(function_exists('form_open'));
+    }
 }

@@ -85,4 +85,20 @@ class Autoload extends AutoloadConfig
      * @phpstan-var list<string>
      */
     public $files = [];
+
+    /**
+     * -------------------------------------------------------------------
+     * Helpers
+     * -------------------------------------------------------------------
+     * Prototype:
+     * ```
+     *   $helpers = [
+     *       'form',
+     *   ];
+     * ```
+     *
+     * @var string[]
+     * @phpstan-var list<string>
+     */
+    public $helpers = [];
 }
