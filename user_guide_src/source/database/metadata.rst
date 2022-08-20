@@ -101,9 +101,11 @@ The following data is available from this function if supported by your
 database:
 
 -  name - column name
--  max_length - maximum length of the column
--  primary_key - 1 if the column is a primary key
 -  type - the type of the column
+-  max_length - maximum length of the column
+-  primary_key - integer ``1`` if the column is a primary key (all integer ``1``, even if there are multiple primary keys), otherwise integer ``0``
+-  nullable - boolean ``true`` if the column is nullable, otherwise boolean ``false``
+-  default - the default value
 
 List the Indexes in a Table
 ===========================
