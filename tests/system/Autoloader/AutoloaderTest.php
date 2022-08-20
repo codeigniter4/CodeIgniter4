@@ -49,6 +49,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->loader->initialize($config, $modules)->register();
     }
 
+    protected function tearDown(): void
+    {
+        $this->loader->unregister();
+
+        parent::tearDown();
+    }
+
     public function testLoadStoredClass()
     {
         $this->assertInstanceOf('UnnamespacedClass', new UnnamespacedClass());
@@ -98,10 +105,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader = Services::autoloader(false);
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
+
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
+
+        $autoloader->unregister();
     }
 
     public function testExistingFile()
@@ -252,6 +262,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
+        $this->loader->unregister();
         $this->loader = new Autoloader();
         $this->loader->initialize($config, $modules);
 
@@ -268,6 +279,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
+        $this->loader->unregister();
         $this->loader = new Autoloader();
         $this->loader->initialize($config, $modules);
 
@@ -284,6 +296,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
+        $this->loader->unregister();
         $this->loader = new Autoloader();
 
         rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
@@ -296,10 +309,10 @@ final class AutoloaderTest extends CIUnitTestCase
 
     public function testAutoloaderLoadsNonClassFiles(): void
     {
-        $config = new Autoload();
-
+        $config          = new Autoload();
         $config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
 
+        $this->loader->unregister();
         $this->loader = new Autoloader();
         $this->loader->initialize($config, new Modules());
         $this->loader->register();
