@@ -68,6 +68,7 @@ Others
 - Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
 - Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
+- Now you can autoload helpers by **app/Config/Autoload.php**.
 
 Changes
 *******

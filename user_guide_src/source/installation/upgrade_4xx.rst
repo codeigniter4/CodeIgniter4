@@ -109,6 +109,7 @@ Helpers
 =======
 
 - Helpers are pretty much the same as before, though some have been simplified.
+- Since v4.3.0, you can autoload helpers by **app/Config/Autoload.php** as well as CI3.
 - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
