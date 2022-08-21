@@ -118,6 +118,3 @@ if (is_file(COMPOSER_PATH)) {
 
     require_once COMPOSER_PATH;
 }
-
-// Always load the URL helper, it should be used in most of apps.
-helper('url');

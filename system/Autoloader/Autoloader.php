@@ -78,11 +78,12 @@ class Autoloader
 
     /**
      * Stores helper list.
+     * Always load the URL helper, it should be used in most apps.
      *
      * @var string[]
      * @phpstan-var list<string>
      */
-    protected $helpers = [];
+    protected $helpers = ['url'];
 
     /**
      * Reads in the configuration array (described above) and stores
@@ -115,7 +116,7 @@ class Autoloader
         }
 
         if (isset($config->helpers)) { // @phpstan-ignore-line
-            $this->helpers = $config->helpers;
+            $this->helpers = array_merge($this->helpers, $config->helpers);
         }
 
         if (is_file(COMPOSER_PATH)) {
