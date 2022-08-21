@@ -12,8 +12,9 @@
 namespace CodeIgniter\Security\Exceptions;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\Exceptions\HTTPExceptionInterface;
 
-class SecurityException extends FrameworkException
+class SecurityException extends FrameworkException implements HTTPExceptionInterface
 {
     public static function forDisallowedAction()
     {
