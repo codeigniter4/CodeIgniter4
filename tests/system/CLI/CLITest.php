@@ -90,6 +90,26 @@ final class CLITest extends CIUnitTestCase
         PhpStreamWrapper::restore();
     }
 
+    public function testPromptByMultipleKeys()
+    {
+        PhpStreamWrapper::register();
+
+        $input = '0,1';
+        PhpStreamWrapper::setContent($input);
+
+        $options = ['Playing game', 'Sleep', 'Badminton'];
+        $output  = CLI::promptByMultipleKeys('Select your hobbies:', $options);
+
+        $expected = [
+            0 => 'Playing game',
+            1 => 'Sleep',
+        ];
+
+        $this->assertSame($expected, $output);
+
+        PhpStreamWrapper::restore();
+    }
+
     public function testIsWindows()
     {
         $this->assertSame(('\\' === DIRECTORY_SEPARATOR), CLI::isWindows());

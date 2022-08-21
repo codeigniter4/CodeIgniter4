@@ -72,6 +72,17 @@ Named keys are also possible:
 
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
 
+.. _prompt-by-multiple-keys:
+
+promptByMultipleKeys()
+======================
+
+This method is the same as ``promptByKey()``, but it supports multiple value.
+
+.. literalinclude:: cli_library/023.php
+
+.. important:: The method ``promptByMultipleKeys()``, unlike ``promptByKey()``, does not support named keys or validation.
+
 Providing Feedback
 ******************
 

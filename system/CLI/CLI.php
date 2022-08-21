@@ -281,14 +281,106 @@ class CLI
             throw new InvalidArgumentException('$text can only be of type string|array');
         }
 
-        if (! $options) {
-            throw new InvalidArgumentException('No options to select from were provided');
-        }
+        CLI::isZeroOptions($options);
 
         if ($line = array_shift($text)) {
             CLI::write($line);
         }
 
+        CLI::printKeysAndValues($options);
+
+        return static::prompt(PHP_EOL . array_shift($text), array_keys($options), $validation);
+    }
+
+    /**
+     * This method is the same as promptByKey(), but this method supports multiple keys, separated by commas.
+     *
+     * @param string $text    Output "field" text or an one or two value array where the first value is the text before listing the options
+     *                        and the second value the text before asking to select one option. Provide empty string to omit
+     * @param array  $options A list of options (array(key => description)), the first option will be the default value
+     *
+     * @return array The selected key(s) and value(s) of $options
+     */
+    public static function promptByMultipleKeys(string $text, array $options): array
+    {
+        CLI::isZeroOptions($options);
+
+        $extraOutputDefault = static::color('0', 'green');
+        $opts               = $options;
+        unset($opts[0]);
+
+        if (empty($opts)) {
+            $extraOutput = $extraOutputDefault;
+        } else {
+            $optsKey = [];
+
+            foreach (array_keys($opts) as $key) {
+                $optsKey[] = $key;
+            }
+            $extraOutput = '[' . $extraOutputDefault . ', ' . implode(', ', $optsKey) . ']';
+            $extraOutput = 'You can specify multiple values separated by commas.' . PHP_EOL . $extraOutput;
+        }
+
+        CLI::write($text);
+        CLI::printKeysAndValues($options);
+        CLI::newLine();
+        $input = static::prompt($extraOutput) ?: 0; // 0 is default
+
+        // validation
+        while (true) {
+            $pattern = preg_match_all('/^\d+(,\d+)*$/', trim($input));
+
+            // separate input by comma and convert all to an int[]
+            $inputToArray = array_map(static fn ($value) => (int) $value, explode(',', $input));
+            // find max from key of $options
+            $maxOptions = array_key_last($options);
+            // find max from input
+            $maxInput = max($inputToArray);
+
+            // return the prompt again if $input contain(s) non-numeric charachter, except a comma.
+            // And if max from $options less than max from input
+            // it is mean user tried to access null value in $options
+            if (! $pattern || $maxOptions < $maxInput) {
+                static::error('Please select correctly.');
+                CLI::newLine();
+                $input = static::prompt($extraOutput) ?: 0;
+            } else {
+                break;
+            }
+        }
+
+        $input = [];
+
+        foreach ($options as $key => $description) {
+            foreach ($inputToArray as $inputKey) {
+                if ($key === $inputKey) {
+                    $input[$key] = $description;
+                }
+            }
+        }
+
+        return $input;
+    }
+
+    //--------------------------------------------------------------------
+    // Utility for promptBy...
+    //--------------------------------------------------------------------
+
+    /**
+     * Validation for $options in promptByKey() and promptByMultipleKeys(). Return an error if $options is an empty array.
+     */
+    private static function isZeroOptions(array $options): void
+    {
+        if (! $options) {
+            throw new InvalidArgumentException('No options to select from were provided');
+        }
+    }
+
+    /**
+     * Print each key and value one by one
+     */
+    private static function printKeysAndValues(array $options): void
+    {
         // +2 for the square brackets around the key
         $keyMaxLength = max(array_map('mb_strwidth', array_keys($options))) + 2;
 
@@ -296,9 +388,11 @@ class CLI
             $name = str_pad('  [' . $key . ']  ', $keyMaxLength + 4, ' ');
             CLI::write(CLI::color($name, 'green') . CLI::wrap($description, 125, $keyMaxLength + 4));
         }
-
-        return static::prompt(PHP_EOL . array_shift($text), array_keys($options), $validation);
     }
+
+    //--------------------------------------------------------------------
+    // End Utility for promptBy...
+    //--------------------------------------------------------------------
 
     /**
      * Validate one prompt "field" at a time
