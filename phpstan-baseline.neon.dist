@@ -61,6 +61,11 @@ parameters:
 			path: system/Cache/Handlers/RedisHandler.php
 
 		-
+			message: "#^Strict comparison using === between array and array{} will always evaluate to false\\.$#"
+			count: 1
+			path: system/CLI/Console.php
+
+		-
 			message: "#^Call to an undefined method CodeIgniter\\\\HTTP\\\\Request\\:\\:getPost\\(\\)\\.$#"
 			count: 1
 			path: system/CodeIgniter.php

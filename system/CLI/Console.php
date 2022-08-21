@@ -31,6 +31,7 @@ class Console
     {
         $runner  = Services::commands();
         $params  = array_merge(CLI::getSegments(), CLI::getOptions());
+        $params  = $this->parseParamsForHelpOption($params);
         $command = array_shift($params) ?? 'list';
 
         return $runner->run($command, $params);
@@ -52,5 +53,25 @@ class Console
             date('P')
         ), 'green');
         CLI::newLine();
+    }
+
+    /**
+     * Introspects the `$params` passed for presence of the
+     * `--help` option.
+     *
+     * If present, it will be found as `['help' => null]`.
+     * We'll remove that as an option from `$params` and
+     * unshift it as argument instead.
+     */
+    private function parseParamsForHelpOption(array $params): array
+    {
+        if (array_key_exists('help', $params)) {
+            unset($params['help']);
+
+            $params = $params === [] ? ['list'] : $params;
+            array_unshift($params, 'help');
+        }
+
+        return $params;
     }
 }
