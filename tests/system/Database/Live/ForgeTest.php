@@ -1237,4 +1237,19 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->forge->dropTable('key_test_users', true);
     }
+
+    public function testAddTextColumnWithConstraint()
+    {
+        // some DBMS do not allow a constraint for type TEXT
+        $result = $this->forge->addColumn('user', [
+            'text_with_constraint' => ['type' => 'text', 'constraint' => 255, 'default' => ''],
+        ]);
+
+        $this->assertTrue($result);
+
+        // SQLSRV requires dropping default constraint before dropping column
+        $result = $this->forge->dropColumn('user', 'text_with_constraint');
+
+        $this->assertTrue($result);
+    }
 }

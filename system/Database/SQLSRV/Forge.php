@@ -144,7 +144,25 @@ class Forge extends BaseForge
                 }
             }
 
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' DROP ';
+            $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+
+            // Drop default constraints
+            $fields = "'" . implode("','", $field) . "'";
+
+            $sql = <<<SQL
+                SELECT name
+                FROM SYS.DEFAULT_CONSTRAINTS
+                WHERE PARENT_OBJECT_ID = OBJECT_ID('{$fullTable}')
+                AND PARENT_COLUMN_ID IN (
+                SELECT column_id FROM sys.columns WHERE NAME IN ({$fields}) AND object_id = OBJECT_ID(N'{$fullTable}')
+                )
+                SQL;
+
+            foreach ($this->db->query($sql)->getResultArray() as $index) {
+                $this->db->query('ALTER TABLE ' . $fullTable . ' DROP CONSTRAINT ' . $index['name'] . '');
+            }
+
+            $sql = 'ALTER TABLE ' . $fullTable . ' DROP ';
 
             $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $field);
 
