@@ -58,7 +58,7 @@ redirect()->withInput() and Validation Errors
 ``redirect()->withInput()`` and Validation errors had an undocumented behavior.
 If you redirect with ``withInput()``, CodeIgniter stores the validation errors
 in the session, and you can get the errors in the redirected page from
-a validation object::
+a validation object *before a new validation is run*::
 
     // In the controller
     if (! $this->validate($rules)) {
