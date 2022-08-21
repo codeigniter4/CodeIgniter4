@@ -79,7 +79,7 @@ final class CommandRunnerTest extends CIUnitTestCase
 
         // make sure the result looks like basic help
         $this->assertStringContainsString('Displays basic usage information.', $result);
-        $this->assertStringContainsString('help command_name', $result);
+        $this->assertStringContainsString('help [<command_name>]', $result);
     }
 
     public function testHelpCommandDetails()

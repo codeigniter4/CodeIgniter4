@@ -46,7 +46,7 @@ class ClearCache extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'cache:clear [driver]';
+    protected $usage = 'cache:clear [<driver>]';
 
     /**
      * the Command's Arguments
