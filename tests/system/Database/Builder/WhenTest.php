@@ -11,14 +11,8 @@
 
 namespace CodeIgniter\Database\Builder;
 
-use CodeIgniter\Database\BaseBuilder;
-use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
-use DateTime;
-use Error;
-use ErrorException;
-use stdClass;
 
 /**
  * @internal
@@ -44,7 +38,7 @@ final class WhenTest extends CIUnitTestCase
         $expectedSQL = 'SELECT * FROM "jobs"';
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
 
-        $builder = $builder->when(true, function ($query) {
+        $builder = $builder->when(true, static function ($query) {
             $query->select('id');
         });
 
@@ -56,7 +50,7 @@ final class WhenTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->when('abc', function ($query) {
+        $builder = $builder->when('abc', static function ($query) {
             $query->select('id');
         });
 
@@ -68,9 +62,9 @@ final class WhenTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->when(false, function ($query) {
+        $builder = $builder->when(false, static function ($query) {
             $query->select('id');
-        }, function($query) {
+        }, static function ($query) {
             $query->select('name');
         });
 
@@ -82,7 +76,7 @@ final class WhenTest extends CIUnitTestCase
     {
         $builder = $this->db->table('jobs');
 
-        $builder = $builder->when(false, function ($query) {
+        $builder = $builder->when(false, static function ($query) {
             $query->select('id');
         });
 
@@ -93,9 +87,9 @@ final class WhenTest extends CIUnitTestCase
     public function testWhenPassesParemeters()
     {
         $builder = $this->db->table('jobs');
-        $name = 'developer';
+        $name    = 'developer';
 
-        $builder = $builder->when($name, function ($query, $name) {
+        $builder = $builder->when($name, static function ($query, $name) {
             $query->where('name', $name);
         });
 
