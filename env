@@ -124,7 +124,7 @@
 # security.cookieName = 'csrf_cookie_name'
 # security.expires = 7200
 # security.regenerate = true
-# security.redirect = true
+# security.redirect = false
 # security.samesite = 'Lax'
 
 #--------------------------------------------------------------------
