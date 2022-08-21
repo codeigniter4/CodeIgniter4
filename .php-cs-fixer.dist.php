@@ -25,7 +25,11 @@ $finder = Finder::create()
         __DIR__ . '/tests',
         __DIR__ . '/utils',
     ])
-    ->exclude(['ThirdParty'])
+    ->exclude([
+        'Pager/Views',
+        'ThirdParty',
+        'Validation/Views',
+    ])
     ->notName('#Foobar.php$#')
     ->append([
         __FILE__,
