@@ -147,7 +147,7 @@ class Forge extends BaseForge
             $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
 
             // Drop default constraints
-            $fields = "'" . implode("','", $field) . "'";
+            $fields = "'" . implode("','", (array) $field) . "'";
 
             $sql = <<<SQL
                 SELECT name
