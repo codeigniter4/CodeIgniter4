@@ -112,18 +112,22 @@ may alter this behavior by editing the following config parameter value in
 Redirection on Failure
 ----------------------
 
-When a request fails the CSRF validation check, it will redirect to the previous page by default,
-setting an ``error`` flash message that you can display to the end user with the following code in your view::
+Since v4.3.0, when a request fails the CSRF validation check,
+it will throw a SecurityException by default,
 
-    <?= session()->getFlashdata('error') ?>
-
-This provides a nicer experience
-than simply crashing. This can be turned off by editing the following config parameter value in
+If you want to make it redirect to the previous page,
+change the following config parameter value in
 **app/Config/Security.php**:
 
 .. literalinclude:: security/005.php
 
-Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an error.
+When redirected, an ``error`` flash message is set and can be displayed to the end user with the following code in your view::
+
+    <?= session()->getFlashdata('error') ?>
+
+This provides a nicer experience than simply crashing.
+
+Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an SecurityException.
 
 Enable CSRF Protection
 ======================
