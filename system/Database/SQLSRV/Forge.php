@@ -263,7 +263,7 @@ class Forge extends BaseForge
     {
         return $this->db->escapeIdentifiers($field['name'])
             . (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-            . ' ' . $field['type'] . $field['length']
+            . ' ' . $field['type'] . ($field['type'] === 'text' ? '' : $field['length'])
             . $field['default']
             . $field['null']
             . $field['auto_increment']
