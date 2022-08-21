@@ -442,9 +442,11 @@ supplying the table name:</p>
 database:</p>
 <ul class="simple">
 <li><p>name - column name</p></li>
-<li><p>max_length - maximum length of the column</p></li>
-<li><p>primary_key - 1 if the column is a primary key</p></li>
 <li><p>type - the type of the column</p></li>
+<li><p>max_length - maximum length of the column</p></li>
+<li><p>primary_key - integer <code class="docutils literal notranslate"><span class="pre">1</span></code> if the column is a primary key (all integer <code class="docutils literal notranslate"><span class="pre">1</span></code>, even if there are multiple primary keys), otherwise integer <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+<li><p>nullable - boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is nullable, otherwise boolean <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>default - the default value</p></li>
 </ul>
 </section>
 </section>
@@ -510,7 +512,7 @@ foreign key definitions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 19, 2022.
+      <span class="lastupdated">Last updated on Aug 21, 2022.
       </span></p>
   </div>
 
