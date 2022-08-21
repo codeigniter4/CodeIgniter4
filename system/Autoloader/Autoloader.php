@@ -116,7 +116,7 @@ class Autoloader
         }
 
         if (isset($config->helpers)) { // @phpstan-ignore-line
-            $this->helpers = array_merge($this->helpers, $config->helpers);
+            $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 
         if (is_file(COMPOSER_PATH)) {
