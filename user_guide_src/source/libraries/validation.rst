@@ -71,7 +71,7 @@ code and save it to your **app/Views/** folder::
     </head>
     <body>
 
-        <?= $validation->listErrors() ?>
+        <?= validation_list_errors() ?>
 
         <?= form_open('form') ?>
 
@@ -166,7 +166,7 @@ The form (**signup.php**) is a standard web form with a couple of exceptions:
 #. At the top of the form you'll notice the following function call:
    ::
 
-    <?= $validation->listErrors() ?>
+    <?= validation_list_errors() ?>
 
    This function will return any error messages sent back by the
    validator. If there are no messages it returns an empty string.
@@ -504,6 +504,8 @@ You can check to see if an error exists with the ``hasError()`` method. The only
 When specifying a field with a wildcard, all errors matching the mask will be checked:
 
 .. literalinclude:: validation/029.php
+
+.. _validation-customizing-error-display:
 
 Customizing Error Display
 *************************

@@ -455,7 +455,7 @@ Routes are registered in the routing table in the order in which they are define
 
 .. note:: If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.
 
-You can check registered routes in the routing table by running the :ref:`spark routes <spark-routes>` command.
+You can check registered routes in the routing table by running the :ref:`spark routes <routing-spark-routes>` command.
 
 Changing Route Priority
 =======================
