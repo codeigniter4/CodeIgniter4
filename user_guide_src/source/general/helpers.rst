@@ -83,6 +83,18 @@ use the following command to load the helper for us:
 .. note:: The functions within files loaded this way are not truly namespaced.
     The namespace is simply used as a convenient way to locate the files.
 
+.. _auto-loading-helpers:
+
+Auto-loading Helpers
+--------------------
+
+.. versionadded:: 4.3.0
+
+If you find that you need a particular helper globally throughout your application,
+you can tell CodeIgniter to auto-load it during system initialization.
+This is done by opening the **app/Config/Autoload.php** file
+and adding the helper to the ``$helpers`` property.
+
 Using a Helper
 ==============
 

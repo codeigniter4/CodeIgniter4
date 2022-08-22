@@ -71,9 +71,19 @@ class Autoloader
     /**
      * Stores files as a list.
      *
-     * @var array<int, string>
+     * @var string[]
+     * @phpstan-var list<string>
      */
     protected $files = [];
+
+    /**
+     * Stores helper list.
+     * Always load the URL helper, it should be used in most apps.
+     *
+     * @var string[]
+     * @phpstan-var list<string>
+     */
+    protected $helpers = ['url'];
 
     /**
      * Reads in the configuration array (described above) and stores
@@ -103,6 +113,10 @@ class Autoloader
 
         if (isset($config->files)) {
             $this->files = $config->files;
+        }
+
+        if (isset($config->helpers)) { // @phpstan-ignore-line
+            $this->helpers = [...$this->helpers, ...$config->helpers];
         }
 
         if (is_file(COMPOSER_PATH)) {
@@ -144,6 +158,17 @@ class Autoloader
         foreach ($this->files as $file) {
             $this->includeFile($file);
         }
+    }
+
+    /**
+     * Unregister autoloader.
+     *
+     * This method is for testing.
+     */
+    public function unregister(): void
+    {
+        spl_autoload_unregister([$this, 'loadClass']);
+        spl_autoload_unregister([$this, 'loadClassmap']);
     }
 
     /**
@@ -395,5 +420,13 @@ class Autoloader
 
         $this->prefixes = array_merge($this->prefixes, $newPaths);
         $this->classmap = array_merge($this->classmap, $classes);
+    }
+
+    /**
+     * Loads helpers
+     */
+    public function loadHelpers(): void
+    {
+        helper($this->helpers);
     }
 }

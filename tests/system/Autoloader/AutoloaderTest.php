@@ -49,6 +49,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->loader->initialize($config, $modules)->register();
     }
 
+    protected function tearDown(): void
+    {
+        $this->loader->unregister();
+
+        parent::tearDown();
+    }
+
     public function testLoadStoredClass()
     {
         $this->assertInstanceOf('UnnamespacedClass', new UnnamespacedClass());
@@ -98,10 +105,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader = Services::autoloader(false);
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
+
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
+
+        $autoloader->unregister();
     }
 
     public function testExistingFile()
@@ -252,10 +262,10 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, $modules);
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
     }
 
@@ -268,10 +278,10 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, $modules);
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
         $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
     }
@@ -284,29 +294,49 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader = new Autoloader();
+        $loader = new Autoloader();
 
         rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
-        $this->loader->initialize($config, $modules);
+        $loader->initialize($config, $modules);
         rename(COMPOSER_PATH . '.backup', $composerPath);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
     }
 
     public function testAutoloaderLoadsNonClassFiles(): void
     {
-        $config = new Autoload();
-
+        $config          = new Autoload();
         $config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
 
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, new Modules());
-        $this->loader->register();
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+        $loader->register();
 
         $this->assertTrue(function_exists('autoload_foo'));
         $this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
         $this->assertTrue(defined('AUTOLOAD_CONSTANT'));
         $this->assertSame('foo', AUTOLOAD_CONSTANT);
+
+        $loader->unregister();
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testLoadHelpers(): void
+    {
+        $config            = new Autoload();
+        $config->helpers[] = 'form';
+
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+
+        $loader->loadHelpers();
+
+        $this->assertTrue(function_exists('form_open'));
+
+        $loader->unregister();
     }
 }

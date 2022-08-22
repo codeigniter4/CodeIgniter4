@@ -103,6 +103,7 @@ require_once APPPATH . 'Config/Services.php';
 
 // Initialize and register the loader with the SPL autoloader stack.
 Services::autoloader()->initialize(new Autoload(), new Modules())->register();
+Services::autoloader()->loadHelpers();
 
 // Now load Composer's if it's available
 if (is_file(COMPOSER_PATH)) {
@@ -117,6 +118,3 @@ if (is_file(COMPOSER_PATH)) {
 
     require_once COMPOSER_PATH;
 }
-
-// Always load the URL helper, it should be used in most of apps.
-helper('url');
