@@ -127,7 +127,7 @@ When redirected, an ``error`` flash message is set and can be displayed to the e
 
 This provides a nicer experience than simply crashing.
 
-Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw an SecurityException.
+Even when the redirect value is ``true``, AJAX calls will not redirect, but will throw a SecurityException.
 
 Enable CSRF Protection
 ======================
