@@ -8,7 +8,7 @@ directory. It is possible, however, to have multiple sets of
 applications that share a single CodeIgniter installation, or even to
 rename or relocate your application directory.
 
-.. important:: When you installed CodeIgniter v4.1.9 or before, and if there are ``App\\`` and ``Config\\`` namespaces in your ``/composer.json``'s ``autoload.psr-4`` like the following, you need to remove these lines, and run ``composer dump-autolod``.
+.. important:: When you installed CodeIgniter v4.1.9 or before, and if there are ``App\\`` and ``Config\\`` namespaces in your ``/composer.json``'s ``autoload.psr-4`` like the following, you need to remove these lines, and run ``composer dump-autoload``.
 
     .. code-block:: text
 
