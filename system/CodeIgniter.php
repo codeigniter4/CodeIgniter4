@@ -730,9 +730,12 @@ class CodeIgniter
         }
 
         $uri = $this->request->getUri();
-
         if ($config->cacheQueryString) {
-            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
+            if (is_array($config->cacheQueryString)){
+                $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(array('only' => $config->cacheQueryString)));
+            }else{
+                $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
+            }
         } else {
             $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
         }
