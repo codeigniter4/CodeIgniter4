@@ -292,6 +292,7 @@
 <ul class="simple">
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">BaseConnection::tableExists()</span></code> has been changed. A second optional parameter <code class="docutils literal notranslate"><span class="pre">$cached</span></code> was added. This directs whether to use cache data or not. Default is <code class="docutils literal notranslate"><span class="pre">true</span></code>, use cache data.</p></li>
 <li><p>The abstract method signature of <code class="docutils literal notranslate"><span class="pre">BaseBuilder::_listTables()</span></code> has been changed. A second optional parameter <code class="docutils literal notranslate"><span class="pre">$tableName</span></code> was added. Providing a table name will generate SQL listing only that table.</p></li>
+<li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::processRules()</span></code> and <code class="docutils literal notranslate"><span class="pre">Validation::getErrorMessage()</span></code> have been changed. Both of these methods add new <code class="docutils literal notranslate"><span class="pre">$originalField</span></code> parameter.</p></li>
 </ul>
 </section>
 <section id="enhancements">
