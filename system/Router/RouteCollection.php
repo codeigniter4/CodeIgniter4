@@ -1207,11 +1207,7 @@ class RouteCollection implements RouteCollectionInterface
         if ($locale === null) {
             $request = Services::request();
 
-            if ($request instanceof IncomingRequest) {
-                $locale = $request->getLocale();
-            } else {
-                $locale = Locale::getDefault();
-            }
+            $locale = $request instanceof IncomingRequest ? $request->getLocale() : Locale::getDefault();
         }
 
         return strtr($route, ['{locale}' => $locale]);
