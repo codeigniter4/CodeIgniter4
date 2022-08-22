@@ -244,8 +244,7 @@ class Table
 
         $this->keys = array_filter(
             $this->keys,
-            static fn ($index) => count(array_intersect($index['fields'], $fieldNames))
-            === count($index['fields'])
+            static fn ($index) => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields'])
         );
 
         // Unique/Index keys
