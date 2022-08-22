@@ -1250,6 +1250,8 @@ final class ForgeTest extends CIUnitTestCase
         // SQLSRV requires dropping default constraint before dropping column
         $result = $this->forge->dropColumn('user', 'text_with_constraint');
 
+        $this->db->resetDataCache();
+
         $this->assertFalse($this->db->fieldExists('text_with_constraint', 'user'));
     }
 }
