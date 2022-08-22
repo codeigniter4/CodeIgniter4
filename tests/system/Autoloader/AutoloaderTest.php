@@ -321,7 +321,11 @@ final class AutoloaderTest extends CIUnitTestCase
         $loader->unregister();
     }
 
-    public function testLoadHelpers()
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState  disabled
+     */
+    public function testLoadHelpers(): void
     {
         $config            = new Autoload();
         $config->helpers[] = 'form';
