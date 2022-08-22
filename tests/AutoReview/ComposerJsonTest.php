@@ -24,25 +24,30 @@ use PHPUnit\Framework\TestCase;
  */
 final class ComposerJsonTest extends TestCase
 {
+    private array $devComposer;
+    private array $frameworkComposer;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->devComposer       = $this->getComposerJson(dirname(__DIR__, 2) . '/composer.json');
+        $this->frameworkComposer = $this->getComposerJson(dirname(__DIR__, 2) . '/admin/framework/composer.json');
+    }
+
     public function testFrameworkRequireIsTheSameWithDevRequire(): void
     {
-        $devComposer       = $this->getComposerJson(dirname(__DIR__, 2) . '/composer.json');
-        $frameworkComposer = $this->getComposerJson(dirname(__DIR__, 2) . '/admin/framework/composer.json');
-
         $this->assertSame(
-            $devComposer['require'],
-            $frameworkComposer['require'],
+            $this->devComposer['require'],
+            $this->frameworkComposer['require'],
             'The framework\'s "require" section is not updated with the main composer.json.'
         );
     }
 
     public function testFrameworkRequireDevIsTheSameWithDevRequireDev(): void
     {
-        $devComposer       = $this->getComposerJson(dirname(__DIR__, 2) . '/composer.json');
-        $frameworkComposer = $this->getComposerJson(dirname(__DIR__, 2) . '/admin/framework/composer.json');
-
-        $devRequireDev = $devComposer['require-dev'];
-        $fwRequireDev  = $frameworkComposer['require-dev'];
+        $devRequireDev = $this->devComposer['require-dev'];
+        $fwRequireDev  = $this->frameworkComposer['require-dev'];
 
         foreach ($devRequireDev as $dependency => $expectedVersion) {
             if (! isset($fwRequireDev[$dependency])) {
@@ -60,6 +65,15 @@ final class ComposerJsonTest extends TestCase
                 clean_path(dirname(__DIR__, 2) . '/admin/framework/composer.json')
             ));
         }
+    }
+
+    public function testFrameworkSuggestIsTheSameWithDevSuggest(): void
+    {
+        $this->assertSame(
+            $this->devComposer['suggest'],
+            $this->frameworkComposer['suggest'],
+            'The framework\'s "suggest" section is not updated with the main composer.json.'
+        );
     }
 
     private function getComposerJson(string $path): array

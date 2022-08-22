@@ -464,6 +464,28 @@ class ValidationTest extends CIUnitTestCase
     }
 
     /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6245
+     */
+    public function testRunWithCustomErrorsAndAsteriskField(): void
+    {
+        $data = [
+            'foo' => [
+                ['bar' => null],
+                ['bar' => null],
+            ],
+        ];
+        $this->validation->setRules(
+            ['foo.*.bar' => ['label' => 'foo bar', 'rules' => 'required']],
+            ['foo.*.bar' => ['required' => 'Required']]
+        );
+        $this->validation->run($data);
+        $this->assertSame([
+            'foo.0.bar' => 'Required',
+            'foo.1.bar' => 'Required',
+        ], $this->validation->getErrors());
+    }
+
+    /**
      * @dataProvider rulesSetupProvider
      *
      * @param string|string[] $rules

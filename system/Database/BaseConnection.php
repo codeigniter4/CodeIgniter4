@@ -883,7 +883,12 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function newQuery(): BaseBuilder
     {
-        return $this->table(',')->from([], true);
+        // save table aliases
+        $tempAliases         = $this->aliasedTables;
+        $builder             = $this->table(',')->from([], true);
+        $this->aliasedTables = $tempAliases;
+
+        return $builder;
     }
 
     /**

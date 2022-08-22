@@ -14,6 +14,7 @@ BREAKING
 
 - The method signature of ``BaseConnection::tableExists()`` has been changed. A second optional parameter ``$cached`` was added. This directs whether to use cache data or not. Default is ``true``, use cache data.
 - The abstract method signature of ``BaseBuilder::_listTables()`` has been changed. A second optional parameter ``$tableName`` was added. Providing a table name will generate SQL listing only that table.
+- The method signature of ``Validation::processRules()`` and ``Validation::getErrorMessage()`` have been changed. Both of these methods add new ``$originalField`` parameter.
 
 Enhancements
 ************
@@ -32,5 +33,6 @@ none.
 
 Bugs Fixed
 **********
+- When using subqueries in the main query, prefixes are added to the table alias.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.

@@ -48,7 +48,7 @@ class Help extends BaseCommand
      *
      * @var string
      */
-    protected $usage = 'help command_name';
+    protected $usage = 'help [<command_name>]';
 
     /**
      * the Command's Arguments
