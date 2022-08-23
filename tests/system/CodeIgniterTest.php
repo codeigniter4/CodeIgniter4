@@ -625,18 +625,23 @@ final class CodeIgniterTest extends CIUnitTestCase
     }
 
     /**
+     * @param mixed $cacheQueryStringValue
+     * @param int   $expectedPagesInCache
+     * @param array $testingUrls
+     * @dataProvider cacheQueryStringProvider
+     *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
-    public function testPageCacheWithCacheQueryStringFalse()
+    public function testPageCacheWithCacheQueryString($cacheQueryStringValue, $expectedPagesInCache, $testingUrls)
     {
         // Suppress command() output
         CITestStreamFilter::$buffer = '';
         $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
         $errorStreamFilter          = stream_filter_append(STDERR, 'CITestStreamFilter');
 
-        // Create cache config with disabled cacheQueryString
+        // Create cache config with cacheQueryString value from the dataProvider
         $cacheConfig                   = new Cache();
-        $cacheConfig->cacheQueryString = false;
+        $cacheConfig->cacheQueryString = $cacheQueryStringValue;
 
         // Clear cache before starting the test
         command('cache:clear');
@@ -645,21 +650,12 @@ final class CodeIgniterTest extends CIUnitTestCase
         $cache             = \Config\Services::cache();
         $cacheStartCounter = count($cache->getCacheInfo());
 
-        // URLs for testing cache configuration. Only one cache file should be created for all 5 URL`s, since we have disabled cacheQueryString
-        $testingUrls = [
-            'test', // Should be cached because its first request after clearing cache and there is no cached version of the page
-            'test?important_parameter=1', // Should NOT be cached, because we expect that GET parameters are ignored and URL without GET parameters was cached at first itteration
-            'test?important_parameter=2', // Should NOT be cached, because we expect that GET parameters are ignored and URL without GET parameters was cached at first itteration
-            'test?important_parameter=1&not_important_parameter=2', // Should NOT be cached, because we expect that GET parameters are ignored and URL without GET parameters was cached at first itteration
-            'test?important_parameter=1&not_important_parameter=2&another_not_important_parameter=3', // Should NOT be cached, because we expect that GET parameters are ignored and URL without GET parameters was cached at first itteration
-        ];
-
         // Generate request to each URL from the testing array
         foreach ($testingUrls as $testingUrl) {
             $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
             $routes                 = Services::routes(true);
             $routes->add($testingUrl, static function () {
-                CodeIgniter::cache(0); // Dont cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings in the test
+                CodeIgniter::cache(0); // Dont cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings from the dataProvider
                 $response = Services::response();
                 $string = 'This is a test page, to check cache configuration';
 
@@ -670,7 +666,7 @@ final class CodeIgniterTest extends CIUnitTestCase
             $router = Services::router($routes, Services::request(null, false));
             Services::injectMock('router', $router);
 
-            // Cache the page output using default caching function and our own $cacheConfig
+            // Cache the page output using default caching function and $cacheConfig with value from the data provider
             $this->codeigniter->useSafeOutput(true)->run();
             $this->codeigniter->cachePage($cacheConfig); // Cache the page using our own $cacheConfig confugration
         }
@@ -682,143 +678,28 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Clear cache after the test
         command('cache:clear');
 
-        // We expect only one new page in the cache, because GET parameters should be ignored with cacheQueryString = false
-        $this->assertSame(1, $newPagesCached);
+        // Check that amount of new items created in the cache matching expected value from the data provider
+        $this->assertSame($expectedPagesInCache, $newPagesCached);
 
         // Remove stream filters
         stream_filter_remove($outputStreamFilter);
         stream_filter_remove($errorStreamFilter);
     }
 
-    /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
-     */
-    public function testPageCacheWithCacheQueryStringTrue()
+    public function cacheQueryStringProvider(): array
     {
-        // Suppress command() output
-        CITestStreamFilter::$buffer = '';
-        $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $errorStreamFilter          = stream_filter_append(STDERR, 'CITestStreamFilter');
-
-        // Create cache config with enabled cacheQueryString
-        $cacheConfig                   = new Cache();
-        $cacheConfig->cacheQueryString = true;
-
-        // Clear cache before starting the test
-        command('cache:clear');
-
-        // Calculate amount of items in the cache before the test
-        $cache             = \Config\Services::cache();
-        $cacheStartCounter = count($cache->getCacheInfo());
-
-        // URLs for testing cache configuration. New 5 files should be created for all 5 URL`s, since we have enabled cacheQueryString, and all GET parameters combinations is unique
         $testingUrls = [
-            'test', // Should be cached because its a unique URL and not exist in the cache
-            'test?important_parameter=1', // Should be cached because its a unique URL (with GET parameters) and its not exist in the cache
-            'test?important_parameter=2', // Should be cached because its a unique URL (with GET parameters) and its not exist in the cache
-            'test?important_parameter=1&not_important_parameter=2', // Should be cached because its a unique URL (with GET parameters) and its not exist in the cache
-            'test?important_parameter=1&not_important_parameter=2&another_not_important_parameter=3', // Should be cached because its a unique URL (with GET parameters) and its not exist in the cache
+            'test', // URL #1
+            'test?important_parameter=1', // URL #2
+            'test?important_parameter=2',  // URL #3
+            'test?important_parameter=1&not_important_parameter=2', // URL #4
+            'test?important_parameter=1&not_important_parameter=2&another_not_important_parameter=3', // URL #5
         ];
 
-        // Generate request to each URL from the testing array
-        foreach ($testingUrls as $testingUrl) {
-            $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
-            $routes                 = Services::routes(true);
-            $routes->add($testingUrl, static function () {
-                CodeIgniter::cache(0); // Dont cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings in the test
-                $response = Services::response();
-                $string = 'This is a test page, to check cache configuration';
-
-                return $response->setBody($string);
-            });
-
-            // Inject router
-            $router = Services::router($routes, Services::request(null, false));
-            Services::injectMock('router', $router);
-
-            // Cache the page output using default caching function and our own $cacheConfig
-            $this->codeigniter->useSafeOutput(true)->run();
-            $this->codeigniter->cachePage($cacheConfig); // Cache the page using our own $cacheConfig confugration
-        }
-
-        // Calculate how much cached items exist in the cache after the test requests
-        $cacheEndCounter = count($cache->getCacheInfo());
-        $newPagesCached  = $cacheEndCounter - $cacheStartCounter;
-
-        // Clear cache after the test
-        command('cache:clear');
-
-        // We expect 5 new pages in the cache, because GET parameters should be counted as unique pages with cacheQueryString = true
-        $this->assertSame(5, $newPagesCached);
-
-        // Remove stream filters
-        stream_filter_remove($outputStreamFilter);
-        stream_filter_remove($errorStreamFilter);
-    }
-
-    /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
-     */
-    public function testPageCacheWithCacheQueryStringArray()
-    {
-        // Suppress command() output
-        CITestStreamFilter::$buffer = '';
-        $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $errorStreamFilter          = stream_filter_append(STDERR, 'CITestStreamFilter');
-
-        // Create cache config with enabled cacheQueryString
-        $cacheConfig                   = new Cache();
-        $cacheConfig->cacheQueryString = ['important_parameter'];
-
-        // Clear cache before starting the test
-        command('cache:clear');
-
-        // Calculate amount of items in the cache before the test
-        $cache             = \Config\Services::cache();
-        $cacheStartCounter = count($cache->getCacheInfo());
-
-        // URLs for testing cache configuration. Only 3 files should be created for this 5 URL`s, since cacheQueryString is an array of important parameters only, and all other GET parameters (not in the array) should be ignored
-        $testingUrls = [
-            'test', // Should be cached because its first request after clearing cache and there is no cached version of the page
-            'test?important_parameter=1', // Should be cached because important parameter exist and have unique value 1
-            'test?important_parameter=2', // Should be cached because important parameter exist and have unique value 2
-            'test?important_parameter=1&not_important_parameter=2', // Should NOT be cached because important parameter have not unique value 1 (was already cashed at previous iteration) and other not important parameters should be ignored
-            'test?important_parameter=1&not_important_parameter=2&another_not_important_parameter=3', // Should NOT be cached because important parameter have not unique value 1 (was already cashed at previous iteration) and other not important parameters should be ignored
+        return [
+            '$cacheQueryString=false' => [false, 1, $testingUrls], // We expect only 1 page in the cache, because when cacheQueryString is set to false, all GET parameter should be ignored, and page URI will be absolutely same "/test" string for all 5 requests
+            '$cacheQueryString=true'  => [true, 5, $testingUrls], // We expect all 5 pages in the cache, because when cacheQueryString is set to true, all GET parameter should be processed as unique requests
+            '$cacheQueryString=array' => [['important_parameter'], 3, $testingUrls], // We expect only 3 pages in the cache, because when cacheQueryString is set to array with important parameters, we should ignore all parameters thats not in the array. Only URL #1, URL #2 and URL #3 should be cached. URL #4 and URL #5 is duplication of URL #2 (with value ?important_parameter=1), so they should not be processed as new unique requests and application should return already cached page for URL #2
         ];
-
-        // Generate request to each URL from the testing array
-        foreach ($testingUrls as $testingUrl) {
-            $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
-            $routes                 = Services::routes(true);
-            $routes->add($testingUrl, static function () {
-                CodeIgniter::cache(0); // Dont cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings in the test
-                $response = Services::response();
-                $string = 'This is a test page, to check cache configuration';
-
-                return $response->setBody($string);
-            });
-
-            // Inject router
-            $router = Services::router($routes, Services::request(null, false));
-            Services::injectMock('router', $router);
-
-            // Cache the page output using default caching function and our own $cacheConfig
-            $this->codeigniter->useSafeOutput(true)->run();
-            $this->codeigniter->cachePage($cacheConfig); // Cache the page using our own $cacheConfig confugration
-        }
-
-        // Calculate how much cached items exist in the cache after the test requests
-        $cacheEndCounter = count($cache->getCacheInfo());
-        $newPagesCached  = $cacheEndCounter - $cacheStartCounter;
-
-        // Clear cache after the test
-        command('cache:clear');
-
-        // We expect 3 new pages in the cache, because only important GET parameters from array should be counted as unique pages with cacheQueryString = ['important_parameter']
-        $this->assertSame(3, $newPagesCached);
-
-        // Remove stream filters
-        stream_filter_remove($outputStreamFilter);
-        stream_filter_remove($errorStreamFilter);
     }
 }
