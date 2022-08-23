@@ -461,12 +461,14 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @see https://httpwg.org/http-extensions/draft-ietf-httpbis-rfc6265bis.html#section-4.1.2.1
      */
     public function withNeverExpiring()
     {
         $cookie = clone $this;
 
-        $cookie->expires = time() + 5 * YEAR;
+        $cookie->expires = time() + 400 * DAY;
 
         return $cookie;
     }
