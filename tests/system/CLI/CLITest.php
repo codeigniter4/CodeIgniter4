@@ -126,7 +126,7 @@ final class CLITest extends CIUnitTestCase
     public function testColorExceptionForeground()
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Invalid foreground color: Foreground');
+        $this->expectExceptionMessage('Invalid "foreground" color: "Foreground"');
 
         CLI::color('test', 'Foreground');
     }
@@ -134,7 +134,7 @@ final class CLITest extends CIUnitTestCase
     public function testColorExceptionBackground()
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Invalid background color: Background');
+        $this->expectExceptionMessage('Invalid "background" color: "Background"');
 
         CLI::color('test', 'white', 'Background');
     }
