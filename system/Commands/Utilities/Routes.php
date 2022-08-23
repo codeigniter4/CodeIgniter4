@@ -147,7 +147,7 @@ class Routes extends BaseCommand
         }
 
         // Sort based on controller.
-        usort($tbody, static fn ($handler1, $handler2) => strcmp($handler1[2], $handler2[2]));
+        usort($tbody, static fn ($handler1, $handler2) => strcasecmp($handler1[2], $handler2[2]));
 
         $thead = [
             'Method',
