@@ -156,6 +156,42 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertTrue($result);
     }
 
+    public function testDropColumnDropCompositeKey()
+    {
+        $this->forge->dropTable('actions', true);
+
+        $fields = [
+            'category'   => ['type' => 'varchar', 'constraint' => 63],
+            'name'       => ['type' => 'varchar', 'constraint' => 63],
+            'created_at' => ['type' => 'datetime', 'null' => true],
+        ];
+
+        $this->forge->addField('id');
+        $this->forge->addField($fields);
+
+        $this->forge->addKey('name');
+        $this->forge->addKey(['category', 'name']);
+        $this->forge->addKey('created_at');
+
+        $this->forge->createTable('actions');
+
+        $indexes = $this->db->getIndexData('actions');
+
+        // the composite index was created
+        $this->assertSame(['category', 'name'], $indexes['actions_category_name']->fields);
+
+        // drop one of the columns in the composite index
+        $this->forge->dropColumn('actions', 'category');
+
+        // get indexes again
+        $indexes = $this->db->getIndexData('actions');
+
+        // check that composite index was dropped.
+        $this->assertFalse(isset($indexes['actions_category_name']));
+
+        $this->forge->dropTable('actions');
+    }
+
     public function testModifyColumnSuccess()
     {
         $this->createTable('janky');
