@@ -32,10 +32,13 @@ If you have multiple developers on your team, you will likely want to keep your 
 the **.env** file. To do so, edit the file to ensure the following lines are present and have the
 correct information::
 
-    database.tests.dbdriver = 'MySQLi';
-    database.tests.username = 'root';
-    database.tests.password = '';
-    database.tests.database = '';
+    database.tests.hostname = localhost
+    database.tests.database = ci4_test
+    database.tests.username = root
+    database.tests.password = root
+    database.tests.DBDriver = MySQLi
+    database.tests.DBPrefix =
+    database.tests.port = 3306
 
 Migrations and Seeds
 ====================
