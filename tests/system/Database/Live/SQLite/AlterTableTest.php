@@ -189,6 +189,10 @@ final class AlterTableTest extends CIUnitTestCase
         // check that composite index was dropped.
         $this->assertFalse(isset($indexes['actions_category_name']));
 
+        // check that that other keys are present
+        $this->assertTrue(isset($indexes['actions_name']));
+        $this->assertTrue(isset($indexes['actions_created_at']));
+
         $this->forge->dropTable('actions');
     }
 
