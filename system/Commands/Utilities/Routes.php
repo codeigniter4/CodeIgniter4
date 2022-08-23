@@ -146,6 +146,11 @@ class Routes extends BaseCommand
             $tbody = [...$tbody, ...$autoRoutes];
         }
 
+        // Sort based on controller.
+        usort($tbody, function ($handler1, $handler2) {
+            return strcmp($handler1[2], $handler2[2]);
+        });
+
         $thead = [
             'Method',
             'Route',
