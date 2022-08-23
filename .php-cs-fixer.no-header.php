@@ -25,6 +25,7 @@ $finder = Finder::create()
         __DIR__ . '/app',
         __DIR__ . '/public',
     ])
+    ->exclude(['Views/errors/html'])
     ->notName('#Logger\.php$#')
     ->append([
         __DIR__ . '/admin/starter/builds',
