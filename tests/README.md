@@ -34,9 +34,24 @@ for code coverage to be calculated successfully. After installing `XDebug`, you 
 ## Setting Up
 
 A number of the tests use a running database.
-In order to set up the database edit the details for the `tests` group in
-**app/Config/Database.php** or **phpunit.xml**.
+The default configuration uses SQLite3 memory database, so it works if you can use SQLite3.
+
+In order to change the database for testing, edit the details for the `tests` group in
+**app/Config/Database.php** or use **.env** file.
+
+E.g.:
+```
+database.tests.hostname = localhost
+database.tests.database = ci4_test
+database.tests.username = root
+database.tests.password = root
+database.tests.DBDriver = MySQLi
+database.tests.DBPrefix = db_
+database.default.port   = 3306
+```
+
 Make sure that you provide a database engine that is currently running on your machine.
+
 More details on a test database setup are in the
 [Testing Your Database](https://codeigniter4.github.io/CodeIgniter4/testing/database.html) section of the documentation.
 
