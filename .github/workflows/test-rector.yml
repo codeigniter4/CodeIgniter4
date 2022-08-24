@@ -27,6 +27,7 @@ on:
       - 'utils/**.php'
       - '.github/workflows/test-rector.yml'
       - composer.json
+      - rector.php
 
 jobs:
   build:
