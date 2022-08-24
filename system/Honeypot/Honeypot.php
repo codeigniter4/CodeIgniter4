@@ -12,6 +12,7 @@
 namespace CodeIgniter\Honeypot;
 
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Honeypot as HoneypotConfig;
@@ -59,6 +60,8 @@ class Honeypot
      */
     public function hasContent(RequestInterface $request)
     {
+        assert($request instanceof IncomingRequest);
+
         return ! empty($request->getPost($this->config->name));
     }
 
