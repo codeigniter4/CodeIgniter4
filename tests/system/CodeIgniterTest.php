@@ -625,14 +625,12 @@ final class CodeIgniterTest extends CIUnitTestCase
     }
 
     /**
-     * @param mixed $cacheQueryStringValue
-     * @param int   $expectedPagesInCache
-     * @param array $testingUrls
+     * @param array|bool $cacheQueryStringValue
      * @dataProvider cacheQueryStringProvider
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/6410
      */
-    public function testPageCacheWithCacheQueryString($cacheQueryStringValue, $expectedPagesInCache, $testingUrls)
+    public function testPageCacheWithCacheQueryString($cacheQueryStringValue, int $expectedPagesInCache, array $testingUrls)
     {
         // Suppress command() output
         CITestStreamFilter::$buffer = '';
