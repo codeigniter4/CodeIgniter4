@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -44,7 +45,7 @@ class CSRF implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if ($request->isCLI()) {
+        if (! $request instanceof IncomingRequest) {
             return;
         }
 
