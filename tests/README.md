@@ -34,7 +34,7 @@ for code coverage to be calculated successfully. After installing `XDebug`, you 
 ## Setting Up
 
 A number of the tests use a running database.
-The default configuration uses SQLite3 memory database, so it works if you can use SQLite3.
+The default configuration uses SQLite3 transient in-memory database, so it works if you can use SQLite3.
 
 In order to change the database for testing, edit the details for the `tests` group in
 **app/Config/Database.php** or **phpunit.xml** or use **.env** file.
