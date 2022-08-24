@@ -351,10 +351,13 @@ This specifies a database connection that is only used while running tests, to k
 <p>If you have multiple developers on your team, you will likely want to keep your credentials stored in
 the <strong>.env</strong> file. To do so, edit the file to ensure the following lines are present and have the
 correct information:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">dbdriver</span> <span class="o">=</span> <span class="s1">&#39;MySQLi&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">hostname</span> <span class="o">=</span> <span class="nx">localhost</span>
+<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">database</span> <span class="o">=</span> <span class="nx">ci4_test</span>
+<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">username</span> <span class="o">=</span> <span class="nx">root</span>
+<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">password</span> <span class="o">=</span> <span class="nx">root</span>
+<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">DBDriver</span> <span class="o">=</span> <span class="nx">MySQLi</span>
+<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">DBPrefix</span> <span class="o">=</span>
+<span class="nx">database</span><span class="o">.</span><span class="nx">tests</span><span class="o">.</span><span class="nx">port</span> <span class="o">=</span> <span class="mi">3306</span>
 </pre></div>
 </div>
 <section id="migrations-and-seeds">
@@ -542,7 +545,7 @@ row is found, it will only return the first one.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 22, 2022.
+      <span class="lastupdated">Last updated on Aug 24, 2022.
       </span></p>
   </div>
 
