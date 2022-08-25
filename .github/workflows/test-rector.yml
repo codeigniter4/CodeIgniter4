@@ -14,6 +14,7 @@ on:
       - 'utils/**.php'
       - '.github/workflows/test-rector.yml'
       - composer.json
+      - rector.php
 
   push:
     branches:
@@ -26,6 +27,7 @@ on:
       - 'utils/**.php'
       - '.github/workflows/test-rector.yml'
       - composer.json
+      - rector.php
 
 jobs:
   build:

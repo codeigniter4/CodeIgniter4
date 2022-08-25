@@ -95,7 +95,6 @@ return static function (RectorConfig $rectorConfig): void {
 
         // check on constant compare
         UnwrapFutureCompatibleIfPhpVersionRector::class => [
-            __DIR__ . '/system/CodeIgniter.php',
             __DIR__ . '/system/Autoloader/Autoloader.php',
         ],
 
