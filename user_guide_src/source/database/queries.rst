@@ -99,12 +99,14 @@ It's a very good security practice to escape your data before submitting
 it into your database. CodeIgniter has three methods that help you do
 this:
 
+.. _database-queries-db_escape:
+
 1. $db->escape()
 ================
 
-This function determines the data type so
-that it can escape only string data. It also automatically adds
-single quotes around the data so you don't have to:
+This function determines the data type so that it can escape only string
+data. It also automatically adds single quotes around the data so you
+don't have to:
 
 .. literalinclude:: queries/009.php
 

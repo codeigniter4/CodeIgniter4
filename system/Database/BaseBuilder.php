@@ -2698,7 +2698,7 @@ class BaseBuilder
 
         foreach (get_object_vars($object) as $key => $val) {
             // There are some built in keys we need to ignore for this conversion
-            if (! is_object($val) && ! is_array($val) && $key !== '_parent_name') {
+            if ((! is_object($val) || $val instanceof RawSql) && ! is_array($val) && $key !== '_parent_name') {
                 $array[$key] = $val;
             }
         }
