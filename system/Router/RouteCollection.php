@@ -15,6 +15,7 @@ use Closure;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\App;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
@@ -1202,6 +1203,14 @@ class RouteCollection implements RouteCollectionInterface
     {
         if (strpos($route, '{locale}') === false) {
             return $route;
+        }
+
+        if ($locale !== null) {
+            /** @var App $config */
+            $config = config('App');
+            if (! in_array($locale, $config->supportedLocales, true)) {
+                $locale = null;
+            }
         }
 
         if ($locale === null) {
