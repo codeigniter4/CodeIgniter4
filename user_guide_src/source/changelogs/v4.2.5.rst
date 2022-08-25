@@ -19,7 +19,7 @@ BREAKING
 Enhancements
 ************
 
-none.
+- You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 
 Changes
 *******
