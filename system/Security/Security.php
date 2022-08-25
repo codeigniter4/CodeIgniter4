@@ -123,7 +123,7 @@ class Security implements SecurityInterface
      *
      * @var bool
      */
-    protected $redirect = true;
+    protected $redirect = false;
 
     /**
      * CSRF SameSite
