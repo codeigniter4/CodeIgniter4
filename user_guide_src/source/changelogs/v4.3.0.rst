@@ -87,7 +87,7 @@ Changes
     - The route configuration file ``app/Config/Routes.php`` has been changed. Removed include of system routes configuration file.
 - Config
     - All atomic type properties in ``Config`` classes have been typed.
-    - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
+- Updated strings in Language/en to improve consistency.
 
 Deprecations
 ************
