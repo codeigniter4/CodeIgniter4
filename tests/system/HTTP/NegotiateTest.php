@@ -27,15 +27,8 @@ final class NegotiateTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        $this->request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
-
+        $this->request   = new IncomingRequest(new App(), new URI(), null, new UserAgent());
         $this->negotiate = new Negotiate($this->request);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->request = $this->negotiate = null;
-        unset($this->request, $this->negotiate);
     }
 
     public function testNegotiateMediaFindsHighestMatch()
