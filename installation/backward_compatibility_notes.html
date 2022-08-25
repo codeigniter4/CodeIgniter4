@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading From a Previous Version &mdash; CodeIgniter 4.2.4 documentation</title>
+  <title>Backward Compatibility Notes &mdash; CodeIgniter 4.2.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" />
-    <link rel="prev" title="Version 4.0.0-alpha.1" href="../changelogs/v4.0.0-alpha.1.html" /> 
+    <link rel="next" title="Upgrading from 4.2.2 to 4.2.3" href="upgrade_423.html" />
+    <link rel="prev" title="Upgrading From a Previous Version" href="upgrading.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,7 +58,7 @@
 <li class="toctree-l2"><a class="reference internal" href="running.html">Running Your App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="upgrading.html">Upgrading From a Previous Version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="repositories.html">CodeIgniter Repositories</a></li>
 </ul>
 </li>
@@ -258,13 +258,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrading.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/backward_compatibility_notes.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Installation</a> &raquo;</li>
-      <li>Upgrading From a Previous Version</li>
+          <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
+      <li>Backward Compatibility Notes</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -273,65 +274,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-a-previous-version">
-<h1>Upgrading From a Previous Version<a class="headerlink" href="#upgrading-from-a-previous-version" title="Permalink to this headline"></a></h1>
-<p>Please read the upgrade notes corresponding to the version you are
-upgrading from.</p>
-<p>See also <a class="reference internal" href="backward_compatibility_notes.html"><span class="doc">Backward Compatibility Notes</span></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you don’t know what version of CodeIgniter you are currently running,
-you can get it from <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">the Debug Toolbar</span></a>,
-or simply echo the constant <code class="docutils literal notranslate"><span class="pre">\CodeIgniter\CodeIgniter::CI_VERSION</span></code>.</p>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="backward_compatibility_notes.html">Backward Compatibility Notes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_423.html">Upgrading from 4.2.2 to 4.2.3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_422.html">Upgrading from 4.2.1 to 4.2.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_421.html">Upgrading from 4.2.0 to 4.2.1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_420.html">Upgrading from 4.1.9 to 4.2.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_418.html">Upgrading from 4.1.7 to 4.1.8</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_417.html">Upgrading from 4.1.6 to 4.1.7</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_416.html">Upgrading from 4.1.5 to 4.1.6</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_415.html">Upgrading from 4.1.4 to 4.1.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_414.html">Upgrading from 4.1.3 to 4.1.4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_413.html">Upgrading from 4.1.2 to 4.1.3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_412.html">Upgrading from 4.1.1 to 4.1.2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_410.html">Upgrading from 4.0.5 to 4.1.0 or 4.1.1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_405.html">Upgrading from 4.0.4 to 4.0.5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_404.html">Upgrading from 4.0.x to 4.0.4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_4xx.html">Upgrading from 3.x to 4.x</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_models.html">Upgrade Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_views.html">Upgrade Views</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_controllers.html">Upgrade Controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_configuration.html">Upgrade Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_database.html">Upgrade Database</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_emails.html">Upgrade Emails</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_encryption.html">Upgrade Encryption</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_file_upload.html">Upgrade Working with Uploaded Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_html_tables.html">Upgrade HTML Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_localization.html">Upgrade Localization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_migrations.html">Upgrade Migrations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_pagination.html">Upgrade Pagination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_responses.html">Upgrade HTTP Responses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_routing.html">Upgrade Routing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_security.html">Upgrade Security</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_sessions.html">Upgrade Sessions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_validations.html">Upgrade Validations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="upgrade_view_parser.html">Upgrade View Parser</a></li>
+  <section id="backward-compatibility-notes">
+<h1>Backward Compatibility Notes<a class="headerlink" href="#backward-compatibility-notes" title="Permalink to this headline"></a></h1>
+<p>We try to develop our products to be as backward compatible (BC) as possible.</p>
+<p>Only major releases (such as 4.0, 5.0 etc.) are allowed to break backward compatibility.
+Minor releases (such as 4.2, 4.3 etc.) may introduce new features, but must do so without breaking the existing API.</p>
+<p>However, the code is not mature and bug fixes may break compatibility in minor releases, or even in patch releases (such as 4.2.5). In that case, all the breaking changes are described in the <a class="reference internal" href="../changelogs/index.html"><span class="doc">Change Logs</span></a>.</p>
+<section id="what-are-not-breaking-changes">
+<h2>What are not Breaking Changes<a class="headerlink" href="#what-are-not-breaking-changes" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>System messages defined in <strong>system/Language/en/</strong> are strictly for internal framework use and are not covered by backwards compatibility (BC) promise. If developers are relying on language string output they should be checking it against the function call (<code class="docutils literal notranslate"><span class="pre">lang('...')</span></code>), not the content.</p></li>
 </ul>
-</li>
-</ul>
-</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../changelogs/v4.0.0-alpha.1.html" class="btn btn-neutral float-left" title="Version 4.0.0-alpha.1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-right" title="Backward Compatibility Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="upgrading.html" class="btn btn-neutral float-left" title="Upgrading From a Previous Version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_423.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.2 to 4.2.3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
