@@ -20,14 +20,14 @@ use Config\App;
  */
 final class NegotiateTest extends CIUnitTestCase
 {
-    private ?Request $request;
+    private ?IncomingRequest $request;
     private ?Negotiate $negotiate;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->request = new Request(new App());
+        $this->request = new IncomingRequest(new App(), new URI(), null, new UserAgent());
 
         $this->negotiate = new Negotiate($this->request);
     }
