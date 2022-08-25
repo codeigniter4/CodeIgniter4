@@ -86,6 +86,7 @@ Changes
     - The system route configuration file ``system/Config/Routes.php`` has been removed.
     - The route configuration file ``app/Config/Routes.php`` has been changed. Removed include of system routes configuration file.
 - All atomic type properties in ``Config`` classes have been typed.
+- Updated strings in Language/en to improve consistency.
 
 Deprecations
 ************
