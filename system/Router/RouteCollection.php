@@ -1151,10 +1151,10 @@ class RouteCollection implements RouteCollectionInterface
     /**
      * Builds reverse route
      *
-     * @param array|null $params One or more parameters to be passed to the route.
-     *                           The last parameter allows you to set the locale.
+     * @param array $params One or more parameters to be passed to the route.
+     *                      The last parameter allows you to set the locale.
      */
-    protected function buildReverseRoute(string $from, ?array $params = null): string
+    protected function buildReverseRoute(string $from, array $params): string
     {
         $locale = null;
 
