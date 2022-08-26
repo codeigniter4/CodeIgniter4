@@ -128,9 +128,9 @@ class Forge extends BaseForge
     /**
      * ALTER TABLE
      *
-     * @param string $alterType ALTER type
-     * @param string $table     Table name
-     * @param mixed  $field     Column definition
+     * @param string       $alterType ALTER type
+     * @param string       $table     Table name
+     * @param array|string $field     Column definition
      *
      * @return string|string[]
      */

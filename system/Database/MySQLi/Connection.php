@@ -277,7 +277,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return bool|object
      */
     protected function execute(string $sql)
     {
