@@ -50,7 +50,7 @@ The following functions are available:
     :returns:    Preformatted HTML select field
     :rtype:    string
 
-    Generates a `select` form field of available timezones (optionally filtered by `$what` and `$country`).
+    Generates a `select` form field of available timezones (optionally filtered by ``$what`` and ``$country``).
     You can supply an option class to apply to the field to make formatting easier, as well as a default
     selected value.
 
