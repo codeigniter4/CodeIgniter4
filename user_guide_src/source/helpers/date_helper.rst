@@ -9,6 +9,8 @@ dates.
     :local:
     :depth: 2
 
+.. note:: Many functions previously found in the CodeIgniter 3 ``date_helper`` have been moved to the :doc:`Time <../libraries/time>` class in CodeIgniter 4.
+
 Loading this Helper
 ===================
 
@@ -53,6 +55,3 @@ The following functions are available:
     selected value.
 
     .. literalinclude:: date_helper/003.php
-
-Many functions previously found in the CodeIgniter 3 ``date_helper`` have been moved to the ``I18n``
-module in CodeIgniter 4.
