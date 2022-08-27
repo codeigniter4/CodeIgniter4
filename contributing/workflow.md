@@ -83,8 +83,8 @@ is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
 ```console
-> git switch develop
 > git fetch upstream
+> git switch develop
 > git merge upstream/develop
 > git push origin develop
 ```
@@ -181,8 +181,8 @@ It is a lot easier to resolve conflicts at this stage.
 Synchronize your repository:
 
 ```console
-> git switch develop
 > git fetch upstream
+> git switch develop
 > git merge upstream/develop
 > git push origin develop
 ```
@@ -253,8 +253,8 @@ do the following:
 Synchronize your repository:
 
 ```console
-> git switch develop
 > git fetch upstream
+> git switch develop
 > git merge upstream/develop
 > git push origin develop
 ```
@@ -298,8 +298,8 @@ Copy the IDs of any commits you made that you want to keep:
 Update your `4.3` branch:
 
 ```console
-> git switch 4.3
 > git fetch upstream
+> git switch 4.3
 > git merge upstream/4.3
 > git push origin 4.3
 ```
