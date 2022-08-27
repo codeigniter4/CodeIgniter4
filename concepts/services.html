@@ -285,16 +285,17 @@
 </li>
 <li><p><a class="reference internal" href="#how-to-get-a-service" id="id4">How to Get a Service</a></p>
 <ul>
-<li><p><a class="reference internal" href="#convenience-functions" id="id5">Convenience Functions</a></p></li>
+<li><p><a class="reference internal" href="#getting-a-new-instance" id="id5">Getting a New Instance</a></p></li>
+<li><p><a class="reference internal" href="#convenience-functions" id="id6">Convenience Functions</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#defining-services" id="id6">Defining Services</a></p>
+<li><p><a class="reference internal" href="#defining-services" id="id7">Defining Services</a></p>
 <ul>
-<li><p><a class="reference internal" href="#allowing-parameters" id="id7">Allowing Parameters</a></p></li>
-<li><p><a class="reference internal" href="#shared-classes" id="id8">Shared Classes</a></p></li>
+<li><p><a class="reference internal" href="#allowing-parameters" id="id8">Allowing Parameters</a></p></li>
+<li><p><a class="reference internal" href="#shared-classes" id="id9">Shared Classes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#service-discovery" id="id9">Service Discovery</a></p></li>
+<li><p><a class="reference internal" href="#service-discovery" id="id10">Service Discovery</a></p></li>
 </ul>
 </div>
 <section id="introduction">
@@ -324,7 +325,7 @@ running, this might be a time-consuming and error-prone way to handle this. That
 come in handy.</p>
 <p>Instead of creating the instance ourself, we let a central class create an instance of the
 class for us. This class is kept very simple. It only contains a method for each class that we want
-to use as a service. The method typically returns a shared instance of that class, passing any dependencies
+to use as a service. The method typically returns a <strong>shared instance</strong> of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -350,14 +351,36 @@ error-resistant.</p>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">$typography</span></code> is an instance of the Typography class, and if you call <code class="docutils literal notranslate"><span class="pre">\Config\Services::typography()</span></code> again, you will get the exactly same instance.</p>
+<p>The Services typically return a <strong>shared instance</strong> of the class. The following code creates a <code class="docutils literal notranslate"><span class="pre">CURLRequest</span></code> instance at the first call. And the second call returns the exactly same instance.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$options1</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://example.com/api/v1/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nv">$client1</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">(</span><span class="nv">$options1</span><span class="p">);</span>
+
+<span class="nv">$options2</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;baseURI&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://another.example.com/api/v2/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;timeout&#39;</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nv">$client2</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">curlrequest</span><span class="p">(</span><span class="nv">$options2</span><span class="p">);</span>
+<span class="c1">// $options2 does not work.</span>
+<span class="c1">// $client2 is the exactly same instance as $client1.</span>
+</pre></div>
+</div>
+<p>Therefore, the parameter <code class="docutils literal notranslate"><span class="pre">$options2</span></code> for the <code class="docutils literal notranslate"><span class="pre">$client2</span></code> does not work. It is just ignored.</p>
+<section id="getting-a-new-instance">
+<h3><a class="toc-backref" href="#id5">Getting a New Instance</a><a class="headerlink" href="#getting-a-new-instance" title="Permalink to this headline"></a></h3>
 <p>If you want to get a new instance of the Typography class, you need to pass <code class="docutils literal notranslate"><span class="pre">false</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">$getShared</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$typography</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">typography</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
 <section id="convenience-functions">
-<h3><a class="toc-backref" href="#id5">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Convenience Functions</a><a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h3>
 <p>Two functions have been provided for getting a service. These functions are always available.</p>
 <section id="service">
 <h4>service()<a class="headerlink" href="#service" title="Permalink to this headline"></a></h4>
@@ -399,7 +422,7 @@ the class:</p>
 </section>
 </section>
 <section id="defining-services">
-<h2><a class="toc-backref" href="#id6">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Defining Services</a><a class="headerlink" href="#defining-services" title="Permalink to this headline"></a></h2>
 <p>To make services work well, you have to be able to rely on each class having a constant API, or
 <a class="reference external" href="https://www.php.net/manual/en/language.oop5.interfaces.php">interface</a>, to use. Almost all of
 CodeIgniter’s classes provide an interface that they adhere to. When you want to extend or replace
@@ -440,7 +463,7 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
 </pre></div>
 </div>
 <section id="allowing-parameters">
-<h3><a class="toc-backref" href="#id7">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h3>
 <p>In some instances, you will want the option to pass a setting to the class during instantiation.
 Since the services file is a very simple class, it is easy to make this work.</p>
 <p>A good example is the <code class="docutils literal notranslate"><span class="pre">renderer</span></code> service. By default, we want this class to be able
@@ -473,7 +496,7 @@ the path it uses:</p>
 </div>
 </section>
 <section id="shared-classes">
-<h3><a class="toc-backref" href="#id8">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Shared Classes</a><a class="headerlink" href="#shared-classes" title="Permalink to this headline"></a></h3>
 <p>There are occasions where you need to require that only a single instance of a service
 is created. This is easily handled with the <code class="docutils literal notranslate"><span class="pre">getSharedInstance()</span></code> method that is called from within the
 factory method. This handles checking if an instance has been created and saved
@@ -503,7 +526,7 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 </section>
 </section>
 <section id="service-discovery">
-<h2><a class="toc-backref" href="#id9">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Service Discovery</a><a class="headerlink" href="#service-discovery" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter can automatically discover any <strong>Config/Services.php</strong> files you may have created within any defined namespaces.
 This allows simple use of any module Services files. In order for custom Services files to be discovered, they must
 meet these requirements:</p>
@@ -557,7 +580,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 25, 2022.
+      <span class="lastupdated">Last updated on Aug 27, 2022.
       </span></p>
   </div>
 
