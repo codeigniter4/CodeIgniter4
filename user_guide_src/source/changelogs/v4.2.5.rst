@@ -19,7 +19,7 @@ BREAKING
 Enhancements
 ************
 
-none.
+- Kint has been updated to 4.2.0.
 
 Changes
 *******
