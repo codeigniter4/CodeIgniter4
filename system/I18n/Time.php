@@ -895,7 +895,7 @@ class Time extends DateTime
      *
      * @throws Exception
      *
-     * @return bool|string
+     * @return false|string
      */
     public function toLocalizedString(?string $format = null)
     {
