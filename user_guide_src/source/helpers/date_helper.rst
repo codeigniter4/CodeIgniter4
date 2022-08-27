@@ -35,7 +35,7 @@ The following functions are available:
 
     .. literalinclude:: date_helper/002.php
 
-    If any PHP supported timezone is provided, it will return a timestamp that is off by the time difference. It is not the same as the current UNIX timestamp.
+    If any PHP supported timezone is provided, it will return a timestamp that is offset by the time difference. It is not the same as the current UNIX timestamp.
 
     If you do not intend to set your master time reference to
     any other PHP supported timezone (which you'll typically do if you run a site
