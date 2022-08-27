@@ -36,7 +36,7 @@ come in handy.
 
 Instead of creating the instance ourself, we let a central class create an instance of the
 class for us. This class is kept very simple. It only contains a method for each class that we want
-to use as a service. The method typically returns a shared instance of that class, passing any dependencies
+to use as a service. The method typically returns a **shared instance** of that class, passing any dependencies
 it might have into it. Then, we would replace our timer creation code with code that calls this new class:
 
 .. literalinclude:: services/002.php
@@ -56,6 +56,15 @@ As many CodeIgniter classes are provided as services, you can get them like the 
 .. literalinclude:: services/013.php
 
 The ``$typography`` is an instance of the Typography class, and if you call ``\Config\Services::typography()`` again, you will get the exactly same instance.
+
+The Services typically return a **shared instance** of the class. The following code creates a ``CURLRequest`` instance at the first call. And the second call returns the exactly same instance.
+
+.. literalinclude:: services/015.php
+
+Therefore, the parameter ``$options2`` for the ``$client2`` does not work. It is just ignored.
+
+Getting a New Instance
+======================
 
 If you want to get a new instance of the Typography class, you need to pass ``false`` to the argument ``$getShared``:
 
