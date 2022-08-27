@@ -226,7 +226,7 @@ class CLIRequest extends Request
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
-        return null;
+        return $this->returnNullOrEmptyArray($index);
     }
 
     /**
@@ -240,7 +240,7 @@ class CLIRequest extends Request
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
-        return null;
+        return $this->returnNullOrEmptyArray($index);
     }
 
     /**
@@ -254,7 +254,7 @@ class CLIRequest extends Request
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
-        return null;
+        return $this->returnNullOrEmptyArray($index);
     }
 
     /**
@@ -268,6 +268,16 @@ class CLIRequest extends Request
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
-        return null;
+        return $this->returnNullOrEmptyArray($index);
+    }
+
+    /**
+     * @param array|string|null $index
+     *
+     * @return array|null
+     */
+    private function returnNullOrEmptyArray($index)
+    {
+        return ($index === null || is_array($index)) ? [] : null;
     }
 }

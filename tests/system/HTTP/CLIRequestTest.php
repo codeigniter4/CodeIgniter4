@@ -592,21 +592,23 @@ final class CLIRequestTest extends CIUnitTestCase
 
     public function testGetGet()
     {
-        $this->assertNull($this->request->getGet());
+        $this->assertSame([], $this->request->getGet());
+        $this->assertNull($this->request->getGet('test'));
+        $this->assertSame([], $this->request->getGet(['test', 'abc']));
     }
 
     public function testGetPost()
     {
-        $this->assertNull($this->request->getPost());
+        $this->assertSame([], $this->request->getGet());
     }
 
     public function testGetPostGet()
     {
-        $this->assertNull($this->request->getPostGet());
+        $this->assertSame([], $this->request->getGet());
     }
 
     public function testGetGetPost()
     {
-        $this->assertNull($this->request->getGetPost());
+        $this->assertSame([], $this->request->getGet());
     }
 }
