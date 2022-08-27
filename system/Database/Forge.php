@@ -405,19 +405,6 @@ class Forge
     {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
-        $errorNames = [];
-
-        foreach ($fieldName as $name) {
-            if (! isset($this->fields[$name])) {
-                $errorNames[] = $name;
-            }
-        }
-
-        if ($errorNames !== []) {
-            $errorNames[0] = implode(', ', $errorNames);
-
-            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
-        }
 
         $this->foreignKeys[] = [
             'field'          => $fieldName,
@@ -452,6 +439,22 @@ class Forge
 
             return false;
         }
+
+        return $this->db->query($sql);
+    }
+
+    /**
+     * Drop Primary Key
+     *
+     * @return bool
+     */
+    public function dropPrimaryKey(string $table)
+    {
+        $sql = sprintf(
+            'ALTER TABLE %s DROP CONSTRAINT %s',
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+            $this->db->escapeIdentifiers('pk_' . $this->db->DBPrefix . $table),
+        );
 
         return $this->db->query($sql);
     }
@@ -513,7 +516,7 @@ class Forge
 
             // Most databases don't support creating indexes from within the CREATE TABLE statement
             if (! empty($this->keys)) {
-                for ($i = 0, $sqls = $this->_processIndexes($table), $c = count($sqls); $i < $c; $i++) {
+                for ($i = 0, $sqls = $this->_processIndexes($table, true), $c = count($sqls); $i < $c; $i++) {
                     $this->db->query($sqls[$i]);
                 }
             }
@@ -541,10 +544,10 @@ class Forge
         $columns = implode(',', $columns);
 
         $columns .= $this->_processPrimaryKeys($table);
-        $columns .= $this->_processForeignKeys($table);
+        $columns .= current($this->_processForeignKeys($table));
 
         if ($this->createTableKeys === true) {
-            $indexes = $this->_processIndexes($table);
+            $indexes = current($this->_processIndexes($table));
             if (is_string($indexes)) {
                 $columns .= $indexes;
             }
@@ -731,7 +734,8 @@ class Forge
             return false;
         }
 
-        return $this->db->query($sql);
+        // sqlite returns ''
+        return ($sql === '') ? true : $this->db->query($sql);
     }
 
     /**
@@ -990,7 +994,7 @@ class Forge
         }
     }
 
-    protected function _processPrimaryKeys(string $table): string
+    protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
     {
         $sql = '';
 
@@ -1001,14 +1005,64 @@ class Forge
         }
 
         if ($this->primaryKeys !== []) {
-            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
+            if ($asQuery === true) {
+                $sql .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $sql .= ",\n\t";
+            }
+            $sql .= 'CONSTRAINT ' . $this->db->escapeIdentifiers('pk_' . $table)
                     . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
         }
 
         return $sql;
     }
 
-    protected function _processIndexes(string $table)
+    /**
+     * Executes Sql to add indexes without createTable
+     */
+    public function processIndexes(string $table): bool
+    {
+        $sqls = [];
+        $fk   = $this->foreignKeys;
+
+        if (empty($this->fields)) {
+            $this->fields = array_flip(array_map(
+                static fn ($columnName) => $columnName->name,
+                $this->db->getFieldData($this->db->DBPrefix . $table)
+            ));
+        }
+
+        $fields = $this->fields;
+
+        if (! empty($this->keys)) {
+            $sqls = array_merge($sqls, $this->_processIndexes($this->db->DBPrefix . $table, true));
+
+            $pk = $this->_processPrimaryKeys($table, true);
+
+            if ($pk !== '') {
+                $sqls[] = $pk;
+            }
+        }
+
+        $this->foreignKeys = $fk;
+        $this->fields      = $fields;
+
+        if (! empty($this->foreignKeys)) {
+            $sqls = array_merge($sqls, $this->_processForeignKeys($table, true));
+        }
+
+        for ($i = 0, $sqls, $c = count($sqls); $i < $c; $i++) {
+            if ($this->db->query($sqls[$i]) === false) {
+                return false;
+            }
+        }
+
+        $this->reset();
+
+        return true;
+    }
+
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
@@ -1041,9 +1095,28 @@ class Forge
         return $sqls;
     }
 
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $errorNames = [];
+
+        foreach ($this->foreignKeys as $name) {
+            foreach ($name['field'] as $f) {
+                if (! isset($this->fields[$f])) {
+                    $errorNames[] = $f;
+                }
+            }
+        }
+
+        if ($errorNames !== []) {
+            $errorNames[0] = implode(', ', $errorNames);
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $sqls    = [];
+        $index   = 0;
+        $sqls[0] = '';
+        $i       = 0;
 
         $allowActions = [
             'CASCADE',
@@ -1054,25 +1127,40 @@ class Forge
         ];
 
         foreach ($this->foreignKeys as $fkey) {
+            $index = $i;
+            if ($asQuery === false) {
+                $index = 0;
+            }
+
             $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+            $sqls[$i] = '';
+
+            if ($asQuery === true) {
+                $sqls[$i] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $sqls[$i] .= ",\n\t";
+            }
+
+            $formatSql = 'CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)';
+            $sqls[$i] .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+                $sqls[$i] .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
             if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
-                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
+                $sqls[$i] .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
+
+            $i++;
         }
 
-        return $sql;
+        return $sqls;
     }
 
     /**

@@ -207,17 +207,65 @@ class Table
         }
 
         for ($i = 0; $i < count($this->foreignKeys); $i++) {
-            if ($this->foreignKeys[$i]->table_name !== $this->tableName) {
+            if ($this->foreignKeys[$i]->table_name !== $this->prefixedTableName) {
                 continue;
             }
 
             // The column name should be the first thing in the constraint name
-            if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0) {
+            if ($this->foreignKeys[$i]->constraint_name !== $column) {
                 continue;
             }
 
             unset($this->foreignKeys[$i]);
         }
+
+        return $this;
+    }
+
+    /**
+     * Add a foreign key
+     *
+     * @return Table
+     */
+    public function addForeignKey(array $foreignKeys)
+    {
+        $this->foreignKeys = array_merge($this->foreignKeys, $foreignKeys);
+
+        return $this;
+    }
+
+    /**
+     * Drops the primary key
+     */
+    public function dropPrimaryKey(): Table
+    {
+        $primaryIndexes = array_filter($this->keys, static fn ($index) => strtolower($index['type']) === 'primary');
+
+        foreach (array_keys($primaryIndexes) as $key) {
+            unset($this->keys[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds primary key
+     */
+    public function addPrimaryKey(array $fields): Table
+    {
+        $primaryIndexes = array_filter($this->keys, static fn ($index) => strtolower($index['type']) === 'primary');
+
+        // if primary key already exists we can't add another one
+        if ($primaryIndexes !== []) {
+            return $this;
+        }
+
+        // add array to keys of fields
+        $pk = ['fields' => $fields,
+            'type'      => 'primary',
+        ];
+
+        $this->keys['primary'] = $pk;
 
         return $this;
     }
@@ -270,6 +318,16 @@ class Table
                         $this->forge->addKey($key['fields']);
                         break;
                 }
+            }
+        }
+
+        foreach ($this->foreignKeys as $foreignKey) {
+            if (is_array($foreignKey)) {
+                $this->forge->addForeignKey(
+                    implode(',', $foreignKey['field']),
+                    $foreignKey['referenceTable'],
+                    implode(',', $foreignKey['referenceField'])
+                );
             }
         }
 

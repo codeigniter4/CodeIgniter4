@@ -130,7 +130,7 @@ class Forge extends BaseForge
     protected function _processColumn(array $field): string
     {
         return $this->db->escapeIdentifiers($field['name'])
-            . ' ' . $field['type'] . $field['length']
+            . ' ' . $field['type'] . ($field['type'] === 'text' ? '' : $field['length'])
             . $field['default']
             . $field['null']
             . $field['auto_increment']

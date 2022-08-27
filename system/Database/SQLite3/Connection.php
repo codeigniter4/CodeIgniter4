@@ -343,14 +343,26 @@ class Connection extends BaseConnection
         foreach ($tables as $table) {
             $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
 
-            foreach ($query as $row) {
-                $obj                     = new stdClass();
-                $obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
-                $obj->table_name         = $table;
-                $obj->foreign_table_name = $row->table;
-                $obj->sequence           = $row->seq;
+            $indexes = [];
 
-                $retVal[] = $obj;
+            foreach ($query as $row) {
+                $indexes[$row->id]['constraint'][]       = $row->from;
+                $indexes[$row->id]['foreign_table_name'] = $row->table;
+                $indexes[$row->id]['fields'][]           = $row->from;
+                $indexes[$row->id]['fields_to'][]        = $row->to;
+            }
+
+            foreach ($indexes as $row) {
+                foreach ($row['fields'] as $key => $field) {
+                    $obj                      = new stdClass();
+                    $obj->constraint_name     = $table . '_' . implode('_', $row['constraint']) . '_foreign';
+                    $obj->table_name          = $table;
+                    $obj->column_name         = $field;
+                    $obj->foreign_table_name  = $row['foreign_table_name'];
+                    $obj->foreign_column_name = $row['fields_to'][$key];
+
+                    $retVal[] = $obj;
+                }
             }
         }
 

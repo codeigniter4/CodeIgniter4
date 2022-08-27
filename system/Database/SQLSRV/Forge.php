@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
 
 /**
@@ -144,7 +145,25 @@ class Forge extends BaseForge
                 }
             }
 
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' DROP ';
+            $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+
+            // Drop default constraints
+            $fields = implode(',', $this->db->escape((array) $field));
+
+            $sql = <<<SQL
+                SELECT name
+                FROM SYS.DEFAULT_CONSTRAINTS
+                WHERE PARENT_OBJECT_ID = OBJECT_ID('{$fullTable}')
+                AND PARENT_COLUMN_ID IN (
+                SELECT column_id FROM sys.columns WHERE NAME IN ({$fields}) AND object_id = OBJECT_ID(N'{$fullTable}')
+                )
+                SQL;
+
+            foreach ($this->db->query($sql)->getResultArray() as $index) {
+                $this->db->query('ALTER TABLE ' . $fullTable . ' DROP CONSTRAINT ' . $index['name'] . '');
+            }
+
+            $sql = 'ALTER TABLE ' . $fullTable . ' DROP ';
 
             $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $field);
 
@@ -218,10 +237,8 @@ class Forge extends BaseForge
 
     /**
      * Process indexes
-     *
-     * @return array|string
      */
-    protected function _processIndexes(string $table)
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
@@ -263,7 +280,7 @@ class Forge extends BaseForge
     {
         return $this->db->escapeIdentifiers($field['name'])
             . (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-            . ' ' . $field['type'] . $field['length']
+            . ' ' . $field['type'] . ($field['type'] === 'text' ? '' : $field['length'])
             . $field['default']
             . $field['null']
             . $field['auto_increment']
@@ -276,51 +293,66 @@ class Forge extends BaseForge
      *
      * @param string $table Table name
      */
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $errorNames = [];
+
+        foreach ($this->foreignKeys as $name) {
+            foreach ($name['field'] as $f) {
+                if (! isset($this->fields[$f])) {
+                    $errorNames[] = $f;
+                }
+            }
+        }
+
+        if ($errorNames !== []) {
+            $errorNames[0] = implode(', ', $errorNames);
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $sqls    = [];
+        $index   = 0;
+        $sqls[0] = '';
+        $i       = 0;
 
         $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
         foreach ($this->foreignKeys as $fkey) {
+            $index = $i;
+            if ($asQuery === false) {
+                $index = 0;
+            }
+
             $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+            $sqls[$i] = '';
+
+            if ($asQuery === true) {
+                $formatSql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $formatSql = ",\n\t";
+            }
+
+            $formatSql .= 'CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)';
+            $sqls[$i]  .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+                $sqls[$i] .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
             if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
-                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
+                $sqls[$i] .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
+
+            $i++;
         }
 
-        return $sql;
-    }
-
-    /**
-     * Process primary keys
-     */
-    protected function _processPrimaryKeys(string $table): string
-    {
-        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
-            if (! isset($this->fields[$this->primaryKeys[$i]])) {
-                unset($this->primaryKeys[$i]);
-            }
-        }
-
-        if ($this->primaryKeys !== []) {
-            $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
-                . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
-        }
-
-        return $sql ?? '';
+        return $sqls;
     }
 
     /**

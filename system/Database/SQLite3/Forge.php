@@ -159,7 +159,7 @@ class Forge extends BaseForge
     /**
      * Process indexes
      */
-    protected function _processIndexes(string $table): array
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
@@ -247,7 +247,67 @@ class Forge extends BaseForge
         $sqlTable = new Table($this->db, $this);
 
         return $sqlTable->fromTable($this->db->DBPrefix . $table)
-            ->dropForeignKey($foreignName)
+            ->dropForeignKey($this->db->DBPrefix . $foreignName)
             ->run();
+    }
+
+    /**
+     * Drop Primary Key
+     *
+     * @return bool
+     */
+    public function dropPrimaryKey(string $table)
+    {
+        $sqlTable = new Table($this->db, $this);
+
+        return $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->dropPrimaryKey()
+            ->run();
+    }
+
+    protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
+    {
+        if ($asQuery === false) {
+            return parent::_processPrimaryKeys($table, $asQuery);
+        }
+
+        $sqlTable = new Table($this->db, $this);
+
+        $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->addPrimaryKey($this->primaryKeys)
+            ->run();
+
+        return '';
+    }
+
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
+    {
+        if ($asQuery === false) {
+            return parent::_processForeignKeys($table, $asQuery);
+        }
+
+        $errorNames = [];
+
+        foreach ($this->foreignKeys as $name) {
+            foreach ($name['field'] as $f) {
+                if (! isset($this->fields[$f])) {
+                    $errorNames[] = $f;
+                }
+            }
+        }
+
+        if ($errorNames !== []) {
+            $errorNames[0] = implode(', ', $errorNames);
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $sqlTable = new Table($this->db, $this);
+
+        $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->addForeignKey($this->foreignKeys)
+            ->run();
+
+        return [];
     }
 }

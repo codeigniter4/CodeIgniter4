@@ -187,11 +187,18 @@ class Forge extends BaseForge
      *
      * @param string $table (ignored)
      */
-    protected function _processIndexes(string $table): string
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $sqls    = [];
+        $index   = 0;
+        $sqls[0] = '';
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
+            $index = $i;
+            if ($asQuery === false) {
+                $index = 0;
+            }
+
             if (is_array($this->keys[$i])) {
                 for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
                     if (! isset($this->fields[$this->keys[$i][$i2]])) {
@@ -212,13 +219,20 @@ class Forge extends BaseForge
 
             $unique = in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
 
-            $sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+            if ($asQuery === true) {
+                $sqls[$index] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . " ADD {$unique}KEY "
+                    . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+            } else {
+                $sqls[$index] .= ",\n\t{$unique}KEY "
+                    . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+            }
         }
 
         $this->keys = [];
 
-        return $sql;
+        return $sqls;
     }
 
     /**
@@ -230,8 +244,23 @@ class Forge extends BaseForge
     {
         $sql = sprintf(
             $this->dropIndexStr,
-            $this->db->escapeIdentifiers($keyName),
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $keyName),
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+        );
+
+        return $this->db->query($sql);
+    }
+
+    /**
+     * Drop Primary Key
+     *
+     * @return bool
+     */
+    public function dropPrimaryKey(string $table)
+    {
+        $sql = sprintf(
+            'ALTER TABLE %s DROP PRIMARY KEY',
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table)
         );
 
         return $this->db->query($sql);

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\OCI8;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
 
 /**
@@ -273,9 +274,28 @@ class Forge extends BaseForge
         return $sql;
     }
 
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $errorNames = [];
+
+        foreach ($this->foreignKeys as $name) {
+            foreach ($name['field'] as $f) {
+                if (! isset($this->fields[$f])) {
+                    $errorNames[] = $f;
+                }
+            }
+        }
+
+        if ($errorNames !== []) {
+            $errorNames[0] = implode(', ', $errorNames);
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $sqls    = [];
+        $index   = 0;
+        $sqls[0] = '';
+        $i       = 0;
 
         $allowActions = [
             'CASCADE',
@@ -284,20 +304,35 @@ class Forge extends BaseForge
         ];
 
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_fk';
+            $index = $i;
+            if ($asQuery === false) {
+                $index = 0;
+            }
+
+            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+            $sqls[$i] = '';
+
+            if ($asQuery === true) {
+                $formatSql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $formatSql = ",\n\t";
+            }
+
+            $formatSql .= 'CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s (%s)';
+            $sqls[$i]  .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+                $sqls[$i] .= ' ON DELETE ' . $fkey['onDelete'];
             }
+
+            $i++;
         }
 
-        return $sql;
+        return $sqls;
     }
 }
