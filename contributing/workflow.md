@@ -154,7 +154,17 @@ such as "Fix error on style guide", "Fix phpstan error", "Fix mistake in code",
 and other related commits, you can squash your commits so that we can have a clean commit history.
 But it is not a must.
 
-### Commit messages
+### Commit Messages
+
+Commit messages are important. They communicate the intent of a specific change, concisely.
+They make it easier to review code, and to find out why a change was made
+if the code history is examined later.
+
+The audience for your commit messages will be the codebase maintainers,
+any code reviewers, and debuggers trying to figure out when a bug might
+have been introduced.
+
+Make your commit messages meaningful.
 
 Commit messages are expected to be descriptive of **why** and what you changed specifically.
 Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
