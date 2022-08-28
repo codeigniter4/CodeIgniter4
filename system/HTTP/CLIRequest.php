@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use Config\App;
+use Locale;
 use RuntimeException;
 
 /**
@@ -279,5 +280,14 @@ class CLIRequest extends Request
     private function returnNullOrEmptyArray($index)
     {
         return ($index === null || is_array($index)) ? [] : null;
+    }
+
+    /**
+     * Gets the current locale, with a fallback to the default
+     * locale if none is set.
+     */
+    public function getLocale(): string
+    {
+        return Locale::getDefault();
     }
 }

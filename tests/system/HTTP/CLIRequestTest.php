@@ -611,4 +611,9 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertSame([], $this->request->getGetPost());
     }
+
+    public function testGetLocale()
+    {
+        $this->assertSame('en', $this->request->getLocale());
+    }
 }
