@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use Config\Mimes;
 use Config\Services;
@@ -24,20 +26,20 @@ class FileRules
     /**
      * Request instance. So we can get access to the files.
      *
-     * @var RequestInterface
+     * @var IncomingRequest
      */
     protected $request;
 
     /**
      * Constructor.
-     *
-     * @param RequestInterface $request
      */
     public function __construct(?RequestInterface $request = null)
     {
         if ($request === null) {
             $request = Services::request();
         }
+
+        assert($request instanceof IncomingRequest);
 
         $this->request = $request;
     }

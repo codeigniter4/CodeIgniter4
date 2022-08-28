@@ -27,7 +27,7 @@ class Negotiate
     /**
      * Request
      *
-     * @var IncomingRequest|RequestInterface
+     * @var IncomingRequest
      */
     protected $request;
 
@@ -37,6 +37,8 @@ class Negotiate
     public function __construct(?RequestInterface $request = null)
     {
         if ($request !== null) {
+            assert($request instanceof IncomingRequest);
+
             $this->request = $request;
         }
     }
@@ -48,6 +50,8 @@ class Negotiate
      */
     public function setRequest(RequestInterface $request)
     {
+        assert($request instanceof IncomingRequest);
+
         $this->request = $request;
 
         return $this;

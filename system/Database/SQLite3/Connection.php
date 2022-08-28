@@ -16,6 +16,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use ErrorException;
 use Exception;
 use SQLite3;
+use SQLite3Result;
 use stdClass;
 
 /**
@@ -120,7 +121,7 @@ class Connection extends BaseConnection
     /**
      * Execute the query
      *
-     * @return mixed \SQLite3Result object or bool
+     * @return bool|SQLite3Result
      */
     protected function execute(string $sql)
     {

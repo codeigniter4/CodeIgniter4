@@ -150,6 +150,7 @@ class Kint
         'Kint\\Parser\\ClosurePlugin',
         'Kint\\Parser\\ColorPlugin',
         'Kint\\Parser\\DateTimePlugin',
+        'Kint\\Parser\\EnumPlugin',
         'Kint\\Parser\\FsPathPlugin',
         'Kint\\Parser\\IteratorPlugin',
         'Kint\\Parser\\JsonPlugin',
