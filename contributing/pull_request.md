@@ -249,18 +249,17 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 8. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
    - `> git commit`
-   - Commit messages are expected to be descriptive of what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
-9. If there are intermediate commits that are not meaningful to the overall PR, such as "Fixed error on style guide", "Fixed phpstan error", "Fixing mistake in code", and other related commits, it is advised to squash your commits so that we can have a clean commit history.
-10. If you have touched PHP code, run static analysis.
+   - Commit messages are expected to be descriptive of why and what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised. [Atomic commit](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) is recommended.
+9. If you have touched PHP code, run static analysis.
    - `> composer analyze`
    - `> vendor/bin/rector process`
-11. Run unit tests on the specific file you modified. If there are no existing tests yet, please create one.
+10. Run unit tests on the specific file you modified. If there are no existing tests yet, please create one.
    - `> vendor/bin/phpunit tests/system/path/to/file/you/modified`
    - Make sure the tests pass to have a higher chance of merging.
-12. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
+11. [Push](https://docs.github.com/en/github/using-git/pushing-commits-to-a-remote-repository) your contribution branch to your fork.
    - `> git push origin <new-branch-name>`
-13. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
-14. Label your pull request with the appropriate label if you can.
+12. Send a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork).
+13. Label your pull request with the appropriate label if you can.
 
 See [Contribution workflow](./workflow.md) for Git workflow details.
 
