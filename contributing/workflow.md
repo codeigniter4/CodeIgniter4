@@ -186,7 +186,7 @@ switch between them to keep the contributions separate. For instance:
 > git switch develop
 ```
 
-The last checkout makes sure that you end up in your *develop* branch as
+The last switch makes sure that you end up in your *develop* branch as
 a starting point for your next session working with your repository.
 This is a good practice, as it is not always obvious which branch you
 are working in.
