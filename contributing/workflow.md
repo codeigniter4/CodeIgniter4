@@ -139,15 +139,47 @@ Your local changes need to be *committed* to save them in your local
 repository. This is where [contribution signing](./signing.md) comes
 in.
 
+Now we don't have detailed rules on commits and its messages. But
+[atomic commit](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) is recommended.
+Keep your commits atomic. One commit for one change.
+
+There are some references for writing good commit messages:
+
+- [Git Best Practices — AFTER Technique - DZone DevOps](https://dzone.com/articles/git-best-practices-after-technique-1)
+- [Semantic Commit Messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+If there are intermediate commits that are not meaningful to the overall PR,
+such as "Fix error on style guide", "Fix phpstan error", "Fix mistake in code",
+and other related commits, you can squash your commits so that we can have a clean commit history.
+But it is not a must.
+
+### Commit Messages
+
+Commit messages are important. They communicate the intent of a specific change, concisely.
+They make it easier to review code, and to find out why a change was made
+if the code history is examined later.
+
+The audience for your commit messages will be the codebase maintainers,
+any code reviewers, and debuggers trying to figure out when a bug might
+have been introduced.
+
+Make your commit messages meaningful.
+
+Commit messages are expected to be descriptive of **why** and what you changed specifically.
+Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
+
 You can have as many commits in a branch as you need to "get it right".
 For instance, to commit your work from a debugging session:
 
 ```console
 > git add .
-> git commit -S -m "Find and fix the broken reference problem"
+> git commit -S -m "Fix the broken reference problem"
 ```
 
 Just make sure that your commits in a feature branch are all related.
+
+### When you work on two features
 
 If you are working on two features at a time, then you will want to
 switch between them to keep the contributions separate. For instance:
@@ -164,7 +196,7 @@ switch between them to keep the contributions separate. For instance:
 > git switch develop
 ```
 
-The last checkout makes sure that you end up in your *develop* branch as
+The last switch makes sure that you end up in your *develop* branch as
 a starting point for your next session working with your repository.
 This is a good practice, as it is not always obvious which branch you
 are working in.
