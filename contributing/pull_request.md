@@ -249,7 +249,7 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
 7. Fix existing bugs on the [Issue tracker](https://github.com/codeigniter4/CodeIgniter4/issues) after confirming that no one else is working on them.
 8. [Commit](https://help.github.com/en/desktop/contributing-to-projects/committing-and-reviewing-changes-to-your-project) the changed files in your contribution branch.
    - `> git commit`
-   - Commit messages are expected to be descriptive of why and what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised. [Atomic commit](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) is recommended.
+   - Commit messages are expected to be descriptive of why and what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised. [Atomic commit](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) is recommended. See [Contribution Workflow](./workflow.md#commit-messages) for details.
 9. If you have touched PHP code, run static analysis.
    - `> composer analyze`
    - `> vendor/bin/rector process`
