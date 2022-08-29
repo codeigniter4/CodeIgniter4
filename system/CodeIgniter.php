@@ -182,11 +182,15 @@ class CodeIgniter
         // Set default timezone on the server
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
-        $this->initializeKint();
-
-        if (! CI_DEBUG) {
-            Kint::$enabled_mode = false; // @codeCoverageIgnore
+        if (CI_DEBUG) {
+            $this->initializeKint();
+        } else {
+            if (class_exists(Kint::class)) {
+                // In case that Kint is already loaded via Composer.
+                Kint::$enabled_mode = false; // @codeCoverageIgnore
+            }
         }
+        helper('kint');
     }
 
     /**
