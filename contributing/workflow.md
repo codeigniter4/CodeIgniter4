@@ -66,7 +66,7 @@ Clone your repository, leaving a local folder for you to work with:
 > git clone ORIGIN_URL
 ```
 
-## Syncing your repository
+## Syncing Your Repository
 
 Within your local repository, Git will have created an alias,
 **origin**, for the GitHub repository it is bound to. You want to create
@@ -179,11 +179,11 @@ For instance, to commit your work from a debugging session:
 
 Just make sure that your commits in a feature branch are all related.
 
-### Changing a commit message
+### Changing a Commit Message
 
 See <https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message>.
 
-### When you work on two features
+### When You Work on Two Features
 
 If you are working on two features at a time, then you will want to
 switch between them to keep the contributions separate. For instance:
@@ -318,7 +318,7 @@ And finally push your local branch to your GitHub repository:
 > git push --force-with-lease origin fix/problem123
 ```
 
-## If you sent to the wrong branch
+## If You Sent to the Wrong Branch
 
 If you have sent a PR to the wrong branch, you need to create a new PR branch.
 
