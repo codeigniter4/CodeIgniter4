@@ -223,11 +223,10 @@ class CodeIgniter
         if (CI_DEBUG) {
             $this->autoloadKint();
             $this->configureKint();
-        } else {
-            if (class_exists(Kint::class)) {
-                // In case that Kint is already loaded via Composer.
-                Kint::$enabled_mode = false; // @codeCoverageIgnore
-            }
+        } elseif (class_exists(Kint::class)) {
+            // In case that Kint is already loaded via Composer.
+            Kint::$enabled_mode = false;
+            // @codeCoverageIgnore
         }
 
         helper('kint');

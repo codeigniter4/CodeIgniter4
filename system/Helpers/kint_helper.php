@@ -38,13 +38,11 @@ if (! function_exists('dd')) {
     }
 }
 
-if (! function_exists('d')) {
-    if (! class_exists(Kint::class)) {
-        // In case that Kint is not loaded.
-        function d(...$vars)
-        {
-            return 0;
-        }
+if (! function_exists('d') && ! class_exists(Kint::class)) {
+    // In case that Kint is not loaded.
+    function d(...$vars)
+    {
+        return 0;
     }
 }
 
