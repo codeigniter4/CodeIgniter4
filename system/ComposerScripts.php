@@ -69,8 +69,14 @@ final class ComposerScripts
     {
         self::recursiveDelete(self::$path);
 
-        foreach (self::$dependencies as $dependency) {
+        foreach (self::$dependencies as $key => $dependency) {
+            // Kint may be removed.
+            if (! is_dir($dependency['from']) && strpos($key, 'kint') === 0) {
+                continue;
+            }
+
             self::recursiveMirror($dependency['from'], $dependency['to']);
+
             if (isset($dependency['license'])) {
                 $license = basename($dependency['license']);
                 copy($dependency['license'], $dependency['to'] . '/' . $license);
