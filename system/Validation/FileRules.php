@@ -39,7 +39,7 @@ class FileRules
             $request = Services::request();
         }
 
-        assert($request instanceof IncomingRequest);
+        assert($request instanceof Request);
 
         $this->request = $request;
     }
