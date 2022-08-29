@@ -311,15 +311,15 @@ class Table
                 }
             }
         }
-/*
+
         foreach ($this->foreignKeys as $foreignKey) {
             $this->forge->addForeignKey(
-                implode(',', $foreignKey['field']),
+                $foreignKey['field'],
                 trim($foreignKey['referenceTable'], $this->db->DBPrefix),
-                implode(',', $foreignKey['referenceField'])
+                $foreignKey['referenceField']
             );
         }
-*/
+
         return $this->forge->createTable($this->tableName);
     }
 

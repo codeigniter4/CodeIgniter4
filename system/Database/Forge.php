@@ -408,14 +408,11 @@ class Forge
 
         // same structure as Connection::_foreignKeyData()
         $this->foreignKeys[] = [
-            'name'           => null,
-            'table'          => null,
             'field'          => $fieldName,
             'referenceTable' => $this->db->DBPrefix . $tableName,
             'referenceField' => $tableField,
             'onDelete'       => strtoupper($onDelete),
             'onUpdate'       => strtoupper($onUpdate),
-            'match'          => null,
         ];
 
         return $this;
