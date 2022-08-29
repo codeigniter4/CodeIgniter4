@@ -179,6 +179,10 @@ For instance, to commit your work from a debugging session:
 
 Just make sure that your commits in a feature branch are all related.
 
+### Changing a commit message
+
+See <https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message>.
+
 ### When you work on two features
 
 If you are working on two features at a time, then you will want to
