@@ -47,6 +47,23 @@ You can supply multiple verbs that a route should match by passing them in as an
 
 .. literalinclude:: routing/004.php
 
+Controller's Namespace
+======================
+
+If a controller name is stated without beginning with ``\``, the :ref:`routing-default-namespace` will be prepended:
+
+.. literalinclude:: routing/063.php
+
+If you put ``\`` at the beginning, it is treated as a fully qualified class name:
+
+.. literalinclude:: routing/064.php
+
+You can also specify the namespace with the ``namespace`` option:
+
+.. literalinclude:: routing/038.php
+
+See :ref:`assigning-namespace` for details.
+
 Placeholders
 ============
 
@@ -394,7 +411,7 @@ You specify an array for the filter value:
 Assigning Namespace
 -------------------
 
-While a default namespace will be prepended to the generated controllers (see below), you can also specify
+While a :ref:`routing-default-namespace` will be prepended to the generated controllers, you can also specify
 a different namespace to be used in any options array, with the ``namespace`` option. The value should be the
 namespace you want modified:
 
@@ -479,6 +496,8 @@ Routes Configuration Options
 
 The RoutesCollection class provides several options that affect all routes, and can be modified to meet your
 application's needs. These options are available at the top of **app/Config/Routes.php**.
+
+.. _routing-default-namespace:
 
 Default Namespace
 =================
