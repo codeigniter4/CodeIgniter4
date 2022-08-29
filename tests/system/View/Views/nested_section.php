@@ -1,4 +1,5 @@
-<?php $this->extend('layout'); ?>
+<?php declare(strict_types=1);
+$this->extend('layout'); ?>
 
 <?php $this->section('content'); ?>
 <p>Second</p>
