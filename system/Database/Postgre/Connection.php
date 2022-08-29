@@ -321,7 +321,7 @@ class Connection extends BaseConnection
      *
      * @throws DatabaseException
      *
-     * @return stdClass[]
+     * @return array[]
      */
     protected function _foreignKeyData(string $table): array
     {

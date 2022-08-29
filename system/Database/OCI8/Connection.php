@@ -379,7 +379,7 @@ class Connection extends BaseConnection implements ConnectionInterface
      *
      * @throws DatabaseException
      *
-     * @return stdClass[]
+     * @return array[]
      */
     protected function _foreignKeyData(string $table): array
     {

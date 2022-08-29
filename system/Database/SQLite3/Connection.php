@@ -324,7 +324,7 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with Foreign key data
      *
-     * @return stdClass[]
+     * @return array[]
      */
     protected function _foreignKeyData(string $table): array
     {
