@@ -313,13 +313,11 @@ class Table
         }
 
         foreach ($this->foreignKeys as $foreignKey) {
-            if (is_array($foreignKey)) {
-                $this->forge->addForeignKey(
-                    implode(',', $foreignKey['field']),
-                    trim($foreignKey['referenceTable'], $this->db->DBPrefix),
-                    implode(',', $foreignKey['referenceField'])
-                );
-            }
+            $this->forge->addForeignKey(
+                implode(',', $foreignKey['field']),
+                trim($foreignKey['referenceTable'], $this->db->DBPrefix),
+                implode(',', $foreignKey['referenceField'])
+            );
         }
 
         return $this->forge->createTable($this->tableName);
@@ -349,9 +347,13 @@ class Table
             array_map(fn ($item) => $this->db->protectIdentifiers($item), $newFields)
         );
 
+        $this->forge->dropTable({$this->db->DBPrefix}temp_{$this->tableName}, true);
+
         $this->db->query(
             "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}"
         );
+
+        $this->forge->dropTable({$this->db->DBPrefix}temp_{$this->tableName}, true);
     }
 
     /**
