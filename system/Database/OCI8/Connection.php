@@ -384,23 +384,25 @@ class Connection extends BaseConnection implements ConnectionInterface
     protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT
-                 acc.constraint_name,
-                 acc.table_name,
-                 acc.column_name,
-                 ccu.table_name foreign_table_name,
-                 accu.column_name foreign_column_name
-  FROM all_cons_columns acc
-  JOIN all_constraints ac
-      ON acc.owner = ac.owner
-      AND acc.constraint_name = ac.constraint_name
-  JOIN all_constraints ccu
-      ON ac.r_owner = ccu.owner
-      AND ac.r_constraint_name = ccu.constraint_name
-  JOIN all_cons_columns accu
-      ON accu.constraint_name = ccu.constraint_name
-      AND accu.table_name = ccu.table_name
-  WHERE ac.constraint_type = ' . $this->escape('R') . '
-      AND acc.table_name = ' . $this->escape($table);
+                 acc.CONSTRAINT_NAME,
+                 acc.TABLE_NAME,
+                 acc.COLUMN_NAME,
+                 ccu.table_name FOREIGN_TABLE_NAME,
+                 accu.column_name FOREIGN_COLUMN_NAME,
+                 ac.DELETE_RULE
+              FROM all_cons_columns acc
+              JOIN all_constraints ac
+                  ON acc.owner = ac.owner
+                  AND acc.constraint_name = ac.constraint_name
+              JOIN all_constraints ccu
+                  ON ac.r_owner = ccu.owner
+                  AND ac.r_constraint_name = ccu.constraint_name
+              JOIN all_cons_columns accu
+                  ON accu.constraint_name = ccu.constraint_name AND accu.POSITION = acc.POSITION
+                  AND accu.table_name = ccu.table_name
+              WHERE ac.constraint_type = ' . $this->escape('R') . '
+                  AND acc.table_name = ' . $this->escape($table);
+
         $query = $this->query($sql);
 
         if ($query === false) {
@@ -411,13 +413,14 @@ class Connection extends BaseConnection implements ConnectionInterface
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $row->CONSTRAINT_NAME;
-            $obj->table_name          = $row->TABLE_NAME;
-            $obj->column_name         = $row->COLUMN_NAME;
-            $obj->foreign_table_name  = $row->FOREIGN_TABLE_NAME;
-            $obj->foreign_column_name = $row->FOREIGN_COLUMN_NAME;
-            $retVal[]                 = $obj;
+            $retVal[$row->CONSTRAINT_NAME]['name']             = $row->CONSTRAINT_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['table']            = $row->TABLE_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['field'][]          = $row->COLUMN_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['referenceTable']   = $row->FOREIGN_TABLE_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['referenceField'][] = $row->FOREIGN_COLUMN_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['onDelete']         = $row->DELETE_RULE;
+            $retVal[$row->CONSTRAINT_NAME]['onUpdate']         = null;
+            $retVal[$row->CONSTRAINT_NAME]['match']            = null;
         }
 
         return $retVal;

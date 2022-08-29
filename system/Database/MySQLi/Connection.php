@@ -487,7 +487,10 @@ class Connection extends BaseConnection
                         tc.TABLE_NAME,
                         kcu.COLUMN_NAME,
                         rc.REFERENCED_TABLE_NAME,
-                        kcu.REFERENCED_COLUMN_NAME
+                        kcu.REFERENCED_COLUMN_NAME,
+                        rc.DELETE_RULE,
+                        rc.UPDATE_RULE,
+                        rc.MATCH_OPTION
                     FROM information_schema.TABLE_CONSTRAINTS AS tc
                     INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
                         ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
@@ -508,14 +511,14 @@ class Connection extends BaseConnection
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $row->CONSTRAINT_NAME;
-            $obj->table_name          = $row->TABLE_NAME;
-            $obj->column_name         = $row->COLUMN_NAME;
-            $obj->foreign_table_name  = $row->REFERENCED_TABLE_NAME;
-            $obj->foreign_column_name = $row->REFERENCED_COLUMN_NAME;
-
-            $retVal[] = $obj;
+            $retVal[$row->CONSTRAINT_NAME]['name']             = $row->CONSTRAINT_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['table']            = $row->TABLE_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['field'][]          = $row->COLUMN_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['referenceTable']   = $row->REFERENCED_TABLE_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['referenceField'][] = $row->REFERENCED_COLUMN_NAME;
+            $retVal[$row->CONSTRAINT_NAME]['onDelete']         = $row->DELETE_RULE;
+            $retVal[$row->CONSTRAINT_NAME]['onUpdate']         = $row->UPDATE_RULE;
+            $retVal[$row->CONSTRAINT_NAME]['match']            = $row->MATCH_OPTION;
         }
 
         return $retVal;

@@ -350,19 +350,23 @@ class Connection extends BaseConnection
                 $indexes[$row->id]['foreign_table_name'] = $row->table;
                 $indexes[$row->id]['fields'][]           = $row->from;
                 $indexes[$row->id]['fields_to'][]        = $row->to;
+                $indexes[$row->id]['on_update']          = $row->on_update;
+                $indexes[$row->id]['on_delete']          = $row->on_delete;
+                $indexes[$row->id]['match']              = $row->match;
             }
 
+            // format same as
             foreach ($indexes as $row) {
-                foreach ($row['fields'] as $key => $field) {
-                    $obj                      = new stdClass();
-                    $obj->constraint_name     = $table . '_' . implode('_', $row['constraint']) . '_foreign';
-                    $obj->table_name          = $table;
-                    $obj->column_name         = $field;
-                    $obj->foreign_table_name  = $row['foreign_table_name'];
-                    $obj->foreign_column_name = $row['fields_to'][$key];
+                $name = $table . '_' . implode('_', $row['constraint']) . '_foreign';
 
-                    $retVal[] = $obj;
-                }
+                $retVal[$name]['name']           = $name;
+                $retVal[$name]['table']          = $table;
+                $retVal[$name]['field']          = $row['fields'];
+                $retVal[$name]['referenceTable'] = $row['foreign_table_name'];
+                $retVal[$name]['referenceField'] = $row['fields_to'];
+                $retVal[$name]['onDelete']       = $row['on_delete'];
+                $retVal[$name]['onUpdate']       = $row['on_update'];
+                $retVal[$name]['match']          = $row['match'];
             }
         }
 

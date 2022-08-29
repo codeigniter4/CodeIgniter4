@@ -406,12 +406,16 @@ class Forge
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
 
+        // same structure as Connection::_foreignKeyData()
         $this->foreignKeys[] = [
+            'name'           => null,
+            'table'          => null,
             'field'          => $fieldName,
-            'referenceTable' => $tableName,
+            'referenceTable' => $this->db->DBPrefix . $tableName,
             'referenceField' => $tableField,
             'onDelete'       => strtoupper($onDelete),
             'onUpdate'       => strtoupper($onUpdate),
+            'match'          => null,
         ];
 
         return $this;
@@ -1135,7 +1139,7 @@ class Forge
             $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+            $referenceTableFilled = $this->db->escapeIdentifiers($fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
             $sqls[$i] = '';

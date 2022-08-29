@@ -325,17 +325,22 @@ class Connection extends BaseConnection
      */
     protected function _foreignKeyData(string $table): array
     {
-        $sql = 'SELECT
-            tc.constraint_name, tc.table_name, kcu.column_name,
-            ccu.table_name AS foreign_table_name,
-            ccu.column_name AS foreign_column_name
-        FROM information_schema.table_constraints AS tc
-        JOIN information_schema.key_column_usage AS kcu
-            ON tc.constraint_name = kcu.constraint_name
-        JOIN information_schema.constraint_column_usage AS ccu
-            ON ccu.constraint_name = tc.constraint_name
-        WHERE constraint_type = ' . $this->escape('FOREIGN KEY') . ' AND
-            tc.table_name = ' . $this->escape($table);
+        $sql = 'select c.constraint_name
+            , x.table_name
+            , x.column_name
+            , y.table_name as foreign_table_name
+            , y.column_name as foreign_column_name
+            , c.delete_rule
+            , c.update_rule
+            , c.match_option
+        from information_schema.referential_constraints c
+        join information_schema.key_column_usage x
+            on x.constraint_name = c.constraint_name
+        join information_schema.key_column_usage y
+            on y.ordinal_position = x.position_in_unique_constraint
+            and y.constraint_name = c.unique_constraint_name
+        where x.table_name = ' . $this->escape($table) .
+        'order by c.constraint_name, x.ordinal_position';
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
@@ -345,15 +350,14 @@ class Connection extends BaseConnection
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
-
-            $obj->constraint_name     = $row->constraint_name;
-            $obj->table_name          = $row->table_name;
-            $obj->column_name         = $row->column_name;
-            $obj->foreign_table_name  = $row->foreign_table_name;
-            $obj->foreign_column_name = $row->foreign_column_name;
-
-            $retVal[] = $obj;
+            $retVal[$row->constraint_name]['name']             = $row->constraint_name;
+            $retVal[$row->constraint_name]['table']            = $row->table_name;
+            $retVal[$row->constraint_name]['field'][]          = $row->column_name;
+            $retVal[$row->constraint_name]['referenceTable']   = $row->foreign_table_name;
+            $retVal[$row->constraint_name]['referenceField'][] = $row->foreign_column_name;
+            $retVal[$row->constraint_name]['onDelete']         = $row->delete_rule;
+            $retVal[$row->constraint_name]['onUpdate']         = $row->update_rule;
+            $retVal[$row->constraint_name]['match']            = $row->match_option;
         }
 
         return $retVal;

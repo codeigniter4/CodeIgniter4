@@ -278,7 +278,10 @@ class Connection extends BaseConnection
             . 'OBJECT_NAME (f.parent_object_id) as table_name, '
             . 'COL_NAME(fc.parent_object_id,fc.parent_column_id) column_name, '
             . 'OBJECT_NAME(f.referenced_object_id) foreign_table_name, '
-            . 'COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name '
+            . 'COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name, '
+            . 'rc.DELETE_RULE, '
+            . 'rc.UPDATE_RULE, '
+            . 'rc.MATCH_OPTION '
             . 'FROM  '
             . 'sys.foreign_keys AS f '
             . 'INNER JOIN  '
@@ -287,6 +290,7 @@ class Connection extends BaseConnection
             . 'INNER JOIN  '
             . 'sys.tables t  '
             . 'ON t.OBJECT_ID = fc.referenced_object_id '
+            . 'INNER JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc ON rc.CONSTRAINT_NAME = f.name '
             . 'WHERE  '
             . 'OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
 
@@ -298,15 +302,14 @@ class Connection extends BaseConnection
         $retVal = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
-
-            $obj->constraint_name     = $row->constraint_name;
-            $obj->table_name          = $row->table_name;
-            $obj->column_name         = $row->column_name;
-            $obj->foreign_table_name  = $row->foreign_table_name;
-            $obj->foreign_column_name = $row->foreign_column_name;
-
-            $retVal[] = $obj;
+            $retVal[$row->constraint_name]['name']             = $row->constraint_name;
+            $retVal[$row->constraint_name]['table']            = $row->table_name;
+            $retVal[$row->constraint_name]['field'][]          = $row->column_name;
+            $retVal[$row->constraint_name]['referenceTable']   = $row->foreign_table_name;
+            $retVal[$row->constraint_name]['referenceField'][] = $row->foreign_column_name;
+            $retVal[$row->constraint_name]['onDelete']         = $row->DELETE_RULE;
+            $retVal[$row->constraint_name]['onUpdate']         = $row->UPDATE_RULE;
+            $retVal[$row->constraint_name]['match']            = $row->MATCH_OPTION;
         }
 
         return $retVal;
