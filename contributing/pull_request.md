@@ -252,7 +252,6 @@ The best way to contribute is to fork the CodeIgniter4 repository, and "clone" t
    - Commit messages are expected to be descriptive of why and what you changed specifically. Commit messages like "Fixes #1234" would be asked by the reviewer to be revised. [Atomic commit](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) is recommended. See [Contribution Workflow](./workflow.md#commit-messages) for details.
 9. If you have touched PHP code, run static analysis.
    - `> composer analyze`
-   - `> vendor/bin/rector process`
 10. Run unit tests on the specific file you modified. If there are no existing tests yet, please create one.
    - `> vendor/bin/phpunit tests/system/path/to/file/you/modified`
    - Make sure the tests pass to have a higher chance of merging.
