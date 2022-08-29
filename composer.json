@@ -70,7 +70,10 @@
             "CodeIgniter\\ComposerScripts::postUpdate",
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
-        "analyze": "phpstan analyse",
+        "analyze": [
+            "phpstan analyze",
+            "rector process --dry-run"
+        ],
         "test": "phpunit",
         "cs": [
             "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
