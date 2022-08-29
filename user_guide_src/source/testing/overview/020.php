@@ -1,15 +1,18 @@
 <?php
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
-public function testSomeOutput(): void
+final class SomeTest extends CIUnitTestCase
 {
-    CITestStreamFilter::registration();
-    CITestStreamFilter::addOutputFilter();
+    public function testSomeOutput(): void
+    {
+        CITestStreamFilter::registration();
+        CITestStreamFilter::addOutputFilter();
 
-    CLI::write('first.');
+        CLI::write('first.');
 
-    CITestStreamFilter::removeOutputFilter();
+        CITestStreamFilter::removeOutputFilter();
+    }
 }
-
