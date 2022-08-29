@@ -311,7 +311,7 @@ class Table
                 }
             }
         }
-
+/*
         foreach ($this->foreignKeys as $foreignKey) {
             $this->forge->addForeignKey(
                 implode(',', $foreignKey['field']),
@@ -319,7 +319,7 @@ class Table
                 implode(',', $foreignKey['referenceField'])
             );
         }
-
+*/
         return $this->forge->createTable($this->tableName);
     }
 
