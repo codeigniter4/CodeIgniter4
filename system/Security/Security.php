@@ -13,6 +13,7 @@ namespace CodeIgniter\Security;
 
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Security\Exceptions\SecurityException;
@@ -321,6 +322,8 @@ class Security implements SecurityInterface
      */
     private function removeTokenInRequest(RequestInterface $request): void
     {
+        assert($request instanceof Request);
+
         $json = json_decode($request->getBody() ?? '');
 
         if (isset($_POST[$this->tokenName])) {
@@ -336,6 +339,8 @@ class Security implements SecurityInterface
 
     private function getPostedToken(RequestInterface $request): ?string
     {
+        assert($request instanceof IncomingRequest);
+
         // Does the token exist in POST, HEADER or optionally php:://input - json data.
         if ($request->hasHeader($this->headerName) && ! empty($request->header($this->headerName)->getValue())) {
             $tokenName = $request->header($this->headerName)->getValue();
@@ -580,6 +585,8 @@ class Security implements SecurityInterface
      */
     protected function sendCookie(RequestInterface $request)
     {
+        assert($request instanceof IncomingRequest);
+
         if ($this->cookie->isSecure() && ! $request->isSecure()) {
             return false;
         }

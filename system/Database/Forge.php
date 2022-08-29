@@ -498,7 +498,7 @@ class Forge
         }
 
         // If table exists lets stop here
-        if ($ifNotExists === true && $this->db->tableExists($table)) {
+        if ($ifNotExists === true && $this->db->tableExists($table, false)) {
             $this->reset();
 
             return true;
@@ -776,7 +776,7 @@ class Forge
     }
 
     /**
-     * @param mixed $fields
+     * @param array|string $fields
      *
      * @return false|string|string[]
      */

@@ -132,7 +132,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return false|resource
      */
     protected function execute(string $sql)
     {
@@ -204,10 +204,16 @@ class Connection extends BaseConnection
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
+     *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'' . $this->schema . "'";
+
+        if ($tableName !== null) {
+            return $sql . ' AND "table_name" LIKE ' . $this->escape($tableName);
+        }
 
         if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . ' AND "table_name" LIKE \''

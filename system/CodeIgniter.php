@@ -47,7 +47,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.2.4';
+    public const CI_VERSION = '4.2.5';
 
     /**
      * App startup time.
@@ -982,8 +982,10 @@ class CodeIgniter
 
         if ($returned instanceof DownloadResponse) {
             // Turn off output buffering completely, even if php.ini output_buffering is not off
-            while (ob_get_level() > 0) {
-                ob_end_clean();
+            if (ENVIRONMENT !== 'testing') {
+                while (ob_get_level() > 0) {
+                    ob_end_clean();
+                }
             }
 
             $this->response = $returned;

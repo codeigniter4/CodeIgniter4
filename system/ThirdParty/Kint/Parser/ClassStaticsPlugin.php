@@ -30,6 +30,7 @@ use Kint\Zval\Representation\Representation;
 use Kint\Zval\Value;
 use ReflectionClass;
 use ReflectionProperty;
+use UnitEnum;
 
 class ClassStaticsPlugin extends Plugin
 {
@@ -56,6 +57,11 @@ class ClassStaticsPlugin extends Plugin
             $consts = [];
 
             foreach ($reflection->getConstants() as $name => $val) {
+                // Skip enum constants
+                if ($var instanceof UnitEnum && $val instanceof UnitEnum && $o->classname == \get_class($val)) {
+                    continue;
+                }
+
                 $const = Value::blank($name, '\\'.$class.'::'.$name);
                 $const->const = true;
                 $const->depth = $o->depth + 1;

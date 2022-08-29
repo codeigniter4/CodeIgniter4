@@ -562,7 +562,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return bool|object|resource
      */
     abstract protected function execute(string $sql);
 
@@ -882,7 +882,12 @@ abstract class BaseConnection implements ConnectionInterface
      */
     public function newQuery(): BaseBuilder
     {
-        return $this->table(',')->from([], true);
+        // save table aliases
+        $tempAliases         = $this->aliasedTables;
+        $builder             = $this->table(',')->from([], true);
+        $this->aliasedTables = $tempAliases;
+
+        return $builder;
     }
 
     /**
@@ -1405,10 +1410,41 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Determine if a particular table exists
+     *
+     * @param bool $cached Whether to use data cache
      */
-    public function tableExists(string $tableName): bool
+    public function tableExists(string $tableName, bool $cached = true): bool
     {
-        return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
+        if ($cached === true) {
+            return in_array($this->protectIdentifiers($tableName, true, false, false), $this->listTables(), true);
+        }
+
+        if (false === ($sql = $this->_listTables(false, $tableName))) {
+            if ($this->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        $tableExists = $this->query($sql)->getResultArray() !== [];
+
+        // if cache has been built already
+        if (! empty($this->dataCache['table_names'])) {
+            $key = array_search(
+                strtolower($tableName),
+                array_map('strtolower', $this->dataCache['table_names']),
+                true
+            );
+
+            // table doesn't exist but still in cache - lets reset cache, it can be rebuilt later
+            // OR if table does exist but is not found in cache
+            if (($key !== false && ! $tableExists) || ($key === false && $tableExists)) {
+                $this->resetDataCache();
+            }
+        }
+
+        return $tableExists;
     }
 
     /**
@@ -1575,9 +1611,11 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
+     *
      * @return false|string
      */
-    abstract protected function _listTables(bool $constrainByPrefix = false);
+    abstract protected function _listTables(bool $constrainByPrefix = false, ?string $tableName = null);
 
     /**
      * Generates a platform-specific query string so that the column names can be fetched.

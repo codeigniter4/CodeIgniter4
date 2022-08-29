@@ -277,7 +277,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return bool|object
      */
     protected function execute(string $sql)
     {
@@ -368,10 +368,16 @@ class Connection extends BaseConnection
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
      * Uses escapeLikeStringDirect().
+     *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SHOW TABLES FROM ' . $this->escapeIdentifiers($this->database);
+
+        if ($tableName !== null) {
+            return $sql . ' LIKE ' . $this->escape($tableName);
+        }
 
         if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . " LIKE '" . $this->escapeLikeStringDirect($this->DBPrefix) . "%'";

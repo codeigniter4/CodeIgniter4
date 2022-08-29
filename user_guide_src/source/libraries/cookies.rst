@@ -223,7 +223,9 @@ In runtime, you can manually supply a new default using the ``Cookie::setDefault
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\HTTP\\Cookie\\Cookie
+.. php:namespace:: CodeIgniter\HTTP\Cookie
+
+.. php:class:: Cookie
 
     .. php:staticmethod:: setDefaults([$config = []])
 
@@ -380,7 +382,7 @@ Class Reference
         :rtype: array
         :returns: Returns the array representation of the Cookie instance.
 
-.. php:class:: CodeIgniter\\HTTP\\Cookie\\CookieStore
+.. php:class:: CookieStore
 
     .. php:staticmethod:: fromCookieHeaders(array $headers[, bool $raw = false])
 

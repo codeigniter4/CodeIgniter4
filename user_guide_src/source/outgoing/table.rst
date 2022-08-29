@@ -75,6 +75,8 @@ to the Table constructor:
 Class Reference
 ***************
 
+.. php:namespace:: CodeIgniter\View
+
 .. php:class:: Table
 
     .. attribute:: $function = null

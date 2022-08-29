@@ -83,8 +83,8 @@ is normally done locally, so that you can resolve any merge conflicts.
 For instance, to synchronize **develop** branches:
 
 ```console
-> git switch develop
 > git fetch upstream
+> git switch develop
 > git merge upstream/develop
 > git push origin develop
 ```
@@ -139,15 +139,47 @@ Your local changes need to be *committed* to save them in your local
 repository. This is where [contribution signing](./signing.md) comes
 in.
 
+Now we don't have detailed rules on commits and its messages. But
+[atomic commit](https://en.wikipedia.org/wiki/Atomic_commit#Atomic_commit_convention) is recommended.
+Keep your commits atomic. One commit for one change.
+
+There are some references for writing good commit messages:
+
+- [Git Best Practices — AFTER Technique - DZone DevOps](https://dzone.com/articles/git-best-practices-after-technique-1)
+- [Semantic Commit Messages](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
+- [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+If there are intermediate commits that are not meaningful to the overall PR,
+such as "Fix error on style guide", "Fix phpstan error", "Fix mistake in code",
+and other related commits, you can squash your commits so that we can have a clean commit history.
+But it is not a must.
+
+### Commit Messages
+
+Commit messages are important. They communicate the intent of a specific change, concisely.
+They make it easier to review code, and to find out why a change was made
+if the code history is examined later.
+
+The audience for your commit messages will be the codebase maintainers,
+any code reviewers, and debuggers trying to figure out when a bug might
+have been introduced.
+
+Make your commit messages meaningful.
+
+Commit messages are expected to be descriptive of **why** and what you changed specifically.
+Commit messages like "Fixes #1234" would be asked by the reviewer to be revised.
+
 You can have as many commits in a branch as you need to "get it right".
 For instance, to commit your work from a debugging session:
 
 ```console
 > git add .
-> git commit -S -m "Find and fix the broken reference problem"
+> git commit -S -m "Fix the broken reference problem"
 ```
 
 Just make sure that your commits in a feature branch are all related.
+
+### When you work on two features
 
 If you are working on two features at a time, then you will want to
 switch between them to keep the contributions separate. For instance:
@@ -164,7 +196,7 @@ switch between them to keep the contributions separate. For instance:
 > git switch develop
 ```
 
-The last checkout makes sure that you end up in your *develop* branch as
+The last switch makes sure that you end up in your *develop* branch as
 a starting point for your next session working with your repository.
 This is a good practice, as it is not always obvious which branch you
 are working in.
@@ -174,15 +206,15 @@ are working in.
 At some point, you will decide that your feature branch is complete, or
 that it could benefit from a review by fellow developers.
 
-**Note:**
+> **Note**
 > Remember to sync your local repo with the shared one before pushing!
 It is a lot easier to resolve conflicts at this stage.
 
 Synchronize your repository:
 
 ```console
-> git switch develop
 > git fetch upstream
+> git switch develop
 > git merge upstream/develop
 > git push origin develop
 ```
@@ -213,7 +245,7 @@ Make sure that the PR title is helpful for the maintainers and other
 developers. Add any comments appropriate, for instance asking for
 review.
 
-**Note:**
+> **Note**
 > If you do not provide a title or description for your PR, the odds of it being summarily rejected
 rise astronomically.
 
@@ -253,10 +285,16 @@ do the following:
 Synchronize your repository:
 
 ```console
-> git switch develop
 > git fetch upstream
+> git switch develop
 > git merge upstream/develop
 > git push origin develop
+```
+
+(Optional) Create a new branch as a backup, just in case:
+
+```console
+> git branch fix/problem123.bk fix/problem123
 ```
 
 Bring your feature branch up to date:
@@ -275,6 +313,60 @@ And finally push your local branch to your GitHub repository:
 ```console
 > git push --force-with-lease origin fix/problem123
 ```
+
+## If you sent to the wrong branch
+
+If you have sent a PR to the wrong branch, you need to create a new PR branch.
+
+When you have the PR branch `feat-abc` and you should have sent the PR to `4.3`,
+but you created the PR branch from `develop` and sent a PR.
+
+Copy the IDs of any commits you made that you want to keep:
+
+```console
+> git log
+```
+
+Update your `4.3` branch:
+
+```console
+> git fetch upstream
+> git switch 4.3
+> git merge upstream/4.3
+> git push origin 4.3
+```
+
+Create a new branch `feat-ab.new` from the correct branch `4.3`:
+
+```console
+> git switch -c feat-abc.new 4.3
+```
+
+Cherry-pick the commits you did:
+
+```console
+> git cherry-pick <commit_id> <commit_id> <commit_id> ...
+```
+
+Rename the PR branch `feat-abc`:
+
+```console
+> git branch -m feat-abc feat-abc.old
+```
+
+Rename the new branch  `feat-abc.new` to `feat-abc`.
+
+```console
+> git branch -m feat-abc.new feat-abc
+```
+
+Force push.
+
+```console
+> git push --force-with-lease origin feat-abc
+```
+
+On the GitHub PR page, change the base branch to the correct branch `4.3`.
 
 ## Cleanup
 

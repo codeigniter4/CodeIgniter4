@@ -34,7 +34,9 @@ This same negotiation can happen with four types of data:
 Class Reference
 ***************
 
-.. php:class:: CodeIgniter\\HTTP\\Message
+.. php:namespace:: CodeIgniter\HTTP
+
+.. php:class:: Message
 
     .. php:method:: getBody()
 

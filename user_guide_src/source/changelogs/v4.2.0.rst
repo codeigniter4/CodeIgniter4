@@ -54,8 +54,8 @@ Behavior Changes
 - The color code output by :ref:`CLI::color() <cli-library-color>` has been changed to fix a bug.
 - To prevent unexpected access from the web browser, if a controller is added to a cli route (``$routes->cli()``), all methods of that controller are no longer accessible via auto-routing.
 - There is a possible backward compatibility break for those users extending the History Collector and they should probably update ``History::setFiles()`` method.
-- The :php:func:`dot_array_search`'s unexpected behavior has been fixed. Now ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returns ``null``. The previous versions returned ``23``.
-- The ``CodeIgniter::storePreviousURL()`` has been changed to store only the URLs whose Content-Type was ``text/html``. It also affects the behavior of :php:func:`previous_url` and :php:func:`redirect()->back() <redirect>`.
+- The :php:func:`dot_array_search()`'s unexpected behavior has been fixed. Now ``dot_array_search('foo.bar.baz', ['foo' => ['bar' => 23]])`` returns ``null``. The previous versions returned ``23``.
+- The ``CodeIgniter::storePreviousURL()`` has been changed to store only the URLs whose Content-Type was ``text/html``. It also affects the behavior of :php:func:`previous_url()` and :php:func:`redirect()->back() <redirect>`.
 
 Enhancements
 ************
@@ -97,8 +97,8 @@ Database
 Helpers and Functions
 =====================
 
-- HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag`.
-- Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames`.
+- HTML helper ``script_tag()`` now uses ``null`` values to write boolean attributes in minimized form: ``<script src="..." defer />``. See the sample code for :php:func:`script_tag()`.
+- Added 4th parameter ``$includeDir`` to ``get_filenames()``. See :php:func:`get_filenames()`.
 - Exception information logged through ``log_message()`` has now improved. It now includes the file and line where the exception originated. It also does not truncate the message anymore.
     - The log format has also changed. If users are depending on the log format in their apps, the new log format is "<1-based count> <cleaned filepath>(<line>): <class><function><args>"
 

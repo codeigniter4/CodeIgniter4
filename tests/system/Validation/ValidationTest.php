@@ -25,11 +25,12 @@ use TypeError;
 
 /**
  * @internal
+ * @no-final
  */
-final class ValidationTest extends CIUnitTestCase
+class ValidationTest extends CIUnitTestCase
 {
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -459,6 +460,28 @@ final class ValidationTest extends CIUnitTestCase
 
         $this->assertSame([
             'password' => 'custom password required error msg.',
+        ], $this->validation->getErrors());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6245
+     */
+    public function testRunWithCustomErrorsAndAsteriskField(): void
+    {
+        $data = [
+            'foo' => [
+                ['bar' => null],
+                ['bar' => null],
+            ],
+        ];
+        $this->validation->setRules(
+            ['foo.*.bar' => ['label' => 'foo bar', 'rules' => 'required']],
+            ['foo.*.bar' => ['required' => 'Required']]
+        );
+        $this->validation->run($data);
+        $this->assertSame([
+            'foo.0.bar' => 'Required',
+            'foo.1.bar' => 'Required',
         ], $this->validation->getErrors());
     }
 
@@ -1206,7 +1229,7 @@ final class ValidationTest extends CIUnitTestCase
      *
      * @source https://github.com/codeigniter4/CodeIgniter4/pull/3910#issuecomment-784922913
      */
-    private function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
+    protected function placeholderReplacementResultDetermination(string $placeholder = 'id', ?array $data = null)
     {
         if ($data === null) {
             $data = [$placeholder => 'placeholder-value'];

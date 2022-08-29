@@ -184,7 +184,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return false|resource
+     * @return bool
      */
     protected function execute(string $sql)
     {
@@ -242,10 +242,16 @@ class Connection extends BaseConnection implements ConnectionInterface
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
+     *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT "TABLE_NAME" FROM "USER_TABLES"';
+
+        if ($tableName !== null) {
+            return $sql . ' WHERE "TABLE_NAME" LIKE ' . $this->escape($tableName);
+        }
 
         if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . ' WHERE "TABLE_NAME" LIKE \'' . $this->escapeLikeString($this->DBPrefix) . "%' "

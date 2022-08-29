@@ -13,11 +13,27 @@ What is a Controller?
 
 A Controller is simply a class file that handles a HTTP request. :doc:`URI Routing <routing>` associates a URI with a controller.
 
+Every controller you create should extend ``BaseController`` class.
+This class provides several features that are available to all of your controllers.
+
+Constructor
+***********
+
+The CodeIgniter's Controller has a special constructor ``initController()``.
+It will be called by the framework after PHP's constructor ``__construct()`` execution.
+
+If you want to override the ``initController()``, don't forget to add ``parent::initController($request, $response, $logger);`` in the method:
+
+.. literalinclude:: controllers/023.php
+
+.. important:: You cannot use ``return`` in the constructor. So ``return redirect()->to('route');`` does not work.
+
+The ``initController()`` method sets the following three properties.
+
 Included Properties
 *******************
 
-Every controller you create should extend ``CodeIgniter\Controller`` class.
-This class provides several features that are available to all of your controllers.
+The CodeIgniter's Controller provides these properties.
 
 **Request Object**
 
@@ -95,19 +111,22 @@ The method accepts an array of data to validate in the first parameter:
 
 .. literalinclude:: controllers/006.php
 
-Private methods
-***************
+Protecting Methods
+******************
 
 In some cases, you may want certain methods hidden from public access.
 To achieve this, simply declare the method as ``private`` or ``protected``.
-That will prevent it from being served by a URL request. For example,
-if you were to define a method like this for the ``Helloworld`` controller:
+That will prevent it from being served by a URL request.
+
+For example, if you were to define a method like this for the ``Helloworld`` controller:
 
 .. literalinclude:: controllers/007.php
 
-then trying to access it using the following URL will not work::
+and to define a route (``helloworld/utitilty``) for the method. Then trying to access it using the following URL will not work::
 
-    example.com/index.php/helloworld/utility/
+    example.com/index.php/helloworld/utility
+
+Auto-routing also will not work.
 
 .. _controller-auto-routing-improved:
 

@@ -240,6 +240,13 @@ class Table
 
         $this->forge->addField($fields);
 
+        $fieldNames = array_keys($fields);
+
+        $this->keys = array_filter(
+            $this->keys,
+            static fn ($index) => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields'])
+        );
+
         // Unique/Index keys
         if (is_array($this->keys)) {
             foreach ($this->keys as $key) {

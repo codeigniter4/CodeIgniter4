@@ -37,7 +37,7 @@ The following functions are available:
     This helper function gives you friendlier syntax to set browser
     cookies. Refer to the :doc:`Response Library </outgoing/response>` for
     a description of its use, as this function is an alias for
-    :php:func:`Response::setCookie() <setCookie>`.
+    :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()`.
 
 .. php:function:: get_cookie($index[, $xssClean = false[, $prefix = '']])
 

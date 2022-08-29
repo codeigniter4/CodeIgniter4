@@ -139,7 +139,7 @@ class MockConnection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return bool|object
      */
     protected function execute(string $sql)
     {
@@ -179,8 +179,10 @@ class MockConnection extends BaseConnection
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
+     *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $constrainByPrefix = false): string
+    protected function _listTables(bool $constrainByPrefix = false, ?string $tableName = null): string
     {
         return '';
     }

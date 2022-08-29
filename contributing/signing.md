@@ -52,12 +52,4 @@ bash shell to use the **-S** option to force the secure signing.
 ## Commit Messages
 
 Regardless of how you sign a commit, commit messages are important too.
-They communicate the intent of a specific change, concisely. They make
-it easier to review code, and to find out why a change was made if the
-code history is examined later.
-
-The audience for your commit messages will be the codebase maintainers,
-any code reviewers, and debuggers trying to figure out when a bug might
-have been introduced.
-
-Make your commit messages meaningful.
+See [Contribution Workflow](./workflow.md#commit-messages) for details.

@@ -10,7 +10,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "kint-php/kint": "^4.1.1",
+        "kint-php/kint": "^4.2",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
@@ -24,7 +24,18 @@
         "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {
-        "ext-fileinfo": "Improves mime type detection for files"
+        "ext-imagick": "If you use Image class ImageMagickHandler",
+        "ext-simplexml": "If you format XML",
+        "ext-mysqli": "If you use MySQL",
+        "ext-oci8": "If you use Oracle Database",
+        "ext-pgsql": "If you use PostgreSQL",
+        "ext-sqlsrv": "If you use SQL Server",
+        "ext-sqlite3": "If you use SQLite3",
+        "ext-memcache": "If you use Cache class MemcachedHandler with Memcache",
+        "ext-memcached": "If you use Cache class MemcachedHandler with Memcached",
+        "ext-redis": "If you use Cache class RedisHandler",
+        "ext-fileinfo": "Improves mime type detection for files",
+        "ext-readline": "Improves CLI::input() usability"
     },
     "autoload": {
         "psr-4": {

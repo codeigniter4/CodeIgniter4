@@ -19,6 +19,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -485,6 +486,10 @@ if (! function_exists('force_https')) {
         }
         if ($response === null) {
             $response = Services::response(null, true);
+        }
+
+        if (! $request instanceof IncomingRequest) {
+            return;
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {

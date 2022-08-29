@@ -155,6 +155,55 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_table', true);
     }
 
+    public function testCreateTableWithExists()
+    {
+        // create table so that it exists in database
+        $this->forge->addField([
+            'id'   => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name' => ['type' => 'VARCHAR', 'constraint' => 80],
+        ])->addKey('id', true)->createTable('test_exists', true);
+
+        // table exists in cache
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+
+        // table exists without cached results
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+
+        // try creating table when table exists
+        $result = $this->forge->addField([
+            'id'   => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name' => ['type' => 'VARCHAR', 'constraint' => 80],
+        ])->addKey('id', true)->createTable('test_exists', true);
+
+        $this->assertTrue($result);
+
+        // Delete table outside of forge. This should leave table in cache as existing.
+        $this->forge->getConnection()->query('DROP TABLE ' . $this->forge->getConnection()->protectIdentifiers('db_test_exists', true, null, false));
+
+        // table stil exists in cache
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+
+        // table does not exist without cached results - this will update the cache
+        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', false));
+
+        // the call above should update the cache - table should not exist in cache anymore
+        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', true));
+
+        // try creating table when table does not exist but still in cache
+        $result = $this->forge->addField([
+            'id'   => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name' => ['type' => 'VARCHAR', 'constraint' => 80],
+        ])->addKey('id', true)->createTable('test_exists', true);
+
+        $this->assertTrue($result);
+
+        // check that the table does now exist without cached results
+        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+
+        // drop table so that it doesn't mess up other tests
+        $this->forge->dropTable('test_exists');
+    }
+
     public function testCreateTableApplyBigInt()
     {
         $this->forge->dropTable('forge_test_table', true);
@@ -817,64 +866,182 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->assertIsArray($fieldsNames);
 
-        $fields = ['id', 'name', 'username', 'active'];
-        $this->assertContains($fieldsData[0]->name, $fields);
-        $this->assertContains($fieldsData[1]->name, $fields);
-        unset($fields);
-
         if ($this->db->DBDriver === 'MySQLi') {
-            $this->assertSame('int', $fieldsData[0]->type);
-            $this->assertSame('varchar', $fieldsData[1]->type);
+            $expected = [
+                0 => [
+                    'name'        => 'id',
+                    'type'        => 'int',
+                    'max_length'  => 11,
+                    'nullable'    => false,
+                    'default'     => null,
+                    'primary_key' => 1,
+                ],
+                1 => [
+                    'name'        => 'username',
+                    'type'        => 'varchar',
+                    'max_length'  => 255,
+                    'nullable'    => false,
+                    'default'     => null,
+                    'primary_key' => 0,
+                ],
+                2 => [
+                    'name'        => 'name',
+                    'type'        => 'varchar',
+                    'max_length'  => 255,
+                    'nullable'    => false,
+                    'default'     => null,
+                    'primary_key' => 0,
+                ],
+                3 => [
+                    'name'        => 'active',
+                    'type'        => 'int',
+                    'max_length'  => 11,
+                    'nullable'    => false,
+                    'default'     => '0',
+                    'primary_key' => 0,
+                ],
+            ];
 
-            if (version_compare($this->db->getVersion(), '8.0.17', '<')) {
+            if (version_compare($this->db->getVersion(), '8.0.17', '>=')) {
                 // As of MySQL 8.0.17, the display width attribute for integer data types
                 // is deprecated and is not reported back anymore.
                 // @see https://dev.mysql.com/doc/refman/8.0/en/numeric-type-attributes.html
-                $this->assertSame(11, $fieldsData[0]->max_length);
+                $expected[0]['max_length'] = null;
+                $expected[3]['max_length'] = null;
             }
-
-            $this->assertNull($fieldsData[0]->default);
-            $this->assertNull($fieldsData[1]->default);
-
-            $this->assertSame(1, (int) $fieldsData[0]->primary_key);
-
-            $this->assertSame(255, (int) $fieldsData[1]->max_length);
         } elseif ($this->db->DBDriver === 'Postgre') {
-            $this->assertSame('integer', $fieldsData[0]->type);
-            $this->assertSame('character varying', $fieldsData[1]->type);
-
-            $this->assertFalse($fieldsData[0]->nullable);
-            $this->assertFalse($fieldsData[1]->nullable);
-
-            $this->assertSame(32, (int) $fieldsData[0]->max_length);
-            $this->assertSame(255, (int) $fieldsData[1]->max_length);
-
-            $this->assertNull($fieldsData[1]->default);
+            $expected = [
+                0 => [
+                    'name'       => 'id',
+                    'type'       => 'integer',
+                    'nullable'   => false,
+                    'default'    => "nextval('db_forge_test_fields_id_seq'::regclass)",
+                    'max_length' => '32',
+                ],
+                1 => [
+                    'name'       => 'username',
+                    'type'       => 'character varying',
+                    'nullable'   => false,
+                    'default'    => null,
+                    'max_length' => '255',
+                ],
+                2 => [
+                    'name'       => 'name',
+                    'type'       => 'character varying',
+                    'nullable'   => false,
+                    'default'    => null,
+                    'max_length' => '255',
+                ],
+                3 => [
+                    'name'       => 'active',
+                    'type'       => 'integer',
+                    'nullable'   => false,
+                    'default'    => '0',
+                    'max_length' => '32',
+                ],
+            ];
         } elseif ($this->db->DBDriver === 'SQLite3') {
-            $this->assertSame('integer', strtolower($fieldsData[0]->type));
-            $this->assertSame('varchar', strtolower($fieldsData[1]->type));
-
-            $this->assertNull($fieldsData[1]->default);
+            $expected = [
+                0 => [
+                    'name'        => 'id',
+                    'type'        => 'INTEGER',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => true,
+                    'nullable'    => true,
+                ],
+                1 => [
+                    'name'        => 'username',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => false,
+                    'nullable'    => false,
+                ],
+                2 => [
+                    'name'        => 'name',
+                    'type'        => 'VARCHAR',
+                    'max_length'  => null,
+                    'default'     => null,
+                    'primary_key' => false,
+                    'nullable'    => false,
+                ],
+                3 => [
+                    'name'        => 'active',
+                    'type'        => 'INTEGER',
+                    'max_length'  => null,
+                    'default'     => '0',
+                    'primary_key' => false,
+                    'nullable'    => false,
+                ],
+            ];
         } elseif ($this->db->DBDriver === 'SQLSRV') {
-            $this->assertSame('int', $fieldsData[0]->type);
-            $this->assertSame('varchar', $fieldsData[1]->type);
-
-            $this->assertSame(10, (int) $fieldsData[0]->max_length);
-            $this->assertSame(255, (int) $fieldsData[1]->max_length);
-
-            $this->assertNull($fieldsData[1]->default);
+            $expected = [
+                0 => [
+                    'name'       => 'id',
+                    'type'       => 'int',
+                    'default'    => null,
+                    'max_length' => 10,
+                ],
+                1 => [
+                    'name'       => 'username',
+                    'type'       => 'varchar',
+                    'default'    => null,
+                    'max_length' => 255,
+                ],
+                2 => [
+                    'name'       => 'name',
+                    'type'       => 'varchar',
+                    'default'    => null,
+                    'max_length' => 255,
+                ],
+                3 => [
+                    'name'       => 'active',
+                    'type'       => 'int',
+                    'default'    => '((0))', // Why?
+                    'max_length' => 10,
+                ],
+            ];
         } elseif ($this->db->DBDriver === 'OCI8') {
-            // Check types
-            $this->assertSame('NUMBER', $fieldsData[0]->type);
-            $this->assertSame('VARCHAR2', $fieldsData[1]->type);
+            $expected = [
+                0 => [
+                    'name'       => 'id',
+                    'type'       => 'NUMBER',
+                    'max_length' => '11',
+                    'default'    => '"ORACLE"."ISEQ$$_80229".nextval', // Sequence id may change
+                    'nullable'   => false,
+                ],
+                1 => [
+                    'name'       => 'username',
+                    'type'       => 'VARCHAR2',
+                    'max_length' => '255',
+                    'default'    => '',
+                    'nullable'   => false,
+                ],
+                2 => [
+                    'name'       => 'name',
+                    'type'       => 'VARCHAR2',
+                    'max_length' => '255',
+                    'default'    => '',
+                    'nullable'   => false,
+                ],
+                3 => [
+                    'name'       => 'active',
+                    'type'       => 'NUMBER',
+                    'max_length' => '11',
+                    'default'    => '0 ', // Why?
+                    'nullable'   => false,
+                ],
+            ];
 
-            $this->assertSame('11', $fieldsData[0]->max_length);
-            $this->assertSame('255', $fieldsData[1]->max_length);
-
-            $this->assertSame('', $fieldsData[1]->default);
+            // Sequence id may change
+            $this->assertMatchesRegularExpression('/"ORACLE"."ISEQ\\$\\$_\d+".nextval/', $fieldsData[0]->default);
+            $expected[0]['default'] = $fieldsData[0]->default;
         } else {
             $this->fail(sprintf('DB driver "%s" is not supported.', $this->db->DBDriver));
         }
+
+        $this->assertSame($expected, json_decode(json_encode($fieldsData), true));
     }
 
     public function testCompositeKey()

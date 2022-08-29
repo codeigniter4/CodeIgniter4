@@ -40,6 +40,7 @@ use ReflectionProperty;
  *
  * @property BaseConnection $db
  *
+ * @method $this groupBy($by, ?bool $escape = null)
  * @method $this havingIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
