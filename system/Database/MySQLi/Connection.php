@@ -477,7 +477,7 @@ class Connection extends BaseConnection
      *
      * @throws DatabaseException
      *
-     * @return array[]
+     * @return stdClass[]
      */
     protected function _foreignKeyData(string $table): array
     {
@@ -508,17 +508,33 @@ class Connection extends BaseConnection
         }
         $query = $query->getResultObject();
 
-        $retVal = [];
+        $ind = [];
 
         foreach ($query as $row) {
-            $retVal[$row->CONSTRAINT_NAME]['name']             = $row->CONSTRAINT_NAME;
-            $retVal[$row->CONSTRAINT_NAME]['table']            = $row->TABLE_NAME;
-            $retVal[$row->CONSTRAINT_NAME]['field'][]          = $row->COLUMN_NAME;
-            $retVal[$row->CONSTRAINT_NAME]['referenceTable']   = $row->REFERENCED_TABLE_NAME;
-            $retVal[$row->CONSTRAINT_NAME]['referenceField'][] = $row->REFERENCED_COLUMN_NAME;
-            $retVal[$row->CONSTRAINT_NAME]['onDelete']         = $row->DELETE_RULE;
-            $retVal[$row->CONSTRAINT_NAME]['onUpdate']         = $row->UPDATE_RULE;
-            $retVal[$row->CONSTRAINT_NAME]['match']            = $row->MATCH_OPTION;
+            $ind[$row->CONSTRAINT_NAME]['constraint_name']       = $row->CONSTRAINT_NAME;
+            $ind[$row->CONSTRAINT_NAME]['table_name']            = $row->TABLE_NAME;
+            $ind[$row->CONSTRAINT_NAME]['column_name'][]         = $row->COLUMN_NAME;
+            $ind[$row->CONSTRAINT_NAME]['foreign_table_name']    = $row->REFERENCED_TABLE_NAME;
+            $ind[$row->CONSTRAINT_NAME]['foreign_column_name'][] = $row->REFERENCED_COLUMN_NAME;
+            $ind[$row->CONSTRAINT_NAME]['on_delete']             = $row->DELETE_RULE;
+            $ind[$row->CONSTRAINT_NAME]['on_update']             = $row->UPDATE_RULE;
+            $ind[$row->CONSTRAINT_NAME]['match']                 = $row->MATCH_OPTION;
+        }
+
+        $retVal = [];
+
+        foreach ($ind as $row) {
+            $obj                      = new stdClass();
+            $obj->constraint_name     = $row['constraint_name'];
+            $obj->table_name          = $row['table_name'];
+            $obj->column_name         = $row['column_name'];
+            $obj->foreign_table_name  = $row['foreign_table_name'];
+            $obj->foreign_column_name = $row['foreign_column_name'];
+            $obj->on_delete           = $row['on_delete'];
+            $obj->on_update           = $row['on_update'];
+            $obj->match               = $row['match'];
+
+            $retVal[$row['constraint_name']] = $obj;
         }
 
         return $retVal;

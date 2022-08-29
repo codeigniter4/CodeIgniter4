@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use stdClass;
 
 /**
  * Class Table
@@ -220,7 +221,21 @@ class Table
      */
     public function addForeignKey(array $foreignKeys)
     {
-        $this->foreignKeys = array_merge($this->foreignKeys, $foreignKeys);
+        $fk = [];
+
+        // convert to object
+        foreach ($foreignKeys as $row) {
+            $obj                      = new stdClass();
+            $obj->column_name         = $row['field'];
+            $obj->foreign_table_name  = $row['referenceTable'];
+            $obj->foreign_column_name = $row['referenceField'];
+            $obj->on_delete           = $row['onDelete'];
+            $obj->on_update           = $row['onUpdate'];
+
+            $fk[] = $obj;
+        }
+
+        $this->foreignKeys = array_merge($this->foreignKeys, $fk);
 
         return $this;
     }
@@ -314,9 +329,9 @@ class Table
 
         foreach ($this->foreignKeys as $foreignKey) {
             $this->forge->addForeignKey(
-                $foreignKey['field'],
-                trim($foreignKey['referenceTable'], $this->db->DBPrefix),
-                $foreignKey['referenceField']
+                $foreignKey->column_name,
+                trim($foreignKey->foreign_table_name, $this->db->DBPrefix),
+                $foreignKey->foreign_column_name
             );
         }
 

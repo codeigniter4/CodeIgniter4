@@ -224,7 +224,7 @@ final class AlterTableTest extends CIUnitTestCase
         $this->createTable('aliens');
 
         $keys = $this->db->getForeignKeyData('aliens');
-        $this->assertSame('aliens_key_id_foreign', $keys[$this->db->DBPrefix . 'aliens_key_id_foreign']['name']);
+        $this->assertSame('aliens_key_id_foreign', $keys[$this->db->DBPrefix . 'aliens_key_id_foreign']->constraint_name);
 
         $result = $this->table
             ->fromTable('aliens')
