@@ -329,7 +329,7 @@ available from the command line:
 .. literalinclude:: routing/032.php
 
 .. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
-    See the :doc:`../cli/spark_commands` page for detailed information.
+    See the :doc:`../cli/cli_commands` page for detailed information.
 
 .. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
