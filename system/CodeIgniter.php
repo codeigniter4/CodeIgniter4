@@ -182,15 +182,7 @@ class CodeIgniter
         // Set default timezone on the server
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
-        if (CI_DEBUG) {
-            $this->initializeKint();
-        } else {
-            if (class_exists(Kint::class)) {
-                // In case that Kint is already loaded via Composer.
-                Kint::$enabled_mode = false; // @codeCoverageIgnore
-            }
-        }
-        helper('kint');
+        $this->initializeKint();
     }
 
     /**
@@ -228,6 +220,21 @@ class CodeIgniter
      */
     protected function initializeKint()
     {
+        if (CI_DEBUG) {
+            $this->autoloadKint();
+            $this->configureKint();
+        } else {
+            if (class_exists(Kint::class)) {
+                // In case that Kint is already loaded via Composer.
+                Kint::$enabled_mode = false; // @codeCoverageIgnore
+            }
+        }
+
+        helper('kint');
+    }
+
+    private function autoloadKint(): void
+    {
         // If we have KINT_DIR it means it's already loaded via composer
         if (! defined('KINT_DIR')) {
             spl_autoload_register(function ($class) {
@@ -246,7 +253,10 @@ class CodeIgniter
 
             require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
         }
+    }
 
+    private function configureKint(): void
+    {
         /** @var \Config\Kint $config */
         $config = config(KintConfig::class);
 
