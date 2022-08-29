@@ -911,7 +911,8 @@ if (! function_exists('route_to')) {
      * have a route defined in the routes Config file.
      *
      * @param string     $method    Named route or Controller::method
-     * @param int|string ...$params One or more parameters to be passed to the route
+     * @param int|string ...$params One or more parameters to be passed to the route.
+     *                              The last parameter allows you to set the locale.
      *
      * @return false|string
      */

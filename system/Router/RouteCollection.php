@@ -14,9 +14,11 @@ namespace CodeIgniter\Router;
 use Closure;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\App;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
+use Locale;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
@@ -1016,7 +1018,8 @@ class RouteCollection implements RouteCollectionInterface
      *      reverseRoute('Controller::method', $param1, $param2);
      *
      * @param string     $search    Named route or Controller::method
-     * @param int|string ...$params One or more parameters to be passed to the route
+     * @param int|string ...$params One or more parameters to be passed to the route.
+     *                              The last parameter allows you to set the locale.
      *
      * @return false|string
      */
@@ -1025,9 +1028,7 @@ class RouteCollection implements RouteCollectionInterface
         // Named routes get higher priority.
         foreach ($this->routes as $collection) {
             if (array_key_exists($search, $collection)) {
-                $route = $this->fillRouteParams(key($collection[$search]['route']), $params);
-
-                return $this->localizeRoute($route);
+                return $this->buildReverseRoute(key($collection[$search]['route']), $params);
             }
         }
 
@@ -1069,9 +1070,7 @@ class RouteCollection implements RouteCollectionInterface
                     continue;
                 }
 
-                $route = $this->fillRouteParams($from, $params);
-
-                return $this->localizeRoute($route);
+                return $this->buildReverseRoute($from, $params);
             }
         }
 
@@ -1081,6 +1080,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Replaces the {locale} tag with the current application locale
+     *
+     * @deprecated Unused.
      */
     protected function localizeRoute(string $route): string
     {
@@ -1145,6 +1146,8 @@ class RouteCollection implements RouteCollectionInterface
      * Given a
      *
      * @throws RouterException
+     *
+     * @deprecated Unused. Now uses buildReverseRoute().
      */
     protected function fillRouteParams(string $from, ?array $params = null): string
     {
@@ -1169,6 +1172,78 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         return '/' . ltrim($from, '/');
+    }
+
+    /**
+     * Builds reverse route
+     *
+     * @param array $params One or more parameters to be passed to the route.
+     *                      The last parameter allows you to set the locale.
+     */
+    protected function buildReverseRoute(string $from, array $params): string
+    {
+        $locale = null;
+
+        // Find all of our back-references in the original route
+        preg_match_all('/\(([^)]+)\)/', $from, $matches);
+
+        if (empty($matches[0])) {
+            if (strpos($from, '{locale}') !== false) {
+                $locale = $params[0] ?? null;
+            }
+
+            $from = $this->replaceLocale($from, $locale);
+
+            return '/' . ltrim($from, '/');
+        }
+
+        // Locale is passed?
+        $placeholderCount = count($matches[0]);
+        if (count($params) > $placeholderCount) {
+            $locale = $params[$placeholderCount];
+        }
+
+        // Build our resulting string, inserting the $params in
+        // the appropriate places.
+        foreach ($matches[0] as $index => $pattern) {
+            if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
+                throw RouterException::forInvalidParameterType();
+            }
+
+            // Ensure that the param we're inserting matches
+            // the expected param type.
+            $pos  = strpos($from, $pattern);
+            $from = substr_replace($from, $params[$index], $pos, strlen($pattern));
+        }
+
+        $from = $this->replaceLocale($from, $locale);
+
+        return '/' . ltrim($from, '/');
+    }
+
+    /**
+     * Replaces the {locale} tag with the locale
+     */
+    private function replaceLocale(string $route, ?string $locale = null): string
+    {
+        if (strpos($route, '{locale}') === false) {
+            return $route;
+        }
+
+        // Check invalid locale
+        if ($locale !== null) {
+            /** @var App $config */
+            $config = config('App');
+            if (! in_array($locale, $config->supportedLocales, true)) {
+                $locale = null;
+            }
+        }
+
+        if ($locale === null) {
+            $locale = Services::request()->getLocale();
+        }
+
+        return strtr($route, ['{locale}' => $locale]);
     }
 
     /**
