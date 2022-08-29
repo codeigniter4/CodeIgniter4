@@ -347,13 +347,9 @@ class Table
             array_map(fn ($item) => $this->db->protectIdentifiers($item), $newFields)
         );
 
-        $this->forge->dropTable({$this->db->DBPrefix}temp_{$this->tableName}, true);
-
         $this->db->query(
             "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}"
         );
-
-        $this->forge->dropTable({$this->db->DBPrefix}temp_{$this->tableName}, true);
     }
 
     /**
