@@ -2863,8 +2863,7 @@ class BaseBuilder
         $array = [];
 
         foreach (get_object_vars($object) as $key => $val) {
-            // There are some built in keys we need to ignore for this conversion
-            if ((! is_object($val) || $val instanceof RawSql) && ! is_array($val) && $key !== '_parent_name') {
+            if ((! is_object($val) || $val instanceof RawSql) && ! is_array($val)) {
                 $array[$key] = $val;
             }
         }
@@ -2890,13 +2889,10 @@ class BaseBuilder
         $fields = array_keys($out);
 
         foreach ($fields as $val) {
-            // There are some built in keys we need to ignore for this conversion
-            if ($val !== '_parent_name') {
-                $i = 0;
+            $i = 0;
 
-                foreach ($out[$val] as $data) {
-                    $array[$i++][$val] = $data;
-                }
+            foreach ($out[$val] as $data) {
+                $array[$i++][$val] = $data;
             }
         }
 

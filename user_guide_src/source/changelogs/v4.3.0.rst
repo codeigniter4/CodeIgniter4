@@ -71,6 +71,7 @@ Others
 - Now you can autoload helpers by **app/Config/Autoload.php**.
 - ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
 - Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. Also included for use with upserts are ``onConstraint()`` and ``updateFields()`` methods.
+- Added :ref:`Time::toDatabase() <time-todatabase>` to get a datetime string that can be used with databases regardless of locale.
 
 Changes
 *******

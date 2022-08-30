@@ -559,7 +559,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return bool|object|resource
      */
     abstract protected function execute(string $sql);
 

@@ -589,4 +589,31 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertTrue($this->request->isCLI());
     }
+
+    public function testGetGet()
+    {
+        $this->assertSame([], $this->request->getGet());
+        $this->assertNull($this->request->getGet('test'));
+        $this->assertSame([], $this->request->getGet(['test', 'abc']));
+    }
+
+    public function testGetPost()
+    {
+        $this->assertSame([], $this->request->getPost());
+    }
+
+    public function testGetPostGet()
+    {
+        $this->assertSame([], $this->request->getPostGet());
+    }
+
+    public function testGetGetPost()
+    {
+        $this->assertSame([], $this->request->getGetPost());
+    }
+
+    public function testGetLocale()
+    {
+        $this->assertSame('en', $this->request->getLocale());
+    }
 }
