@@ -13,10 +13,6 @@ namespace CodeIgniter\HTTP;
 
 /**
  * Expected behavior of an HTTP request
- *
- * @mixin IncomingRequest
- * @mixin CLIRequest
- * @mixin CURLRequest
  */
 interface RequestInterface
 {

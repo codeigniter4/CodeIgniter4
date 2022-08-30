@@ -1,5 +1,31 @@
 # Changelog
 
+## [v4.2.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.5) (2022-08-28)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.4...v4.2.5)
+
+### Breaking Changes
+* Add $cached param to BaseConnection::tableExists() by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6364
+* Fix validation custom error asterisk field by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/6378
+
+### Fixed Bugs
+* fix: Email class may not log an error when it fails to send by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6362
+* fix: Response::download() causes TypeError by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6361
+* fix: command usages by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6402
+* Fix: The subquery adds a prefix for the table alias. by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/6390
+* Fix Sqlite Table::createTable() by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6396
+* docs: add missing `@method` `groupBy()` in Model by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6433
+* fix: CLIRequest Erros in CLI by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6421
+* fix: Call to undefined method CodeIgniter\HTTP\CLIRequest::getLocale() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6442
+
+### Enhancements
+* chore: update Kint to 4.2.0 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6436
+
+### Refactoring
+* refactor: add test for DownloadResponse by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6375
+* refactor: ValidationTest by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6382
+* refactor: remove unused `_parent_name` in BaseBuilder::objectToArray() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6427
+* Remove unneeded abstract `handle()` method by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6434
+
 ## [v4.2.4](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.4) (2022-08-13)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.3...v4.2.4)
 

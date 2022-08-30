@@ -171,6 +171,17 @@ Displays just the localized version of time portion of the value:
 
 .. literalinclude:: time/018.php
 
+.. _time-todatabase:
+
+toDatabase()
+============
+
+.. versionadded:: 4.3.0
+
+This method returns a string that can be used with databases regardless of locale.
+
+.. literalinclude:: time/042.php
+
 humanize()
 ==========
 
