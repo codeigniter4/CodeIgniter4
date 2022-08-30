@@ -74,6 +74,43 @@ If you have code that depends on the bug, you need to change the code.
 Use new Form helpers, :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors,
 instead of the Validation object.
 
+.. _upgrade-430-stream-filter:
+
+Capturing STDERR and STDOUT streams in tests
+============================================
+
+The way error and output streams are captured has changed. Now instead of::
+
+    use CodeIgniter\Test\Filters\CITestStreamFilter;
+
+    protected function setUp(): void
+    {
+        CITestStreamFilter::$buffer = '';
+        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+    }
+
+    protected function tearDown(): void
+    {
+        stream_filter_remove($this->stream_filter);
+    }
+
+need to use::
+
+    use CodeIgniter\Test\Filters\CITestStreamFilter;
+
+    protected function setUp(): void
+    {
+        CITestStreamFilter::registration();
+        CITestStreamFilter::addOutputFilter();
+    }
+
+    protected function tearDown(): void
+    {
+        CITestStreamFilter::removeOutputFilter();
+    }
+
+Or use the trait ``CodeIgniter\Test\StreamFilterTrait``. See :ref:`testing-cli-output`.
+
 Others
 ======
 

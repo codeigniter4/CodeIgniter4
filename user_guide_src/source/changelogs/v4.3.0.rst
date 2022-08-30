@@ -43,7 +43,8 @@ Others
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
 - ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
-- ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there is a ``CITestStreamFilter::registration()`` method for this.
+- ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
+  is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 
 Enhancements
 ************
