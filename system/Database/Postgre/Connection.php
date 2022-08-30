@@ -169,9 +169,9 @@ class Connection extends BaseConnection
      *
      * Escapes data based on type
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      *
-     * @return mixed
+     * @return array|float|int|string
      */
     public function escape($str)
     {
