@@ -401,7 +401,11 @@ be applied. If you have custom error message that you want to use, place them in
 
 The other way to set the validation rules to fields by functions,
 
-.. php:function:: setValidationRule($field, $fieldRules)
+.. php:namespace:: CodeIgniter
+
+.. php:class:: Model
+
+.. php:method:: setValidationRule($field, $fieldRules)
 
     :param  string  $field:
     :param  array   $fieldRules:
@@ -412,7 +416,7 @@ The other way to set the validation rules to fields by functions,
 
     .. literalinclude:: model/028.php
 
-.. php:function:: setValidationRules($validationRules)
+.. php:method:: setValidationRules($validationRules)
 
     :param  array   $validationRules:
 
@@ -424,7 +428,7 @@ The other way to set the validation rules to fields by functions,
 
 The other way to set the validation message to fields by functions,
 
-.. php:function:: setValidationMessage($field, $fieldMessages)
+.. php:method:: setValidationMessage($field, $fieldMessages)
 
     :param  string  $field:
     :param  array   $fieldMessages:
@@ -435,7 +439,7 @@ The other way to set the validation message to fields by functions,
 
     .. literalinclude:: model/030.php
 
-.. php:function:: setValidationMessages($fieldMessages)
+.. php:method:: setValidationMessages($fieldMessages)
 
     :param  array   $fieldMessages:
 
