@@ -40,7 +40,7 @@ class FileRules
             $request = Services::request();
         }
 
-        assert($request instanceof CLIRequest ?? IncomingRequest)
+        assert($request instanceof IncomingRequest || $request instanceof CLIRequest);
 
         $this->request = $request;
     }
