@@ -43,6 +43,7 @@ Others
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
 - ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
+- ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there is a ``CITestStreamFilter::registration()`` method for this.
 
 Enhancements
 ************
@@ -54,6 +55,7 @@ CLI
 Others
 ======
 - Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-cli-output`.
+- The CITestStreamFilter filter class now implements methods for adding a filter to streams. See :ref:`testing-cli-output`.
 - Added the ``PhpStreamWrapper`` to make it easier to work with setting data to ``php://stdin``. See :ref:`testing-cli-input`.
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
