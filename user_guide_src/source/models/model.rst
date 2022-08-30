@@ -390,6 +390,10 @@ For many people, validating data in the model is the preferred way to ensure the
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
 prior to saving to the database with the ``insert()``, ``update()``, or ``save()`` methods.
 
+.. important:: The validation in the model class only validate provided fields.
+    So when you set the rule ``required``, if you don't pass the required field data,
+    the validation won't fail. This is to avoid validation errors when updating only some fields.
+
 The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:
 
