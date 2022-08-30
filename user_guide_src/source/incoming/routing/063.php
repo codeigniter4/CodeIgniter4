@@ -1,4 +1,4 @@
 <?php
 
-// Routes to \App\Controllers\Users::index()
-$routes->get('users', 'Users::index');
+// Routes to \App\Controllers\Api\Users::update()
+$routes->post('api/users', 'Api\Users::update');
