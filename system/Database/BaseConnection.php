@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
+use CodeIgniter\I18n\Time;
 use stdClass;
 use Throwable;
 
@@ -1245,6 +1246,10 @@ abstract class BaseConnection implements ConnectionInterface
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
             if ($str instanceof RawSql) {
                 return $str->__toString();
+            }
+
+            if ($str instanceof Time) {
+                $str = $str->toDatabase();
             }
 
             return "'" . $this->escapeString($str) . "'";

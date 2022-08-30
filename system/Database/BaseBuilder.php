@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\I18n\Time;
 use InvalidArgumentException;
 
 /**
@@ -2698,7 +2699,7 @@ class BaseBuilder
         $array = [];
 
         foreach (get_object_vars($object) as $key => $val) {
-            if ((! is_object($val) || $val instanceof RawSql) && ! is_array($val)) {
+            if ((! is_object($val) || $val instanceof RawSql || $val instanceof Time) && ! is_array($val)) {
                 $array[$key] = $val;
             }
         }

@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\I18n\Time;
 use ErrorException;
 use stdClass;
 
@@ -184,6 +185,10 @@ class Connection extends BaseConnection
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
             if ($str instanceof RawSql) {
                 return $str->__toString();
+            }
+
+            if ($str instanceof Time) {
+                $str = $str->toDatabase();
             }
 
             return pg_escape_literal($this->connID, $str);

@@ -13,9 +13,11 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 use CodeIgniter\Test\Mock\MockQuery;
+use Locale;
 
 /**
  * @internal
@@ -166,6 +168,34 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testUpdateWithSetAsTimeWithLocaleFa()
+    {
+        $currentLocale = Locale::getDefault();
+        Locale::setDefault('fa');
+
+        $builder = new BaseBuilder('users', $this->db);
+
+        $time = Time::parse('2022-08-29 13:00');
+        $builder->testMode()->set('last_active', $time)->where('id', 1)->update();
+
+        $expectedSQL = 'UPDATE "users" SET "last_active" = \'2022-08-29 13:00:00\' WHERE "id" = 1';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledUpdate()));
+
+        $expectedBinds = [
+            'last_active' => [
+                $time,
+                true,
+            ],
+            'id' => [
+                1,
+                true,
+            ],
+        ];
+        $this->assertSame($expectedBinds, $builder->getBinds());
+
+        Locale::setDefault($currentLocale);
     }
 
     public function testUpdateWithSetAsArray()

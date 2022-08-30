@@ -14,8 +14,10 @@ namespace CodeIgniter\Database\Builder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use Locale;
 
 /**
  * @internal
@@ -99,6 +101,26 @@ final class InsertTest extends CIUnitTestCase
         $expectedSQL = 'INSERT INTO "jobs" ("id", "name") VALUES (1, CONCAT("id", \'Grocery Sales\'))';
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+    }
+
+    public function testInsertObjectWithTimeWithLocaleFa()
+    {
+        $currentLocale = Locale::getDefault();
+        Locale::setDefault('fa');
+
+        $builder = $this->db->table('jobs');
+
+        $time       = Time::parse('2022-08-29 13:00');
+        $insertData = (object) [
+            'id'        => 1,
+            'insert_at' => $time,
+        ];
+        $builder->testMode()->insert($insertData, true);
+
+        $expectedSQL = 'INSERT INTO "jobs" ("id", "insert_at") VALUES (1, \'2022-08-29 13:00:00\')';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
+
+        Locale::setDefault($currentLocale);
     }
 
     /**
