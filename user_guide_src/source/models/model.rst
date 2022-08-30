@@ -380,8 +380,11 @@ Cleans out the database table by permanently removing all rows that have 'delete
 
 .. literalinclude:: model/026.php
 
+In-Model Validation
+===================
+
 Validating Data
-===============
+---------------
 
 For many people, validating data in the model is the preferred way to ensure the data is kept to a single
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
@@ -454,7 +457,7 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 .. literalinclude:: model/034.php
 
 Retrieving Validation Rules
-===========================
+---------------------------
 
 You can retrieve a model's validation rules by accessing its ``validationRules``
 property:
@@ -473,7 +476,7 @@ value an array of fieldnames of interest:
 .. literalinclude:: model/037.php
 
 Validation Placeholders
-=======================
+-----------------------
 
 The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply
