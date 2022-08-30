@@ -1,3 +1,3 @@
 <?php
 
-echo now('Australia/Victoria');
+echo now();

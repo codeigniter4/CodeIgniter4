@@ -184,7 +184,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return false|resource
+     * @return bool
      */
     protected function execute(string $sql)
     {

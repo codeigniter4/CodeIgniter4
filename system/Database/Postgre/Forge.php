@@ -76,7 +76,7 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param mixed $field
+     * @param array|string $field
      *
      * @return array|bool|string
      */

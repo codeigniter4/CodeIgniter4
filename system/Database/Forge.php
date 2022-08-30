@@ -776,7 +776,7 @@ class Forge
     }
 
     /**
-     * @param mixed $fields
+     * @param array|string $fields
      *
      * @return false|string|string[]
      */

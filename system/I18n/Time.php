@@ -895,7 +895,7 @@ class Time extends DateTime
      *
      * @throws Exception
      *
-     * @return bool|string
+     * @return false|string
      */
     public function toLocalizedString(?string $format = null)
     {
@@ -1178,5 +1178,13 @@ class Time extends DateTime
 
         $this->timezone = new DateTimeZone($timezone);
         parent::__construct($this->date, $this->timezone);
+    }
+
+    /**
+     * Returns the datetime string ('Y-m-d H:i:s') that is safe to databases regardless of locale.
+     */
+    public function toDatabase(): string
+    {
+        return $this->format('Y-m-d H:i:s');
     }
 }
