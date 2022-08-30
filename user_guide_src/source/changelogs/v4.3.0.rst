@@ -71,6 +71,7 @@ Others
 - Now you can autoload helpers by **app/Config/Autoload.php**.
 - ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
 - Added :ref:`Time::toDatabase() <time-todatabase>` to get a datetime string that can be used with databases regardless of locale.
+- You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 
 Changes
 *******
@@ -93,7 +94,8 @@ Changes
 Deprecations
 ************
 
-none.
+- ``RouteCollection::localizeRoute()`` is deprecated.
+- ``RouteCollection::fillRouteParams()`` is deprecated. Use ``RouteCollection::buildReverseRoute()`` instead.
 
 Bugs Fixed
 **********
