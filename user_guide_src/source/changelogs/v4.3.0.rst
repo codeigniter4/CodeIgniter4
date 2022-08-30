@@ -70,6 +70,7 @@ Others
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - Now you can autoload helpers by **app/Config/Autoload.php**.
 - ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
+- SQLSRV now automatically drops ``DEFAULT`` constraint when using ``Forge::dropColumn()``.
 - Added :ref:`Time::toDatabase() <time-todatabase>` to get a datetime string that can be used with databases regardless of locale.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 
