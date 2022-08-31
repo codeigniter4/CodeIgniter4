@@ -347,25 +347,6 @@ if (! function_exists('db_connect')) {
     }
 }
 
-if (! function_exists('dd')) {
-    /**
-     * Prints a Kint debug report and exits.
-     *
-     * @param array ...$vars
-     *
-     * @codeCoverageIgnore Can't be tested ... exits
-     */
-    function dd(...$vars)
-    {
-        // @codeCoverageIgnoreStart
-        Kint::$aliases[] = 'dd';
-        Kint::dump(...$vars);
-
-        exit;
-        // @codeCoverageIgnoreEnd
-    }
-}
-
 if (! function_exists('env')) {
     /**
      * Allows user to retrieve values from the environment
@@ -1106,17 +1087,6 @@ if (! function_exists('timer')) {
         }
 
         return $timer->start($name);
-    }
-}
-
-if (! function_exists('trace')) {
-    /**
-     * Provides a backtrace to the current execution point, from Kint.
-     */
-    function trace()
-    {
-        Kint::$aliases[] = 'trace';
-        Kint::trace();
     }
 }
 
