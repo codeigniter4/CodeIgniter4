@@ -25,12 +25,23 @@ use Locale;
  */
 final class TimeTest extends CIUnitTestCase
 {
+    private string $currentLocale;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         helper('date');
+
+        $this->currentLocale = Locale::getDefault();
         Locale::setDefault('en_US');
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Locale::setDefault($this->currentLocale);
     }
 
     public function testNewTimeNow()
