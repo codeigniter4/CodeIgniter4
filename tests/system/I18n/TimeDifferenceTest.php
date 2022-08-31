@@ -28,7 +28,7 @@ final class TimeDifferenceTest extends CIUnitTestCase
         helper('date');
 
         $this->currentLocale = Locale::getDefault();
-        Locale::setDefault('America/Chicago');
+        Locale::setDefault('en-US');
     }
 
     protected function tearDown(): void
