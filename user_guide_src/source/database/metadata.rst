@@ -110,6 +110,8 @@ database:
 List the Indexes in a Table
 ===========================
 
+.. _db-metadata-getindexdata:
+
 $db->getIndexData()
 -------------------
 
