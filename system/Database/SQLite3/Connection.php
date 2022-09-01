@@ -333,26 +333,39 @@ class Connection extends BaseConnection
             return [];
         }
 
-        $tables = $this->listTables();
+        $retVal = [];
 
-        if (empty($tables)) {
-            return [];
+        $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
+
+        $indexes = [];
+
+        foreach ($query as $row) {
+            $indexes[$row->id]['constraint_name'][]     = $row->from;
+            $indexes[$row->id]['foreign_table_name']    = $row->table;
+            $indexes[$row->id]['column_name'][]         = $row->from;
+            $indexes[$row->id]['foreign_column_name'][] = $row->to;
+            $indexes[$row->id]['on_delete']             = $row->on_delete;
+            $indexes[$row->id]['on_update']             = $row->on_update;
+            $indexes[$row->id]['match']                 = $row->match;
         }
 
         $retVal = [];
 
-        foreach ($tables as $table) {
-            $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
+        // now we can build index name and convert to object
+        foreach ($indexes as $row) {
+            $name = $table . '_' . implode('_', $row['constraint_name']) . '_foreign';
 
-            foreach ($query as $row) {
-                $obj                     = new stdClass();
-                $obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
-                $obj->table_name         = $table;
-                $obj->foreign_table_name = $row->table;
-                $obj->sequence           = $row->seq;
+            $obj                      = new stdClass();
+            $obj->constraint_name     = $name;
+            $obj->table_name          = $table;
+            $obj->column_name         = $row['column_name'];
+            $obj->foreign_table_name  = $row['foreign_table_name'];
+            $obj->foreign_column_name = $row['foreign_column_name'];
+            $obj->on_delete           = $row['on_delete'];
+            $obj->on_update           = $row['on_update'];
+            $obj->match               = $row['match'];
 
-                $retVal[] = $obj;
-            }
+            $retVal[$row['constraint_name']] = $obj;
         }
 
         return $retVal;
