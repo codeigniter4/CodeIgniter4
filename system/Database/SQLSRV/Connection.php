@@ -273,40 +273,54 @@ class Connection extends BaseConnection
      */
     protected function _foreignKeyData(string $table): array
     {
-        $sql = 'SELECT '
-            . 'f.name as constraint_name, '
-            . 'OBJECT_NAME (f.parent_object_id) as table_name, '
-            . 'COL_NAME(fc.parent_object_id,fc.parent_column_id) column_name, '
-            . 'OBJECT_NAME(f.referenced_object_id) foreign_table_name, '
-            . 'COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name '
-            . 'FROM  '
-            . 'sys.foreign_keys AS f '
-            . 'INNER JOIN  '
-            . 'sys.foreign_key_columns AS fc  '
-            . 'ON f.OBJECT_ID = fc.constraint_object_id '
-            . 'INNER JOIN  '
-            . 'sys.tables t  '
-            . 'ON t.OBJECT_ID = fc.referenced_object_id '
-            . 'WHERE  '
-            . 'OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
+        $sql = 'SELECT
+                f.name as constraint_name,
+                OBJECT_NAME (f.parent_object_id) as table_name,
+                COL_NAME(fc.parent_object_id,fc.parent_column_id) column_name,
+                OBJECT_NAME(f.referenced_object_id) foreign_table_name,
+                COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name,
+                rc.delete_rule,
+                rc.update_rule,
+                rc.match_option
+                FROM
+                sys.foreign_keys AS f
+                INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
+                INNER JOIN sys.tables t ON t.OBJECT_ID = fc.referenced_object_id
+                INNER JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc ON rc.CONSTRAINT_NAME = f.name
+                WHERE OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
 
-        $query  = $query->getResultObject();
-        $retVal = [];
+        $query = $query->getResultObject();
+        $ind   = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
+            $ind[$row->constraint_name]['constraint_name']       = $row->constraint_name;
+            $ind[$row->constraint_name]['table_name']            = $row->table_name;
+            $ind[$row->constraint_name]['column_name'][]         = $row->column_name;
+            $ind[$row->constraint_name]['foreign_table_name']    = $row->foreign_table_name;
+            $ind[$row->constraint_name]['foreign_column_name'][] = $row->foreign_column_name;
+            $ind[$row->constraint_name]['on_delete']             = $row->delete_rule;
+            $ind[$row->constraint_name]['on_update']             = $row->update_rule;
+            $ind[$row->constraint_name]['match']                 = $row->match_option;
+        }
 
-            $obj->constraint_name     = $row->constraint_name;
-            $obj->table_name          = $row->table_name;
-            $obj->column_name         = $row->column_name;
-            $obj->foreign_table_name  = $row->foreign_table_name;
-            $obj->foreign_column_name = $row->foreign_column_name;
+        $retVal = [];
 
-            $retVal[] = $obj;
+        foreach ($ind as $row) {
+            $obj                      = new stdClass();
+            $obj->constraint_name     = $row['constraint_name'];
+            $obj->table_name          = $row['table_name'];
+            $obj->column_name         = $row['column_name'];
+            $obj->foreign_table_name  = $row['foreign_table_name'];
+            $obj->foreign_column_name = $row['foreign_column_name'];
+            $obj->on_delete           = $row['on_delete'];
+            $obj->on_update           = $row['on_update'];
+            $obj->match               = $row['match'];
+
+            $retVal[$row['constraint_name']] = $obj;
         }
 
         return $retVal;
