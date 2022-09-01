@@ -49,33 +49,55 @@ Others
 Enhancements
 ************
 
-CLI
-===
+Commands
+========
+
+- The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
+- Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
+- Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
+- Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 - Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
 
-Others
-======
+Testing
+=======
+
 - Added the ``StreamFilterTrait`` to make it easier to work with capturing data from STDOUT and STDERR streams. See :ref:`testing-cli-output`.
 - The CITestStreamFilter filter class now implements methods for adding a filter to streams. See :ref:`testing-cli-output`.
 - Added the ``PhpStreamWrapper`` to make it easier to work with setting data to ``php://stdin``. See :ref:`testing-cli-input`.
+- Added method ``Timer::record()`` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
+
+Database
+========
+
+- SQLite ``BaseConnection::getIndexData()`` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
+- SQLSRV now automatically drops ``DEFAULT`` constraint when using ``Forge::dropColumn()``.
+- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
+
+Model
+=====
+
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
-- Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
-- Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
-- The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
-- SQLite ``BaseConnection::getIndexData()`` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
-- Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
-- Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
-- Added method ``Timer::record()`` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
-- Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 - Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
-- Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
-- Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
-- Now you can autoload helpers by **app/Config/Autoload.php**.
-- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
-- SQLSRV now automatically drops ``DEFAULT`` constraint when using ``Forge::dropColumn()``.
+
+Libraries
+=========
+
+- Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
+- Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
 - Added :ref:`Time::toDatabase() <time-todatabase>` to get a datetime string that can be used with databases regardless of locale.
+
+Helpers and Functions
+=====================
+
+- Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
+
+Others
+======
+
+- Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
+- Now you can autoload helpers by **app/Config/Autoload.php**.
 
 Changes
 *******
