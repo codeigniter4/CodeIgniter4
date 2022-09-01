@@ -411,14 +411,14 @@ class Connection extends BaseConnection implements ConnectionInterface
         $ind = [];
 
         foreach ($query as $row) {
-            $ind[$row->constraint_name]['constraint_name']       = $row->constraint_name;
-            $ind[$row->constraint_name]['table_name']            = $row->table_name;
-            $ind[$row->constraint_name]['column_name'][]         = $row->column_name;
-            $ind[$row->constraint_name]['foreign_table_name']    = $row->foreign_table_name;
-            $ind[$row->constraint_name]['foreign_column_name'][] = $row->foreign_column_name;
-            $ind[$row->constraint_name]['on_delete']             = $row->delete_rule;
-            $ind[$row->constraint_name]['on_update']             = null;
-            $ind[$row->constraint_name]['match']                 = null;
+            $ind[$row->CONSTRAINT_NAME]['constraint_name']       = $row->CONSTRAINT_NAME;
+            $ind[$row->CONSTRAINT_NAME]['table_name']            = $row->TABLE_NAME;
+            $ind[$row->CONSTRAINT_NAME]['column_name'][]         = $row->COLUMN_NAME;
+            $ind[$row->CONSTRAINT_NAME]['foreign_table_name']    = $row->FOREIGN_TABLE_NAME;
+            $ind[$row->CONSTRAINT_NAME]['foreign_column_name'][] = $row->FOREIGN_COLUMN_NAME;
+            $ind[$row->CONSTRAINT_NAME]['on_delete']             = $row->DELETE_RULE;
+            $ind[$row->CONSTRAINT_NAME]['on_update']             = null;
+            $ind[$row->CONSTRAINT_NAME]['match']                 = null;
         }
 
         $retVal = [];
