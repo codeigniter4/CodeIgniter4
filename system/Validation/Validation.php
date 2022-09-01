@@ -328,7 +328,9 @@ class Validation implements ValidationInterface
             if ($passed === false) {
                 // if the $value is an array, convert it to as string representation
                 if (is_array($value)) {
-                    $value = '[' . implode(', ', $value) . ']';
+                    $value = $this->isStringList($value)
+                        ? '[' . implode(', ', $value) . ']'
+                        : json_encode($value);
                 } elseif (is_object($value)) {
                     $value = json_encode($value);
                 }
@@ -344,6 +346,32 @@ class Validation implements ValidationInterface
                     $originalField
                 );
 
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Is the array a string list `list<string>`?
+     */
+    private function isStringList(array $array): bool
+    {
+        $expectedKey = 0;
+
+        foreach ($array as $key => $val) {
+            // Note: also covers PHP array key conversion, e.g. '5' and 5.1 both become 5
+            if (! is_int($key)) {
+                return false;
+            }
+
+            if ($key !== $expectedKey) {
+                return false;
+            }
+            $expectedKey++;
+
+            if (! is_string($val)) {
                 return false;
             }
         }
