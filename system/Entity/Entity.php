@@ -26,6 +26,7 @@ use CodeIgniter\Entity\Cast\TimestampCast;
 use CodeIgniter\Entity\Cast\URICast;
 use CodeIgniter\Entity\Exceptions\CastException;
 use CodeIgniter\I18n\Time;
+use DateTime;
 use Exception;
 use JsonSerializable;
 use ReturnTypeWillChange;
@@ -149,7 +150,7 @@ class Entity implements JsonSerializable
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
      * @param bool $cast        If true, properties will be cast.
-     * @param bool $recursive   If true, inner entities will be casted as array as well.
+     * @param bool $recursive   If true, inner entities will be cast as array as well.
      */
     public function toArray(bool $onlyChanged = false, bool $cast = true, bool $recursive = false): array
     {
@@ -191,7 +192,7 @@ class Entity implements JsonSerializable
      * Returns the raw values of the current attributes.
      *
      * @param bool $onlyChanged If true, only return values that have changed since object creation
-     * @param bool $recursive   If true, inner entities will be casted as array as well.
+     * @param bool $recursive   If true, inner entities will be cast as array as well.
      */
     public function toRawArray(bool $onlyChanged = false, bool $recursive = false): array
     {
@@ -249,7 +250,7 @@ class Entity implements JsonSerializable
      * was created. Or, without a parameter, checks if any
      * properties have changed.
      *
-     * @param string $key
+     * @param string|null $key class property
      */
     public function hasChanged(?string $key = null): bool
     {
@@ -310,11 +311,11 @@ class Entity implements JsonSerializable
      * Converts the given string|timestamp|DateTime|Time instance
      * into the "CodeIgniter\I18n\Time" object.
      *
-     * @param mixed $value
+     * @param DateTime|float|int|string|Time $value
      *
      * @throws Exception
      *
-     * @return mixed|Time
+     * @return Time
      */
     protected function mutateDate($value)
     {
@@ -326,13 +327,13 @@ class Entity implements JsonSerializable
      * Add ? at the beginning of $type  (i.e. ?string) to get NULL
      * instead of casting $value if $value === null
      *
-     * @param mixed  $value     Attribute value
-     * @param string $attribute Attribute name
-     * @param string $method    Allowed to "get" and "set"
+     * @param bool|float|int|string|null $value     Attribute value
+     * @param string                     $attribute Attribute name
+     * @param string                     $method    Allowed to "get" and "set"
      *
      * @throws CastException
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     protected function castAs($value, string $attribute, string $method = 'get')
     {
@@ -426,7 +427,7 @@ class Entity implements JsonSerializable
      *  $this->my_property = $p;
      *  $this->setMyProperty() = $p;
      *
-     * @param mixed|null $value
+     * @param array|bool|float|int|object|string|null $value
      *
      * @throws Exception
      *
@@ -472,8 +473,9 @@ class Entity implements JsonSerializable
      *  $p = $this->getMyProperty()
      *
      * @throws Exception
+     * @params string $key class property
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function __get(string $key)
     {
