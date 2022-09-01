@@ -90,6 +90,7 @@ Libraries
 Helpers and Functions
 =====================
 
+- Now you can autoload helpers by **app/Config/Autoload.php**.
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 
@@ -97,7 +98,6 @@ Others
 ======
 
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
-- Now you can autoload helpers by **app/Config/Autoload.php**.
 
 Changes
 *******
