@@ -365,7 +365,7 @@ class Connection extends BaseConnection
             $obj->on_update           = $row['on_update'];
             $obj->match               = $row['match'];
 
-            $retVal[$row['constraint_name']] = $obj;
+            $retVal[$name] = $obj;
         }
 
         return $retVal;
