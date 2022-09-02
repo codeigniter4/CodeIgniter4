@@ -945,11 +945,9 @@ class CodeIgniter
         $this->response->setStatusCode($e->getCode());
 
         if (ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
             if (ob_get_level() > 0) {
-                ob_end_flush();
+                ob_end_flush(); // @codeCoverageIgnore
             }
-        // @codeCoverageIgnoreEnd
         }
         // When testing, one is for phpunit, another is for test case.
         elseif (ob_get_level() > 2) {
