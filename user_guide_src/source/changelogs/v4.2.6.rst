@@ -27,7 +27,7 @@ none.
 Deprecations
 ************
 
-none.
+- :php:meth:`CodeIgniter\\Cookie\\Cookie::withNeverExpiring()` is deprecated.
 
 Bugs Fixed
 **********
