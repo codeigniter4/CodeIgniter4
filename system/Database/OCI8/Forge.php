@@ -273,31 +273,10 @@ class Forge extends BaseForge
         return $sql;
     }
 
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = false): string
     {
-        $sql = '';
+        $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
-        $allowActions = [
-            'CASCADE',
-            'SET NULL',
-            'NO ACTION',
-        ];
-
-        foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
-            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
-            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
-            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
-
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
-
-            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
-            }
-        }
-
-        return $sql;
+        return parent::_processForeignKeys($table, $allowActions, $onUpdate);
     }
 }

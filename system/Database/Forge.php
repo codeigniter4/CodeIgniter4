@@ -1055,17 +1055,19 @@ class Forge
         return $sqls;
     }
 
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = true): string
     {
         $sql = '';
 
-        $allowActions = [
-            'CASCADE',
-            'SET NULL',
-            'NO ACTION',
-            'RESTRICT',
-            'SET DEFAULT',
-        ];
+        if (empty($allowActions)) {
+            $allowActions = [
+                'CASCADE',
+                'SET NULL',
+                'NO ACTION',
+                'RESTRICT',
+                'SET DEFAULT',
+            ];
+        }
 
         foreach ($this->foreignKeys as $fkey) {
             $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
@@ -1081,7 +1083,7 @@ class Forge
                 $sql .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
-            if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
+            if ($onUpdate === true && $fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
                 $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
         }
