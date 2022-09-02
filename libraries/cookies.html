@@ -310,7 +310,7 @@ cookie interaction.</p>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#cookie-personalization" id="id13">Cookie Personalization</a></p></li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\HTTP\Cookie" id="id14">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Cookie" id="id14">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="creating-cookies">
@@ -779,14 +779,14 @@ objects. However, you may wish to define your own settings by changing the follo
 </table>
 <p>In runtime, you can manually supply a new default using the <code class="docutils literal notranslate"><span class="pre">Cookie::setDefaults()</span></code> method.</p>
 </section>
-<section id="namespace-CodeIgniter\HTTP\Cookie">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\HTTP\Cookie" title="Permalink to this headline"></a></h2>
+<section id="namespace-CodeIgniter\Cookie">
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id14">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Cookie" title="Permalink to this headline"></a></h2>
 <dl class="php class">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\Cookie\</span></span><span class="sig-name descname"><span class="pre">Cookie</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Cookie\</span></span><span class="sig-name descname"><span class="pre">Cookie</span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie" title="Permalink to this definition"></a></dt>
 <dd><dl class="php staticmethod">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::setDefaults">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">setDefaults</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$config</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::setDefaults" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::setDefaults">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">setDefaults</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$config</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::setDefaults" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -804,8 +804,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php staticmethod">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::fromHeaderString">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">fromHeaderString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$header</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::fromHeaderString" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::fromHeaderString">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">fromHeaderString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$header</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::fromHeaderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -827,8 +827,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::__construct">
-<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::__construct" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::__construct">
+<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">array</span> <span class="pre">$options</span> <span class="pre">=</span> <span class="pre">[]</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::__construct" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -851,8 +851,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getId">
-<span class="sig-name descname"><span class="pre">getId</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getId" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getId">
+<span class="sig-name descname"><span class="pre">getId</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getId" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -864,83 +864,83 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getPrefix">
-<span class="sig-name descname"><span class="pre">getPrefix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getPrefix" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getPrefix">
+<span class="sig-name descname"><span class="pre">getPrefix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getPrefix" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getName">
-<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getName" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getName">
+<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getName" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getPrefixedName">
-<span class="sig-name descname"><span class="pre">getPrefixedName</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getPrefixedName" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getPrefixedName">
+<span class="sig-name descname"><span class="pre">getPrefixedName</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getPrefixedName" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getValue">
-<span class="sig-name descname"><span class="pre">getValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getValue" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getValue">
+<span class="sig-name descname"><span class="pre">getValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getValue" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getExpiresTimestamp">
-<span class="sig-name descname"><span class="pre">getExpiresTimestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getExpiresTimestamp" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getExpiresTimestamp">
+<span class="sig-name descname"><span class="pre">getExpiresTimestamp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getExpiresTimestamp" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getExpiresString">
-<span class="sig-name descname"><span class="pre">getExpiresString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getExpiresString" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getExpiresString">
+<span class="sig-name descname"><span class="pre">getExpiresString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getExpiresString" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::isExpired">
-<span class="sig-name descname"><span class="pre">isExpired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::isExpired" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::isExpired">
+<span class="sig-name descname"><span class="pre">isExpired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::isExpired" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getMaxAge">
-<span class="sig-name descname"><span class="pre">getMaxAge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getMaxAge" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getMaxAge">
+<span class="sig-name descname"><span class="pre">getMaxAge</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getMaxAge" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getDomain">
-<span class="sig-name descname"><span class="pre">getDomain</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getDomain" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getDomain">
+<span class="sig-name descname"><span class="pre">getDomain</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getDomain" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getPath">
-<span class="sig-name descname"><span class="pre">getPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getPath" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getPath">
+<span class="sig-name descname"><span class="pre">getPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getPath" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::isSecure">
-<span class="sig-name descname"><span class="pre">isSecure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::isSecure" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::isSecure">
+<span class="sig-name descname"><span class="pre">isSecure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::isSecure" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::isHTTPOnly">
-<span class="sig-name descname"><span class="pre">isHTTPOnly</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::isHTTPOnly" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::isHTTPOnly">
+<span class="sig-name descname"><span class="pre">isHTTPOnly</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::isHTTPOnly" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getSameSite">
-<span class="sig-name descname"><span class="pre">getSameSite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getSameSite" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getSameSite">
+<span class="sig-name descname"><span class="pre">getSameSite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">string</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getSameSite" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::isRaw">
-<span class="sig-name descname"><span class="pre">isRaw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::isRaw" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::isRaw">
+<span class="sig-name descname"><span class="pre">isRaw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::isRaw" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::getOptions">
-<span class="sig-name descname"><span class="pre">getOptions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::getOptions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::getOptions">
+<span class="sig-name descname"><span class="pre">getOptions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::getOptions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withRaw">
-<span class="sig-name descname"><span class="pre">withRaw</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withRaw" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withRaw">
+<span class="sig-name descname"><span class="pre">withRaw</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withRaw" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -958,8 +958,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withPrefix">
-<span class="sig-name descname"><span class="pre">withPrefix</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withPrefix" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withPrefix">
+<span class="sig-name descname"><span class="pre">withPrefix</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withPrefix" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -977,8 +977,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withName">
-<span class="sig-name descname"><span class="pre">withName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withName" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withName">
+<span class="sig-name descname"><span class="pre">withName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withName" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -996,8 +996,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withValue">
-<span class="sig-name descname"><span class="pre">withValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withValue" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withValue">
+<span class="sig-name descname"><span class="pre">withValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withValue" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1015,8 +1015,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withExpires">
-<span class="sig-name descname"><span class="pre">withExpires</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$expires</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withExpires" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withExpires">
+<span class="sig-name descname"><span class="pre">withExpires</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$expires</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withExpires" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1034,8 +1034,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withExpired">
-<span class="sig-name descname"><span class="pre">withExpired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withExpired" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withExpired">
+<span class="sig-name descname"><span class="pre">withExpired</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withExpired" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">Cookie</span></code></p>
@@ -1048,9 +1048,13 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withNeverExpiring">
-<span class="sig-name descname"><span class="pre">withNeverExpiring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withNeverExpiring" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withNeverExpiring">
+<span class="sig-name descname"><span class="pre">withNeverExpiring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withNeverExpiring" title="Permalink to this definition"></a></dt>
+<dd><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method is deprecated.</p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
@@ -1067,8 +1071,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withDomain">
-<span class="sig-name descname"><span class="pre">withDomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?string</span> <span class="pre">$domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withDomain" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withDomain">
+<span class="sig-name descname"><span class="pre">withDomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?string</span> <span class="pre">$domain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withDomain" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1086,8 +1090,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withPath">
-<span class="sig-name descname"><span class="pre">withPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?string</span> <span class="pre">$path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withPath" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withPath">
+<span class="sig-name descname"><span class="pre">withPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">?string</span> <span class="pre">$path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withPath" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1105,8 +1109,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withSecure">
-<span class="sig-name descname"><span class="pre">withSecure</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withSecure" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withSecure">
+<span class="sig-name descname"><span class="pre">withSecure</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withSecure" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1124,8 +1128,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withHTTPOnly">
-<span class="sig-name descname"><span class="pre">withHTTPOnly</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withHTTPOnly" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withHTTPOnly">
+<span class="sig-name descname"><span class="pre">withHTTPOnly</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">bool</span> <span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">true</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withHTTPOnly" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1143,8 +1147,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::withSameSite">
-<span class="sig-name descname"><span class="pre">withSameSite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$samesite</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::withSameSite" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::withSameSite">
+<span class="sig-name descname"><span class="pre">withSameSite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$samesite</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::withSameSite" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1162,8 +1166,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::toHeaderString">
-<span class="sig-name descname"><span class="pre">toHeaderString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::toHeaderString" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::toHeaderString">
+<span class="sig-name descname"><span class="pre">toHeaderString</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::toHeaderString" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
@@ -1175,8 +1179,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\Cookie::toArray">
-<span class="sig-name descname"><span class="pre">toArray</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\Cookie::toArray" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\Cookie::toArray">
+<span class="sig-name descname"><span class="pre">toArray</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\Cookie::toArray" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
@@ -1190,11 +1194,11 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php class">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\HTTP\Cookie\</span></span><span class="sig-name descname"><span class="pre">CookieStore</span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Cookie\</span></span><span class="sig-name descname"><span class="pre">CookieStore</span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore" title="Permalink to this definition"></a></dt>
 <dd><dl class="php staticmethod">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::fromCookieHeaders">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">fromCookieHeaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$headers</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::fromCookieHeaders" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::fromCookieHeaders">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">fromCookieHeaders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$headers</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">bool</span> <span class="pre">$raw</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::fromCookieHeaders" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1216,8 +1220,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::__construct">
-<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$cookies</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::__construct" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::__construct">
+<span class="sig-name descname"><span class="pre">__construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">array</span> <span class="pre">$cookies</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::__construct" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1237,8 +1241,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::has">
-<span class="sig-name descname"><span class="pre">has</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">?string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::has" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::has">
+<span class="sig-name descname"><span class="pre">has</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">?string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::has" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1257,8 +1261,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Cookie</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::get" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Cookie</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::get" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1279,12 +1283,12 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::put">
-<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Cookie</span> <span class="pre">$cookie</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CookieStore</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::put" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::put">
+<span class="sig-name descname"><span class="pre">put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">Cookie</span> <span class="pre">$cookie</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CookieStore</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::put" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$cookie</strong> (<span><a class="reference internal" href="#CodeIgniter\HTTP\Cookie\Cookie" title="CodeIgniter\HTTP\Cookie\Cookie"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Cookie</span></code></a></span>) – A Cookie object</p></li>
+<li><p><strong>$cookie</strong> (<span><a class="reference internal" href="#CodeIgniter\Cookie\Cookie" title="CodeIgniter\Cookie\Cookie"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Cookie</span></code></a></span>) – A Cookie object</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -1298,8 +1302,8 @@ objects. However, you may wish to define your own settings by changing the follo
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::remove">
-<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CookieStore</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::remove" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">string</span> <span class="pre">$name</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CookieStore</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::remove" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1319,8 +1323,8 @@ The original collection is left unchanged.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::dispatch">
-<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::dispatch" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::dispatch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
@@ -1330,8 +1334,8 @@ The original collection is left unchanged.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::display">
-<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::display" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::display" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
@@ -1343,8 +1347,8 @@ The original collection is left unchanged.</p>
 </dd></dl>
 
 <dl class="php method">
-<dt class="sig sig-object php" id="CodeIgniter\HTTP\Cookie\CookieStore::clear">
-<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#CodeIgniter\HTTP\Cookie\CookieStore::clear" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object php" id="CodeIgniter\Cookie\CookieStore::clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">void</span></span></span><a class="headerlink" href="#CodeIgniter\Cookie\CookieStore::clear" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">void</span></code></span></p>
@@ -1370,7 +1374,7 @@ The original collection is left unchanged.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Aug 30, 2022.
+      <span class="lastupdated">Last updated on Sep 02, 2022.
       </span></p>
   </div>
 
