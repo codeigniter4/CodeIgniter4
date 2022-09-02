@@ -423,7 +423,7 @@ final class RouterTest extends CIUnitTestCase
     public function testRouteWithSlashInControllerName()
     {
         $this->expectExceptionMessage(
-            'The namespace delimiter is a backslash (\), not a slash (/). Route handler: \App/Admin/Admins::edit_show/$1'
+            'The namespace delimiter is a backslash (\), not a slash (/). Route handler: "\App/Admin/Admins::edit_show/$1"'
         );
 
         $router = new Router($this->collection, $this->request);
@@ -444,7 +444,7 @@ final class RouterTest extends CIUnitTestCase
     public function testRouteWithDynamicController()
     {
         $this->expectException(RouterException::class);
-        $this->expectExceptionMessage('A dynamic controller is not allowed for security reasons. Route handler: \$2::$3/$1');
+        $this->expectExceptionMessage('A dynamic controller is not allowed for security reasons. Route handler: "\$2::$3/$1"');
 
         $router = new Router($this->collection, $this->request);
 

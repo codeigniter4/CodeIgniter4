@@ -81,7 +81,7 @@ final class CommandTest extends CIUnitTestCase
         $command  = new $commands['app:info']['class']($this->logger, $this->commands);
 
         $command->bomb();
-        $this->assertStringContainsString('Invalid background color:', $this->getBuffer());
+        $this->assertStringContainsString('Invalid "background" color:', $this->getBuffer());
     }
 
     public function testAbstractCommand()

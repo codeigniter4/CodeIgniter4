@@ -116,6 +116,7 @@ Changes
 - Config
     - All atomic type properties in ``Config`` classes have been typed.
     - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
+- Updated English language strings to be more consistent.
 
 Deprecations
 ************
