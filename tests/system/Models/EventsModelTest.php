@@ -167,7 +167,7 @@ final class EventsModelTest extends LiveModelTestCase
         $this->setPrivateProperty($this->model, 'beforeInsert', ['anotherBeforeInsertMethod']);
 
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('anotherBeforeInsertMethod is not a valid Model Event callback.');
+        $this->expectExceptionMessage('"anotherBeforeInsertMethod" is not a valid Model Event callback.');
         $this->model->insert($data);
     }
 

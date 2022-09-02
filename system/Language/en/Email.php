@@ -12,9 +12,9 @@
 // Email language settings
 return [
     'mustBeArray'          => 'The email validation method must be passed an array.',
-    'invalidAddress'       => 'Invalid email address: {0}',
-    'attachmentMissing'    => 'Unable to locate the following email attachment: {0}',
-    'attachmentUnreadable' => 'Unable to open this attachment: {0}',
+    'invalidAddress'       => 'Invalid email address: "{0}"',
+    'attachmentMissing'    => 'Unable to locate the following email attachment: "{0}"',
+    'attachmentUnreadable' => 'Unable to open this attachment: "{0}"',
     'noFrom'               => 'Cannot send mail with no "From" header.',
     'noRecipients'         => 'You must include recipients: To, Cc, or Bcc',
     'sendFailurePHPMail'   => 'Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.',

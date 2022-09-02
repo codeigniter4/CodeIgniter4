@@ -637,7 +637,7 @@ final class ForgeTest extends CIUnitTestCase
     public function testCompositeForeignKeyFieldNotExistException()
     {
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Field `user_id, user_second_id` not found.');
+        $this->expectExceptionMessage('Field "user_id, user_second_id" not found.');
 
         $attributes = [];
 
@@ -689,7 +689,7 @@ final class ForgeTest extends CIUnitTestCase
     public function testForeignKeyFieldNotExistException()
     {
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Field `user_id` not found.');
+        $this->expectExceptionMessage('Field "user_id" not found.');
 
         $attributes = [];
 

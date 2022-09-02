@@ -204,7 +204,7 @@ final class DeleteModelTest extends LiveModelTestCase
     public function testThrowsWithNoDateFormat(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not have a valid dateFormat.');
+        $this->expectExceptionMessage('"Tests\Support\Models\UserModel" model class does not have a valid dateFormat.');
 
         $this->createModel(UserModel::class);
         $this->setPrivateProperty($this->model, 'dateFormat', '');
