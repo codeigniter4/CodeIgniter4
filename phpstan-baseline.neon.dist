@@ -56,16 +56,6 @@ parameters:
 			path: system/Cache/Handlers/FileHandler.php
 
 		-
-			message: "#^Method MemcachePool\\:\\:decrement\\(\\) invoked with 4 parameters, 1\\-2 required\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
-			message: "#^Method MemcachePool\\:\\:increment\\(\\) invoked with 4 parameters, 1\\-2 required\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: system/Cache/Handlers/MemcachedHandler.php
@@ -546,11 +536,6 @@ parameters:
 			path: system/HTTP/Request.php
 
 		-
-			message: "#^Cannot unset offset 'path' on array{host: non-empty-string}\\.$#"
-			count: 1
-			path: system/HTTP/URI.php
-
-		-
 			message: "#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$fragment \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/HTTP/URI.php
@@ -579,11 +564,6 @@ parameters:
 			message: "#^Binary operation \"\\+\" between 0 and string results in an error\\.$#"
 			count: 1
 			path: system/Helpers/number_helper.php
-
-		-
-			message: "#^Variable \\$pool might not be defined\\.$#"
-			count: 2
-			path: system/Helpers/text_helper.php
 
 		-
 			message: "#^Variable \\$count might not be defined\\.$#"
