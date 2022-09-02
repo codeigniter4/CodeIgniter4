@@ -508,22 +508,22 @@ class Connection extends BaseConnection
         }
         $query = $query->getResultObject();
 
-        $ind = [];
+        $indexes = [];
 
         foreach ($query as $row) {
-            $ind[$row->constraint_name]['constraint_name']       = $row->constraint_name;
-            $ind[$row->constraint_name]['table_name']            = $row->table_name;
-            $ind[$row->constraint_name]['column_name'][]         = $row->column_name;
-            $ind[$row->constraint_name]['foreign_table_name']    = $row->referenced_table_name;
-            $ind[$row->constraint_name]['foreign_column_name'][] = $row->referenced_column_name;
-            $ind[$row->constraint_name]['on_delete']             = $row->delete_rule;
-            $ind[$row->constraint_name]['on_update']             = $row->update_rule;
-            $ind[$row->constraint_name]['match']                 = $row->match_option;
+            $indexes[$row->constraint_name]['constraint_name']       = $row->constraint_name;
+            $indexes[$row->constraint_name]['table_name']            = $row->table_name;
+            $indexes[$row->constraint_name]['column_name'][]         = $row->column_name;
+            $indexes[$row->constraint_name]['foreign_table_name']    = $row->referenced_table_name;
+            $indexes[$row->constraint_name]['foreign_column_name'][] = $row->referenced_column_name;
+            $indexes[$row->constraint_name]['on_delete']             = $row->delete_rule;
+            $indexes[$row->constraint_name]['on_update']             = $row->update_rule;
+            $indexes[$row->constraint_name]['match']                 = $row->match_option;
         }
 
         $retVal = [];
 
-        foreach ($ind as $row) {
+        foreach ($indexes as $row) {
             $obj                      = new stdClass();
             $obj->constraint_name     = $row['constraint_name'];
             $obj->table_name          = $row['table_name'];
