@@ -406,8 +406,8 @@ class Connection extends BaseConnection implements ConnectionInterface
         if ($query === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
-        $query = $query->getResultObject();
 
+        $query   = $query->getResultObject();
         $indexes = [];
 
         foreach ($query as $row) {
@@ -421,23 +421,7 @@ class Connection extends BaseConnection implements ConnectionInterface
             $indexes[$row->CONSTRAINT_NAME]['match']                 = null;
         }
 
-        $retVal = [];
-
-        foreach ($indexes as $row) {
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $row['constraint_name'];
-            $obj->table_name          = $row['table_name'];
-            $obj->column_name         = $row['column_name'];
-            $obj->foreign_table_name  = $row['foreign_table_name'];
-            $obj->foreign_column_name = $row['foreign_column_name'];
-            $obj->on_delete           = $row['on_delete'];
-            $obj->on_update           = $row['on_update'];
-            $obj->match               = $row['match'];
-
-            $retVal[$row['constraint_name']] = $obj;
-        }
-
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

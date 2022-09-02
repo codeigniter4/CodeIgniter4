@@ -293,8 +293,8 @@ class Connection extends BaseConnection
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
 
-        $query = $query->getResultObject();
-        $indexes   = [];
+        $query   = $query->getResultObject();
+        $indexes = [];
 
         foreach ($query as $row) {
             $indexes[$row->constraint_name]['constraint_name']       = $row->constraint_name;
@@ -307,23 +307,7 @@ class Connection extends BaseConnection
             $indexes[$row->constraint_name]['match']                 = $row->match_option;
         }
 
-        $retVal = [];
-
-        foreach ($indexes as $row) {
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $row['constraint_name'];
-            $obj->table_name          = $row['table_name'];
-            $obj->column_name         = $row['column_name'];
-            $obj->foreign_table_name  = $row['foreign_table_name'];
-            $obj->foreign_column_name = $row['foreign_column_name'];
-            $obj->on_delete           = $row['on_delete'];
-            $obj->on_update           = $row['on_update'];
-            $obj->match               = $row['match'];
-
-            $retVal[$row['constraint_name']] = $obj;
-        }
-
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

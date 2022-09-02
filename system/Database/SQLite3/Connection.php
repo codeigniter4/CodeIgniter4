@@ -333,14 +333,12 @@ class Connection extends BaseConnection
             return [];
         }
 
-        $retVal = [];
-
-        $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
-
+        $query   = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
         $indexes = [];
 
         foreach ($query as $row) {
-            $indexes[$row->id]['constraint_name'][]     = $row->from;
+            $indexes[$row->id]['constraint_name']       = null;
+            $indexes[$row->id]['table_name']            = $table;
             $indexes[$row->id]['foreign_table_name']    = $row->table;
             $indexes[$row->id]['column_name'][]         = $row->from;
             $indexes[$row->id]['foreign_column_name'][] = $row->to;
@@ -349,26 +347,7 @@ class Connection extends BaseConnection
             $indexes[$row->id]['match']                 = $row->match;
         }
 
-        $retVal = [];
-
-        // now we can build index name and convert to object
-        foreach ($indexes as $row) {
-            $name = $table . '_' . implode('_', $row['constraint_name']) . '_foreign';
-
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $name;
-            $obj->table_name          = $table;
-            $obj->column_name         = $row['column_name'];
-            $obj->foreign_table_name  = $row['foreign_table_name'];
-            $obj->foreign_column_name = $row['foreign_column_name'];
-            $obj->on_delete           = $row['on_delete'];
-            $obj->on_update           = $row['on_update'];
-            $obj->match               = $row['match'];
-
-            $retVal[$name] = $obj;
-        }
-
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**
