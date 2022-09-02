@@ -995,6 +995,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param bool         $fieldExists        Supplied $item contains a column name?
      *
      * @return array|string
+     *
      * @phpstan-return ($item is array ? array : string)
      */
     public function protectIdentifiers($item, bool $prefixSingle = false, ?bool $protectIdentifiers = null, bool $fieldExists = true)
@@ -1597,6 +1598,7 @@ abstract class BaseConnection implements ConnectionInterface
      * Must return an array with keys 'code' and 'message':
      *
      * @return array<string, int|string|null>
+     *
      * @phpstan-return array{code: int|string|null, message: string|null}
      */
     abstract public function error(): array;

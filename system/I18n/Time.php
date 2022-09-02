@@ -285,6 +285,7 @@ class Time extends DateTime
      * @return Time
      *
      * @deprecated         Use createFromInstance() instead
+     *
      * @codeCoverageIgnore
      */
     public static function instance(DateTime $dateTime, ?string $locale = null)

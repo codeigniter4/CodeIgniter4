@@ -32,6 +32,7 @@ final class CommonFunctionsSendTest extends CIUnitTestCase
      * See https://github.com/codeigniter4/CodeIgniter4/issues/1393
      *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testRedirectResponseCookiesSent()

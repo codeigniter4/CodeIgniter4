@@ -106,7 +106,7 @@ final class BaseConnectionTest extends CIUnitTestCase
         $options             = $this->options;
         $options['failover'] = [$this->failoverOptions];
 
-        $db                         = new class ($options) extends MockConnection {
+        $db = new class ($options) extends MockConnection {
             protected $returnValues = [
                 'connect' => [false, 345],
             ];

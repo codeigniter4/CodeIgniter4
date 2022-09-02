@@ -177,7 +177,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes = Services::routes();
         $routes->add('pages/(:segment)', static function ($segment) {
             $response = Services::response();
-            $string = "You want to see 'about' page.";
+            $string   = "You want to see 'about' page.";
 
             return $response->setBody($string);
         });
@@ -583,7 +583,7 @@ final class CodeIgniterTest extends CIUnitTestCase
             CodeIgniter::cache(3600);
 
             $response = Services::response();
-            $string = 'This is a test page. Elapsed time: {elapsed_time}';
+            $string   = 'This is a test page. Elapsed time: {elapsed_time}';
 
             return $response->setBody($string);
         });

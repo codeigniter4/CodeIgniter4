@@ -37,6 +37,7 @@ final class ControllerFinder
 
     /**
      * @return string[]
+     *
      * @phpstan-return class-string[]
      */
     public function find(): array

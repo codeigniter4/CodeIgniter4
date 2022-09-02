@@ -43,19 +43,19 @@ final class ResponseTraitTest extends CIUnitTestCase
         $config = new App();
 
         foreach ([
-            'baseURL' => 'http://example.com/',
-            'uriProtocol' => 'REQUEST_URI',
-            'defaultLocale' => 'en',
-            'negotiateLocale' => false,
+            'baseURL'          => 'http://example.com/',
+            'uriProtocol'      => 'REQUEST_URI',
+            'defaultLocale'    => 'en',
+            'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
-            'CSPEnabled' => false,
-            'cookiePrefix' => '',
-            'cookieDomain' => '',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHTTPOnly' => false,
-            'proxyIPs' => [],
-            'cookieSameSite' => 'Lax',
+            'CSPEnabled'       => false,
+            'cookiePrefix'     => '',
+            'cookieDomain'     => '',
+            'cookiePath'       => '/',
+            'cookieSecure'     => false,
+            'cookieHTTPOnly'   => false,
+            'proxyIPs'         => [],
+            'cookieSameSite'   => 'Lax',
         ] as $key => $value) {
             $config->{$key} = $value;
         }
@@ -79,7 +79,7 @@ final class ResponseTraitTest extends CIUnitTestCase
         }
 
         // Create the controller class finally.
-        $controller = new class ($this->request, $this->response, $this->formatter) {
+        return new class ($this->request, $this->response, $this->formatter) {
             use ResponseTrait;
 
             protected $request;
@@ -98,8 +98,6 @@ final class ResponseTraitTest extends CIUnitTestCase
                 $this->formatter = null;
             }
         };
-
-        return $controller;
     }
 
     public function testNoFormatterJSON()
@@ -518,19 +516,19 @@ final class ResponseTraitTest extends CIUnitTestCase
         $config = new App();
 
         foreach ([
-            'baseURL' => 'http://example.com/',
-            'uriProtocol' => 'REQUEST_URI',
-            'defaultLocale' => 'en',
-            'negotiateLocale' => false,
+            'baseURL'          => 'http://example.com/',
+            'uriProtocol'      => 'REQUEST_URI',
+            'defaultLocale'    => 'en',
+            'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
-            'CSPEnabled' => false,
-            'cookiePrefix' => '',
-            'cookieDomain' => '',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHTTPOnly' => false,
-            'proxyIPs' => [],
-            'cookieSameSite' => 'Lax',
+            'CSPEnabled'       => false,
+            'cookiePrefix'     => '',
+            'cookieDomain'     => '',
+            'cookiePath'       => '/',
+            'cookieSecure'     => false,
+            'cookieHTTPOnly'   => false,
+            'proxyIPs'         => [],
+            'cookieSameSite'   => 'Lax',
         ] as $key => $value) {
             $config->{$key} = $value;
         }

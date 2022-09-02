@@ -41,6 +41,7 @@ final class ControllerMethodReader
      * @phpstan-param class-string $class
      *
      * @return array<int, array<string, array|string>>
+     *
      * @phpstan-return list<array<string, string|array>>
      */
     public function read(string $class, string $defaultController = 'Home', string $defaultMethod = 'index'): array

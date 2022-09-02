@@ -66,7 +66,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
             'Europe/London', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN,
+            IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
 
@@ -82,7 +82,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
             'Europe/London', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN,
+            IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
 
