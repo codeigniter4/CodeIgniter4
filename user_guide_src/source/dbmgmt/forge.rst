@@ -262,6 +262,8 @@ Examples:
 Dropping Columns From a Table
 ==============================
 
+.. _db-forge-dropColumn:
+
 $forge->dropColumn()
 --------------------
 

@@ -22,10 +22,16 @@ With the Timer, you can measure the time between two moments in the execution of
 it simple to measure the performance of different aspects of your application. All measurement is done using
 the ``start()`` and ``stop()`` methods.
 
+Timer::start()
+==============
+
 The ``start()`` methods takes a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which:
 
 .. literalinclude:: benchmark/001.php
+
+Timer::stop()
+=============
 
 The ``stop()`` method takes the name of the timer that you want to stop as the only parameter, also:
 
@@ -33,10 +39,20 @@ The ``stop()`` method takes the name of the timer that you want to stop as the o
 
 The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.
 
+timer()
+=======
+
 Alternatively, you can use the :doc:`global function </general/common_functions>` ``timer()`` to start
 and stop timers:
 
 .. literalinclude:: benchmark/003.php
+
+.. _benchmark-timer-record:
+
+Timer::record()
+===============
+
+.. versionadded:: 4.3.0
 
 Since v4.3.0, if you use very small code blocks to benchmark, you can also use the ``record()`` method. It accepts
 a no-parameter callable and measures its execution time. Methods ``start()`` and ``stop()`` will be called
