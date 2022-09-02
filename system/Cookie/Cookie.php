@@ -460,8 +460,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated See https://github.com/codeigniter4/CodeIgniter4/pull/6413
      */
     public function withNeverExpiring()
