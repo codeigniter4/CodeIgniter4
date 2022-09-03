@@ -49,6 +49,7 @@ $overrides = [
             ['var', 'phpstan-var', 'psalm-var'],
         ],
     ],
+    'statement_indentation' => true,
     // >>>>>>>>>>>>>>>>>>>>>>>>>
 ];
 
