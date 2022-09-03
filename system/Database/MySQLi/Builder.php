@@ -59,43 +59,78 @@ class Builder extends BaseBuilder
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
-        $keys = array_keys(current($values));
+        // this is a work around until the rest of the platform is refactored
+        $this->QBOptions['constraints'] = [$index];
+        $keys                           = array_keys(current($values));
 
-        // make array for future use with composite keys - `field`
-        // future: $this->QBOptions['constraints']
-        $constraints = [$index];
+        $sql = $this->QBOptions['sql'] ?? '';
 
-        // future: $this->QBOptions['updateFields']
-        $updateFields = array_filter($keys, static fn ($index) => ! in_array($index, $constraints, true));
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $constraints = $this->QBOptions['constraints'] ?? [];
 
-        $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . " AS t\n";
+            if ($constraints === []) {
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('You must specify a constraint to match on for batch updates.'); // @codeCoverageIgnore
+                }
 
-        $sql .= 'INNER JOIN (' . "\n";
+                return ''; // @codeCoverageIgnore
+            }
 
-        $sql .= implode(
-            " UNION ALL\n",
-            array_map(
-                static fn ($value) => 'SELECT ' . implode(', ', array_map(
-                    static fn ($key, $index) => $index . ' ' . $key,
-                    $keys,
-                    $value
-                )),
-                $values
-            )
-        ) . "\n";
+            $updateFields = $this->QBOptions['updateFields'] ??
+                $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
+                [];
 
-        $sql .= ') u' . "\n";
+            $alias = $this->QBOptions['alias'] ?? '`_u`';
 
-        $sql .= 'ON ' . implode(
-            ' AND ',
-            array_map(static fn ($key) => 't.' . $key . ' = u.' . $key, $constraints)
-        ) . "\n";
+            $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
 
-        $sql .= 'SET' . "\n";
+            $sql .= 'INNER JOIN (' . "\n%s";
 
-        return $sql .= implode(
-            ",\n",
-            array_map(static fn ($key) => 't.' . $key . ' = u.' . $key, $updateFields)
-        );
+            $sql .= ') ' . $alias . "\n";
+
+            $sql .= 'ON ' . implode(
+                ' AND ',
+                array_map(
+                    static fn ($key) => ($key instanceof RawSql ?
+                    $key :
+                    $table . '.' . $key . ' = ' . $alias . '.' . $key),
+                    $constraints
+                )
+            ) . "\n";
+
+            $sql .= 'SET' . "\n";
+
+            $sql .= implode(
+                ",\n",
+                array_map(
+                    static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
+                        ' = ' . $value :
+                        ' = ' . $alias . '.' . $value),
+                    array_keys($updateFields),
+                    $updateFields
+                )
+            );
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = implode(
+                " UNION ALL\n",
+                array_map(
+                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index) => $index . ' ' . $key,
+                        $keys,
+                        $value
+                    )),
+                    $values
+                )
+            ) . "\n";
+        }
+
+        return sprintf($sql, $data);
     }
 }
