@@ -167,7 +167,7 @@ class Forge
      *
      * @var string
      */
-    protected $dropConstraintStr;
+    protected $dropConstraintStr;'ALTER TABLE %s DROP CONSTRAINT %s'
 
     /**
      * DROP INDEX statement
@@ -452,6 +452,20 @@ class Forge
 
             return false;
         }
+
+        return $this->db->query($sql);
+    }
+
+    /**
+     * Drop Primary Key
+     */
+    public function dropPrimaryKey(string $table): bool
+    {
+        $sql = sprintf(
+            'ALTER TABLE %s DROP CONSTRAINT %s',
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+            $this->db->escapeIdentifiers('pk_' . $this->db->DBPrefix . $table),
+        );
 
         return $this->db->query($sql);
     }
