@@ -134,7 +134,7 @@ class Filters
             $className = $locator->getClassname($file);
 
             // Don't include our main Filter config again...
-            if ($className === 'Config\\Filters') {
+            if ($className === FiltersConfig::class) {
                 continue;
             }
 
