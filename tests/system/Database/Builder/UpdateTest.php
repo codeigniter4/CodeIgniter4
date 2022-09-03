@@ -234,13 +234,13 @@ final class UpdateTest extends CIUnitTestCase
         $expected = <<<'EOF'
             UPDATE "jobs"
             SET
-            "name" = u."name",
-            "description" = u."description"
+            "name" = _u."name",
+            "description" = _u."description"
             FROM (
             SELECT 2 "id", 'Comedian' "name", 'There''s something in your teeth' "description" UNION ALL
             SELECT 3 "id", 'Cab Driver' "name", 'I am yellow' "description"
-            ) u
-            WHERE "jobs"."id" = u."id"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
@@ -273,13 +273,13 @@ final class UpdateTest extends CIUnitTestCase
         $expected = <<<'EOF'
             UPDATE "jobs"
             SET
-            "name" = u."name",
-            "description" = u."description"
+            "name" = _u."name",
+            "description" = _u."description"
             FROM (
             SELECT 2 "id", SUBSTRING(name, 1) "name", SUBSTRING(description, 3) "description" UNION ALL
             SELECT 3 "id", SUBSTRING(name, 2) "name", SUBSTRING(description, 4) "description"
-            ) u
-            WHERE "jobs"."id" = u."id"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
