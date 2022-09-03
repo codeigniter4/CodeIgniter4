@@ -154,6 +154,23 @@ class BaseBuilder
     protected $QBIgnore = false;
 
     /**
+     * QB Options data
+     * Holds additional options and data used to render SQL
+     * and is reset by resetWrite()
+     *
+     * @phpstan-var array{
+     * updateFields?: array,
+     * constraints?: array,
+     * fromQuery?: string,
+     * sql?: string,
+     * alias?: string
+     * }
+     *
+     * @var array
+     */
+    protected $QBOptions;
+
+    /**
      * A reference to the database connection.
      *
      * @var BaseConnection
@@ -2839,6 +2856,7 @@ class BaseBuilder
             'QBKeys'    => [],
             'QBLimit'   => false,
             'QBIgnore'  => false,
+            'QBOptions' => [],
         ]);
     }
 
