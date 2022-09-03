@@ -12,11 +12,11 @@
 // Validation language settings
 return [
     // Core Messages
-    'noRuleSets'      => 'No rulesets specified in Validation configuration.',
-    'ruleNotFound'    => '{0} is not a valid rule.',
-    'groupNotFound'   => '{0} is not a validation rules group.',
-    'groupNotArray'   => '{0} rule group must be an array.',
-    'invalidTemplate' => '{0} is not a valid Validation template.',
+    'noRuleSets'      => 'No rule sets specified in Validation configuration.',
+    'ruleNotFound'    => '"{0}" is not a valid rule.',
+    'groupNotFound'   => '"{0}" is not a validation rules group.',
+    'groupNotArray'   => '"{0}" rule group must be an array.',
+    'invalidTemplate' => '"{0}" is not a valid Validation template.',
 
     // Rule Messages
     'alpha'                 => 'The {field} field may only contain alphabetical characters.',
@@ -31,7 +31,7 @@ return [
     'exact_length'          => 'The {field} field must be exactly {param} characters in length.',
     'greater_than'          => 'The {field} field must contain a number greater than {param}.',
     'greater_than_equal_to' => 'The {field} field must contain a number greater than or equal to {param}.',
-    'hex'                   => 'The {field} field may only contain hexidecimal characters.',
+    'hex'                   => 'The {field} field may only contain hexadecimal characters.',
     'in_list'               => 'The {field} field must be one of: {param}.',
     'integer'               => 'The {field} field must contain an integer.',
     'is_natural'            => 'The {field} field must only contain digits.',

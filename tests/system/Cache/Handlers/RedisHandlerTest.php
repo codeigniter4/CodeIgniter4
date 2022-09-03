@@ -166,14 +166,22 @@ final class RedisHandlerTest extends AbstractHandlerTest
         $this->assertSame('keys=90', $dbInfo[0]);
     }
 
-    // FIXME: I don't like all Hash logic very much. It's wasting memory.
-    // public function testIncrement()
-    // {
-    // }
+    public function testIncrementAndDecrement()
+    {
+        $this->handler->save('counter', 100);
 
-    // public function testDecrement()
-    // {
-    // }
+        foreach (range(1, 10) as $step) {
+            $this->handler->increment('counter', $step);
+        }
+
+        $this->assertSame(155, $this->handler->get('counter'));
+
+        $this->handler->decrement('counter', 20);
+        $this->assertSame(135, $this->handler->get('counter'));
+
+        $this->handler->increment('counter', 5);
+        $this->assertSame(140, $this->handler->get('counter'));
+    }
 
     public function testClean()
     {

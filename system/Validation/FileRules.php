@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
@@ -39,7 +40,7 @@ class FileRules
             $request = Services::request();
         }
 
-        assert($request instanceof IncomingRequest);
+        assert($request instanceof IncomingRequest || $request instanceof CLIRequest);
 
         $this->request = $request;
     }

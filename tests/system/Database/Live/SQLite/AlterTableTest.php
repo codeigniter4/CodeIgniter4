@@ -74,7 +74,7 @@ final class AlterTableTest extends CIUnitTestCase
     public function testFromTableThrowsOnNoTable()
     {
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('Table `foo` was not found in the current database.');
+        $this->expectExceptionMessage('Table "foo" was not found in the current database.');
 
         $this->table->fromTable('foo');
     }

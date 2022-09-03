@@ -569,9 +569,9 @@ final class CodeIgniterTest extends CIUnitTestCase
     public function testPageCacheSendSecureHeaders()
     {
         // Suppress command() output
-        CITestStreamFilter::$buffer = '';
-        $outputStreamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $errorStreamFilter          = stream_filter_append(STDERR, 'CITestStreamFilter');
+        CITestStreamFilter::registration();
+        CITestStreamFilter::addErrorFilter();
+        CITestStreamFilter::addOutputFilter();
 
         // Clear Page cache
         command('cache:clear');
@@ -618,8 +618,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Clear Page cache
         command('cache:clear');
 
-        // Remove stream fliters
-        stream_filter_remove($outputStreamFilter);
-        stream_filter_remove($errorStreamFilter);
+        // Remove stream filters
+        CITestStreamFilter::removeErrorFilter();
+        CITestStreamFilter::removeOutputFilter();
     }
 }

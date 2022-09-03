@@ -200,7 +200,7 @@ class RedisHandler extends BaseHandler
     {
         $key = static::validateKey($key, $this->prefix);
 
-        return $this->redis->hIncrBy($key, 'data', $offset);
+        return $this->redis->hIncrBy($key, '__ci_value', $offset);
     }
 
     /**
@@ -208,9 +208,7 @@ class RedisHandler extends BaseHandler
      */
     public function decrement(string $key, int $offset = 1)
     {
-        $key = static::validateKey($key, $this->prefix);
-
-        return $this->redis->hIncrBy($key, 'data', -$offset);
+        return $this->increment($key, -$offset);
     }
 
     /**

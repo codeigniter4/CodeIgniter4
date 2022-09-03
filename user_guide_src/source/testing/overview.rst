@@ -277,6 +277,21 @@ See :ref:`Testing Traits <testing-overview-traits>`.
 If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you must call the ``parent::setUp()`` and
 ``parent::tearDown()`` methods respectively to configure the ``StreamFilterTrait``.
 
+**CITestStreamFilter** for manual/single use.
+
+If you need to capture streams in only one test, then instead of using the StreamFilterTrait trait, you can manually
+add a filter to streams.
+
+**Overview of methods**
+
+- ``CITestStreamFilter::registration()`` Filter registration.
+- ``CITestStreamFilter::addOutputFilter()`` Adding a filter to the output stream.
+- ``CITestStreamFilter::addErrorFilter()`` Adding a filter to the error stream.
+- ``CITestStreamFilter::removeOutputFilter()`` Removing a filter from the output stream.
+- ``CITestStreamFilter::removeErrorFilter()`` Removing a filter from the error stream.
+
+.. literalinclude:: overview/020.php
+
 .. _testing-cli-input:
 
 Testing CLI Input
