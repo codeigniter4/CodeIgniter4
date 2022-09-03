@@ -236,4 +236,17 @@ class Forge extends BaseForge
 
         return $this->db->query($sql);
     }
+
+    /**
+     * Drop Primary Key
+     */
+    public function dropPrimaryKey(string $table): bool
+    {
+        $sql = sprintf(
+            'ALTER TABLE %s DROP PRIMARY KEY',
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table)
+        );
+
+        return $this->db->query($sql);
+    }
 }
