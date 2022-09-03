@@ -1372,4 +1372,40 @@ final class ForgeTest extends CIUnitTestCase
 
         $this->assertFalse($this->db->fieldExists('text_with_constraint', 'user'));
     }
+
+    public function testDropPrimaryKey()
+    {
+        $this->forge->dropTable('forge_test_users', true);
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'second_id' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $primaryKeys = ['id', 'second_id'];
+        $this->forge->addPrimaryKey($primaryKeys);
+        $this->forge->createTable('forge_test_users', true);
+
+        $indexes = $this->db->getIndexData('forge_test_users');
+
+        $this->assertCount(1, $indexes);
+        $this->assertSame($primaryKeys, current($indexes)->fields);
+
+        $this->forge->dropPrimaryKey('forge_test_users');
+
+        $indexes = $this->db->getIndexData('forge_test_users');
+
+        $this->assertCount(0, $indexes);
+
+        $this->forge->dropTable('forge_test_users', true);
+    }
 }
