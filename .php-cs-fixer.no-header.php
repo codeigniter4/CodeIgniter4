@@ -33,6 +33,7 @@ $finder = Finder::create()
 $overrides = [
     // <<<<<<<<<<<<<<<<<<<<<<<< @TODO TO BE REMOVED ONCE LIVE IN CODING-STANDARD
     'blank_line_between_import_groups' => true,
+    'control_structure_braces'         => true,
     'phpdoc_separation'                => [
         'groups' => [
             ['immutable', 'psalm-immutable'],
