@@ -229,6 +229,13 @@ Execute a DROP KEY.
 
 .. literalinclude:: forge/020.php
 
+Dropping a Primary Key
+======================
+
+Execute a DROP PRIMARY KEY.
+
+.. literalinclude:: forge/028.php
+
 Renaming a Table
 ================
 
