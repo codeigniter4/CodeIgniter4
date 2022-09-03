@@ -42,8 +42,16 @@ $overrides = [
     ],
     'control_structure_braces'        => true,
     'no_multiple_statements_per_line' => true,
-    'no_useless_nullsafe_operator'    => true,
-    'phpdoc_separation'               => [
+    'no_trailing_comma_in_singleline' => [
+        'elements' => [
+            'arguments',
+            'array_destructuring',
+            'array',
+            'group_import',
+        ],
+    ],
+    'no_useless_nullsafe_operator' => true,
+    'phpdoc_separation'            => [
         'groups' => [
             ['immutable', 'psalm-immutable'],
             ['param', 'phpstan-param', 'psalm-param'],
