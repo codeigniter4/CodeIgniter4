@@ -433,7 +433,7 @@ rule and message array formats, as well as available rules:</p>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
             <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;required|is_unique[users.email,id,</span><span class="si">{</span><span class="nv">$userID</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">,</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_spaces&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|alpha_numeric_spaces&#39;</span><span class="p">,</span>
         <span class="p">]))</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;users/update&#39;</span><span class="p">,</span> <span class="p">[</span>
                 <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="o">-&gt;</span><span class="na">getErrors</span><span class="p">(),</span>

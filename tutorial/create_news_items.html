@@ -355,7 +355,7 @@ You’ll use the <a class="reference internal" href="../incoming/controllers.htm
 
         <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">()</span> <span class="o">===</span> <span class="s1">&#39;post&#39;</span> <span class="o">&amp;&amp;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
             <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|min_length[3]|max_length[255]&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;body&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required&#39;</span><span class="p">,</span>
         <span class="p">]))</span> <span class="p">{</span>
             <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">([</span>
                 <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">),</span>

@@ -1005,7 +1005,8 @@ an optional third argument. Your options are <code class="docutils literal notra
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">like</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
 <span class="c1">// WHERE `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
@@ -1251,7 +1252,8 @@ an optional third argument. Your options are <code class="docutils literal notra
 instances are joined by <strong>OR</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">havingLike</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;match&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">orHavingLike</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="nv">$match</span><span class="p">);</span>
 <span class="c1">// HAVING `title` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39; OR  `body` LIKE &#39;%match%&#39; ESCAPE &#39;!&#39;</span>
 </pre></div>
 </div>
