@@ -167,7 +167,7 @@ class Forge
      *
      * @var string
      */
-    protected $dropConstraintStr;'ALTER TABLE %s DROP CONSTRAINT %s'
+    protected $dropConstraintStr;
 
     /**
      * DROP INDEX statement
