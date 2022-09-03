@@ -33,6 +33,19 @@ $overrides = [
     'php_unit_internal_class'     => false,
     'no_unused_imports'           => false,
     'class_attributes_separation' => false,
+    'phpdoc_separation'           => [
+        'groups' => [
+            ['immutable', 'psalm-immutable'],
+            ['param', 'phpstan-param', 'psalm-param'],
+            ['phpstan-pure', 'psalm-pure'],
+            ['readonly', 'psalm-readonly'],
+            ['return', 'phpstan-return', 'psalm-return'],
+            ['template', 'phpstan-template', 'psalm-template'],
+            ['template-covariant', 'phpstan-template-covariant', 'psalm-template-covariant'],
+            ['phpstan-type', 'psalm-type'],
+            ['var', 'phpstan-var', 'psalm-var'],
+        ],
+    ],
 ];
 
 $options = [

@@ -437,6 +437,7 @@ class App extends BaseConfig
      * Defaults to `Lax` as recommended in this link:
      *
      * @see https://portswigger.net/web-security/csrf/samesite-cookies
+     *
      * @deprecated `Config\Cookie` $samesite property is used.
      *
      * @var string

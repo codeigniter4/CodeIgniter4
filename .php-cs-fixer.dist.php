@@ -38,7 +38,21 @@ $finder = Finder::create()
         __DIR__ . '/spark',
     ]);
 
-$overrides = [];
+$overrides = [
+    'phpdoc_separation' => [
+        'groups' => [
+            ['immutable', 'psalm-immutable'],
+            ['param', 'phpstan-param', 'psalm-param'],
+            ['phpstan-pure', 'psalm-pure'],
+            ['readonly', 'psalm-readonly'],
+            ['return', 'phpstan-return', 'psalm-return'],
+            ['template', 'phpstan-template', 'psalm-template'],
+            ['template-covariant', 'phpstan-template-covariant', 'psalm-template-covariant'],
+            ['phpstan-type', 'psalm-type'],
+            ['var', 'phpstan-var', 'psalm-var'],
+        ],
+    ],
+];
 
 $options = [
     'cacheFile'    => 'build/.php-cs-fixer.cache',
