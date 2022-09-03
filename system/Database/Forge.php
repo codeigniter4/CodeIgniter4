@@ -1055,7 +1055,7 @@ class Forge
         return $sqls;
     }
 
-    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = true): string
+    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = true, bool $shortName = false): string
     {
         $sql = '';
 
@@ -1070,7 +1070,12 @@ class Forge
         }
 
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = 'fk_' . $table . '_' . implode('_', $fkey['field']);
+            $nameIndex = 'fk_' . $table . '_' . implode('_', $fkey['field']);
+
+            if ($shortName === true && strlen($nameIndex) > 30) {
+                $nameIndex = substr($nameIndex, 0, 28) . mt_rand(10, 99);
+            }
+
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);

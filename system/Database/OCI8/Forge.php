@@ -273,10 +273,14 @@ class Forge extends BaseForge
         return $sql;
     }
 
-    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = false): string
+    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = false, bool $shortName = false): string
     {
         $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
-        return parent::_processForeignKeys($table, $allowActions, $onUpdate);
+        if (version_compare($this->db->getVersion(), '18.0.0', '<')) {
+            $shortName = true;
+        }
+
+        return parent::_processForeignKeys($table, $allowActions, $onUpdate, $shortName);
     }
 }

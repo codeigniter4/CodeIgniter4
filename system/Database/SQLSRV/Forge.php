@@ -293,11 +293,11 @@ class Forge extends BaseForge
      *
      * @param string $table Table name
      */
-    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = true): string
+    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = true, bool $shortName = false): string
     {
         $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
 
-        return parent::_processForeignKeys($table, $allowActions, $onUpdate);
+        return parent::_processForeignKeys($table, $allowActions, $onUpdate, $shortName);
     }
 
     /**
