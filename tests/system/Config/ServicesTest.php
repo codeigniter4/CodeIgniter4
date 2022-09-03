@@ -238,6 +238,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testNewSession()
@@ -248,6 +249,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testNewSessionWithNullConfig()
@@ -258,6 +260,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testCallStatic()
@@ -272,6 +275,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testCallStaticDirectly()
@@ -283,6 +287,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testMockInjection()
@@ -305,6 +310,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testReset()
@@ -324,6 +330,7 @@ final class ServicesTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testResetSingle()

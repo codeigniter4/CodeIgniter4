@@ -30,6 +30,7 @@ use Config\Security as SecurityConfig;
 
 /**
  * @runTestsInSeparateProcesses
+ *
  * @preserveGlobalState disabled
  *
  * @internal

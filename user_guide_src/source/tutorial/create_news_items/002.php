@@ -10,7 +10,7 @@ class News extends BaseController
 
         if ($this->request->getMethod() === 'post' && $this->validate([
             'title' => 'required|min_length[3]|max_length[255]',
-            'body' => 'required',
+            'body'  => 'required',
         ])) {
             $model->save([
                 'title' => $this->request->getPost('title'),

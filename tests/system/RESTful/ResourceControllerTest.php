@@ -36,6 +36,7 @@ use Tests\Support\RESTful\Worker;
  * return correct responses.
  *
  * @runTestsInSeparateProcesses
+ *
  * @preserveGlobalState         disabled
  *
  * @internal

@@ -124,6 +124,7 @@ final class IncomingRequestTest extends CIUnitTestCase
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testCanGetOldInputArrayWithSessionService()

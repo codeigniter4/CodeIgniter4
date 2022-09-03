@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @coversNothing
+ *
  * @group auto-review
  */
 final class ComposerJsonTest extends TestCase

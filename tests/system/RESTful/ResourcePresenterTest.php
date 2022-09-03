@@ -30,6 +30,7 @@ use Tests\Support\RESTful\Worker2;
  * return correct responses.
  *
  * @runTestsInSeparateProcesses
+ *
  * @preserveGlobalState         disabled
  *
  * @internal

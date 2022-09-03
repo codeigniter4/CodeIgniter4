@@ -222,6 +222,7 @@ class Response extends Message implements MessageInterface, ResponseInterface
      *
      * @see http://tools.ietf.org/html/rfc7231#section-6
      * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
+     *
      * @deprecated Use getReasonPhrase()
      *
      * @codeCoverageIgnore

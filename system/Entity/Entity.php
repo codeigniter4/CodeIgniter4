@@ -471,6 +471,7 @@ class Entity implements JsonSerializable
      *  $p = $this->getMyProperty()
      *
      * @throws Exception
+     *
      * @params string $key class property
      *
      * @return array|bool|float|int|object|string|null

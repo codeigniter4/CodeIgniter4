@@ -14,7 +14,6 @@ declare(strict_types=1);
 use CodeIgniter\CodingStandard\CodeIgniter4;
 use Nexus\CsConfig\Factory;
 use Nexus\CsConfig\Fixer\Comment\NoCodeSeparatorCommentFixer;
-use Nexus\CsConfig\Fixer\Comment\SpaceAfterCommentStartFixer;
 use Nexus\CsConfig\FixerGenerator;
 use PhpCsFixer\Finder;
 
@@ -34,6 +33,19 @@ $overrides = [
     'php_unit_internal_class'     => false,
     'no_unused_imports'           => false,
     'class_attributes_separation' => false,
+    'phpdoc_separation'           => [
+        'groups' => [
+            ['immutable', 'psalm-immutable'],
+            ['param', 'phpstan-param', 'psalm-param'],
+            ['phpstan-pure', 'psalm-pure'],
+            ['readonly', 'psalm-readonly'],
+            ['return', 'phpstan-return', 'psalm-return'],
+            ['template', 'phpstan-template', 'psalm-template'],
+            ['template-covariant', 'phpstan-template-covariant', 'psalm-template-covariant'],
+            ['phpstan-type', 'psalm-type'],
+            ['var', 'phpstan-var', 'psalm-var'],
+        ],
+    ],
 ];
 
 $options = [
@@ -42,7 +54,6 @@ $options = [
     'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [
         NoCodeSeparatorCommentFixer::name() => true,
-        SpaceAfterCommentStartFixer::name() => true,
     ],
 ];
 
