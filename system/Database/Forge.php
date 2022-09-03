@@ -1070,7 +1070,7 @@ class Forge
         }
 
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex = 'fk_' . $table . '_' . implode('_', $fkey['field']);
+            $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_foreign';
 
             if ($shortName === true && strlen($nameIndex) > 30) {
                 $nameIndex = substr($nameIndex, 0, 28) . mt_rand(10, 99);
