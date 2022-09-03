@@ -288,14 +288,15 @@
 <ul>
 <li><p><a class="reference internal" href="#index-php-and-spark" id="id2">index.php and spark</a></p></li>
 <li><p><a class="reference internal" href="#config-constants-php" id="id3">Config/Constants.php</a></p></li>
+<li><p><a class="reference internal" href="#composer-json" id="id4">composer.json</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#breaking-changes" id="id4">Breaking Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-enhancements" id="id5">Breaking Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-changes" id="id5">Breaking Changes</a></p></li>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id6">Breaking Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id7">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#content-changes" id="id8">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id9">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -326,22 +327,40 @@ after running <code class="docutils literal notranslate"><span class="pre">compo
 <h3><a class="toc-backref" href="#id3">Config/Constants.php</a><a class="headerlink" href="#config-constants-php" title="Permalink to this headline"></a></h3>
 <p>The constants <code class="docutils literal notranslate"><span class="pre">EVENT_PRIORITY_LOW</span></code>, <code class="docutils literal notranslate"><span class="pre">EVENT_PRIORITY_NORMAL</span></code> and <code class="docutils literal notranslate"><span class="pre">EVENT_PRIORITY_HIGH</span></code> are deprecated, and the definitions are moved to <code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code>. If you use these constants, define them in <code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code>. Or use new class constants <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events::PRIORITY_LOW</span></code>, <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events::PRIORITY_NORMAL</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events::PRIORITY_HIGH</span></code>.</p>
 </section>
+<section id="composer-json">
+<h3><a class="toc-backref" href="#id4">composer.json</a><a class="headerlink" href="#composer-json" title="Permalink to this headline"></a></h3>
+<p>If you use Composer, when you installed CodeIgniter v4.1.9 or before, and
+if there are <code class="docutils literal notranslate"><span class="pre">App\\</span></code> and <code class="docutils literal notranslate"><span class="pre">Config\\</span></code> namespaces in your <code class="docutils literal notranslate"><span class="pre">/composer.json</span></code>’s <code class="docutils literal notranslate"><span class="pre">autoload.psr-4</span></code>
+like the following, you need to remove these lines, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">dump-autoload</span></code>.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>{
+    ...
+    &quot;autoload&quot;: {
+        &quot;psr-4&quot;: {
+            &quot;App\\&quot;: &quot;app&quot;,             &lt;-- Remove this line
+            &quot;Config\\&quot;: &quot;app/Config&quot;    &lt;-- Remove this line
+        }
+    },
+    ...
+}
+</pre></div>
+</div>
+</section>
 </section>
 <section id="breaking-changes">
-<h2><a class="toc-backref" href="#id4">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">system/bootstrap.php</span></code> file no longer returns a <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> instance, and does not load the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file (now handled in <code class="docutils literal notranslate"><span class="pre">index.php</span></code> and <code class="docutils literal notranslate"><span class="pre">spark</span></code>). If you have code that expects these behaviors it will no longer work and must be modified. This has been changed to make <a class="reference external" href="https://www.php.net/manual/en/opcache.preloading.php">Preloading</a> easier to implement.</p></li>
 </ul>
 </section>
 <section id="breaking-enhancements">
-<h2><a class="toc-backref" href="#id5">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">Validation::setRule()</span></code> has been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$rules</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
 <li><p>The method signature of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseBuilder::join()</span></code> and <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\*\Builder::join()</span></code> have been changed. The <code class="docutils literal notranslate"><span class="pre">string</span></code> typehint on the <code class="docutils literal notranslate"><span class="pre">$cond</span></code> parameter was removed. Extending classes should likewise remove the parameter so as not to break LSP.</p></li>
 </ul>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id6">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Numerous files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
 these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
@@ -353,7 +372,7 @@ will break your application. All changes noted here are optional until the next 
 and any mandatory changes will be covered in the sections above.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id7">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <ul class="simple">
@@ -367,7 +386,7 @@ and it is recommended that you merge the updated versions with your application:
 </ul>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id8">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -414,7 +433,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 02, 2022.
+      <span class="lastupdated">Last updated on Sep 03, 2022.
       </span></p>
   </div>
 
