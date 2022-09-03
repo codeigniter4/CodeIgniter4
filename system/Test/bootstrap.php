@@ -29,9 +29,7 @@ defined('CI_DEBUG') || define('CI_DEBUG', true);
 defined('HOMEPATH') || define('HOMEPATH', realpath(rtrim(getcwd(), '\\/ ')) . DIRECTORY_SEPARATOR);
 $source = is_dir(HOMEPATH . 'app')
     ? HOMEPATH
-    : (is_dir('vendor/codeigniter4/framework/')
-        ? 'vendor/codeigniter4/framework/'
-        : 'vendor/codeigniter4/codeigniter4/');
+    : (is_dir('vendor/codeigniter4/framework/') ? 'vendor/codeigniter4/framework/' : 'vendor/codeigniter4/codeigniter4/');
 defined('CONFIGPATH') || define('CONFIGPATH', realpath($source . 'app/Config') . DIRECTORY_SEPARATOR);
 defined('PUBLICPATH') || define('PUBLICPATH', realpath($source . 'public') . DIRECTORY_SEPARATOR);
 unset($source);
