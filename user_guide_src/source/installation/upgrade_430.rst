@@ -122,6 +122,34 @@ Interface Changes
 
 Some interfaces has been fixed. See :ref:`v430-interface-changes` for details.
 
+Foreign Key Data
+=====================================================
+
+- The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
+You will need to adjust any code depending on this method to use the new structure.
+- The Foreign key naming convention has been changed for Oracle. All DBMS use the same
+convention now. Oracle version 12 is truncated to 30 bytes.
+
+Example: ``tableprefix_table_column1_column2_foreign``
+
+The data returned has the following structure::
+
+    /**
+     * @return array[
+     *    {constraint_name} =>
+     *        stdClass[
+     *            'constraint_name'     => string,
+     *            'table_name'          => string,
+     *            'column_name'         => string[],
+     *            'foreign_table_name'  => string,
+     *            'foreign_column_name' => string[],
+     *            'on_delete'           => string,
+     *            'on_update'           => string,
+     *            'match'               => string
+     *        ]
+     * ]
+     */
+
 Others
 ======
 
