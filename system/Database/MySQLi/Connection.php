@@ -483,14 +483,14 @@ class Connection extends BaseConnection
     {
         $sql = '
                 SELECT
-                    tc.constraint_name,
-                    tc.table_name,
-                    kcu.column_name,
-                    rc.referenced_table_name,
-                    kcu.referenced_column_name,
-                    rc.delete_rule,
-                    rc.update_rule,
-                    rc.match_option
+                    tc.CONSTRAINT_NAME,
+                    tc.TABLE_NAME,
+                    kcu.COLUMN_NAME,
+                    rc.REFERENCED_TABLE_NAME,
+                    kcu.REFERENCED_COLUMN_NAME,
+                    rc.DELETE_RULE,
+                    rc.UPDATE_RULE,
+                    rc.MATCH_OPTION
                 FROM information_schema.table_constraints AS tc
                 INNER JOIN information_schema.referential_constraints AS rc
                     ON tc.constraint_name = rc.constraint_name
@@ -511,14 +511,14 @@ class Connection extends BaseConnection
         $indexes = [];
 
         foreach ($query as $row) {
-            $indexes[$row->constraint_name]['constraint_name']       = $row->constraint_name;
-            $indexes[$row->constraint_name]['table_name']            = $row->table_name;
-            $indexes[$row->constraint_name]['column_name'][]         = $row->column_name;
-            $indexes[$row->constraint_name]['foreign_table_name']    = $row->referenced_table_name;
-            $indexes[$row->constraint_name]['foreign_column_name'][] = $row->referenced_column_name;
-            $indexes[$row->constraint_name]['on_delete']             = $row->delete_rule;
-            $indexes[$row->constraint_name]['on_update']             = $row->update_rule;
-            $indexes[$row->constraint_name]['match']                 = $row->match_option;
+            $indexes[$row->CONSTRAINT_NAME]['constraint_name']       = $row->CONSTRAINT_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['table_name']            = $row->TABLE_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['column_name'][]         = $row->COLUMN_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['foreign_table_name']    = $row->REFERENCED_TABLE_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['foreign_column_name'][] = $row->REFERENCED_COLUMN_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['on_delete']             = $row->DELETE_RULE;
+            $indexes[$row->CONSTRAINT_NAME]['on_update']             = $row->UPDATE_RULE;
+            $indexes[$row->CONSTRAINT_NAME]['match']                 = $row->MATCH_OPTION;
         }
 
         return $this->foreignKeyDataToObjects($indexes);
