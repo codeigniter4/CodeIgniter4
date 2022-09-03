@@ -126,9 +126,9 @@ Foreign Key Data
 =====================================================
 
 - The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
-You will need to adjust any code depending on this method to use the new structure.
+  You will need to adjust any code depending on this method to use the new structure.
 - The Foreign key naming convention has been changed for Oracle. All DBMS use the same
-convention now. Oracle version 12 is truncated to 30 bytes.
+  convention now. Oracle version 12 is truncated to 30 bytes.
 
 Example: ``tableprefix_table_column1_column2_foreign``
 
