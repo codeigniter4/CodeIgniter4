@@ -64,7 +64,8 @@ $overrides = [
             ['var', 'phpstan-var', 'psalm-var'],
         ],
     ],
-    'statement_indentation' => true,
+    'single_line_comment_spacing' => true,
+    'statement_indentation'       => true,
     // >>>>>>>>>>>>>>>>>>>>>>>>>
 ];
 
