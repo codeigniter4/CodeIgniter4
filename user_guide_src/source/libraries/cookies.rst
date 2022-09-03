@@ -223,7 +223,7 @@ In runtime, you can manually supply a new default using the ``Cookie::setDefault
 Class Reference
 ***************
 
-.. php:namespace:: CodeIgniter\HTTP\Cookie
+.. php:namespace:: CodeIgniter\Cookie
 
 .. php:class:: Cookie
 
@@ -325,6 +325,8 @@ Class Reference
         Creates a new Cookie that will expire from the browser.
 
     .. php:method:: withNeverExpiring()
+
+        .. important:: This method is deprecated.
 
         :param string $name:
         :rtype: ``Cookie``

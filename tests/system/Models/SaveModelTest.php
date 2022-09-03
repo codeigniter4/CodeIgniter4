@@ -293,7 +293,7 @@ final class SaveModelTest extends LiveModelTestCase
         ];
 
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('Allowed fields must be specified for model: Tests\Support\Models\JobModel');
+        $this->expectExceptionMessage('Allowed fields must be specified for model: "Tests\Support\Models\JobModel"');
 
         $this->model->save($data);
     }

@@ -10,11 +10,11 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "kint-php/kint": "^4.2",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
     "require-dev": {
+        "kint-php/kint": "^4.2",
         "codeigniter/coding-standard": "^1.1",
         "fakerphp/faker": "^1.9",
         "friendsofphp/php-cs-fixer": "3.6.*",
@@ -24,7 +24,8 @@
         "phpstan/phpstan": "^1.7.1",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.14.0"
+        "rector/rector": "0.14.0",
+        "vimeo/psalm": "^4.26"
     },
     "suggest": {
         "ext-imagick": "If you use Image class ImageMagickHandler",
@@ -70,7 +71,11 @@
             "CodeIgniter\\ComposerScripts::postUpdate",
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
-        "analyze": "phpstan analyse",
+        "analyze": [
+            "phpstan analyze",
+            "rector process --dry-run"
+        ],
+        "sa": "@analyze",
         "test": "phpunit",
         "cs": [
             "php-cs-fixer fix --ansi --verbose --dry-run --diff --config=.php-cs-fixer.user-guide.php",
@@ -81,7 +86,8 @@
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.user-guide.php",
             "php-cs-fixer fix --ansi --verbose --diff --config=.php-cs-fixer.no-header.php",
             "php-cs-fixer fix --ansi --verbose --diff"
-        ]
+        ],
+        "style": "@cs-fix"
     },
     "scripts-descriptions": {
         "analyze": "Run static analysis",

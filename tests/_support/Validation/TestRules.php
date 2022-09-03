@@ -32,4 +32,9 @@ class TestRules
 
         return $find;
     }
+
+    public function array_count($value, $count): bool
+    {
+        return is_array($value) && count($value) === (int) $count;
+    }
 }

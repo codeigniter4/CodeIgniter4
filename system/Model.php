@@ -681,7 +681,7 @@ class Model extends BaseModel
     {
         if (! empty($this->tempData['data'])) {
             if (empty($data)) {
-                $data = $this->tempData['data'] ?? null;
+                $data = $this->tempData['data'];
             } else {
                 $data = $this->transformDataToArray($data, 'insert');
                 $data = array_merge($this->tempData['data'], $data);
@@ -707,7 +707,7 @@ class Model extends BaseModel
     {
         if (! empty($this->tempData['data'])) {
             if (empty($data)) {
-                $data = $this->tempData['data'] ?? null;
+                $data = $this->tempData['data'];
             } else {
                 $data = $this->transformDataToArray($data, 'update');
                 $data = array_merge($this->tempData['data'], $data);
