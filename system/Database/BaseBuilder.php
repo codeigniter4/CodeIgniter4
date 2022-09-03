@@ -1737,6 +1737,40 @@ class BaseBuilder
     }
 
     /**
+     * Sets update fields for updateBatch
+     *
+     * @param string|string[] $set
+     * @param bool            $addToDefault future use
+     * @param array|null      $ignore       ignores items in set
+     *
+     * @return $this
+     */
+    protected function updateFields($set, bool $addToDefault = false, ?array $ignore = null)
+    {
+        if (! empty($set)) {
+            if (! is_array($set)) {
+                $set = explode(',', $set);
+            }
+
+            foreach ($set as $key => $value) {
+                if (! ($value instanceof RawSql)) {
+                    $value = $this->db->protectIdentifiers($value);
+                }
+
+                if (is_numeric($key)) {
+                    $key = $value;
+                }
+
+                if ($ignore === null || ! in_array($key, $ignore, true)) {
+                    $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Compiles batch insert strings and runs the queries
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
