@@ -102,6 +102,7 @@ Database
 - SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
 - ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
 - The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
+- Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
 
 Model
 =====
@@ -109,7 +110,6 @@ Model
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
 - Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
-- Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
 
 Libraries
 =========
