@@ -108,7 +108,7 @@ final class FileCollectionTest extends CIUnitTestCase
             $this->file,
         ];
 
-        $collection          = new class ([$this->file]) extends FileCollection {
+        $collection = new class ([$this->file]) extends FileCollection {
             protected $files = [
                 SUPPORTPATH . 'Files/able/apple.php',
             ];

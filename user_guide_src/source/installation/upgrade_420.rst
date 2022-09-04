@@ -38,6 +38,26 @@ Config/Constants.php
 
 The constants ``EVENT_PRIORITY_LOW``, ``EVENT_PRIORITY_NORMAL`` and ``EVENT_PRIORITY_HIGH`` are deprecated, and the definitions are moved to ``app/Config/Constants.php``. If you use these constants, define them in ``app/Config/Constants.php``. Or use new class constants ``CodeIgniter\Events\Events::PRIORITY_LOW``, ``CodeIgniter\Events\Events::PRIORITY_NORMAL`` and ``CodeIgniter\Events\Events::PRIORITY_HIGH``.
 
+composer.json
+=============
+
+If you use Composer, when you installed CodeIgniter v4.1.9 or before, and
+if there are ``App\\`` and ``Config\\`` namespaces in your ``/composer.json``'s ``autoload.psr-4``
+like the following, you need to remove these lines, and run ``composer dump-autoload``.
+
+.. code-block:: text
+
+    {
+        ...
+        "autoload": {
+            "psr-4": {
+                "App\\": "app",             <-- Remove this line
+                "Config\\": "app/Config"    <-- Remove this line
+            }
+        },
+        ...
+    }
+
 Breaking Changes
 ****************
 

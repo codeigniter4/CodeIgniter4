@@ -459,7 +459,7 @@ class Router implements RouterInterface
                     return true;
                 }
 
-                [$controller, ] = explode('::', $handler);
+                [$controller] = explode('::', $handler);
 
                 // Checks `/` in controller name
                 if (strpos($controller, '/') !== false) {

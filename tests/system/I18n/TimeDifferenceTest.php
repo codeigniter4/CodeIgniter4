@@ -19,12 +19,23 @@ use Locale;
  */
 final class TimeDifferenceTest extends CIUnitTestCase
 {
+    private string $currentLocale;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         helper('date');
-        Locale::setDefault('America/Chicago');
+
+        $this->currentLocale = Locale::getDefault();
+        Locale::setDefault('en-US');
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Locale::setDefault($this->currentLocale);
     }
 
     public function testDifferenceBasics()

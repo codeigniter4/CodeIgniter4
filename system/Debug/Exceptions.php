@@ -177,7 +177,7 @@ class Exceptions
         ['type' => $type, 'message' => $message, 'file' => $file, 'line' => $line] = $error;
 
         if (in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
-            $this->exceptionHandler(new ErrorException($message, $type, 0, $file, $line));
+            $this->exceptionHandler(new ErrorException($message, 0, $type, $file, $line));
         }
     }
 
@@ -329,9 +329,9 @@ class Exceptions
         return [$statusCode, $exitStatus];
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Display Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * This makes nicer looking paths for the error output.

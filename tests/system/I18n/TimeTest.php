@@ -25,12 +25,23 @@ use Locale;
  */
 final class TimeTest extends CIUnitTestCase
 {
+    private string $currentLocale;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         helper('date');
+
+        $this->currentLocale = Locale::getDefault();
         Locale::setDefault('en_US');
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        Locale::setDefault($this->currentLocale);
     }
 
     public function testNewTimeNow()
@@ -55,7 +66,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
             'Europe/London', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN,
+            IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
 
@@ -71,7 +82,7 @@ final class TimeTest extends CIUnitTestCase
             IntlDateFormatter::SHORT,
             IntlDateFormatter::SHORT,
             'Europe/London', // Default for CodeIgniter
-                IntlDateFormatter::GREGORIAN,
+            IntlDateFormatter::GREGORIAN,
             'yyyy-MM-dd HH:mm:ss'
         );
 

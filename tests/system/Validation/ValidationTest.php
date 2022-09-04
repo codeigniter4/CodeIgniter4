@@ -25,6 +25,7 @@ use TypeError;
 
 /**
  * @internal
+ *
  * @no-final
  */
 class ValidationTest extends CIUnitTestCase
@@ -637,6 +638,42 @@ class ValidationTest extends CIUnitTestCase
 
         $this->assertTrue($validated);
         $this->assertSame([], $this->validation->getErrors());
+
+        unset($_SERVER['CONTENT_TYPE']);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6466
+     */
+    public function testJsonInputObjectArray(): void
+    {
+        $json = <<<'EOL'
+            {
+                "p": [
+                    {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                    }
+                ]
+            }
+            EOL;
+
+        $_SERVER['CONTENT_TYPE'] = 'application/json';
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+
+        $rules = [
+            'p' => 'required|array_count[2]',
+        ];
+        $validated = $this->validation
+            ->withRequest($request->withMethod('patch'))
+            ->setRules($rules)
+            ->run();
+
+        $this->assertFalse($validated);
+        $this->assertSame(['p' => 'Validation.array_count'], $this->validation->getErrors());
 
         unset($_SERVER['CONTENT_TYPE']);
     }

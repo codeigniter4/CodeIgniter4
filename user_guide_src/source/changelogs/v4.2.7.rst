@@ -1,9 +1,9 @@
-Version 4.2.6
+Version 4.2.7
 #############
 
-Release Date: September 4, 2022
+Release Date: Unreleased
 
-**4.2.6 release of CodeIgniter4**
+**4.2.7 release of CodeIgniter4**
 
 .. contents::
     :local:
@@ -27,12 +27,11 @@ none.
 Deprecations
 ************
 
-- :php:meth:`CodeIgniter\\Cookie\\Cookie::withNeverExpiring()` is deprecated.
+none.
 
 Bugs Fixed
 **********
 
-Many bugs fixed, but notably:
-- AssertionError occurs when using Validation in CLI `https://github.com/codeigniter4/CodeIgniter4/pull/6452`
+none.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.

@@ -380,12 +380,19 @@ Cleans out the database table by permanently removing all rows that have 'delete
 
 .. literalinclude:: model/026.php
 
+In-Model Validation
+===================
+
 Validating Data
-===============
+---------------
 
 For many people, validating data in the model is the preferred way to ensure the data is kept to a single
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
 prior to saving to the database with the ``insert()``, ``update()``, or ``save()`` methods.
+
+.. important:: When you update data, the validation in the model class only validate provided fields.
+    So when you set the rule ``required``, if you don't pass the required field data,
+    the validation won't fail. This is to avoid validation errors when updating only some fields.
 
 The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:
@@ -394,7 +401,11 @@ be applied. If you have custom error message that you want to use, place them in
 
 The other way to set the validation rules to fields by functions,
 
-.. php:function:: setValidationRule($field, $fieldRules)
+.. php:namespace:: CodeIgniter
+
+.. php:class:: Model
+
+.. php:method:: setValidationRule($field, $fieldRules)
 
     :param  string  $field:
     :param  array   $fieldRules:
@@ -405,7 +416,7 @@ The other way to set the validation rules to fields by functions,
 
     .. literalinclude:: model/028.php
 
-.. php:function:: setValidationRules($validationRules)
+.. php:method:: setValidationRules($validationRules)
 
     :param  array   $validationRules:
 
@@ -417,7 +428,7 @@ The other way to set the validation rules to fields by functions,
 
 The other way to set the validation message to fields by functions,
 
-.. php:function:: setValidationMessage($field, $fieldMessages)
+.. php:method:: setValidationMessage($field, $fieldMessages)
 
     :param  string  $field:
     :param  array   $fieldMessages:
@@ -428,7 +439,7 @@ The other way to set the validation message to fields by functions,
 
     .. literalinclude:: model/030.php
 
-.. php:function:: setValidationMessages($fieldMessages)
+.. php:method:: setValidationMessages($fieldMessages)
 
     :param  array   $fieldMessages:
 
@@ -454,7 +465,7 @@ and simply set ``$validationRules`` to the name of the validation rule group you
 .. literalinclude:: model/034.php
 
 Retrieving Validation Rules
-===========================
+---------------------------
 
 You can retrieve a model's validation rules by accessing its ``validationRules``
 property:
@@ -473,7 +484,7 @@ value an array of fieldnames of interest:
 .. literalinclude:: model/037.php
 
 Validation Placeholders
-=======================
+-----------------------
 
 The model provides a simple method to replace parts of your rules based on data that's being passed into it. This
 sounds fairly obscure but can be especially handy with the ``is_unique`` validation rule. Placeholders are simply

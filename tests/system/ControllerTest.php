@@ -75,7 +75,7 @@ final class ControllerTest extends CIUnitTestCase
         $original = $_SERVER;
         $_SERVER  = ['HTTPS' => 'on'];
         // make sure we can instantiate one
-        $this->controller         = new class () extends Controller {
+        $this->controller = new class () extends Controller {
             protected $forceHTTPS = 1;
         };
         $this->controller->initController($this->request, $this->response, $this->logger);
@@ -182,7 +182,7 @@ final class ControllerTest extends CIUnitTestCase
 
     public function testHelpers()
     {
-        $this->controller      = new class () extends Controller {
+        $this->controller = new class () extends Controller {
             protected $helpers = [
                 'cookie',
                 'text',
