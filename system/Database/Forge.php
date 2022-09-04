@@ -1055,6 +1055,13 @@ class Forge
         return $sqls;
     }
 
+    /**
+     * Generates SQL to process foreign keys
+     *
+     * @param array $allowActions Allows child to override default value
+     * @param bool  $onUpdate     Allows child to avoid setting onUpdate rule (Oracle)
+     * @param bool  $shortName    Allows child to limit key name to 30 byte (Oracle)
+     */
     protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = true, bool $shortName = false): string
     {
         $sql = '';
