@@ -811,11 +811,41 @@ final class FormatRulesTest extends CIUnitTestCase
         ];
         $this->assertsame($expected, $this->validation->run($data));
     }
+    
+    public function integerInvalidTypeDataProvider(): Generator
+    {
+        // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
+        // yield 'array with int' => [
+        // [555],
+        // false,
+        // ];
+
+        // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
+        // yield 'empty array' => [
+        // [],
+        // false,
+        // ];
+
+        yield 'bool true' => [
+            true,
+            false,
+        ];
+
+        yield 'bool false' => [
+            false,
+            false,
+        ];
+
+        yield 'null' => [
+            null,
+            false,
+        ];
+    }
 
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
      *
-     * @dataProvider integerInvalidTypeDataProvider
+     * @dataProvider numericInvalidTypeDataProvider
      *
      * @param mixed $value
      */
@@ -831,15 +861,15 @@ final class FormatRulesTest extends CIUnitTestCase
         $this->assertsame($expected, $this->validation->run($data));
     }
 
-    public function integerInvalidTypeDataProvider(): Generator
+    public function numericInvalidTypeDataProvider(): Generator
     {
-        // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
+        // TypeError : CodeIgniter\Validation\FormatRules::numeric(): Argument #1 ($str) must be of type ?string, array given
         // yield 'array with int' => [
         // [555],
         // false,
         // ];
 
-        // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
+        // TypeError : CodeIgniter\Validation\FormatRules::numeric(): Argument #1 ($str) must be of type ?string, array given
         // yield 'empty array' => [
         // [],
         // false,
@@ -863,6 +893,8 @@ final class FormatRulesTest extends CIUnitTestCase
 
     /**
      * @dataProvider integerProvider
+     *
+     * @param int|string $str
      */
     public function testInteger($str, bool $expected): void
     {
@@ -885,16 +917,20 @@ final class FormatRulesTest extends CIUnitTestCase
                 true,
             ],
             [
+                1.5,
+                false,
+            ],
+            [
                 '0',
                 false,
             ],
             [
                 '42',
-                true,
+                false,
             ],
             [
                 '-1',
-                true,
+                false,
             ],
             [
                 "+42\n",
