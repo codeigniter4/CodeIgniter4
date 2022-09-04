@@ -284,7 +284,7 @@ class Forge extends BaseForge
     {
         $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
-        if (version_compare($this->db->getVersion(), '18.0.0', '<')) {
+        if (version_compare($this->db->getVersion(), '12.2.0', '<')) {
             $shortName = true;
         }
 
