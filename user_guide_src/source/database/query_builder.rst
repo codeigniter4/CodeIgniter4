@@ -939,6 +939,8 @@ Or as an array:
 You may also use the ``$builder->set()`` method described above when
 performing updates.
 
+.. _update-batch:
+
 UpdateBatch
 ===========
 

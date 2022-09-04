@@ -109,6 +109,7 @@ Model
 - Added before and after events to ``BaseModel::insertBatch()`` and ``BaseModel::updateBatch()`` methods. See :ref:`model-events-callbacks`.
 - Added ``Model::allowEmptyInserts()`` method to insert empty data. See :ref:`Using CodeIgniter's Model <model-allow-empty-inserts>`
 - Added new :ref:`entities-property-casting` class ``IntBoolCast`` for Entity.
+- Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
 
 Libraries
 =========
