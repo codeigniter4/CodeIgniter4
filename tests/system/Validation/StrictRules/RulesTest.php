@@ -129,4 +129,50 @@ final class RulesTest extends TraditionalRulesTest
             [10, 'a', false],
         ];
     }
+
+    /**
+     * @dataProvider provideLessThanStrict
+     *
+     * @param int $value
+     */
+    public function testLessThanStrict($value, string $param, bool $expected): void
+    {
+        $this->validation->setRules(['foo' => "less_than[{$param}]"]);
+
+        $data = ['foo' => $value];
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function provideLessThanStrict(): Generator
+    {
+        yield from [
+            [-10, '-11', false],
+            [9, '10', true],
+            [10, '9', false],
+            [10, '10', false],
+            [10, 'a', true],
+        ];
+    }
+
+    /**
+     * @dataProvider provideLessThanEqualStrict
+     *
+     * @param int $value
+     */
+    public function testLessEqualThanStrict($value, ?string $param, bool $expected): void
+    {
+        $this->validation->setRules(['foo' => "less_than_equal_to[{$param}]"]);
+
+        $data = ['foo' => $value];
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function provideLessThanEqualStrict(): Generator
+    {
+        yield from [
+            [0, '0', true],
+            [1, '0', false],
+            [-1, '0', true],
+        ];
+    }
 }

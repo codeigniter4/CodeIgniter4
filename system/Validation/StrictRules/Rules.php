@@ -149,20 +149,28 @@ class Rules
     /**
      * Less than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function less_than($str, string $max): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
         return $this->nonStrictRules->less_than($str, $max);
     }
 
     /**
      * Equal to or Less than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function less_than_equal_to($str, string $max): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
         return $this->nonStrictRules->less_than_equal_to($str, $max);
     }
 
