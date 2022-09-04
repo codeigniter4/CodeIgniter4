@@ -291,24 +291,22 @@
 <li><p><a class="reference internal" href="#finding-data" id="id8">Finding Data</a></p></li>
 <li><p><a class="reference internal" href="#saving-data" id="id9">Saving Data</a></p></li>
 <li><p><a class="reference internal" href="#deleting-data" id="id10">Deleting Data</a></p></li>
-<li><p><a class="reference internal" href="#validating-data" id="id11">Validating Data</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-validation-rules" id="id12">Retrieving Validation Rules</a></p></li>
-<li><p><a class="reference internal" href="#validation-placeholders" id="id13">Validation Placeholders</a></p></li>
-<li><p><a class="reference internal" href="#protecting-fields" id="id14">Protecting Fields</a></p></li>
-<li><p><a class="reference internal" href="#working-with-query-builder" id="id15">Working With Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#runtime-return-type-changes" id="id16">Runtime Return Type Changes</a></p></li>
-<li><p><a class="reference internal" href="#processing-large-amounts-of-data" id="id17">Processing Large Amounts of Data</a></p></li>
+<li><p><a class="reference internal" href="#in-model-validation" id="id11">In-Model Validation</a></p></li>
+<li><p><a class="reference internal" href="#protecting-fields" id="id12">Protecting Fields</a></p></li>
+<li><p><a class="reference internal" href="#working-with-query-builder" id="id13">Working With Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#runtime-return-type-changes" id="id14">Runtime Return Type Changes</a></p></li>
+<li><p><a class="reference internal" href="#processing-large-amounts-of-data" id="id15">Processing Large Amounts of Data</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#model-events" id="id18">Model Events</a></p>
+<li><p><a class="reference internal" href="#model-events" id="id16">Model Events</a></p>
 <ul>
-<li><p><a class="reference internal" href="#defining-callbacks" id="id19">Defining Callbacks</a></p></li>
-<li><p><a class="reference internal" href="#specifying-callbacks-to-run" id="id20">Specifying Callbacks To Run</a></p></li>
-<li><p><a class="reference internal" href="#event-parameters" id="id21">Event Parameters</a></p></li>
-<li><p><a class="reference internal" href="#modifying-find-data" id="id22">Modifying Find* Data</a></p></li>
+<li><p><a class="reference internal" href="#defining-callbacks" id="id17">Defining Callbacks</a></p></li>
+<li><p><a class="reference internal" href="#specifying-callbacks-to-run" id="id18">Specifying Callbacks To Run</a></p></li>
+<li><p><a class="reference internal" href="#event-parameters" id="id19">Event Parameters</a></p></li>
+<li><p><a class="reference internal" href="#modifying-find-data" id="id20">Modifying Find* Data</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#manual-model-creation" id="id23">Manual Model Creation</a></p></li>
+<li><p><a class="reference internal" href="#manual-model-creation" id="id21">Manual Model Creation</a></p></li>
 </ul>
 </div>
 <section id="models">
@@ -867,11 +865,19 @@ previously:</p>
 </div>
 </section>
 </section>
+<section id="in-model-validation">
+<h3><a class="toc-backref" href="#id11">In-Model Validation</a><a class="headerlink" href="#in-model-validation" title="Permalink to this headline"></a></h3>
 <section id="validating-data">
-<h3><a class="toc-backref" href="#id11">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this headline"></a></h3>
+<h4>Validating Data<a class="headerlink" href="#validating-data" title="Permalink to this headline"></a></h4>
 <p>For many people, validating data in the model is the preferred way to ensure the data is kept to a single
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
 prior to saving to the database with the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When you update data, the validation in the model class only validate provided fields.
+So when you set the rule <code class="docutils literal notranslate"><span class="pre">required</span></code>, if you don’t pass the required field data,
+the validation won’t fail. This is to avoid validation errors when updating only some fields.</p>
+</div>
 <p>The first step is to fill out the <code class="docutils literal notranslate"><span class="pre">$validationRules</span></code> class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the <code class="docutils literal notranslate"><span class="pre">$validationMessages</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -897,9 +903,14 @@ be applied. If you have custom error message that you want to use, place them in
 </pre></div>
 </div>
 <p>The other way to set the validation rules to fields by functions,</p>
-<dl class="php function">
-<dt class="sig sig-object php" id="setValidationRule">
-<span class="sig-name descname"><span class="pre">setValidationRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$fieldRules</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationRule" title="Permalink to this definition"></a></dt>
+<span class="target" id="namespace-CodeIgniter"></span><dl class="php class">
+<dt class="sig sig-object php" id="CodeIgniter\Model">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\</span></span><span class="sig-name descname"><span class="pre">Model</span></span><a class="headerlink" href="#CodeIgniter\Model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationRule">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$fieldRules</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationRule" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -920,9 +931,9 @@ be applied. If you have custom error message that you want to use, place them in
 </div>
 </dd></dl>
 
-<dl class="php function">
-<dt class="sig sig-object php" id="setValidationRules">
-<span class="sig-name descname"><span class="pre">setValidationRules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$validationRules</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationRules" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationRules">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationRules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$validationRules</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationRules" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -949,9 +960,9 @@ be applied. If you have custom error message that you want to use, place them in
 </dd></dl>
 
 <p>The other way to set the validation message to fields by functions,</p>
-<dl class="php function">
-<dt class="sig sig-object php" id="setValidationMessage">
-<span class="sig-name descname"><span class="pre">setValidationMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$fieldMessages</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessage" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationMessage">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$fieldMessages</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationMessage" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -973,9 +984,9 @@ be applied. If you have custom error message that you want to use, place them in
 </div>
 </dd></dl>
 
-<dl class="php function">
-<dt class="sig sig-object php" id="setValidationMessages">
-<span class="sig-name descname"><span class="pre">setValidationMessages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$fieldMessages</span></em><span class="sig-paren">)</span><a class="headerlink" href="#setValidationMessages" title="Permalink to this definition"></a></dt>
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationMessages">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationMessages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$fieldMessages</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationMessages" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -1034,7 +1045,7 @@ and simply set <code class="docutils literal notranslate"><span class="pre">$val
 </div>
 </section>
 <section id="retrieving-validation-rules">
-<h3><a class="toc-backref" href="#id12">Retrieving Validation Rules</a><a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this headline"></a></h3>
+<h4>Retrieving Validation Rules<a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this headline"></a></h4>
 <p>You can retrieve a model’s validation rules by accessing its <code class="docutils literal notranslate"><span class="pre">validationRules</span></code>
 property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1062,7 +1073,7 @@ value an array of fieldnames of interest:</p>
 </div>
 </section>
 <section id="validation-placeholders">
-<h3><a class="toc-backref" href="#id13">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this headline"></a></h3>
+<h4>Validation Placeholders<a class="headerlink" href="#validation-placeholders" title="Permalink to this headline"></a></h4>
 <p>The model provides a simple method to replace parts of your rules based on data that’s being passed into it. This
 sounds fairly obscure but can be especially handy with the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> validation rule. Placeholders are simply
 the name of the field (or array key) that was passed in as <code class="docutils literal notranslate"><span class="pre">$data</span></code> surrounded by curly brackets. It will be
@@ -1110,8 +1121,9 @@ that has an id matching the placeholder’s value. Assuming that the form POST d
 <p>This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
 keys passed in don’t conflict with your form data.</p>
 </section>
+</section>
 <section id="protecting-fields">
-<h3><a class="toc-backref" href="#id14">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this headline"></a></h3>
 <p>To help protect against Mass Assignment Attacks, the Model class <strong>requires</strong> that you list all of the field names
 that can be changed during inserts and updates in the <code class="docutils literal notranslate"><span class="pre">$allowedFields</span></code> class property. Any data provided
 in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
@@ -1139,7 +1151,7 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 </div>
 </section>
 <section id="working-with-query-builder">
-<h3><a class="toc-backref" href="#id15">Working With Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">Working With Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline"></a></h3>
 <p>You can get access to a shared instance of the Query Builder for that model’s database connection any time you
 need it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1181,7 +1193,7 @@ For example, if you need to get the compiledInsert you should do so directly on 
 </div>
 </section>
 <section id="runtime-return-type-changes">
-<h3><a class="toc-backref" href="#id16">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this headline"></a></h3>
 <p>You can specify the format that data should be returned as when using the <strong>find*()</strong> methods as the class property,
 <code class="docutils literal notranslate"><span class="pre">$returnType</span></code>. There may be times that you would like the data back in a different format, though. The Model
 provides methods that allow you to do just that.</p>
@@ -1214,7 +1226,7 @@ it is reset to its default value.</p>
 </section>
 </section>
 <section id="processing-large-amounts-of-data">
-<h3><a class="toc-backref" href="#id17">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this headline"></a></h3>
 <p>Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
 To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
 do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
@@ -1231,13 +1243,13 @@ parameter is a Closure that will be called for each row of data.</p>
 </section>
 </section>
 <section id="model-events">
-<h2><a class="toc-backref" href="#id18">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id16">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this headline"></a></h2>
 <p>There are several points within the model’s execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model’s execution can be affected, each through a class property: <code class="docutils literal notranslate"><span class="pre">$beforeInsert</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterInsert</span></code>,
 <code class="docutils literal notranslate"><span class="pre">$beforeUpdate</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterUpdate</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterFind</span></code>, and <code class="docutils literal notranslate"><span class="pre">$afterDelete</span></code>.</p>
 <section id="defining-callbacks">
-<h3><a class="toc-backref" href="#id19">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id17">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline"></a></h3>
 <p>You specify the callbacks by first creating a new class method in your model to use. This class will always
 receive a <code class="docutils literal notranslate"><span class="pre">$data</span></code> array as its only parameter. The exact contents of the <code class="docutils literal notranslate"><span class="pre">$data</span></code> array will vary between events, but
 will always contain a key named <strong>data</strong> that contains the primary data passed to the original method. In the case
@@ -1268,7 +1280,7 @@ must return the original $data array so other callbacks have the full informatio
 </div>
 </section>
 <section id="specifying-callbacks-to-run">
-<h3><a class="toc-backref" href="#id20">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this headline"></a></h3>
 <p>You specify when to run the callbacks by adding the method name to the appropriate class property (<code class="docutils literal notranslate"><span class="pre">$beforeInsert</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterUpdate</span></code>,
 etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
 use the same callback in multiple events:</p>
@@ -1307,7 +1319,7 @@ use the same callback in multiple events:</p>
 </div>
 </section>
 <section id="event-parameters">
-<h3><a class="toc-backref" href="#id21">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this headline"></a></h3>
 <p>Since the exact data passed to each callback varies a bit, here are the details on what is in the <code class="docutils literal notranslate"><span class="pre">$data</span></code> parameter
 passed to each event:</p>
 <table class="docutils align-default">
@@ -1385,7 +1397,7 @@ insert method, it is first converted to an array.</p></td>
 </table>
 </section>
 <section id="modifying-find-data">
-<h3><a class="toc-backref" href="#id22">Modifying Find* Data</a><a class="headerlink" href="#modifying-find-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">Modifying Find* Data</a><a class="headerlink" href="#modifying-find-data" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> and <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> methods can both return a modified set of data to override the normal response
 from the model. For <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> any changes made to <code class="docutils literal notranslate"><span class="pre">data</span></code> in the return array will automatically be passed back
 to the calling context. In order for <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> to intercept the find workflow it must also return an additional
@@ -1420,7 +1432,7 @@ boolean, <code class="docutils literal notranslate"><span class="pre">returnData
 </section>
 </section>
 <section id="manual-model-creation">
-<h2><a class="toc-backref" href="#id23">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id21">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this headline"></a></h2>
 <p>You do not need to extend any special class to create a model for your application. All you need is to get an
 instance of the database connection and you’re good to go. This allows you to bypass the features CodeIgniter’s
 Model gives you out of the box, and create a fully custom experience.</p>
@@ -1456,7 +1468,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 03, 2022.
+      <span class="lastupdated">Last updated on Sep 04, 2022.
       </span></p>
   </div>
 
