@@ -211,7 +211,6 @@ It works for most basic cases like validating POST data.
 
 However, for example, if you use JSON input data, it may be a type of bool/null/array.
 When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
-If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
 
 The **Strict Rules** don't use implicit type conversion.
 
