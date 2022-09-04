@@ -39,7 +39,9 @@ $finder = Finder::create()
     ]);
 
 $overrides = [
-    'phpdoc_separation' => [
+    // <<<<<<<<<<<<<<<<<<<<<<<< @TODO TO BE REMOVED ONCE LIVE IN CODING-STANDARD
+    'blank_line_between_import_groups' => true,
+    'phpdoc_separation'                => [
         'groups' => [
             ['immutable', 'psalm-immutable'],
             ['param', 'phpstan-param', 'psalm-param'],
@@ -52,6 +54,7 @@ $overrides = [
             ['var', 'phpstan-var', 'psalm-var'],
         ],
     ],
+    // >>>>>>>>>>>>>>>>>>>>>>>>>
 ];
 
 $options = [
