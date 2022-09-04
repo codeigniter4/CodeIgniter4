@@ -33,10 +33,17 @@ $finder = Finder::create()
 $overrides = [
     // <<<<<<<<<<<<<<<<<<<<<<<< @TODO TO BE REMOVED ONCE LIVE IN CODING-STANDARD
     'blank_line_between_import_groups' => true,
-    'control_structure_braces'         => true,
-    'no_multiple_statements_per_line'  => true,
-    'no_useless_nullsafe_operator'     => true,
-    'phpdoc_separation'                => [
+    'class_definition'                 => [
+        'multi_line_extends_each_single_line' => true,
+        'single_item_single_line'             => true,
+        'single_line'                         => true,
+        'space_before_parenthesis'            => true,
+        'inline_constructor_arguments'        => true,
+    ],
+    'control_structure_braces'        => true,
+    'no_multiple_statements_per_line' => true,
+    'no_useless_nullsafe_operator'    => true,
+    'phpdoc_separation'               => [
         'groups' => [
             ['immutable', 'psalm-immutable'],
             ['param', 'phpstan-param', 'psalm-param'],
