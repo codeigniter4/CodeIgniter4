@@ -881,8 +881,12 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         yield from [
             [
-                '0',
+                1,
                 true,
+            ],
+            [
+                '0',
+                false,
             ],
             [
                 '42',
