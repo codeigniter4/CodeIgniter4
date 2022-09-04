@@ -17,14 +17,14 @@
         "kint-php/kint": "^4.2",
         "codeigniter/coding-standard": "^1.1",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "3.6.*",
+        "friendsofphp/php-cs-fixer": "~3.11.0",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.3",
         "nexusphp/tachycardia": "^1.0",
         "phpstan/phpstan": "^1.7.1",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.14.0",
+        "rector/rector": "0.14.1",
         "vimeo/psalm": "^4.26"
     },
     "suggest": {

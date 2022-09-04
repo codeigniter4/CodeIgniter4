@@ -623,7 +623,7 @@ final class EntityTest extends CIUnitTestCase
         $this->expectExceptionMessage('Syntax error, malformed JSON');
 
         (Closure::bind(static function (string $value) {
-            $entity = new Entity();
+            $entity                 = new Entity();
             $entity->casts['dummy'] = 'json[array]';
 
             return $entity->castAs($value, 'dummy');
@@ -637,7 +637,7 @@ final class EntityTest extends CIUnitTestCase
 
         $string = '{' . str_repeat('"test":{', 513) . '"test":"value"' . str_repeat('}', 513) . '}';
         (Closure::bind(static function (string $value) {
-            $entity = new Entity();
+            $entity                 = new Entity();
             $entity->casts['dummy'] = 'json[array]';
 
             return $entity->castAs($value, 'dummy');
@@ -651,7 +651,7 @@ final class EntityTest extends CIUnitTestCase
 
         $string = "{\n\t\"property1\": \"The quick brown fox\njumps over the lazy dog\",\n\t\"property2\":\"value2\"\n}";
         (Closure::bind(static function (string $value) {
-            $entity = new Entity();
+            $entity                 = new Entity();
             $entity->casts['dummy'] = 'json[array]';
 
             return $entity->castAs($value, 'dummy');
@@ -665,7 +665,7 @@ final class EntityTest extends CIUnitTestCase
 
         $string = '[{"name":"jack","product_id":"1234"]';
         (Closure::bind(static function (string $value) {
-            $entity = new Entity();
+            $entity                 = new Entity();
             $entity->casts['dummy'] = 'json[array]';
 
             return $entity->castAs($value, 'dummy');
@@ -832,7 +832,7 @@ final class EntityTest extends CIUnitTestCase
 
     public function testToArraySkipAttributesWithUnderscoreInFirstCharacter()
     {
-        $entity                   = new class () extends Entity {
+        $entity = new class () extends Entity {
             protected $attributes = [
                 '_foo' => null,
                 'bar'  => null,

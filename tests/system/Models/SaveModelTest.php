@@ -263,7 +263,7 @@ final class SaveModelTest extends LiveModelTestCase
             ];
         };
 
-        $testModel                   = new class () extends Model {
+        $testModel = new class () extends Model {
             protected $table         = 'empty';
             protected $allowedFields = [
                 'name',

@@ -81,6 +81,7 @@ final class GenerateKeyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testGenerateKeyCreatesNewKey()

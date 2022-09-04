@@ -1,5 +1,21 @@
 # Changelog
 
+## [v4.2.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.6) (2022-09-04)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.5...v4.2.6)
+
+### Fixed Bugs
+* fix: AssertionError occurs when using Validation in CLI by @daycry in https://github.com/codeigniter4/CodeIgniter4/pull/6452
+* fix: [Validation] JSON data may cause "Array to string conversion" error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6467
+* Fix fatal error gets turned to `0` severity on shutdown handler by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6472
+* Fix redis cache increment/decrement methods by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6473
+* Fix broken caching system when array of allowed parameters used by @JavaDeveloperKiev in https://github.com/codeigniter4/CodeIgniter4/pull/6475
+* fix: Strict Validation Rules greater_than/less_than by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6492
+
+### Refactoring
+* refactor: fix PHPStan errors by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6470
+* Bump `friendsofphp/php-cs-fixer` to `~3.11.0` by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6471
+* Fix overlooked coding style violations by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6491
+
 ## [v4.2.5](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.5) (2022-08-28)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.4...v4.2.5)
 

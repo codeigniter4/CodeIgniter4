@@ -44,6 +44,7 @@ final class ResponseSendTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testHeadersMissingDate()
@@ -77,6 +78,7 @@ final class ResponseSendTest extends CIUnitTestCase
      * it makes sure that sending gives CSP a chance to do its thing.
      *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testHeadersWithCSP()
@@ -111,7 +113,9 @@ final class ResponseSendTest extends CIUnitTestCase
      * Make sure cookies are set by RedirectResponse this way
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1393
+     *
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testRedirectResponseCookies()

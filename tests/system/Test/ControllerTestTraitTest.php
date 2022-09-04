@@ -23,6 +23,7 @@ use Tests\Support\Controllers\Popcorn;
  * Exercise our Controller class.
  *
  * @runTestsInSeparateProcesses
+ *
  * @preserveGlobalState         disabled
  *
  * @internal

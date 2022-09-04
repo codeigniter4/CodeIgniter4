@@ -15,9 +15,10 @@ use CodeIgniter\Config\BaseConfig;
  */
 class ContentSecurityPolicy extends BaseConfig
 {
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Broadbrush CSP management
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
     /**
      * Default CSP report context
      */
@@ -36,10 +37,10 @@ class ContentSecurityPolicy extends BaseConfig
      */
     public bool $upgradeInsecureRequests = false;
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Sources allowed
     // Note: once you set a policy to 'none', it cannot be further restricted
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Will default to self if not overridden

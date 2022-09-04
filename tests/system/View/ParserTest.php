@@ -267,7 +267,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParseLoopEntityProperties()
     {
-        $power             = new class () extends Entity {
+        $power = new class () extends Entity {
             public $foo    = 'bar';
             protected $bar = 'baz';
 
@@ -297,7 +297,7 @@ final class ParserTest extends CIUnitTestCase
 
     public function testParseLoopEntityObjectProperties()
     {
-        $power                    = new class () extends Entity {
+        $power = new class () extends Entity {
             protected $attributes = [
                 'foo'     => 'bar',
                 'bar'     => 'baz',
@@ -738,7 +738,7 @@ final class ParserTest extends CIUnitTestCase
     public function testParserPluginParams()
     {
         $this->parser->addPlugin('growth', static function ($str, array $params) {
-            $step = $params['step'] ?? 1;
+            $step  = $params['step'] ?? 1;
             $count = $params['count'] ?? 2;
 
             $out = '';

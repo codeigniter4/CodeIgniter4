@@ -1920,6 +1920,7 @@ class BaseBuilder
      * @internal This is a temporary solution.
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/pull/5376
+     *
      * @TODO Fix a root cause, and this method should be removed.
      */
     protected function removeAlias(string $from): string

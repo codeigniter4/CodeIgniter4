@@ -102,7 +102,7 @@ final class GeneralModelTest extends CIUnitTestCase
             'updated_at',
         ];
 
-        $model                       = new class () extends Model {
+        $model = new class () extends Model {
             protected $allowedFields = [
                 'id',
                 'created_at',

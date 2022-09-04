@@ -25,6 +25,7 @@ use TypeError;
 
 /**
  * @internal
+ *
  * @no-final
  */
 class ValidationTest extends CIUnitTestCase

@@ -42,6 +42,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testHeadersEmitted()
@@ -70,6 +71,7 @@ final class TestCaseEmissionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
+     *
      * @preserveGlobalState  disabled
      */
     public function testHeadersNotEmitted()

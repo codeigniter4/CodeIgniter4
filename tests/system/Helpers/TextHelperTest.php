@@ -196,7 +196,6 @@ final class TextHelperTest extends CIUnitTestCase
 
     public function testConvertAccentedCharacters()
     {
-        //$this->ci_vfs_clone('application/Config/ForeignChars.php');
         $this->assertSame('AAAeEEEIIOOEUUUeY', convert_accented_characters('ÀÂÄÈÊËÎÏÔŒÙÛÜŸ'));
         $this->assertSame('a e i o u n ue', convert_accented_characters('á é í ó ú ñ ü'));
     }
