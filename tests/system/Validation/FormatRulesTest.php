@@ -864,7 +864,7 @@ final class FormatRulesTest extends CIUnitTestCase
     /**
      * @dataProvider integerProvider
      */
-    public function testInteger(?string $str, bool $expected): void
+    public function testInteger($str, bool $expected): void
     {
         $data = [
             'foo' => $str,
