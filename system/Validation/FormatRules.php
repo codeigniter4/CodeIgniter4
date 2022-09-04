@@ -128,8 +128,10 @@ class FormatRules
 
     /**
      * Integer
+     *
+     * @param string|int|null $str
      */
-    public function integer(?string $str = null): bool
+    public function integer($str = null): bool
     {
         return is_int($str);
     }
