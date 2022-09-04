@@ -19,11 +19,13 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @no-final
  */
-final class RulesTest extends CIUnitTestCase
+class RulesTest extends CIUnitTestCase
 {
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,

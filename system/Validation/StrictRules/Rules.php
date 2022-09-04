@@ -71,20 +71,36 @@ class Rules
     /**
      * Greater than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function greater_than($str, string $min): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
+        if (! is_string($str)) {
+            return false;
+        }
+
         return $this->nonStrictRules->greater_than($str, $min);
     }
 
     /**
      * Equal to or Greater than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function greater_than_equal_to($str, string $min): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
+        if (! is_string($str)) {
+            return false;
+        }
+
         return $this->nonStrictRules->greater_than_equal_to($str, $min);
     }
 
@@ -141,20 +157,36 @@ class Rules
     /**
      * Less than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function less_than($str, string $max): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
+        if (! is_string($str)) {
+            return false;
+        }
+
         return $this->nonStrictRules->less_than($str, $max);
     }
 
     /**
      * Equal to or Less than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function less_than_equal_to($str, string $max): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
+        if (! is_string($str)) {
+            return false;
+        }
+
         return $this->nonStrictRules->less_than_equal_to($str, $max);
     }
 
