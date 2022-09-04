@@ -131,7 +131,7 @@ class FormatRules
      */
     public function integer(?string $str = null): bool
     {
-        return (bool) preg_match('/\A[\-+]?\d+\z/', $str ?? '');
+        return is_int($str);
     }
 
     /**
@@ -155,8 +155,7 @@ class FormatRules
      */
     public function numeric(?string $str = null): bool
     {
-        // @see https://regex101.com/r/bb9wtr/2
-        return (bool) preg_match('/\A[\-+]?\d*\.?\d+\z/', $str ?? '');
+        return is_numeric($str);
     }
 
     /**
