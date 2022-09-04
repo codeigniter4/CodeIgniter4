@@ -2255,8 +2255,10 @@ class BaseBuilder
     protected function _updateBatch(string $table, array $values, string $index): string
     {
         // this is a work around until the rest of the platform is refactored
-        $this->QBOptions['constraints'] = [$index];
-        $keys                           = array_keys(current($values));
+        if ($index !== '') {
+            $this->QBOptions['constraints'] = [$index];
+        }
+        $keys = array_keys(current($values));
 
         $sql = $this->QBOptions['sql'] ?? '';
 
