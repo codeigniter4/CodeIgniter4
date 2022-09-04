@@ -129,7 +129,7 @@ class FormatRules
     /**
      * Integer
      *
-     * @param string|int|null $str
+     * @param int|string|null $str
      */
     public function integer($str = null): bool
     {
