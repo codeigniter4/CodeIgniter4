@@ -84,4 +84,26 @@ final class RulesTest extends TraditionalRulesTest
             ],
         ];
     }
+
+    /**
+     * @dataProvider provideGreaterThanEqualStrict
+     *
+     * @param int $value
+     */
+    public function testGreaterThanEqualStrict($value, string $param, bool $expected): void
+    {
+        $this->validation->setRules(['foo' => "greater_than_equal_to[{$param}]"]);
+
+        $data = ['foo' => $value];
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function provideGreaterThanEqualStrict(): Generator
+    {
+        yield from [
+            [0, '0', true],
+            [1, '0', true],
+            [-1, '0', false],
+        ];
+    }
 }
