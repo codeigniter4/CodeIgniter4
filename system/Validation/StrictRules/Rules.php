@@ -79,6 +79,10 @@ class Rules
             $str = (string) $str;
         }
 
+        if (! is_string($str)) {
+            return false;
+        }
+
         return $this->nonStrictRules->greater_than($str, $min);
     }
 
@@ -91,6 +95,10 @@ class Rules
     {
         if (is_int($str)) {
             $str = (string) $str;
+        }
+
+        if (! is_string($str)) {
+            return false;
         }
 
         return $this->nonStrictRules->greater_than_equal_to($str, $min);
@@ -157,6 +165,10 @@ class Rules
             $str = (string) $str;
         }
 
+        if (! is_string($str)) {
+            return false;
+        }
+
         return $this->nonStrictRules->less_than($str, $max);
     }
 
@@ -169,6 +181,10 @@ class Rules
     {
         if (is_int($str)) {
             $str = (string) $str;
+        }
+
+        if (! is_string($str)) {
+            return false;
         }
 
         return $this->nonStrictRules->less_than_equal_to($str, $max);

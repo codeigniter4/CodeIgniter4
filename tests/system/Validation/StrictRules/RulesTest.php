@@ -104,6 +104,7 @@ final class RulesTest extends TraditionalRulesTest
             [0, '0', true],
             [1, '0', true],
             [-1, '0', false],
+            [true, '0', false],
         ];
     }
 
@@ -127,6 +128,7 @@ final class RulesTest extends TraditionalRulesTest
             [10, '9', true],
             [10, '10', false],
             [10, 'a', false],
+            [true, '0', false],
         ];
     }
 
@@ -151,6 +153,7 @@ final class RulesTest extends TraditionalRulesTest
             [10, '9', false],
             [10, '10', false],
             [10, 'a', true],
+            [true, '0', false],
         ];
     }
 
@@ -173,6 +176,7 @@ final class RulesTest extends TraditionalRulesTest
             [0, '0', true],
             [1, '0', false],
             [-1, '0', true],
+            [true, '0', false],
         ];
     }
 }
