@@ -71,10 +71,14 @@ class Rules
     /**
      * Greater than
      *
-     * @param mixed $str
+     * @param mixed $str expects int|string
      */
     public function greater_than($str, string $min): bool
     {
+        if (is_int($str)) {
+            $str = (string) $str;
+        }
+
         return $this->nonStrictRules->greater_than($str, $min);
     }
 

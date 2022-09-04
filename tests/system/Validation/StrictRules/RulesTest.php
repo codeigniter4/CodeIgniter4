@@ -106,4 +106,27 @@ final class RulesTest extends TraditionalRulesTest
             [-1, '0', false],
         ];
     }
+
+    /**
+     * @dataProvider provideGreaterThanStrict
+     *
+     * @param int $value
+     */
+    public function testGreaterThanStrict($value, string $param, bool $expected): void
+    {
+        $this->validation->setRules(['foo' => "greater_than[{$param}]"]);
+
+        $data = ['foo' => $value];
+        $this->assertSame($expected, $this->validation->run($data));
+    }
+
+    public function provideGreaterThanStrict(): Generator
+    {
+        yield from [
+            [-10, '-11', true],
+            [10, '9', true],
+            [10, '10', false],
+            [10, 'a', false],
+        ];
+    }
 }
