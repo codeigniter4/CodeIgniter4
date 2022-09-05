@@ -729,18 +729,13 @@ class CodeIgniter
             return md5($this->request->getPath());
         }
 
-        $uri = $this->request->getUri();
-        if ($config->cacheQueryString) {
-            if (is_array($config->cacheQueryString)) {
-                $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(['only' => $config->cacheQueryString]));
-            } else {
-                $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery());
-            }
-        } else {
-            $name = URI::createURIString($uri->getScheme(), $uri->getAuthority(), $uri->getPath());
-        }
+        $uri = clone $this->request->getUri();
 
-        return md5($name);
+        $query = $config->cacheQueryString
+            ? $uri->getQuery(is_array($config->cacheQueryString) ? ['only' => $config->cacheQueryString] : [])
+            : '';
+
+        return md5($uri->setFragment('')->setQuery($query));
     }
 
     /**
