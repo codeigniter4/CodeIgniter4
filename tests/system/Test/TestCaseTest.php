@@ -56,7 +56,7 @@ final class TestCaseTest extends CIUnitTestCase
         CITestStreamFilter::$buffer = '';
         $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
         CLI::write('first.');
-        $expected = "first.\n";
+        $expected = "\nfirst.\n";
         $this->assertSame($expected, CITestStreamFilter::$buffer);
         stream_filter_remove($this->stream_filter);
     }
