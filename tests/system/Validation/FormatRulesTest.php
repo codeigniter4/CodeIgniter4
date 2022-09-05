@@ -809,9 +809,9 @@ final class FormatRulesTest extends CIUnitTestCase
         $data = [
             'foo' => $value,
         ];
-        $this->assertsame($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
-    
+
     public function integerInvalidTypeDataProvider(): Generator
     {
         // TypeError : CodeIgniter\Validation\FormatRules::integer(): Argument #1 ($str) must be of type ?string, array given
@@ -858,7 +858,7 @@ final class FormatRulesTest extends CIUnitTestCase
         $data = [
             'foo' => $value,
         ];
-        $this->assertsame($expected, $this->validation->run($data));
+        $this->assertSame($expected, $this->validation->run($data));
     }
 
     public function numericInvalidTypeDataProvider(): Generator
