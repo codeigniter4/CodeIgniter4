@@ -221,7 +221,7 @@ final class InsertModelTest extends LiveModelTestCase
             'updated_at' => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
         ])->addKey('id', true)->createTable('insert_no_data', true);
 
-        $model                       = new class () extends Model {
+        $model = new class () extends Model {
             protected $table         = 'insert_no_data';
             protected $allowedFields = [
                 'updated_at',
