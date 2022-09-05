@@ -183,9 +183,17 @@ Just make sure that your commits in a feature branch are all related.
 
 Almost developer forgot signing GPG with params `-S` in commiting like `git commit -S -m "Signed GPG"`, you can signing old commit to keep secure.
 
+Latests commit :
 ```console
 > git switch your-branch
 > git commit --amend --no-edit -n -S
+> git push --force-with-lease origin your-branch
+```
+
+All commit (will be change date commit to today) :
+```console
+> git switch your-branch
+> git rebase -i --root --exec 'git commit --amend --no-edit -n -S'
 > git push --force-with-lease origin your-branch
 ```
 
