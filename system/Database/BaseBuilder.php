@@ -2426,7 +2426,7 @@ class BaseBuilder
     /**
      * Only runs the query when $condition evaluates to true
      *
-     * @param mixed $condition
+     * @param array|bool|float|int|object|resource|string|null $condition
      */
     public function when($condition, Closure $callback, ?Closure $defaultCallback = null): self
     {

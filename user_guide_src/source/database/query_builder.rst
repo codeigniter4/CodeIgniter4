@@ -1024,6 +1024,8 @@ For more information view documentation for ``$builder->getCompiledInsert()``.
 Conditional Statements
 **********************
 
+.. _db-builder-when:
+
 $builder->when()
 ------------------
 
