@@ -499,7 +499,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws InvalidArgumentException If group not found.
+     * @throws ValidationException If group not found.
      *
      * @return string[] Rule group.
      */
@@ -521,7 +521,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws InvalidArgumentException If group not found.
+     * @throws ValidationException If group not found.
      */
     public function setRuleGroup(string $group)
     {
