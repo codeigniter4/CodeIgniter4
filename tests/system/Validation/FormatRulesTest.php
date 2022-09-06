@@ -894,7 +894,7 @@ final class FormatRulesTest extends CIUnitTestCase
     /**
      * @dataProvider integerProvider
      *
-     * @param int|string $str
+     * @param int|string|null $str
      */
     public function testInteger($str, bool $expected): void
     {

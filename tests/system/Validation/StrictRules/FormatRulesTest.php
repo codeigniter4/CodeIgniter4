@@ -813,25 +813,6 @@ final class FormatRulesTest extends CIUnitTestCase
         $this->assertsame($expected, $this->validation->run($data));
     }
 
-    /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
-     *
-     * @dataProvider integerInvalidTypeDataProvider
-     *
-     * @param mixed $value
-     */
-    public function testNumericWithInvalidTypeData($value, bool $expected): void
-    {
-        $this->validation->setRules([
-            'foo' => 'numeric',
-        ]);
-
-        $data = [
-            'foo' => $value,
-        ];
-        $this->assertsame($expected, $this->validation->run($data));
-    }
-
     public function integerInvalidTypeDataProvider(): Generator
     {
         yield 'array with int' => [
@@ -861,9 +842,48 @@ final class FormatRulesTest extends CIUnitTestCase
     }
 
     /**
-     * @dataProvider integerProvider
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5374
+     *
+     * @dataProvider numericInvalidTypeDataProvider
+     *
+     * @param mixed $value
      */
-    public function testInteger(?string $str, bool $expected): void
+    public function testNumericWithInvalidTypeData($value, bool $expected): void
+    {
+        $this->validation->setRules([
+            'foo' => 'numeric',
+        ]);
+
+        $data = [
+            'foo' => $value,
+        ];
+        $this->assertsame($expected, $this->validation->run($data));
+    }
+
+    public function numericInvalidTypeDataProvider(): Generator
+    {
+        yield 'bool true' => [
+            true,
+            false,
+        ];
+
+        yield 'bool false' => [
+            false,
+            false,
+        ];
+
+        yield 'null' => [
+            null,
+            false,
+        ];
+    }
+
+    /**
+     * @dataProvider integerProvider
+     *
+     * @param int|string|null $str
+     */
+    public function testInteger($str, bool $expected): void
     {
         $data = [
             'foo' => $str,
@@ -880,16 +900,24 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         yield from [
             [
-                '0',
+                1,
                 true,
+            ],
+            [
+                1.5,
+                false,
+            ],
+            [
+                '0',
+                false,
             ],
             [
                 '42',
-                true,
+                false,
             ],
             [
                 '-1',
-                true,
+                false,
             ],
             [
                 "+42\n",
