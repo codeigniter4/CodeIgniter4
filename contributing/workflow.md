@@ -179,6 +179,29 @@ For instance, to commit your work from a debugging session:
 
 Just make sure that your commits in a feature branch are all related.
 
+### Signing GPG Old Commits
+
+Almost developer forgot signing GPG with params `-S` in commiting like `git commit -S -m "Signed GPG"`, you can signing old commit to keep secure.
+
+Latests commit :
+```console
+> git switch your-branch
+> git commit --amend --no-edit -n -S
+> git push --force-with-lease origin your-branch
+```
+
+All commit (will be change date commit to today) :
+```console
+> git switch your-branch
+> git rebase -i --root --exec 'git commit --amend --no-edit -n -S'
+> git push --force-with-lease origin your-branch
+```
+
+But developer can secure commit without `-S` in `git commit`, you can set `git config --global commit.gpgsign true` and `git config --global user.signingkey 3AC5C34371567BD2` to all local repostory local or without `--global` to one local repostory.
+
+> **Note**
+> `3AC5C34371567BD2` is your GPG Key ID
+
 ### Changing a Commit Message
 
 See <https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message>.
