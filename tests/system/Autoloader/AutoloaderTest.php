@@ -286,6 +286,45 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
     }
 
+    public function testComposerPackagesOnly()
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = ['only' => ['laminas/laminas-escaper']];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertCount(1, $namespaces);
+        $this->assertStringContainsString(VENDORPATH, $namespaces['Laminas\Escaper'][0]);
+    }
+
+    public function testComposerPackagesExlcude()
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [
+            'exclude' => [
+                'psr/log',
+                'laminas/laminas-escaper',
+            ],
+        ];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertArrayNotHasKey('Psr\Log', $namespaces);
+        $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+    }
+
     public function testFindsComposerRoutesWithComposerPathNotFound()
     {
         $composerPath = COMPOSER_PATH;
