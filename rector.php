@@ -104,10 +104,6 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/app/Config/Validation.php',
             __DIR__ . '/tests/system/Validation/StrictRules/ValidationTest.php',
             __DIR__ . '/tests/system/Validation/ValidationTest.php',
-
-            // expected Qualified name
-            __DIR__ . '/tests/system/Autoloader/FileLocatorTest.php',
-            __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
         ],
 
         // sometime too detail

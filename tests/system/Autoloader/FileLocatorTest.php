@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Autoloader;
 
+use CodeIgniter\HTTP\Header;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
@@ -260,7 +261,7 @@ final class FileLocatorTest extends CIUnitTestCase
     public function testFindQNameFromPathSimple()
     {
         $ClassName = $this->locator->findQualifiedNameFromPath(SYSTEMPATH . 'HTTP/Header.php');
-        $expected  = '\CodeIgniter\HTTP\Header';
+        $expected  = '\\' . Header::class;
 
         $this->assertSame($expected, $ClassName);
     }
