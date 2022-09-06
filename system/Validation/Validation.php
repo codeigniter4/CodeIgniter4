@@ -331,6 +331,7 @@ class Validation implements ValidationInterface
 
                 $param = ($param === false) ? '' : $param;
 
+                // @phpstan-ignore-next-line $error may be set by rule methods.
                 $this->errors[$field] = $error ?? $this->getErrorMessage(
                     $rule,
                     $field,
