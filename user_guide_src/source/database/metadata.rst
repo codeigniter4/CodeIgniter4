@@ -127,6 +127,8 @@ for each key associated with a table.
 
 SQLite3 returns a pseudo index named ``PRIMARY``. But it is a special index, and you can't use it in your SQL commands.
 
+.. _metadata-getforeignkeydata:
+
 $db->getForeignKeyData()
 ------------------------
 
