@@ -159,13 +159,12 @@ class BaseBuilder
      * and is reset by resetWrite()
      *
      * @phpstan-var array{
-     * updateFields?: array,
-     * constraints?: array,
-     * fromQuery?: string,
-     * sql?: string,
-     * alias?: string
+     *   updateFields?: array,
+     *   constraints?: array,
+     *   fromQuery?: string,
+     *   sql?: string,
+     *   alias?: string
      * }
-     *
      * @var array
      */
     protected $QBOptions;
