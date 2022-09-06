@@ -405,7 +405,7 @@ class Validation implements ValidationInterface
      *
      *    [
      *        'rule' => 'message',
-     *        'rule' => 'message'
+     *        'rule' => 'message',
      *    ]
      *
      * @param array|string $rules
