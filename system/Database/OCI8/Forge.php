@@ -275,19 +275,33 @@ class Forge extends BaseForge
 
     /**
      * Generates SQL to process foreign keys
-     *
-     * @param array $allowActions Allows child to override default value
-     * @param bool  $onUpdate     Allows child to avoid setting onUpdate rule (Oracle)
-     * @param bool  $shortName    Allows child to limit key name to 30 byte (Oracle)
      */
-    protected function _processForeignKeys(string $table, array $allowActions = [], bool $onUpdate = false, bool $shortName = false): string
+    protected function _processForeignKeys(string $table): string
     {
         $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 
-        if (version_compare($this->db->getVersion(), '12.2.0', '<')) {
-            $shortName = true;
+        $sql = '';
+
+        foreach ($this->foreignKeys as $fkey) {
+            $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+
+            if (version_compare($this->db->getVersion(), '12.2.0', '<') && strlen($nameIndex) > 30) {
+                $nameIndex = substr($nameIndex, 0, 28) . mt_rand(10, 99);
+            }
+
+            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
+            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
+            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
+            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
+
+            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+
+            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+            }
         }
 
-        return parent::_processForeignKeys($table, $allowActions, $onUpdate, $shortName);
+        return $sql;
     }
 }
