@@ -12,7 +12,6 @@
 namespace CodeIgniter\Validation;
 
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\Validation\Exceptions\ValidationException;
 
 /**
  * Expected behavior of a validator
@@ -93,8 +92,6 @@ interface ValidationInterface
      * be any name, but must all still be an array of the
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
-     *
-     * @throws ValidationException
      *
      * @return array
      */
