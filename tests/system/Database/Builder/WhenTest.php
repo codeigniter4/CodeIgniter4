@@ -22,7 +22,7 @@ final class WhenTest extends CIUnitTestCase
     /**
      * @var MockConnection
      */
-    protected $db;
+    protected MockConnection $db;
 
     protected function setUp(): void
     {
