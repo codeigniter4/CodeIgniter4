@@ -184,18 +184,10 @@ class FormatRules
     /**
      * Integer
      *
-     * @param mixed $str
+     * @param int|null $str
      */
     public function integer($str = null): bool
     {
-        if (is_int($str)) {
-            $str = (string) $str;
-        }
-
-        if (! is_string($str)) {
-            return false;
-        }
-
         return $this->nonStrictFormatRules->integer($str);
     }
 
@@ -238,7 +230,7 @@ class FormatRules
     /**
      * Numeric
      *
-     * @param mixed $str
+     * @param float|int|string|null $str
      */
     public function numeric($str = null): bool
     {
