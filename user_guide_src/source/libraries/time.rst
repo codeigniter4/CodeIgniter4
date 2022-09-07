@@ -149,6 +149,8 @@ A full listing of values can be found `here <https://unicode-org.github.io/icu-d
 
 .. literalinclude:: time/015.php
 
+.. _time-todatetimestring:
+
 toDateTimeString()
 ==================
 

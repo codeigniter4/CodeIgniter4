@@ -32,7 +32,7 @@ use Throwable;
  * @property mixed      $encrypt
  * @property array      $failover
  * @property string     $hostname
- * @property mixed      $lastQuery
+ * @property Query      $lastQuery
  * @property string     $password
  * @property bool       $pConnect
  * @property int|string $port
@@ -151,7 +151,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Encryption flag/data
      *
-     * @var mixed
+     * @var array|bool
      */
     protected $encrypt = false;
 
@@ -182,7 +182,7 @@ abstract class BaseConnection implements ConnectionInterface
      * The last query object that was executed
      * on this connection.
      *
-     * @var mixed
+     * @var Query
      */
     protected $lastQuery;
 
@@ -933,7 +933,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns the last query's statement object.
      *
-     * @return mixed
+     * @return Query
      */
     public function getLastQuery()
     {
@@ -1150,9 +1150,10 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * This function escapes column and table names
      *
-     * @param mixed $item
+     * @param array|string $item
      *
-     * @return mixed
+     * @return array|string
+     * @phpstan-return ($item is array ? array : string)
      */
     public function escapeIdentifiers($item)
     {
@@ -1232,9 +1233,10 @@ abstract class BaseConnection implements ConnectionInterface
      * Escapes data based on type.
      * Sets boolean and null types
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      *
-     * @return mixed
+     * @return array|float|int|string
+     * @phpstan-return ($str is array ? array : float|int|string)
      */
     public function escape($str)
     {

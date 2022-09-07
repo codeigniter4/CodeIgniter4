@@ -17,6 +17,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use DateTime;
 use DateTimeZone;
+use Generator;
 use IntlDateFormatter;
 use Locale;
 
@@ -56,7 +57,7 @@ final class TimeTest extends CIUnitTestCase
         );
 
         $time = new Time('', 'America/Chicago');
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testTimeWithTimezone()
@@ -72,7 +73,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', 'Europe/London');
 
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testTimeWithTimezoneAndLocale()
@@ -88,7 +89,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', 'Europe/London', 'fr_FR');
 
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testTimeWithDateTimeZone()
@@ -104,7 +105,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', new DateTimeZone('Europe/London'), 'fr_FR');
 
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testToDateTime()
@@ -138,7 +139,6 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = Time::parse('2017-01-12 00:00', 'America/Chicago');
 
-        $this->assertSame('2017-01-12 00:00:00', (string) $time);
         $this->assertSame('2017-01-12 00:00:00', $time->toDateTimeString());
     }
 
@@ -1128,7 +1128,6 @@ final class TimeTest extends CIUnitTestCase
 
     public function testSetTestNowWithFaLocale()
     {
-        $currentLocale = Locale::getDefault();
         Locale::setDefault('fa');
 
         Time::setTestNow('2017/03/10 12:00', 'Asia/Tokyo');
@@ -1136,8 +1135,28 @@ final class TimeTest extends CIUnitTestCase
         $now = Time::now()->format('c');
 
         $this->assertSame('2017-03-10T12:00:00+09:00', $now);
+    }
 
-        Locale::setDefault($currentLocale);
+    /**
+     * @dataProvider provideLocales
+     */
+    public function testToStringDoesNotDependOnLocale(string $locale)
+    {
+        Locale::setDefault($locale);
+
+        $time = new Time('2017/03/10 12:00');
+
+        $this->assertSame('2017-03-10 12:00:00', (string) $time);
+    }
+
+    public function provideLocales(): Generator
+    {
+        yield from [
+            ['en'],
+            ['de'],
+            ['ar'],
+            ['fa'],
+        ];
     }
 
     public function testToDatabase()
