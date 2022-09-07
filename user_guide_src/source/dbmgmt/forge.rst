@@ -229,8 +229,12 @@ Execute a DROP KEY.
 
 .. literalinclude:: forge/020.php
 
+.. _dropping-a-primary-key:
+
 Dropping a Primary Key
 ======================
+
+.. versionadded:: 4.3.0
 
 Execute a DROP PRIMARY KEY.
 
