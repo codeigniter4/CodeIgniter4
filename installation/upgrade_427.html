@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrade Routing &mdash; CodeIgniter 4.2.6 documentation</title>
+  <title>Upgrading from 4.2.6 to 4.2.7 &mdash; CodeIgniter 4.2.6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrade Security" href="upgrade_security.html" />
-    <link rel="prev" title="Upgrade HTTP Responses" href="upgrade_responses.html" /> 
+    <link rel="next" title="Upgrading from 4.2.5 to 4.2.6" href="upgrade_426.html" />
+    <link rel="prev" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -258,15 +258,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_routing.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_427.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Installation</a> &raquo;</li>
           <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
-          <li><a href="upgrade_4xx.html">Upgrading from 3.x to 4.x</a> &raquo;</li>
-      <li>Upgrade Routing</li>
+      <li>Upgrading from 4.2.6 to 4.2.7</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -275,100 +274,42 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrade-routing">
-<h1>Upgrade Routing<a class="headerlink" href="#upgrade-routing" title="Permalink to this headline"></a></h1>
+  <section id="upgrading-from-4-2-6-to-4-2-7">
+<h1>Upgrading from 4.2.6 to 4.2.7<a class="headerlink" href="#upgrading-from-4-2-6-to-4-2-7" title="Permalink to this headline"></a></h1>
+<p>Please refer to the upgrade instructions corresponding to your installation method.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
+<li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
+<li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
+</ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#documentations" id="id1">Documentations</a></p></li>
-<li><p><a class="reference internal" href="#what-has-been-changed" id="id2">What has been changed</a></p></li>
-<li><p><a class="reference internal" href="#upgrade-guide" id="id3">Upgrade Guide</a></p></li>
-<li><p><a class="reference internal" href="#code-example" id="id4">Code Example</a></p>
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p></li>
+<li><p><a class="reference internal" href="#project-files" id="id2">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#codeigniter-version-3-x" id="id5">CodeIgniter Version 3.x</a></p></li>
-<li><p><a class="reference internal" href="#codeigniter-version-4-x" id="id6">CodeIgniter Version 4.x</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id3">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<section id="documentations">
-<h2><a class="toc-backref" href="#id1">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this headline"></a></h2>
+<section id="breaking-changes">
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="http://codeigniter.com/userguide3/general/routing.html">URI Routing Documentation CodeIgniter 3.X</a></p></li>
-<li><p><a class="reference internal" href="../incoming/routing.html"><span class="doc">URI Routing Documentation CodeIgniter 4.X</span></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Time::__toString()</span></code> is now locale-independent. It returns database-compatible strings like ‘2022-09-07 12:00:00’ in any locale. Most locales are not affected by this change. But in a few locales like <cite>ar</cite>, <cite>fa</cite>, <code class="docutils literal notranslate"><span class="pre">Time::__toString()</span></code> (or <code class="docutils literal notranslate"><span class="pre">(string)</span> <span class="pre">$time</span></code> or implicit casting to a string) no longer returns a localized datetime string. if you want to get a localized datetime string, use <a class="reference internal" href="../libraries/time.html#time-todatetimestring"><span class="std std-ref">Time::toDateTimeString()</span></a> instead.</p></li>
 </ul>
 </section>
-<section id="what-has-been-changed">
-<h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
+<section id="project-files">
+<h2><a class="toc-backref" href="#id2">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<p>A few files in the <strong>project space</strong> (root, app, public, writable) received cosmetic updates.
+You need not touch these files at all. There are some third-party CodeIgniter modules available
+to assist with merging changes to the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<section id="all-changes">
+<h3><a class="toc-backref" href="#id3">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<p>This is a list of all files in the <strong>project space</strong> that received changes;
+many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>In CI4 the Auto Routing is disabled by default.</p></li>
-<li><p>In CI4 the new more secure <a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a> is introduced.</p></li>
-<li><p>In CI4 the routing is no longer configured by setting the routes as array.</p></li>
+<li></li>
 </ul>
-</section>
-<section id="upgrade-guide">
-<h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
-<ol class="arabic">
-<li><p>If you use the Auto Routing in the same way as CI3, you need to enable <a class="reference internal" href="../incoming/routing.html#auto-routing"><span class="std std-ref">Auto Routing (Legacy)</span></a>.</p></li>
-<li><p>You have to change the syntax of each routing line and append it in <strong>app/Config/Routes.php</strong>. For example:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$route['journals']</span> <span class="pre">=</span> <span class="pre">'blogs';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('journals',</span> <span class="pre">'Blogs::index');</span></code>. This would map to the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">Blogs</span></code> controller.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$route['product/(:any)']</span> <span class="pre">=</span> <span class="pre">'catalog/product_lookup';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('product/(:any)',</span> <span class="pre">'Catalog::productLookup');</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$route['login/(.+)']</span> <span class="pre">=</span> <span class="pre">'auth/login/$1';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('login/(.+)',</span> <span class="pre">'Auth::login/$1');</span></code></p></li>
-</ul>
-</div></blockquote>
-</li>
-</ol>
-</section>
-<section id="code-example">
-<h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
-<section id="codeigniter-version-3-x">
-<h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
-<p>Path: <strong>application/config/routes.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
-
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/index&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;teams/create&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;teams/create&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;teams/update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;teams/update&#39;</span><span class="p">;</span>
-
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/create&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/create&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/update&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;drivers/create&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;drivers/create&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;drivers/update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;drivers/update&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/(:any)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/view/$1&#39;</span><span class="p">;</span>
-</pre></div>
-</div>
-</section>
-<section id="codeigniter-version-4-x">
-<h3><a class="toc-backref" href="#id6">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <strong>app/Config/Routes.php</strong>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
-
-<span class="c1">// Create a new instance of our RouteCollection class.</span>
-<span class="nv">$routes</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">routes</span><span class="p">();</span>
-
-<span class="c1">// Load the system&#39;s routing file first, so that the app and ENVIRONMENT</span>
-<span class="c1">// can override as needed.</span>
-<span class="k">if</span> <span class="p">(</span><span class="nb">file_exists</span><span class="p">(</span><span class="nx">SYSTEMPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/Routes.php&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">require</span> <span class="nx">SYSTEMPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/Routes.php&#39;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// ...</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/index&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;teams/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Teams::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;teams/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Teams::update&#39;</span><span class="p">);</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::update&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::create&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::update&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::view/$1&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
 </section>
 </section>
 </section>
@@ -377,8 +318,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_responses.html" class="btn btn-neutral float-left" title="Upgrade HTTP Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="upgrade_security.html" class="btn btn-neutral float-right" title="Upgrade Security" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-left" title="Backward Compatibility Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_426.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.5 to 4.2.6" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
