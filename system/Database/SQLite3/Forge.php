@@ -250,4 +250,16 @@ class Forge extends BaseForge
             ->dropForeignKey($foreignName)
             ->run();
     }
+
+    /**
+     * Drop Primary Key
+     */
+    public function dropPrimaryKey(string $table): bool
+    {
+        $sqlTable = new Table($this->db, $this);
+
+        return $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->dropPrimaryKey()
+            ->run();
+    }
 }

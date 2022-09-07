@@ -457,6 +457,20 @@ class Forge
     }
 
     /**
+     * Drop Primary Key
+     */
+    public function dropPrimaryKey(string $table): bool
+    {
+        $sql = sprintf(
+            'ALTER TABLE %s DROP CONSTRAINT %s',
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+            $this->db->escapeIdentifiers('pk_' . $this->db->DBPrefix . $table),
+        );
+
+        return $this->db->query($sql);
+    }
+
+    /**
      * @throws DatabaseException
      *
      * @return BaseResult|bool|false|mixed|Query

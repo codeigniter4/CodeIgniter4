@@ -195,6 +195,20 @@ class Table
     }
 
     /**
+     * Drops the primary key
+     */
+    public function dropPrimaryKey(): Table
+    {
+        $primaryIndexes = array_filter($this->keys, static fn ($index) => strtolower($index['type']) === 'primary');
+
+        foreach (array_keys($primaryIndexes) as $key) {
+            unset($this->keys[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
      * Drops a foreign key from this table so that
      * it won't be recreated in the future.
      *
