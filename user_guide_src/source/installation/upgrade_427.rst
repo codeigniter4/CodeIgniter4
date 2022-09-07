@@ -15,7 +15,7 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
--  ``Time::__toStrong()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale. Most locales are not affected by this change. But in a few locales like `ar`, `fa`, ``Time::__toStrong()`` (or ``(string) $time`` or implicit casting to a string) no longer returns a localized datetime string. if you want to get a localized datetime string, use :ref:`Time::toDateTimeString() <time-todatetimestring>` instead.
+-  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale. Most locales are not affected by this change. But in a few locales like `ar`, `fa`, ``Time::__toString()`` (or ``(string) $time`` or implicit casting to a string) no longer returns a localized datetime string. if you want to get a localized datetime string, use :ref:`Time::toDateTimeString() <time-todatetimestring>` instead.
 
 Project Files
 *************
