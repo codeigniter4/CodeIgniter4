@@ -636,11 +636,6 @@ parameters:
 			path: system/Throttle/Throttler.php
 
 		-
-			message: "#^Variable \\$error on left side of \\?\\? always exists and is always null\\.$#"
-			count: 1
-			path: system/Validation/Validation.php
-
-		-
 			message: "#^Property CodeIgniter\\\\View\\\\Cell\\:\\:\\$cache \\(CodeIgniter\\\\Cache\\\\CacheInterface\\) in empty\\(\\) is not falsy\\.$#"
 			count: 2
 			path: system/View/Cell.php

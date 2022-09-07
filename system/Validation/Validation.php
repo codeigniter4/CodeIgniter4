@@ -331,6 +331,7 @@ class Validation implements ValidationInterface
 
                 $param = ($param === false) ? '' : $param;
 
+                // @phpstan-ignore-next-line $error may be set by rule methods.
                 $this->errors[$field] = $error ?? $this->getErrorMessage(
                     $rule,
                     $field,
@@ -405,7 +406,7 @@ class Validation implements ValidationInterface
      *
      *    [
      *        'rule' => 'message',
-     *        'rule' => 'message'
+     *        'rule' => 'message',
      *    ]
      *
      * @param array|string $rules
@@ -499,7 +500,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws InvalidArgumentException If group not found.
+     * @throws ValidationException If group not found.
      *
      * @return string[] Rule group.
      */
@@ -521,7 +522,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws InvalidArgumentException If group not found.
+     * @throws ValidationException If group not found.
      */
     public function setRuleGroup(string $group)
     {
@@ -593,12 +594,14 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
-     * @return array|ValidationException|null
+     * @throws ValidationException
+     *
+     * @return array
      */
     public function loadRuleGroup(?string $group = null)
     {
         if (empty($group)) {
-            return null;
+            return [];
         }
 
         if (! isset($this->config->{$group})) {
