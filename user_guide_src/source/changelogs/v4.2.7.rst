@@ -12,7 +12,7 @@ Release Date: Unreleased
 BREAKING
 ********
 
--  ``Time::__toStrong()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale.
+-  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale.
 
 Enhancements
 ************
