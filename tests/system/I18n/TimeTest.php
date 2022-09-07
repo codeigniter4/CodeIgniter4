@@ -56,7 +56,7 @@ final class TimeTest extends CIUnitTestCase
         );
 
         $time = new Time('', 'America/Chicago');
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testTimeWithTimezone()
@@ -72,7 +72,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', 'Europe/London');
 
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testTimeWithTimezoneAndLocale()
@@ -88,7 +88,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', 'Europe/London', 'fr_FR');
 
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testTimeWithDateTimeZone()
@@ -104,7 +104,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = new Time('now', new DateTimeZone('Europe/London'), 'fr_FR');
 
-        $this->assertSame($formatter->format($time), (string) $time);
+        $this->assertSame($formatter->format($time), $time->toDateTimeString());
     }
 
     public function testToDateTime()
@@ -138,7 +138,6 @@ final class TimeTest extends CIUnitTestCase
     {
         $time = Time::parse('2017-01-12 00:00', 'America/Chicago');
 
-        $this->assertSame('2017-01-12 00:00:00', (string) $time);
         $this->assertSame('2017-01-12 00:00:00', $time->toDateTimeString());
     }
 
