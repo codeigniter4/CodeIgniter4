@@ -1122,12 +1122,11 @@ class Time extends DateTime
 
     /**
      * Outputs a short format version of the datetime.
-     *
-     * @throws Exception
+     * The output is NOT localized intentionally.
      */
     public function __toString(): string
     {
-        return IntlDateFormatter::formatObject($this->toDateTime(), $this->toStringFormat, $this->locale);
+        return $this->format('Y-m-d H:i:s');
     }
 
     /**
