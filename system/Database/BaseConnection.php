@@ -1235,6 +1235,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param array|bool|float|int|object|string|null $str
      *
      * @return array|float|int|string
+     * @phpstan-return ($str is array ? array : float|int|string)
      */
     public function escape($str)
     {
