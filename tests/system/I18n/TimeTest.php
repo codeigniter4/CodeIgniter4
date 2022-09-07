@@ -1154,6 +1154,7 @@ final class TimeTest extends CIUnitTestCase
         yield from [
             ['en'],
             ['de'],
+            ['ar'],
             ['fa'],
         ];
     }
