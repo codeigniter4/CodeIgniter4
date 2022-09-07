@@ -37,6 +37,35 @@ For example, the Exit code has been changed like the following:
 - If an uncaught ``CastException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``9``.
 - If an uncaught ``DatabaseException`` occurs, the Exit code is ``EXIT_DATABASE`` (= ``8``) instead of ``17``.
 
+Method Signature Changes
+========================
+
+.. _v430_validation_changes:
+
+Validation Changes
+------------------
+
+ValidationInterface
+^^^^^^^^^^^^^^^^^^^
+
+``ValidationInterface`` has been changed to eliminate the mismatch between ``ValidationInterface`` and the ``Validation`` class.
+
+- The third parameter ``$dbGroup`` for ``ValidationInterface::run()`` has been added.
+- The following methods are added to the interface:
+    - ``ValidationInterface::setRule()``
+    - ``ValidationInterface::getRules()``
+    - ``ValidationInterface::getRuleGroup()``
+    - ``ValidationInterface::setRuleGroup()``
+    - ``ValidationInterface::loadRuleGroup()``
+    - ``ValidationInterface::hasError()``
+    - ``ValidationInterface::listErrors()``
+    - ``ValidationInterface::showError()``
+
+Validation
+^^^^^^^^^^
+
+The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty.
+
 Others
 ------
 
