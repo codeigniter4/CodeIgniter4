@@ -303,7 +303,7 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertStringContainsString(VENDORPATH, $namespaces['Laminas\Escaper'][0]);
     }
 
-    public function testComposerPackagesExlcude()
+    public function testComposerPackagesExclude()
     {
         $config                      = new Autoload();
         $config->psr4                = [];
