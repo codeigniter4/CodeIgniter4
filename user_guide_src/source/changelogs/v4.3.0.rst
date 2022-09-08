@@ -13,7 +13,7 @@ BREAKING
 ********
 
 - The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
-- The naming of foreign keys in has changed in all DBMS except OCI8. The previous suffix of ``_foreign`` has changed to ``_fk``.
+- The naming of foreign keys in OCI8 has changed. The previous suffix of ``_fk`` has changed to ``_foreign``.
 
 Behavior Changes
 ================
