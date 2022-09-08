@@ -115,7 +115,6 @@ Libraries
 
 - Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
 - Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
-- Added :ref:`Time::toDatabase() <time-todatabase>` to get a datetime string that can be used with databases regardless of locale.
 
 Helpers and Functions
 =====================

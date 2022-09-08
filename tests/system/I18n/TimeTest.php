@@ -1158,17 +1158,4 @@ final class TimeTest extends CIUnitTestCase
             ['fa'],
         ];
     }
-
-    public function testToDatabase()
-    {
-        $currentLocale = Locale::getDefault();
-        Locale::setDefault('fa');
-
-        $time = Time::parse('2017-01-12 00:00', 'America/Chicago');
-
-        $this->assertSame('2017-01-12 00:00:00', (string) $time);
-        $this->assertSame('2017-01-12 00:00:00', $time->toDatabase());
-
-        Locale::setDefault($currentLocale);
-    }
 }
