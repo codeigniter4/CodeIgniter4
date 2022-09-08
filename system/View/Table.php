@@ -302,7 +302,13 @@ class Table
 
                 foreach ($heading as $key => $val) {
                     if ($key !== 'data') {
-                        $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                        $checkElement = (bool) preg_match('/td/i', $temp);
+
+                        if ($checkElement) {
+                            $temp = str_replace('<td', '<td ' . $key . '="' . $val . '"', $temp);
+                        } else {
+                            $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                        }
                     }
                 }
 
@@ -362,7 +368,13 @@ class Table
 
                 foreach ($footing as $key => $val) {
                     if ($key !== 'data') {
-                        $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                        $checkElement = (bool) preg_match('/td/i', $temp);
+
+                        if ($checkElement) {
+                            $temp = str_replace('<td', '<td ' . $key . '="' . $val . '"', $temp);
+                        } else {
+                            $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                        }
                     }
                 }
 
