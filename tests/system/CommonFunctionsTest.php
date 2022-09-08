@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
@@ -135,6 +136,31 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testRedirectDefault()
     {
         $this->assertInstanceOf(RedirectResponse::class, redirect());
+    }
+
+    public function testRequestIncomingRequest()
+    {
+        Services::createRequest(new App());
+
+        $request = request();
+
+        $this->assertInstanceOf(IncomingRequest::class, $request);
+    }
+
+    public function testRequestCLIRequest()
+    {
+        Services::createRequest(new App(), true);
+
+        $request = request();
+
+        $this->assertInstanceOf(CLIRequest::class, $request);
+    }
+
+    public function testResponse()
+    {
+        $response = response();
+
+        $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testView()
