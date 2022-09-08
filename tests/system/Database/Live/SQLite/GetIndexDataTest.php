@@ -81,10 +81,10 @@ final class GetIndexDataTest extends CIUnitTestCase
         $row->type                  = 'PRIMARY';
         $expectedIndexes['PRIMARY'] = $row;
 
-        $row                               = new stdclass();
-        $row->name                         = 'testuser_email_u';
-        $row->fields                       = ['email'];
-        $row->type                         = 'UNIQUE';
+        $row                                 = new stdclass();
+        $row->name                           = 'testuser_email_u';
+        $row->fields                         = ['email'];
+        $row->type                           = 'UNIQUE';
         $expectedIndexes['testuser_email_u'] = $row;
 
         $row                                 = new stdclass();
