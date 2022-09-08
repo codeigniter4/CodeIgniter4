@@ -110,8 +110,8 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertCount(3, $keys);
         $this->assertArrayHasKey('foo_name', $keys);
         $this->assertSame(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
-        $this->assertArrayHasKey('foo_email', $keys);
-        $this->assertSame(['fields' => ['email'], 'type' => 'unique'], $keys['foo_email']);
+        $this->assertArrayHasKey('foo_email_u', $keys);
+        $this->assertSame(['fields' => ['email'], 'type' => 'unique'], $keys['foo_email_u']);
         $this->assertArrayHasKey('primary', $keys);
         $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['primary']);
     }
@@ -141,7 +141,7 @@ final class AlterTableTest extends CIUnitTestCase
         $oldKeys = $this->db->getIndexData('foo');
 
         $this->assertArrayHasKey('foo_name', $oldKeys);
-        $this->assertArrayHasKey('foo_email', $oldKeys);
+        $this->assertArrayHasKey('foo_email_u', $oldKeys);
 
         $result = $this->table
             ->fromTable('foo')
@@ -151,7 +151,7 @@ final class AlterTableTest extends CIUnitTestCase
         $newKeys = $this->db->getIndexData('foo');
 
         $this->assertArrayNotHasKey('foo_name', $newKeys);
-        $this->assertArrayHasKey('foo_email', $newKeys);
+        $this->assertArrayHasKey('foo_email_u', $newKeys);
 
         $this->assertTrue($result);
     }
