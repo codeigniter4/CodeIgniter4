@@ -35,9 +35,9 @@ class Database
      * Parses the connection binds and returns an instance of the driver
      * ready to go.
      *
-     * @throws InvalidArgumentException
-     *
      * @return mixed
+     *
+     * @throws InvalidArgumentException
      */
     public function load(array $params = [], string $alias = '')
     {

@@ -86,9 +86,9 @@ class Builder extends BaseBuilder
     /**
      * Increments a numeric column by the specified value.
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function increment(string $column, int $value = 1)
     {
@@ -108,9 +108,9 @@ class Builder extends BaseBuilder
     /**
      * Decrements a numeric column by the specified value.
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function decrement(string $column, int $value = 1)
     {
@@ -135,9 +135,9 @@ class Builder extends BaseBuilder
      *
      * @param array|null $set An associative array of insert values
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function replace(?array $set = null)
     {
@@ -204,9 +204,9 @@ class Builder extends BaseBuilder
      *
      * @param mixed $where
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {

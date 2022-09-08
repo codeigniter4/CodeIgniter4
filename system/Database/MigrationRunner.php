@@ -153,10 +153,10 @@ class MigrationRunner
     /**
      * Locate and run all new migrations
      *
+     * @return bool
+     *
      * @throws ConfigException
      * @throws RuntimeException
-     *
-     * @return bool
      */
     public function latest(?string $group = null)
     {
@@ -221,10 +221,10 @@ class MigrationRunner
      *
      * @param int $targetBatch Target batch number, or negative for a relative batch, 0 for all
      *
+     * @return mixed Current batch number on success, FALSE on failure or no migrations are found
+     *
      * @throws ConfigException
      * @throws RuntimeException
-     *
-     * @return mixed Current batch number on success, FALSE on failure or no migrations are found
      */
     public function regress(int $targetBatch = 0, ?string $group = null)
     {

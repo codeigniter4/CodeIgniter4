@@ -311,9 +311,9 @@ class Entity implements JsonSerializable
      *
      * @param DateTime|float|int|string|Time $value
      *
-     * @throws Exception
-     *
      * @return Time
+     *
+     * @throws Exception
      */
     protected function mutateDate($value)
     {
@@ -329,9 +329,9 @@ class Entity implements JsonSerializable
      * @param string                     $attribute Attribute name
      * @param string                     $method    Allowed to "get" and "set"
      *
-     * @throws CastException
-     *
      * @return array|bool|float|int|object|string|null
+     *
+     * @throws CastException
      */
     protected function castAs($value, string $attribute, string $method = 'get')
     {
@@ -427,9 +427,9 @@ class Entity implements JsonSerializable
      *
      * @param array|bool|float|int|object|string|null $value
      *
-     * @throws Exception
-     *
      * @return $this
+     *
+     * @throws Exception
      */
     public function __set(string $key, $value = null)
     {
@@ -470,11 +470,11 @@ class Entity implements JsonSerializable
      *  $p = $this->my_property
      *  $p = $this->getMyProperty()
      *
+     * @return array|bool|float|int|object|string|null
+     *
      * @throws Exception
      *
      * @params string $key class property
-     *
-     * @return array|bool|float|int|object|string|null
      */
     public function __get(string $key)
     {
