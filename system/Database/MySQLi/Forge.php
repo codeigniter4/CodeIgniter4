@@ -212,7 +212,8 @@ class Forge extends BaseForge
 
             $unique = in_array($i, $this->uniqueKeys, true) ? 'UNIQUE ' : '';
 
-            $sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i]))
+            $sql .= ",\n\t{$unique}KEY " . $this->db->escapeIdentifiers(implode('_', $this->keys[$i])
+                . (in_array($i, $this->uniqueKeys, true) ? '_u' : ''))
                 . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
         }
 

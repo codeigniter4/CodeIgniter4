@@ -258,7 +258,8 @@ class Forge extends BaseForge
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE '
                     . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
-                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_'
+                    . implode('_', $this->keys[$i]) . '_u')
                     . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 
                 continue;
