@@ -22,10 +22,15 @@ use stdClass;
 final class TableTest extends CIUnitTestCase
 {
     private Table $table;
+    private string $styleTable = 'background:#F99;text-align:right;width:5em;';
 
     protected function setUp(): void
     {
         $this->table = new MockTable();
+
+        // Reset Header & Footer
+        $this->table->heading = [];
+        $this->table->footing = [];
     }
 
     // Setter Methods
@@ -87,6 +92,58 @@ final class TableTest extends CIUnitTestCase
             [
                 ['data' => 'Subtotal'],
                 ['data' => $subtotal],
+            ],
+            $this->table->footing
+        );
+    }
+
+    /**
+     * @depends testPrepArgs
+     */
+    public function testSetHeadingWithStyle()
+    {
+        // uses _prep_args internally, so we'll just do a quick
+        // check to verify that func_get_args and prep_args are
+        // being called.
+        $template = [
+            'heading_cell_start' => '<td>',
+            'heading_cell_end'   => '</td>',
+        ];
+
+        $this->table->setTemplate($template);
+        $this->table->setHeading(['Header', ['style' => $this->styleTable]]);
+
+        $this->assertSame(
+            [
+                ['data' => 'Header'],
+                [
+                    'style' => $this->styleTable,
+                ],
+            ],
+            $this->table->heading
+        );
+    }
+
+    public function testSetFootingWithStyle()
+    {
+        // uses _prep_args internally, so we'll just do a quick
+        // check to verify that func_get_args and prep_args are
+        // being called.
+        $template = [
+            'footing_cell_start' => '<td>',
+            'footing_cell_end'   => '</td>',
+        ];
+
+        $this->table->setTemplate($template);
+        $this->table->setFooting(['Total', ['data' => 3, 'style' => $this->styleTable]]);
+
+        $this->assertSame(
+            [
+                ['data' => 'Total'],
+                [
+                    'data'  => 3,
+                    'style' => $this->styleTable,
+                ],
             ],
             $this->table->footing
         );
