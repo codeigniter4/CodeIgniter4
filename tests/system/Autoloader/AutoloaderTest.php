@@ -12,6 +12,7 @@
 namespace CodeIgniter\Autoloader;
 
 use App\Controllers\Home;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
@@ -323,6 +324,24 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->assertArrayNotHasKey('Psr\Log', $namespaces);
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testComposerPackagesOnlyAndExclude()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
+
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [
+            'only'    => ['laminas/laminas-escaper'],
+            'exclude' => ['psr/log'],
+        ];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
     }
 
     public function testFindsComposerRoutesWithComposerPathNotFound()

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Autoloader;
 
+use CodeIgniter\Exceptions\ConfigException;
 use Composer\Autoload\ClassLoader;
 use Composer\InstalledVersions;
 use Config\Autoload;
@@ -372,9 +373,14 @@ class Autoloader
 
         $packageList = InstalledVersions::getAllRawData()[0]['versions'];
 
+        // Check config for $composerPackages.
+        $only    = $composerPackages['only'] ?? [];
+        $exclude = $composerPackages['exclude'] ?? [];
+        if ($only !== [] && $exclude !== []) {
+            throw new ConfigException('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
+        }
+
         // Get install paths of packages to add namespace for auto-discovery.
-        $only         = $composerPackages['only'] ?? [];
-        $exclude      = $composerPackages['exclude'] ?? [];
         $installPaths = [];
         if ($only !== []) {
             foreach ($packageList as $packageName => $data) {
