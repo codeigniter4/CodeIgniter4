@@ -39,7 +39,7 @@ class Modules extends BaseModules
      *   [
      *       'only' => [
      *           // List up all packages to auto-discover
-     *           'codeigniter4/sheild',
+     *           'codeigniter4/shield',
      *       ],
      *   ]
      *   or
