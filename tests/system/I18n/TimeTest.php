@@ -1166,7 +1166,7 @@ final class TimeTest extends CIUnitTestCase
 
         $time = Time::parse('2017-01-12 00:00', 'America/Chicago');
 
-        $this->assertSame('۲۰۱۷-۰۱-۱۲ ۰۰:۰۰:۰۰', (string) $time);
+        $this->assertSame('2017-01-12 00:00:00', (string) $time);
         $this->assertSame('2017-01-12 00:00:00', $time->toDatabase());
 
         Locale::setDefault($currentLocale);
