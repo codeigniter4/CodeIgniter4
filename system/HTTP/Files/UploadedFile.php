@@ -118,11 +118,11 @@ class UploadedFile extends File implements UploadedFileInterface
      * @param bool   $overwrite  State for indicating whether to overwrite the previously generated file with the same
      *                           name or not.
      *
+     * @return bool
+     *
      * @throws InvalidArgumentException if the $path specified is invalid.
      * @throws RuntimeException         on any error during the move operation.
      * @throws RuntimeException         on the second or subsequent call to the method.
-     *
-     * @return bool
      */
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {

@@ -285,9 +285,9 @@ class CodeIgniter
      * tries to route the response, loads the controller and generally
      * makes all of the pieces work together.
      *
-     * @throws RedirectException
-     *
      * @return ResponseInterface|void
+     *
+     * @throws RedirectException
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
@@ -396,10 +396,10 @@ class CodeIgniter
     /**
      * Handles the main request logic and fires the controller.
      *
+     * @return ResponseInterface
+     *
      * @throws PageNotFoundException
      * @throws RedirectException
-     *
-     * @return ResponseInterface
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
@@ -649,9 +649,9 @@ class CodeIgniter
     /**
      * Determines if a response has been cached for the given URI.
      *
-     * @throws Exception
-     *
      * @return false|ResponseInterface
+     *
+     * @throws Exception
      */
     public function displayCache(Cache $config)
     {
@@ -754,9 +754,9 @@ class CodeIgniter
      * @param RouteCollectionInterface|null $routes An collection interface to use in place
      *                                              of the config file.
      *
-     * @throws RedirectException
-     *
      * @return string|string[]|null Route filters, that is, the filters specified in the routes file
+     *
+     * @throws RedirectException
      */
     protected function tryToRouteIt(?RouteCollectionInterface $routes = null)
     {

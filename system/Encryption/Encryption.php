@@ -100,9 +100,9 @@ class Encryption
     /**
      * Initialize or re-initialize an encrypter
      *
-     * @throws EncryptionException
-     *
      * @return EncrypterInterface
+     *
+     * @throws EncryptionException
      */
     public function initialize(?EncryptionConfig $config = null)
     {

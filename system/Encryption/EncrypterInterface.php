@@ -26,9 +26,9 @@ interface EncrypterInterface
      * @param string            $data   Input data
      * @param array|string|null $params Overridden parameters, specifically the key
      *
-     * @throws EncryptionException
-     *
      * @return string
+     *
+     * @throws EncryptionException
      */
     public function encrypt($data, $params = null);
 
@@ -38,9 +38,9 @@ interface EncrypterInterface
      * @param string            $data   Encrypted data
      * @param array|string|null $params Overridden parameters, specifically the key
      *
-     * @throws EncryptionException
-     *
      * @return string
+     *
+     * @throws EncryptionException
      */
     public function decrypt($data, $params = null);
 }

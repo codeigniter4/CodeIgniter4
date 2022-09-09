@@ -72,7 +72,10 @@ $overrides = [
         ],
     ],
     'no_useless_nullsafe_operator' => true,
-    'phpdoc_separation'            => [
+    'phpdoc_order'                 => [
+        'order' => ['param', 'return', 'throws'],
+    ],
+    'phpdoc_separation' => [
         'groups' => [
             ['immutable', 'psalm-immutable'],
             ['param', 'phpstan-param', 'psalm-param'],

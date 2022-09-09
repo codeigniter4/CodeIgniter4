@@ -348,9 +348,9 @@ abstract class CIUnitTestCase extends TestCase
      *
      * @param string|null $expectedMessage
      *
-     * @throws Exception
-     *
      * @return bool
+     *
+     * @throws Exception
      */
     public function assertLogged(string $level, $expectedMessage = null)
     {
@@ -473,9 +473,9 @@ abstract class CIUnitTestCase extends TestCase
      * @param mixed $expected
      * @param mixed $actual
      *
-     * @throws Exception
-     *
      * @return bool|void
+     *
+     * @throws Exception
      */
     public function assertCloseEnoughString($expected, $actual, string $message = '', int $tolerance = 1)
     {

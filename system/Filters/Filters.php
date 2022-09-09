@@ -154,9 +154,9 @@ class Filters
      * Runs through all of the filters for the specified
      * uri and position.
      *
-     * @throws FilterException
-     *
      * @return mixed|RequestInterface|ResponseInterface
+     *
+     * @throws FilterException
      */
     public function run(string $uri, string $position = 'before')
     {

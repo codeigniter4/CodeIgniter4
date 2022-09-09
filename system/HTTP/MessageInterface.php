@@ -93,9 +93,9 @@ interface MessageInterface
     /**
      * Sets the HTTP protocol version.
      *
-     * @throws HTTPException For invalid protocols
-     *
      * @return $this
+     *
+     * @throws HTTPException For invalid protocols
      */
     public function setProtocolVersion(string $version);
 }
