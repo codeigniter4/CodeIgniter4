@@ -117,5 +117,6 @@ class ScaffoldGenerator extends BaseCommand
         $this->call('make:model', array_merge([$class], $modelOpts, $options));
         $this->call('make:migration', array_merge([$class], $options));
         $this->call('make:seeder', array_merge([$class], $options));
+        $this->call('make:entity', array_merge([$class], $options));
     }
 }
