@@ -374,9 +374,9 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @throws DatabaseException
-     *
      * @return mixed Number of rows affected or FALSE on failure
+     *
+     * @throws DatabaseException
      */
     protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
@@ -391,9 +391,9 @@ class Model extends BaseModel
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @throws DatabaseException
-     *
      * @return bool|string
+     *
+     * @throws DatabaseException
      */
     protected function doDelete($id = null, bool $purge = false)
     {
@@ -581,9 +581,9 @@ class Model extends BaseModel
     /**
      * Provides a shared instance of the Query Builder.
      *
-     * @throws ModelException
-     *
      * @return BaseBuilder
+     *
+     * @throws ModelException
      */
     public function builder(?string $table = null)
     {
@@ -673,9 +673,9 @@ class Model extends BaseModel
      * @param array|object|null $data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @throws ReflectionException
-     *
      * @return BaseResult|false|int|object|string
+     *
+     * @throws ReflectionException
      */
     public function insert($data = null, bool $returnID = true)
     {
@@ -727,9 +727,9 @@ class Model extends BaseModel
      * @param object|string $data
      * @param bool          $recursive If true, inner entities will be casted as array as well
      *
-     * @throws ReflectionException
-     *
      * @return array|null Array
+     *
+     * @throws ReflectionException
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
     {

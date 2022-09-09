@@ -476,10 +476,10 @@ class BaseBuilder
      * @used-by selectAvg()
      * @used-by selectSum()
      *
+     * @return $this
+     *
      * @throws DatabaseException
      * @throws DataException
-     *
-     * @return $this
      */
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
     {
@@ -888,9 +888,9 @@ class BaseBuilder
      *
      * @param array|BaseBuilder|Closure|null $values The values searched on, or anonymous function with subquery
      *
-     * @throws InvalidArgumentException
-     *
      * @return $this
+     *
+     * @throws InvalidArgumentException
      */
     protected function _whereIn(?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null, string $clause = 'QBWhere')
     {
@@ -1722,9 +1722,9 @@ class BaseBuilder
     /**
      * Compiles batch insert strings and runs the queries
      *
-     * @throws DatabaseException
-     *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
     {
@@ -1844,9 +1844,9 @@ class BaseBuilder
     /**
      * Compiles an insert query and returns the sql
      *
-     * @throws DatabaseException
-     *
      * @return bool|string
+     *
+     * @throws DatabaseException
      */
     public function getCompiledInsert(bool $reset = true)
     {
@@ -1877,9 +1877,9 @@ class BaseBuilder
      *
      * @param array|object|null $set
      *
-     * @throws DatabaseException
-     *
      * @return bool
+     *
+     * @throws DatabaseException
      */
     public function insert($set = null, ?bool $escape = null)
     {
@@ -1967,9 +1967,9 @@ class BaseBuilder
     /**
      * Compiles a replace into string and runs the query
      *
-     * @throws DatabaseException
-     *
      * @return BaseResult|false|Query|string
+     *
+     * @throws DatabaseException
      */
     public function replace(?array $set = null)
     {
@@ -2123,9 +2123,9 @@ class BaseBuilder
     /**
      * Compiles an update string and runs the query
      *
-     * @throws DatabaseException
-     *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
      */
     public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100)
     {
@@ -2234,9 +2234,9 @@ class BaseBuilder
      *
      * @param array|object $key
      *
-     * @throws DatabaseException
-     *
      * @return $this|null
+     *
+     * @throws DatabaseException
      */
     public function setUpdateBatch($key, string $index = '', ?bool $escape = null)
     {
@@ -2342,9 +2342,9 @@ class BaseBuilder
      *
      * @param mixed $where
      *
-     * @throws DatabaseException
-     *
      * @return bool|string
+     *
+     * @throws DatabaseException
      */
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {

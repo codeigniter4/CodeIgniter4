@@ -130,9 +130,9 @@ interface ResponseInterface
      *                       provided status code; if none is provided, will
      *                       default to the IANA name.
      *
-     * @throws InvalidArgumentException For invalid status code arguments.
-     *
      * @return self
+     *
+     * @throws InvalidArgumentException For invalid status code arguments.
      */
     public function setStatusCode(int $code, string $reason = '');
 
@@ -202,9 +202,9 @@ interface ResponseInterface
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @throws InvalidArgumentException If the body property is not array.
-     *
      * @return mixed|string
+     *
+     * @throws InvalidArgumentException If the body property is not array.
      */
     public function getJSON();
 
@@ -220,9 +220,9 @@ interface ResponseInterface
     /**
      * Retrieves the current body into XML and returns it.
      *
-     * @throws InvalidArgumentException If the body property is not array.
-     *
      * @return mixed|string
+     *
+     * @throws InvalidArgumentException If the body property is not array.
      */
     public function getXML();
 
@@ -361,9 +361,9 @@ interface ResponseInterface
      * @param string $uri  The URI to redirect to
      * @param int    $code The type of redirection, defaults to 302
      *
-     * @throws HTTPException For invalid status code.
-     *
      * @return $this
+     *
+     * @throws HTTPException For invalid status code.
      */
     public function redirect(string $uri, string $method = 'auto', ?int $code = null);
 

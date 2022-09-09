@@ -40,7 +40,20 @@ $overrides = [
         'space_before_parenthesis'            => true,
         'inline_constructor_arguments'        => true,
     ],
-    'control_structure_braces'        => true,
+    'control_structure_braces' => true,
+    'curly_braces_position'    => [
+        'control_structures_opening_brace'          => 'same_line',
+        'functions_opening_brace'                   => 'next_line_unless_newline_at_signature_end',
+        'anonymous_functions_opening_brace'         => 'same_line',
+        'classes_opening_brace'                     => 'next_line_unless_newline_at_signature_end',
+        'anonymous_classes_opening_brace'           => 'same_line',
+        'allow_single_line_empty_anonymous_classes' => true,
+        'allow_single_line_anonymous_functions'     => true,
+    ],
+    'function_declaration' => [
+        'closure_function_spacing'   => 'one',
+        'trailing_comma_single_line' => false,
+    ],
     'no_multiple_statements_per_line' => true,
     'no_trailing_comma_in_singleline' => [
         'elements' => [
@@ -51,7 +64,10 @@ $overrides = [
         ],
     ],
     'no_useless_nullsafe_operator' => true,
-    'phpdoc_separation'            => [
+    'phpdoc_order'                 => [
+        'order' => ['param', 'return', 'throws'],
+    ],
+    'phpdoc_separation' => [
         'groups' => [
             ['immutable', 'psalm-immutable'],
             ['param', 'phpstan-param', 'psalm-param'],

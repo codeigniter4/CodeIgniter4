@@ -400,9 +400,9 @@ if (! function_exists('esc')) {
      * @param array|string $data
      * @param string       $encoding
      *
-     * @throws InvalidArgumentException
-     *
      * @return array|string
+     *
+     * @throws InvalidArgumentException
      */
     function esc($data, string $context = 'html', ?string $encoding = null)
     {

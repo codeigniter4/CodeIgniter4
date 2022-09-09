@@ -411,9 +411,9 @@ class Validation implements ValidationInterface
      *
      * @param array|string $rules
      *
-     * @throws TypeError
-     *
      * @return $this
+     *
+     * @throws TypeError
      */
     public function setRule(string $field, ?string $label, $rules, array $errors = [])
     {
@@ -500,9 +500,9 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws ValidationException If group not found.
-     *
      * @return string[] Rule group.
+     *
+     * @throws ValidationException If group not found.
      */
     public function getRuleGroup(string $group): array
     {
@@ -594,9 +594,9 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
-     * @throws ValidationException
-     *
      * @return array
+     *
+     * @throws ValidationException
      */
     public function loadRuleGroup(?string $group = null)
     {

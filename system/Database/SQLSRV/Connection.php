@@ -95,9 +95,9 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @throws DatabaseException
-     *
      * @return mixed
+     *
+     * @throws DatabaseException
      */
     public function connect(bool $persistent = false)
     {
@@ -229,9 +229,9 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with index data
      *
-     * @throws DatabaseException
-     *
      * @return stdClass[]
+     *
+     * @throws DatabaseException
      */
     protected function _indexData(string $table): array
     {
@@ -267,9 +267,9 @@ class Connection extends BaseConnection
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
      *
-     * @throws DatabaseException
-     *
      * @return stdClass[]
+     *
+     * @throws DatabaseException
      */
     protected function _foreignKeyData(string $table): array
     {
@@ -335,9 +335,9 @@ class Connection extends BaseConnection
     /**
      * Returns an array of objects with field data
      *
-     * @throws DatabaseException
-     *
      * @return stdClass[]
+     *
+     * @throws DatabaseException
      */
     protected function _fieldData(string $table): array
     {

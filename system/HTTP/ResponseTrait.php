@@ -142,9 +142,9 @@ trait ResponseTrait
      *                       provided status code; if none is provided, will
      *                       default to the IANA name.
      *
-     * @throws HTTPException For invalid status code arguments.
-     *
      * @return $this
+     *
+     * @throws HTTPException For invalid status code arguments.
      */
     public function setStatusCode(int $code, string $reason = '')
     {
@@ -251,9 +251,9 @@ trait ResponseTrait
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @throws InvalidArgumentException If the body property is not array.
-     *
      * @return mixed|string
+     *
+     * @throws InvalidArgumentException If the body property is not array.
      */
     public function getJSON()
     {
@@ -283,9 +283,9 @@ trait ResponseTrait
     /**
      * Retrieves the current body into XML and returns it.
      *
-     * @throws InvalidArgumentException If the body property is not array.
-     *
      * @return mixed|string
+     *
+     * @throws InvalidArgumentException If the body property is not array.
      */
     public function getXML()
     {
@@ -305,9 +305,9 @@ trait ResponseTrait
      * @param array|string $body
      * @param string       $format Valid: json, xml
      *
-     * @throws InvalidArgumentException If the body property is not string or array.
-     *
      * @return mixed
+     *
+     * @throws InvalidArgumentException If the body property is not string or array.
      */
     protected function formatBody($body, string $format)
     {
@@ -495,9 +495,9 @@ trait ResponseTrait
      * @param string $uri  The URI to redirect to
      * @param int    $code The type of redirection, defaults to 302
      *
-     * @throws HTTPException For invalid status code.
-     *
      * @return $this
+     *
+     * @throws HTTPException For invalid status code.
      */
     public function redirect(string $uri, string $method = 'auto', ?int $code = null)
     {

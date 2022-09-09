@@ -358,9 +358,9 @@ abstract class BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @throws DataException
-     *
      * @return array|null The resulting row of data, or null if no data found.
+     *
+     * @throws DataException
      */
     abstract protected function doFindColumn(string $columnName);
 
@@ -424,9 +424,9 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @throws DatabaseException
-     *
      * @return mixed Number of rows affected or FALSE on failure
+     *
+     * @throws DatabaseException
      */
     abstract protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false);
 
@@ -437,9 +437,9 @@ abstract class BaseModel
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @throws DatabaseException
-     *
      * @return bool|string
+     *
+     * @throws DatabaseException
      */
     abstract protected function doDelete($id = null, bool $purge = false);
 
@@ -573,9 +573,9 @@ abstract class BaseModel
      *
      * @param string $columnName Column Name
      *
-     * @throws DataException
-     *
      * @return array|null The resulting row of data, or null if no data found.
+     *
+     * @throws DataException
      */
     public function findColumn(string $columnName)
     {
@@ -725,9 +725,9 @@ abstract class BaseModel
      * @param array|object|null $data     Data
      * @param bool              $returnID Whether insert ID should be returned or not.
      *
-     * @throws ReflectionException
-     *
      * @return bool|int|string insert ID or true on success. false on failure.
+     *
+     * @throws ReflectionException
      */
     public function insert($data = null, bool $returnID = true)
     {
@@ -799,9 +799,9 @@ abstract class BaseModel
      * @param int        $batchSize The size of the batch to run
      * @param bool       $testing   True means only number of records is returned, false will execute the query
      *
-     * @throws ReflectionException
-     *
      * @return bool|int Number of rows inserted or FALSE on failure
+     *
+     * @throws ReflectionException
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
@@ -934,10 +934,10 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
+     * @return mixed Number of rows affected or FALSE on failure
+     *
      * @throws DatabaseException
      * @throws ReflectionException
-     *
-     * @return mixed Number of rows affected or FALSE on failure
      */
     public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
@@ -1009,9 +1009,9 @@ abstract class BaseModel
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
      *
-     * @throws DatabaseException
-     *
      * @return BaseResult|bool
+     *
+     * @throws DatabaseException
      */
     public function delete($id = null, bool $purge = false)
     {
@@ -1225,9 +1225,9 @@ abstract class BaseModel
      *
      * @param int|null $userData An optional PHP timestamp to be converted.
      *
-     * @throws ModelException
-     *
      * @return mixed
+     *
+     * @throws ModelException
      */
     protected function setDate(?int $userData = null)
     {
@@ -1249,9 +1249,9 @@ abstract class BaseModel
      *
      * @param int $value value
      *
-     * @throws ModelException
-     *
      * @return int|string
+     *
+     * @throws ModelException
      */
     protected function intToDate(int $value)
     {
@@ -1512,9 +1512,9 @@ abstract class BaseModel
      * @param string $event     Event
      * @param array  $eventData Event Data
      *
-     * @throws DataException
-     *
      * @return mixed
+     *
+     * @throws DataException
      */
     protected function trigger(string $event, array $eventData)
     {
@@ -1573,9 +1573,9 @@ abstract class BaseModel
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
-     * @throws ReflectionException
-     *
      * @return array Array
+     *
+     * @throws ReflectionException
      */
     protected function objectToArray($data, bool $onlyChanged = true, bool $recursive = false): array
     {
@@ -1603,9 +1603,9 @@ abstract class BaseModel
      * @param bool          $onlyChanged Only Changed Property
      * @param bool          $recursive   If true, inner entities will be casted as array as well
      *
-     * @throws ReflectionException
-     *
      * @return array|null Array
+     *
+     * @throws ReflectionException
      */
     protected function objectToRawArray($data, bool $onlyChanged = true, bool $recursive = false): ?array
     {

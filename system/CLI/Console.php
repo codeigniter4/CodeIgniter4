@@ -23,9 +23,9 @@ class Console
     /**
      * Runs the current command discovered on the CLI.
      *
-     * @throws Exception
-     *
      * @return int|void
+     *
+     * @throws Exception
      */
     public function run()
     {
