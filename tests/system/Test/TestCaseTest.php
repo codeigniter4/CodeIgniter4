@@ -27,6 +27,14 @@ final class TestCaseTest extends CIUnitTestCase
      */
     private $stream_filter;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+    
+        // Reset CLI::$lastWrite
+        CLI::print();
+    }
+
     public function testGetPrivatePropertyWithObject()
     {
         $obj    = new __TestForReflectionHelper();
