@@ -56,6 +56,10 @@ $overrides = [
         'closure_function_spacing'   => 'one',
         'trailing_comma_single_line' => false,
     ],
+    'new_with_braces' => [
+        'named_class'     => true,
+        'anonymous_class' => true,
+    ],
     'no_multiple_statements_per_line' => true,
     'no_trailing_comma_in_singleline' => [
         'elements' => [
