@@ -58,6 +58,10 @@ $overrides = [
         'allow_single_line_empty_anonymous_classes' => true,
         'allow_single_line_anonymous_functions'     => true,
     ],
+    'function_declaration' => [
+        'closure_function_spacing'   => 'one',
+        'trailing_comma_single_line' => false,
+    ],
     'no_multiple_statements_per_line' => true,
     'no_trailing_comma_in_singleline' => [
         'elements' => [
