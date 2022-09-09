@@ -553,7 +553,7 @@ if (! function_exists('url_is')) {
      * which will allow any valid character.
      *
      * Example:
-     *   if (url_is('admin*)) ...
+     *   if (url_is('admin*')) ...
      */
     function url_is(string $path): bool
     {
