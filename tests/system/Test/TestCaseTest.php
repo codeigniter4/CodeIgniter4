@@ -30,7 +30,7 @@ final class TestCaseTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-    
+
         // Reset CLI::$lastWrite
         CLI::print();
     }
