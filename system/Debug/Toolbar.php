@@ -360,7 +360,7 @@ class Toolbar
          * @var Response|null        $response
          */
         if (CI_DEBUG && ! is_cli()) {
-            global $app;
+            $app = Services::codeigniter();
 
             $request ??= Services::request();
             $response ??= Services::response();
