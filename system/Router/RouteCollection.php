@@ -998,9 +998,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function view(string $from, string $view, ?array $options = null): RouteCollectionInterface
     {
-        $to = static function (...$data) use ($view) {
-            return view($view, ['_page' => $data]);
-        };
+        $to = static fn (...$data) => view($view, ['_page' => $data]);
 
         $this->create('get', $from, $to, $options);
 

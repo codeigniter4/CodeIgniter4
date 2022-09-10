@@ -12,11 +12,9 @@
 namespace CodeIgniter\Router;
 
 use App\Controllers\Home;
-use CodeIgniter\Config\Factory;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\View\View;
 use Config\Modules;
 use Tests\Support\Controllers\Hello;
 
