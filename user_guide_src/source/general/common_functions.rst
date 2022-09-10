@@ -332,6 +332,24 @@ Miscellaneous Functions
 
     .. literalinclude:: common_functions/007.php
 
+.. php:function:: request()
+
+    :returns:    The shared Request object.
+    :rtype:    IncomingRequest|CLIRequest
+
+    .. versionadded:: 4.3.0
+
+    This function is a wrapper for ``Services::request()``.
+
+.. php:function:: response()
+
+    :returns:    The shared Response object.
+    :rtype:    Response
+
+    .. versionadded:: 4.3.0
+
+    This function is a wrapper for ``Services::response()``.
+
 .. php:function:: route_to($method[, ...$params])
 
     :param   string  $method: The named route alias, or name of the controller/method to match.
