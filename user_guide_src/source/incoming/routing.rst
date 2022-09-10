@@ -206,7 +206,7 @@ Closures
 
 You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
-a simple view.
+a simple view. These are always treated as GET requests.
 
 .. literalinclude:: routing/065.php
 
