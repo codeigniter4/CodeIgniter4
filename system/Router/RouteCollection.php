@@ -993,6 +993,21 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
+     * Specifies a route that will only display a view.
+     * Only works for GET requests.
+     */
+    public function view(string $from, string $view, ?array $options = null): RouteCollectionInterface
+    {
+        $to = static function (...$data) use ($view) {
+            return view($view, ['_page' => $data]);
+        };
+
+        $this->create('get', $from, $to, $options);
+
+        return $this;
+    }
+
+    /**
      * Limits the routes to a specified ENVIRONMENT or they won't run.
      */
     public function environment(string $env, Closure $callback): RouteCollectionInterface
