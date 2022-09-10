@@ -434,6 +434,55 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>12345</td>', $table);
     }
 
+    public function testGenerateWithStyle()
+    {
+        $template = [
+            'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
+            'thead_open'         => '<thead>',
+            'thead_close'        => '</thead>',
+            'heading_row_start'  => '<tr>',
+            'heading_row_end'    => '</tr>',
+            'heading_cell_start' => '<td>',
+            'heading_cell_end'   => '</td>',
+            'tfoot_open'         => '<tfoot>',
+            'tfoot_close'        => '</tfoot>',
+            'footing_row_start'  => '<tr>',
+            'footing_row_end'    => '</tr>',
+            'footing_cell_start' => '<td>',
+            'footing_cell_end'   => '</td>',
+            'tbody_open'         => '<tbody>',
+            'tbody_close'        => '</tbody>',
+            'row_start'          => '<tr>',
+            'row_end'            => '</tr>',
+            'cell_start'         => '<td>',
+            'cell_end'           => '</td>',
+            'row_alt_start'      => '<tr>',
+            'row_alt_end'        => '</tr>',
+            'cell_alt_start'     => '<td>',
+            'cell_alt_end'       => '</td>',
+            'table_close'        => '</table>',
+        ];
+
+        $this->table->setTemplate($template);
+        $this->table->setHeading(['Name', ['data' => 'Amount', 'style' => $this->styleTable]]);
+
+        $this->table->addRow(['Fred', 1]);
+        $this->table->addRow(['Mary', 3]);
+        $this->table->addRow(['John', 6]);
+
+        $this->table->setFooting(['Total', ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'style' => $this->styleTable]]);
+
+        $table = $this->table->generate();
+
+        // Header
+        $this->assertStringContainsString('<td>Name</td>', $table);
+        $this->assertStringContainsString('<td style="' . $this->styleTable . '">Amount</td>', $table);
+
+        // Footer
+        $this->assertStringContainsString('<td>Total</td>', $table);
+        $this->assertStringContainsString('<td style="' . $this->styleTable . '"><small class="text-light">IDR <span class="badge badge-info">10</span></small></td>', $table);
+    }
+
     public function testGenerateEmptyCell()
     {
         // Prepare the data
