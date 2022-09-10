@@ -102,15 +102,16 @@ final class TableTest extends CIUnitTestCase
      */
     public function testSetHeadingWithStyle()
     {
-        // uses _prep_args internally, so we'll just do a quick
-        // check to verify that func_get_args and prep_args are
-        // being called.
         $template = [
             'heading_cell_start' => '<td>',
             'heading_cell_end'   => '</td>',
         ];
 
         $this->table->setTemplate($template);
+
+        // uses _prep_args internally, so we'll just do a quick
+        // check to verify that func_get_args and prep_args are
+        // being called.
         $this->table->setHeading(['Header', ['style' => $this->styleTable]]);
 
         $this->assertSame(
@@ -126,15 +127,16 @@ final class TableTest extends CIUnitTestCase
 
     public function testSetFootingWithStyle()
     {
-        // uses _prep_args internally, so we'll just do a quick
-        // check to verify that func_get_args and prep_args are
-        // being called.
         $template = [
             'footing_cell_start' => '<td>',
             'footing_cell_end'   => '</td>',
         ];
 
         $this->table->setTemplate($template);
+
+        // uses _prep_args internally, so we'll just do a quick
+        // check to verify that func_get_args and prep_args are
+        // being called.
         $this->table->setFooting(['Total', ['data' => 3, 'style' => $this->styleTable]]);
 
         $this->assertSame(
