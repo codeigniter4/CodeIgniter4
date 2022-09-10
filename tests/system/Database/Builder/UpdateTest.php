@@ -231,17 +231,16 @@ final class UpdateTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = 2 THEN 'Comedian'
-            WHEN "id" = 3 THEN 'Cab Driver'
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = 2 THEN 'There''s something in your teeth'
-            WHEN "id" = 3 THEN 'I am yellow'
-            ELSE "description" END
-            WHERE "id" IN(2,3)
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "name" = _u."name",
+            "description" = _u."description"
+            FROM (
+            SELECT 2 "id", 'Comedian' "name", 'There''s something in your teeth' "description" UNION ALL
+            SELECT 3 "id", 'Cab Driver' "name", 'I am yellow' "description"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());
@@ -271,17 +270,16 @@ final class UpdateTest extends CIUnitTestCase
         $query = $this->db->getLastQuery();
         $this->assertInstanceOf(MockQuery::class, $query);
 
-        $space = ' ';
-
-        $expected = <<<EOF
-            UPDATE "jobs" SET "name" = CASE{$space}
-            WHEN "id" = 2 THEN SUBSTRING(name, 1)
-            WHEN "id" = 3 THEN SUBSTRING(name, 2)
-            ELSE "name" END, "description" = CASE{$space}
-            WHEN "id" = 2 THEN SUBSTRING(description, 3)
-            WHEN "id" = 3 THEN SUBSTRING(description, 4)
-            ELSE "description" END
-            WHERE "id" IN(2,3)
+        $expected = <<<'EOF'
+            UPDATE "jobs"
+            SET
+            "name" = _u."name",
+            "description" = _u."description"
+            FROM (
+            SELECT 2 "id", SUBSTRING(name, 1) "name", SUBSTRING(description, 3) "description" UNION ALL
+            SELECT 3 "id", SUBSTRING(name, 2) "name", SUBSTRING(description, 4) "description"
+            ) _u
+            WHERE "jobs"."id" = _u."id"
             EOF;
 
         $this->assertSame($expected, $query->getQuery());

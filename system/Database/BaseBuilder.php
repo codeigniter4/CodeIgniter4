@@ -154,6 +154,22 @@ class BaseBuilder
     protected $QBIgnore = false;
 
     /**
+     * QB Options data
+     * Holds additional options and data used to render SQL
+     * and is reset by resetWrite()
+     *
+     * @phpstan-var array{
+     *   updateFields?: array,
+     *   constraints?: array,
+     *   fromQuery?: string,
+     *   sql?: string,
+     *   alias?: string
+     * }
+     * @var array
+     */
+    protected $QBOptions;
+
+    /**
      * A reference to the database connection.
      *
      * @var BaseConnection
@@ -1720,6 +1736,40 @@ class BaseBuilder
     }
 
     /**
+     * Sets update fields for updateBatch
+     *
+     * @param string|string[] $set
+     * @param bool            $addToDefault future use
+     * @param array|null      $ignore       ignores items in set
+     *
+     * @return $this
+     */
+    protected function updateFields($set, bool $addToDefault = false, ?array $ignore = null)
+    {
+        if (! empty($set)) {
+            if (! is_array($set)) {
+                $set = explode(',', $set);
+            }
+
+            foreach ($set as $key => $value) {
+                if (! ($value instanceof RawSql)) {
+                    $value = $this->db->protectIdentifiers($value);
+                }
+
+                if (is_numeric($key)) {
+                    $key = $value;
+                }
+
+                if ($ignore === null || ! in_array($key, $ignore, true)) {
+                    $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Compiles batch insert strings and runs the queries
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
@@ -2203,30 +2253,81 @@ class BaseBuilder
      */
     protected function _updateBatch(string $table, array $values, string $index): string
     {
-        $ids   = [];
-        $final = [];
+        // this is a work around until the rest of the platform is refactored
+        if ($index !== '') {
+            $this->QBOptions['constraints'] = [$index];
+        }
+        $keys = array_keys(current($values));
 
-        foreach ($values as $val) {
-            $ids[] = $val[$index];
+        $sql = $this->QBOptions['sql'] ?? '';
 
-            foreach (array_keys($val) as $field) {
-                if ($field !== $index) {
-                    $final[$field][] = 'WHEN ' . $index . ' = ' . $val[$index] . ' THEN ' . $val[$field];
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $constraints = $this->QBOptions['constraints'] ?? [];
+
+            if ($constraints === []) {
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('You must specify a constraint to match on for batch updates.'); // @codeCoverageIgnore
                 }
+
+                return ''; // @codeCoverageIgnore
             }
+
+            $updateFields = $this->QBOptions['updateFields'] ??
+                $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
+                [];
+
+            $alias = $this->QBOptions['alias'] ?? '_u';
+
+            $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
+
+            $sql .= 'SET' . "\n";
+
+            $sql .= implode(
+                ",\n",
+                array_map(
+                    static fn ($key, $value) => $key . ($value instanceof RawSql ?
+                        ' = ' . $value :
+                        ' = ' . $alias . '.' . $value),
+                    array_keys($updateFields),
+                    $updateFields
+                )
+            ) . "\n";
+
+            $sql .= 'FROM (' . "\n%s";
+
+            $sql .= ') ' . $alias . "\n";
+
+            $sql .= 'WHERE ' . implode(
+                ' AND ',
+                array_map(
+                    static fn ($key) => ($key instanceof RawSql ?
+                    $key :
+                    $table . '.' . $key . ' = ' . $alias . '.' . $key),
+                    $constraints
+                )
+            );
+
+            $this->QBOptions['sql'] = $sql;
         }
 
-        $cases = '';
-
-        foreach ($final as $k => $v) {
-            $cases .= $k . " = CASE \n"
-                . implode("\n", $v) . "\n"
-                . 'ELSE ' . $k . ' END, ';
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = implode(
+                " UNION ALL\n",
+                array_map(
+                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index) => $index . ' ' . $key,
+                        $keys,
+                        $value
+                    )),
+                    $values
+                )
+            ) . "\n";
         }
 
-        $this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
-
-        return 'UPDATE ' . $this->compileIgnore('update') . $table . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
+        return sprintf($sql, $data);
     }
 
     /**
@@ -2825,6 +2926,7 @@ class BaseBuilder
             'QBKeys'    => [],
             'QBLimit'   => false,
             'QBIgnore'  => false,
+            'QBOptions' => [],
         ]);
     }
 

@@ -206,39 +206,6 @@ class Builder extends BaseBuilder
     }
 
     /**
-     * Update_Batch statement
-     *
-     * Generates a platform-specific batch update string from the supplied data
-     */
-    protected function _updateBatch(string $table, array $values, string $index): string
-    {
-        $ids   = [];
-        $final = [];
-
-        foreach ($values as $val) {
-            $ids[] = $val[$index];
-
-            foreach (array_keys($val) as $field) {
-                if ($field !== $index) {
-                    $final[$field][] = 'WHEN ' . $index . ' = ' . $val[$index] . ' THEN ' . $val[$field];
-                }
-            }
-        }
-
-        $cases = '';
-
-        foreach ($final as $k => $v) {
-            $cases .= $k . " = CASE \n"
-                . implode("\n", $v) . "\n"
-                . 'ELSE ' . $k . ' END, ';
-        }
-
-        $this->where($index . ' IN(' . implode(',', $ids) . ')', null, false);
-
-        return 'UPDATE ' . $this->compileIgnore('update') . ' ' . $this->getFullName($table) . ' SET ' . substr($cases, 0, -2) . $this->compileWhereHaving('QBWhere');
-    }
-
-    /**
      * Increments a numeric column by the specified value.
      *
      * @return bool
