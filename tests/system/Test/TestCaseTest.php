@@ -24,6 +24,14 @@ final class TestCaseTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Reset CLI::$lastWrite
+        CLI::print();
+    }
+
     public function testGetPrivatePropertyWithObject()
     {
         $obj    = new __TestForReflectionHelper();
@@ -51,7 +59,7 @@ final class TestCaseTest extends CIUnitTestCase
     public function testStreamFilter()
     {
         CLI::write('first.');
-        $expected = "first.\n";
+        $expected = "\nfirst.\n";
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
