@@ -278,7 +278,7 @@ final class UpdateTest extends CIUnitTestCase
             [
                 'id'      => 2,
                 'name'    => 'Ahmadinejad Changes',
-                'country' => 'Iraq', // same length but different
+                'country' => 'Uruguay',
             ],
             [
                 'id'      => 3,
@@ -288,11 +288,11 @@ final class UpdateTest extends CIUnitTestCase
             [
                 'id'      => 4,
                 'name'    => 'Chris Martin Does Not Change',
-                'country' => 'Greece', // not same length
+                'country' => 'Greece',
             ],
         ];
 
-        $this->db->table('user')->setData($data, true, 'd')->updateBatch(null, ['id', new RawSql('LENGTH(db_user.country) = LENGTH(d.country)')]);
+        $this->db->table('user')->setData($data, true, 'd')->updateBatch(null, ['id', new RawSql("d.country LIKE 'U%'")]);
 
         $this->seeInDatabase('user', [
             'name'    => 'Derek Jones Changes',
@@ -300,7 +300,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
         $this->seeInDatabase('user', [
             'name'    => 'Ahmadinejad Changes',
-            'country' => 'Iraq',
+            'country' => 'Uruguay',
         ]);
         $this->seeInDatabase('user', [
             'name'    => 'Richard A Causey Changes',

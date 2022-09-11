@@ -91,7 +91,7 @@ class Builder extends BaseBuilder
                 ' AND ',
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
-                    $key :
+                    str_replace('%', '%%', $key) :
                     $table . '.' . $key . ' = ' . $alias . '.' . $key),
                     $constraints
                 )
@@ -103,7 +103,7 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
-                        ' = ' . $value :
+                        ' = ' . str_replace('%', '%%', $value) :
                         ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
                     $updateFields
