@@ -2338,7 +2338,7 @@ class BaseBuilder
      *
      * @throws DatabaseException
      */
-    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100)
+    public function updateBatchOld(?array $set = null, ?string $index = null, int $batchSize = 100)
     {
         if ($index === null) {
             if ($this->db->DBDebug) {
@@ -2407,6 +2407,27 @@ class BaseBuilder
         $this->resetWrite();
 
         return $this->testMode ? $savedSQL : $affectedRows;
+    }
+
+    /**
+     * Sets data and calls batchExecute to run queryies
+     *
+     * @param array|object|string|null $set        a dataset or select query
+     * @param array|string|null                    $constraints
+     *
+     * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     */
+    public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
+    {
+        $this->onConstraint($constraints);
+
+        if ($set !== null) {
+            $this->setBatch($set, true);
+        }
+
+        return $this->batchExecute('_updateBatch', $batchSize);
     }
 
     /**
