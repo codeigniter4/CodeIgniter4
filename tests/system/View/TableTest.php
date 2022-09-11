@@ -433,10 +433,7 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>12345</td>', $table);
     }
 
-    /**
-     * @see https://github.com/codeigniter4/CodeIgniter4/pull/6511#discussion_r967789173
-     */
-    public function testGenerateWithClassStyle()
+    public function testGenerateTdWithClassStyle()
     {
         $template = [
             'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
@@ -444,8 +441,8 @@ final class TableTest extends CIUnitTestCase
             'thead_close'        => '</thead>',
             'heading_row_start'  => '<tr>',
             'heading_row_end'    => '</tr>',
-            'heading_cell_start' => '<th>',
-            'heading_cell_end'   => '</th>',
+            'heading_cell_start' => '<td>',
+            'heading_cell_end'   => '</td>',
             'tfoot_open'         => '<tfoot>',
             'tfoot_close'        => '</tfoot>',
             'footing_row_start'  => '<tr>',
@@ -477,12 +474,110 @@ final class TableTest extends CIUnitTestCase
         $table = $this->table->generate();
 
         // Header
-        $this->assertStringContainsString('<th class="tdk">Name</th>', $table);
-        $this->assertStringContainsString('<th style="' . $this->styleTable . '" class="tdr">Amount</th>', $table);
+        $this->assertStringContainsString('<td class="tdk">Name</td>', $table);
+        $this->assertStringContainsString('<td style="' . $this->styleTable . '" class="tdr">Amount</td>', $table);
 
         // Footer
         $this->assertStringContainsString('<td class="thk">Total</td>', $table);
         $this->assertStringContainsString('<td style="background:cyan;color:white;" class="thr"><small class="text-light">IDR <span class="badge badge-info">10</span></small></td>', $table);
+    }
+
+    public function testGenerateThWithClassStyle()
+    {
+        $template = [
+            'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
+            'thead_open'         => '<thead>',
+            'thead_close'        => '</thead>',
+            'heading_row_start'  => '<tr>',
+            'heading_row_end'    => '</tr>',
+            'heading_cell_start' => '<th>',
+            'heading_cell_end'   => '</th>',
+            'tfoot_open'         => '<tfoot>',
+            'tfoot_close'        => '</tfoot>',
+            'footing_row_start'  => '<tr>',
+            'footing_row_end'    => '</tr>',
+            'footing_cell_start' => '<th>',
+            'footing_cell_end'   => '</th>',
+            'tbody_open'         => '<tbody>',
+            'tbody_close'        => '</tbody>',
+            'row_start'          => '<tr>',
+            'row_end'            => '</tr>',
+            'cell_start'         => '<td>',
+            'cell_end'           => '</td>',
+            'row_alt_start'      => '<tr>',
+            'row_alt_end'        => '</tr>',
+            'cell_alt_start'     => '<td>',
+            'cell_alt_end'       => '</td>',
+            'table_close'        => '</table>',
+        ];
+
+        $this->table->setTemplate($template);
+        $this->table->setHeading([['data' => 'Name', 'class' => 'tdk'], ['data' => 'Amount', 'class' => 'tdr', 'style' => $this->styleTable]]);
+
+        $this->table->addRow(['Fred', 1]);
+        $this->table->addRow(['Mary', 3]);
+        $this->table->addRow(['John', 6]);
+
+        $this->table->setFooting([['data' => 'Total', 'class' => 'thk'], ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'class' => 'thr', 'style' => 'background:cyan;color:white;']]);
+
+        $table = $this->table->generate();
+
+        // Header
+        $this->assertStringContainsString('<th class="tdk">Name</th>', $table);
+        $this->assertStringContainsString('<th style="' . $this->styleTable . '" class="tdr">Amount</th>', $table);
+
+        // Footer
+        $this->assertStringContainsString('<th class="thk">Total</th>', $table);
+        $this->assertStringContainsString('<th style="background:cyan;color:white;" class="thr"><small class="text-light">IDR <span class="badge badge-info">10</span></small></th>', $table);
+    }
+
+    public function testGenerateInvalidHeadingFooting()
+    {
+        $template = [
+            'table_open'         => '<table border="1" cellpadding="4" cellspacing="0">',
+            'thead_open'         => '<thead>',
+            'thead_close'        => '</thead>',
+            'heading_row_start'  => '<tr>',
+            'heading_row_end'    => '</tr>',
+            'heading_cell_start' => '<header>',
+            'heading_cell_end'   => '</header>',
+            'tfoot_open'         => '<tfoot>',
+            'tfoot_close'        => '</tfoot>',
+            'footing_row_start'  => '<tr>',
+            'footing_row_end'    => '</tr>',
+            'footing_cell_start' => '<footer>',
+            'footing_cell_end'   => '</footer>',
+            'tbody_open'         => '<tbody>',
+            'tbody_close'        => '</tbody>',
+            'row_start'          => '<tr>',
+            'row_end'            => '</tr>',
+            'cell_start'         => '<td>',
+            'cell_end'           => '</td>',
+            'row_alt_start'      => '<tr>',
+            'row_alt_end'        => '</tr>',
+            'cell_alt_start'     => '<td>',
+            'cell_alt_end'       => '</td>',
+            'table_close'        => '</table>',
+        ];
+
+        $this->table->setTemplate($template);
+        $this->table->setHeading([['data' => 'Name', 'class' => 'tdk'], ['data' => 'Amount', 'class' => 'tdr', 'style' => $this->styleTable]]);
+
+        $this->table->addRow(['Fred', 1]);
+        $this->table->addRow(['Mary', 3]);
+        $this->table->addRow(['John', 6]);
+
+        $this->table->setFooting([['data' => 'Total', 'class' => 'thk'], ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'class' => 'thr', 'style' => 'background:cyan;color:white;']]);
+
+        $table = $this->table->generate();
+
+        // Header
+        $this->assertStringContainsString('<header>Name</header>', $table);
+        $this->assertStringContainsString('<header>Amount</header>', $table);
+
+        // Footer
+        $this->assertStringContainsString('<footer>Total</footer>', $table);
+        $this->assertStringContainsString('<footer><small class="text-light">IDR <span class="badge badge-info">10</span></small></footer>', $table);
     }
 
     public function testGenerateEmptyCell()
