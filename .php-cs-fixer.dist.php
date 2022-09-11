@@ -96,6 +96,10 @@ $overrides = [
     'single_import_per_statement' => ['group_to_single_imports' => true],
     'single_line_comment_spacing' => true,
     'statement_indentation'       => true,
+    'types_spaces'                => [
+        'space'                => 'none',
+        'space_multiple_catch' => 'none',
+    ],
     // >>>>>>>>>>>>>>>>>>>>>>>>>
 ];
 
