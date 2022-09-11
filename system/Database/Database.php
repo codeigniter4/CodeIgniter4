@@ -127,7 +127,7 @@ class Database
      *
      * @return BaseConnection|BaseUtils|Forge
      */
-    protected function initDriver(string $driver, string $class, $argument)
+    protected function initDriver(string $driver, string $class, $argument): object
     {
         $class = $driver . '\\' . $class;
 
