@@ -470,7 +470,7 @@ final class TableTest extends CIUnitTestCase
         $this->table->addRow(['Mary', 3]);
         $this->table->addRow(['John', 6]);
 
-        $this->table->setFooting(['Total', ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'style' => $this->styleTable]]);
+        $this->table->setFooting(['Total', ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'style' => 'background:cyan;color:white;']]);
 
         $table = $this->table->generate();
 
@@ -480,7 +480,7 @@ final class TableTest extends CIUnitTestCase
 
         // Footer
         $this->assertStringContainsString('<td>Total</td>', $table);
-        $this->assertStringContainsString('<td style="' . $this->styleTable . '"><small class="text-light">IDR <span class="badge badge-info">10</span></small></td>', $table);
+        $this->assertStringContainsString('<td style="background:cyan;color:white;"><small class="text-light">IDR <span class="badge badge-info">10</span></small></td>', $table);
     }
 
     /**
@@ -522,13 +522,13 @@ final class TableTest extends CIUnitTestCase
         $this->table->addRow(['Mary', 3]);
         $this->table->addRow(['John', 6]);
 
-        $this->table->setFooting([['data' => 'Total', 'class' => 'tdk'], ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'style' => $this->styleTable]]);
+        $this->table->setFooting([['data' => 'Total', 'class' => 'tdk'], ['data' => '<small class="text-light">IDR <span class="badge badge-info">10</span></small>', 'style' => 'background:cyan;color:white;']]);
 
         $table = $this->table->generate();
 
         // Header
         $this->assertStringContainsString('<th>Name</th>', $table);
-        $this->assertStringContainsString('<th style="' . $this->styleTable . '" class="tdk">Amount</th>', $table);
+        $this->assertStringContainsString('<th style="background:cyan;color:white;" class="tdk">Amount</th>', $table);
 
         // Footer
         $this->assertStringContainsString('<td class="tdk">Total</td>', $table);
