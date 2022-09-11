@@ -18,10 +18,12 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Model;
@@ -879,6 +881,28 @@ if (! function_exists('remove_invisible_characters')) {
         } while ($count);
 
         return $str;
+    }
+}
+
+if (! function_exists('request')) {
+    /**
+     * Returns the shared Request.
+     *
+     * @return CLIRequest|IncomingRequest
+     */
+    function request()
+    {
+        return Services::request();
+    }
+}
+
+if (! function_exists('response')) {
+    /**
+     * Returns the shared Response.
+     */
+    function response(): Response
+    {
+        return Services::response();
     }
 }
 
