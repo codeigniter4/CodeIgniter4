@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -236,6 +237,78 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->seeInDatabase('type_test', [
             'type_boolean' => true,
+        ]);
+    }
+
+    public function testUpdateBatchTwoConstraints()
+    {
+        $data = [
+            [
+                'id'      => 1,
+                'name'    => 'Derek Jones Changes',
+                'country' => 'US',
+            ],
+            [
+                'id'      => 2,
+                'name'    => 'Ahmadinejad Does Not Change',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $this->db->table('user')->updateBatch($data, 'id, country');
+
+        $this->seeInDatabase('user', [
+            'name'    => 'Derek Jones Changes',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Ahmadinejad',
+            'country' => 'Iran',
+        ]);
+    }
+
+    public function testUpdateBatchConstraintsRawSqlandAlias()
+    {
+        $data = [
+            [
+                'id'      => 1,
+                'name'    => 'Derek Jones Changes',
+                'country' => 'US',
+            ],
+            [
+                'id'      => 2,
+                'name'    => 'Ahmadinejad Changes',
+                'country' => 'Iraq', // same length but different
+            ],
+            [
+                'id'      => 3,
+                'name'    => 'Richard A Causey Changes',
+                'country' => 'US',
+            ],
+            [
+                'id'      => 4,
+                'name'    => 'Chris Martin Does Not Change',
+                'country' => 'Greece', // not same length
+            ],
+        ];
+
+        $this->db->table('user')->setData($data, true, 'd')->updateBatch(null, ['id', new RawSql('LENGTH(db_user.country) = LENGTH(d.country)')]);
+
+        $this->seeInDatabase('user', [
+            'name'    => 'Derek Jones Changes',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Ahmadinejad Changes',
+            'country' => 'Iraq',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Richard A Causey Changes',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Chris Martin',
+            'country' => 'UK',
         ]);
     }
 }
