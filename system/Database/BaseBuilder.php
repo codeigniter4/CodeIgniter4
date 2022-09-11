@@ -1786,6 +1786,85 @@ class BaseBuilder
     }
 
     /**
+     * Allows a row or multiple rows to be set for batch inserts/upserts/updates
+     *
+     * @param array|object $set
+     * @param string|null  $alias alias for sql table
+     *
+     * @return $this|null
+     */
+    public function setData($set, ?bool $escape = null, ?string $alias = null)
+    {
+        if (empty($set)) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('setData() has no data.');
+            }
+
+            return null; // @codeCoverageIgnore
+        }
+
+        if ($alias !== null) {
+            $this->setAlias($alias);
+        }
+
+        // this allows to set just one row at a time
+        if (is_object($set) || (! is_array(current($set)) && ! is_object(current($set)))) {
+            $set = [$set];
+        }
+
+        $set = $this->batchObjectToArray($set);
+
+        $escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
+
+        $keys = array_keys($this->objectToArray(current($set)));
+        sort($keys);
+
+        foreach ($set as $row) {
+            $row = $this->objectToArray($row);
+            if (array_diff($keys, array_keys($row)) !== [] || array_diff(array_keys($row), $keys) !== []) {
+                // batchExecute() function returns an error on an empty array
+                $this->QBSet[] = [];
+
+                return null;
+            }
+
+            ksort($row); // puts $row in the same order as our keys
+
+            $clean = [];
+
+            foreach ($row as $rowValue) {
+                $clean[] = $escape ? $this->db->escape($rowValue) : $rowValue;
+            }
+
+            $row = $clean;
+
+            $this->QBSet[] = $row;
+        }
+
+        foreach ($keys as $k) {
+            $k = $this->db->protectIdentifiers($k, false);
+
+            if (! in_array($k, $this->QBKeys, true)) {
+                $this->QBKeys[] = $k;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set table alias for dataset sudo table.
+     */
+    public function setAlias(string $alias): BaseBuilder
+    {
+        if ($alias !== '') {
+            $this->QBOptions['alias'] = $this->db->protectIdentifiers($alias);
+        }
+
+        return $this;
+    }
+
+    /**
      * Sets update fields for updateBatch
      *
      * @param string|string[] $set
