@@ -2346,7 +2346,7 @@ class BaseBuilder
         $this->onConstraint($constraints);
 
         if ($set !== null) {
-            $this->setBatch($set, true);
+            $this->setData($set, true);
         }
 
         return $this->batchExecute('_updateBatch', $batchSize);
@@ -2439,41 +2439,17 @@ class BaseBuilder
      *
      * @param array|object $key
      *
-     * @return $this|null
-     *
      * @throws DatabaseException
+     *
+     * @return $this
      */
     public function setUpdateBatch($key, string $index = '', ?bool $escape = null)
     {
-        $key = $this->batchObjectToArray($key);
-
-        if (! is_array($key)) {
-            return null;
+        if ($index !== '') {
+            $this->onConstraint($index);
         }
 
-        if (! is_bool($escape)) {
-            $escape = $this->db->protectIdentifiers;
-        }
-
-        foreach ($key as $v) {
-            $indexSet = false;
-            $clean    = [];
-
-            foreach ($v as $k2 => $v2) {
-                if ($k2 === $index) {
-                    $indexSet = true;
-                }
-
-                $clean[$this->db->protectIdentifiers($k2, false)]
-                    = $escape ? $this->db->escape($v2) : $v2;
-            }
-
-            if ($indexSet === false) {
-                throw new DatabaseException('One or more rows submitted for batch updating is missing the specified index.');
-            }
-
-            $this->QBSet[] = $clean;
-        }
+        $this->setData($key, $escape);
 
         return $this;
     }
