@@ -1899,6 +1899,38 @@ class BaseBuilder
     }
 
     /**
+     * Sets constraints for batch upsert, update
+     *
+     * @param array|object|string $set a string of columns, key value pairs, or RawSql
+     *
+     * @return $this
+     */
+    public function onConstraint($set)
+    {
+        if (! empty($set)) {
+            if (is_string($set)) {
+                $set = explode(',', $set);
+
+                $set = array_map(static fn ($key) => trim($key), $set);
+            }
+
+            if ($set instanceof RawSql) {
+                $set = [$set];
+            }
+
+            foreach ($set as $key => $value) {
+                if (! ($value instanceof RawSql)) {
+                    $value = $this->db->protectIdentifiers($value);
+                }
+
+                $this->QBOptions['constraints'][$key] = $value;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Compiles batch insert strings and runs the queries
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
