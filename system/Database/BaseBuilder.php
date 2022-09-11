@@ -1736,6 +1736,56 @@ class BaseBuilder
     }
 
     /**
+     * Compiles batch insert/update/upsert strings and runs the queries
+     *
+     * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
+     */
+    protected function batchExecute(string $renderMethod, int $batchSize = 100)
+    {
+        if (empty($this->QBSet)) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('No data availble to process.');
+            }
+
+            return false; // @codeCoverageIgnore
+        }
+
+        $table = $this->db->protectIdentifiers($this->QBFrom[0], true, null, false);
+
+        $affectedRows = 0;
+        $savedSQL     = [];
+        $cnt          = count($this->QBSet);
+
+        // batch size 0 for unlimited
+        if ($batchSize === 0) {
+            $batchSize = $cnt;
+        }
+
+        for ($i = 0, $total = $cnt; $i < $total; $i += $batchSize) {
+            $QBSet = array_slice($this->QBSet, $i, $batchSize);
+
+            $sql = $this->{$renderMethod}($table, $this->QBKeys, $QBSet);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            if ($this->testMode) {
+                $savedSQL[] = $sql;
+            } else {
+                $this->db->query($sql, null, false);
+                $affectedRows += $this->db->affectedRows();
+            }
+        }
+
+        $this->resetWrite();
+
+        return $this->testMode ? $savedSQL : $affectedRows;
+    }
+
+    /**
      * Sets update fields for updateBatch
      *
      * @param string|string[] $set
