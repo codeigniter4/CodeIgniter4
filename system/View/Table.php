@@ -302,8 +302,8 @@ class Table
 
                 // Check tag with td or th
                 // If not will return null
-                preg_match('/(<)(td|th)/i', $temp, $valueHead);
-                $strHeading = count($valueHead) === 3 ? $valueHead[1] . $valueHead[2] : null;
+                preg_match('/td|th/i', $temp, $valueHead);
+                $strHeading = end($valueHead);
 
                 foreach ($heading as $key => $val) {
                     if ($key !== 'data') {
@@ -367,8 +367,8 @@ class Table
 
                 // Check tag with td or th
                 // If not will return null
-                preg_match('/(<)(td|th)/i', $temp, $valueFoot);
-                $strFooting = count($valueFoot) === 3 ? $valueFoot[1] . $valueFoot[2] : null;
+                preg_match('/td|th/i', $temp, $valueFoot);
+                $strFooting = end($valueFoot);
 
                 foreach ($footing as $key => $val) {
                     if ($key !== 'data') {
