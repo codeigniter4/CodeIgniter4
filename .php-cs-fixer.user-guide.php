@@ -94,6 +94,7 @@ $overrides = [
         'space'                => 'none',
         'space_multiple_catch' => 'none',
     ],
+    'whitespace_after_comma_in_array' => ['ensure_single_space' => true],
     // >>>>>>>>>>>>>>>>>>>>>>>>>
 ];
 
