@@ -210,12 +210,7 @@ a simple view. These are always treated as GET requests.
 
 .. literalinclude:: routing/065.php
 
-If you use placeholders within your route, you can access them within the view in a special variable, ``$_page``.
-They are available as an array, indexed in the order they appear in the route.
-
-.. literalinclude:: routing/066.php
-
-.. _view_routes:
+.. _view-routes:
 
 Views
 =====
@@ -224,6 +219,11 @@ If you just want to render a view out that has no logic associated with it, you 
 This method accepts the name of the view to load as the ``$to`` parameter.
 
 .. literalinclude:: routing/021.php
+
+If you use placeholders within your route, you can access them within the view in a special variable, ``$page``.
+They are available as an array, indexed in the order they appear in the route.
+
+.. literalinclude:: routing/066.php
 
 Mapping Multiple Routes
 =======================
