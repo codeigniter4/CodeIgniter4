@@ -302,9 +302,10 @@ class Table
 
                 foreach ($heading as $key => $val) {
                     if ($key !== 'data') {
-                        $headerElement = (bool) preg_match('/td/i', $temp) ? '<td' : '<th';
+                        preg_match('/td|th/i', $temp, $valueMatch);
+                        $strVal = end($valueMatch);
 
-                        $temp = str_replace($headerElement, $headerElement . ' ' . $key . '="' . $val . '"', $temp);
+                        $temp = $strVal ? str_replace($strVal, $strVal . ' ' . $key . '="' . $val . '"', $temp) : $temp;
                     }
                 }
 
@@ -364,9 +365,10 @@ class Table
 
                 foreach ($footing as $key => $val) {
                     if ($key !== 'data') {
-                        $footerElement = (bool) preg_match('/td/i', $temp) ? '<td' : '<th';
+                        preg_match('/td|th/i', $temp, $valueMatch);
+                        $strVal = end($valueMatch);
 
-                        $temp = str_replace($footerElement, $footerElement . ' ' . $key . '="' . $val . '"', $temp);
+                        $temp = $strVal ? str_replace($strVal, $strVal . ' ' . $key . '="' . $val . '"', $temp) : $temp;
                     }
                 }
 
