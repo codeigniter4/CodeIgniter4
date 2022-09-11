@@ -59,14 +59,8 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
-    protected function _updateBatch(string $table, array $values, string $index): string
+    protected function _updateBatch(string $table, array $keys, array $values): string
     {
-        // this is a work around until the rest of the platform is refactored
-        if ($index !== '') {
-            $this->QBOptions['constraints'] = [$index];
-        }
-        $keys = array_keys(current($values));
-
         $sql = $this->QBOptions['sql'] ?? '';
 
         // if this is the first iteration of batch then we need to build skeleton sql
