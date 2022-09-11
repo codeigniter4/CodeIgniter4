@@ -81,11 +81,11 @@ final class GetIndexDataTest extends CIUnitTestCase
         $row->type                  = 'PRIMARY';
         $expectedIndexes['PRIMARY'] = $row;
 
-        $row                               = new stdclass();
-        $row->name                         = 'testuser_email';
-        $row->fields                       = ['email'];
-        $row->type                         = 'UNIQUE';
-        $expectedIndexes['testuser_email'] = $row;
+        $row                                 = new stdclass();
+        $row->name                           = 'testuser_email_u';
+        $row->fields                         = ['email'];
+        $row->type                           = 'UNIQUE';
+        $expectedIndexes['testuser_email_u'] = $row;
 
         $row                                 = new stdclass();
         $row->name                           = 'testuser_country';
@@ -98,8 +98,8 @@ final class GetIndexDataTest extends CIUnitTestCase
         $this->assertSame($expectedIndexes['PRIMARY']->fields, $indexes['PRIMARY']->fields);
         $this->assertSame($expectedIndexes['PRIMARY']->type, $indexes['PRIMARY']->type);
 
-        $this->assertSame($expectedIndexes['testuser_email']->fields, $indexes['testuser_email']->fields);
-        $this->assertSame($expectedIndexes['testuser_email']->type, $indexes['testuser_email']->type);
+        $this->assertSame($expectedIndexes['testuser_email_u']->fields, $indexes['testuser_email_u']->fields);
+        $this->assertSame($expectedIndexes['testuser_email_u']->type, $indexes['testuser_email_u']->type);
 
         $this->assertSame($expectedIndexes['testuser_country']->fields, $indexes['testuser_country']->fields);
         $this->assertSame($expectedIndexes['testuser_country']->type, $indexes['testuser_country']->type);
