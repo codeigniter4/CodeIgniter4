@@ -71,7 +71,7 @@ class Database
     }
 
     /**
-     * Creates an Utils instance for the current database type.
+     * Creates an instance of Utils for the current database type.
      */
     public function loadUtils(ConnectionInterface $db): BaseUtils
     {
