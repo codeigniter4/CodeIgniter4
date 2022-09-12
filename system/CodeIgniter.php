@@ -850,6 +850,8 @@ class CodeIgniter
      */
     protected function createController()
     {
+        assert(is_string($this->controller));
+
         $class = new $this->controller();
         $class->initController($this->request, $this->response, Services::logger());
 
