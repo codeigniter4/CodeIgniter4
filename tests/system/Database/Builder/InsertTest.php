@@ -265,7 +265,7 @@ final class InsertTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
+        $this->expectExceptionMessage('No data availble to process.');
         $builder->insertBatch();
     }
 
@@ -274,7 +274,7 @@ final class InsertTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('insertBatch() called with no data');
+        $this->expectExceptionMessage('setData() has no data.');
         $builder->insertBatch([]);
     }
 }
