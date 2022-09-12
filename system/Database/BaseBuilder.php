@@ -1931,68 +1931,29 @@ class BaseBuilder
     }
 
     /**
+     * Converts value array of array to array of strings
+     */
+    protected function getValues(array $values): array
+    {
+        return array_map(static fn ($index) => '(' . implode(',', $index) . ')', $values);
+    }
+
+    /**
      * Compiles batch insert strings and runs the queries
+     *
+     * @param array|string|null $set a dataset or select query
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
-    public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100)
+    public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        if ($set === null) {
-            if (empty($this->QBSet)) {
-                if ($this->db->DBDebug) {
-                    throw new DatabaseException('You must use the "set" method to update an entry.');
-                }
-
-                return false; // @codeCoverageIgnore
-            }
-        } elseif (empty($set)) {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('insertBatch() called with no data');
-            }
-
-            return false; // @codeCoverageIgnore
+        if ($set !== null) {
+            $this->setBatch($set, $escape);
         }
 
-        $hasQBSet = $set === null;
-
-        $table = $this->QBFrom[0];
-
-        $affectedRows = 0;
-        $savedSQL     = [];
-
-        if ($hasQBSet) {
-            $set = $this->QBSet;
-        }
-
-        for ($i = 0, $total = count($set); $i < $total; $i += $batchSize) {
-            if ($hasQBSet) {
-                $QBSet = array_slice($this->QBSet, $i, $batchSize);
-            } else {
-                $this->setInsertBatch(array_slice($set, $i, $batchSize), '', $escape);
-                $QBSet = $this->QBSet;
-            }
-            $sql = $this->_insertBatch($this->db->protectIdentifiers($table, true, null, false), $this->QBKeys, $QBSet);
-
-            if ($this->testMode) {
-                $savedSQL[] = $sql;
-            } else {
-                $this->db->query($sql, null, false);
-                $affectedRows += $this->db->affectedRows();
-            }
-
-            if (! $hasQBSet) {
-                $this->resetRun([
-                    'QBSet'  => [],
-                    'QBKeys' => [],
-                ]);
-            }
-        }
-
-        $this->resetWrite();
-
-        return $this->testMode ? $savedSQL : $affectedRows;
+        return $this->batchExecute('_insertBatch', $batchSize);
     }
 
     /**
