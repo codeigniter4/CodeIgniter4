@@ -1950,7 +1950,7 @@ class BaseBuilder
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
         if ($set !== null) {
-            $this->setBatch($set, $escape);
+            $this->setData($set, $escape);
         }
 
         return $this->batchExecute('_insertBatch', $batchSize);
@@ -1961,7 +1961,23 @@ class BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $sql = 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table
+                . ' (' . implode(', ', $keys) . ")\n%s";
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = 'VALUES ' . implode(', ', $this->getValues($values));
+        }
+
+        return sprintf($sql, $data);
     }
 
     /**
@@ -2361,7 +2377,7 @@ class BaseBuilder
                 ' AND ',
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
-                    str_replace('%', '%%', $key) :
+                    str_replace('%', '%%', (string) $key) :
                     $table . '.' . $key . ' = ' . $alias . '.' . $key),
                     $constraints
                 )
@@ -2821,7 +2837,7 @@ class BaseBuilder
     /**
      * Takes an object as input and converts the class variables to array key/vals
      *
-     * @param object $object
+     * @param array|object $object
      *
      * @return array
      */
@@ -2845,7 +2861,7 @@ class BaseBuilder
     /**
      * Takes an object as input and converts the class variables to array key/vals
      *
-     * @param object $object
+     * @param array|object $object
      *
      * @return array
      */

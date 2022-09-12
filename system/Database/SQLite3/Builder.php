@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Builder for SQLite3
@@ -79,6 +80,8 @@ class Builder extends BaseBuilder
         if (version_compare($this->db->getVersion(), '3.33.0') >= 0) {
             return parent::_updateBatch($table, $keys, $values);
         }
+
+        $constraints = $this->QBOptions['constraints'] ?? [];
 
         if (count($constraints) > 1 || isset($this->QBOptions['fromQuery'])) {
             throw new DatabaseException('You are trying to use a feature which requires SQLite version 3.33 or higher.');
