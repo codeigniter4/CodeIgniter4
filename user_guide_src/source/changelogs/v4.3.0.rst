@@ -76,6 +76,12 @@ Validation
 
 The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty.
 
+Others
+------
+
+- The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
+- The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
+
 Enhancements
 ************
 
