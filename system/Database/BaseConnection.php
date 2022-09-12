@@ -355,7 +355,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed
+     * @return void
      *
      * @throws DatabaseException
      */

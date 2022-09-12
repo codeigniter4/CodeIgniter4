@@ -35,7 +35,7 @@ class Database
      * Parses the connection binds and returns an instance of the driver
      * ready to go.
      *
-     * @return mixed
+     * @return BaseConnection
      *
      * @throws InvalidArgumentException
      */
@@ -61,7 +61,7 @@ class Database
     /**
      * Creates a Forge instance for the current database type.
      */
-    public function loadForge(ConnectionInterface $db): object
+    public function loadForge(ConnectionInterface $db): Forge
     {
         if (! $db->connID) {
             $db->initialize();
@@ -71,9 +71,9 @@ class Database
     }
 
     /**
-     * Creates a Utils instance for the current database type.
+     * Creates an instance of Utils for the current database type.
      */
-    public function loadUtils(ConnectionInterface $db): object
+    public function loadUtils(ConnectionInterface $db): BaseUtils
     {
         if (! $db->connID) {
             $db->initialize();
@@ -124,6 +124,8 @@ class Database
      * Initialize database driver.
      *
      * @param array|object $argument
+     *
+     * @return BaseConnection|BaseUtils|Forge
      */
     protected function initDriver(string $driver, string $class, $argument): object
     {

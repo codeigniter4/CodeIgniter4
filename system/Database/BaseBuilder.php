@@ -2944,7 +2944,7 @@ class BaseBuilder
     /**
      * Returns the SQL string operator
      *
-     * @return mixed
+     * @return array|false|string
      */
     protected function getOperator(string $str, bool $list = false)
     {
