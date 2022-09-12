@@ -37,6 +37,16 @@ For example, the Exit code has been changed like the following:
 - If an uncaught ``CastException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``9``.
 - If an uncaught ``DatabaseException`` occurs, the Exit code is ``EXIT_DATABASE`` (= ``8``) instead of ``17``.
 
+Others
+------
+
+- The ``spark`` file has been changed due to a change in the processing of Spark commands.
+- ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
+- ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
+  is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
+- ``Forge::addUniqueKey()`` now applies ``_u`` suffix to the constraint name. This was done to ensure a unique index name.
+
 Method Signature Changes
 ========================
 
@@ -65,16 +75,6 @@ Validation
 ^^^^^^^^^^
 
 The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty.
-
-Others
-------
-
-- The ``spark`` file has been changed due to a change in the processing of Spark commands.
-- ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
-- ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
-- ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
-  is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
-- ``Forge::addUniqueKey()`` now applies ``_u`` suffix to the constraint name. This was done to ensure a unique index name.
 
 Enhancements
 ************
