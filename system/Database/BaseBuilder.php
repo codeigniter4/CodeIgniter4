@@ -1989,44 +1989,11 @@ class BaseBuilder
      */
     public function setInsertBatch($key, string $value = '', ?bool $escape = null)
     {
-        $key = $this->batchObjectToArray($key);
-
         if (! is_array($key)) {
-            $key = [$key => $value];
+            $key = [[$key => $value]];
         }
 
-        $escape = is_bool($escape) ? $escape : $this->db->protectIdentifiers;
-
-        $keys = array_keys($this->objectToArray(current($key)));
-        sort($keys);
-
-        foreach ($key as $row) {
-            $row = $this->objectToArray($row);
-            if (array_diff($keys, array_keys($row)) !== [] || array_diff(array_keys($row), $keys) !== []) {
-                // batch function above returns an error on an empty array
-                $this->QBSet[] = [];
-
-                return null;
-            }
-
-            ksort($row); // puts $row in the same order as our keys
-
-            $clean = [];
-
-            foreach ($row as $rowValue) {
-                $clean[] = $escape ? $this->db->escape($rowValue) : $rowValue;
-            }
-
-            $row = $clean;
-
-            $this->QBSet[] = '(' . implode(',', $row) . ')';
-        }
-
-        foreach ($keys as $k) {
-            $this->QBKeys[] = $this->db->protectIdentifiers($k, false);
-        }
-
-        return $this;
+        return $this->setData($key, $escape);
     }
 
     /**
