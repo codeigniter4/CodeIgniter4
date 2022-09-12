@@ -350,7 +350,6 @@ class Toolbar
      *
      * @param RequestInterface  $request
      * @param ResponseInterface $response
-     *
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
