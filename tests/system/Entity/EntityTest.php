@@ -617,6 +617,9 @@ final class EntityTest extends CIUnitTestCase
         $entity->tenth = "\xB1\x31";
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONSyntaxError()
     {
         $this->expectException(CastException::class);
@@ -630,6 +633,9 @@ final class EntityTest extends CIUnitTestCase
         }, null, Entity::class))('{ this is bad string');
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONAnotherErrorDepth()
     {
         $this->expectException(CastException::class);
@@ -644,6 +650,9 @@ final class EntityTest extends CIUnitTestCase
         }, null, Entity::class))($string);
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONControlCharCheck()
     {
         $this->expectException(CastException::class);
@@ -658,6 +667,9 @@ final class EntityTest extends CIUnitTestCase
         }, null, Entity::class))($string);
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONStateMismatch()
     {
         $this->expectException(CastException::class);
