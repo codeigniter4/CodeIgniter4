@@ -300,9 +300,14 @@ class Table
             foreach ($this->heading as $heading) {
                 $temp = $this->template['heading_cell_start'];
 
+                // Check tag with td or th
+                // If not will return null
+                preg_match('/(<)(td|th)/i', $temp, $valueHead);
+                $strHeading = count($valueHead) === 3 ? $valueHead[1] . $valueHead[2] : null;
+
                 foreach ($heading as $key => $val) {
                     if ($key !== 'data') {
-                        $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                        $temp = $strHeading ? str_replace($strHeading, $strHeading . ' ' . $key . '="' . $val . '"', $temp) : $temp;
                     }
                 }
 
@@ -360,9 +365,14 @@ class Table
             foreach ($this->footing as $footing) {
                 $temp = $this->template['footing_cell_start'];
 
+                // Check tag with td or th
+                // If not will return null
+                preg_match('/(<)(td|th)/i', $temp, $valueFoot);
+                $strFooting = count($valueFoot) === 3 ? $valueFoot[1] . $valueFoot[2] : null;
+
                 foreach ($footing as $key => $val) {
                     if ($key !== 'data') {
-                        $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                        $temp = $strFooting ? str_replace($strFooting, $strFooting . ' ' . $key . '="' . $val . '"', $temp) : $temp;
                     }
                 }
 
