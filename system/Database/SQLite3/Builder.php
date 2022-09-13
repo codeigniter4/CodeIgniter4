@@ -93,6 +93,8 @@ class Builder extends BaseBuilder
         $final = [];
 
         foreach ($values as $val) {
+            $val = array_combine($keys, $val);
+
             $ids[] = $val[$index];
 
             foreach (array_keys($val) as $field) {

@@ -242,6 +242,10 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchTwoConstraints()
     {
+        if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
+            $this->markTestSkipped('This SQLite version does not support this test.');
+        }
+
         $data = [
             [
                 'id'      => 1,
@@ -269,6 +273,10 @@ final class UpdateTest extends CIUnitTestCase
 
     public function testUpdateBatchConstraintsRawSqlandAlias()
     {
+        if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
+            $this->markTestSkipped('This SQLite version does not support this test.');
+        }
+
         $data = [
             [
                 'id'      => 1,
@@ -292,7 +300,12 @@ final class UpdateTest extends CIUnitTestCase
             ],
         ];
 
-        $this->db->table('user')->setData($data, true, 'd')->updateBatch(null, ['id', new RawSql("d.country LIKE 'U%'")]);
+        $this->db->table('user')->setData($data, true, 'd')->updateBatch(
+            null,
+            ['id', new RawSql($this->db->protectIdentifiers('d')
+            . '.' . $this->db->protectIdentifiers('country')
+            . " LIKE 'U%'")]
+        );
 
         $this->seeInDatabase('user', [
             'name'    => 'Derek Jones Changes',
