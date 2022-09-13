@@ -149,7 +149,7 @@ if (! function_exists('entities_to_ascii')) {
         if ($all) {
             return str_replace(
                 ['&amp;', '&lt;', '&gt;', '&quot;', '&apos;', '&#45;'],
-                ['&', '<', '>', '"', "'",  '-'],
+                ['&', '<', '>', '"', "'", '-'],
                 $str
             );
         }
