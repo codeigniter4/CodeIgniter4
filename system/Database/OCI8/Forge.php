@@ -283,7 +283,7 @@ class Forge extends BaseForge
         $sql = '';
 
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+            $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_fk';
 
             if (version_compare($this->db->getVersion(), '12.2.0', '<') && strlen($nameIndex) > 30) {
                 $nameIndex = substr($nameIndex, 0, 28) . mt_rand(10, 99);

@@ -1071,7 +1071,7 @@ class Forge
         ];
 
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_fk';
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
