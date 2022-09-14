@@ -1436,4 +1436,26 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
         $this->assertSame('Required *.foo', $this->validation->getError('*.foo'));
     }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/5942
+     */
+    public function testRequireWithoutWithWildCard()
+    {
+        $data = [
+            'a' => [
+                ['b' => '', 'c' => 2],
+                ['c' => ''],
+            ],
+        ];
+
+        $this->validation->setRules([
+            'a.*.c' => 'required_without[a.*.b]',
+        ])->run($data);
+
+        $this->assertSame(
+            'The a.*.c field is required when a.*.b is not present.',
+            $this->validation->getError('a.1.c')
+        );
+    }
 }
