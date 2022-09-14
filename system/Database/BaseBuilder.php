@@ -1949,8 +1949,14 @@ class BaseBuilder
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        if ($set !== null) {
+        if ($set !== null && $set !== []) {
             $this->setData($set, $escape);
+        } elseif (empty($this->QBSet)) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('insertBatch() has no data.');
+            }
+
+            return false; // @codeCoverageIgnore
         }
 
         return $this->batchExecute('_insertBatch', $batchSize);
@@ -2289,8 +2295,14 @@ class BaseBuilder
     {
         $this->onConstraint($constraints);
 
-        if ($set !== null) {
+        if ($set !== null && $set !== []) {
             $this->setData($set, true);
+        } elseif (empty($this->QBSet)) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('updateBatch() has no data.');
+            }
+
+            return false; // @codeCoverageIgnore
         }
 
         return $this->batchExecute('_updateBatch', $batchSize);

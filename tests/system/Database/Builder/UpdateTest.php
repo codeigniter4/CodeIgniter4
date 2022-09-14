@@ -290,7 +290,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('No data availble to process.');
+        $this->expectExceptionMessage('updateBatch() has no data.');
 
         $builder->updateBatch(null, 'id');
     }
@@ -323,7 +323,7 @@ final class UpdateTest extends CIUnitTestCase
         $builder = new BaseBuilder('jobs', $this->db);
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('setData() has no data.');
+        $this->expectExceptionMessage('updateBatch() has no data.');
 
         $builder->updateBatch([], 'id');
     }
