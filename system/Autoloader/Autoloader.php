@@ -11,7 +11,9 @@
 
 namespace CodeIgniter\Autoloader;
 
+use CodeIgniter\Exceptions\ConfigException;
 use Composer\Autoload\ClassLoader;
+use Composer\InstalledVersions;
 use Config\Autoload;
 use Config\Modules;
 use InvalidArgumentException;
@@ -137,7 +139,7 @@ class Autoloader
 
         // Should we load through Composer's namespaces, also?
         if ($modules->discoverInComposer) {
-            $this->loadComposerNamespaces($composer);
+            $this->loadComposerNamespaces($composer, $modules->composerPackages);
         }
 
         unset($composer);
@@ -360,20 +362,58 @@ class Autoloader
         return $cleanFilename;
     }
 
-    private function loadComposerNamespaces(ClassLoader $composer): void
+    private function loadComposerNamespaces(ClassLoader $composer, array $composerPackages): void
     {
-        $paths = $composer->getPrefixesPsr4();
+        $namespacePaths = $composer->getPrefixesPsr4();
 
         // Get rid of CodeIgniter so we don't have duplicates
-        if (isset($paths['CodeIgniter\\'])) {
-            unset($paths['CodeIgniter\\']);
+        if (isset($namespacePaths['CodeIgniter\\'])) {
+            unset($namespacePaths['CodeIgniter\\']);
+        }
+
+        $packageList = InstalledVersions::getAllRawData()[0]['versions'];
+
+        // Check config for $composerPackages.
+        $only    = $composerPackages['only'] ?? [];
+        $exclude = $composerPackages['exclude'] ?? [];
+        if ($only !== [] && $exclude !== []) {
+            throw new ConfigException('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
+        }
+
+        // Get install paths of packages to add namespace for auto-discovery.
+        $installPaths = [];
+        if ($only !== []) {
+            foreach ($packageList as $packageName => $data) {
+                if (in_array($packageName, $only, true) && isset($data['install_path'])) {
+                    $installPaths[] = $data['install_path'];
+                }
+            }
+        } else {
+            foreach ($packageList as $packageName => $data) {
+                if (! in_array($packageName, $exclude, true) && isset($data['install_path'])) {
+                    $installPaths[] = $data['install_path'];
+                }
+            }
         }
 
         $newPaths = [];
 
-        foreach ($paths as $key => $value) {
-            // Composer stores namespaces with trailing slash. We don't.
-            $newPaths[rtrim($key, '\\ ')] = $value;
+        foreach ($namespacePaths as $namespace => $srcPaths) {
+            $add = false;
+
+            foreach ($srcPaths as $path) {
+                foreach ($installPaths as $installPath) {
+                    if ($installPath === substr($path, 0, strlen($installPath))) {
+                        $add = true;
+                        break 2;
+                    }
+                }
+            }
+
+            if ($add) {
+                // Composer stores namespaces with trailing slash. We don't.
+                $newPaths[rtrim($namespace, '\\ ')] = $srcPaths;
+            }
         }
 
         $this->addNamespace($newPaths);
