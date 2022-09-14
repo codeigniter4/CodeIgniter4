@@ -1789,11 +1789,11 @@ class BaseBuilder
      * Allows a row or multiple rows to be set for batch inserts/upserts/updates
      *
      * @param array|object $set
-     * @param string|null  $alias alias for sql table
+     * @param string       $alias alias for sql table
      *
      * @return $this|null
      */
-    public function setData($set, ?bool $escape = null, ?string $alias = null)
+    public function setData($set, ?bool $escape = null, string $alias = '')
     {
         if (empty($set)) {
             if ($this->db->DBDebug) {
@@ -1803,9 +1803,7 @@ class BaseBuilder
             return null; // @codeCoverageIgnore
         }
 
-        if ($alias !== null) {
-            $this->setAlias($alias);
-        }
+        $this->setAlias($alias);
 
         // this allows to set just one row at a time
         if (is_object($set) || (! is_array(current($set)) && ! is_object(current($set)))) {
