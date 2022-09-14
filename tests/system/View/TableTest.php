@@ -28,10 +28,6 @@ final class TableTest extends CIUnitTestCase
     protected function setUp(): void
     {
         $this->table = new MockTable();
-
-        // Reset Header & Footer
-        $this->table->heading = [];
-        $this->table->footing = [];
     }
 
     // Setter Methods
