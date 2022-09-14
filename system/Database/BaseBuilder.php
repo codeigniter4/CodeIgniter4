@@ -1901,7 +1901,7 @@ class BaseBuilder
     /**
      * Sets constraints for batch upsert, update
      *
-     * @param array|object|string $set a string of columns, key value pairs, or RawSql
+     * @param array|RawSql|string $set a string of columns, key value pairs, or RawSql
      *
      * @return $this
      */
@@ -2285,7 +2285,7 @@ class BaseBuilder
      * Sets data and calls batchExecute to run queryies
      *
      * @param array|object|string|null $set         a dataset or select query
-     * @param array|string|null        $constraints
+     * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
