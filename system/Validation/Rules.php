@@ -271,8 +271,8 @@ class Rules
     }
 
     /**
-     * The field is required when all of the other fields are present
-     * in the data but not required.
+     * The field is required when any of the other required fields are not present
+     * in any data.
      *
      * Example (field is required when the id or email field is missing):
      *
