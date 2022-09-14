@@ -295,15 +295,13 @@ class Table
 
         // Is there a table heading to display?
         if (! empty($this->heading)) {
+            preg_match('/(<)(td|th)/i', $this->template['heading_cell_start'], $valueHead);
+            $strHeading = count($valueHead) === 3 ? $valueHead[1] . $valueHead[2] : null;
+
             $out .= $this->template['thead_open'] . $this->newline . $this->template['heading_row_start'] . $this->newline;
 
             foreach ($this->heading as $heading) {
                 $temp = $this->template['heading_cell_start'];
-
-                // Check tag with td or th
-                // If not will return null
-                preg_match('/(<)(td|th)/i', $temp, $valueHead);
-                $strHeading = count($valueHead) === 3 ? $valueHead[1] . $valueHead[2] : null;
 
                 foreach ($heading as $key => $val) {
                     if ($key !== 'data') {
@@ -360,15 +358,14 @@ class Table
 
         // Any table footing to display?
         if (! empty($this->footing)) {
+            // Check if there is a th or td tag, null if not
+            preg_match('/(<)(td|th)/i', $this->template['footing_cell_start'], $valueFoot);
+            $strFooting = count($valueFoot) === 3 ? $valueFoot[1] . $valueFoot[2] : null;
+
             $out .= $this->template['tfoot_open'] . $this->newline . $this->template['footing_row_start'] . $this->newline;
 
             foreach ($this->footing as $footing) {
                 $temp = $this->template['footing_cell_start'];
-
-                // Check tag with td or th
-                // If not will return null
-                preg_match('/(<)(td|th)/i', $temp, $valueFoot);
-                $strFooting = count($valueFoot) === 3 ? $valueFoot[1] . $valueFoot[2] : null;
 
                 foreach ($footing as $key => $val) {
                     if ($key !== 'data') {
