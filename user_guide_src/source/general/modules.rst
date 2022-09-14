@@ -110,6 +110,24 @@ Discovery and Composer
 Packages installed via Composer using PSR-4 namespaces will also be discovered by default.
 PSR-0 namespaced packages will not be detected.
 
+.. _modules-specify-composer-packages:
+
+Specify Composer Packages
+-------------------------
+
+.. versionadded:: 4.3.0
+
+To avoid wasting time scanning for irrelevant Composer packages, you can manually specify packages to discover by editing the ``$composerPackages`` variable in **app/Config/Modules.php**:
+
+.. literalinclude:: modules/013.php
+
+Alternatively, you can specify which packages to exclude from discovery.
+
+.. literalinclude:: modules/014.php
+
+Disable Composer Package Discovery
+----------------------------------
+
 If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
 by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``:
 
