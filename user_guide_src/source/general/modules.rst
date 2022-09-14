@@ -129,7 +129,7 @@ Disable Composer Package Discovery
 ----------------------------------
 
 If you do not want all of Composer's known directories to be scanned when locating files, you can turn this off
-by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``:
+by editing the ``$discoverInComposer`` variable in **app/Config/Modules.php**:
 
 .. literalinclude:: modules/004.php
 
