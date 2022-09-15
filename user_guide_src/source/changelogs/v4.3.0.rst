@@ -12,9 +12,6 @@ Release Date: Unreleased
 BREAKING
 ********
 
-- The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
-- The naming of foreign keys in OCI8 has changed. The previous suffix of ``_fk`` has changed to ``_foreign``.
-
 Behavior Changes
 ================
 
@@ -48,6 +45,7 @@ Others
 - ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
+- The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
 
 .. _v430-interface-changes:
 
@@ -121,6 +119,7 @@ Database
 - The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
 - Improved data returned by ``BaseConnection::getForeignKeyData()``. All DBMS return the same structure and use the same naming conventions.
+- ``Forge::addForeignKey()`` now includes a name parameter to manuall set foreign key names.
 
 Model
 =====

@@ -179,7 +179,7 @@ you may add them directly in forge:
 
 .. literalinclude:: forge/012.php
 
-You can specify the desired action for the "on delete" and "on update" properties of the constraint:
+You can specify the desired action for the "on delete" and "on update" properties of the constraint as well as the name:
 
 .. literalinclude:: forge/013.php
 
@@ -323,13 +323,14 @@ Class Reference
 
                 Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
-    .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = ''])
+    .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = '', $fkName = ''])
 
         :param    string|string[]    $fieldName: Name of a key field or an array of fields
         :param    string    $tableName: Name of a parent table
         :param    string|string[]    $tableField: Name of a parent table field or an array of fields
         :param    string    $onUpdate: Desired action for the "on update"
         :param    string    $onDelete: Desired action for the "on delete"
+        :param    string    $fkName: Name of foreign key
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
