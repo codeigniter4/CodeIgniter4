@@ -1071,11 +1071,9 @@ class Forge
         $sql = '';
 
         foreach ($this->foreignKeys as $fkey) {
-            if ($fkey['fkName'] !== '') {
-                $nameIndex = $fkey['fkName'];
-            } else {
-                $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_fk';
-            }
+            $nameIndex = $fkey['fkName'] !== '' ?
+            $fkey['fkName'] :
+            $table . '_' . implode('_', $fkey['field']) . '_fk';
 
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
