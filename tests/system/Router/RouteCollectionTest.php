@@ -827,6 +827,17 @@ final class RouteCollectionTest extends CIUnitTestCase
 
         $route = $routes->getRoutes('get')['here'];
         $this->assertIsCallable($route);
+
+        // Test that the route is not available in any other verb
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('*'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('options'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('head'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('post'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('put'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('delete'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('trace'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('connect'));
+        $this->assertArrayNotHasKey('here', $routes->getRoutes('cli'));
     }
 
     public function testEnvironmentRestricts()

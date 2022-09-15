@@ -220,7 +220,7 @@ This method accepts the name of the view to load as the ``$to`` parameter.
 
 .. literalinclude:: routing/021.php
 
-If you use placeholders within your route, you can access them within the view in a special variable, ``$page``.
+If you use placeholders within your route, you can access them within the view in a special variable, ``$segments``.
 They are available as an array, indexed in the order they appear in the route.
 
 .. literalinclude:: routing/066.php
