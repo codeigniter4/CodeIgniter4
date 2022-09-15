@@ -998,7 +998,9 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function view(string $from, string $view, ?array $options = null): RouteCollectionInterface
     {
-        $to = static fn (...$data) => view($view, ['page' => $data]);
+        $to = static fn (...$data) => Services::renderer()
+            ->setData(['segments' => $data], 'raw')
+            ->render($view, $options);
 
         $this->create('get', $from, $to, $options);
 
