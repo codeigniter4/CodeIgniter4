@@ -14,7 +14,7 @@ Enhancements:
 - Additional docs for getting started
 - CLI fixed to better handle complex arguments
 - Improvements to File class
-- New model() helper method for easy singleton Models.
+- New :php:func:`model()` helper method for easy singleton Models.
 - Tests completely reorganized to make app-level tests simpler out of the box.
 
 Repo changes:
