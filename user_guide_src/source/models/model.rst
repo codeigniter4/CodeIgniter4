@@ -16,6 +16,8 @@ It comes out of the box with helper
 methods for much of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
+.. _accessing-models:
+
 Accessing Models
 ****************
 
