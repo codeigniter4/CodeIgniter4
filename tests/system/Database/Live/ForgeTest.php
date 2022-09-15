@@ -756,6 +756,73 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_users', true);
     }
 
+    public function testNameForeignKey()
+    {
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->markTestSkipped('SQLite does not support naming foreign keys.');
+        }
+
+        $this->forge->dropTable('forge_test_invoices', true);
+        $this->forge->dropTable('forge_test_users', true);
+
+        $attributes = [];
+
+        if ($this->db->DBDriver === 'MySQLi') {
+            $attributes = ['ENGINE' => 'InnoDB'];
+        }
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+        $this->forge->addKey('id', true);
+        $this->forge->createTable('forge_test_users', true, $attributes);
+
+        $this->forge->addField([
+            'id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'users_id' => [
+                'type'       => 'INTEGER',
+                'constraint' => 11,
+            ],
+            'name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+            ],
+        ]);
+
+        $foreignKeyName = 'custom_foreign_key_name';
+
+        $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE', $foreignKeyName);
+
+        $tableName = 'forge_test_invoices';
+
+        $this->forge->createTable($tableName, true, $attributes);
+
+        $foreignKeyData = $this->db->getForeignKeyData($tableName);
+
+        // see if fk name is found
+        $this->assertArrayHasKey($foreignKeyName, $foreignKeyData);
+
+        $this->forge->dropForeignKey($tableName, $foreignKeyName);
+
+        $foreignKeyData = $this->db->getForeignKeyData($tableName);
+
+        $this->assertEmpty($foreignKeyData);
+
+        $this->forge->dropTable($tableName, true);
+        $this->forge->dropTable('forge_test_users', true);
+    }
+
     public function testAddColumn()
     {
         $this->forge->dropTable('forge_test_table', true);

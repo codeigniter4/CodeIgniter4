@@ -401,7 +401,7 @@ class Forge
      *
      * @throws DatabaseException
      */
-    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '')
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = '')
     {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
@@ -425,6 +425,7 @@ class Forge
             'referenceField' => $tableField,
             'onDelete'       => strtoupper($onDelete),
             'onUpdate'       => strtoupper($onUpdate),
+            'fkName'         => $fkName,
         ];
 
         return $this;
@@ -1071,7 +1072,12 @@ class Forge
         ];
 
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_fk';
+            if ($fkey['fkName'] !== '') {
+                $nameIndex = $fkey['fkName'];
+            } else {
+                $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_fk';
+            }
+
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
