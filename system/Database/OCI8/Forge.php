@@ -84,6 +84,13 @@ class Forge extends BaseForge
     protected $dropConstraintStr = 'ALTER TABLE %s DROP CONSTRAINT %s';
 
     /**
+     * Foreign Key Allowed Actions
+     *
+     * @var array
+     */
+    protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
+
+    /**
      * ALTER TABLE
      *
      * @param string       $alterType ALTER type
@@ -268,38 +275,6 @@ class Forge extends BaseForge
             $sql .= ' CASCADE CONSTRAINTS PURGE';
         } elseif ($sql !== true) {
             $sql .= ' PURGE';
-        }
-
-        return $sql;
-    }
-
-    /**
-     * Generates SQL to process foreign keys
-     */
-    protected function _processForeignKeys(string $table): string
-    {
-        $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
-
-        $sql = '';
-
-        foreach ($this->foreignKeys as $fkey) {
-            if ($fkey['fkName'] !== '') {
-                $nameIndex = $fkey['fkName'];
-            } else {
-                $nameIndex = $table . '_' . implode('_', $fkey['field']) . '_fk';
-            }
-
-            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
-            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
-            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
-
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
-
-            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
-            }
         }
 
         return $sql;

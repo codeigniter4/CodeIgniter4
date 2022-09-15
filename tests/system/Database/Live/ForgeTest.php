@@ -742,7 +742,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->addForeignKey('users_id', 'forge_test_users', 'id', 'CASCADE', 'CASCADE');
 
         $tableName      = 'forge_test_invoices';
-        $foreignKeyName = 'forge_test_invoices_users_id_fk';
+        $foreignKeyName = $this->db->DBPrefix . 'forge_test_invoices_users_id_fk';
 
         $this->forge->createTable($tableName, true, $attributes);
 

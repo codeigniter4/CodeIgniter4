@@ -177,6 +177,13 @@ class Forge
     protected $dropIndexStr = 'DROP INDEX %s ON %s';
 
     /**
+     * Foreign Key Allowed Actions
+     *
+     * @var array
+     */
+    protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
+
+    /**
      * Constructor.
      */
     public function __construct(BaseConnection $db)
@@ -481,7 +488,7 @@ class Forge
         $sql = sprintf(
             (string) $this->dropConstraintStr,
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName)
+            $this->db->escapeIdentifiers($foreignName)
         );
 
         if ($sql === '') {
@@ -1063,14 +1070,6 @@ class Forge
     {
         $sql = '';
 
-        $allowActions = [
-            'CASCADE',
-            'SET NULL',
-            'NO ACTION',
-            'RESTRICT',
-            'SET DEFAULT',
-        ];
-
         foreach ($this->foreignKeys as $fkey) {
             if ($fkey['fkName'] !== '') {
                 $nameIndex = $fkey['fkName'];
@@ -1086,11 +1085,11 @@ class Forge
             $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
             $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
-            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $this->fkAllowActions, true)) {
                 $sql .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
-            if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
+            if ($this->db->DBDriver !== 'OCI8' && $fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $this->fkAllowActions, true)) {
                 $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
         }
