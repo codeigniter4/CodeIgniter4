@@ -1123,7 +1123,7 @@ if (! function_exists('view')) {
      * NOTE: Does not provide any escaping of the data, so that must
      * all be handled manually by the developer.
      *
-     * @param array $options Unused - reserved for third-party extensions.
+     * @param array $options Options for saveData or third-party extensions.
      */
     function view(string $name, array $data = [], array $options = []): string
     {
