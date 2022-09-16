@@ -121,7 +121,7 @@ access to the current ``Request`` and ``Response`` objects, as well as the
 Next, there are two methods, one to view all news items, and one for a specific
 news item.
 
-Next, the ``model()`` function is used to create the **NewsModel** instance.
+Next, the :php:func:`model()` function is used to create the **NewsModel** instance.
 This is a helper function. You can read more about it :doc:`here </general/common_functions>`.
 You could also write ``$model = new NewsModel();``, if you don't use it.
 

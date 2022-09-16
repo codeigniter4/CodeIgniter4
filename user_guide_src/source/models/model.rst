@@ -16,13 +16,15 @@ It comes out of the box with helper
 methods for much of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
+.. _accessing-models:
+
 Accessing Models
 ****************
 
 Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
 location within the directory, like ``namespace App\Models``.
 
-You can access models within your classes by creating a new instance or using the ``model()`` helper function.
+You can access models within your classes by creating a new instance or using the :php:func:`model()` helper function.
 
 .. literalinclude:: model/001.php
 

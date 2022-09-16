@@ -83,7 +83,7 @@ The first is ``config()`` which returns a new instance of a Config class. The on
 model()
 =======
 
-The second function, ``model()`` returns a new instance of a Model class. The only required parameter is the class name:
+The second function, :php:func:`model()` returns a new instance of a Model class. The only required parameter is the class name:
 
 .. literalinclude:: factories/009.php
 

@@ -101,11 +101,13 @@ Service Accessors
 
 .. php:function:: model($name[, $getShared = true[, &$conn = null]])
 
-    :param string                   $name:
-    :param boolean                  $getShared:
-    :param ConnectionInterface|null $conn:
+    :param string                   $name: The model classname.
+    :param boolean                  $getShared: Whether to return a shared instance.
+    :param ConnectionInterface|null $conn: The database connection.
     :returns: More simple way of getting model instances
-    :rtype: mixed
+    :rtype: object
+
+    See also the :ref:`Using CodeIgniter's Model <accessing-models>`.
 
 .. php:function:: old($key[, $default = null,[, $escape = 'html']])
 
