@@ -46,6 +46,15 @@ To this:
 
 .. literalinclude:: troubleshooting/002.php
 
+No input file specified
+-----------------------
+
+If you see "No input file specified", try to change the rewrite rule like the following (to add ``?`` after ``index.php``):
+
+.. code-block:: apache
+
+    RewriteRule ^([\s\S]*)$ index.php?/$1 [L,NC,QSA]
+
 The tutorial gives 404 errors everywhere :(
 -------------------------------------------
 
