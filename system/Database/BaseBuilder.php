@@ -1931,7 +1931,7 @@ class BaseBuilder
     /**
      * Converts value array of array to array of strings
      */
-    protected function getValues(array $values): array
+    protected function formatValues(array $values): array
     {
         return array_map(static fn ($index) => '(' . implode(',', $index) . ')', $values);
     }
@@ -1970,7 +1970,7 @@ class BaseBuilder
         if (isset($this->QBOptions['fromQuery'])) {
             $data = $this->QBOptions['fromQuery'];
         } else {
-            $data = 'VALUES ' . implode(', ', $this->getValues($values));
+            $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
 
         return sprintf($sql, $data);

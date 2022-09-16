@@ -193,7 +193,7 @@ class Builder extends BaseBuilder
         if (isset($this->QBOptions['fromQuery'])) {
             $data = $this->QBOptions['fromQuery'];
         } else {
-            $data = 'VALUES ' . implode(', ', $this->getValues($values));
+            $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
 
         return sprintf($sql, $data);
