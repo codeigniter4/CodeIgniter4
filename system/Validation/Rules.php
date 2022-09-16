@@ -302,6 +302,11 @@ class Rules
             if ((strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) || (strpos($field, '.') !== false && empty(dot_array_search($field, $data)))) {
                 return false;
             }
+            if (strpos($field, '.') !== false && is_array(dot_array_search($field, $data))) {
+                foreach (dot_array_search($field, $data) as $value) {
+                    if (empty($value)) return false;
+                }
+            }
         }
 
         return true;
