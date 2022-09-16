@@ -157,41 +157,6 @@ class Forge extends BaseForge
     }
 
     /**
-     * Process indexes
-     */
-    protected function _processIndexes(string $table): array
-    {
-        $sqls = [];
-
-        for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
-            $this->keys[$i] = (array) $this->keys[$i];
-
-            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
-                if (! isset($this->fields[$this->keys[$i][$i2]])) {
-                    unset($this->keys[$i][$i2]);
-                }
-            }
-            if (count($this->keys[$i]) <= 0) {
-                continue;
-            }
-
-            if (in_array($i, $this->uniqueKeys, true)) {
-                $sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                    . ' ON ' . $this->db->escapeIdentifiers($table)
-                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
-
-                continue;
-            }
-
-            $sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                . ' ON ' . $this->db->escapeIdentifiers($table)
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
-        }
-
-        return $sqls;
-    }
-
-    /**
      * Field attribute TYPE
      *
      * Performs a data type mapping between different databases.
@@ -254,7 +219,7 @@ class Forge extends BaseForge
     /**
      * Drop Primary Key
      */
-    public function dropPrimaryKey(string $table): bool
+    public function dropPrimaryKey(string $table, string $keyName = ''): bool
     {
         $sqlTable = new Table($this->db, $this);
 
@@ -263,7 +228,7 @@ class Forge extends BaseForge
             ->run();
     }
 
-    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = '')
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = ''): BaseForge
     {
         if ($fkName === '') {
             return parent::addForeignKey($fieldName, $tableName, $tableField, $onUpdate, $onDelete, $fkName);

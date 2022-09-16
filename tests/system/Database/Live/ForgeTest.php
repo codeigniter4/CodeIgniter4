@@ -1047,6 +1047,8 @@ final class ForgeTest extends CIUnitTestCase
 
     public function testCompositeKey()
     {
+        $this->forge->dropTable('forge_test_1', true);
+
         $this->forge->addField([
             'id' => [
                 'type'           => 'INTEGER',

@@ -39,7 +39,7 @@ class Forge
     /**
      * List of keys.
      *
-     * @var array
+     * @phpstan-var array{}|list<array{fields: string[], keyName: string}>
      */
     protected $keys = [];
 
@@ -51,9 +51,9 @@ class Forge
     protected $uniqueKeys = [];
 
     /**
-     * List of primary keys.
+     * Primary keys.
      *
-     * @var array
+     * @phpstan-var array{}|array{fields: string[], keyName: string}
      */
     protected $primaryKeys = [];
 
@@ -309,14 +309,12 @@ class Forge
      *
      * @return Forge
      */
-    public function addKey($key, bool $primary = false, bool $unique = false)
+    public function addKey($key, bool $primary = false, bool $unique = false, string $keyName = '')
     {
         if ($primary) {
-            foreach ((array) $key as $one) {
-                $this->primaryKeys[] = $one;
-            }
+            $this->primaryKeys = ['fields' => (array) $key, 'keyName' => $keyName];
         } else {
-            $this->keys[] = $key;
+            $this->keys[] = ['fields' => (array) $key, 'keyName' => $keyName];
 
             if ($unique) {
                 $this->uniqueKeys[] = count($this->keys) - 1;
@@ -333,9 +331,9 @@ class Forge
      *
      * @return Forge
      */
-    public function addPrimaryKey($key)
+    public function addPrimaryKey($key, string $keyName = '')
     {
-        return $this->addKey($key, true);
+        return $this->addKey($key, true, false, $keyName);
     }
 
     /**
@@ -345,9 +343,9 @@ class Forge
      *
      * @return Forge
      */
-    public function addUniqueKey($key)
+    public function addUniqueKey($key, string $keyName = '')
     {
-        return $this->addKey($key, false, true);
+        return $this->addKey($key, false, true, $keyName);
     }
 
     /**
@@ -404,11 +402,9 @@ class Forge
      * @param string|string[] $fieldName
      * @param string|string[] $tableField
      *
-     * @return Forge
-     *
      * @throws DatabaseException
      */
-    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = '')
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = ''): Forge
     {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
@@ -441,17 +437,27 @@ class Forge
     /**
      * Drop Key
      *
-     * @return bool
-     *
      * @throws DatabaseException
      */
-    public function dropKey(string $table, string $keyName)
+    public function dropKey(string $table, string $keyName, bool $prefixKeyName = true): bool
     {
-        $sql = sprintf(
-            $this->dropIndexStr,
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $keyName),
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-        );
+        $keyName             = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
+        $table               = $this->db->escapeIdentifiers($this->db->DBPrefix . $table);
+        $dropKeyAsConstraint = $this->dropKeyAsConstraint($table, $keyName);
+
+        if ($dropKeyAsConstraint === true) {
+            $sql = sprintf(
+                $this->dropConstraintStr,
+                $table,
+                $keyName,
+            );
+        } else {
+            $sql = sprintf(
+                $this->dropIndexStr,
+                $keyName,
+                $table,
+            );
+        }
 
         if ($sql === '') {
             if ($this->db->DBDebug) {
@@ -465,14 +471,36 @@ class Forge
     }
 
     /**
+     * Checks if if key needs to be dropped as a constraint.
+     */
+    protected function dropKeyAsConstraint(string $table, string $constraintName): bool
+    {
+        $sql = $this->_dropKeyAsConstraint($table, $constraintName);
+
+        if ($sql === '') {
+            return false;
+        }
+
+        return $this->db->query($sql)->getResultArray() !== [];
+    }
+
+    /**
+     * Constructs sql to check if key is a constraint.
+     */
+    protected function _dropKeyAsConstraint(string $table, string $constraintName): string
+    {
+        return '';
+    }
+
+    /**
      * Drop Primary Key
      */
-    public function dropPrimaryKey(string $table): bool
+    public function dropPrimaryKey(string $table, string $keyName = ''): bool
     {
         $sql = sprintf(
             'ALTER TABLE %s DROP CONSTRAINT %s',
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-            $this->db->escapeIdentifiers('pk_' . $this->db->DBPrefix . $table),
+            ($keyName === '') ? $this->db->escapeIdentifiers('pk_' . $this->db->DBPrefix . $table) : $this->db->escapeIdentifiers($keyName),
         );
 
         return $this->db->query($sql);
@@ -1016,15 +1044,19 @@ class Forge
     {
         $sql = '';
 
-        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
-            if (! isset($this->fields[$this->primaryKeys[$i]])) {
-                unset($this->primaryKeys[$i]);
+        if (isset($this->primaryKeys['fields'])) {
+            for ($i = 0, $c = count($this->primaryKeys['fields']); $i < $c; $i++) {
+                if (! isset($this->fields[$this->primaryKeys['fields'][$i]])) {
+                    unset($this->primaryKeys['fields'][$i]);
+                }
             }
         }
 
-        if ($this->primaryKeys !== []) {
-            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
-                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
+        if (isset($this->primaryKeys['fields']) && $this->primaryKeys['fields'] !== []) {
+            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers(($this->primaryKeys['keyName'] === '' ?
+                'pk_' . $table :
+                $this->primaryKeys['keyName']))
+                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
         }
 
         return $sql;
@@ -1035,29 +1067,37 @@ class Forge
         $sqls = [];
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
-            $this->keys[$i] = (array) $this->keys[$i];
-
-            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
-                if (! isset($this->fields[$this->keys[$i][$i2]])) {
-                    unset($this->keys[$i][$i2]);
+            for ($i2 = 0, $c2 = count($this->keys[$i]['fields']); $i2 < $c2; $i2++) {
+                if (! isset($this->fields[$this->keys[$i]['fields'][$i2]])) {
+                    unset($this->keys[$i]['fields'][$i2]);
                 }
             }
 
-            if (count($this->keys[$i]) <= 0) {
+            if (count($this->keys[$i]['fields']) <= 0) {
                 continue;
             }
+
+            $keyName = $this->db->escapeIdentifiers(($this->keys[$i]['keyName'] === '') ?
+                $table . '_' . implode('_', $this->keys[$i]['fields']) :
+                $this->keys[$i]['keyName']);
 
             if (in_array($i, $this->uniqueKeys, true)) {
-                $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
-                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+                if ($this->db->DBDriver === 'SQLite3') {
+                    $sqls[] = 'CREATE UNIQUE INDEX ' . $keyName
+                        . ' ON ' . $this->db->escapeIdentifiers($table)
+                        . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
+                } else {
+                    $sqls[] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
+                        . ' ADD CONSTRAINT ' . $keyName
+                        . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
+                }
 
                 continue;
             }
 
-            $sqls[] = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+            $sqls[] = 'CREATE INDEX ' . $keyName
                 . ' ON ' . $this->db->escapeIdentifiers($table)
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
         }
 
         return $sqls;
