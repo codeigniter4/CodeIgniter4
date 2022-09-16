@@ -159,6 +159,7 @@ class BaseBuilder
      * and is reset by resetWrite()
      *
      * @phpstan-var array{
+     *   updateFieldsAdditional?: array,
      *   updateFields?: array,
      *   constraints?: array,
      *   fromQuery?: string,
@@ -1863,15 +1864,15 @@ class BaseBuilder
     }
 
     /**
-     * Sets update fields for updateBatch
+     * Sets update fields for upsert, update
      *
      * @param string|string[] $set
-     * @param bool            $addToDefault future use
+     * @param bool            $addToDefault adds update fields to the default ones
      * @param array|null      $ignore       ignores items in set
      *
      * @return $this
      */
-    protected function updateFields($set, bool $addToDefault = false, ?array $ignore = null)
+    public function updateFields($set, bool $addToDefault = false, ?array $ignore = null)
     {
         if (! empty($set)) {
             if (! is_array($set)) {
@@ -1888,13 +1889,20 @@ class BaseBuilder
                 }
 
                 if ($ignore === null || ! in_array($key, $ignore, true)) {
-                    $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
+                    if ($addToDefault) {
+                        $this->QBOptions['updateFieldsAdditional'][$this->db->protectIdentifiers($key)] = $value;
+                    } else {
+                        $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
+                    }
                 }
             }
-        }
 
-        return $this;
-    }
+            if ($addToDefault === false && isset($this->QBOptions['updateFieldsAdditional'], $this->QBOptions['updateFields'])) {
+                $this->QBOptions['updateFields'] = array_merge($this->QBOptions['updateFields'], $this->QBOptions['updateFieldsAdditional']);
+
+                unset($this->QBOptions['updateFieldsAdditional']);
+            }
+        }
 
     /**
      * Sets constraints for batch upsert, update
