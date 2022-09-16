@@ -32,6 +32,12 @@ $builder->setData($data)
     ->onConstraint(new RawSql('`mytable`.`title` = `u`.`title` AND `mytable`.`author` = `u`.`author`'))
     ->updateFields(['last_update' => new RawSql('CURRENT_TIMESTAMP()')], true)
     ->updateBatch();
+
+// OR
+foreach ($data as $row) {
+    $builder->setData($row);
+}
+$builder->onConstraint('title, author')->updateBatch();
 /*
  * Produces:
  * UPDATE `mytable`
