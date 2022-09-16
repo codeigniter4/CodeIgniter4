@@ -29,10 +29,13 @@ The following functions are available:
     :param    string    $domain: Cookie domain (usually: .yourdomain.com)
     :param    string    $path: Cookie path
     :param    string    $prefix: Cookie name prefix. If ``''``, the default from **app/Config/Cookie.php** is used
-    :param    bool    $secure: Whether to only send the cookie through HTTPS
-    :param    bool    $httpOnly: Whether to hide the cookie from JavaScript
+    :param    bool    $secure: Whether to only send the cookie through HTTPS. If ``null``, the default from **app/Config/Cookie.php** is used
+    :param    bool    $httpOnly: Whether to hide the cookie from JavaScript. If ``null``, the default from **app/Config/Cookie.php** is used
     :param    string    $sameSite: The value for the SameSite cookie parameter. If ``null``, the default from **app/Config/Cookie.php** is used
     :rtype:    void
+
+    .. note:: Prior to v4.2.7, the default values of ``$secure`` and ``$httpOnly`` were ``false``
+        due to a bug, and these values from **app/Config/Cookie.php** were never used.
 
     This helper function gives you friendlier syntax to set browser
     cookies. Refer to the :doc:`Response Library </outgoing/response>` for
