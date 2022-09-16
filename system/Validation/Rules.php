@@ -304,7 +304,9 @@ class Rules
             }
             if (strpos($field, '.') !== false && is_array(dot_array_search($field, $data))) {
                 foreach (dot_array_search($field, $data) as $value) {
-                    if (empty($value)) return false;
+                    if (empty($value)) {
+                        return false;
+                    }
                 }
             }
         }
