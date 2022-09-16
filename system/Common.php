@@ -1127,9 +1127,7 @@ if (! function_exists('view')) {
      */
     function view(string $name, array $data = [], array $options = []): string
     {
-        /**
-         * @var CodeIgniter\View\View $renderer
-         */
+        /** @var CodeIgniter\View\View $renderer */
         $renderer = Services::renderer();
 
         $saveData = config(View::class)->saveData;
