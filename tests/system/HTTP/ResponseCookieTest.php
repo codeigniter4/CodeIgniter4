@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
@@ -255,6 +256,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
     public function testCookieBlankSetSameSite()
     {
+        /** @var \Config\Cookie $config */
         $config           = config('Cookie');
         $config->samesite = '';
         $response         = new Response(new App());
@@ -312,6 +314,30 @@ final class ResponseCookieTest extends CIUnitTestCase
             'value'    => 'foo',
             'samesite' => 'Invalid',
         ]);
+    }
+
+    public function testSetCookieConfigCookieIsUsed()
+    {
+        /** @var \Config\Cookie $config */
+        $config           = config('Cookie');
+        $config->secure   = true;
+        $config->httponly = true;
+        $config->samesite = 'None';
+        Factories::injectMock('config', 'Cookie', $config);
+
+        $cookieAttr = [
+            'name'   => 'bar',
+            'value'  => 'foo',
+            'expire' => 9999,
+        ];
+        $response = new Response(new App());
+        $response->setCookie($cookieAttr);
+
+        $cookie  = $response->getCookie('bar');
+        $options = $cookie->getOptions();
+        $this->assertTrue($options['secure']);
+        $this->assertTrue($options['httponly']);
+        $this->assertSame('None', $options['samesite']);
     }
 
     public function testGetCookieStore()
