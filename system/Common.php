@@ -1130,7 +1130,9 @@ if (! function_exists('view')) {
         /** @var CodeIgniter\View\View $renderer */
         $renderer = Services::renderer();
 
-        $saveData = config(View::class)->saveData;
+        /** @var \CodeIgniter\Config\View $config */
+        $config   = config(View::class);
+        $saveData = $config->saveData;
 
         if (array_key_exists('saveData', $options)) {
             $saveData = (bool) $options['saveData'];
