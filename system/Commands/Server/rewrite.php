@@ -26,6 +26,9 @@ if (PHP_SAPI === 'cli') {
 
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
+// All request handle by index.php file.
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+
 // Front Controller path - expected to be in the default folder
 $fcpath = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR;
 
