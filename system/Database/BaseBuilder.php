@@ -1904,6 +1904,9 @@ class BaseBuilder
             }
         }
 
+        return $this;
+    }
+
     /**
      * Sets constraints for batch upsert, update
      *
