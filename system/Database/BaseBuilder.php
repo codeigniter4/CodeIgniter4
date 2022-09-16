@@ -1746,7 +1746,7 @@ class BaseBuilder
     {
         if (empty($this->QBSet)) {
             if ($this->db->DBDebug) {
-                throw new DatabaseException('No data availble to process.');
+                throw new DatabaseException(trim($renderMethod, '_') . '() has no data.');
             }
 
             return false; // @codeCoverageIgnore
@@ -1942,19 +1942,11 @@ class BaseBuilder
      * @param array|string|null $set a dataset or select query
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
-     *
-     * @throws DatabaseException
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
         if ($set !== null && $set !== []) {
             $this->setData($set, $escape);
-        } elseif (empty($this->QBSet)) {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('insertBatch() has no data.');
-            }
-
-            return false; // @codeCoverageIgnore
         }
 
         return $this->batchExecute('_insertBatch', $batchSize);
@@ -2286,8 +2278,6 @@ class BaseBuilder
      * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
-     *
-     * @throws DatabaseException
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
@@ -2295,12 +2285,6 @@ class BaseBuilder
 
         if ($set !== null && $set !== []) {
             $this->setData($set, true);
-        } elseif (empty($this->QBSet)) {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('updateBatch() has no data.');
-            }
-
-            return false; // @codeCoverageIgnore
         }
 
         return $this->batchExecute('_updateBatch', $batchSize);
