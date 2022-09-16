@@ -330,7 +330,7 @@ Class Reference
         :param    string|string[]    $tableField: Name of a parent table field or an array of fields
         :param    string    $onUpdate: Desired action for the "on update"
         :param    string    $onDelete: Desired action for the "on delete"
-        :param    string    $fkName: Name of foreign key *Does not work with SQLite
+        :param    string    $fkName: Name of foreign key. This does not work with SQLite
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
