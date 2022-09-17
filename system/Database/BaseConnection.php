@@ -1567,7 +1567,7 @@ abstract class BaseConnection implements ConnectionInterface
 
             // for sqlite generate name
             if ($name === null) {
-                $name = $row['table_name'] . '_' . implode('_', $row['column_name']) . '_fk';
+                $name = $row['table_name'] . '_' . implode('_', $row['column_name']) . '_foreign';
             }
 
             $obj                      = new stdClass();

@@ -1073,7 +1073,7 @@ class Forge
         foreach ($this->foreignKeys as $fkey) {
             $nameIndex = $fkey['fkName'] !== '' ?
             $fkey['fkName'] :
-            $table . '_' . implode('_', $fkey['field']) . '_fk';
+            $table . '_' . implode('_', $fkey['field']) . ($this->db->DBDriver === 'OCI8' ? '_fk' : '_foreign');
 
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
