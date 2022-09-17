@@ -32,5 +32,5 @@ See also :doc:`./backward_compatibility_notes`.
     upgrade_412
     upgrade_410
     upgrade_405
-    upgrade_404
+    
     upgrade_4xx
