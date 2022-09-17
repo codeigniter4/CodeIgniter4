@@ -187,8 +187,6 @@ class Table
     /**
      * Set "empty" cells
      *
-     * Can be passed as an array or discreet params
-     *
      * @param string $value
      *
      * @return Table
