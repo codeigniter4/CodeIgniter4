@@ -1081,9 +1081,9 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['code_company']->fields, ['code', 'company']);
             $this->assertSame($keys['code_company']->type, 'INDEX');
 
-            $this->assertSame($keys['code_active_u']->name, 'code_active_u');
-            $this->assertSame($keys['code_active_u']->fields, ['code', 'active']);
-            $this->assertSame($keys['code_active_u']->type, 'UNIQUE');
+            $this->assertSame($keys['code_active']->name, 'code_active');
+            $this->assertSame($keys['code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'Postgre') {
             $this->assertSame($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
             $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
@@ -1093,9 +1093,9 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
             $this->assertSame($keys['db_forge_test_1_code_company']->type, 'INDEX');
 
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->name, 'db_forge_test_1_code_active_u');
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->fields, ['code', 'active']);
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->type, 'UNIQUE');
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'SQLite3') {
             $this->assertSame($keys['PRIMARY']->name, 'PRIMARY');
             $this->assertSame($keys['PRIMARY']->fields, ['id']);
@@ -1105,9 +1105,9 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
             $this->assertSame($keys['db_forge_test_1_code_company']->type, 'INDEX');
 
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->name, 'db_forge_test_1_code_active_u');
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->fields, ['code', 'active']);
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->type, 'UNIQUE');
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'SQLSRV') {
             $this->assertSame($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
             $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
@@ -1117,9 +1117,9 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
             $this->assertSame($keys['db_forge_test_1_code_company']->type, 'INDEX');
 
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->name, 'db_forge_test_1_code_active_u');
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->fields, ['code', 'active']);
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->type, 'UNIQUE');
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         } elseif ($this->db->DBDriver === 'OCI8') {
             $this->assertSame($keys['pk_db_forge_test_1']->name, 'pk_db_forge_test_1');
             $this->assertSame($keys['pk_db_forge_test_1']->fields, ['id']);
@@ -1129,9 +1129,9 @@ final class ForgeTest extends CIUnitTestCase
             $this->assertSame($keys['db_forge_test_1_code_company']->fields, ['code', 'company']);
             $this->assertSame($keys['db_forge_test_1_code_company']->type, 'INDEX');
 
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->name, 'db_forge_test_1_code_active_u');
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->fields, ['code', 'active']);
-            $this->assertSame($keys['db_forge_test_1_code_active_u']->type, 'UNIQUE');
+            $this->assertSame($keys['db_forge_test_1_code_active']->name, 'db_forge_test_1_code_active');
+            $this->assertSame($keys['db_forge_test_1_code_active']->fields, ['code', 'active']);
+            $this->assertSame($keys['db_forge_test_1_code_active']->type, 'UNIQUE');
         }
 
         $this->forge->dropTable('forge_test_1', true);
