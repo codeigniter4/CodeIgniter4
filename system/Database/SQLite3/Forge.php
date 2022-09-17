@@ -176,8 +176,7 @@ class Forge extends BaseForge
             }
 
             if (in_array($i, $this->uniqueKeys, true)) {
-                $sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_'
-                    . implode('_', $this->keys[$i]) . '_u')
+                $sqls[] = 'CREATE UNIQUE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
                     . ' ON ' . $this->db->escapeIdentifiers($table)
                     . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
 
