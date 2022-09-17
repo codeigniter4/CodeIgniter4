@@ -187,9 +187,7 @@ class Table
     /**
      * Set "empty" cells
      *
-     * Can be passed as an array or discreet params
-     *
-     * @param mixed $value
+     * @param string $value
      *
      * @return Table
      */
@@ -256,7 +254,7 @@ class Table
     /**
      * Generate the table
      *
-     * @param mixed $tableData
+     * @param array|BaseResult|null $tableData
      *
      * @return string
      */
