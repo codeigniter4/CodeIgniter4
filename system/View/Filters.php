@@ -214,7 +214,6 @@ class Filters
      */
     public static function round(string $value, $precision = 2, string $type = 'common')
     {
-        $testGatau = 1337.0;
         if (! is_numeric($precision)) {
             $type      = $precision;
             $precision = 2;

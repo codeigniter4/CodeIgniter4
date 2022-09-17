@@ -146,8 +146,6 @@ class Parser extends View
      *
      * Parses pseudo-variables contained in the specified string,
      * replacing them with any data that has already been set.
-     *
-     * @param array $options
      */
     public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
