@@ -250,31 +250,35 @@ class Forge extends BaseForge
         $sqls = [];
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
-            $this->keys[$i] = (array) $this->keys[$i];
+            $this->keys[$i]['fields'] = (array) $this->keys[$i]['fields'];
 
-            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
-                if (! isset($this->fields[$this->keys[$i][$i2]])) {
-                    unset($this->keys[$i][$i2]);
+            for ($i2 = 0, $c2 = count($this->keys[$i]['fields']); $i2 < $c2; $i2++) {
+                if (! isset($this->fields[$this->keys[$i]['fields'][$i2]])) {
+                    unset($this->keys[$i]['fields'][$i2]);
                 }
             }
 
-            if (count($this->keys[$i]) <= 0) {
+            if (count($this->keys[$i]['fields']) <= 0) {
                 continue;
             }
+
+            $keyName = ($this->keys[$i]['keyName'] === '') ?
+                $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]['fields'])) :
+                $this->db->escapeIdentifiers($this->keys[$i]['keyName']);
 
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE '
                     . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
-                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                    . ' ADD CONSTRAINT ' . $keyName
+                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ');';
 
                 continue;
             }
 
             $sqls[] = 'CREATE INDEX '
-                . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                . $keyName
                 . ' ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ');';
         }
 
         return $sqls;
@@ -300,15 +304,17 @@ class Forge extends BaseForge
      */
     protected function _processPrimaryKeys(string $table): string
     {
-        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
-            if (! isset($this->fields[$this->primaryKeys[$i]])) {
-                unset($this->primaryKeys[$i]);
+        if (isset($this->primaryKeys['fields'])) {
+            for ($i = 0, $c = count($this->primaryKeys['fields']); $i < $c; $i++) {
+                if (! isset($this->fields[$this->primaryKeys['fields'][$i]])) {
+                    unset($this->primaryKeys['fields'][$i]);
+                }
             }
-        }
 
-        if ($this->primaryKeys !== []) {
-            $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
-                . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
+            if ($this->primaryKeys['fields'] !== []) {
+                $sql = ",\n\tCONSTRAINT " . ($this->primaryKeys['keyName'] === '' ? $this->db->escapeIdentifiers('pk_' . $table) : $this->primaryKeys['keyName'])
+                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
+            }
         }
 
         return $sql ?? '';
