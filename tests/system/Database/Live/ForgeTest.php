@@ -1140,6 +1140,70 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('forge_test_1', true);
     }
 
+    public function testSetKeyNames()
+    {
+        $this->forge->dropTable('forge_test_1', true);
+
+        $this->forge->addField([
+            'id' => [
+                'type'           => 'INTEGER',
+                'constraint'     => 3,
+                'auto_increment' => true,
+            ],
+            'code' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 40,
+            ],
+            'company' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 40,
+            ],
+            'active' => [
+                'type'       => 'INTEGER',
+                'constraint' => 1,
+            ],
+        ]);
+
+        $pk          = 'my_custom_pk';
+        $index       = 'my_custom_index';
+        $uniqueIndex = 'my_custom_unique_index';
+
+        if ($this->db->DBDriver === 'MySQLi' || $this->db->DBDriver === 'SQLite3') {
+            $pk = 'PRIMARY';
+        }
+
+        $this->forge->addPrimaryKey('id', $pk);
+        $this->forge->addKey(['code', 'company'], false, false, $index);
+        $this->forge->addUniqueKey(['code', 'active'], $uniqueIndex);
+        $this->forge->createTable('forge_test_1', true);
+
+        $keys = $this->db->getIndexData('forge_test_1');
+
+        // mysql must redefine auto increment which can only exist on a key
+        if ($this->db->DBDriver === 'MySQLi') {
+            $id = [
+                'id' => [
+                    'name'       => 'id',
+                    'type'       => 'INTEGER',
+                    'constraint' => 3,
+                ],
+            ];
+            $this->forge->modifyColumn('forge_test_1', $id);
+        }
+
+        $this->assertSame($keys[$pk]->name, $pk);
+        $this->assertSame($keys[$index]->name, $index);
+        $this->assertSame($keys[$uniqueIndex]->name, $uniqueIndex);
+
+        $this->forge->dropPrimaryKey('forge_test_1', $pk);
+        $this->forge->dropKey('forge_test_1', $index, false);
+        $this->forge->dropKey('forge_test_1', $uniqueIndex, false);
+
+        $this->assertCount(0, $this->db->getIndexData('forge_test_1'));
+
+        $this->forge->dropTable('forge_test_1', true);
+    }
+
     public function testDropColumn()
     {
         $this->forge->dropTable('forge_test_two', true);
