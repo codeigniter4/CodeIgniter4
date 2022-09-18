@@ -279,4 +279,14 @@ class Forge extends BaseForge
 
         return $sql;
     }
+
+    /**
+     * Constructs sql to check if key is a constraint.
+     */
+    protected function _dropKeyAsConstraint(string $table, string $constraintName): string
+    {
+        return "SELECT constraint_name FROM all_constraints WHERE table_name = '"
+            . trim($table, '"') . "' AND index_name = '"
+            . trim($constraintName, '"') . "'";
+    }
 }
