@@ -208,7 +208,7 @@ class Filters
      *  - ceil      always rounds up
      *  - floor     always rounds down
      *
-     * @param float|int|string $precision
+     * @param int|string $precision
      *
      * @return float|string
      */
