@@ -190,4 +190,56 @@ class Forge extends BaseForge
 
         return $sql;
     }
+
+    /**
+     * Drop Key
+     *
+     * @param mixed $prefixKeyName
+     *
+     * @return bool
+     *
+     * @throws DatabaseException
+     */
+    public function dropKey(string $table, string $keyName, bool $prefixKeyName = true)
+    {
+        $keyName = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
+
+        // check if key is a constraint
+        $sql = "SELECT con.conname
+               FROM pg_catalog.pg_constraint con
+                INNER JOIN pg_catalog.pg_class rel
+                           ON rel.oid = con.conrelid
+                INNER JOIN pg_catalog.pg_namespace nsp
+                           ON nsp.oid = connamespace
+               WHERE nsp.nspname = '{$this->db->schema}'
+                     AND rel.relname = '" . $this->db->DBPrefix . $table . "'
+                     AND con.conname = '" . trim($keyName, '"') . "'";
+                     
+        $constraint = $this->db->query($sql)->getResultArray();
+
+        $sql = sprintf(
+            $this->dropIndexStr,
+            $keyName,
+            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+        );
+
+        if (count($constraint) !== 0) {
+            $sqlString = $this->dropConstraintStr;
+            $sql       = sprintf(
+                $this->dropConstraintStr,
+                $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
+                $keyName,
+            );
+        }
+
+        if ($sql === '') {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('This feature is not available for the database you are using.');
+            }
+
+            return false;
+        }
+
+        return $this->db->query($sql);
+    }
 }
