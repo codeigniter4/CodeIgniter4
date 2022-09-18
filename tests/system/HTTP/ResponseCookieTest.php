@@ -256,7 +256,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
     public function testCookieBlankSetSameSite()
     {
-        /** @var \Config\Cookie $config */
+        /** @var CookieConfig $config */
         $config           = config('Cookie');
         $config->samesite = '';
         $response         = new Response(new App());
@@ -318,7 +318,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
     public function testSetCookieConfigCookieIsUsed()
     {
-        /** @var \Config\Cookie $config */
+        /** @var CookieConfig $config */
         $config           = config('Cookie');
         $config->secure   = true;
         $config->httponly = true;
