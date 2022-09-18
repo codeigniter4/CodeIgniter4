@@ -571,7 +571,7 @@ trait ResponseTrait
         /** @var CookieConfig|null $cookieConfig */
         $cookieConfig = config('Cookie');
 
-        if ($cookieConfig) {
+        if ($cookieConfig instanceof CookieConfig) {
             $secure ??= $cookieConfig->secure;
             $httponly ??= $cookieConfig->httponly;
             $samesite ??= $cookieConfig->samesite;
