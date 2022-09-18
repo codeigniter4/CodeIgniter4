@@ -225,7 +225,7 @@ If you run it without `--dry-run`, Rector will fix the code:
 ```
 
 [1]: https://github.com/phpstan/phpstan-src
-[2]: https://github.com/rector/rector
+[2]: https://github.com/rectorphp/rector
 
 ## How-to Guide
 
