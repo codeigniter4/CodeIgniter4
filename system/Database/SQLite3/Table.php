@@ -261,18 +261,18 @@ class Table
 
         // Unique/Index keys
         if (is_array($this->keys)) {
-            foreach ($this->keys as $key) {
+            foreach ($this->keys as $i => $key) {
                 switch ($key['type']) {
                     case 'primary':
                         $this->forge->addPrimaryKey($key['fields']);
                         break;
 
                     case 'unique':
-                        $this->forge->addUniqueKey($key['fields']);
+                        $this->forge->addUniqueKey($key['fields'], $i);
                         break;
 
                     case 'index':
-                        $this->forge->addKey($key['fields']);
+                        $this->forge->addKey($key['fields'], false, false, $i);
                         break;
                 }
             }
