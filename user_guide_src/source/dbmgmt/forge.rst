@@ -156,8 +156,9 @@ Adding Keys
 Generally speaking, you'll want your table to have Keys. This is
 accomplished with ``$forge->addKey('field')``. The optional second
 parameter set to true will make it a primary key and the third
-parameter set to true will make it a unique key. Note that ``addKey()``
-must be followed by a call to ``createTable()``.
+parameter set to true will make it a unique key. You may specify a name
+with the fourth parameter. Note that ``addKey()`` must be followed by a
+call to ``createTable()``.
 
 Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
@@ -340,27 +341,30 @@ Class Reference
 
         Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
 
-    .. php:method:: addKey($key[, $primary = false[, $unique = false]])
+    .. php:method:: addKey($key[, $primary = false[, $unique = false[, $keyName = '']]])
 
         :param    mixed    $key: Name of a key field or an array of fields
         :param    bool    $primary: Set to true if it should be a primary key or a regular one
         :param    bool    $unique: Set to true if it should be a unique key or a regular one
+        :param    string    $keyName: Name of key to be added
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
         Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
-    .. php:method:: addPrimaryKey($key)
+    .. php:method:: addPrimaryKey($key[, $keyName = ''])
 
         :param    mixed    $key: Name of a key field or an array of fields
+        :param    string    $keyName: Name of key to be added
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
         Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
-    .. php:method:: addUniqueKey($key)
+    .. php:method:: addUniqueKey($key[, $keyName = ''])
 
         :param    mixed    $key: Name of a key field or an array of fields
+        :param    string    $keyName: Name of key to be added
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
@@ -401,6 +405,25 @@ Class Reference
         :rtype:    bool
 
         Drops a database. Usage:  See `Creating and Dropping Databases`_.
+
+    .. php:method:: dropKey($table, $keyName[, $prefixKeyName = true])
+
+        :param    string    $table: Name of table that has key
+        :param    string    $keyName: Name of key to be dropped
+        :param    string    $prefixKeyName: If database prefix should be added to ``$keyName``
+        :returns:    true on success, false on failure
+        :rtype:    bool
+
+        Drops an index or unique index.
+
+    .. php:method:: dropPrimaryKey($table[, $keyName = ''])
+
+        :param    string    $table: Name of table to drop primary key
+        :param    string    $keyName: Name of primary key to be dropped
+        :returns:    true on success, false on failure
+        :rtype:    bool
+
+        Drops a primary key from a table.
 
     .. php:method:: dropTable($table_name[, $if_exists = false])
 

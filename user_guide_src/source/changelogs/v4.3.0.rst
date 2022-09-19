@@ -46,7 +46,6 @@ Others
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 - The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
-- :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
 
 .. _v430-interface-changes:
 
@@ -101,6 +100,10 @@ Others
 - The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
     - ``Debug\Exceptions::__construct()``
     - ``Services::exceptions()``
+- The method signature of ``Forge::dropKey()`` has changed. An additional optional parameter ``$prefixKeyName`` has been added.
+- The method signature of ``Forge::addKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
+- The method signature of ``Forge::addPrimaryKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
+- The method signature of ``Forge::addUniqueKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 
 Enhancements
 ************
@@ -113,7 +116,6 @@ Commands
 - Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 - Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 - Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
-- HTTP/3 is now considered a valid protocol.
 
 Testing
 =======
@@ -134,6 +136,8 @@ Database
 - Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
 - :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
+- Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
+- Fixed ``Forge::dropKey()`` to allow droping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
 
 Model
 =====
@@ -155,7 +159,6 @@ Helpers and Functions
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 - Added :php:func:`request()` and :php:func:`response()` functions.
-- Add :php:func:`decamelize()` function to convert camelCase to snake_case.
 
 Others
 ======
@@ -163,8 +166,7 @@ Others
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
 - Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 - Added new ``$routes->view()`` method to return a the view directly. See :ref:`View Routes <view-routes>`.
-- View Cells are now first-class citizens and can located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
-- Add ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
+- View Cells are now first-class citizens and can located in the **app/Cells** directory. See :ref:`View Cells <view-cells-app-cells>`.
 
 Changes
 *******
