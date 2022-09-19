@@ -138,4 +138,4 @@ Usage example:
 
 .. literalinclude:: metadata/009.php
 
-Foreign keys use the naming convention ``tableprefix_table_column1_column2_foreign``.
+Foreign keys use the naming convention ``tableprefix_table_column1_column2_foreign``. Oracle uses a slightly different suffix of ``_fk``.

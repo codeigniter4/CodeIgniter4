@@ -183,6 +183,8 @@ You can specify the desired action for the "on delete" and "on update" propertie
 
 .. literalinclude:: forge/013.php
 
+.. note:: SQLite does not support the naming of foreign keys. CodeIgniter will refer to them by ``prefix_table_column_foreign``.
+
 Creating a Table
 ================
 
