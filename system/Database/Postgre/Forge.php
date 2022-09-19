@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\Postgre;
 
-use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
 
@@ -71,14 +70,6 @@ class Forge extends BaseForge
      * @var Connection
      */
     protected $db;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(BaseConnection $db)
-    {
-        parent::__construct($db);
-    }
 
     /**
      * CREATE TABLE attributes
