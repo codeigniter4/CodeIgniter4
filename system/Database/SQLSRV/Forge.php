@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\SQLSRV;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
 
 /**
@@ -395,8 +396,6 @@ class Forge extends BaseForge
     /**
      * Drop Key
      *
-     * @param mixed $prefixKeyName
-     *
      * @return bool
      *
      * @throws DatabaseException
@@ -418,9 +417,8 @@ class Forge extends BaseForge
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
         );
 
-        if (count($constraint) !== 0) {
-            $sqlString = $this->dropConstraintStr;
-            $sql       = sprintf(
+        if ($constraint !== []) {
+            $sql = sprintf(
                 $this->dropConstraintStr,
                 $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
                 $keyName,
