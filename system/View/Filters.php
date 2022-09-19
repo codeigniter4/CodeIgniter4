@@ -62,7 +62,7 @@ class Filters
     /**
      * Returns the given default value if $value is empty or undefined.
      *
-     * @param int|string|null $value
+     * @param array|bool|float|int|object|resource|string|null $value
      */
     public static function default($value, string $default): string
     {
