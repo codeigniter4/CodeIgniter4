@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\Postgre;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Forge as BaseForge;
 
 /**
@@ -198,51 +197,18 @@ class Forge extends BaseForge
     }
 
     /**
-     * Drop Key
-     *
-     * @return bool
-     *
-     * @throws DatabaseException
+     * Constructs sql to check if key is a constraint.
      */
-    public function dropKey(string $table, string $keyName, bool $prefixKeyName = true)
+    protected function _dropKeyAsConstraint(string $table, string $constraintName): string
     {
-        $keyName = $this->db->escapeIdentifiers(($prefixKeyName === true ? $this->db->DBPrefix : '') . $keyName);
-
-        // check if key is a constraint
-        $sql = "SELECT con.conname
+        return "SELECT con.conname
                FROM pg_catalog.pg_constraint con
                 INNER JOIN pg_catalog.pg_class rel
                            ON rel.oid = con.conrelid
                 INNER JOIN pg_catalog.pg_namespace nsp
                            ON nsp.oid = connamespace
                WHERE nsp.nspname = '{$this->db->schema}'
-                     AND rel.relname = '" . $this->db->DBPrefix . $table . "'
-                     AND con.conname = '" . trim($keyName, '"') . "'";
-
-        $constraint = $this->db->query($sql)->getResultArray();
-
-        $sql = sprintf(
-            $this->dropIndexStr,
-            $keyName,
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-        );
-
-        if ($constraint !== []) {
-            $sql = sprintf(
-                $this->dropConstraintStr,
-                $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-                $keyName,
-            );
-        }
-
-        if ($sql === '') {
-            if ($this->db->DBDebug) {
-                throw new DatabaseException('This feature is not available for the database you are using.');
-            }
-
-            return false;
-        }
-
-        return $this->db->query($sql);
+                     AND rel.relname = '" . trim($table, '"') . "'
+                     AND con.conname = '" . trim($constraintName, '"') . "'";
     }
 }
