@@ -271,7 +271,7 @@ final class UpdateTest extends CIUnitTestCase
         ]);
     }
 
-    public function testUpdateBatchConstraintsRawSqlandAlias()
+    public function testUpdateBatchConstraintsRawSqlAndAlias()
     {
         if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
             $this->markTestSkipped('This SQLite version does not support this test.');
