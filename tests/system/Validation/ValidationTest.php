@@ -1444,6 +1444,7 @@ class ValidationTest extends CIUnitTestCase
     {
         $data = [
             'a' => [
+                ['b' => 1, 'c' => ''],
                 ['b' => '', 'c' => 2],
                 ['c' => ''],
             ],
@@ -1455,7 +1456,15 @@ class ValidationTest extends CIUnitTestCase
 
         $this->assertSame(
             'The a.*.c field is required when a.*.b is not present.',
+            $this->validation->getError('a.0.c')
+        );
+        $this->assertSame(
+            '',
             $this->validation->getError('a.1.c')
+        );
+        $this->assertSame(
+            'The a.*.c field is required when a.*.b is not present.',
+            $this->validation->getError('a.2.c')
         );
     }
 }
