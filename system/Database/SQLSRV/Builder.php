@@ -185,7 +185,7 @@ class Builder extends BaseBuilder
         // if this is the first iteration of batch then we need to build skeleton sql
         if ($sql === '') {
             $sql = 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table)
-                . ' (' . implode(', ', $keys) . ")\n%s";
+                . ' (' . implode(', ', $keys) . ")\n{:_table_:}";
 
             $this->QBOptions['sql'] = $sql;
         }
@@ -196,7 +196,7 @@ class Builder extends BaseBuilder
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**

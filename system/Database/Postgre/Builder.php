@@ -200,7 +200,7 @@ class Builder extends BaseBuilder
 
         // if this is the first iteration of batch then we need to build skeleton sql
         if ($sql === '') {
-            $sql = 'INSERT INTO ' . $table . '(' . implode(', ', $keys) . ")\n%s\n";
+            $sql = 'INSERT INTO ' . $table . '(' . implode(', ', $keys) . ")\n{:_table_:}\n";
 
             $sql .= $this->compileIgnore('insert');
 
@@ -213,7 +213,7 @@ class Builder extends BaseBuilder
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**

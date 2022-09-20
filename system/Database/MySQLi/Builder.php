@@ -83,7 +83,7 @@ class Builder extends BaseBuilder
 
             $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
 
-            $sql .= 'INNER JOIN (' . "\n%s";
+            $sql .= 'INNER JOIN (' . "\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 
@@ -91,7 +91,7 @@ class Builder extends BaseBuilder
                 ' AND ',
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
-                    str_replace('%', '%%', (string) $key) :
+                    $key :
                     $table . '.' . $key . ' = ' . $alias . '.' . $key),
                     $constraints
                 )
@@ -103,7 +103,7 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
-                        ' = ' . str_replace('%', '%%', $value) :
+                        ' = ' . $value :
                         ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
                     $updateFields
@@ -129,6 +129,6 @@ class Builder extends BaseBuilder
             ) . "\n";
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 }

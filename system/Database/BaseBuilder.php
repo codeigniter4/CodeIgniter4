@@ -1973,7 +1973,7 @@ class BaseBuilder
         // if this is the first iteration of batch then we need to build skeleton sql
         if ($sql === '') {
             $sql = 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $table
-                . ' (' . implode(', ', $keys) . ")\n%s";
+                . ' (' . implode(', ', $keys) . ")\n{:_table_:}";
 
             $this->QBOptions['sql'] = $sql;
         }
@@ -1984,7 +1984,7 @@ class BaseBuilder
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**
@@ -2334,14 +2334,14 @@ class BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
-                        ' = ' . str_replace('%', '%%', $value) :
+                        ' = ' . $value :
                         ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
                     $updateFields
                 )
             ) . "\n";
 
-            $sql .= 'FROM (' . "\n%s";
+            $sql .= 'FROM (' . "\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 
@@ -2349,7 +2349,7 @@ class BaseBuilder
                 ' AND ',
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
-                    str_replace('%', '%%', (string) $key) :
+                    $key :
                     $table . '.' . $key . ' = ' . $alias . '.' . $key),
                     $constraints
                 )
@@ -2374,7 +2374,7 @@ class BaseBuilder
             ) . "\n";
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**

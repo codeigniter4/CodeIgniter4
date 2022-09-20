@@ -76,7 +76,7 @@ class Builder extends BaseBuilder
             $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
 
             // ORA-00001 measures
-            $sql = 'INSERT' . ($hasPrimaryKey ? '' : ' ALL') . ' INTO ' . $table . ' (' . $insertKeys . ")\n%s";
+            $sql = 'INSERT' . ($hasPrimaryKey ? '' : ' ALL') . ' INTO ' . $table . ' (' . $insertKeys . ")\n{:_table_:}";
 
             $this->QBOptions['sql'] = $sql;
         }
@@ -97,7 +97,7 @@ class Builder extends BaseBuilder
             ) . " FROM DUAL\n";
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**
@@ -264,7 +264,7 @@ class Builder extends BaseBuilder
             // Oracle doesn't support ignore on updates so we will use MERGE
             $sql = 'MERGE INTO ' . $table . "\n";
 
-            $sql .= 'USING (' . "\n%s";
+            $sql .= 'USING (' . "\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 
@@ -272,7 +272,7 @@ class Builder extends BaseBuilder
                 ' AND ',
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
-                    str_replace('%', '%%', (string) $key) :
+                    $key :
                     $table . '.' . $key . ' = ' . $alias . '.' . $key),
                     $constraints
                 )
@@ -286,7 +286,7 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
-                    ' = ' . str_replace('%', '%%', $value) :
+                    ' = ' . $value :
                     ' = ' . $alias . '.' . $value),
                     array_keys($updateFields),
                     $updateFields
@@ -312,6 +312,6 @@ class Builder extends BaseBuilder
             ) . "\n";
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 }
