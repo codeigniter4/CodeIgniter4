@@ -17,6 +17,7 @@ use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\Pager\PagerInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\Cookie as CookieConfig;
 use Config\Services;
 use DateTime;
 use DateTimeZone;
@@ -544,8 +545,8 @@ trait ResponseTrait
      * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string              $path     Cookie path (default: '/')
      * @param string              $prefix   Cookie name prefix ('': the default prefix)
-     * @param bool                $secure   Whether to only transfer cookies via SSL
-     * @param bool                $httponly Whether only make the cookie accessible via HTTP (no javascript)
+     * @param bool|null           $secure   Whether to only transfer cookies via SSL
+     * @param bool|null           $httponly Whether only make the cookie accessible via HTTP (no javascript)
      * @param string|null         $samesite
      *
      * @return $this
@@ -557,8 +558,8 @@ trait ResponseTrait
         $domain = '',
         $path = '/',
         $prefix = '',
-        $secure = false,
-        $httponly = false,
+        $secure = null,
+        $httponly = null,
         $samesite = null
     ) {
         if ($name instanceof Cookie) {
@@ -567,8 +568,17 @@ trait ResponseTrait
             return $this;
         }
 
+        /** @var CookieConfig|null $cookieConfig */
+        $cookieConfig = config('Cookie');
+
+        if ($cookieConfig instanceof CookieConfig) {
+            $secure ??= $cookieConfig->secure;
+            $httponly ??= $cookieConfig->httponly;
+            $samesite ??= $cookieConfig->samesite;
+        }
+
         if (is_array($name)) {
-            // always leave 'name' in last place, as the loop will break otherwise, due to $$item
+            // always leave 'name' in last place, as the loop will break otherwise, due to ${$item}
             foreach (['samesite', 'value', 'expire', 'domain', 'path', 'prefix', 'secure', 'httponly', 'name'] as $item) {
                 if (isset($name[$item])) {
                     ${$item} = $name[$item];

@@ -370,10 +370,13 @@ The methods provided by the parent class that are available are:
         :param string $domain: Cookie domain
         :param string $path: Cookie path
         :param string $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used
-        :param bool $secure: Whether to only transfer the cookie through HTTPS
-        :param bool $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript)
+        :param bool $secure: Whether to only transfer the cookie through HTTPS. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
+        :param bool $httponly: Whether to only make the cookie accessible for HTTP requests (no JavaScript). If set to ``null``, the default value from **app/Config/Cookie.php** will be used
         :param string $samesite: The value for the SameSite cookie parameter. If set to ``''``, no SameSite attribute will be set on the cookie. If set to ``null``, the default value from **app/Config/Cookie.php** will be used
         :rtype: void
+
+        .. note:: Prior to v4.2.7, the default values of ``$secure`` and ``$httponly`` were ``false``
+            due to a bug, and these values from **app/Config/Cookie.php** were never used.
 
         Sets a cookie containing the values you specify. There are two ways to
         pass information to this method so that a cookie can be set: Array
