@@ -28,10 +28,8 @@ use InvalidArgumentException;
  * - Status code and reason phrase
  * - Headers
  * - Message body
- *
- * @mixin RedirectResponse
  */
-interface ResponseInterface
+interface ResponseInterface extends MessageInterface
 {
     /**
      * Constants for status codes.
