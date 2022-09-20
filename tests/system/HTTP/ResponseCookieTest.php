@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
@@ -135,11 +136,11 @@ final class ResponseCookieTest extends CIUnitTestCase
 
         $response->setCookie('foo', 'bar');
         $cookie = $response->getCookie('foo');
-        $this->assertFalse($cookie->isHTTPOnly());
-
-        $response->setCookie(['name' => 'bee', 'value' => 'bop', 'httponly' => true]);
-        $cookie = $response->getCookie('bee');
         $this->assertTrue($cookie->isHTTPOnly());
+
+        $response->setCookie(['name' => 'bee', 'value' => 'bop', 'httponly' => false]);
+        $cookie = $response->getCookie('bee');
+        $this->assertFalse($cookie->isHTTPOnly());
     }
 
     public function testCookieExpiry()
@@ -255,6 +256,7 @@ final class ResponseCookieTest extends CIUnitTestCase
 
     public function testCookieBlankSetSameSite()
     {
+        /** @var CookieConfig $config */
         $config           = config('Cookie');
         $config->samesite = '';
         $response         = new Response(new App());
@@ -312,6 +314,30 @@ final class ResponseCookieTest extends CIUnitTestCase
             'value'    => 'foo',
             'samesite' => 'Invalid',
         ]);
+    }
+
+    public function testSetCookieConfigCookieIsUsed()
+    {
+        /** @var CookieConfig $config */
+        $config           = config('Cookie');
+        $config->secure   = true;
+        $config->httponly = true;
+        $config->samesite = 'None';
+        Factories::injectMock('config', 'Cookie', $config);
+
+        $cookieAttr = [
+            'name'   => 'bar',
+            'value'  => 'foo',
+            'expire' => 9999,
+        ];
+        $response = new Response(new App());
+        $response->setCookie($cookieAttr);
+
+        $cookie  = $response->getCookie('bar');
+        $options = $cookie->getOptions();
+        $this->assertTrue($options['secure']);
+        $this->assertTrue($options['httponly']);
+        $this->assertSame('None', $options['samesite']);
     }
 
     public function testGetCookieStore()
