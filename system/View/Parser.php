@@ -121,7 +121,7 @@ class Parser extends View
         }
 
         if ($this->tempData === null) {
-            $this->tempData = $this->data; // @codeCoverageIgnore
+            $this->tempData = $this->data;
         }
 
         $template = file_get_contents($file);
@@ -447,7 +447,7 @@ class Parser extends View
         ob_start();
 
         if ($this->tempData === null) {
-            $this->tempData = $this->data; // @codeCoverageIgnore
+            $this->tempData = $this->data;
         }
 
         extract($this->tempData);
@@ -690,9 +690,9 @@ class Parser extends View
      * Converts an object to an array, respecting any
      * toArray() methods on an object.
      *
-     * @param array|float|int|object|string $value
+     * @param array|bool|float|int|object|string|null $value
      *
-     * @return array
+     * @return array|bool|float|int|string|null
      */
     protected function objectToArray($value)
     {
