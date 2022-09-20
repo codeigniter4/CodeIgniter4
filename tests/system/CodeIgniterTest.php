@@ -41,6 +41,9 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.1';
 
         $this->codeigniter = new MockCodeIgniter(new App());
+
+        $response = Services::response();
+        $response->pretend();
     }
 
     protected function tearDown(): void
@@ -60,7 +63,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 1;
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
@@ -82,7 +85,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('You want to see "about" page.', $output);
@@ -101,7 +104,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($routes);
+        $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Hello', $output);
@@ -120,7 +123,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($routes);
+        $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Oops', $output);
@@ -141,7 +144,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($routes);
+        $this->codeigniter->run($routes);
         $output = ob_get_clean();
 
         $this->assertStringContainsString('404 Override by Closure.', $output);
@@ -161,7 +164,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('You want to see "about" page.', $output);
@@ -186,7 +189,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString("You want to see 'about' page.", $output);
@@ -213,7 +216,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertSame('some text', $output);
@@ -234,7 +237,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('http://hellowworld.com', $output);
@@ -262,7 +265,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
@@ -276,7 +279,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/2.0';
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
@@ -291,7 +294,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         ob_start();
         @unlink('inexistent-file');
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
@@ -316,7 +319,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertNull($response->header('Location'));
 
         ob_start();
-        $codeigniter->useSafeOutput(true)->run();
+        $codeigniter->run();
         ob_get_clean();
 
         $this->assertSame('https://example.com/', $response->header('Location')->getValue());
@@ -339,7 +342,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame('http://example.com/pages/named', $response->header('Location')->getValue());
@@ -362,7 +365,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame('http://example.com/pages/uri', $response->header('Location')->getValue());
@@ -386,7 +389,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
         $this->assertSame('http://example.com/pages/notset', $response->header('Location')->getValue());
@@ -409,7 +412,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $response = $this->getPrivateProperty($this->codeigniter, 'response');
@@ -426,7 +429,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $this->assertArrayHasKey('_ci_previous_url', $_SESSION);
@@ -450,7 +453,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
@@ -474,7 +477,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         Services::injectMock('router', $router);
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $this->assertArrayNotHasKey('_ci_previous_url', $_SESSION);
@@ -491,7 +494,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['argc'] = 2;
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
@@ -510,7 +513,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes->cli('cli', '\Tests\Support\Controllers\Popcorn::index');
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Method Not Allowed', $output);
@@ -534,7 +537,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes->put('/', 'Home::index');
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $this->assertSame('put', Services::request()->getMethod());
@@ -558,7 +561,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         $routes->get('/', 'Home::index');
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         ob_get_clean();
 
         $this->assertSame('post', Services::request()->getMethod());
@@ -598,7 +601,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // The first response to be cached.
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('This is a test page', $output);
@@ -608,7 +611,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         // The second response from the Page cache.
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run();
+        $this->codeigniter->run();
         $output = ob_get_clean();
 
         $this->assertStringContainsString('This is a test page', $output);
@@ -666,7 +669,7 @@ final class CodeIgniterTest extends CIUnitTestCase
             Services::injectMock('router', $router);
 
             // Cache the page output using default caching function and $cacheConfig with value from the data provider
-            $this->codeigniter->useSafeOutput(true)->run();
+            $this->codeigniter->run();
             $this->codeigniter->cachePage($cacheConfig); // Cache the page using our own $cacheConfig confugration
         }
 

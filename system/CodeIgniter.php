@@ -138,6 +138,8 @@ class CodeIgniter
      * to keep from setting headers/cookies/etc
      *
      * @var bool
+     *
+     * @deprecated No longer used.
      */
     protected $useSafeOutput = false;
 
@@ -340,7 +342,7 @@ class CodeIgniter
                 return $response;
             }
 
-            $this->response->pretend($this->useSafeOutput)->send();
+            $this->response->send();
             $this->callExit(EXIT_SUCCESS);
 
             return;
@@ -371,6 +373,8 @@ class CodeIgniter
      * not complain when ini_set() function is used.
      *
      * @return $this
+     *
+     * @deprecated No longer used.
      */
     public function useSafeOutput(bool $safe = true)
     {
@@ -433,7 +437,7 @@ class CodeIgniter
 
         // If a ResponseInterface instance is returned then send it back to the client and stop
         if ($possibleResponse instanceof ResponseInterface) {
-            return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
+            return $returnResponse ? $possibleResponse : $possibleResponse->send();
         }
 
         if ($possibleResponse instanceof Request) {
@@ -1057,7 +1061,7 @@ class CodeIgniter
      */
     protected function sendResponse()
     {
-        $this->response->pretend($this->useSafeOutput)->send();
+        $this->response->send();
     }
 
     /**
