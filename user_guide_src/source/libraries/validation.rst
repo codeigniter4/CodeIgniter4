@@ -594,12 +594,15 @@ Custom errors can be returned as the fourth parameter, just as described above.
 Available Rules
 ***************
 
-The following is a list of all the native rules that are available to use:
-
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
 .. literalinclude:: validation/038.php
+
+Rules for General Use
+=====================
+
+The following is a list of all the native rules that are available to use:
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
