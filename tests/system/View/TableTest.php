@@ -429,6 +429,54 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>12345</td>', $table);
     }
 
+    public function testGenerateOther()
+    {
+        // Prepare the data
+        $data = [
+            [
+                ['data' => 'Fred', 'style' => 'cssFred'],
+                ['data' => 'Blue', 'style' => 'cssBlue'],
+                ['data' => 'Small', 'style' => 'cssSmall'],
+            ],
+            [
+                'Mary',
+                'Red',
+                'Large',
+            ],
+            [
+                'John',
+                'Green',
+                'Medium',
+            ],
+        ];
+
+        $this->table->setCaption('Awesome table');
+        $this->table->setHeading(['Name', 'Color', 'Size']);
+
+        $subtotal = 12345;
+
+        $this->table->setFooting('Subtotal', $subtotal);
+
+        $table = $this->table->generate($data);
+
+        // Test the table header
+        $this->assertStringContainsString('<th>Name</th>', $table);
+        $this->assertStringContainsString('<th>Color</th>', $table);
+        $this->assertStringContainsString('<th>Size</th>', $table);
+
+        // Test the first entry
+        $this->assertStringContainsString('<td style="cssFred">Fred</td>', $table);
+        $this->assertStringContainsString('<td style="cssBlue">Blue</td>', $table);
+        $this->assertStringContainsString('<td style="cssSmall">Small</td>', $table);
+
+        // Check for the caption
+        $this->assertStringContainsString('<caption>Awesome table</caption>', $table);
+
+        // Test the table footing
+        $this->assertStringContainsString('<td>Subtotal</td>', $table);
+        $this->assertStringContainsString('<td>12345</td>', $table);
+    }
+
     public function testGenerateTdWithClassStyle()
     {
         $template = [
