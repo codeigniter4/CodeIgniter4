@@ -676,9 +676,8 @@ required                No         Fails if the field is an empty array, empty
                                    string, null or false.
 required_with           Yes        The field is required when any of the other   required_with[field1,field2]
                                    required fields are present in the data.
-required_without        Yes        The field is required when all of the other   required_without[field1,field2]
-                                   fields are present in the data but not
-                                   required.
+required_without        Yes        The field is required when any of other       required_without[field1,field2]
+                                   fields do not pass ``required`` checks.
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
 timezone                No         Fails if field does match a timezone per
