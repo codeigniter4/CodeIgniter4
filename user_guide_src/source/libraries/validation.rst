@@ -728,6 +728,10 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
                                    HSBC Canada Card (hsbc)
 ======================= ========== ============================================= ===================================================
 
+.. note:: You can also use any native PHP functions that return boolean and
+    permit at least one parameter, the field data to validate.
+    The Validation library **never alters the data** to validate.
+
 .. _rules-for-file-uploads:
 
 Rules for File Uploads
@@ -772,7 +776,3 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
-
-.. note:: You can also use any native PHP functions that return boolean and
-    permit at least one parameter, the field data to validate.
-    The Validation library **never alters the data** to validate.
