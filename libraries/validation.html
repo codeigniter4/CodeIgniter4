@@ -336,7 +336,8 @@ helps minimize the amount of code you’ll write.</p>
 </li>
 <li><p><a class="reference internal" href="#available-rules" id="id37">Available Rules</a></p>
 <ul>
-<li><p><a class="reference internal" href="#rules-for-file-uploads" id="id38">Rules for File Uploads</a></p></li>
+<li><p><a class="reference internal" href="#rules-for-general-use" id="id38">Rules for General Use</a></p></li>
+<li><p><a class="reference internal" href="#rules-for-file-uploads" id="id39">Rules for File Uploads</a></p></li>
 </ul>
 </li>
 </ul>
@@ -1299,7 +1300,6 @@ for rules like <code class="docutils literal notranslate"><span class="pre">requ
 </section>
 <section id="available-rules">
 <h2><a class="toc-backref" href="#id37">Available Rules</a><a class="headerlink" href="#available-rules" title="Permalink to this headline"></a></h2>
-<p>The following is a list of all the native rules that are available to use:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Rule is a string; there must be <strong>no spaces</strong> between the parameters, especially the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule.
@@ -1317,6 +1317,9 @@ There can be no spaces before and after <code class="docutils literal notranslat
 <span class="p">]);</span>
 </pre></div>
 </div>
+<section id="rules-for-general-use">
+<h3><a class="toc-backref" href="#id38">Rules for General Use</a><a class="headerlink" href="#rules-for-general-use" title="Permalink to this headline"></a></h3>
+<p>The following is a list of all the native rules that are available to use:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 18%" />
@@ -1526,9 +1529,8 @@ required fields are present in the data.</p></td>
 </tr>
 <tr class="row-even"><td><p>required_without</p></td>
 <td><p>Yes</p></td>
-<td><p>The field is required when all of the other
-fields are present in the data but not
-required.</p></td>
+<td><p>The field is required when any of other
+fields do not pass <code class="docutils literal notranslate"><span class="pre">required</span></code> checks.</p></td>
 <td><p>required_without[field1,field2]</p></td>
 </tr>
 <tr class="row-odd"><td><p>string</p></td>
@@ -1622,8 +1624,15 @@ HSBC Canada Card (hsbc)</p></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also use any native PHP functions that return boolean and
+permit at least one parameter, the field data to validate.
+The Validation library <strong>never alters the data</strong> to validate.</p>
+</div>
+</section>
 <section id="rules-for-file-uploads">
-<span id="id2"></span><h3><a class="toc-backref" href="#id38">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id39">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Permalink to this headline"></a></h3>
 <p>These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
 Since the value of a file upload HTML field doesn’t exist, and is stored in the <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, the name of the input field will
 need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
@@ -1699,12 +1708,6 @@ an image based on the mime type.</p></td>
 </tbody>
 </table>
 <p>The file validation rules apply for both single and multiple file uploads.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can also use any native PHP functions that return boolean and
-permit at least one parameter, the field data to validate.
-The Validation library <strong>never alters the data</strong> to validate.</p>
-</div>
 </section>
 </section>
 </section>
@@ -1721,7 +1724,7 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 20, 2022.
+      <span class="lastupdated">Last updated on Sep 22, 2022.
       </span></p>
   </div>
 
