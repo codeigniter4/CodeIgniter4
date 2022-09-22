@@ -208,15 +208,18 @@ class Filters
      *  - ceil      always rounds up
      *  - floor     always rounds down
      *
-     * @param int|string $precision
+     * @param int|string $precision precision or type
      *
      * @return float|string
      */
     public static function round(string $value, $precision = 2, string $type = 'common')
     {
+        // In case that $precision is a type like `{ value1|round(ceil) }`
         if (! is_numeric($precision)) {
             $type      = $precision;
             $precision = 2;
+        } else {
+            $precision = (int) $precision;
         }
 
         switch ($type) {
