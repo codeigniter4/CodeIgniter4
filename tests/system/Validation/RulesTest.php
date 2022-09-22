@@ -639,4 +639,97 @@ class RulesTest extends CIUnitTestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider requiredWithoutMultipleProvider
+     */
+    public function testRequiredWithoutMultiple(string $foo, string $bar, string $baz, bool $result): void
+    {
+        $this->validation->setRules(['foo' => 'required_without[bar,baz]']);
+
+        $data = [
+            'foo' => $foo,
+            'bar' => $bar,
+            'baz' => $baz,
+        ];
+        $this->assertSame($result, $this->validation->run($data));
+    }
+
+    public function requiredWithoutMultipleProvider(): Generator
+    {
+        yield from [
+            'all empty' => [
+                '',
+                '',
+                '',
+                false,
+            ],
+            'foo is not empty' => [
+                'a',
+                '',
+                '',
+                true,
+            ],
+            'bar is not empty' => [
+                '',
+                'b',
+                '',
+                false,
+            ],
+            'baz is not empty' => [
+                '',
+                '',
+                'c',
+                false,
+            ],
+            'bar,baz are not empty' => [
+                '',
+                'b',
+                'c',
+                true,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider requiredWithoutMultipleWithoutFieldsProvider
+     */
+    public function testRequiredWithoutMultipleWithoutFields(array $data, bool $result): void
+    {
+        $this->validation->setRules(['foo' => 'required_without[bar,baz]']);
+
+        $this->assertSame($result, $this->validation->run($data));
+    }
+
+    public function requiredWithoutMultipleWithoutFieldsProvider(): Generator
+    {
+        yield from [
+            'baz is missing' => [
+                [
+                    'foo' => '',
+                    'bar' => '',
+                ],
+                false,
+            ],
+            'bar,baz are missing' => [
+                [
+                    'foo' => '',
+                ],
+                false,
+            ],
+            'bar is not empty' => [
+                [
+                    'foo' => '',
+                    'bar' => 'b',
+                ],
+                false,
+            ],
+            'foo is not empty' => [
+                [
+                    'foo' => 'a',
+                ],
+                true,
+            ],
+        ];
+    }
 }
