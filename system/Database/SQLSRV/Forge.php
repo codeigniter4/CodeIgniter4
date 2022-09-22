@@ -262,9 +262,9 @@ class Forge extends BaseForge
                 continue;
             }
 
-            $keyName = ($this->keys[$i]['keyName'] === '') ?
-                $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]['fields'])) :
-                $this->db->escapeIdentifiers($this->keys[$i]['keyName']);
+            $keyName = $this->db->escapeIdentifiers(($this->keys[$i]['keyName'] === '') ?
+                $table . '_' . implode('_', $this->keys[$i]['fields']) :
+                $this->keys[$i]['keyName']);
 
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE '
@@ -312,7 +312,11 @@ class Forge extends BaseForge
             }
 
             if ($this->primaryKeys['fields'] !== []) {
-                $sql = ",\n\tCONSTRAINT " . ($this->primaryKeys['keyName'] === '' ? $this->db->escapeIdentifiers('pk_' . $table) : $this->primaryKeys['keyName'])
+                $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers(
+                    ($this->primaryKeys['keyName'] === '' ?
+                    'pk_' . $table :
+                    $this->primaryKeys['keyName'])
+                )
                     . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
             }
         }
