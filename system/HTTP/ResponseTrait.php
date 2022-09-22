@@ -252,7 +252,7 @@ trait ResponseTrait
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @return mixed|string
+     * @return bool|string|null
      *
      * @throws InvalidArgumentException If the body property is not array.
      */
@@ -284,7 +284,7 @@ trait ResponseTrait
     /**
      * Retrieves the current body into XML and returns it.
      *
-     * @return mixed|string
+     * @return bool|string|null
      *
      * @throws InvalidArgumentException If the body property is not array.
      */
@@ -430,7 +430,7 @@ trait ResponseTrait
     /**
      * Sends the output to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function send()
     {

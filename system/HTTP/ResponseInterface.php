@@ -128,7 +128,7 @@ interface ResponseInterface extends MessageInterface
      *                       provided status code; if none is provided, will
      *                       default to the IANA name.
      *
-     * @return self
+     * @return $this
      *
      * @throws InvalidArgumentException For invalid status code arguments.
      */
@@ -151,7 +151,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Sets the date header
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setDate(DateTime $date);
 
@@ -162,6 +162,8 @@ interface ResponseInterface extends MessageInterface
      * preferably, an instance of DateTime.
      *
      * @param DateTime|string $date
+     *
+     * @return $this
      */
     public function setLastModified($date);
 
@@ -170,7 +172,7 @@ interface ResponseInterface extends MessageInterface
      *
      * @see http://tools.ietf.org/html/rfc5988
      *
-     * @return Response
+     * @return $this
      *
      * @todo Recommend moving to Pager
      */
@@ -180,7 +182,7 @@ interface ResponseInterface extends MessageInterface
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setContentType(string $mime, string $charset = 'UTF-8');
 
@@ -200,7 +202,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @return mixed|string
+     * @return bool|string|null
      *
      * @throws InvalidArgumentException If the body property is not array.
      */
@@ -218,7 +220,7 @@ interface ResponseInterface extends MessageInterface
     /**
      * Retrieves the current body into XML and returns it.
      *
-     * @return mixed|string
+     * @return bool|string|null
      *
      * @throws InvalidArgumentException If the body property is not array.
      */
@@ -233,6 +235,8 @@ interface ResponseInterface extends MessageInterface
     /**
      * Sets the appropriate headers to ensure this response
      * is not cached by the browsers.
+     *
+     * @return $this
      */
     public function noCache();
 
@@ -260,7 +264,7 @@ interface ResponseInterface extends MessageInterface
      *  - proxy-revalidate
      *  - no-transform
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function setCache(array $options = []);
 
@@ -271,21 +275,21 @@ interface ResponseInterface extends MessageInterface
     /**
      * Sends the output to the browser.
      *
-     * @return ResponseInterface
+     * @return $this
      */
     public function send();
 
     /**
      * Sends the headers of this HTTP request to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function sendHeaders();
 
     /**
      * Sends the Body of the message to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function sendBody();
 
