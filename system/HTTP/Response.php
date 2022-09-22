@@ -193,6 +193,8 @@ class Response extends Message implements MessageInterface, ResponseInterface
      * should not be relied on outside of internal testing.
      *
      * @return $this
+     *
+     * @testTag only available to test code
      */
     public function pretend(bool $pretend = true)
     {
