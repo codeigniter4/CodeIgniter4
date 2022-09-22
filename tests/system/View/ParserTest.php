@@ -265,6 +265,71 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame("Super Heroes\nTom Dick Henry ", $this->parser->renderString($template));
     }
 
+    public function testParseIntegerPositive()
+    {
+        $data = [
+            'title'  => 'Count:',
+            'amount' => 5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Count: 5', $this->parser->renderString($template));
+    }
+
+    public function testParseIntegerNegative()
+    {
+        $data = [
+            'title'  => 'Count:',
+            'amount' => -5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Count: -5', $this->parser->renderString($template));
+    }
+
+    public function testParseFloatPositive()
+    {
+        $data = [
+            'title'  => 'Rate:',
+            'amount' => 5.5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Rate: 5.5', $this->parser->renderString($template));
+    }
+
+    public function testParseFloatNegative()
+    {
+        $data = [
+            'title'  => 'Rate:',
+            'amount' => -5.5,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Rate: -5.5', $this->parser->renderString($template));
+    }
+
+    public function testParseNull()
+    {
+        $data = [
+            'title'  => 'Ticks:',
+            'amount' => null,
+        ];
+
+        $template = '{title} {amount}';
+
+        $this->parser->setData($data, 'html');
+        $this->assertSame('Ticks: ', $this->parser->renderString($template));
+    }
+
     public function testParseLoopEntityProperties()
     {
         $power = new class () extends Entity {
