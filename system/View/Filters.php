@@ -30,7 +30,7 @@ class Filters
     /**
      * Formats a date into the given $format.
      *
-     * @param mixed $value
+     * @param int|string|null $value
      */
     public static function date($value, string $format): string
     {
@@ -48,7 +48,7 @@ class Filters
      * Example:
      *      my_date|date_modify(+1 day)
      *
-     * @param string $value
+     * @param int|string|null $value
      *
      * @return false|int
      */
@@ -62,7 +62,7 @@ class Filters
     /**
      * Returns the given default value if $value is empty or undefined.
      *
-     * @param mixed $value
+     * @param array|bool|float|int|object|resource|string|null $value
      */
     public static function default($value, string $default): string
     {
@@ -208,15 +208,18 @@ class Filters
      *  - ceil      always rounds up
      *  - floor     always rounds down
      *
-     * @param mixed $precision
+     * @param int|string $precision precision or type
      *
      * @return float|string
      */
     public static function round(string $value, $precision = 2, string $type = 'common')
     {
+        // In case that $precision is a type like `{ value1|round(ceil) }`
         if (! is_numeric($precision)) {
             $type      = $precision;
             $precision = 2;
+        } else {
+            $precision = (int) $precision;
         }
 
         switch ($type) {

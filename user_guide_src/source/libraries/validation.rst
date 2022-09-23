@@ -596,12 +596,15 @@ Custom errors can be returned as the fourth parameter, just as described above.
 Available Rules
 ***************
 
-The following is a list of all the native rules that are available to use:
-
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
 .. literalinclude:: validation/038.php
+
+Rules for General Use
+=====================
+
+The following is a list of all the native rules that are available to use:
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
@@ -678,9 +681,8 @@ required                No         Fails if the field is an empty array, empty
                                    string, null or false.
 required_with           Yes        The field is required when any of the other   required_with[field1,field2]
                                    required fields are present in the data.
-required_without        Yes        The field is required when all of the other   required_without[field1,field2]
-                                   fields are present in the data but not
-                                   required.
+required_without        Yes        The field is required when any of other       required_without[field1,field2]
+                                   fields do not pass ``required`` checks.
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
 timezone                No         Fails if field does match a timezone per
@@ -728,6 +730,10 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
                                    HSBC Canada Card (hsbc)
 ======================= ========== ============================================= ===================================================
 
+.. note:: You can also use any native PHP functions that return boolean and
+    permit at least one parameter, the field data to validate.
+    The Validation library **never alters the data** to validate.
+
 .. _rules-for-file-uploads:
 
 Rules for File Uploads
@@ -772,7 +778,3 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
-
-.. note:: You can also use any native PHP functions that return boolean and
-    permit at least one parameter, the field data to validate.
-    The Validation library **never alters the data** to validate.

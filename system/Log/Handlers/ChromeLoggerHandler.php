@@ -157,7 +157,9 @@ class ChromeLoggerHandler extends BaseHandler
             $response = Services::response(null, true);
         }
 
-        $data = base64_encode(utf8_encode(json_encode($this->json)));
+        $data = base64_encode(
+            mb_convert_encoding(json_encode($this->json), 'UTF-8', mb_list_encodings())
+        );
 
         $response->setHeader($this->header, $data);
     }

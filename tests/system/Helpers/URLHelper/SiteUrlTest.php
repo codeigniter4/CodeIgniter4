@@ -77,8 +77,16 @@ final class SiteUrlTest extends CIUnitTestCase
 
     public function configProvider()
     {
-        // baseURL, indexPage, scheme, path, expectedSiteUrl
+        // baseURL, indexPage, scheme, secure, path, expectedSiteUrl
         return [
+            'forceGlobalSecure' => [
+                'http://example.com/',
+                'index.php',
+                null,
+                true,
+                '',
+                'https://example.com/index.php',
+            ],
             [
                 'http://example.com/',
                 'index.php',
@@ -118,6 +126,22 @@ final class SiteUrlTest extends CIUnitTestCase
                 false,
                 'abc',
                 'http://example.com/abc',
+            ],
+            'URL decode' => [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                'template/meet-%26-greet',
+                'http://example.com/template/meet-&-greet',
+            ],
+            'URL encode' => [
+                'http://example.com/',
+                '',
+                null,
+                false,
+                '<s>alert</s>',
+                'http://example.com/%3Cs%3Ealert%3C/s%3E',
             ],
             [
                 'http://example.com/public/',
