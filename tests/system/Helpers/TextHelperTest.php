@@ -160,6 +160,9 @@ final class TextHelperTest extends CIUnitTestCase
     public function testAsciiToEntities()
     {
         $strs = [
+            'Œ'              => '&#338;',
+            'Âé'             => '&#194;&#233;',
+            'Â? '            => '&#194;? ',
             '“‘ “test” '     => '&#8220;&#8216; &#8220;test&#8221; ',
             '†¥¨ˆøåß∂ƒ©˙∆˚¬' => '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;',
         ];
@@ -172,6 +175,9 @@ final class TextHelperTest extends CIUnitTestCase
     public function testEntitiesToAscii()
     {
         $strs = [
+            '&#338;'                                                                                  => 'Œ',
+            '&#194;&#233;'                                                                            => 'Âé',
+            '&#194;? '                                                                                => 'Â? ',
             '&#8220;&#8216; &#8220;test&#8221; '                                                      => '“‘ “test” ',
             '&#8224;&#165;&#168;&#710;&#248;&#229;&#223;&#8706;&#402;&#169;&#729;&#8710;&#730;&#172;' => '†¥¨ˆøåß∂ƒ©˙∆˚¬',
         ];
@@ -202,11 +208,19 @@ final class TextHelperTest extends CIUnitTestCase
 
     public function testCensoredWords()
     {
+        $this->assertSame('fuck', word_censor('fuck', []));
+    }
+
+    public function testCensoredWordsWithReplacement()
+    {
         $censored = [
             'boob',
             'nerd',
             'ass',
+            'asshole',
             'fart',
+            'fuck',
+            'fucking',
         ];
         $strs = [
             'Ted bobbled the ball'         => 'Ted bobbled the ball',
@@ -219,6 +233,29 @@ final class TextHelperTest extends CIUnitTestCase
 
         foreach ($strs as $str => $expect) {
             $this->assertSame($expect, word_censor($str, $censored, '$*#'));
+        }
+    }
+
+    public function testCensoredWordsNonReplacement()
+    {
+        $censored = [
+            'boob',
+            'nerd',
+            'ass',
+            'asshole',
+            'fart',
+            'fuck',
+            'fucking',
+        ];
+        $strs = [
+            'How are you today?'          => 'How are you today?',
+            'I am fine, thankyou!'        => 'I am fine, thankyou!',
+            'Are you fucking kidding me?' => 'Are you ####### kidding me?',
+            'Fucking asshole!'            => '####### #######!',
+        ];
+
+        foreach ($strs as $str => $expect) {
+            $this->assertSame($expect, word_censor($str, $censored));
         }
     }
 
