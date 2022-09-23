@@ -1022,6 +1022,42 @@ that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
 
 For more information view documentation for ``$builder->getCompiledInsert()``.
 
+**********************
+Conditional Statements
+**********************
+
+.. _db-builder-when:
+
+$builder->when()
+------------------
+
+This allows modifying the query based on a condition without breaking out of the
+query builder chain. The first parameter is the condition, and it should evaluate
+to a boolean. The second parameter is a callable that will be ran
+when the condition is true.
+
+For example, you might only want to apply a given WHERE statement based on the
+value sent within an HTTP request:
+
+.. literalinclude:: query_builder/105.php
+
+Since the condition is evaluated as ``true``, the callable will be called. The value
+set in the condition will be passed as the second parameter to the callable so it
+can be used in the query.
+
+Sometimes you might want to apply a different statement if the condition evaluates to false.
+This can be accomplished by providing a second closure:
+
+.. literalinclude:: query_builder/106.php
+
+$builder->whenNot()
+-------------------
+
+This works exactly the same way as ``$builder->when()`` except that it will
+only run the callable when the condition evaluates to ``false``, instead of ``true`` like ``when()``.
+
+.. literalinclude:: query_builder/107.php
+
 ***************
 Method Chaining
 ***************
