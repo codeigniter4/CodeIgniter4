@@ -282,10 +282,8 @@ trait ResponseTrait
      * @param string      $description The error message to show the user.
      * @param string|null $code        A custom, API-specific, error code.
      * @param string      $message     A custom "reason" message to return.
-     *
-     * @return Response The value of the Response's send() method.
      */
-    protected function failServerError(string $description = 'Internal Server Error', ?string $code = null, string $message = ''): Response
+    protected function failServerError(string $description = 'Internal Server Error', ?string $code = null, string $message = ''): ResponseInterface
     {
         return $this->fail($description, $this->codes['server_error'], $code, $message);
     }

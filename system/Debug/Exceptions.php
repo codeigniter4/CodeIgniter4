@@ -70,7 +70,7 @@ class Exceptions
     /**
      * @param CLIRequest|IncomingRequest $request
      */
-    public function __construct(ExceptionsConfig $config, $request, Response $response)
+    public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response)
     {
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;

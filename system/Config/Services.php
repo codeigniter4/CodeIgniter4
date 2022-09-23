@@ -253,7 +253,7 @@ class Services extends BaseService
     public static function exceptions(
         ?ExceptionsConfig $config = null,
         ?IncomingRequest $request = null,
-        ?Response $response = null,
+        ?ResponseInterface $response = null,
         bool $getShared = true
     ) {
         if ($getShared) {
