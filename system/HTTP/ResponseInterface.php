@@ -131,7 +131,7 @@ interface ResponseInterface extends MessageInterface
      *
      * @return $this
      *
-     * @throws InvalidArgumentException For invalid status code arguments.
+     * @throws HTTPException For invalid status code arguments.
      */
     public function setStatusCode(int $code, string $reason = '');
 
