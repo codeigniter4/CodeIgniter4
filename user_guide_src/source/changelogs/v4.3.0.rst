@@ -89,6 +89,7 @@ Others
 
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
+- Parameter ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
 
 Enhancements
 ************
