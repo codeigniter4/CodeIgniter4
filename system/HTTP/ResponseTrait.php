@@ -49,7 +49,7 @@ trait ResponseTrait
      *
      * @var ContentSecurityPolicy
      *
-     * @TODO Will be protected. Use `getCSP()` instead.
+     * @deprecated Will be protected. Use `getCSP()` instead.
      */
     public $CSP;
 
