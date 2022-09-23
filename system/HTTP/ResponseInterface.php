@@ -135,7 +135,7 @@ interface ResponseInterface extends MessageInterface
     public function setStatusCode(int $code, string $reason = '');
 
     /**
-     * Gets the response response phrase associated with the status code.
+     * Gets the response phrase associated with the status code.
      *
      * @see http://tools.ietf.org/html/rfc7231#section-6
      * @see http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml
