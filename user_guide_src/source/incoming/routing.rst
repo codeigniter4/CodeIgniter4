@@ -217,7 +217,7 @@ Views
 
 If you just want to render a view out that has no logic associated with it, you can use the ``view()`` method.
 This is always treated as GET request.
-This method accepts the name of the view to load as the ``$to`` parameter.
+This method accepts the name of the view to load as the second parameter.
 
 .. literalinclude:: routing/065.php
 
