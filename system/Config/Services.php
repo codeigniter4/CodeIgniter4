@@ -546,7 +546,7 @@ class Services extends BaseService
     /**
      * The Response class models an HTTP response.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public static function response(?App $config = null, bool $getShared = true)
     {

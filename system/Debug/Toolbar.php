@@ -20,7 +20,6 @@ use CodeIgniter\Format\XMLFormatter;
 use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
@@ -71,7 +70,6 @@ class Toolbar
      *
      * @param float           $startTime App start time
      * @param IncomingRequest $request
-     * @param Response        $response
      *
      * @return string JSON encoded data
      */
@@ -355,7 +353,6 @@ class Toolbar
     {
         /**
          * @var IncomingRequest|null $request
-         * @var Response|null        $response
          */
         if (CI_DEBUG && ! is_cli()) {
             $app = Services::codeigniter();

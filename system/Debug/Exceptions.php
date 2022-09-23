@@ -18,7 +18,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
 use ErrorException;
@@ -63,7 +63,7 @@ class Exceptions
     /**
      * The outgoing response.
      *
-     * @var Response
+     * @var ResponseInterface
      */
     protected $response;
 

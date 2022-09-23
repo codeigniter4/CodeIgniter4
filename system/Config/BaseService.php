@@ -35,7 +35,6 @@ use CodeIgniter\HTTP\Negotiate;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Images\Handlers\BaseHandler;
@@ -101,7 +100,7 @@ use Config\View as ConfigView;
  * @method static CURLRequest                curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
  * @method static Email                      email($config = null, $getShared = true)
  * @method static EncrypterInterface         encrypter(Encryption $config = null, $getShared = false)
- * @method static Exceptions                 exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, Response $response = null, $getShared = true)
+ * @method static Exceptions                 exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, ResponseInterface $response = null, $getShared = true)
  * @method static Filters                    filters(ConfigFilters $config = null, $getShared = true)
  * @method static Format                     format(ConfigFormat $config = null, $getShared = true)
  * @method static Honeypot                   honeypot(ConfigHoneyPot $config = null, $getShared = true)
@@ -117,7 +116,7 @@ use Config\View as ConfigView;
  * @method static RedirectResponse           redirectresponse(App $config = null, $getShared = true)
  * @method static View                       renderer($viewPath = null, ConfigView $config = null, $getShared = true)
  * @method static IncomingRequest|CLIRequest request(App $config = null, $getShared = true)
- * @method static Response                   response(App $config = null, $getShared = true)
+ * @method static ResponseInterface          response(App $config = null, $getShared = true)
  * @method static Router                     router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
  * @method static RouteCollection            routes($getShared = true)
  * @method static Security                   security(App $config = null, $getShared = true)
