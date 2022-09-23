@@ -1652,6 +1652,14 @@ Class Reference
 
         Used for ``*Batch()`` methods to set data for insert, update, upsert.
 
+    .. php:method:: setAlias($alias)
+
+        :param string $alias: Alias for table
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        This allows setting an alias for the psuedo table generated with ``setData()``.
+
     .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
 
         :param mixed $key: Field name or an array of field/value pairs
