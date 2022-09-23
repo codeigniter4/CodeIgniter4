@@ -48,6 +48,8 @@ trait ResponseTrait
      * Content security policy handler
      *
      * @var ContentSecurityPolicy
+     *
+     * @TODO Will be protected. Use `getCSP()` instead.
      */
     public $CSP;
 
@@ -794,5 +796,10 @@ trait ResponseTrait
         }
 
         return $response;
+    }
+
+    public function getCSP(): ContentSecurityPolicy
+    {
+        return $this->CSP;
     }
 }
