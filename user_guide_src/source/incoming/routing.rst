@@ -206,9 +206,9 @@ Closures
 
 You can use an anonymous function, or Closure, as the destination that a route maps to. This function will be
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
-a simple view. These are always treated as GET requests.
+a simple view.
 
-.. literalinclude:: routing/065.php
+.. literalinclude:: routing/020.php
 
 .. _view-routes:
 
@@ -216,9 +216,10 @@ Views
 =====
 
 If you just want to render a view out that has no logic associated with it, you can use the ``view()`` method.
+This is always treated as GET request.
 This method accepts the name of the view to load as the ``$to`` parameter.
 
-.. literalinclude:: routing/021.php
+.. literalinclude:: routing/065.php
 
 If you use placeholders within your route, you can access them within the view in a special variable, ``$segments``.
 They are available as an array, indexed in the order they appear in the route.
