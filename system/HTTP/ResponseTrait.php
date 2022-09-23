@@ -175,7 +175,7 @@ trait ResponseTrait
     /**
      * Sets the date header
      *
-     * @return Response
+     * @return $this
      */
     public function setDate(DateTime $date)
     {
@@ -191,7 +191,7 @@ trait ResponseTrait
      *
      * @see http://tools.ietf.org/html/rfc5988
      *
-     * @return Response
+     * @return $this
      *
      * @todo Recommend moving to Pager
      */
@@ -222,7 +222,7 @@ trait ResponseTrait
      * Sets the Content Type header for this response with the mime type
      * and, optionally, the charset.
      *
-     * @return Response
+     * @return $this
      */
     public function setContentType(string $mime, string $charset = 'UTF-8')
     {
@@ -336,7 +336,7 @@ trait ResponseTrait
      * Sets the appropriate headers to ensure this response
      * is not cached by the browsers.
      *
-     * @return Response
+     * @return $this
      *
      * @todo Recommend researching these directives, might need: 'private', 'no-transform', 'no-store', 'must-revalidate'
      *
@@ -374,7 +374,7 @@ trait ResponseTrait
      *  - proxy-revalidate
      *  - no-transform
      *
-     * @return Response
+     * @return $this
      */
     public function setCache(array $options = [])
     {
@@ -411,7 +411,7 @@ trait ResponseTrait
      *
      * @param DateTime|string $date
      *
-     * @return Response
+     * @return $this
      */
     public function setLastModified($date)
     {
@@ -454,7 +454,7 @@ trait ResponseTrait
     /**
      * Sends the headers of this HTTP response to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function sendHeaders()
     {
@@ -483,7 +483,7 @@ trait ResponseTrait
     /**
      * Sends the Body of the message to the browser.
      *
-     * @return Response
+     * @return $this
      */
     public function sendBody()
     {
