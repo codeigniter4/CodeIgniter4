@@ -77,7 +77,7 @@ instead of the Validation object.
 Validation Changes
 ==================
 
-- ``ValidationInterface`` has been changed. Implemented classes should likewise add the methods and the parameters so as not to break LSP. See :ref:`v430_validation_changes` for details.
+- ``ValidationInterface`` has been changed. Implemented classes should likewise add the methods and the parameters so as not to break LSP. See :ref:`v430-validation-changes` for details.
 - The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty. Update the code if you depend on the behavior.
 
 .. _upgrade-430-stream-filter:

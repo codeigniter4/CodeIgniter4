@@ -57,7 +57,7 @@ Interface Changes
 Method Signature Changes
 ========================
 
-.. _v430_validation_changes:
+.. _v430-validation-changes:
 
 Validation Changes
 ------------------
