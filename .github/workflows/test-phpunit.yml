@@ -177,17 +177,15 @@ jobs:
 
       - name: Run Coveralls
         if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
-        run: |
-          composer global require --ansi php-coveralls/php-coveralls:^2.4
-          php-coveralls --coverage_clover=build/logs/clover.xml -v
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+          parallel: true
 
   coveralls-finish:
     if: github.repository_owner == 'codeigniter4'
-    needs: [tests]
+    needs: tests
     runs-on: ubuntu-20.04
 
     steps:
