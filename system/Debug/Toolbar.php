@@ -161,9 +161,7 @@ class Toolbar
 
         $data['config'] = Config::display();
 
-        if ($response->getCSP() !== null) {
-            $response->getCSP()->addImageSrc('data:');
-        }
+        $response->getCSP()->addImageSrc('data:');
 
         return json_encode($data);
     }
