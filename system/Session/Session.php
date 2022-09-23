@@ -12,7 +12,6 @@
 namespace CodeIgniter\Session;
 
 use CodeIgniter\Cookie\Cookie;
-use CodeIgniter\HTTP\Response;
 use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Services;
@@ -930,7 +929,6 @@ class Session implements SessionInterface
         $expiration   = $this->sessionExpiration === 0 ? 0 : time() + $this->sessionExpiration;
         $this->cookie = $this->cookie->withValue(session_id())->withExpires($expiration);
 
-        /** @var Response $response */
         $response = Services::response();
         $response->setCookie($this->cookie);
     }
