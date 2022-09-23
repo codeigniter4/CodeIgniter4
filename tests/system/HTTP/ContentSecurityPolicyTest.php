@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\TestResponse;
 use Config\App;
 use Config\ContentSecurityPolicy as CSPConfig;
 
@@ -534,7 +535,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertStringContainsString('{csp-script-nonce}', $response->getBody());
 
-        $result = new \CodeIgniter\Test\TestResponse($response);
+        $result = new TestResponse($response);
         $result->assertHeader('Content-Security-Policy');
     }
 
@@ -553,7 +554,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
         $this->assertStringContainsString('{csp-style-nonce}', $response->getBody());
 
-        $result = new \CodeIgniter\Test\TestResponse($response);
+        $result = new TestResponse($response);
         $result->assertHeader('Content-Security-Policy');
     }
 
