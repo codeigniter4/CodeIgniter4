@@ -382,4 +382,13 @@ interface ResponseInterface extends MessageInterface
      * @return DownloadResponse|null
      */
     public function download(string $filename = '', $data = '', bool $setMime = false);
+
+    // --------------------------------------------------------------------
+    // CSP Methods
+    // --------------------------------------------------------------------
+
+    /**
+     * Get Content Security Policy handler.
+     */
+    public function getCSP(): ContentSecurityPolicy;
 }
