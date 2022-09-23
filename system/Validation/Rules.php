@@ -280,7 +280,7 @@ class Rules
      *
      * @param string|null $str
      */
-    public function required_without($str = null, ?string $fields = null, array $data = [], string $keyField = null): bool
+    public function required_without($str = null, ?string $fields = null, array $data = [], ?string $keyField = null): bool
     {
         if ($fields === null || empty($data) || $keyField === null) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data, keyField.');
@@ -296,11 +296,26 @@ class Rules
             return true;
         }
 
+        if (strpos($keyField, '.') !== false) {
+            $keyFieldArray = explode('.', $keyField);
+            $nowKeyField   = $keyFieldArray[1];
+        }
+
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach ($fields as $field) {
-            if ((strpos($field, '.') === false && (! array_key_exists($field, $data) || empty($data[$field]))) || (strpos($field, '.') !== false && empty(dot_array_search($field, $data)))) {
-                return false;
+            if ((strpos($field, '.') === false) && (! array_key_exists($field, $data))) {
+                return ! empty($data[$field]);
+            }
+            if (strpos($field, '.') !== false) {
+                $fieldData = dot_array_search($field, $data);
+                if (is_array($fieldData)) {
+                    return ! empty(dot_array_search($field, $data)[$nowKeyField]);
+                }
+                $nowField      = str_replace('*', $nowKeyField, $field);
+                $nowFieldVaule = dot_array_search($nowField, $data);
+
+                return (bool) (null !== $nowFieldVaule);
             }
         }
 
