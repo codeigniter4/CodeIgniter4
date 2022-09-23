@@ -270,13 +270,15 @@ final class ParserFilterTest extends CIUnitTestCase
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
 
         $data = [
-            'value1' => 5.55,
+            'value1' => 5.555,
         ];
 
-        $template = '{ value1|round(1) } { value1|round(1, common) } { value1|round(ceil) } { value1|round(floor) } { value1|round(unknown) }';
+        $template = '{ value1|round(1) } / { value1|round(1, common) }'
+            . ' / { value1|round(ceil) } / { value1|round(floor) }'
+            . ' / { value1|round(unknown) }';
 
         $parser->setData($data);
-        $this->assertSame('5.6 5.6 6 5 5.55', $parser->renderString($template));
+        $this->assertSame('5.6 / 5.6 / 6 / 5 / 5.555', $parser->renderString($template));
     }
 
     public function testStripTags()
