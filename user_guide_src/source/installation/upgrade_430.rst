@@ -117,6 +117,11 @@ need to use::
 
 Or use the trait ``CodeIgniter\Test\StreamFilterTrait``. See :ref:`testing-cli-output`.
 
+Interface Changes
+=================
+
+Some interfaces has been fixed. See :ref:`v430-interface-changes` for details.
+
 Others
 ======
 
