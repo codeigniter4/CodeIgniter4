@@ -46,10 +46,18 @@ Others
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 
+.. _v430-interface-changes:
+
+Interface Changes
+=================
+
+- Added missing ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
+- Now ``ResponseInterface`` extends ``MessageInterface``.
+
 Method Signature Changes
 ========================
 
-.. _v430_validation_changes:
+.. _v430-validation-changes:
 
 Validation Changes
 ------------------

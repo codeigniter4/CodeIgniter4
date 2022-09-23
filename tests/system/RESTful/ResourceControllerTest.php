@@ -71,6 +71,9 @@ final class ResourceControllerTest extends CIUnitTestCase
 
         $config            = new App();
         $this->codeigniter = new MockCodeIgniter($config);
+
+        $response = Services::response();
+        $response->pretend();
     }
 
     protected function tearDown(): void
@@ -96,7 +99,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -118,7 +121,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -141,7 +144,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -163,7 +166,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -184,7 +187,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -206,7 +209,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -228,7 +231,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
@@ -250,7 +253,7 @@ final class ResourceControllerTest extends CIUnitTestCase
         $this->createCodeigniter();
 
         ob_start();
-        $this->codeigniter->useSafeOutput(true)->run($this->routes);
+        $this->codeigniter->run($this->routes);
         $output = ob_get_clean();
 
         $error = json_decode($output)->messages->error;
