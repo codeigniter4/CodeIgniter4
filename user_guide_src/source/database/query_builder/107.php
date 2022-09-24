@@ -1,3 +1,5 @@
+<?php
+
 $status = service('request')->getPost('status');
 
 $users = $this->db->table('users')

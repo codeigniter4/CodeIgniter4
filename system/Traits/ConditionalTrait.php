@@ -17,6 +17,8 @@ trait ConditionalTrait
      * Only runs the query when $condition evaluates to true
      *
      * @param array|bool|float|int|object|resource|string|null $condition
+     *
+     * @return $this
      */
     public function when($condition, callable $callback, ?callable $defaultCallback = null): self
     {
@@ -33,6 +35,8 @@ trait ConditionalTrait
      * Only runs the query when $condition evaluates to false
      *
      * @param array|bool|float|int|object|resource|string|null $condition
+     *
+     * @return $this
      */
     public function whenNot($condition, callable $callback, ?callable $defaultCallback = null): self
     {
