@@ -588,7 +588,7 @@ class Kint
             isset($call_info['params']) ? $call_info['params'] : [],
             \count($args)
         );
-        $output = $kintstance->dumpAll($args, $bases);
+        $output = $kintstance->dumpAll(\array_values($args), $bases);
 
         if (static::$return || \in_array('@', $call_info['modifiers'], true)) {
             return $output;
