@@ -5,20 +5,30 @@ Release Date: Sept 27, 2019
 
 **RC.2 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - query builder testability simplified with new property, but dropped
     method parameters (breaking change)
 - database, migrations and sessions beefed up
 - numerous smaller bugs corrected
 
-App changes:
+App Changes
+-----------
 
 - Config/Constants, Paths & some config settings have had changes
 
-Message changes:
+Message Changes
+---------------
 
 - N/A
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -162,8 +172,8 @@ The list of changed files follows, with PR numbers shown.
         - news_section #2221
         - static_pages #2221
 
-PRs merged:
---------------------------
+PRs merged
+----------
 
 - #2271 fix ResourcePresenter::setModel()
 - #2270 groupStart() refactorization

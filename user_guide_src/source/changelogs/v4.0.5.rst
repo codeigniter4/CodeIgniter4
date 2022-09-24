@@ -5,7 +5,12 @@ Release Date: January 31, 2021
 
 **4.0.5 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - New URL helper function ``url_to()`` which creates absolute URLs based on controllers.
 - New Model option: ``$useAutoIncrement`` which when set to ``false`` allows you to provide your own primary key for each record in the table. Handy when we want to implement 1:1 relation or use UUIDs for our model.
@@ -16,17 +21,20 @@ Enhancements:
 - The getter functions for file extensions of uploaded files now have different fallback values (``$this->getClientExtension()`` for ``UploadedFile->getExtension()`` and ``''`` for ``UploadedFile->guessExtension()``). This is a security fix and makes the process less dependent on the client.
 - The Cache ``FileHandler`` now allows setting the file permissions mode via ``Config\Cache``
 
-Changes:
+Changes
+-------
 
 - System messages defined in ``system/Language/en/`` are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.
 
-Bugs Fixed:
+Bugs Fixed
+----------
 
 - Fixed a bug in ``Entity`` class where declaring class parameters was preventing data propagation to the ``attributes`` array.
 - Handling for the environment variable ``encryption.key`` has changed. Previously, explicit function calls, like ``getenv('encryption.key')`` or ``env('encryption.key')`` where the value has the special prefix ``hex2bin:`` returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing ``$key`` using ``Encryption`` class config remains unchanged and still returns a binary string.
 - ``Config\Services`` (in **app/Config/Services.php**) now extends ``CodeIgniter\Config\BaseService`` to allow proper discovery of third-party services.
 
-Deprecations:
+Deprecations
+------------
 
 - Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
 - Deprecated ``CodeIgniter\Controller::loadHelpers`` in favor of ``helper`` function.

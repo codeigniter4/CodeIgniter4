@@ -5,15 +5,21 @@ Release Date: February 6, 2020
 
 **RC.4 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - Fixed url systems so that it would work when system is served out of subfolders.
 - Added required insert ignore support for sqlite3 and mysql.
 - Add validation function `is_not_unique`
 - Various improvements and cleanup to the Email class
 
-PRs merged:
------------
+PRs merged
+----------
+
 - #2527 Update manual.rst
 - #2454 Page in the official documentation on ajax requests with iSAJAX() fixes
 - #2525 Remove incorrect inline doc type
