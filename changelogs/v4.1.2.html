@@ -278,12 +278,24 @@
 <h1>Version 4.1.2<a class="headerlink" href="#version-4-1-2" title="Permalink to this headline"></a></h1>
 <p>Release Date: May 16, 2021</p>
 <p><strong>4.1.2 release of CodeIgniter4</strong></p>
-<p>BREAKING:</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#enhancements" id="id2">Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id3">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id5">Bugs Fixed</a></p></li>
+</ul>
+</div>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
 <p>Fixed <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/issues/4116">a bug</a> in <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> that prevented
 configurations with an <code class="docutils literal notranslate"><span class="pre">indexPage</span></code> from including that value in the return value. Any installations
 using <code class="docutils literal notranslate"><span class="pre">App::$indexPage</span></code> should expect altered values from <code class="docutils literal notranslate"><span class="pre">current_url()</span></code> and all its dependencies
 (including Response Testing, Pager, Form Helper, Pager, and View Parser).</p>
-<p>Enhancements:</p>
+</section>
+<section id="enhancements">
+<h2><a class="toc-backref" href="#id2">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>New HTTP classes, <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> and <code class="docutils literal notranslate"><span class="pre">CookieStore</span></code>, for abstracting web cookies.</p></li>
 <li><p>New <code class="docutils literal notranslate"><span class="pre">assertRedirectTo()</span></code> assertion available for HTTP tests.</p></li>
@@ -292,7 +304,9 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <li><p>New option in routing. The <code class="docutils literal notranslate"><span class="pre">priority</span></code> option lower the priority of specific route processing.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Autoloader</span></code> class can now load files which do not contain PHP classes. The list of <cite>non-class</cite> files will be listed in the <code class="docutils literal notranslate"><span class="pre">$files</span></code> property of <code class="docutils literal notranslate"><span class="pre">Config\Autoload</span></code> class.</p></li>
 </ul>
-<p>Changes:</p>
+</section>
+<section id="changes">
+<h2><a class="toc-backref" href="#id3">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Layouts in views now support nested sections.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Response::getCookie</span></code> now returns a <code class="docutils literal notranslate"><span class="pre">Cookie</span></code> instance instead of an array of cookie attributes.</p></li>
@@ -307,7 +321,9 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <li><p>The array helper <code class="docutils literal notranslate"><span class="pre">_array_search_dot</span></code> is now marked for <code class="docutils literal notranslate"><span class="pre">&#64;internal</span></code> use. As this is used by <code class="docutils literal notranslate"><span class="pre">dot_array_search</span></code>, users should not use <code class="docutils literal notranslate"><span class="pre">_array_search_dot</span></code> directly in their code.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CacheInterface::getMetaData()</span></code> returns <code class="docutils literal notranslate"><span class="pre">null</span></code> for misses, or an array with at least the “expires” key set to the absolute epoch expiration, or <code class="docutils literal notranslate"><span class="pre">null</span></code> for “never expires”. The File, Memcached, and Wincache Handlers still return <code class="docutils literal notranslate"><span class="pre">false</span></code> which will become <code class="docutils literal notranslate"><span class="pre">null</span></code> in a future release.</p></li>
 </ul>
-<p>Deprecations:</p>
+</section>
+<section id="deprecations">
+<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\View::$currentSection</span></code> property.</p></li>
 <li><p>Language strings and exceptions on invalid cookie samesite are deprecated for the <code class="docutils literal notranslate"><span class="pre">CookieException</span></code>’s own exception message.</p></li>
@@ -324,11 +340,14 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">IncomingRequest::removeRelativeDirectory()</span></code>, use <code class="docutils literal notranslate"><span class="pre">URI::removeDotSegments()</span></code> instead</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">\API\ResponseTrait::failValidationError</span></code> to use <code class="docutils literal notranslate"><span class="pre">\API\ResponseTrait::failValidationErrors</span></code> instead</p></li>
 </ul>
-<p>Bugs Fixed:</p>
-<p><em>See the repo’s **CHANGELOG.MD*</em> for a complete list of bugs fixed.*</p>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id5">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<p>See the repo’s <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a> for a complete list of bugs fixed.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">BaseConnection::query()</span></code> now returns <code class="docutils literal notranslate"><span class="pre">false</span></code> for failed queries (unless <code class="docutils literal notranslate"><span class="pre">DBDebug==true</span></code>, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.</p></li>
 </ul>
+</section>
 </section>
 
 
@@ -343,7 +362,7 @@ using <code class="docutils literal notranslate"><span class="pre">App::$indexPa
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 23, 2022.
+      <span class="lastupdated">Last updated on Sep 24, 2022.
       </span></p>
   </div>
 

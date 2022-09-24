@@ -278,7 +278,14 @@
 <h1>Version 4.0.4<a class="headerlink" href="#version-4-0-4" title="Permalink to this headline"></a></h1>
 <p>Release Date: July 15, 2020</p>
 <p><strong>4.0.4 release of CodeIgniter4</strong></p>
-<p>Enhancements:</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#enhancements" id="id1">Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id2">Bugs Fixed</a></p></li>
+</ul>
+</div>
+<section id="enhancements">
+<h2><a class="toc-backref" href="#id1">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The location for the SQLite3 database has changed and by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</p></li>
 <li><p>New CLI command: <code class="docutils literal notranslate"><span class="pre">cache:clear</span></code> that will destroy all data within the current cache engine.</p></li>
@@ -304,7 +311,9 @@
 <li><p>Cookies and headers can be copied from the global Response object when doing a redirect using the new <code class="docutils literal notranslate"><span class="pre">withCookies()</span></code> and <code class="docutils literal notranslate"><span class="pre">withHeaders()</span></code> methods.</p></li>
 <li><p>Support for special prefix “hex2bin:” which can be used with <code class="docutils literal notranslate"><span class="pre">$key</span></code> parameter in <a class="reference internal" href="../libraries/encryption.html"><span class="doc">Encryption class</span></a> or in .env file.</p></li>
 </ul>
-<p>Bugs Fixed:</p>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id2">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Fixed location for the SQLite3 database which by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</p></li>
 <li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">force_https</span></code> could add <code class="docutils literal notranslate"><span class="pre">https://</span></code> a second time.</p></li>
@@ -330,6 +339,7 @@
 <li><p>Fixed a bug where filter arguments were not passed to after()</p></li>
 </ul>
 </section>
+</section>
 
 
            </div>
@@ -343,7 +353,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 23, 2022.
+      <span class="lastupdated">Last updated on Sep 24, 2022.
       </span></p>
   </div>
 
