@@ -300,11 +300,10 @@ class ContentSecurityPolicy
      */
     public function finalize(ResponseInterface $response)
     {
-        if ($this->autoNonce === false) {
-            return;
+        if ($this->autoNonce) {
+            $this->generateNonces($response);
         }
 
-        $this->generateNonces($response);
         $this->buildHeaders($response);
     }
 

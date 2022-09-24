@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\TestResponse;
 use Config\App;
 use Config\ContentSecurityPolicy as CSPConfig;
 
@@ -533,6 +534,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $csp->finalize($response);
 
         $this->assertStringContainsString('{csp-script-nonce}', $response->getBody());
+
+        $result = new TestResponse($response);
+        $result->assertHeader('Content-Security-Policy');
     }
 
     public function testBodyStyleNonceDisableAutoNonce()
@@ -549,6 +553,9 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $csp->finalize($response);
 
         $this->assertStringContainsString('{csp-style-nonce}', $response->getBody());
+
+        $result = new TestResponse($response);
+        $result->assertHeader('Content-Security-Policy');
     }
 
     /**

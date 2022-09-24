@@ -5,14 +5,20 @@ Release Date: May 16, 2021
 
 **4.1.2 release of CodeIgniter4**
 
-BREAKING:
+.. contents::
+    :local:
+    :depth: 2
+
+BREAKING
+--------
 
 Fixed `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()`` that prevented
 configurations with an ``indexPage`` from including that value in the return value. Any installations
 using ``App::$indexPage`` should expect altered values from ``current_url()`` and all its dependencies
 (including Response Testing, Pager, Form Helper, Pager, and View Parser).
 
-Enhancements:
+Enhancements
+------------
 
 - New HTTP classes, ``Cookie`` and ``CookieStore``, for abstracting web cookies.
 - New ``assertRedirectTo()`` assertion available for HTTP tests.
@@ -21,7 +27,8 @@ Enhancements:
 - New option in routing. The ``priority`` option lower the priority of specific route processing.
 - The ``Autoloader`` class can now load files which do not contain PHP classes. The list of `non-class` files will be listed in the ``$files`` property of ``Config\Autoload`` class.
 
-Changes:
+Changes
+-------
 
 - Layouts in views now support nested sections.
 - ``Response::getCookie`` now returns a ``Cookie`` instance instead of an array of cookie attributes.
@@ -36,7 +43,8 @@ Changes:
 - The array helper ``_array_search_dot`` is now marked for ``@internal`` use. As this is used by ``dot_array_search``, users should not use ``_array_search_dot`` directly in their code.
 - ``CacheInterface::getMetaData()`` returns ``null`` for misses, or an array with at least the "expires" key set to the absolute epoch expiration, or ``null`` for "never expires". The File, Memcached, and Wincache Handlers still return ``false`` which will become ``null`` in a future release.
 
-Deprecations:
+Deprecations
+------------
 
 - Deprecated ``CodeIgniter\View\View::$currentSection`` property.
 - Language strings and exceptions on invalid cookie samesite are deprecated for the ``CookieException``'s own exception message.
@@ -53,8 +61,9 @@ Deprecations:
 - Deprecated ``IncomingRequest::removeRelativeDirectory()``, use ``URI::removeDotSegments()`` instead
 - Deprecated ``\API\ResponseTrait::failValidationError`` to use ``\API\ResponseTrait::failValidationErrors`` instead
 
-Bugs Fixed:
+Bugs Fixed
+----------
 
-*See the repo's **CHANGELOG.MD** for a complete list of bugs fixed.*
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
 
 - ``BaseConnection::query()`` now returns ``false`` for failed queries (unless ``DBDebug==true``, in which case an exception will be thrown) and returns boolean values for write-type queries as specified in the docs.

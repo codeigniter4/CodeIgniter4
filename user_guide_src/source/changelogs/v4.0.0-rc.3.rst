@@ -5,16 +5,26 @@ Release Date: Oct 19, 2019
 
 **RC.3 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - Beefed up database, session & routing handling.
 - Fixed numerous bugs & user guide errata.
 
-App changes:
+App Changes
+-----------
 
 - New $CSRFHeaderName property in App/Config/App
 
-Message changes:
+Message Changes
+---------------
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -120,8 +130,8 @@ The list of changed files follows, with PR numbers shown.
     - outgoing/
         - table #2337
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #2348 CodeIgniter Foundation gets copyright
 - #2346 Fix FilerHandlerTest.php wierdness

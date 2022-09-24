@@ -12,6 +12,7 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use DateTimeZone;
 
 /**
  * @internal
@@ -33,5 +34,56 @@ final class DateHelperTest extends CIUnitTestCase
     {
         // Chicago should be two hours ahead of Vancouver
         $this->assertCloseEnough(7200, now('America/Chicago') - now('America/Vancouver'));
+    }
+
+    public function testTimezoneSelectDefault()
+    {
+        $timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL, null);
+
+        $expected = "<select name='timezone' class='custom-select'>" . PHP_EOL;
+
+        foreach ($timezones as $timezone) {
+            $selected = ($timezone === 'Asia/Jakarta') ? 'selected' : '';
+            $expected .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
+        }
+
+        $expected .= ('</select>' . PHP_EOL);
+
+        $this->assertSame($expected, timezone_select('custom-select', 'Asia/Jakarta'));
+    }
+
+    public function testTimezoneSelectSpecific()
+    {
+        $spesificRegion = DateTimeZone::ASIA;
+        $timezones      = DateTimeZone::listIdentifiers($spesificRegion, null);
+
+        $expected = "<select name='timezone' class='custom-select'>" . PHP_EOL;
+
+        foreach ($timezones as $timezone) {
+            $selected = ($timezone === 'Asia/Jakarta') ? 'selected' : '';
+            $expected .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
+        }
+
+        $expected .= ('</select>' . PHP_EOL);
+
+        $this->assertSame($expected, timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion));
+    }
+
+    public function testTimezoneSelectSingle()
+    {
+        $spesificRegion = DateTimeZone::PER_COUNTRY;
+        $country        = 'ID';
+        $timezones      = DateTimeZone::listIdentifiers($spesificRegion, $country);
+
+        $expected = "<select name='timezone' class='custom-select'>" . PHP_EOL;
+
+        foreach ($timezones as $timezone) {
+            $selected = ($timezone === 'Asia/Jakarta') ? 'selected' : '';
+            $expected .= "<option value='{$timezone}' {$selected}>{$timezone}</option>" . PHP_EOL;
+        }
+
+        $expected .= ('</select>' . PHP_EOL);
+
+        $this->assertSame($expected, timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion, $country));
     }
 }

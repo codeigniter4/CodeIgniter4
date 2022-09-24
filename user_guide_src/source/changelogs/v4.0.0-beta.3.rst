@@ -3,21 +3,31 @@ Version 4.0.0-beta.3
 
 Release Date: May 7, 2019
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 - Type hinting added throughout & typos corrected (see API docs)
 - Fixed a number of model, database, validation & debug toolbar issues
 
-New messages:
+New Messages
+------------
 
 - Database.FieldNotExists
 - Validation.equals, not_equals
 
-App changes:
+App Changes
+-----------
 
 - Removed $salt config item in app/Config/App
 - Enabled migrations by default in app/Config/Migrations
 - Simplified public/.htaccess
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -136,8 +146,8 @@ The list of changed files follows, with PR numbers shown.
 - composer.json #1935
 - phpdoc.dist.xml #1987
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1987 Correct API docblock problems for phpdocs
 - #1986 Update docblock version to 4.0.0

@@ -192,6 +192,10 @@ class Parser
 
     public function childHasPath(InstanceValue $parent, Value $child)
     {
+        if ('__PHP_Incomplete_Class' === $parent->classname) {
+            return false;
+        }
+
         if ('object' === $parent->type && (null !== $parent->access_path || $child->static || $child->const)) {
             if (Value::ACCESS_PUBLIC === $child->access) {
                 return true;
@@ -435,7 +439,7 @@ class Parser
 
         $rep = new Representation('Properties');
 
-        if (KINT_PHP74) {
+        if (KINT_PHP74 && '__PHP_Incomplete_Class' != $object->classname) {
             $rprops = $reflector->getProperties();
 
             foreach ($rprops as $rprop) {

@@ -392,9 +392,18 @@ final class TableTest extends CIUnitTestCase
                 'Small',
             ],
             [
-                'Mary',
-                'Red',
-                'Large',
+                [
+                    'data'  => 'Mary',
+                    'class' => 'cssMary',
+                ],
+                [
+                    'data'  => 'Red',
+                    'class' => 'cssRed',
+                ],
+                [
+                    'data'  => 'Large',
+                    'class' => 'cssLarge',
+                ],
             ],
             [
                 'John',
@@ -420,6 +429,11 @@ final class TableTest extends CIUnitTestCase
         $this->assertStringContainsString('<td>Fred</td>', $table);
         $this->assertStringContainsString('<td>Blue</td>', $table);
         $this->assertStringContainsString('<td>Small</td>', $table);
+
+        // Test entry with attribute
+        $this->assertStringContainsString('<td class="cssMary">Mary</td>', $table);
+        $this->assertStringContainsString('<td class="cssRed">Red</td>', $table);
+        $this->assertStringContainsString('<td class="cssLarge">Large</td>', $table);
 
         // Check for the caption
         $this->assertStringContainsString('<caption>Awesome table</caption>', $table);

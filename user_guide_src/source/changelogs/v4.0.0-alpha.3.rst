@@ -5,6 +5,13 @@ Release Date: November 30, 2018
 
 **Next alpha release of CodeIgniter4**
 
+.. contents::
+    :local:
+    :depth: 2
+
+Changed Files
+-------------
+
 The list of changed files follows, with PR numbers shown.
 
 - admin/
@@ -242,8 +249,8 @@ The list of changed files follows, with PR numbers shown.
     - spark 2047b5a
     - .travis.yml #1394
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1554 Serviceinstances
 - #1553 Admin/scripts
