@@ -3,7 +3,12 @@ Version 4.0.0-beta.4
 
 Release Date: Jul 25, 2019
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 There are some breaking changes...
 
@@ -11,15 +16,21 @@ There are some breaking changes...
 - The Model class changing has been updated to better handle soft deletes
 - The routing has been beefed up
 
-New messages:
+New Messages
+------------
 
 - new translation key: Database/noDateFormat
 
-App changes:
+App Changes
+-----------
 
-Testing changes:
+Testing Changes
+---------------
 
 - enhanced database & migration testing in tests/_support
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -151,8 +162,8 @@ The list of changed files follows, with PR numbers shown.
     - testing/
         - database #2051, #2053
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #2104 File & UploadFile Fixes
 - #2091 Timezone select

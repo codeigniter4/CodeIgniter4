@@ -5,7 +5,12 @@ Release Date: Sep 3, 2019
 
 **RC.1 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - CI3 Email ported to CI4
 - Encryption (basic) added
@@ -16,17 +21,22 @@ Enhancements:
 - RESTful controllers added to shorten dev time for RESTful APIs
 - added RouteCollection::presenter() as part of the RESTful support
 
-App changes:
+App Changes
+-----------
 
 - added app/Common to make it easier to override common functions
 - Config/Email and Encryption added
 - Config/Migration modified, and has different settings
 - Controllers/Home fixed, removing unnecessary model reference
 
-Message changes:
+Message Changes
+---------------
 
 - Migration has new & modified messages
 - Messages now has RESTful set
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -188,8 +198,8 @@ The list of changed files follows, with PR numbers shown.
 - README.md #2010
 - spark
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #2178 Add fallback for missing finfo_open
 - #2177 Fix missing form close tag

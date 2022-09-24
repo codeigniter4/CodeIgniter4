@@ -3,7 +3,12 @@ Version 4.0.0-beta.2
 
 Release Date: April 4, 2019
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 - A number of fixes & improvements, importantly for the Model and testing classes
 - Models now require a primary key
@@ -11,16 +16,21 @@ Highlights:
 - Validation rules have been enhanced
 - .htaccess beefed up
 
-New messages:
+New messages
+------------
 
 - Database.noPrimaryKey, forFindColumnHaveMultipleColumns, Database.forEmptyInputGiven
 
-App changes:
+App Changes
+-----------
 
 - updated app/Config/Events
 - added app/Controllers/BaseController
 - added tests/ folder for unit testing
 - added phpunit.xml.dist for unit testing configuration
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -187,8 +197,8 @@ The list of changed files follows, with PR numbers shown.
     - testing/
         - controllers #1848
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1913 More RouteCollection tests for overwriting. Closes #1692
 - #1912 Additional RouteCollectionTests

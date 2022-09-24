@@ -5,7 +5,12 @@ Release Date: July 15, 2020
 
 **4.0.4 release of CodeIgniter4**
 
-Enhancements:
+.. contents::
+    :local:
+    :depth: 2
+
+Enhancements
+------------
 
 - The location for the SQLite3 database has changed and by default will be now located in a ``writable`` folder instead of the ``public`` folder.
 - New CLI command: ``cache:clear`` that will destroy all data within the current cache engine.
@@ -31,7 +36,8 @@ Enhancements:
 - Cookies and headers can be copied from the global Response object when doing a redirect using the new ``withCookies()`` and ``withHeaders()`` methods.
 - Support for special prefix "hex2bin:" which can be used with ``$key`` parameter in :doc:`Encryption class</libraries/encryption>` or in .env file.
 
-Bugs Fixed:
+Bugs Fixed
+----------
 
 - Fixed location for the SQLite3 database which by default will be now located in a ``writable`` folder instead of the ``public`` folder.
 - Fixed bug where ``force_https`` could add ``https://`` a second time.

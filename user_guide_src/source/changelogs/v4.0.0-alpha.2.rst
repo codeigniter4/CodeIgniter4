@@ -5,6 +5,13 @@ Release Date: Oct 26, 2018
 
 **Second alpha release of CodeIgniter4**
 
+.. contents::
+    :local:
+    :depth: 2
+
+Changed Files
+-------------
+
 The list of changed files follows, with PR numbers shown.
 
 application /
@@ -144,8 +151,8 @@ user_guide_src /source/
 /
     - spark #1305
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1361 Add timing assertion to CIUnitTestCase
 - #1312 Add headerEmitted assertions to CIUnitTestCase

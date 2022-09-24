@@ -5,12 +5,20 @@ Release Date: Dec 15, 2018
 
 **Next alpha release of CodeIgniter4**
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 - Refactor for consistency: folder application renamed to app;
     constant BASEPATH renamed to SYSTEMPATH
 - Debug toolbar gets its own config, history collector
 - Numerous corrections and enhancements
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -171,8 +179,8 @@ The list of changed files follows, with PR numbers shown.
 - spark #1579
 - Vagrantfile.dist #1459
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1610 Test, fix & enhance Language
 - #a0fc68 Clear binds after inserts, updates, and find queries
