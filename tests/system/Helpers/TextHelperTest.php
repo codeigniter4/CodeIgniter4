@@ -254,8 +254,8 @@ final class TextHelperTest extends CIUnitTestCase
             'Fucking asshole!'            => '####### #######!',
         ];
 
-        foreach ($strs as $str => $expect) {
-            $this->assertSame($expect, word_censor($str, $censored));
+        foreach ($strs as $str => $expected) {
+            $this->assertSame($expected, word_censor($str, $censored));
         }
     }
 
