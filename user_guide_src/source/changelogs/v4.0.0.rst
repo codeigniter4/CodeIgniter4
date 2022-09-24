@@ -27,4 +27,4 @@ Repo Changes
 
 The devstarter repo has been deprecated.
 
-We now have an automated changelog generated in the CHANGELOG.md file in the main repo. See it for more details.
+We now have an automated changelog generated in the `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ file in the main repo. See it for more details.

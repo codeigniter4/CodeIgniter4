@@ -10,7 +10,7 @@ Release Date: May 1, 2020
     :depth: 2
 
 Thanks to the community, there have been 74 bugs closed, 21 issues closed, and 88 merged pull requests. These are all
-listed in the `changelog <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md/>`_. This is a small
+listed in the `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_. This is a small
 representation of some of the bigger changes you should know about.
 
 Enhancements
