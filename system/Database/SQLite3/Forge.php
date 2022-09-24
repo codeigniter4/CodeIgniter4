@@ -262,4 +262,13 @@ class Forge extends BaseForge
             ->dropPrimaryKey()
             ->run();
     }
+
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = '')
+    {
+        if ($fkName === '') {
+            return parent::addForeignKey($fieldName, $tableName, $tableField, $onUpdate, $onDelete, $fkName);
+        }
+
+        throw new DatabaseException('SQLite does not support foreign key names. CodeIgniter will refer to them in the format: prefix_table_column_referencecolumn_foreign');
+    }
 }

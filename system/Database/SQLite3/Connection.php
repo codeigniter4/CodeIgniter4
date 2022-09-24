@@ -333,29 +333,21 @@ class Connection extends BaseConnection
             return [];
         }
 
-        $tables = $this->listTables();
+        $query   = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
+        $indexes = [];
 
-        if (empty($tables)) {
-            return [];
+        foreach ($query as $row) {
+            $indexes[$row->id]['constraint_name']       = null;
+            $indexes[$row->id]['table_name']            = $table;
+            $indexes[$row->id]['foreign_table_name']    = $row->table;
+            $indexes[$row->id]['column_name'][]         = $row->from;
+            $indexes[$row->id]['foreign_column_name'][] = $row->to;
+            $indexes[$row->id]['on_delete']             = $row->on_delete;
+            $indexes[$row->id]['on_update']             = $row->on_update;
+            $indexes[$row->id]['match']                 = $row->match;
         }
 
-        $retVal = [];
-
-        foreach ($tables as $table) {
-            $query = $this->query("PRAGMA foreign_key_list({$table})")->getResult();
-
-            foreach ($query as $row) {
-                $obj                     = new stdClass();
-                $obj->constraint_name    = $row->from . ' to ' . $row->table . '.' . $row->to;
-                $obj->table_name         = $table;
-                $obj->foreign_table_name = $row->table;
-                $obj->sequence           = $row->seq;
-
-                $retVal[] = $obj;
-            }
-        }
-
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

@@ -45,6 +45,7 @@ Others
 - ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
+- The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
 
 .. _v430-interface-changes:
 
@@ -88,6 +89,7 @@ Others
 
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
+- Parameter ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
 
 Enhancements
 ************
@@ -117,6 +119,8 @@ Database
 - ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
 - The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
+- Improved data returned by ``BaseConnection::getForeignKeyData()``. All DBMS returns the same structure.
+- ``Forge::addForeignKey()`` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
 
 Model
 =====

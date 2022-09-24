@@ -214,23 +214,14 @@ class Table
      *
      * @return Table
      */
-    public function dropForeignKey(string $column)
+    public function dropForeignKey(string $foreignName)
     {
         if (empty($this->foreignKeys)) {
             return $this;
         }
 
-        for ($i = 0; $i < count($this->foreignKeys); $i++) {
-            if ($this->foreignKeys[$i]->table_name !== $this->tableName) {
-                continue;
-            }
-
-            // The column name should be the first thing in the constraint name
-            if (strpos($this->foreignKeys[$i]->constraint_name, $column) !== 0) {
-                continue;
-            }
-
-            unset($this->foreignKeys[$i]);
+        if (isset($this->foreignKeys[$foreignName])) {
+            unset($this->foreignKeys[$foreignName]);
         }
 
         return $this;

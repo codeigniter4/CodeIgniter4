@@ -127,6 +127,8 @@ for each key associated with a table.
 
 SQLite3 returns a pseudo index named ``PRIMARY``. But it is a special index, and you can't use it in your SQL commands.
 
+.. _metadata-getforeignkeydata:
+
 $db->getForeignKeyData()
 ------------------------
 
@@ -136,6 +138,4 @@ Usage example:
 
 .. literalinclude:: metadata/009.php
 
-The object fields may be unique to the database you are using. For instance, SQLite3 does
-not return data on column names, but has the additional *sequence* field for compound
-foreign key definitions.
+Foreign keys use the naming convention ``tableprefix_table_column1_column2_foreign``. Oracle uses a slightly different suffix of ``_fk``.

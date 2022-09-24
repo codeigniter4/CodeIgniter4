@@ -84,6 +84,13 @@ class Forge extends BaseForge
     ];
 
     /**
+     * Foreign Key Allowed Actions
+     *
+     * @var array
+     */
+    protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
+
+    /**
      * CREATE TABLE IF statement
      *
      * @var string
@@ -286,39 +293,6 @@ class Forge extends BaseForge
             . $field['auto_increment']
             . ''
             . $field['unique'];
-    }
-
-    /**
-     * Process foreign keys
-     *
-     * @param string $table Table name
-     */
-    protected function _processForeignKeys(string $table): string
-    {
-        $sql = '';
-
-        $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
-
-        foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
-            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
-            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
-            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
-
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
-
-            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
-            }
-
-            if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
-                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
-            }
-        }
-
-        return $sql;
     }
 
     /**

@@ -482,43 +482,46 @@ class Connection extends BaseConnection
     protected function _foreignKeyData(string $table): array
     {
         $sql = '
-                    SELECT
-                        tc.CONSTRAINT_NAME,
-                        tc.TABLE_NAME,
-                        kcu.COLUMN_NAME,
-                        rc.REFERENCED_TABLE_NAME,
-                        kcu.REFERENCED_COLUMN_NAME
-                    FROM information_schema.TABLE_CONSTRAINTS AS tc
-                    INNER JOIN information_schema.REFERENTIAL_CONSTRAINTS AS rc
-                        ON tc.CONSTRAINT_NAME = rc.CONSTRAINT_NAME
-                        AND tc.CONSTRAINT_SCHEMA = rc.CONSTRAINT_SCHEMA
-                    INNER JOIN information_schema.KEY_COLUMN_USAGE AS kcu
-                        ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
-                        AND tc.CONSTRAINT_SCHEMA = kcu.CONSTRAINT_SCHEMA
-                    WHERE
-                        tc.CONSTRAINT_TYPE = ' . $this->escape('FOREIGN KEY') . ' AND
-                        tc.TABLE_SCHEMA = ' . $this->escape($this->database) . ' AND
-                        tc.TABLE_NAME = ' . $this->escape($table);
+                SELECT
+                    tc.CONSTRAINT_NAME,
+                    tc.TABLE_NAME,
+                    kcu.COLUMN_NAME,
+                    rc.REFERENCED_TABLE_NAME,
+                    kcu.REFERENCED_COLUMN_NAME,
+                    rc.DELETE_RULE,
+                    rc.UPDATE_RULE,
+                    rc.MATCH_OPTION
+                FROM information_schema.table_constraints AS tc
+                INNER JOIN information_schema.referential_constraints AS rc
+                    ON tc.constraint_name = rc.constraint_name
+                    AND tc.constraint_schema = rc.constraint_schema
+                INNER JOIN information_schema.key_column_usage AS kcu
+                    ON tc.constraint_name = kcu.constraint_name
+                    AND tc.constraint_schema = kcu.constraint_schema
+                WHERE
+                    tc.constraint_type = ' . $this->escape('FOREIGN KEY') . ' AND
+                    tc.table_schema = ' . $this->escape($this->database) . ' AND
+                    tc.table_name = ' . $this->escape($table);
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
-        $query = $query->getResultObject();
 
-        $retVal = [];
+        $query   = $query->getResultObject();
+        $indexes = [];
 
         foreach ($query as $row) {
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $row->CONSTRAINT_NAME;
-            $obj->table_name          = $row->TABLE_NAME;
-            $obj->column_name         = $row->COLUMN_NAME;
-            $obj->foreign_table_name  = $row->REFERENCED_TABLE_NAME;
-            $obj->foreign_column_name = $row->REFERENCED_COLUMN_NAME;
-
-            $retVal[] = $obj;
+            $indexes[$row->CONSTRAINT_NAME]['constraint_name']       = $row->CONSTRAINT_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['table_name']            = $row->TABLE_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['column_name'][]         = $row->COLUMN_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['foreign_table_name']    = $row->REFERENCED_TABLE_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['foreign_column_name'][] = $row->REFERENCED_COLUMN_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['on_delete']             = $row->DELETE_RULE;
+            $indexes[$row->CONSTRAINT_NAME]['on_update']             = $row->UPDATE_RULE;
+            $indexes[$row->CONSTRAINT_NAME]['match']                 = $row->MATCH_OPTION;
         }
 
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

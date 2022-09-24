@@ -177,6 +177,13 @@ class Forge
     protected $dropIndexStr = 'DROP INDEX %s ON %s';
 
     /**
+     * Foreign Key Allowed Actions
+     *
+     * @var array
+     */
+    protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
+
+    /**
      * Constructor.
      */
     public function __construct(BaseConnection $db)
@@ -401,7 +408,7 @@ class Forge
      *
      * @throws DatabaseException
      */
-    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '')
+    public function addForeignKey($fieldName = '', string $tableName = '', $tableField = '', string $onUpdate = '', string $onDelete = '', string $fkName = '')
     {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
@@ -425,6 +432,7 @@ class Forge
             'referenceField' => $tableField,
             'onDelete'       => strtoupper($onDelete),
             'onUpdate'       => strtoupper($onUpdate),
+            'fkName'         => $fkName,
         ];
 
         return $this;
@@ -480,7 +488,7 @@ class Forge
         $sql = sprintf(
             (string) $this->dropConstraintStr,
             $this->db->escapeIdentifiers($this->db->DBPrefix . $table),
-            $this->db->escapeIdentifiers($this->db->DBPrefix . $foreignName)
+            $this->db->escapeIdentifiers($foreignName)
         );
 
         if ($sql === '') {
@@ -1055,20 +1063,18 @@ class Forge
         return $sqls;
     }
 
+    /**
+     * Generates SQL to process foreign keys
+     */
     protected function _processForeignKeys(string $table): string
     {
         $sql = '';
 
-        $allowActions = [
-            'CASCADE',
-            'SET NULL',
-            'NO ACTION',
-            'RESTRICT',
-            'SET DEFAULT',
-        ];
-
         foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
+            $nameIndex = $fkey['fkName'] !== '' ?
+            $fkey['fkName'] :
+            $table . '_' . implode('_', $fkey['field']) . ($this->db->DBDriver === 'OCI8' ? '_fk' : '_foreign');
+
             $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
@@ -1077,11 +1083,11 @@ class Forge
             $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
             $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
-            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
+            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $this->fkAllowActions, true)) {
                 $sql .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
-            if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
+            if ($this->db->DBDriver !== 'OCI8' && $fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $this->fkAllowActions, true)) {
                 $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
         }
