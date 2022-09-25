@@ -47,6 +47,7 @@ Others
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 - The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
 - The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts an array, string, or ``RawSql``.
+- The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data.
 
 .. _v430-interface-changes:
 

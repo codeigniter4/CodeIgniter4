@@ -1950,7 +1950,7 @@ class BaseBuilder
     /**
      * Compiles batch insert strings and runs the queries
      *
-     * @param array|string|null $set a dataset or select query
+     * @param array|object|null $set a dataset
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      */
@@ -2285,7 +2285,7 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queryies
      *
-     * @param array|object|string|null $set         a dataset or select query
+     * @param array|object|null $set         a dataset or select query
      * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
