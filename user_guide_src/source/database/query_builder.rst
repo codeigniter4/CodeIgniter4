@@ -1028,8 +1028,11 @@ Conditional Statements
 
 .. _db-builder-when:
 
+When
+====
+
 $builder->when()
-------------------
+----------------
 
 This allows modifying the query based on a condition without breaking out of the
 query builder chain. The first parameter is the condition, and it should evaluate
@@ -1049,6 +1052,9 @@ Sometimes you might want to apply a different statement if the condition evaluat
 This can be accomplished by providing a second closure:
 
 .. literalinclude:: query_builder/106.php
+
+WhenNot
+=======
 
 $builder->whenNot()
 -------------------
