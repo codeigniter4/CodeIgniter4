@@ -25,11 +25,6 @@ class TestRegistrar
                 'first',
                 'second',
             ],
-            'format' => 'nice',
-            'fruit'  => [
-                'apple',
-                'banana',
-            ],
         ];
     }
 }
