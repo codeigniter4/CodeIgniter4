@@ -14,6 +14,7 @@ namespace CodeIgniter\Config;
 use CodeIgniter\Test\CIUnitTestCase;
 use ReflectionClass;
 use stdClass;
+use Tests\Support\Config\Factory;
 use Tests\Support\Models\UserModel;
 use Tests\Support\Widgets\OtherWidget;
 use Tests\Support\Widgets\SomeWidget;
