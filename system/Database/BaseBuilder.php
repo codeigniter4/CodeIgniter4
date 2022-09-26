@@ -1993,6 +1993,8 @@ class BaseBuilder
      * @param mixed $key
      *
      * @return $this|null
+     *
+     * @deprecated
      */
     public function setInsertBatch($key, string $value = '', ?bool $escape = null)
     {
@@ -2285,7 +2287,7 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queryies
      *
-     * @param array|object|null $set         a dataset or select query
+     * @param array|object|null        $set         a dataset or select query
      * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
@@ -2385,6 +2387,8 @@ class BaseBuilder
      * @return $this
      *
      * @throws DatabaseException
+     *
+     * @deprecated
      */
     public function setUpdateBatch($key, string $index = '', ?bool $escape = null)
     {

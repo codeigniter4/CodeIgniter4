@@ -46,8 +46,6 @@ Others
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 - The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
-- The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts an array, string, or ``RawSql``.
-- The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data.
 
 .. _v430-interface-changes:
 
@@ -92,6 +90,9 @@ Others
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
 - Parameter ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
+- The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts an array, string, or ``RawSql``.
+- The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data.
+- The second and third parameters of ``BaseBuilder::_updateBatch()`` has changed. Instead of ``$values, $index``, it is now ``$keys, $values``.
 
 Enhancements
 ************
@@ -176,6 +177,7 @@ Deprecations
 
 - ``RouteCollection::localizeRoute()`` is deprecated.
 - ``RouteCollection::fillRouteParams()`` is deprecated. Use ``RouteCollection::buildReverseRoute()`` instead.
+- ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are depreciated. Use ``BaseBuilder::setData()`` instead.
 
 Bugs Fixed
 **********
