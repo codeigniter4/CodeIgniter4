@@ -31,8 +31,8 @@ interface ValidationInterface
      * Check; runs the validation process, returning true or false
      * determining whether or not validation was successful.
      *
-     * @param object|array|string|int|float|bool|null $value  Value to validate.
-     * @param string[] $errors
+     * @param array|bool|float|int|object|string|null $value  Value to validate.
+     * @param string[]                                $errors
      *
      * @return bool True if valid, else false.
      */

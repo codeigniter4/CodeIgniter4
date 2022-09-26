@@ -183,8 +183,8 @@ class Validation implements ValidationInterface
      * Runs the validation process, returning true or false
      * determining whether validation was successful or not.
      *
-     * @param object|array|string|int|float|bool|null $value
-     * @param string[] $errors
+     * @param array|bool|float|int|object|string|null $value
+     * @param string[]                                $errors
      */
     public function check($value, string $rule, array $errors = []): bool
     {
