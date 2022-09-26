@@ -90,9 +90,11 @@ Others
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
 - Parameter ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
-- The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts an array, string, or ``RawSql``.
+- The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts types array, string, or ``RawSql``. Extending classes should likewise change types.
 - The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data.
-- The second and third parameters of ``BaseBuilder::_updateBatch()`` has changed. Instead of ``$values, $index``, it is now ``$keys, $values``.
+- ``BaseBuilder::_updateBatch()``
+    - The second parameter ``$values`` has changed to ``$keys``.
+    - The third parameter ``$index`` has changed to ``$values``. The parameter type also has changed to ``array``.
 
 Enhancements
 ************
