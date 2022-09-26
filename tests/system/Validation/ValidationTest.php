@@ -1414,13 +1414,20 @@ class ValidationTest extends CIUnitTestCase
                     'credit_amount'  => null,
                     'purpose'        => 'A',
                 ],
+                'account_3' => [
+                    'account_number' => '',
+                    'credit_amount'  => 2000,
+                    'purpose'        => '',
+                ],
             ],
         ];
         $this->validation->run($data);
 
         $this->assertSame([
-            'beneficiaries_accounts.account_2.credit_amount' => 'The CREDIT AMOUNT field is required.',
-            'beneficiaries_accounts.account_2.purpose'       => 'The PURPOSE field must be at least 3 characters in length.',
+            'beneficiaries_accounts.account_3.account_number' => 'The BENEFICIARY ACCOUNT NUMBER field must be exactly 5 characters in length.',
+            'beneficiaries_accounts.account_2.credit_amount'  => 'The CREDIT AMOUNT field is required.',
+            'beneficiaries_accounts.account_2.purpose'        => 'The PURPOSE field must be at least 3 characters in length.',
+            'beneficiaries_accounts.account_3.purpose'        => 'The PURPOSE field is required when BENEFICIARY ACCOUNT NUMBER is not present.',
         ], $this->validation->getErrors());
     }
 
