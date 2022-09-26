@@ -31,7 +31,7 @@ interface ValidationInterface
      * Check; runs the validation process, returning true or false
      * determining whether or not validation was successful.
      *
-     * @param mixed    $value  Value to validation.
+     * @param object|array|string|int|float|bool|null $value  Value to validation.
      * @param string   $rule   Rule.
      * @param string[] $errors Errors.
      *
