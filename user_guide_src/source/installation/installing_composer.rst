@@ -128,9 +128,6 @@ In your project root::
 
     > composer require codeigniter4/framework
 
-As with the earlier composer install method, you can omit installing
-phpunit and its dependencies by adding the ``--no-dev`` argument to the ``composer require`` command.
-
 Setting Up
 ----------
 

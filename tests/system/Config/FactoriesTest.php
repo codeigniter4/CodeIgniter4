@@ -75,8 +75,9 @@ final class FactoriesTest extends CIUnitTestCase
     public function testUsesConfigOptions()
     {
         // Simulate having a $widgets property in App\Config\Factory
-        $config          = new Factory();
-        $config->widgets = ['bar' => 'bam'];
+        $config = new class () extends Factory {
+            public $widgets = ['bar' => 'bam'];
+        };
         Factories::injectMock('config', Factory::class, $config);
 
         $result = Factories::getOptions('widgets');

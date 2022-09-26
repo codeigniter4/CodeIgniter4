@@ -14,3 +14,4 @@ What are not Breaking Changes
 *****************************
 
 - System messages defined in **system/Language/en/** are strictly for internal framework use and are not covered by backwards compatibility (BC) promise. If developers are relying on language string output they should be checking it against the function call (``lang('...')``), not the content.
+- `Named arguments <https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments>`_ are not covered by backwards compatibility (BC) promise. We may choose to rename method/function parameter names when necessary in order to improve the  codebase.

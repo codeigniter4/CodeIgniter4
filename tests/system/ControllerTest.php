@@ -11,6 +11,7 @@
 
 namespace CodeIgniter;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\Response;
@@ -20,7 +21,9 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
+use Config\Validation as ValidationConfig;
 use Psr\Log\LoggerInterface;
+use Tests\Support\Config\Validation;
 
 /**
  * Exercise our core Controller class.
@@ -118,15 +121,17 @@ final class ControllerTest extends CIUnitTestCase
 
     public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
     {
-        $validation         = config('Validation');
-        $validation->signup = [
-            'username' => 'required',
-        ];
-        $validation->signup_errors = [
-            'username' => [
-                'required' => 'You must choose a username.',
-            ],
-        ];
+        $validation = new class () extends ValidationConfig {
+            public $signup = [
+                'username' => 'required',
+            ];
+            public $signup_errors = [
+                'username' => [
+                    'required' => 'You must choose a username.',
+                ],
+            ];
+        };
+        Factories::injectMock('config', 'Validation', $validation);
 
         // make sure we can instantiate one
         $this->controller = new Controller();
@@ -139,10 +144,12 @@ final class ControllerTest extends CIUnitTestCase
 
     public function testValidateWithStringRulesFoundUseMessagesParameter()
     {
-        $validation         = config('Validation');
-        $validation->signup = [
-            'username' => 'required',
-        ];
+        $validation = new class () extends ValidationConfig {
+            public $signup = [
+                'username' => 'required',
+            ];
+        };
+        Factories::injectMock('config', 'Validation', $validation);
 
         // make sure we can instantiate one
         $this->controller = new Controller();

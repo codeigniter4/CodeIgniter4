@@ -587,7 +587,7 @@ Allowing Parameters
 
 If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
-for rules like ``require_with`` that needs to check the value of another submitted field to base its result on:
+for rules like ``required_with`` that needs to check the value of another submitted field to base its result on:
 
 .. literalinclude:: validation/037.php
 
