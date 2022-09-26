@@ -209,7 +209,7 @@ class Rules
     }
 
     /**
-     * @param object|array|string|int|float|null $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function required($str = null): bool
     {
