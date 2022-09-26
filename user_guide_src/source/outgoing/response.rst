@@ -292,9 +292,7 @@ The methods provided by the parent class that are available are:
         :returns: The current response instance.
         :rtype: ``CodeIgniter\HTTP\Response``
 
-        Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``:
-
-        .. literalinclude:: response/018.php
+        Sets the date used for this response. The ``$date`` argument must be an instance of ``DateTime``.
 
     .. php:method:: setContentType($mime[, $charset='UTF-8'])
 
