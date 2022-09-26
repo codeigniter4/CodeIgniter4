@@ -12,9 +12,11 @@
 namespace CodeIgniter\Models;
 
 use CodeIgniter\Config\Factories;
+use CodeIgniter\Model;
 use Config\Validation;
 use stdClass;
 use Tests\Support\Models\JobModel;
+use Tests\Support\Models\SimpleEntity;
 use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
@@ -366,5 +368,120 @@ final class ValidationModelTest extends LiveModelTestCase
 
         $error = $this->model->getValidationMessages();
         $this->assertSame('Description field is required.', $error['description']);
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6577
+     */
+    public function testUpdateEntityWithCleanRulesFalse()
+    {
+        $model = new class () extends Model {
+            protected $table           = 'test';
+            protected $allowedFields   = ['field1', 'field2', 'field3', 'field4'];
+            protected $returnType      = SimpleEntity::class;
+            protected $validationRules = [
+                'field1' => 'required_with[field2,field3,field4]',
+                'field2' => 'permit_empty',
+                'field3' => 'permit_empty',
+                'field4' => 'permit_empty',
+            ];
+        };
+
+        // Simulate to get the entity from the database.
+        $entity = new SimpleEntity();
+        $entity->setAttributes([
+            'id'     => '1',
+            'field1' => 'value1',
+            'field2' => 'value2',
+            'field3' => '',
+            'field4' => '',
+        ]);
+
+        // Change field1 value.
+        $entity->field1 = '';
+
+        // Set $cleanValidationRules to false.
+        $model->cleanRules(false)->save($entity);
+
+        $errors = $model->errors();
+        $this->assertCount(1, $errors);
+        $this->assertSame(
+            $errors['field1'],
+            'The field1 field is required when field2,field3,field4 is present.'
+        );
+    }
+
+    public function testUpdateEntityWithCleanValidationRulesFalse()
+    {
+        $model = new class () extends Model {
+            protected $table           = 'test';
+            protected $allowedFields   = ['field1', 'field2', 'field3', 'field4'];
+            protected $returnType      = SimpleEntity::class;
+            protected $validationRules = [
+                'field1' => 'required_with[field2,field3,field4]',
+                'field2' => 'permit_empty',
+                'field3' => 'permit_empty',
+                'field4' => 'permit_empty',
+            ];
+
+            // Set to false.
+            protected $cleanValidationRules = false;
+        };
+
+        // Simulate to get the entity from the database.
+        $entity = new SimpleEntity();
+        $entity->setAttributes([
+            'id'     => '1',
+            'field1' => 'value1',
+            'field2' => 'value2',
+            'field3' => '',
+            'field4' => '',
+        ]);
+
+        // Change field1 value.
+        $entity->field1 = '';
+
+        // Set $cleanValidationRules to false.
+        $model->save($entity);
+
+        $errors = $model->errors();
+        $this->assertCount(1, $errors);
+        $this->assertSame(
+            $errors['field1'],
+            'The field1 field is required when field2,field3,field4 is present.'
+        );
+    }
+
+    public function testInsertEntityValidateEntireRules()
+    {
+        $model = new class () extends Model {
+            protected $table           = 'test';
+            protected $allowedFields   = ['field1', 'field2', 'field3', 'field4'];
+            protected $returnType      = SimpleEntity::class;
+            protected $validationRules = [
+                'field1' => 'required',
+                'field2' => 'required',
+                'field3' => 'permit_empty',
+                'field4' => 'permit_empty',
+            ];
+        };
+
+        $entity = new SimpleEntity();
+        $entity->setAttributes([
+            'field1' => 'value1',
+            'field2' => '',
+            'field3' => '',
+            'field4' => '',
+        ]);
+
+        // Insert ignores $cleanValidationRules value.
+        $model->insert($entity);
+
+        $errors = $model->errors();
+        $this->assertCount(1, $errors);
+        $this->assertSame(
+            $errors['field2'],
+            'The field2 field is required.'
+        );
     }
 }
