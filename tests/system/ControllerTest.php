@@ -21,6 +21,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\App;
 use Config\Services;
+use Config\Validation as ValidationConfig;
 use Psr\Log\LoggerInterface;
 use Tests\Support\Config\Validation;
 
@@ -120,7 +121,16 @@ final class ControllerTest extends CIUnitTestCase
 
     public function testValidateWithStringRulesFoundReadMessagesFromValidationConfig()
     {
-        $validation = new Validation();
+        $validation = new class () extends ValidationConfig {
+            public $signup = [
+                'username' => 'required',
+            ];
+            public $signup_errors = [
+                'username' => [
+                    'required' => 'You must choose a username.',
+                ],
+            ];
+        };
         Factories::injectMock('config', 'Validation', $validation);
 
         // make sure we can instantiate one
@@ -134,7 +144,11 @@ final class ControllerTest extends CIUnitTestCase
 
     public function testValidateWithStringRulesFoundUseMessagesParameter()
     {
-        $validation = new Validation();
+        $validation = new class () extends ValidationConfig {
+            public $signup = [
+                'username' => 'required',
+            ];
+        };
         Factories::injectMock('config', 'Validation', $validation);
 
         // make sure we can instantiate one
