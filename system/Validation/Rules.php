@@ -296,6 +296,8 @@ class Rules
             return true;
         }
 
+        $nowKeyField = 0;
+
         if (strpos($keyField, '.') !== false) {
             $keyFieldArray = explode('.', $keyField);
             $nowKeyField   = $keyFieldArray[1];
@@ -315,7 +317,7 @@ class Rules
                 $nowField      = str_replace('*', $nowKeyField, $field);
                 $nowFieldVaule = dot_array_search($nowField, $data);
 
-                return (bool) (null !== $nowFieldVaule);
+                return null !== $nowFieldVaule;
             }
         }
 
