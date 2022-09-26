@@ -158,8 +158,7 @@ you need it.
 You can simply assign data to the ``$_SESSION`` array, as with any other
 variable. Or as a property of ``$session``.
 
-The former userdata method is deprecated,
-but you can pass an array containing your new session data to the
+You can pass an array containing your new session data to the
 ``set()`` method:
 
 .. literalinclude:: sessions/010.php
