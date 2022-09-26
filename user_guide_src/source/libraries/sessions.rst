@@ -75,7 +75,7 @@ However, non-blocking requests in the context of sessions also means
 unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
-CodeIgniter 4 has a completely re-written Session library.
+CodeIgniter 3 has a completely re-written Session library.
 
 Why are we telling you this? Because it is likely that after trying to
 find the reason for your performance issues, you may conclude that locking
