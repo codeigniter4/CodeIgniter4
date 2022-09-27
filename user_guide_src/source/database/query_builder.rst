@@ -506,7 +506,7 @@ You can also pass an array of multiple values as well:
 
 .. literalinclude:: query_builder/049.php
 
-If you are using a database that CodeIgniter escapes queries for, you
+If you are using a database that CodeIgniter escapes values for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to ``false``.
 
@@ -895,7 +895,7 @@ In the above example, if we assume that the ``title`` field is our primary
 key, then if a row containing ``My title`` as the ``title`` value, that row
 will be deleted with our new row data replacing it.
 
-Usage of the ``set()`` method is also allowed and all fields are
+Usage of the ``set()`` method is also allowed and all values are
 automatically escaped, just like with ``insert()``.
 
 $builder->set()
@@ -914,7 +914,7 @@ based on whether you are doing an insert or an update:
 .. literalinclude:: query_builder/084.php
 
 ``set()`` will also accept an optional third parameter (``$escape``), that
-will prevent data from being escaped if set to ``false``. To illustrate the
+will prevent the values from being escaped if set to ``false``. To illustrate the
 difference, here is ``set()`` used both with and without the escape
 parameter.
 
