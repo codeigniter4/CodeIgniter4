@@ -1857,9 +1857,9 @@ class BaseBuilder
     /**
      * Compiles an upsert query and returns the sql
      *
-     * @throws DatabaseException
-     *
      * @return string
+     *
+     * @throws DatabaseException
      */
     public function getCompiledUpsert()
     {
@@ -1879,9 +1879,9 @@ class BaseBuilder
      *
      * @param array|object|null $set
      *
-     * @throws DatabaseException
-     *
      * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
      */
     public function upsert($set = null, ?bool $escape = null)
     {
@@ -1908,9 +1908,9 @@ class BaseBuilder
      *
      * @param array|object|string|null $set a dataset or select query
      *
-     * @throws DatabaseException
-     *
      * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
