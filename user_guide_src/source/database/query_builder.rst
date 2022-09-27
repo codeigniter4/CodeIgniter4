@@ -1622,8 +1622,8 @@ Class Reference
         The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or RawSql.
 
         .. note:: When more than ``$batchSize`` field/value pairs are provided,
-             multiple queries will be executed, each handling up to ``$batchSize`` 
-             field/value pairs. If we set ``$batchSize`` to 0, then all field/value 
+             multiple queries will be executed, each handling up to ``$batchSize``
+             field/value pairs. If we set ``$batchSize`` to 0, then all field/value
              pairs will be executed in one query.
 
     .. php:method:: updateFields($set, [$addToDefault = false, [$ignore = null]])
