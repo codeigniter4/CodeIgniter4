@@ -68,29 +68,36 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        $insertKeys    = implode(', ', $keys);
-        $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
+        $sql = $this->QBOptions['sql'] ?? '';
 
-        // ORA-00001 measures
-        if ($hasPrimaryKey) {
-            $sql               = 'INSERT INTO ' . $table . ' (' . $insertKeys . ") \n SELECT * FROM (\n";
-            $selectQueryValues = [];
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $insertKeys    = implode(', ', $keys);
+            $hasPrimaryKey = in_array('PRIMARY', array_column($this->db->getIndexData($table), 'type'), true);
 
-            foreach ($values as $value) {
-                $selectValues        = implode(',', array_map(static fn ($value, $key) => $value . ' as ' . $key, explode(',', substr(substr($value, 1), 0, -1)), $keys));
-                $selectQueryValues[] = 'SELECT ' . $selectValues . ' FROM DUAL';
-            }
+            // ORA-00001 measures
+            $sql = 'INSERT' . ($hasPrimaryKey ? '' : ' ALL') . ' INTO ' . $table . ' (' . $insertKeys . ")\n{:_table_:}";
 
-            return $sql . implode("\n UNION ALL \n", $selectQueryValues) . "\n)";
+            $this->QBOptions['sql'] = $sql;
         }
 
-        $sql = "INSERT ALL\n";
-
-        foreach ($values as $value) {
-            $sql .= '	INTO ' . $table . ' (' . $insertKeys . ') VALUES ' . $value . "\n";
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = implode(
+                " FROM DUAL UNION ALL\n",
+                array_map(
+                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index) => $index . ' ' . $key,
+                        $keys,
+                        $value
+                    )),
+                    $values
+                )
+            ) . " FROM DUAL\n";
         }
 
-        return $sql . 'SELECT * FROM DUAL';
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**
@@ -232,14 +239,8 @@ class Builder extends BaseBuilder
     /**
      * Generates a platform-specific batch update string from the supplied data
      */
-    protected function _updateBatch(string $table, array $values, string $index): string
+    protected function _updateBatch(string $table, array $keys, array $values): string
     {
-        // this is a work around until the rest of the platform is refactored
-        if ($index !== '') {
-            $this->QBOptions['constraints'] = [$index];
-        }
-        $keys = array_keys(current($values));
-
         $sql = $this->QBOptions['sql'] ?? '';
 
         // if this is the first iteration of batch then we need to build skeleton sql
@@ -263,7 +264,7 @@ class Builder extends BaseBuilder
             // Oracle doesn't support ignore on updates so we will use MERGE
             $sql = 'MERGE INTO ' . $table . "\n";
 
-            $sql .= 'USING (' . "\n%s";
+            $sql .= 'USING (' . "\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 
@@ -311,6 +312,6 @@ class Builder extends BaseBuilder
             ) . "\n";
         }
 
-        return sprintf($sql, $data);
+        return str_replace('{:_table_:}', $data, $sql);
     }
 }

@@ -180,7 +180,23 @@ class Builder extends BaseBuilder
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
-        return 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table) . ' (' . implode(', ', $keys) . ') VALUES ' . implode(', ', $values);
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $sql = 'INSERT ' . $this->compileIgnore('insert') . 'INTO ' . $this->getFullName($table)
+                . ' (' . implode(', ', $keys) . ")\n{:_table_:}";
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = 'VALUES ' . implode(', ', $this->formatValues($values));
+        }
+
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**

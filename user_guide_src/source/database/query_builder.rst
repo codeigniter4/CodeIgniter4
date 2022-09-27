@@ -1598,6 +1598,8 @@ Class Reference
 
         Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
 
+        .. important:: This method is deprecated. It will be removed in future releases.
+
     .. php:method:: update([$set = null[, $where = null[, $limit = null]]])
 
         :param array $set: An associative array of field/value pairs
@@ -1608,19 +1610,57 @@ Class Reference
 
         Compiles and executes an ``UPDATE`` statement.
 
-    .. php:method:: updateBatch([$set = null[, $value = null[, $batch_size = 100]]])
+    .. php:method:: updateBatch([$set = null[, $constraints = null[, $batchSize = 100]]])
 
         :param array $set: Field name, or an associative array of field/value pairs
-        :param string $value: Field value, if $set is a single field
-        :param int $batch_size: Count of conditions to group in a single query
+        :param mixed $constraints: The field or fields used as keys to update on.
+        :param int $batchSize: Count of conditions to group in a single query
         :returns:   Number of rows updated or ``false`` on failure
         :rtype:     int|false
 
         Compiles and executes batch ``UPDATE`` statements.
+        The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or RawSql.
 
-        .. note:: When more than ``$batch_size`` field/value pairs are provided,
-            multiple queries will be executed, each handling up to
-            ``$batch_size`` field/value pairs.
+        .. note:: When more than ``$batchSize`` field/value pairs are provided,
+             multiple queries will be executed, each handling up to ``$batchSize`` 
+             field/value pairs. If we set ``$batchSize`` to 0, then all field/value 
+             pairs will be executed in one query.
+
+    .. php:method:: updateFields($set, [$addToDefault = false, [$ignore = null]])
+
+        :param mixed $set: Row of columns or array of rows, a row is an array or object
+        :param bool $addToDefault: Adds an additional column than those in dataset
+        :param bool $ignore: An array of columns to ignore from those in $set
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Used with ``updateBatch()`` and ``upsertBatch()`` methods. This defines the fields which will be updated.
+
+    .. php:method:: onConstraint($set)
+
+        :param mixed $set: A set of fields or field used has keys or constraints
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Used with ``updateBatch()`` and ``upsertBatch()`` methods. This takes a comma delimited string of columns, and array, associative array, or RawSql.
+
+    .. php:method:: setData($set, [$escape = null, [$alias = '']])
+
+        :param mixed $set: Row of columns or array of rows, a row is an array or object
+        :param bool $escape: Whether to escape values
+        :param bool $alias: A table alias for dataset
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Used for ``*Batch()`` methods to set data for insert, update, upsert.
+
+    .. php:method:: setAlias($alias)
+
+        :param string $alias: Alias for table
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        This allows setting an alias for the psuedo table generated with ``setData()``.
 
     .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
 
@@ -1631,6 +1671,8 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be updated in a table later via ``updateBatch()``.
+
+        .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: replace([$set = null])
 
