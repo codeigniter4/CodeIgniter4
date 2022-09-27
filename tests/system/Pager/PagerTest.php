@@ -180,7 +180,7 @@ final class PagerTest extends CIUnitTestCase
         );
     }
 
-    public function testStoreWithURIReturnObject()
+    public function testgetPageURIWithURIReturnObject()
     {
         $this->pager->store('bar', 5, 25, 100, 1);
 
