@@ -182,9 +182,6 @@ final class PagerTest extends CIUnitTestCase
 
     public function testStoreWithURIReturnObject()
     {
-        $_GET['page'] = 5;
-        $_GET['id']   = 1;
-
         $this->pager->store('bar', 5, 25, 100, 1);
 
         $uri     = $this->pager->getPageURI(7, 'bar', true);
