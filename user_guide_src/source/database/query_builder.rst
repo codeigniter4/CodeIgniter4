@@ -27,20 +27,22 @@ You can generate SQL statements quite safely with the Query Builder. However,
 it is not designed to prevent SQL injection no matter what data you pass.
 
 Arguments passed to the Query Builder can be:
-    1. **identifiers** such as field or table names
+    1. **identifiers** such as field (or table) names
     2. their **values**
     3. a part of **SQL strings**
 
 The Query Builder will escape all **values** by default.
 
-It will also try its best to properly protect **identifiers**
-and identifiers in **SQL strings** by default.
-However, flexibility is a priority and is far from perfect.
+It will also try to properly protect **identifiers** and identifiers in
+**SQL strings** by default.
+However, it is implemented to work well in many use cases and
+is not designed to prevent all attacks.
 Therefore, you should never feed in user input to them without proper validation.
 
 Also, many methods have the ``$escape`` parameter that can be set to disable escaping.
-If ``$escape`` is set to false, no protection is provided, so you must ensure that
-they are properly escaped or protected by yourself.
+If ``$escape`` is set to false, no protection is provided by the Query Builder,
+so you must ensure by yourself that
+they are properly escaped or protected before passing it to the Query Builder.
 The same is true when using ``RawSql``, which specifies a raw SQL statement.
 
 *************************
