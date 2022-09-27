@@ -1621,7 +1621,7 @@ Class Reference
         .. note:: Since v4.3.0, the types of the parameters ``$set`` and ``$constraints`` have changed.
 
         Compiles and executes batch ``UPDATE`` statements.
-        The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or RawSql.
+        The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or ``RawSql``.
 
         .. note:: When more than ``$batchSize`` field/value pairs are provided,
              multiple queries will be executed, each handling up to ``$batchSize``
