@@ -16,7 +16,7 @@ $data = [
 ];
 
 $additionalUpdateField = ['updated_at' => new RawSql('CURRENT_TIMESTAMP')];
-        
+
 $sql = $builder->setData($data)->updateFields($additionalUpdateField, true)->upsertBatch();
 /* MySQLi produces:
     INSERT INTO `db_user` (`country`, `email`, `name`)

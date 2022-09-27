@@ -163,6 +163,7 @@ class BaseBuilder
      *
      * @phpstan-var array{
      *   updateFieldsAdditional?: array,
+     *   tableIdentity?: string,
      *   updateFields?: array,
      *   constraints?: array,
      *   fromQuery?: string,
