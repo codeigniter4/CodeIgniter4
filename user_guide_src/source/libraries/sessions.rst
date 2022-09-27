@@ -133,7 +133,7 @@ Or even through the session helper method:
 .. literalinclude:: sessions/007.php
 
 Where ``item`` is the array key corresponding to the item you wish to fetch.
-For example, to assign a previously stored 'name' item to the ``$name``
+For example, to assign a previously stored ``name`` item to the ``$name``
 variable, you will do this:
 
 .. literalinclude:: sessions/008.php
@@ -188,8 +188,8 @@ Or you can call ``has()``:
 Pushing new value to session data
 =================================
 
-The push method is used to push a new value onto a session value that is an array.
-For instance, if the 'hobbies' key contains an array of hobbies, you can add a new value onto the array like so:
+The ``push()`` method is used to push a new value onto a session value that is an array.
+For instance, if the ``hobbies`` key contains an array of hobbies, you can add a new value onto the array like so:
 
 .. literalinclude:: sessions/015.php
 
@@ -203,7 +203,7 @@ done through ``unset()``:
 
 Also, just as ``set()`` can be used to add information to a
 session, ``remove()`` can be used to remove it, by passing the
-session key. For example, if you wanted to remove 'some_name' from your
+session key. For example, if you wanted to remove ``some_name`` from your
 session data array:
 
 .. literalinclude:: sessions/017.php
