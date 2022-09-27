@@ -573,4 +573,12 @@ final class UpsertTest extends CIUnitTestCase
             }
         }
     }
+
+    public function testUpsertNoData()
+    {
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('upsertBatch() has no data.');
+
+        $this->db->table('user')->onConstraint('email')->upsertBatch();
+    }
 }
