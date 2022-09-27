@@ -1597,6 +1597,7 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
+
         .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: update([$set = null[, $where = null[, $limit = null]]])
@@ -1670,6 +1671,7 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be updated in a table later via ``updateBatch()``.
+
         .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: replace([$set = null])
