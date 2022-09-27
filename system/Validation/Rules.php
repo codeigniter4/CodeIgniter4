@@ -301,11 +301,11 @@ class Rules
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach ($fields as $field) {
-            if ((strpos($field, '.') === false) && (! array_key_exists($field, $data))) {
-                return ! empty($data[$field]);
+            if ((strpos($field, '.') === false) && (! array_key_exists($field, $data) || empty($data[$field]))) {
+                return false;
             }
             if (strpos($field, '.') !== false) {
-                if ($keyField == null) {
+                if ($keyField === null) {
                     throw new InvalidArgumentException('You must supply the parameters: keyField');
                 }
 
