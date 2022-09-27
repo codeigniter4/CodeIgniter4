@@ -1612,18 +1612,20 @@ Class Reference
 
     .. php:method:: updateBatch([$set = null[, $constraints = null[, $batchSize = 100]]])
 
-        :param array $set: Field name, or an associative array of field/value pairs
-        :param mixed $constraints: The field or fields used as keys to update on.
+        :param array|object|null $set: Field name, or an associative array of field/value pairs
+        :param array|RawSql|string|null $constraints: The field or fields used as keys to update on.
         :param int $batchSize: Count of conditions to group in a single query
         :returns:   Number of rows updated or ``false`` on failure
         :rtype:     int|false
 
+        .. note:: Since v4.3.0, the types of the parameters ``$set`` and ``$constraints`` have changed.
+
         Compiles and executes batch ``UPDATE`` statements.
-        The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or RawSql.
+        The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or ``RawSql``.
 
         .. note:: When more than ``$batchSize`` field/value pairs are provided,
-             multiple queries will be executed, each handling up to ``$batchSize`` 
-             field/value pairs. If we set ``$batchSize`` to 0, then all field/value 
+             multiple queries will be executed, each handling up to ``$batchSize``
+             field/value pairs. If we set ``$batchSize`` to 0, then all field/value
              pairs will be executed in one query.
 
     .. php:method:: updateFields($set, [$addToDefault = false, [$ignore = null]])
@@ -1634,6 +1636,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
+        .. versionadded:: 4.3.0
+
         Used with ``updateBatch()`` and ``upsertBatch()`` methods. This defines the fields which will be updated.
 
     .. php:method:: onConstraint($set)
@@ -1641,6 +1645,8 @@ Class Reference
         :param mixed $set: A set of fields or field used has keys or constraints
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
+
+        .. versionadded:: 4.3.0
 
         Used with ``updateBatch()`` and ``upsertBatch()`` methods. This takes a comma delimited string of columns, and array, associative array, or RawSql.
 
@@ -1652,6 +1658,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
+        .. versionadded:: 4.3.0
+
         Used for ``*Batch()`` methods to set data for insert, update, upsert.
 
     .. php:method:: setAlias($alias)
@@ -1659,6 +1667,8 @@ Class Reference
         :param string $alias: Alias for table
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
+
+        .. versionadded:: 4.3.0
 
         This allows setting an alias for the psuedo table generated with ``setData()``.
 
