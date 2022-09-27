@@ -141,14 +141,14 @@ variable, you will do this:
 .. note:: The ``get()`` method returns null if the item you are trying
     to access does not exist.
 
-If you want to retrieve all of the existing userdata, you can simply
+If you want to retrieve all of the existing session data, you can simply
 omit the item key (magic getter only works for single property values):
 
 .. literalinclude:: sessions/009.php
 
 .. important:: The ``get()`` method WILL return flashdata or tempdata items when
     retrieving a single item by key. It will not return flashdata or tempdata when
-    grabbing all userdata from the session, however.
+    grabbing all data from the session, however.
 
 Adding Session Data
 ===================
@@ -251,7 +251,7 @@ through ``$_SESSION``:
 
 .. important:: The ``get()`` method WILL return flashdata items when
     retrieving a single item by key. It will not return flashdata when
-    grabbing all userdata from the session, however.
+    grabbing all data from the session, however.
 
 However, if you want to be sure that you're reading "flashdata" (and not
 any other kind), you can also use the ``getFlashdata()`` method:
@@ -313,7 +313,7 @@ To read a tempdata variable, again you can just access it through the
 
 .. important:: The ``get()`` method WILL return tempdata items when
     retrieving a single item by key. It will not return tempdata when
-    grabbing all userdata from the session, however.
+    grabbing all data from the session, however.
 
 Or if you want to be sure that you're reading "tempdata" (and not any
 other kind), you can also use the ``getTempdata()`` method:
