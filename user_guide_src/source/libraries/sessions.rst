@@ -106,6 +106,9 @@ uses the session handlers' mechanism provided by PHP. Using session data is
 as simple as manipulating (read, set and unset values) the ``$_SESSION``
 array.
 
+.. note:: In general, it is bad practice to use global variables.
+    So using the superglobal ``$_SESSION`` directly is not recommended.
+
 In addition, CodeIgniter also provides 2 special types of session data
 that are further explained below: flashdata and tempdata.
 
