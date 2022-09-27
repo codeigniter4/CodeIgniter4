@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use stdclass;
@@ -509,6 +510,67 @@ final class UpsertTest extends CIUnitTestCase
             $this->seeInDatabase('user', ['id' => 1, 'country' => 'Greece']);
             $this->seeInDatabase('user', ['id' => 2, 'country' => 'Greece']);
             $this->seeInDatabase('user', ['id' => 3, 'country' => 'Greece']);
+        }
+    }
+
+    public function testSetBatchOneRow()
+    {
+        $data = [
+            [
+                'name'    => 'Derek Jones users',
+                'email'   => 'derek@world.com',
+                'country' => 'Netherlands',
+            ],
+            [
+                'name'    => 'Ahmadinejad users',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Netherlands',
+            ],
+            [
+                'name'    => 'Richard A Causey users',
+                'email'   => 'richard@world.com',
+                'country' => 'Netherlands',
+            ],
+            [
+                'name'    => 'Chris Martin users',
+                'email'   => 'chris@world.com',
+                'country' => 'Netherlands',
+            ],
+            [
+                'name'    => 'New User users',
+                'email'   => 'newuser@example.com',
+                'country' => 'Netherlands',
+            ],
+        ];
+
+        $builder = $this->db->table('user');
+
+        // set batch row at a time
+        foreach ($data as $moreData) {
+            $builder->setData($moreData);
+        }
+
+        $evenMoreData          = new stdclass();
+        $evenMoreData->name    = 'New User2 users';
+        $evenMoreData->email   = 'newuser2@example.com';
+        $evenMoreData->country = 'Netherlands';
+
+        $rawSql       = new RawSql('CURRENT_TIMESTAMP');
+        $updateFields = ['updated_at' => $rawSql];
+
+        // set additional field updated_at
+        $builder->updateFields($updateFields, true)->onConstraint('email')->upsertBatch($evenMoreData, true, 2);
+
+        $result = $this->db->table('user')->get()->getResultArray();
+
+        foreach ($result as $row) {
+            $this->assertSame('Netherlands', $row['country']);
+
+            if ($row['email'] !== 'newuser@example.com' && in_array($row['email'], array_column($data, 'email'), true)) {
+                $this->assertNotNull($row['updated_at']);
+            } else {
+                $this->assertNull($row['updated_at']);
+            }
         }
     }
 }
