@@ -1855,6 +1855,113 @@ class BaseBuilder
     }
 
     /**
+     * Compiles an upsert query and returns the sql
+     *
+     * @throws DatabaseException
+     *
+     * @return string
+     */
+    public function getCompiledUpsert()
+    {
+        $currentTestMode = $this->testMode;
+
+        $this->testMode = true;
+
+        $sql = implode(";\n", $this->upsert());
+
+        $this->testMode = $currentTestMode;
+
+        return $this->compileFinalQuery($sql);
+    }
+
+    /**
+     * Converts call to batchUpsert
+     *
+     * @param array|object|null $set
+     *
+     * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     */
+    public function upsert($set = null, ?bool $escape = null)
+    {
+        if ($set === null) {
+            $set = empty($this->binds) ? null : [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
+
+            $this->binds = [];
+
+            $this->resetRun([
+                'QBSet'  => [],
+                'QBKeys' => [],
+            ]);
+        } else {
+            $set = [$set];
+        }
+
+        $this->setData($set, $escape);
+
+        return $this->batchExecute('_upsertBatch', 1);
+    }
+
+    /**
+     * Compiles batch upsert strings and runs the queries
+     *
+     * @param array|object|string|null $set a dataset or select query
+     *
+     * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     */
+    public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
+    {
+        if ($set !== null) {
+            $this->setData($set, $escape);
+        }
+
+        return $this->batchExecute('_upsertBatch', $batchSize);
+    }
+
+    /**
+     * Generates a platform-specific upsertBatch string from the supplied data
+     */
+    protected function _upsertBatch(string $table, array $keys, array $values): string
+    {
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys)->QBOptions['updateFields'] ?? [];
+
+            $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ')' . "\n";
+
+            $sql .= '{:_table_:}';
+
+            $sql .= 'ON DUPLICATE KEY UPDATE' . "\n";
+
+            $sql .= implode(
+                ",\n",
+                array_map(
+                    static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
+                        ' = ' . $value :
+                        ' = ' . 'VALUES(' . $value . ')'),
+                    array_keys($updateFields),
+                    $updateFields
+                )
+            );
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
+        }
+
+        return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
      * Set table alias for dataset sudo table.
      */
     public function setAlias(string $alias): BaseBuilder
