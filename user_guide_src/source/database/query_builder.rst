@@ -1752,6 +1752,7 @@ Class Reference
         .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: upsert([$set = null[, $escape = null]])
+
         :param array $set: An associative array of field/value pairs
         :param bool $escape: Whether to escape values
         :returns:   ``true`` on success, ``false`` on failure
@@ -1760,6 +1761,7 @@ Class Reference
         Compiles and executes an ``UPSERT`` statement.
 
     .. php:method:: upsertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
+
         :param array $set: Data to upsert
         :param bool $escape: Whether to escape values
         :param int $batch_size: Count of rows to upsert at once
