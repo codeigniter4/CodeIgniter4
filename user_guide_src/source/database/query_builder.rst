@@ -1612,8 +1612,8 @@ Class Reference
 
     .. php:method:: updateBatch([$set = null[, $constraints = null[, $batchSize = 100]]])
 
-        :param array $set: Field name, or an associative array of field/value pairs
-        :param mixed $constraints: The field or fields used as keys to update on.
+        :param array|object|null $set: Field name, or an associative array of field/value pairs
+        :param array|RawSql|string|null $constraints: The field or fields used as keys to update on.
         :param int $batchSize: Count of conditions to group in a single query
         :returns:   Number of rows updated or ``false`` on failure
         :rtype:     int|false
