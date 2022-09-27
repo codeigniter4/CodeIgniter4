@@ -102,6 +102,7 @@ Commands
 - Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 - Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 - Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
+- HTTP/3 is now considered a valid protocol.
 
 Testing
 =======
