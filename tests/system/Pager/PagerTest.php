@@ -184,16 +184,9 @@ final class PagerTest extends CIUnitTestCase
     {
         $this->pager->store('bar', 5, 25, 100, 1);
 
-        $uri     = $this->pager->getPageURI(7, 'bar', true);
-        $onlyURI = $this->pager->only(['bar'])->getPageURI(9, 'bar', true);
+        $uri = $this->pager->getPageURI(7, 'bar', true);
 
-        // Total Segment
-        $this->assertSame(1, $uri->getTotalSegments());
-        $this->assertSame(1, $onlyURI->getTotalSegments());
-
-        // Get Segment
-        $this->assertSame('', $uri->getSegment(2));
-        $this->assertSame('9', $onlyURI->getSegment(1));
+        $this->assertInstanceOf(URI::class, $uri);
     }
 
     public function testHasMoreDefaultsToFalse()
