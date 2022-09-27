@@ -280,7 +280,7 @@ class Rules
      *
      * @param string|null $str
      */
-    public function required_without($str = null, ?string $fields = null, array $data = [], ?string $keyField = null): bool
+    public function required_without($str = null, ?string $fields = null, array $data = [], ?string $error = null, ?string $keyField = null): bool
     {
         if ($fields === null || empty($data) || $keyField === null) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data, keyField.');
