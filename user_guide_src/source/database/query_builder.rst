@@ -1618,6 +1618,8 @@ Class Reference
         :returns:   Number of rows updated or ``false`` on failure
         :rtype:     int|false
 
+        .. note:: Since v4.3.0, the types of the parameters ``$set`` and ``$constraints`` have changed.
+
         Compiles and executes batch ``UPDATE`` statements.
         The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or RawSql.
 
