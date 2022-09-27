@@ -1634,6 +1634,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
+        .. versionadded:: 4.3.0
+
         Used with ``updateBatch()`` and ``upsertBatch()`` methods. This defines the fields which will be updated.
 
     .. php:method:: onConstraint($set)
@@ -1641,6 +1643,8 @@ Class Reference
         :param mixed $set: A set of fields or field used has keys or constraints
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
+
+        .. versionadded:: 4.3.0
 
         Used with ``updateBatch()`` and ``upsertBatch()`` methods. This takes a comma delimited string of columns, and array, associative array, or RawSql.
 
@@ -1652,6 +1656,8 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
+        .. versionadded:: 4.3.0
+
         Used for ``*Batch()`` methods to set data for insert, update, upsert.
 
     .. php:method:: setAlias($alias)
@@ -1659,6 +1665,8 @@ Class Reference
         :param string $alias: Alias for table
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
+
+        .. versionadded:: 4.3.0
 
         This allows setting an alias for the psuedo table generated with ``setData()``.
 
