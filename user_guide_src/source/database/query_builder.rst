@@ -148,7 +148,7 @@ Since v4.2.0, ``$builder->select()`` accepts a ``CodeIgniter\Database\RawSql`` i
 
 .. literalinclude:: query_builder/099.php
 
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+.. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 $builder->selectMax()
 ---------------------
@@ -265,7 +265,7 @@ Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` ins
 
 .. literalinclude:: query_builder/102.php
 
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+.. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 *************************
 Looking for Specific Data
@@ -322,8 +322,7 @@ methods:
 
     .. literalinclude:: query_builder/026.php
 
-    .. warning:: If you are using user-supplied data within the string, you MUST escape the
-        data manually. Failure to do so could result in SQL injections.
+    .. warning:: If you are using user-supplied data within the string, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
         .. literalinclude:: query_builder/027.php
 
@@ -336,7 +335,7 @@ methods:
 
     .. literalinclude:: query_builder/100.php
 
-    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+    .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 .. _query-builder-where-subquery:
 
@@ -451,7 +450,7 @@ searches.
 
     .. literalinclude:: query_builder/101.php
 
-    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+    .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 $builder->orLike()
 ------------------
