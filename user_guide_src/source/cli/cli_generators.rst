@@ -34,7 +34,7 @@ where ``<generator_command>`` will be replaced with the command to check.
     namespace defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload
     file. Otherwise, code generation will be interrupted.
 
-.. warning:: Use of ``migrate:create`` to create migration files is now deprecated. It will be removed in
+.. important:: Use of ``migrate:create`` to create migration files is now deprecated. It will be removed in
     future releases. Please use ``make:migration`` as replacement. Also, please use ``make:migration --session``
     to use instead of the deprecated ``session:migration``.
 

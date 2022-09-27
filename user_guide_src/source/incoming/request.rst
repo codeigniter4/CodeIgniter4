@@ -34,7 +34,7 @@ Class Reference
 
     .. php:method:: isValidIP($ip[, $which = ''])
 
-        .. important:: This method is deprecated.
+        .. important:: This method is deprecated. It will be removed in future releases.
 
         :param    string $ip: IP address
         :param    string $which: IP protocol ('ipv4' or 'ipv6')
@@ -53,7 +53,7 @@ Class Reference
 
     .. php:method:: getMethod([$upper = false])
 
-        .. important:: Use of the ``$upper`` parameter is deprecated.
+        .. important:: Use of the ``$upper`` parameter is deprecated. It will be removed in future releases.
 
         :param bool $upper: Whether to return the request method name in upper or lower case
         :returns: HTTP request method

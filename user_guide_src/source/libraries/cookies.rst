@@ -326,7 +326,7 @@ Class Reference
 
     .. php:method:: withNeverExpiring()
 
-        .. important:: This method is deprecated.
+        .. important:: This method is deprecated. It will be removed in future releases.
 
         :param string $name:
         :rtype: ``Cookie``

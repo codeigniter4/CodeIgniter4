@@ -58,8 +58,6 @@ final class PagerTest extends CIUnitTestCase
         $request = $request->withMethod('GET');
         Services::injectMock('request', $request);
 
-        Services::injectMock('request', $request);
-
         $this->config = new Pager();
         $this->pager  = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
     }
