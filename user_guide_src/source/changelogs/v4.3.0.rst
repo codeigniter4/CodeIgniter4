@@ -140,6 +140,7 @@ Database
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
 - Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
 - Fixed ``Forge::dropKey()`` to allow droping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
+- Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
 
 Model
 =====
