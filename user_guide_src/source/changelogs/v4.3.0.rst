@@ -179,7 +179,7 @@ Deprecations
 
 - ``RouteCollection::localizeRoute()`` is deprecated.
 - ``RouteCollection::fillRouteParams()`` is deprecated. Use ``RouteCollection::buildReverseRoute()`` instead.
-- ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are depreciated. Use ``BaseBuilder::setData()`` instead.
+- ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are deprecated. Use ``BaseBuilder::setData()`` instead.
 
 Bugs Fixed
 **********
