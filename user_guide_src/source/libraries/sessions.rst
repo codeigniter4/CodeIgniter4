@@ -361,7 +361,7 @@ the cookie that contained the session id:
 
 .. literalinclude:: sessions/038.php
 
-Accessing session metadata
+Accessing Session Metadata
 ==========================
 
 In previous CodeIgniter versions, the session data array included 4 items
