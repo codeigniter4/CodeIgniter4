@@ -18,7 +18,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Pager\Exceptions\PagerException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
-use Config\Pager;
+use Config\Pager as PagerConfig;
 use Config\Services;
 
 /**
@@ -28,7 +28,7 @@ use Config\Services;
  */
 final class PagerTest extends CIUnitTestCase
 {
-    private ?\CodeIgniter\Pager\Pager $pager = null;
+    private ?Pager $pager = null;
     private $config;
 
     protected function setUp(): void
@@ -58,8 +58,8 @@ final class PagerTest extends CIUnitTestCase
         $request = $request->withMethod('GET');
         Services::injectMock('request', $request);
 
-        $this->config = new Pager();
-        $this->pager  = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
+        $this->config = new PagerConfig();
+        $this->pager  = new Pager($this->config, Services::renderer());
     }
 
     public function testSetPathRemembersPath()
@@ -178,6 +178,25 @@ final class PagerTest extends CIUnitTestCase
             'http://example.com/5?foo=bar',
             $this->pager->only(['foo'])->getPageURI(5)
         );
+    }
+
+    public function testStoreWithURIReturnObject()
+    {
+        $_GET['page'] = 5;
+        $_GET['id']   = 1;
+
+        $this->pager->store('bar', 5, 25, 100, 1);
+
+        $uri     = $this->pager->getPageURI(7, 'bar', true);
+        $onlyURI = $this->pager->only(['bar'])->getPageURI(9, 'bar', true);
+
+        // Total Segment
+        $this->assertSame(1, $uri->getTotalSegments());
+        $this->assertSame(1, $onlyURI->getTotalSegments());
+
+        // Get Segment
+        $this->assertSame('', $uri->getSegment(2));
+        $this->assertSame('9', $onlyURI->getSegment(1));
     }
 
     public function testHasMoreDefaultsToFalse()
@@ -463,8 +482,8 @@ final class PagerTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->config = new Pager();
-        $this->pager  = new \CodeIgniter\Pager\Pager($this->config, Services::renderer());
+        $this->config = new PagerConfig();
+        $this->pager  = new Pager($this->config, Services::renderer());
 
         $_GET['page_foo'] = 2;
 
