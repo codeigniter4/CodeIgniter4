@@ -258,12 +258,13 @@ any other kind), you can also use the ``getFlashdata()`` method:
 
 .. literalinclude:: sessions/024.php
 
+.. note:: The ``getFlashdata()`` method returns null if the item cannot be
+    found.
+
 Or to get an array with all flashdata, simply omit the key parameter:
 
 .. literalinclude:: sessions/025.php
 
-.. note:: The ``getFlashdata()`` method returns null if the item cannot be
-    found.
 
 If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the ``keepFlashdata()`` method.
@@ -320,12 +321,12 @@ other kind), you can also use the ``getTempdata()`` method:
 
 .. literalinclude:: sessions/033.php
 
+.. note:: The ``getTempdata()`` method returns null if the item cannot be
+    found.
+
 And of course, if you want to retrieve all existing tempdata:
 
 .. literalinclude:: sessions/034.php
-
-.. note:: The ``getTempdata()`` method returns null if the item cannot be
-    found.
 
 If you need to remove a tempdata value before it expires, you can directly
 unset it from the ``$_SESSION`` array:
