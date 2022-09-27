@@ -1589,6 +1589,7 @@ Class Reference
             up to ``$batch_size`` rows.
 
     .. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
+
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
         :param bool $escape: Whether to escape values
@@ -1596,7 +1597,7 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
-        This method is deprecated. It will be removed in future releases.
+        .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: update([$set = null[, $where = null[, $limit = null]]])
 
@@ -1661,6 +1662,7 @@ Class Reference
         This allows setting an alias for the psuedo table generated with ``setData()``.
 
     .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
+
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
         :param bool    $escape: Whether to escape values
@@ -1668,7 +1670,7 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be updated in a table later via ``updateBatch()``.
-        This method is deprecated. It will be removed in future releases.
+        .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: replace([$set = null])
 
