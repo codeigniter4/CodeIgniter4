@@ -198,7 +198,16 @@ class Cell
         }
 
         if (! class_exists($class, true)) {
-            throw ViewException::forInvalidCellClass($class);
+            // If we don't know the fully qualified name,
+            // use the locator service to find it in Cells/* folders.
+            $locator   = Services::locator();
+            $classPath = $locator->search('Cells/' . $class);
+
+            if (empty($classPath)) {
+                throw ViewException::forInvalidCellClass($class);
+            }
+
+            $class = $locator->getClassname($classPath[0]);
         }
 
         if (empty($method)) {

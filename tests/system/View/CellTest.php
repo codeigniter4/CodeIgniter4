@@ -251,4 +251,10 @@ final class CellTest extends CIUnitTestCase
     {
         $this->assertSame(Response::class, $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
     }
+
+    public function testLocateCellSuccess()
+    {
+        $this->assertSame('Hello World!', $this->cell->render('StarterCell::hello'));
+        $this->assertSame('Hello CodeIgniter!', $this->cell->render('StarterCell::hello', ['name' => 'CodeIgniter']));
+    }
 }

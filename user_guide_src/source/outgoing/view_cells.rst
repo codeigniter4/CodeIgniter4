@@ -13,6 +13,12 @@ This is intended to be used within views, and is a great aid to modularizing you
 In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is run. The method
 must return the generated HTML as a string. The method can be either a static method or not. Either way works.
 
+If the Cell is a class, you can locate it in the ``app/Cells`` directory and it can be discovered automatically,
+allowing the use of just the class name and method.
+
+::
+        <?= view_cell('Blog::recentPosts') ?>
+
 Cell Parameters
 ---------------
 
