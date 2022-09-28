@@ -79,12 +79,20 @@ class Builder extends BaseBuilder
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
         if (version_compare($this->db->getVersion(), '3.33.0') >= 0) {
-            return parent::_updateBatch($table, $keys, $values);
+            // return parent::_updateBatch($table, $keys, $values);
         }
 
         $constraints = $this->QBOptions['constraints'] ?? [];
 
-        if (count($constraints) > 1 || isset($this->QBOptions['fromQuery'])) {
+        if ($constraints === []) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('You must specify a constraint to match on for batch updates.');
+            }
+
+            return ''; // @codeCoverageIgnore
+        }
+
+        if (count($constraints) > 1 || isset($this->QBOptions['fromQuery']) || (current($constraints) instanceof RawSql)) {
             throw new DatabaseException('You are trying to use a feature which requires SQLite version 3.33 or higher.');
         }
 
