@@ -304,8 +304,8 @@ class Rules
      *
      * @param mixed $str
      */
-    public function required_without($str = null, ?string $fields = null, array $data = []): bool
+    public function required_without($str = null, ?string $fields = null, array $data = [], ?string $error = null, ?string $keyField = null): bool
     {
-        return $this->nonStrictRules->required_without($str, $fields, $data);
+        return $this->nonStrictRules->required_without($str, $fields, $data, $error, $keyField);
     }
 }
