@@ -356,15 +356,6 @@ class Builder extends BaseBuilder
 
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
 
-            if (empty($updateFields)) {
-                $updateFields = array_filter(
-                    $keys,
-                    static fn ($columnName) => ! (in_array($columnName, $constraints, true))
-                );
-
-                $this->QBOptions['updateFields'] = $updateFields;
-            }
-
             $sql = 'MERGE INTO ' . $table . "\nUSING (\n{:_table_:}";
 
             $sql .= ') "_upsert"' . "\nON (";

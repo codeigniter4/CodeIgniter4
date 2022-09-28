@@ -637,7 +637,7 @@ class Builder extends BaseBuilder
             $tableIdentity = $this->QBOptions['tableIdentity'] ?? '';
             $sql           = "SELECT name from syscolumns where id = Object_ID('" . $table . "') and colstat = 1";
             if (($query = $this->db->query($sql)) === false) {
-                throw new DatabaseException('Failed to get table identity');
+                throw new DatabaseException('Failed to get table identity'); // @codeCoverageIgnore
             }
             $query = $query->getResultObject();
 
@@ -686,15 +686,6 @@ class Builder extends BaseBuilder
             }
 
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
-
-            if (empty($updateFields)) {
-                $updateFields = array_filter(
-                    $fieldNames,
-                    static fn ($columnName) => ! (in_array($columnName, $constraints, true))
-                );
-
-                $this->QBOptions['updateFields'] = $updateFields;
-            }
 
             $sql = 'MERGE INTO ' . $fullTableName . "\nUSING (\n";
 

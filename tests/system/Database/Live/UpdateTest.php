@@ -482,4 +482,19 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
     }
+
+    public function testNoConstraintFound()
+    {
+        $jobData = [
+            'name'        => 'Programmer',
+            'description' => 'General PHP Coding',
+        ];
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('You must specify a constraint to match on for batch updates.');
+
+        $this->db->table('job')
+            ->updateBatch($jobData);
+
+    }
 }
