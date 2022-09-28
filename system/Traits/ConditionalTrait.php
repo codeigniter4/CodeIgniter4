@@ -34,7 +34,11 @@ trait ConditionalTrait
     /**
      * Only runs the query when $condition evaluates to false
      *
-     * @param array|bool|float|int|object|resource|string|null $condition
+     * @template TWhenNot of mixed
+     *
+     * @phpstan-param TWhenNot                        $condition
+     * @phpstan-param callable(self, TWhenNot): mixed $callback
+     * @phpstan-param (callable(self): mixed)|null    $defaultCallback
      *
      * @return $this
      */
