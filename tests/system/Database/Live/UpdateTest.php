@@ -495,6 +495,5 @@ final class UpdateTest extends CIUnitTestCase
 
         $this->db->table('job')
             ->updateBatch($jobData);
-
     }
 }
