@@ -279,45 +279,46 @@ class Rules
      *     required_without[id,email]
      *
      * @param string|null $str
-     * @param string|null $keyField This rule param fields aren't present, this field is required.
+     * @param string|null $otherFields The param fields of required_without[].
+     * @param string|null $field       This rule param fields aren't present, this field is required.
      */
-    public function required_without($str = null, ?string $fields = null, array $data = [], ?string $error = null, ?string $keyField = null): bool
+    public function required_without($str = null, ?string $otherFields = null, array $data = [], ?string $error = null, ?string $field = null): bool
     {
-        if ($fields === null || empty($data)) {
+        if ($otherFields === null || empty($data)) {
             throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
         // If the field is present we can safely assume that
         // the field is here, no matter whether the corresponding
         // search field is present or not.
-        $fields  = explode(',', $fields);
-        $present = $this->required($str ?? '');
+        $otherFields = explode(',', $otherFields);
+        $present     = $this->required($str ?? '');
 
         if ($present) {
             return true;
         }
 
-        $nowKeyField = 0;
+        $fieldIndex = 0;
 
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
-        foreach ($fields as $field) {
-            if ((strpos($field, '.') === false) && (! array_key_exists($field, $data) || empty($data[$field]))) {
+        foreach ($otherFields as $otherField) {
+            if ((strpos($otherField, '.') === false) && (! array_key_exists($otherField, $data) || empty($data[$otherField]))) {
                 return false;
             }
-            if (strpos($field, '.') !== false) {
-                if ($keyField === null) {
+            if (strpos($otherField, '.') !== false) {
+                if ($field === null) {
                     throw new InvalidArgumentException('You must supply the parameters: keyField.');
                 }
 
-                $fieldData     = dot_array_search($field, $data);
-                $keyFieldArray = explode('.', $keyField);
-                $nowKeyField   = $keyFieldArray[1];
+                $fieldData       = dot_array_search($otherField, $data);
+                $fieldSplitArray = explode('.', $field);
+                $fieldIndex      = $fieldSplitArray[1];
 
                 if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($field, $data)[$nowKeyField]);
+                    return ! empty(dot_array_search($otherField, $data)[$fieldIndex]);
                 }
-                $nowField      = str_replace('*', $nowKeyField, $field);
+                $nowField      = str_replace('*', $fieldIndex, $otherField);
                 $nowFieldVaule = dot_array_search($nowField, $data);
 
                 return null !== $nowFieldVaule;
