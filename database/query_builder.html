@@ -288,74 +288,99 @@ for safer queries, since the values are escaped automatically by the
 system.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#loading-the-query-builder" id="id9">Loading the Query Builder</a></p></li>
-<li><p><a class="reference internal" href="#selecting-data" id="id10">Selecting Data</a></p>
+<li><p><a class="reference internal" href="#sql-injection-protection" id="id9">SQL Injection Protection</a></p></li>
+<li><p><a class="reference internal" href="#loading-the-query-builder" id="id10">Loading the Query Builder</a></p></li>
+<li><p><a class="reference internal" href="#selecting-data" id="id11">Selecting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#get" id="id11">Get</a></p></li>
-<li><p><a class="reference internal" href="#select" id="id12">Select</a></p></li>
-<li><p><a class="reference internal" href="#from" id="id13">From</a></p></li>
-<li><p><a class="reference internal" href="#subqueries" id="id14">Subqueries</a></p></li>
-<li><p><a class="reference internal" href="#join" id="id15">Join</a></p></li>
+<li><p><a class="reference internal" href="#get" id="id12">Get</a></p></li>
+<li><p><a class="reference internal" href="#select" id="id13">Select</a></p></li>
+<li><p><a class="reference internal" href="#from" id="id14">From</a></p></li>
+<li><p><a class="reference internal" href="#subqueries" id="id15">Subqueries</a></p></li>
+<li><p><a class="reference internal" href="#join" id="id16">Join</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#looking-for-specific-data" id="id16">Looking for Specific Data</a></p>
+<li><p><a class="reference internal" href="#looking-for-specific-data" id="id17">Looking for Specific Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#where" id="id17">Where</a></p></li>
+<li><p><a class="reference internal" href="#where" id="id18">Where</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#looking-for-similar-data" id="id18">Looking for Similar Data</a></p>
+<li><p><a class="reference internal" href="#looking-for-similar-data" id="id19">Looking for Similar Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#like" id="id19">Like</a></p></li>
+<li><p><a class="reference internal" href="#like" id="id20">Like</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#ordering-results" id="id20">Ordering Results</a></p>
+<li><p><a class="reference internal" href="#ordering-results" id="id21">Ordering Results</a></p>
 <ul>
-<li><p><a class="reference internal" href="#orderby" id="id21">OrderBy</a></p></li>
+<li><p><a class="reference internal" href="#orderby" id="id22">OrderBy</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#limiting-or-counting-results" id="id22">Limiting or Counting Results</a></p>
+<li><p><a class="reference internal" href="#limiting-or-counting-results" id="id23">Limiting or Counting Results</a></p>
 <ul>
-<li><p><a class="reference internal" href="#limit" id="id23">Limit</a></p></li>
+<li><p><a class="reference internal" href="#limit" id="id24">Limit</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#union-queries" id="id24">Union queries</a></p>
+<li><p><a class="reference internal" href="#union-queries" id="id25">Union queries</a></p>
 <ul>
-<li><p><a class="reference internal" href="#union" id="id25">Union</a></p></li>
+<li><p><a class="reference internal" href="#union" id="id26">Union</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#query-grouping" id="id26">Query grouping</a></p>
+<li><p><a class="reference internal" href="#query-grouping" id="id27">Query grouping</a></p>
 <ul>
-<li><p><a class="reference internal" href="#group" id="id27">Group</a></p></li>
+<li><p><a class="reference internal" href="#group" id="id28">Group</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#inserting-data" id="id28">Inserting Data</a></p>
+<li><p><a class="reference internal" href="#inserting-data" id="id29">Inserting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#insert" id="id29">Insert</a></p></li>
-<li><p><a class="reference internal" href="#insertbatch" id="id30">insertBatch</a></p></li>
+<li><p><a class="reference internal" href="#insert" id="id30">Insert</a></p></li>
+<li><p><a class="reference internal" href="#insertbatch" id="id31">insertBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#updating-data" id="id31">Updating Data</a></p>
+<li><p><a class="reference internal" href="#updating-data" id="id32">Updating Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#update" id="id32">Update</a></p></li>
-<li><p><a class="reference internal" href="#updatebatch" id="id33">UpdateBatch</a></p></li>
+<li><p><a class="reference internal" href="#update" id="id33">Update</a></p></li>
+<li><p><a class="reference internal" href="#updatebatch" id="id34">UpdateBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#deleting-data" id="id34">Deleting Data</a></p>
+<li><p><a class="reference internal" href="#deleting-data" id="id35">Deleting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#delete" id="id35">Delete</a></p></li>
+<li><p><a class="reference internal" href="#delete" id="id36">Delete</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#method-chaining" id="id36">Method Chaining</a></p></li>
-<li><p><a class="reference internal" href="#resetting-query-builder" id="id37">Resetting Query Builder</a></p>
+<li><p><a class="reference internal" href="#method-chaining" id="id37">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#resetting-query-builder" id="id38">Resetting Query Builder</a></p>
 <ul>
-<li><p><a class="reference internal" href="#resetquery" id="id38">ResetQuery</a></p></li>
+<li><p><a class="reference internal" href="#resetquery" id="id39">ResetQuery</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id39">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id40">Class Reference</a></p></li>
 </ul>
 </div>
+<section id="sql-injection-protection">
+<h2><a class="toc-backref" href="#id9">SQL Injection Protection</a><a class="headerlink" href="#sql-injection-protection" title="Permalink to this headline"></a></h2>
+<p>You can generate SQL statements quite safely with the Query Builder. However,
+it is not designed to prevent SQL injection no matter what data you pass.</p>
+<dl class="simple">
+<dt>Arguments passed to the Query Builder can be:</dt><dd><ol class="arabic simple">
+<li><p><strong>identifiers</strong> such as field (or table) names</p></li>
+<li><p>their <strong>values</strong></p></li>
+<li><p>a part of <strong>SQL strings</strong></p></li>
+</ol>
+</dd>
+</dl>
+<p>The Query Builder will escape all <strong>values</strong> by default.</p>
+<p>It will also try to properly protect <strong>identifiers</strong> and identifiers in
+<strong>SQL strings</strong> by default.
+However, it is implemented to work well in many use cases and
+is not designed to prevent all attacks.
+Therefore, you should never feed in user input to them without proper validation.</p>
+<p>Also, many methods have the <code class="docutils literal notranslate"><span class="pre">$escape</span></code> parameter that can be set to disable escaping.
+If <code class="docutils literal notranslate"><span class="pre">$escape</span></code> is set to false, no protection is provided by the Query Builder,
+so you must ensure by yourself that
+they are properly escaped or protected before passing it to the Query Builder.
+The same is true when using <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, which specifies a raw SQL statement.</p>
+</section>
 <section id="loading-the-query-builder">
-<h2><a class="toc-backref" href="#id9">Loading the Query Builder</a><a class="headerlink" href="#loading-the-query-builder" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Loading the Query Builder</a><a class="headerlink" href="#loading-the-query-builder" title="Permalink to this headline"></a></h2>
 <p>The Query Builder is loaded through the <code class="docutils literal notranslate"><span class="pre">table()</span></code> method on the
 database connection. This sets the <strong>FROM</strong> portion of the query for you
 and returns a new instance of the Query Builder class:</p>
@@ -369,10 +394,10 @@ and returns a new instance of the Query Builder class:</p>
 the class, so no resources are used by default.</p>
 </section>
 <section id="selecting-data">
-<h2><a class="toc-backref" href="#id10">Selecting Data</a><a class="headerlink" href="#selecting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Selecting Data</a><a class="headerlink" href="#selecting-data" title="Permalink to this headline"></a></h2>
 <p>The following methods allow you to build SQL <strong>SELECT</strong> statements.</p>
 <section id="get">
-<h3><a class="toc-backref" href="#id11">Get</a><a class="headerlink" href="#get" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Get</a><a class="headerlink" href="#get" title="Permalink to this headline"></a></h3>
 <section id="builder-get">
 <h4>$builder-&gt;get()<a class="headerlink" href="#builder-get" title="Permalink to this headline"></a></h4>
 <p>Runs the selection query and returns the result. Can be used by itself
@@ -452,7 +477,7 @@ method:</p>
 </section>
 </section>
 <section id="select">
-<span id="query-builder-select"></span><h3><a class="toc-backref" href="#id12">Select</a><a class="headerlink" href="#select" title="Permalink to this headline"></a></h3>
+<span id="query-builder-select"></span><h3><a class="toc-backref" href="#id13">Select</a><a class="headerlink" href="#select" title="Permalink to this headline"></a></h3>
 <section id="builder-select">
 <h4>$builder-&gt;select()<a class="headerlink" href="#builder-select" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>SELECT</strong> portion of your query:</p>
@@ -493,7 +518,7 @@ escaping of fields may break them.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.</p>
 </div>
 </section>
 </section>
@@ -582,7 +607,7 @@ counting results generally see <code class="docutils literal notranslate"><span 
 </section>
 </section>
 <section id="from">
-<h3><a class="toc-backref" href="#id13">From</a><a class="headerlink" href="#from" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">From</a><a class="headerlink" href="#from" title="Permalink to this headline"></a></h3>
 <section id="builder-from">
 <h4>$builder-&gt;from()<a class="headerlink" href="#builder-from" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>FROM</strong> portion of your query:</p>
@@ -604,7 +629,7 @@ to the FROM portion of your query.</p>
 </section>
 </section>
 <section id="subqueries">
-<span id="query-builder-from-subquery"></span><h3><a class="toc-backref" href="#id14">Subqueries</a><a class="headerlink" href="#subqueries" title="Permalink to this headline"></a></h3>
+<span id="query-builder-from-subquery"></span><h3><a class="toc-backref" href="#id15">Subqueries</a><a class="headerlink" href="#subqueries" title="Permalink to this headline"></a></h3>
 <section id="builder-fromsubquery">
 <h4>$builder-&gt;fromSubquery()<a class="headerlink" href="#builder-fromsubquery" title="Permalink to this headline"></a></h4>
 <p>Permits you to write part of a <strong>FROM</strong> query as a subquery.</p>
@@ -629,7 +654,7 @@ to the FROM portion of your query.</p>
 </section>
 </section>
 <section id="join">
-<h3><a class="toc-backref" href="#id15">Join</a><a class="headerlink" href="#join" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Join</a><a class="headerlink" href="#join" title="Permalink to this headline"></a></h3>
 <section id="builder-join">
 <h4>$builder-&gt;join()<a class="headerlink" href="#builder-join" title="Permalink to this headline"></a></h4>
 <p>Permits you to write the <strong>JOIN</strong> portion of your query:</p>
@@ -670,16 +695,16 @@ parameter of the method. Options are: <code class="docutils literal notranslate"
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.</p>
 </div>
 </section>
 </section>
 </section>
 </section>
 <section id="looking-for-specific-data">
-<h2><a class="toc-backref" href="#id16">Looking for Specific Data</a><a class="headerlink" href="#looking-for-specific-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id17">Looking for Specific Data</a><a class="headerlink" href="#looking-for-specific-data" title="Permalink to this headline"></a></h2>
 <section id="where">
-<h3><a class="toc-backref" href="#id17">Where</a><a class="headerlink" href="#where" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id18">Where</a><a class="headerlink" href="#where" title="Permalink to this headline"></a></h3>
 <section id="builder-where">
 <h4>$builder-&gt;where()<a class="headerlink" href="#builder-where" title="Permalink to this headline"></a></h4>
 <p>This method enables you to set <strong>WHERE</strong> clauses using one of five
@@ -761,8 +786,7 @@ control the comparison:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you are using user-supplied data within the string, you MUST escape the
-data manually. Failure to do so could result in SQL injections.</p>
+<p>If you are using user-supplied data within the string, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$name</span>  <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">);</span>
@@ -787,7 +811,7 @@ data manually. Failure to do so could result in SQL injections.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.</p>
 </div>
 </div></blockquote>
 </section>
@@ -919,9 +943,9 @@ if appropriate:</p>
 </section>
 </section>
 <section id="looking-for-similar-data">
-<h2><a class="toc-backref" href="#id18">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id19">Looking for Similar Data</a><a class="headerlink" href="#looking-for-similar-data" title="Permalink to this headline"></a></h2>
 <section id="like">
-<h3><a class="toc-backref" href="#id19">Like</a><a class="headerlink" href="#like" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id20">Like</a><a class="headerlink" href="#like" title="Permalink to this headline"></a></h3>
 <section id="builder-like">
 <h4>$builder-&gt;like()<a class="headerlink" href="#builder-like" title="Permalink to this headline"></a></h4>
 <p>This method enables you to generate <strong>LIKE</strong> clauses, useful for doing
@@ -994,7 +1018,7 @@ an optional third argument. Your options are <code class="docutils literal notra
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.</p>
 </div>
 </div></blockquote>
 </section>
@@ -1078,7 +1102,7 @@ possible syntaxes, 1 argument or 2:</p>
 <span class="c1">// Produces: HAVING title = &#39;My Title&#39;, id &lt; 45</span>
 </pre></div>
 </div>
-<p>If you are using a database that CodeIgniter escapes queries for, you
+<p>If you are using a database that CodeIgniter escapes values for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1284,9 +1308,9 @@ instances are joined by <strong>OR</strong>:</p>
 </section>
 </section>
 <section id="ordering-results">
-<h2><a class="toc-backref" href="#id20">Ordering Results</a><a class="headerlink" href="#ordering-results" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id21">Ordering Results</a><a class="headerlink" href="#ordering-results" title="Permalink to this headline"></a></h2>
 <section id="orderby">
-<h3><a class="toc-backref" href="#id21">OrderBy</a><a class="headerlink" href="#orderby" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id22">OrderBy</a><a class="headerlink" href="#orderby" title="Permalink to this headline"></a></h3>
 <section id="builder-orderby">
 <h4>$builder-&gt;orderBy()<a class="headerlink" href="#builder-orderby" title="Permalink to this headline"></a></h4>
 <p>Lets you set an <strong>ORDER BY</strong> clause.</p>
@@ -1329,9 +1353,9 @@ be ignored, unless you specify a numeric seed value.</p>
 </section>
 </section>
 <section id="limiting-or-counting-results">
-<h2><a class="toc-backref" href="#id22">Limiting or Counting Results</a><a class="headerlink" href="#limiting-or-counting-results" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id23">Limiting or Counting Results</a><a class="headerlink" href="#limiting-or-counting-results" title="Permalink to this headline"></a></h2>
 <section id="limit">
-<h3><a class="toc-backref" href="#id23">Limit</a><a class="headerlink" href="#limit" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id24">Limit</a><a class="headerlink" href="#limit" title="Permalink to this headline"></a></h3>
 <section id="builder-limit">
 <h4>$builder-&gt;limit()<a class="headerlink" href="#builder-limit" title="Permalink to this headline"></a></h4>
 <p>Lets you limit the number of rows you would like returned by the query:</p>
@@ -1387,9 +1411,9 @@ first parameter.</p>
 </section>
 </section>
 <section id="union-queries">
-<span id="query-builder-union"></span><h2><a class="toc-backref" href="#id24">Union queries</a><a class="headerlink" href="#union-queries" title="Permalink to this headline"></a></h2>
+<span id="query-builder-union"></span><h2><a class="toc-backref" href="#id25">Union queries</a><a class="headerlink" href="#union-queries" title="Permalink to this headline"></a></h2>
 <section id="union">
-<h3><a class="toc-backref" href="#id25">Union</a><a class="headerlink" href="#union" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id26">Union</a><a class="headerlink" href="#union" title="Permalink to this headline"></a></h3>
 <section id="builder-union">
 <h4>$builder-&gt;union()<a class="headerlink" href="#builder-union" title="Permalink to this headline"></a></h4>
 <p>Is used to combine the result-set of two or more SELECT statements. It will return only the unique results.</p>
@@ -1442,9 +1466,9 @@ In the example below, we get the first 5 users + the last 5 users and sort the r
 </section>
 </section>
 <section id="query-grouping">
-<h2><a class="toc-backref" href="#id26">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id27">Query grouping</a><a class="headerlink" href="#query-grouping" title="Permalink to this headline"></a></h2>
 <section id="group">
-<h3><a class="toc-backref" href="#id27">Group</a><a class="headerlink" href="#group" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id28">Group</a><a class="headerlink" href="#group" title="Permalink to this headline"></a></h3>
 <p>Query grouping allows you to create groups of <strong>WHERE</strong> clauses by enclosing them in parentheses. This will allow
 you to create queries with complex <strong>WHERE</strong> clauses. Nested groups are supported. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1512,9 +1536,9 @@ you to create queries with complex <strong>WHERE</strong> clauses. Nested groups
 </section>
 </section>
 <section id="inserting-data">
-<h2><a class="toc-backref" href="#id28">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id29">Inserting Data</a><a class="headerlink" href="#inserting-data" title="Permalink to this headline"></a></h2>
 <section id="insert">
-<h3><a class="toc-backref" href="#id29">Insert</a><a class="headerlink" href="#insert" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id30">Insert</a><a class="headerlink" href="#insert" title="Permalink to this headline"></a></h3>
 <section id="builder-insert">
 <h4>$builder-&gt;insert()<a class="headerlink" href="#builder-insert" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
@@ -1610,7 +1634,7 @@ will be reset (by default it will be–just like <code class="docutils literal n
 </section>
 </section>
 <section id="insertbatch">
-<h3><a class="toc-backref" href="#id30">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id31">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
 <section id="builder-insertbatch">
 <h4>$builder-&gt;insertBatch()<a class="headerlink" href="#builder-insertbatch" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
@@ -1644,9 +1668,9 @@ method. Here is an example using an array:</p>
 </section>
 </section>
 <section id="updating-data">
-<h2><a class="toc-backref" href="#id31">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id32">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
 <section id="update">
-<h3><a class="toc-backref" href="#id32">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id33">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
 <section id="builder-replace">
 <h4>$builder-&gt;replace()<a class="headerlink" href="#builder-replace" title="Permalink to this headline"></a></h4>
 <p>This method executes a <strong>REPLACE</strong> statement, which is basically the SQL
@@ -1671,7 +1695,7 @@ logics with different combinations of  <code class="docutils literal notranslate
 <p>In the above example, if we assume that the <code class="docutils literal notranslate"><span class="pre">title</span></code> field is our primary
 key, then if a row containing <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">title</span></code> as the <code class="docutils literal notranslate"><span class="pre">title</span></code> value, that row
 will be deleted with our new row data replacing it.</p>
-<p>Usage of the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method is also allowed and all fields are
+<p>Usage of the <code class="docutils literal notranslate"><span class="pre">set()</span></code> method is also allowed and all values are
 automatically escaped, just like with <code class="docutils literal notranslate"><span class="pre">insert()</span></code>.</p>
 </section>
 <section id="builder-set">
@@ -1697,7 +1721,7 @@ based on whether you are doing an insert or an update:</p>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">set()</span></code> will also accept an optional third parameter (<code class="docutils literal notranslate"><span class="pre">$escape</span></code>), that
-will prevent data from being escaped if set to <code class="docutils literal notranslate"><span class="pre">false</span></code>. To illustrate the
+will prevent the values from being escaped if set to <code class="docutils literal notranslate"><span class="pre">false</span></code>. To illustrate the
 difference, here is <code class="docutils literal notranslate"><span class="pre">set()</span></code> used both with and without the escape
 parameter.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1809,7 +1833,7 @@ performing updates.</p>
 </section>
 </section>
 <section id="updatebatch">
-<h3><a class="toc-backref" href="#id33">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id34">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
 <section id="builder-updatebatch">
 <h4>$builder-&gt;updateBatch()<a class="headerlink" href="#builder-updatebatch" title="Permalink to this headline"></a></h4>
 <p>Generates an update string based on the data you supply, and runs the query.
@@ -1870,9 +1894,9 @@ that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INS
 </section>
 </section>
 <section id="deleting-data">
-<h2><a class="toc-backref" href="#id34">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id35">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
 <section id="delete">
-<h3><a class="toc-backref" href="#id35">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id36">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
 <section id="builder-delete">
 <h4>$builder-&gt;delete()<a class="headerlink" href="#builder-delete" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the query.</p>
@@ -1937,7 +1961,7 @@ that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSE
 </section>
 </section>
 <section id="method-chaining">
-<h2><a class="toc-backref" href="#id36">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id37">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
 <p>Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1950,9 +1974,9 @@ multiple methods. Consider this example:</p>
 </div>
 </section>
 <section id="resetting-query-builder">
-<span id="ar-caching"></span><h2><a class="toc-backref" href="#id37">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id38">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
 <section id="resetquery">
-<h3><a class="toc-backref" href="#id38">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id39">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
 <section id="builder-resetquery">
 <h4>$builder-&gt;resetQuery()<a class="headerlink" href="#builder-resetquery" title="Permalink to this headline"></a></h4>
 <p>Resetting Query Builder allows you to start fresh with your query without
@@ -1983,7 +2007,7 @@ run the query:</p>
 </section>
 </section>
 <section id="namespace-CodeIgniter\Database">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id39">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id40">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">BaseBuilder</span></span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder" title="Permalink to this definition"></a></dt>
@@ -3373,7 +3397,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 27, 2022.
+      <span class="lastupdated">Last updated on Sep 28, 2022.
       </span></p>
   </div>
 
