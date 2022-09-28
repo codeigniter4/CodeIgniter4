@@ -256,7 +256,7 @@ final class UpsertTest extends CIUnitTestCase
         $esc = $this->db->escapeChar;
 
         $this->db->table('user')
-            ->onConstraint(new RawSql($esc . 'user' . $esc . '.' . $esc. 'id' . $esc))
+            ->onConstraint(new RawSql($esc . 'user' . $esc . '.' . $esc . 'id' . $esc))
             ->updateFields('name, email, country')
             ->upsert($userData);
     }
