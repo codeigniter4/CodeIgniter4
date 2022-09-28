@@ -170,6 +170,8 @@ and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
 
+.. note:: MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
+
 .. _adding-foreign-keys:
 
 Adding Foreign Keys
@@ -341,6 +343,8 @@ Class Reference
 
         Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
 
+        .. note:: ``$fkName`` can be used since v4.3.0.
+
     .. php:method:: addKey($key[, $primary = false[, $unique = false[, $keyName = '']]])
 
         :param    mixed    $key: Name of a key field or an array of fields
@@ -352,6 +356,8 @@ Class Reference
 
         Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
+        .. note:: ``$keyName`` can be used since v4.3.0.
+
     .. php:method:: addPrimaryKey($key[, $keyName = ''])
 
         :param    mixed    $key: Name of a key field or an array of fields
@@ -361,6 +367,8 @@ Class Reference
 
         Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
+        .. note:: ``$keyName`` can be used since v4.3.0.
+
     .. php:method:: addUniqueKey($key[, $keyName = ''])
 
         :param    mixed    $key: Name of a key field or an array of fields
@@ -369,6 +377,8 @@ Class Reference
         :rtype:    \CodeIgniter\Database\Forge
 
         Adds a unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+
+        .. note:: ``$keyName`` can be used since v4.3.0.
 
     .. php:method:: createDatabase($dbName[, $ifNotExists = false])
 
@@ -416,6 +426,8 @@ Class Reference
 
         Drops an index or unique index.
 
+        .. note:: ``$keyName`` and ``$prefixKeyName`` can be used since v4.3.0.
+
     .. php:method:: dropPrimaryKey($table[, $keyName = ''])
 
         :param    string    $table: Name of table to drop primary key
@@ -424,6 +436,8 @@ Class Reference
         :rtype:    bool
 
         Drops a primary key from a table.
+
+        .. note:: ``$keyName`` can be used since v4.3.0.
 
     .. php:method:: dropTable($table_name[, $if_exists = false])
 
