@@ -150,14 +150,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);
     $rectorConfig->rule(NormalizeNamespaceByPSR4ComposerAutoloadRector::class);
-    $rectorConfig->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [
-        'Error',
-        'Exception',
-        'InvalidArgumentException',
-        'Closure',
-        'stdClass',
-        'SQLite3',
-    ]);
+    $rectorConfig->rule(StringClassNameToClassConstantRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
 };
