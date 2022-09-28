@@ -302,7 +302,8 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param mixed $str
+     * @param mixed       $str
+     * @param string|null $keyField This rule param fields aren't present, this field is required.
      */
     public function required_without($str = null, ?string $fields = null, array $data = [], ?string $error = null, ?string $keyField = null): bool
     {

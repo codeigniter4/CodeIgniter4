@@ -279,11 +279,12 @@ class Rules
      *     required_without[id,email]
      *
      * @param string|null $str
+     * @param string|null $keyField This rule param fields aren't present, this field is required.
      */
     public function required_without($str = null, ?string $fields = null, array $data = [], ?string $error = null, ?string $keyField = null): bool
     {
         if ($fields === null || empty($data)) {
-            throw new InvalidArgumentException('You must supply the parameters: fields, data');
+            throw new InvalidArgumentException('You must supply the parameters: fields, data.');
         }
 
         // If the field is present we can safely assume that
@@ -306,7 +307,7 @@ class Rules
             }
             if (strpos($field, '.') !== false) {
                 if ($keyField === null) {
-                    throw new InvalidArgumentException('You must supply the parameters: keyField');
+                    throw new InvalidArgumentException('You must supply the parameters: keyField.');
                 }
 
                 $fieldData     = dot_array_search($field, $data);
