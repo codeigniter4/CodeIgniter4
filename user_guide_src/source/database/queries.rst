@@ -91,9 +91,9 @@ prefixing set ``true`` (boolean) via the second parameter:
 
 .. literalinclude:: queries/008.php
 
-****************
-Escaping Queries
-****************
+***************
+Escaping Values
+***************
 
 It's a very good security practice to escape your data before submitting
 it into your database. CodeIgniter has three methods that help you do
