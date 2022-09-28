@@ -250,8 +250,6 @@ class Forge extends BaseForge
         $sqls = [];
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
-            $this->keys[$i]['fields'] = (array) $this->keys[$i]['fields'];
-
             for ($i2 = 0, $c2 = count($this->keys[$i]['fields']); $i2 < $c2; $i2++) {
                 if (! isset($this->fields[$this->keys[$i]['fields'][$i2]])) {
                     unset($this->keys[$i]['fields'][$i2]);
