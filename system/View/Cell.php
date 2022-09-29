@@ -12,6 +12,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\Config\Factories;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
 use ReflectionException;
@@ -68,9 +69,13 @@ class Cell
      */
     public function render(string $library, $params = null, int $ttl = 0, ?string $cacheName = null): string
     {
-        [$class, $method] = $this->determineClass($library);
+        [$instance, $method] = $this->determineClass($library);
 
-        // Is it cached?
+        $class = is_object($instance)
+            ? get_class($instance)
+            : null;
+
+        // Is the output cached?
         $cacheName = ! empty($cacheName)
             ? $cacheName
             : str_replace(['\\', '/'], '', $class) . $method . md5(serialize($params));
@@ -78,9 +83,6 @@ class Cell
         if (! empty($this->cache) && $output = $this->cache->get($cacheName)) {
             return $output;
         }
-
-        // Not cached - so grab it...
-        $instance = new $class();
 
         if (method_exists($instance, 'initController')) {
             $instance->initController(Services::request(), Services::response(), Services::logger());
@@ -197,17 +199,11 @@ class Cell
             throw ViewException::forNoCellClass();
         }
 
-        if (! class_exists($class, true)) {
-            // If we don't know the fully qualified name,
-            // use the locator service to find it in Cells/* folders.
-            $locator   = Services::locator();
-            $classPath = $locator->search('Cells/' . $class);
+        // locate and return an instance of the cell
+        $class = Factories::cells($class);
 
-            if (empty($classPath)) {
-                throw ViewException::forInvalidCellClass($class);
-            }
-
-            $class = $locator->getClassname($classPath[0]);
+        if (! is_object($class)) {
+            throw ViewException::forInvalidCellClass($class);
         }
 
         if (empty($method)) {

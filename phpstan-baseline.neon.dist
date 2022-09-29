@@ -641,6 +641,11 @@ parameters:
 			path: system/View/Cell.php
 
 		-
+			message: "#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:cells\\(\\)\\.$#"
+			count: 1
+			path: system/View/Cell.php
+
+		-
 			message: "#^Property Config\\\\View\\:\\:\\$plugins \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/View/Parser.php
