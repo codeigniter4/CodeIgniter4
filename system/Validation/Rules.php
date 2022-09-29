@@ -285,7 +285,7 @@ class Rules
     public function required_without($str = null, ?string $otherFields = null, array $data = [], ?string $error = null, ?string $field = null): bool
     {
         if ($otherFields === null || empty($data)) {
-            throw new InvalidArgumentException('You must supply the parameters: fields, data.');
+            throw new InvalidArgumentException('You must supply the parameters: otherFields, data.');
         }
 
         // If the field is present we can safely assume that
@@ -298,8 +298,6 @@ class Rules
             return true;
         }
 
-        $fieldIndex = 0;
-
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach ($otherFields as $otherField) {
@@ -307,18 +305,18 @@ class Rules
                 return false;
             }
             if (strpos($otherField, '.') !== false) {
-                if ($field === null) {
+                if ($otherField === null) {
                     throw new InvalidArgumentException('You must supply the parameters: keyField.');
                 }
 
                 $fieldData       = dot_array_search($otherField, $data);
                 $fieldSplitArray = explode('.', $field);
-                $fieldIndex      = $fieldSplitArray[1];
+                $fieldKey        = $fieldSplitArray[1];
 
                 if (is_array($fieldData)) {
-                    return ! empty(dot_array_search($otherField, $data)[$fieldIndex]);
+                    return ! empty(dot_array_search($otherField, $data)[$fieldKey]);
                 }
-                $nowField      = str_replace('*', $fieldIndex, $otherField);
+                $nowField      = str_replace('*', $fieldKey, $otherField);
                 $nowFieldVaule = dot_array_search($nowField, $data);
 
                 return null !== $nowFieldVaule;
