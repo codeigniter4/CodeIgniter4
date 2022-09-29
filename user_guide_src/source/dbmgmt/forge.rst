@@ -170,7 +170,7 @@ and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
 
-.. note:: MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
+.. note:: When you add a primary key, MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
 
 .. _adding-foreign-keys:
 
