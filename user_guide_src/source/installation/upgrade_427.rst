@@ -53,6 +53,7 @@ Others
 ======
 
 -  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale. Most locales are not affected by this change. But in a few locales like `ar`, `fa`, ``Time::__toString()`` (or ``(string) $time`` or implicit casting to a string) no longer returns a localized datetime string. if you want to get a localized datetime string, use :ref:`Time::toDateTimeString() <time-todatetimestring>` instead.
+- The rule of ``required_without`` logic is changed to validate each array separately, and the name of parameters are also changed.
 
 Project Files
 *************
