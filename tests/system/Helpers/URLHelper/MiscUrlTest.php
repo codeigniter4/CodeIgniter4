@@ -468,7 +468,7 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
     {
-        $request      = Services::request($this->config);
+        $request      = Services::incomingrequest($this->config);
         $request->uri = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
