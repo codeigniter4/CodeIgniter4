@@ -185,7 +185,7 @@ Or you can call ``has()``:
 
 .. literalinclude:: sessions/014.php
 
-Pushing new value to session data
+Pushing New Value to Session Data
 =================================
 
 The ``push()`` method is used to push a new value onto a session value that is an array.
