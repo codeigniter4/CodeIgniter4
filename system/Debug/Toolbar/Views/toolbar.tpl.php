@@ -22,7 +22,7 @@
     <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . '/toolbar.css')) ?>
 </style>
 
-<script id="toolbar_js" type="text/javascript">
+<script id="toolbar_js">
     <?= file_get_contents(__DIR__ . '/toolbar.js') ?>
 </script>
 <div id="debug-icon" class="debug-bar-ndisplay">
