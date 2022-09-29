@@ -112,6 +112,8 @@ array.
 In addition, CodeIgniter also provides 2 special types of session data
 that are further explained below: `Flashdata`_ and `Tempdata`_.
 
+.. note:: For historical reasons, we refer to session data excluding Flashdata and Tempdata as "userdata".
+
 Retrieving Session Data
 =======================
 
