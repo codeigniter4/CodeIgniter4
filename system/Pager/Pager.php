@@ -158,7 +158,7 @@ class Pager implements PagerInterface
     /**
      * Sets segment for a group.
      *
-     * @return mixed
+     * @return $this
      */
     public function setSegment(int $number, string $group = 'default')
     {
@@ -174,7 +174,7 @@ class Pager implements PagerInterface
     /**
      * Sets the path that an aliased group of links will use.
      *
-     * @return mixed
+     * @return $this
      */
     public function setPath(string $path, string $group = 'default')
     {

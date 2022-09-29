@@ -19,6 +19,32 @@ system.
     :local:
     :depth: 2
 
+************************
+SQL Injection Protection
+************************
+
+You can generate SQL statements quite safely with the Query Builder. However,
+it is not designed to prevent SQL injection no matter what data you pass.
+
+Arguments passed to the Query Builder can be:
+    1. **identifiers** such as field (or table) names
+    2. their **values**
+    3. a part of **SQL strings**
+
+The Query Builder will escape all **values** by default.
+
+It will also try to properly protect **identifiers** and identifiers in
+**SQL strings** by default.
+However, it is implemented to work well in many use cases and
+is not designed to prevent all attacks.
+Therefore, you should never feed in user input to them without proper validation.
+
+Also, many methods have the ``$escape`` parameter that can be set to disable escaping.
+If ``$escape`` is set to false, no protection is provided by the Query Builder,
+so you must ensure by yourself that
+they are properly escaped or protected before passing it to the Query Builder.
+The same is true when using ``RawSql``, which specifies a raw SQL statement.
+
 *************************
 Loading the Query Builder
 *************************
@@ -124,7 +150,7 @@ Since v4.2.0, ``$builder->select()`` accepts a ``CodeIgniter\Database\RawSql`` i
 
 .. literalinclude:: query_builder/099.php
 
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+.. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 $builder->selectMax()
 ---------------------
@@ -241,7 +267,7 @@ Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` ins
 
 .. literalinclude:: query_builder/102.php
 
-.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+.. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 *************************
 Looking for Specific Data
@@ -298,8 +324,7 @@ methods:
 
     .. literalinclude:: query_builder/026.php
 
-    .. warning:: If you are using user-supplied data within the string, you MUST escape the
-        data manually. Failure to do so could result in SQL injections.
+    .. warning:: If you are using user-supplied data within the string, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
         .. literalinclude:: query_builder/027.php
 
@@ -312,7 +337,7 @@ methods:
 
     .. literalinclude:: query_builder/100.php
 
-    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+    .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 .. _query-builder-where-subquery:
 
@@ -427,7 +452,7 @@ searches.
 
     .. literalinclude:: query_builder/101.php
 
-    .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+    .. warning:: When you use ``RawSql``, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
 $builder->orLike()
 ------------------
@@ -483,7 +508,7 @@ You can also pass an array of multiple values as well:
 
 .. literalinclude:: query_builder/049.php
 
-If you are using a database that CodeIgniter escapes queries for, you
+If you are using a database that CodeIgniter escapes values for, you
 can prevent escaping content by passing an optional third argument, and
 setting it to ``false``.
 
@@ -876,7 +901,7 @@ In the above example, if we assume that the ``title`` field is our primary
 key, then if a row containing ``My title`` as the ``title`` value, that row
 will be deleted with our new row data replacing it.
 
-Usage of the ``set()`` method is also allowed and all fields are
+Usage of the ``set()`` method is also allowed and all values are
 automatically escaped, just like with ``insert()``.
 
 $builder->set()
@@ -895,7 +920,7 @@ based on whether you are doing an insert or an update:
 .. literalinclude:: query_builder/084.php
 
 ``set()`` will also accept an optional third parameter (``$escape``), that
-will prevent data from being escaped if set to ``false``. To illustrate the
+will prevent the values from being escaped if set to ``false``. To illustrate the
 difference, here is ``set()`` used both with and without the escape
 parameter.
 
