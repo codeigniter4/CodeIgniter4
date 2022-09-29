@@ -75,7 +75,7 @@ However, non-blocking requests in the context of sessions also means
 unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
-CodeIgniter 4 has a completely re-written Session library.
+CodeIgniter 3 has a completely re-written Session library.
 
 Why are we telling you this? Because it is likely that after trying to
 find the reason for your performance issues, you may conclude that locking
@@ -106,8 +106,13 @@ uses the session handlers' mechanism provided by PHP. Using session data is
 as simple as manipulating (read, set and unset values) the ``$_SESSION``
 array.
 
+.. note:: In general, it is bad practice to use global variables.
+    So using the superglobal ``$_SESSION`` directly is not recommended.
+
 In addition, CodeIgniter also provides 2 special types of session data
-that are further explained below: flashdata and tempdata.
+that are further explained below: `Flashdata`_ and `Tempdata`_.
+
+.. note:: For historical reasons, we refer to session data excluding Flashdata and Tempdata as "userdata".
 
 Retrieving Session Data
 =======================
@@ -130,7 +135,7 @@ Or even through the session helper method:
 .. literalinclude:: sessions/007.php
 
 Where ``item`` is the array key corresponding to the item you wish to fetch.
-For example, to assign a previously stored 'name' item to the ``$name``
+For example, to assign a previously stored ``name`` item to the ``$name``
 variable, you will do this:
 
 .. literalinclude:: sessions/008.php
@@ -138,14 +143,14 @@ variable, you will do this:
 .. note:: The ``get()`` method returns null if the item you are trying
     to access does not exist.
 
-If you want to retrieve all of the existing userdata, you can simply
+If you want to retrieve all of the existing session data, you can simply
 omit the item key (magic getter only works for single property values):
 
 .. literalinclude:: sessions/009.php
 
 .. important:: The ``get()`` method WILL return flashdata or tempdata items when
     retrieving a single item by key. It will not return flashdata or tempdata when
-    grabbing all userdata from the session, however.
+    grabbing all data from the session, however.
 
 Adding Session Data
 ===================
@@ -158,8 +163,7 @@ you need it.
 You can simply assign data to the ``$_SESSION`` array, as with any other
 variable. Or as a property of ``$session``.
 
-The former userdata method is deprecated,
-but you can pass an array containing your new session data to the
+You can pass an array containing your new session data to the
 ``set()`` method:
 
 .. literalinclude:: sessions/010.php
@@ -183,11 +187,11 @@ Or you can call ``has()``:
 
 .. literalinclude:: sessions/014.php
 
-Pushing new value to session data
+Pushing New Value to Session Data
 =================================
 
-The push method is used to push a new value onto a session value that is an array.
-For instance, if the 'hobbies' key contains an array of hobbies, you can add a new value onto the array like so:
+The ``push()`` method is used to push a new value onto a session value that is an array.
+For instance, if the ``hobbies`` key contains an array of hobbies, you can add a new value onto the array like so:
 
 .. literalinclude:: sessions/015.php
 
@@ -201,7 +205,7 @@ done through ``unset()``:
 
 Also, just as ``set()`` can be used to add information to a
 session, ``remove()`` can be used to remove it, by passing the
-session key. For example, if you wanted to remove 'some_name' from your
+session key. For example, if you wanted to remove ``some_name`` from your
 session data array:
 
 .. literalinclude:: sessions/017.php
@@ -249,19 +253,20 @@ through ``$_SESSION``:
 
 .. important:: The ``get()`` method WILL return flashdata items when
     retrieving a single item by key. It will not return flashdata when
-    grabbing all userdata from the session, however.
+    grabbing all data from the session, however.
 
 However, if you want to be sure that you're reading "flashdata" (and not
 any other kind), you can also use the ``getFlashdata()`` method:
 
 .. literalinclude:: sessions/024.php
 
+.. note:: The ``getFlashdata()`` method returns null if the item cannot be
+    found.
+
 Or to get an array with all flashdata, simply omit the key parameter:
 
 .. literalinclude:: sessions/025.php
 
-.. note:: The ``getFlashdata()`` method returns null if the item cannot be
-    found.
 
 If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the ``keepFlashdata()`` method.
@@ -311,19 +316,19 @@ To read a tempdata variable, again you can just access it through the
 
 .. important:: The ``get()`` method WILL return tempdata items when
     retrieving a single item by key. It will not return tempdata when
-    grabbing all userdata from the session, however.
+    grabbing all data from the session, however.
 
 Or if you want to be sure that you're reading "tempdata" (and not any
 other kind), you can also use the ``getTempdata()`` method:
 
 .. literalinclude:: sessions/033.php
 
+.. note:: The ``getTempdata()`` method returns null if the item cannot be
+    found.
+
 And of course, if you want to retrieve all existing tempdata:
 
 .. literalinclude:: sessions/034.php
-
-.. note:: The ``getTempdata()`` method returns null if the item cannot be
-    found.
 
 If you need to remove a tempdata value before it expires, you can directly
 unset it from the ``$_SESSION`` array:
@@ -358,10 +363,10 @@ the cookie that contained the session id:
 
 .. literalinclude:: sessions/038.php
 
-Accessing session metadata
+Accessing Session Metadata
 ==========================
 
-In previous CodeIgniter versions, the session data array included 4 items
+In CodeIgniter 2, the session data array included 4 items
 by default: 'session_id', 'ip_address', 'user_agent', 'last_activity'.
 
 This was due to the specifics of how sessions worked, but is now no longer
