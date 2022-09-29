@@ -305,8 +305,8 @@ class Rules
                 return false;
             }
             if (strpos($otherField, '.') !== false) {
-                if ($otherField === null) {
-                    throw new InvalidArgumentException('You must supply the parameters: keyField.');
+                if ($field === null) {
+                    throw new InvalidArgumentException('You must supply the parameters: field.');
                 }
 
                 $fieldData       = dot_array_search($otherField, $data);
