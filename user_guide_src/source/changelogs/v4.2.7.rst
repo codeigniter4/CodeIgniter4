@@ -14,6 +14,7 @@ BREAKING
 
 - The default values of the parameters in :php:func:`set_cookie()` and :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` has been fixed. Now the default values of ``$secure`` and ``$httponly`` are ``null``, and these values will be replaced with the ``Config\Cookie`` values.
 -  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale.
+- The Rule of :php:func:`Validation\\Rule::required_without()` parameters are changed and this rule logic is fixed. 
 
 Enhancements
 ************
