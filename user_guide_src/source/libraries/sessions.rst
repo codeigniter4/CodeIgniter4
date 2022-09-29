@@ -364,7 +364,7 @@ the cookie that contained the session id:
 Accessing Session Metadata
 ==========================
 
-In previous CodeIgniter versions, the session data array included 4 items
+In CodeIgniter 2, the session data array included 4 items
 by default: 'session_id', 'ip_address', 'user_agent', 'last_activity'.
 
 This was due to the specifics of how sessions worked, but is now no longer
