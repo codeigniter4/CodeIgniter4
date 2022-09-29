@@ -369,7 +369,9 @@ if (! function_exists('safe_mailto')) {
         $x = array_reverse($x);
 
         // improve obfuscation by eliminating newlines & whitespace
-        $output = '<script type="text/javascript">'
+        $cspNonce = csp_script_nonce();
+        $cspNonce = $cspNonce ? ' ' . $cspNonce : $cspNonce;
+        $output   = '<script type="text/javascript"' . $cspNonce . '>'
                 . 'var l=new Array();';
 
         foreach ($x as $i => $value) {

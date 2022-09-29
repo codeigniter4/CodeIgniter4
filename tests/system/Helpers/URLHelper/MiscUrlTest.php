@@ -468,12 +468,22 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
     {
-        $request      = Services::request($this->config);
+        $request      = Services::incomingrequest($this->config);
         $request->uri = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
 
         $this->assertSame($expected, safe_mailto($email, $title, $attributes));
+    }
+
+    public function testSafeMailtoWithCsp()
+    {
+        $this->config->CSPEnabled = true;
+        Factories::injectMock('config', 'App', $this->config);
+
+        $html = safe_mailto('foo@example.jp', 'Foo');
+
+        $this->assertMatchesRegularExpression('/<script .*?nonce="\w+?".*?>/u', $html);
     }
 
     // Test auto_link
