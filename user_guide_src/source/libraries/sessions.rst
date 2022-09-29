@@ -110,7 +110,7 @@ array.
     So using the superglobal ``$_SESSION`` directly is not recommended.
 
 In addition, CodeIgniter also provides 2 special types of session data
-that are further explained below: flashdata and tempdata.
+that are further explained below: `Flashdata`_ and `Tempdata`_.
 
 Retrieving Session Data
 =======================
