@@ -302,7 +302,7 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param mixed       $str
+     * @param string|null $str
      * @param string|null $otherFields The param fields of required_without[].
      * @param string|null $field       This rule param fields aren't present, this field is required.
      */
