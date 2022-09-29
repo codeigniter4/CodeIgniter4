@@ -288,12 +288,12 @@ in the last section of the table of contents:</p>
 <li><p><a class="reference internal" href="#what-is-session-data" id="id5">What is Session Data?</a></p></li>
 <li><p><a class="reference internal" href="#retrieving-session-data" id="id6">Retrieving Session Data</a></p></li>
 <li><p><a class="reference internal" href="#adding-session-data" id="id7">Adding Session Data</a></p></li>
-<li><p><a class="reference internal" href="#pushing-new-value-to-session-data" id="id8">Pushing new value to session data</a></p></li>
+<li><p><a class="reference internal" href="#pushing-new-value-to-session-data" id="id8">Pushing New Value to Session Data</a></p></li>
 <li><p><a class="reference internal" href="#removing-session-data" id="id9">Removing Session Data</a></p></li>
 <li><p><a class="reference internal" href="#flashdata" id="id10">Flashdata</a></p></li>
 <li><p><a class="reference internal" href="#tempdata" id="id11">Tempdata</a></p></li>
 <li><p><a class="reference internal" href="#destroying-a-session" id="id12">Destroying a Session</a></p></li>
-<li><p><a class="reference internal" href="#accessing-session-metadata" id="id13">Accessing session metadata</a></p></li>
+<li><p><a class="reference internal" href="#accessing-session-metadata" id="id13">Accessing Session Metadata</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#session-preferences" id="id14">Session Preferences</a></p></li>
@@ -366,7 +366,7 @@ non-blocking.</p>
 unsafe, because, modifications to session data (or session ID regeneration)
 in one request can interfere with the execution of a second, concurrent
 request. This detail was at the root of many issues and the main reason why
-CodeIgniter 4 has a completely re-written Session library.</p>
+CodeIgniter 3 has a completely re-written Session library.</p>
 <p>Why are we telling you this? Because it is likely that after trying to
 find the reason for your performance issues, you may conclude that locking
 is the issue and therefore look into how to remove the locks …</p>
@@ -394,8 +394,17 @@ current request after you no longer need it.</p>
 uses the session handlers’ mechanism provided by PHP. Using session data is
 as simple as manipulating (read, set and unset values) the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code>
 array.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In general, it is bad practice to use global variables.
+So using the superglobal <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> directly is not recommended.</p>
+</div>
 <p>In addition, CodeIgniter also provides 2 special types of session data
-that are further explained below: flashdata and tempdata.</p>
+that are further explained below: <a class="reference internal" href="#flashdata">Flashdata</a> and <a class="reference internal" href="#tempdata">Tempdata</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For historical reasons, we refer to session data excluding Flashdata and Tempdata as “userdata”.</p>
+</div>
 </section>
 <section id="retrieving-session-data">
 <h3><a class="toc-backref" href="#id6">Retrieving Session Data</a><a class="headerlink" href="#retrieving-session-data" title="Permalink to this headline"></a></h3>
@@ -425,7 +434,7 @@ that are further explained below: flashdata and tempdata.</p>
 </pre></div>
 </div>
 <p>Where <code class="docutils literal notranslate"><span class="pre">item</span></code> is the array key corresponding to the item you wish to fetch.
-For example, to assign a previously stored ‘name’ item to the <code class="docutils literal notranslate"><span class="pre">$name</span></code>
+For example, to assign a previously stored <code class="docutils literal notranslate"><span class="pre">name</span></code> item to the <code class="docutils literal notranslate"><span class="pre">$name</span></code>
 variable, you will do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -445,7 +454,7 @@ variable, you will do this:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method returns null if the item you are trying
 to access does not exist.</p>
 </div>
-<p>If you want to retrieve all of the existing userdata, you can simply
+<p>If you want to retrieve all of the existing session data, you can simply
 omit the item key (magic getter only works for single property values):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -458,7 +467,7 @@ omit the item key (magic getter only works for single property values):</p>
 <p class="admonition-title">Important</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata or tempdata items when
 retrieving a single item by key. It will not return flashdata or tempdata when
-grabbing all userdata from the session, however.</p>
+grabbing all data from the session, however.</p>
 </div>
 </section>
 <section id="adding-session-data">
@@ -469,8 +478,7 @@ data globally available to you without having to run a database query when
 you need it.</p>
 <p>You can simply assign data to the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array, as with any other
 variable. Or as a property of <code class="docutils literal notranslate"><span class="pre">$session</span></code>.</p>
-<p>The former userdata method is deprecated,
-but you can pass an array containing your new session data to the
+<p>You can pass an array containing your new session data to the
 <code class="docutils literal notranslate"><span class="pre">set()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -516,9 +524,9 @@ supports this syntax:</p>
 </div>
 </section>
 <section id="pushing-new-value-to-session-data">
-<h3><a class="toc-backref" href="#id8">Pushing new value to session data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline"></a></h3>
-<p>The push method is used to push a new value onto a session value that is an array.
-For instance, if the ‘hobbies’ key contains an array of hobbies, you can add a new value onto the array like so:</p>
+<h3><a class="toc-backref" href="#id8">Pushing New Value to Session Data</a><a class="headerlink" href="#pushing-new-value-to-session-data" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">push()</span></code> method is used to push a new value onto a session value that is an array.
+For instance, if the <code class="docutils literal notranslate"><span class="pre">hobbies</span></code> key contains an array of hobbies, you can add a new value onto the array like so:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">push</span><span class="p">(</span><span class="s1">&#39;hobbies&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sport&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;tennis&#39;</span><span class="p">]);</span>
@@ -541,7 +549,7 @@ done through <code class="docutils literal notranslate"><span class="pre">unset(
 </div>
 <p>Also, just as <code class="docutils literal notranslate"><span class="pre">set()</span></code> can be used to add information to a
 session, <code class="docutils literal notranslate"><span class="pre">remove()</span></code> can be used to remove it, by passing the
-session key. For example, if you wanted to remove ‘some_name’ from your
+session key. For example, if you wanted to remove <code class="docutils literal notranslate"><span class="pre">some_name</span></code> from your
 session data array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -603,7 +611,7 @@ through <code class="docutils literal notranslate"><span class="pre">$_SESSION</
 <p class="admonition-title">Important</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return flashdata items when
 retrieving a single item by key. It will not return flashdata when
-grabbing all userdata from the session, however.</p>
+grabbing all data from the session, however.</p>
 </div>
 <p>However, if you want to be sure that you’re reading “flashdata” (and not
 any other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method:</p>
@@ -612,16 +620,16 @@ any other kind), you can also use the <code class="docutils literal notranslate"
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method returns null if the item cannot be
+found.</p>
+</div>
 <p>Or to get an array with all flashdata, simply omit the key parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getFlashdata</span><span class="p">();</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">getFlashdata()</span></code> method returns null if the item cannot be
-found.</p>
 </div>
 <p>If you find that you need to preserve a flashdata variable through an
 additional request, you can do so using the <code class="docutils literal notranslate"><span class="pre">keepFlashdata()</span></code> method.
@@ -699,7 +707,7 @@ time-to-live value of 300 seconds (or 5 minutes) will be used.</p>
 <p class="admonition-title">Important</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">get()</span></code> method WILL return tempdata items when
 retrieving a single item by key. It will not return tempdata when
-grabbing all userdata from the session, however.</p>
+grabbing all data from the session, however.</p>
 </div>
 <p>Or if you want to be sure that you’re reading “tempdata” (and not any
 other kind), you can also use the <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method:</p>
@@ -708,16 +716,16 @@ other kind), you can also use the <code class="docutils literal notranslate"><sp
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method returns null if the item cannot be
+found.</p>
+</div>
 <p>And of course, if you want to retrieve all existing tempdata:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">getTempdata</span><span class="p">();</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">getTempdata()</span></code> method returns null if the item cannot be
-found.</p>
 </div>
 <p>If you need to remove a tempdata value before it expires, you can directly
 unset it from the <code class="docutils literal notranslate"><span class="pre">$_SESSION</span></code> array:</p>
@@ -766,8 +774,8 @@ the cookie that contained the session id:</p>
 </div>
 </section>
 <section id="accessing-session-metadata">
-<h3><a class="toc-backref" href="#id13">Accessing session metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
-<p>In previous CodeIgniter versions, the session data array included 4 items
+<h3><a class="toc-backref" href="#id13">Accessing Session Metadata</a><a class="headerlink" href="#accessing-session-metadata" title="Permalink to this headline"></a></h3>
+<p>In CodeIgniter 2, the session data array included 4 items
 by default: ‘session_id’, ‘ip_address’, ‘user_agent’, ‘last_activity’.</p>
 <p>This was due to the specifics of how sessions worked, but is now no longer
 necessary with our new implementation. However, it may happen that your
@@ -1201,7 +1209,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 28, 2022.
+      <span class="lastupdated">Last updated on Sep 29, 2022.
       </span></p>
   </div>
 
