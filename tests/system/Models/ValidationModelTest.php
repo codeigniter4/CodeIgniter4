@@ -373,7 +373,7 @@ final class ValidationModelTest extends LiveModelTestCase
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/6577
      */
-    public function testUpdateEntityWithCleanRulesFalse()
+    public function testUpdateEntityWithPropertyCleanValidationRulesTrueAndCallingCleanRulesFalse()
     {
         $model = new class () extends Model {
             protected $table           = 'test';
@@ -400,7 +400,7 @@ final class ValidationModelTest extends LiveModelTestCase
         // Change field1 value.
         $entity->field1 = '';
 
-        // Set $cleanValidationRules to false.
+        // Set $cleanValidationRules to false by cleanRules()
         $model->cleanRules(false)->save($entity);
 
         $errors = $model->errors();
@@ -411,7 +411,7 @@ final class ValidationModelTest extends LiveModelTestCase
         );
     }
 
-    public function testUpdateEntityWithCleanValidationRulesFalse()
+    public function testUpdateEntityWithPropertyCleanValidationRulesFalse()
     {
         $model = new class () extends Model {
             protected $table           = 'test';
