@@ -469,7 +469,7 @@ final class ValidationModelTest extends LiveModelTestCase
         $entity = new SimpleEntity();
         $entity->setAttributes([
             'field1' => 'value1',
-            'field2' => '',
+            // field2 is missing
             'field3' => '',
             'field4' => '',
         ]);
