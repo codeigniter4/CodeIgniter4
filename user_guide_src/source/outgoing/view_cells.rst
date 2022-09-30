@@ -9,12 +9,15 @@ View Cells allow you to insert HTML that is generated outside of your controller
 
 In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is run. The method must return the generated HTML as a string. The method can be either a static method or not. Either way works.
 
-If the Cell is a class, you can locate it in the ``app/Cells`` directory and it can be discovered automatically, allowing the use of just the class name and method.
+.. _view-cells-app-cells:
 
-::
+app/Cells
+---------
+
+Since v4.3.0, if the Cell is a class, you can locate it in the **app/Cells** directory and it can be discovered automatically, allowing the use of just the class name and method::
         <?= view_cell('Blog::recentPosts') ?>
 
-This respects the ``Config\Factories->preferApp`` setting, so if you have a class in both ``app/Cells`` and ``MyNamespace/Cells``, the one in ``app/Cells`` will be used when ``preferApp`` is ``true``.
+This respects the :ref:`Factories preferApp option <factories-options>`, so if you have a class in both **app/Cells** and **MyNamespace/Cells**, the one in **app/Cells** will be used when ``preferApp`` is ``true``.
 
 Cell Parameters
 ---------------
