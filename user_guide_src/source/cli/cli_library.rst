@@ -77,6 +77,8 @@ Finally, you can pass :ref:`validation <validation>` rules to the answer input a
 promptByMultipleKeys()
 ======================
 
+.. versionadded:: 4.3.0
+
 This method is the same as ``promptByKey()``, but it supports multiple value.
 
 .. literalinclude:: cli_library/023.php

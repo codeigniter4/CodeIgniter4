@@ -199,6 +199,8 @@ either the entity or the database. Properties can be cast to any of the followin
 **integer**, **float**, **double**, **string**, **boolean**, **object**, **array**, **datetime**, **timestamp**, **uri** and **int-bool**.
 Add a question mark at the beginning of type to mark property as nullable, i.e., **?string**, **?integer**.
 
+.. note:: **int-bool** can be used since v4.3.0.
+
 For example, if you had a User entity with an ``is_banned`` property, you can cast it as a boolean:
 
 .. literalinclude:: entities/012.php

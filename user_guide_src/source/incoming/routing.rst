@@ -215,6 +215,8 @@ a simple view:
 Views
 =====
 
+.. versionadded:: 4.3.0
+
 If you just want to render a view out that has no logic associated with it, you can use the ``view()`` method.
 This is always treated as GET request.
 This method accepts the name of the view to load as the second parameter.
@@ -781,7 +783,7 @@ The *Method* column shows the HTTP method that the route is listening for.
 
 The *Route* column shows the route (URI path) to match. The route of a defined route is expressed as a regular expression.
 
-The *Name* column shows the route name. ``»`` indicates the name is the same as the route.
+Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route.
 
 .. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
 

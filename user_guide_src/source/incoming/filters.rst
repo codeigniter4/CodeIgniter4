@@ -159,6 +159,8 @@ CodeIgniter has the following :doc:`command </cli/spark_commands>` to check the 
 filter:check
 ============
 
+.. versionadded:: 4.3.0
+
 Check the filters for the route ``/`` with **GET** method::
 
     > php spark filter:check get /
