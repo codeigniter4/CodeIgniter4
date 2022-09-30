@@ -183,7 +183,7 @@ You can specify the desired action for the "on delete" and "on update" propertie
 
 .. literalinclude:: forge/013.php
 
-.. note:: SQLite does not support the naming of foreign keys. CodeIgniter will refer to them by ``prefix_table_column_foreign``.
+.. note:: SQLite3 does not support the naming of foreign keys. CodeIgniter will refer to them by ``prefix_table_column_foreign``.
 
 Creating a Table
 ================
@@ -332,7 +332,7 @@ Class Reference
         :param    string|string[]    $tableField: Name of a parent table field or an array of fields
         :param    string    $onUpdate: Desired action for the "on update"
         :param    string    $onDelete: Desired action for the "on delete"
-        :param    string    $fkName: Name of foreign key. This does not work with SQLite
+        :param    string    $fkName: Name of foreign key. This does not work with SQLite3
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
