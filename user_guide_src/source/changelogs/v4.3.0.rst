@@ -155,6 +155,7 @@ Others
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
 - Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 - Added new ``$routes->view()`` method to return a the view directly. See :ref:`View Routes <view-routes>`.
+- View Cells are now first-class citizens and can located in the **app/Cells** directory. See :ref:`View Cells <view-cells-app-cells>`.
 
 Changes
 *******

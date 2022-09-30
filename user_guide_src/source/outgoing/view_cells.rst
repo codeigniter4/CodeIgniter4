@@ -2,16 +2,22 @@
 View Cells
 ##########
 
-View Cells allow you to insert HTML that is generated outside of your controller. It simply calls the specified
-class and method, which must return a string of valid HTML. This method could be in any callable method, found in any class
-that the autoloader can locate. The only restriction is that the class can not have any constructor parameters.
-This is intended to be used within views, and is a great aid to modularizing your code.
+View Cells allow you to insert HTML that is generated outside of your controller. It simply calls the specified class and method, which must return a string of valid HTML. This method could be in any callable method, found in any class that the autoloader can locate. The only restriction is that the class can not have any constructor parameters. This is intended to be used within views, and is a great aid to modularizing your code.
 ::
 
     <?= view_cell('\App\Libraries\Blog::recentPosts') ?>
 
-In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is run. The method
-must return the generated HTML as a string. The method can be either a static method or not. Either way works.
+In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is run. The method must return the generated HTML as a string. The method can be either a static method or not. Either way works.
+
+.. _view-cells-app-cells:
+
+app/Cells
+---------
+
+Since v4.3.0, if the Cell is a class, you can locate it in the **app/Cells** directory and it can be discovered automatically, allowing the use of just the class name and method::
+        <?= view_cell('Blog::recentPosts') ?>
+
+This respects the :ref:`Factories preferApp option <factories-options>`, so if you have a class in both **app/Cells** and **MyNamespace/Cells**, the one in **app/Cells** will be used when ``preferApp`` is ``true``.
 
 Cell Parameters
 ---------------
