@@ -441,7 +441,6 @@ final class ValidationModelTest extends LiveModelTestCase
         // Change field1 value.
         $entity->field1 = '';
 
-        // Set $cleanValidationRules to false.
         $model->save($entity);
 
         $errors = $model->errors();
