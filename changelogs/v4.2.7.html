@@ -292,6 +292,7 @@
 <ul class="simple">
 <li><p>The default values of the parameters in <a class="reference internal" href="../helpers/cookie_helper.html#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a> and <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a> has been fixed. Now the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> are <code class="docutils literal notranslate"><span class="pre">null</span></code>, and these values will be replaced with the <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code> values.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Time::__toString()</span></code> is now locale-independent. It returns database-compatible strings like ‘2022-09-07 12:00:00’ in any locale.</p></li>
+<li><p>The Validation rule <code class="docutils literal notranslate"><span class="pre">Validation\Rule::required_without()</span></code> and <code class="docutils literal notranslate"><span class="pre">Validation\StrictRules\Rule::required_without()</span></code> parameters have been changed and the logic of these rule has also been fixed.</p></li>
 </ul>
 </section>
 <section id="enhancements">
@@ -327,7 +328,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Sep 29, 2022.
+      <span class="lastupdated">Last updated on Sep 30, 2022.
       </span></p>
   </div>
 
