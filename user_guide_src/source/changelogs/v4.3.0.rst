@@ -126,6 +126,7 @@ Database
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
 - Improved data returned by ``BaseConnection::getForeignKeyData()``. All DBMS returns the same structure.
 - ``Forge::addForeignKey()`` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
+- Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
 
 Model
 =====

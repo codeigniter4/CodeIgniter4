@@ -14,6 +14,7 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Traits\ConditionalTrait;
 use InvalidArgumentException;
 
 /**
@@ -25,6 +26,8 @@ use InvalidArgumentException;
  */
 class BaseBuilder
 {
+    use ConditionalTrait;
+
     /**
      * Reset DELETE data flag
      *
