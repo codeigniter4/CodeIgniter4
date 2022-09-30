@@ -336,6 +336,8 @@ Class Reference
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
+        .. note:: ``$fkName`` can be used since v4.3.0.
+
         Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
 
     .. php:method:: addKey($key[, $primary = false[, $unique = false]])

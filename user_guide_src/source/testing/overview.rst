@@ -257,6 +257,11 @@ component name:
 Testing CLI Output
 ==================
 
+StreamFilterTrait
+-----------------
+
+.. versionadded:: 4.3.0
+
 **StreamFilterTrait** provides an alternate to these helper methods.
 
 You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP's own STDOUT, or STDERR,
@@ -277,6 +282,9 @@ See :ref:`Testing Traits <testing-overview-traits>`.
 If you override the ``setUp()`` or ``tearDown()`` methods in your test, then you must call the ``parent::setUp()`` and
 ``parent::tearDown()`` methods respectively to configure the ``StreamFilterTrait``.
 
+CITestStreamFilter
+------------------
+
 **CITestStreamFilter** for manual/single use.
 
 If you need to capture streams in only one test, then instead of using the StreamFilterTrait trait, you can manually
@@ -296,6 +304,11 @@ add a filter to streams.
 
 Testing CLI Input
 =================
+
+PhpStreamWrapper
+----------------
+
+.. versionadded:: 4.3.0
 
 **PhpStreamWrapper** provides a way to write tests for methods that require user input,
 such as ``CLI::prompt()``, ``CLI::wait()``, and ``CLI::input()``.

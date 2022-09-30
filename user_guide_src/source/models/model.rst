@@ -317,7 +317,9 @@ You can retrieve the last inserted row's primary key using the ``getInsertID()``
 allowEmptyInserts()
 -------------------
 
-Since v4.3.0, you can use ``allowEmptyInserts()`` method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.
+.. versionadded:: 4.3.0
+
+You can use ``allowEmptyInserts()`` method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.
 
 .. literalinclude:: model/056.php
 
@@ -616,6 +618,9 @@ These methods can be used to normalize data, hash passwords, save related entiti
 points in the model's execution can be affected, each through a class property: ``$beforeInsert``, ``$afterInsert``,
 ``$beforeInsertBatch``, ``$afterInsertBatch``, ``$beforeUpdate``, ``$afterUpdate``, ``$beforeUpdateBatch``,
 ``$afterUpdateBatch``, ``$afterFind``, and ``$afterDelete``.
+
+.. note:: ``$beforeInsertBatch``, ``$afterInsertBatch``, ``$beforeUpdateBatch`` and
+    ``$afterUpdateBatch`` can be used since v4.3.0.
 
 Defining Callbacks
 ==================
