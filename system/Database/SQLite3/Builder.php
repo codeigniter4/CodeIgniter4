@@ -79,7 +79,7 @@ class Builder extends BaseBuilder
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
         if (version_compare($this->db->getVersion(), '3.33.0') >= 0) {
-            // return parent::_updateBatch($table, $keys, $values);
+            return parent::_updateBatch($table, $keys, $values);
         }
 
         $constraints = $this->QBOptions['constraints'] ?? [];
