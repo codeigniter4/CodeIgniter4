@@ -11,8 +11,10 @@
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 
 /**
  * @internal
@@ -267,6 +269,28 @@ final class HTMLHelperTest extends CIUnitTestCase
         $target   = ['src' => 'js/mystyles.js', 'charset' => 'UTF-8', 'defer' => '', 'async' => null];
         $expected = '<script src="http://example.com/js/mystyles.js" charset="UTF-8" defer="" async type="text/javascript"></script>';
         $this->assertSame($expected, script_tag($target));
+    }
+
+    public function testScriptTagWithCsp()
+    {
+        // Reset CSP object
+        $this->resetServices();
+
+        $config             = new App();
+        $config->CSPEnabled = true;
+        Factories::injectMock('config', 'App', $config);
+
+        $target = 'http://site.com/js/mystyles.js';
+        $html   = script_tag($target);
+
+        $this->assertMatchesRegularExpression(
+            '!<script nonce="\w+?" src="http://site.com/js/mystyles.js".*?>!u',
+            $html
+        );
+
+        // Reset CSP object
+        $this->resetFactories();
+        $this->resetServices();
     }
 
     /**
