@@ -408,7 +408,7 @@ standard, without duplicating code. The Model class provides a way to automatica
 prior to saving to the database with the ``insert()``, ``update()``, or ``save()`` methods.
 
 .. important:: When you update data, by default, the validation in the model class only
-    validate provided fields. This is to avoid validation errors when updating only some fields.
+    validates provided fields. This is to avoid validation errors when updating only some fields.
 
     But this means ``required*`` rules do not work as expected when updating.
     If you want to check required fields, you can change the behavior by configuration.
