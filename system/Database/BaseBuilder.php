@@ -1933,22 +1933,19 @@ class BaseBuilder
         if ($sql === '') {
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys)->QBOptions['updateFields'] ?? [];
 
-            $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ')' . "\n";
-
-            $sql .= '{:_table_:}';
-
-            $sql .= 'ON DUPLICATE KEY UPDATE' . "\n";
-
-            $sql .= implode(
-                ",\n",
-                array_map(
-                    static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
-                        ' = ' . $value :
-                        ' = ' . 'VALUES(' . $value . ')'),
-                    array_keys($updateFields),
-                    $updateFields
-                )
-            );
+            $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ')' . "\n"
+                . '{:_table_:}'
+                . 'ON DUPLICATE KEY UPDATE' . "\n"
+                . implode(
+                    ",\n",
+                    array_map(
+                        static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
+                            ' = ' . $value :
+                            ' = ' . 'VALUES(' . $value . ')'),
+                        array_keys($updateFields),
+                        $updateFields
+                    )
+                );
 
             $this->QBOptions['sql'] = $sql;
         }
