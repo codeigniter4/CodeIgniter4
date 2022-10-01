@@ -309,6 +309,12 @@ final class InflectorHelperTest extends CIUnitTestCase
             'aBaBaB'          => 'a_ba_ba_b',
             'BaBaBa'          => 'ba_ba_ba',
             'libC'            => 'lib_c',
+            'a'               => 'a',
+            'A'               => 'a',
+            'aB'              => 'a_b',
+            'AB'              => 'ab',
+            'ab'              => 'ab',
+            'Ab'              => 'ab',
         ];
 
         foreach ($strings as $camelized => $expects) {
