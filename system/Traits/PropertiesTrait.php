@@ -18,10 +18,8 @@ trait PropertiesTrait
      */
     final public function fill(array $params): self
     {
-        $publicProperties = array_keys($this->getPublicProperties());
-
         foreach ($params as $key => $value) {
-            if (in_array($key, $publicProperties, true)) {
+            if (property_exists($this, $key)) {
                 $this->{$key} = $value;
             }
         }

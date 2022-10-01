@@ -29,7 +29,7 @@ You can also pass the parameters along as a key/value string:
 Simple Cells
 ************
 
-Simple Cells are simple classes that return a string from the chosen method. An example of a simple Alert Message cell might look like this:
+Simple Cells are classes that return a string from the chosen method. An example of a simple Alert Message cell might look like this:
 ::
 
     namespace App\Cells;
@@ -172,7 +172,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
 Performing Setup Logic
 ======================
 
-If you need to perform additional logic before the view is rendered, you can implement a ``mount()`` method. This method will be called once, just after the class is instantiated, and can be used to set additional properties or perform other logic.
+If you need to perform additional logic before the view is rendered, you can implement a ``mount()`` method. This method will be called just after the class is instantiated, and can be used to set additional properties or perform other logic.
 
 ::
 

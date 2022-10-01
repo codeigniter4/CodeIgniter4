@@ -21,13 +21,7 @@ class Cell
      * If empty, will be determined based
      * on the cell class' name.
      */
-    protected string $view;
-
-    /**
-     * Allows developer to do actions when the class is instantiated,
-     * and before it is rendered out.
-     */
-    public function mount(?array $params): void {}
+    protected string $view = '';
 
     /**
      * Responsible for converting the view into HTML.
@@ -36,11 +30,21 @@ class Cell
      */
     public function render(): string
     {
-        if (empty($this->view)) {
-            $this->view = url_title((new \ReflectionClass($this))->getShortName());
+        if (! function_exists('decamelize')) {
+            helper('inflector');
         }
 
         return $this->view($this->view);
+    }
+
+    /**
+     * Sets the view to use when rendered.
+     */
+    public function setView(string $view)
+    {
+        $this->view = $view;
+
+        return $this;
     }
 
     /**
@@ -50,24 +54,28 @@ class Cell
      * current scope and captures the output buffer instead of
      * relying on the view service.
      */
-    final protected function view(string $view, array $data = []): string
+    final protected function view(?string $view): string
     {
         $properties = $this->getPublicProperties();
         $properties = $this->includeComputedProperties($properties);
 
+        // If no view is specified, we'll try to guess it based on the class name.
+        if (empty($view)) {
+            $view = decamelize((new \ReflectionClass($this))->getShortName());
+            $view = str_replace('_cell', '', $view);
+        }
+
         // Locate our view, prefering the directory of the class.
-        $view = $this->view;
         if (! is_file($view)) {
             // Get the local pathname of the Cell
             $ref = new ReflectionClass($this);
-            $view = dirname($ref->getFileName()) .'/'. $view;
+            $view = dirname($ref->getFileName()) . DIRECTORY_SEPARATOR . $view .'.php';
         }
-        dd($view, $this->view);
 
-        $output = (function () use ($properties): string {
+        $output = (function () use ($properties, $view): string {
             extract($properties);
             ob_start();
-            include $this->view;
+            include $view;
 
             return ob_get_clean() ?: '';
         })();

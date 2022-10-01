@@ -95,11 +95,9 @@ class Cell
 
         $params = $this->prepareParams($params);
 
-        if ($instance instanceof BaseCell) {
-            $output = $this->renderCell($instance, $method, $params);
-        } else {
-            $output = $this->renderSimpleClass($instance, $method, $params, $class);
-        }
+        $output = $instance instanceof BaseCell
+            ? $this->renderCell($instance, $method, $params)
+            : $this->renderSimpleClass($instance, $method, $params, $class);
 
         // Can we cache it?
         if (! empty($this->cache) && $ttl !== 0) {
@@ -206,11 +204,37 @@ class Cell
 
         // If there are any protected/private properties, we need to
         // send them to the mount() method.
-        if (! empty($privateProperties)) {
-            $instance->mount($privateProperties);
+        if (method_exists($instance, 'mount')) {
+
+            // if any $params have keys that match the name of an argument in the
+            // mount method, pass those variables to the method.
+            $mountParams = $this->getMethodParams($instance, 'mount', $params);
+            $instance->mount(...$mountParams);
         }
 
         return $instance->{$method}();
+    }
+
+    private function getMethodParams($instance, $method, $params)
+    {
+        $mountParams = [];
+
+        try {
+            $reflectionMethod = new ReflectionMethod($instance, $method);
+            $reflectionParams = $reflectionMethod->getParameters();
+
+            foreach ($reflectionParams as $reflectionParam) {
+                $paramName = $reflectionParam->getName();
+
+                if (array_key_exists($paramName, $params)) {
+                    $mountParams[] = $params[$paramName];
+                }
+            }
+        } catch (ReflectionException $e) {
+            // do nothing
+        }
+
+        return $mountParams;
     }
 
     /**
