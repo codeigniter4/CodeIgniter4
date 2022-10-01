@@ -266,14 +266,15 @@ class RedisHandler extends BaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
+        $lockKey = $this->keyPrefix . $sessionID . ':lock';
+
         // PHP 7 reuses the SessionHandler object on regeneration,
         // so we need to check here if the lock key is for the
         // correct session ID.
-        if ($this->lockKey === $this->keyPrefix . $sessionID . ':lock') {
+        if ($this->lockKey === $lockKey) {
             return $this->redis->expire($this->lockKey, 300);
         }
 
-        $lockKey = $this->keyPrefix . $sessionID . ':lock';
         $attempt = 0;
 
         do {
