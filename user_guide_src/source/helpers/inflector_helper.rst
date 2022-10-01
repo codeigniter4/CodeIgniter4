@@ -85,6 +85,17 @@ The following functions are available:
 
     .. literalinclude:: inflector_helper/007.php
 
+.. php:function:: decamelize($string)
+
+    :param    string    $string: Input string
+    :returns:    String containing underscores between words
+    :rtype:    string
+
+    Takes multiple words in camelCase or PascalCase and converts them to snake_case.
+    Example:
+
+    .. literalinclude:: inflector_helper/007.php
+
 .. php:function:: humanize($string[, $separator = '_'])
 
     :param    string    $string: Input string
