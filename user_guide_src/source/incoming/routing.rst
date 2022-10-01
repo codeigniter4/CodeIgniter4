@@ -210,15 +210,6 @@ a simple view:
 
 .. literalinclude:: routing/020.php
 
-Mapping Multiple Routes
-=======================
-
-While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
-the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
-define an array of routes and then pass it as the first parameter to the ``map()`` method:
-
-.. literalinclude:: routing/021.php
-
 .. _redirecting-routes:
 
 Redirecting Routes
@@ -332,6 +323,15 @@ You can use the ``add()`` method:
 .. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
+
+Mapping Multiple Routes
+=======================
+
+While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
+the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
+define an array of routes and then pass it as the first parameter to the ``map()`` method:
+
+.. literalinclude:: routing/021.php
 
 .. _command-line-only-routes:
 
