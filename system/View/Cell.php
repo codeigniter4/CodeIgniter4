@@ -13,6 +13,7 @@ namespace CodeIgniter\View;
 
 use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Config\Factories;
+use CodeIgniter\View\Cells\Cell as BaseCell;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\Services;
 use ReflectionException;
@@ -92,44 +93,14 @@ class Cell
             throw ViewException::forInvalidCellMethod($class, $method);
         }
 
-        // Try to match up the parameter list we were provided
-        // with the parameter name in the callback method.
-        $paramArray = $this->prepareParams($params);
-        $refMethod  = new ReflectionMethod($instance, $method);
-        $paramCount = $refMethod->getNumberOfParameters();
-        $refParams  = $refMethod->getParameters();
+        $params = $this->prepareParams($params);
 
-        if ($paramCount === 0) {
-            if (! empty($paramArray)) {
-                throw ViewException::forMissingCellParameters($class, $method);
-            }
-
-            $output = $instance->{$method}();
-        } elseif (($paramCount === 1)
-            && ((! array_key_exists($refParams[0]->name, $paramArray))
-            || (array_key_exists($refParams[0]->name, $paramArray)
-            && count($paramArray) !== 1))
-        ) {
-            $output = $instance->{$method}($paramArray);
+        if ($instance instanceof BaseCell) {
+            $output = $this->renderCell($instance, $method, $params);
         } else {
-            $fireArgs     = [];
-            $methodParams = [];
-
-            foreach ($refParams as $arg) {
-                $methodParams[$arg->name] = true;
-                if (array_key_exists($arg->name, $paramArray)) {
-                    $fireArgs[$arg->name] = $paramArray[$arg->name];
-                }
-            }
-
-            foreach (array_keys($paramArray) as $key) {
-                if (! isset($methodParams[$key])) {
-                    throw ViewException::forInvalidCellParameter($key);
-                }
-            }
-
-            $output = $instance->{$method}(...array_values($fireArgs));
+            $output = $this->renderSimpleClass($instance, $method, $params, $class);
         }
+
         // Can we cache it?
         if (! empty($this->cache) && $ttl !== 0) {
             $this->cache->save($cacheName, $output, $ttl);
@@ -193,6 +164,12 @@ class Cell
         // by default, so convert any double colons.
         $library = str_replace('::', ':', $library);
 
+        // controlled cells might be called with just
+        // the class name, so add a default method
+        if (strpos($library, ':') === false) {
+            $library .= ':render';
+        }
+
         [$class, $method] = explode(':', $library);
 
         if (empty($class)) {
@@ -214,5 +191,71 @@ class Cell
             $class,
             $method,
         ];
+    }
+
+    /**
+     * Renders a cell that extends the BaseCell class.
+     */
+    final protected function renderCell(BaseCell $instance, string $method, array $params): string
+    {
+        $publicProperties = $instance->getPublicProperties();
+        $privateProperties = $instance->getNonPublicProperties();
+
+        // Fill in any public properties that were passed in
+        $instance = $instance->fill($params);
+
+        // If there are any protected/private properties, we need to
+        // send them to the mount() method.
+        if (! empty($privateProperties)) {
+            $instance->mount($privateProperties);
+        }
+
+        return $instance->{$method}();
+    }
+
+    /**
+     * Renders the non-Cell class, passing in the string/array params.
+     */
+    final protected function renderSimpleClass($instance, string $method, array $params, string $class): string
+    {
+        // Try to match up the parameter list we were provided
+        // with the parameter name in the callback method.
+        $refMethod  = new ReflectionMethod($instance, $method);
+        $paramCount = $refMethod->getNumberOfParameters();
+        $refParams  = $refMethod->getParameters();
+
+        if ($paramCount === 0) {
+            if (! empty($params)) {
+                throw ViewException::forMissingCellParameters($class, $method);
+            }
+
+            $output = $instance->{$method}();
+        } elseif (($paramCount === 1)
+            && ((! array_key_exists($refParams[0]->name, $params))
+            || (array_key_exists($refParams[0]->name, $params)
+            && count($params) !== 1))
+        ) {
+            $output = $instance->{$method}($params);
+        } else {
+            $fireArgs     = [];
+            $methodParams = [];
+
+            foreach ($refParams as $arg) {
+                $methodParams[$arg->name] = true;
+                if (array_key_exists($arg->name, $params)) {
+                    $fireArgs[$arg->name] = $params[$arg->name];
+                }
+            }
+
+            foreach (array_keys($params) as $key) {
+                if (! isset($methodParams[$key])) {
+                    throw ViewException::forInvalidCellParameter($key);
+                }
+            }
+
+            $output = $instance->{$method}(...array_values($fireArgs));
+        }
+
+        return $output;
     }
 }
