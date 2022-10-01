@@ -327,6 +327,9 @@ You can use the ``add()`` method:
 Mapping Multiple Routes
 =======================
 
+.. warning:: The ``map()`` method is not recommended as well as ``add()``
+    because it calls ``add()`` internally.
+
 While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the ``map()`` method:
