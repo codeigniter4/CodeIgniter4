@@ -310,15 +310,15 @@ This has the added benefit of making the views more readable, too.
 Routes with any HTTP verbs
 ==========================
 
-It is possible to define a route with any HTTP verbs.
-You can use the ``add()`` method:
-
-.. literalinclude:: routing/031.php
-
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
     will not work.
+
+It is possible to define a route with any HTTP verbs.
+You can use the ``add()`` method:
+
+.. literalinclude:: routing/031.php
 
 .. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
