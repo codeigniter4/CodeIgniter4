@@ -75,10 +75,10 @@ class RedisHandler extends BaseHandler
 
             $this->savePath = [
                 'host'     => $matches[1],
-                'port'     => empty($matches[2]) ? null : $matches[2],
+                'port'     => empty($matches[2]) ? 6379 : $matches[2],
                 'password' => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
-                'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
-                'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
+                'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : 0,
+                'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : 0,
             ];
 
             preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
