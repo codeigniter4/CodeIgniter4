@@ -58,6 +58,8 @@ class RedisHandler extends BaseHandler
     protected $sessionExpiration = 7200;
 
     /**
+     * @param string $ipAddress User's IP address
+     *
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
