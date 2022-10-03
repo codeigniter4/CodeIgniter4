@@ -11,6 +11,8 @@ use ReflectionClass;
  * The base class that View Cells should extend.
  * Provides extended features for managing/rendering
  * a single cell's contents.
+ *
+ * @function mount()
  */
 class Cell
 {

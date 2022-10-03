@@ -50,12 +50,13 @@ trait PropertiesTrait
      */
     final public function getNonPublicProperties(): array
     {
+        $exclude = ['view'];
         $properties = [];
 
         $reflection = new \ReflectionClass($this);
 
         foreach ($reflection->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
-            if ($property->isStatic()) {
+            if ($property->isStatic() || in_array($property->getName(), $exclude)) {
                 continue;
             }
 

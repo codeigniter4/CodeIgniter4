@@ -2,7 +2,7 @@
 View Cells
 ##########
 
-Many applications have small view fragments that can be repeated from page to page, or in different places on the pages. These are often help boxes, navigation controls, ads, login forms, etc. CodeIgniter lets you encapsulate the logic for these presentation blocks within View Cells. They are basically mini-views that can be included in other views. They can have logic built in to handle any cell-specific display logic. They can be used to make your views more readable and maintainable, by separating the logic for each cell into its own class.
+Many applications have small view fragments that can be repeated from page to page, or in different places on the pages. These are often help boxes, navigation controls, ads, login forms, etc. CodeIgniter lets you encapsulate the logic for these presentation blocks within View Cells. They are basically mini-views that can be included in other views. They can have logic built in to handle any cell-specific display logic. They can be used to make your views more readable and maintainable by separating the logic for each cell into its own class.
 
 CodeIgniter supports two types of View Cells: simple and controlled. Simple View Cells can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string. Controlled View Cells must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
 
@@ -47,11 +47,28 @@ You would call it from within a view like:
 
     <?= view_cell('AlertMessage::show', ['type' => 'success', 'message' => 'The user has been updated.']); ?>
 
+Additionally, you can use parameter names that match the parameter variables in the method for better readability.
+When you use it this way, all of the parameters must always be specified in the view cell call::
+
+    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
+
+    public function recentPosts(string $category, int $limit)
+    {
+        $posts = $this->blogModel->where('category', $category)
+                                 ->orderBy('published_on', 'desc')
+                                 ->limit($limit)
+                                 ->get();
+
+        return view('recentPosts', ['posts' => $posts]);
+    }
+
+.. _controlled-cells:
+
 ****************
 Controlled Cells
 ****************
 
-Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the kebab-cased version of the class name. So, for example, if you have a ``MyCell`` class, the view file should be ``my-cell.php``.
+Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend ``CodeIgniter\View\Cells\Cell``. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a ``MyCell`` class, the view file should be ``my_cell.php``.
 
 Creating a Controlled Cell
 ==========================
@@ -97,7 +114,7 @@ You can specify a custom view name by setting the ``view`` property in the class
 Customize the Rendering
 =======================
 
-If you need more control over the rendering of the HTML, you can implement a ``render()`` method. This method allows you to perform additional logic and pass extra data the view, if needed. The ``render()`` method must return a string. To take advantage of the full features of controlled Cells, you must use ``$this->view()`` instead of the normal ``view()`` helper function.
+If you need more control over the rendering of the HTML, you can implement a ``render()`` method. This method allows you to perform additional logic and pass extra data the view, if needed. The ``render()`` method must return a string. To take advantage of the full features of controlled Cells, you should use ``$this->view()`` instead of the normal ``view()`` helper function.
 ::
 
     namespace App\Cells;
@@ -118,7 +135,7 @@ If you need more control over the rendering of the HTML, you can implement a ``r
 Computed Properties
 ===================
 
-If you need to perform additional logic for one of the properties you can use computed properties. These require setting the property to either ``protected`` or ``private`` and implementing a public method whose name consists of the property name surrounded by ``get`` and ``Property``.
+If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either ``protected`` or ``private`` and implementing a public method whose name consists of the property name surrounded by ``get`` and ``Property``.
 ::
 
     namespace App\Cells;
@@ -144,7 +161,7 @@ If you need to perform additional logic for one of the properties you can use co
 Presentation Methods
 ====================
 
-Sometimes you need to perform additional logic for the view, but you don't want to pass it as a parameter. You can implement a method that will be called from within the cell's view itself. This can really help the readability of your views.
+Sometimes you need to perform additional logic for the view, but you don't want to pass it as a parameter. You can implement a method that will be called from within the cell's view itself. This can help the readability of your views.
 ::
 
     // app/Cells/RecentPostsCell.php
@@ -165,7 +182,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
     // app/Cells/recent-posts.php
     <ul>
         <?php foreach ($posts as $post): ?>
-            <li><?= $this->linkPost($post); ?></li>
+            <li><?= $this->linkPost($post) ?></li>
         <?php endforeach; ?>
     </ul>
 
@@ -214,69 +231,6 @@ You can pass additional parameters to the ``mount()`` method by passing them as 
 
     // Called in main View:
     <?= view_cell('RecentPosts::show', ['categoryId' => 5]); ?>
-
-
-
-
-
-
-
-It simply calls the specified
-class and method, which must return a string of valid HTML. This method could be in any callable method, found in any class
-that the autoloader can locate. The only restriction is that the class can not have any constructor parameters.
-This is intended to be used within views, and is a great aid to modularizing your code.
-::
-
-    <?= view_cell('\App\Libraries\Blog::recentPosts') ?>
-
-In this example, the class ``App\Libraries\Blog`` is loaded, and the method ``recentPosts()`` is run. The method must return the generated HTML as a string. The method can be either a static method or not. Either way works.
-
-.. _view-cells-app-cells:
-
-app/Cells
----------
-
-Since v4.3.0, if the Cell is a class, you can locate it in the **app/Cells** directory and it can be discovered automatically, allowing the use of just the class name and method::
-        <?= view_cell('Blog::recentPosts') ?>
-
-This respects the :ref:`Factories preferApp option <factories-options>`, so if you have a class in both **app/Cells** and **MyNamespace/Cells**, the one in **app/Cells** will be used when ``preferApp`` is ``true``.
-
-Cell Parameters
----------------
-
-You can further refine the call by passing a list of parameters in the second parameter to the method. The values passed
-can be an array of key/value pairs, or a comma-separated string of key/value pairs::
-
-    // Passing Parameter Array
-    <?= view_cell('\App\Libraries\Blog::recentPosts', ['category' => 'codeigniter', 'limit' => 5]) ?>
-
-    // Passing Parameter String
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
-
-    public function recentPosts(array $params = [])
-    {
-        $posts = $this->blogModel->where('category', $params['category'])
-                                 ->orderBy('published_on', 'desc')
-                                 ->limit($params['limit'])
-                                 ->get();
-
-        return view('recentPosts', ['posts' => $posts]);
-    }
-
-Additionally, you can use parameter names that match the parameter variables in the method for better readability.
-When you use it this way, all of the parameters must always be specified in the view cell call::
-
-    <?= view_cell('\App\Libraries\Blog::recentPosts', 'category=codeigniter, limit=5') ?>
-
-    public function recentPosts(string $category, int $limit)
-    {
-        $posts = $this->blogModel->where('category', $category)
-                                 ->orderBy('published_on', 'desc')
-                                 ->limit($limit)
-                                 ->get();
-
-        return view('recentPosts', ['posts' => $posts]);
-    }
 
 Cell Caching
 ------------

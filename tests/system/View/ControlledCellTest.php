@@ -12,6 +12,7 @@
 namespace CodeIgniter\View;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * @internal
@@ -37,6 +38,36 @@ final class ControlledCellTest extends CIUnitTestCase
         $result = view_cell('Tests\Support\View\Cells\RenderedNotice');
 
         $this->assertStringContainsString('4, 8, 15, 16, 23, 42', $result);
+    }
+
+    public function testCellWithParameters()
+    {
+        $result = view_cell('Tests\Support\View\Cells\GreetingCell', 'greeting=Hi, name=CodeIgniter');
+
+        $this->assertStringContainsString('Hi CodeIgniter', $result);
+
+        // Should NOT be able to overwrite base class properties, like `view`.
+        $result = view_cell('Tests\Support\View\Cells\GreetingCell', 'greeting=Hi, name=CodeIgniter, view=foo');
+
+        $this->assertStringContainsString('Hi CodeIgniter', $result);
+    }
+
+    public function testCellWithCustomMethod()
+    {
+        $result = view_cell('Tests\Support\View\Cells\GreetingCell::sayHello', 'greeting=Hi, name=CodeIgniter');
+
+        $this->assertStringContainsString('Well, Hi CodeIgniter', $result);
+    }
+
+    public function testCellWithMissingCustomMethod()
+    {
+        $this->expectException(ViewException::class);
+        $this->expectExceptionMessage(lang('View.invalidCellMethod', [
+            'class' => "Tests\Support\View\Cells\GreetingCell",
+            'method' => 'sayGoodbye',
+        ]));
+
+        view_cell('Tests\Support\View\Cells\GreetingCell::sayGoodbye', 'greeting=Hi, name=CodeIgniter');
     }
 
     public function testCellWithComputedProperties()
@@ -92,6 +123,19 @@ final class ControlledCellTest extends CIUnitTestCase
         $this->assertStringContainsString('7', (string)$result);
 
         $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3, 'number' => 4, 'skipAddition' => true]);
+
+        $this->assertStringContainsString('3', (string)$result);
+    }
+
+    public function testMountWithMissingParams()
+    {
+        // Don't provide any params
+        $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3]);
+
+        $this->assertStringContainsString('3', (string)$result);
+
+        // Skip a parameter in the mount param list
+        $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3, $skipAddition = true]);
 
         $this->assertStringContainsString('3', (string)$result);
     }
