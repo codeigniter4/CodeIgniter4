@@ -148,6 +148,7 @@ Helpers and Functions
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 - Added :php:func:`request()` and :php:func:`response()` functions.
+- Add :php:func:`decamelize()` function to convert camelCase to snake_case.
 
 Others
 ======
