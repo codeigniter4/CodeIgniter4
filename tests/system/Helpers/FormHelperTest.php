@@ -29,15 +29,18 @@ final class FormHelperTest extends CIUnitTestCase
         parent::setUp();
 
         helper('form');
+
+        $this->resetServices();
     }
 
     public function testFormOpenBasic()
     {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
         $config            = new App();
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
         $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
 
@@ -67,11 +70,12 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenHasLocale()
     {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
         $config            = new App();
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
         $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
         $expected = <<<'EOH'
@@ -89,11 +93,12 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithoutAction()
     {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
         $config            = new App();
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
         $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
 
@@ -122,11 +127,12 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithoutMethod()
     {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
         $config            = new App();
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
         $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
 
@@ -155,11 +161,12 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithHidden()
     {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
         $config            = new App();
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
         $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
 
@@ -195,11 +202,12 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenMultipart()
     {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
         $config            = new App();
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
         $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
 
         Services::injectMock('request', $request);
 
