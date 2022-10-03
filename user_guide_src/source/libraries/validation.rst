@@ -767,7 +767,7 @@ max_dims                Yes         Fails if the maximum width and height of an 
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
                                     to be an image.
-mime_in                 Yes         Fails if the file's mime type is not one     mime_in[field_name,image/png,image/jpg]
+mime_in                 Yes         Fails if the file's mime type is not one     mime_in[field_name,image/png,image/jpeg]
                                     listed in the parameters.
 ext_in                  Yes         Fails if the file's extension is not one     ext_in[field_name,png,jpg,gif]
                                     listed in the parameters.
