@@ -140,13 +140,19 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $uri = new URI('http://example.com/assets/image.jpg');
+        $uri = 'http://example.com/assets/image.jpg';
+        $this->setService($uri);
+
+        $this->assertSame('assets/image.jpg', uri_string());
+    }
+
+    private function setService(string $uri): void
+    {
+        $uri = new URI($uri);
         Services::injectMock('uri', $uri);
 
         $request = Services::request($this->config);
         Services::injectMock('request', $request);
-
-        $this->assertSame('assets/image.jpg', uri_string());
     }
 
     public function testUriStringRelative()
@@ -154,11 +160,8 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $uri = new URI('http://example.com/assets/image.jpg');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/assets/image.jpg';
+        $this->setService($uri);
 
         $this->assertSame('assets/image.jpg', uri_string(true));
     }
@@ -170,11 +173,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com';
 
-        $uri = new URI('http://example.com/assets/image.jpg');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/assets/image.jpg';
+        $this->setService($uri);
 
         $this->assertSame('assets/image.jpg', uri_string());
     }
@@ -186,33 +186,24 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com';
 
-        $uri = new URI('http://example.com/assets/image.jpg');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/assets/image.jpg';
+        $this->setService($uri);
 
         $this->assertSame('assets/image.jpg', uri_string(true));
     }
 
     public function testUriStringEmptyAbsolute()
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/';
+        $this->setService($uri);
 
         $this->assertSame('/', uri_string());
     }
 
     public function testUriStringEmptyRelative()
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/';
+        $this->setService($uri);
 
         $this->assertSame('', uri_string(true));
     }
@@ -224,11 +215,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com/subfolder/';
 
-        $uri = new URI('http://example.com/subfolder/assets/image.jpg');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/subfolder/assets/image.jpg';
+        $this->setService($uri);
 
         $this->assertSame('subfolder/assets/image.jpg', uri_string());
     }
@@ -241,12 +229,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com/subfolder/';
 
-        $uri = new URI('http://example.com/subfolder/assets/image.jpg');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/subfolder/assets/image.jpg';
+        $this->setService($uri);
 
         $this->assertSame('assets/image.jpg', uri_string(true));
     }
@@ -300,11 +284,8 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
 
-        $uri = new URI('http://example.com/' . $currentPath);
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request();
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/' . $currentPath;
+        $this->setService($uri);
 
         $this->assertSame($expected, url_is($testPath));
     }
@@ -319,11 +300,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->indexPage = '';
 
-        $uri = new URI('http://example.com/' . $currentPath);
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/' . $currentPath;
+        $this->setService($uri);
 
         $this->assertSame($expected, url_is($testPath));
     }
@@ -339,11 +317,8 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com/subfolder/';
 
-        $uri = new URI('http://example.com/subfolder/' . $currentPath);
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/subfolder/' . $currentPath;
+        $this->setService($uri);
 
         $this->assertSame($expected, url_is($testPath));
     }
