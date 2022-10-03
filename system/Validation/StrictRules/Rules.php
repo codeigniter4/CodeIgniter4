@@ -302,10 +302,12 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param mixed $str
+     * @param string|null $str
+     * @param string|null $otherFields The param fields of required_without[].
+     * @param string|null $field       This rule param fields aren't present, this field is required.
      */
-    public function required_without($str = null, ?string $fields = null, array $data = []): bool
+    public function required_without($str = null, ?string $otherFields = null, array $data = [], ?string $error = null, ?string $field = null): bool
     {
-        return $this->nonStrictRules->required_without($str, $fields, $data);
+        return $this->nonStrictRules->required_without($str, $otherFields, $data, $error, $field);
     }
 }

@@ -228,15 +228,6 @@ They are available as an array, indexed in the order they appear in the route.
 
 .. literalinclude:: routing/066.php
 
-Mapping Multiple Routes
-=======================
-
-While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
-the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
-define an array of routes and then pass it as the first parameter to the ``map()`` method:
-
-.. literalinclude:: routing/021.php
-
 .. _redirecting-routes:
 
 Redirecting Routes
@@ -337,19 +328,31 @@ This has the added benefit of making the views more readable, too.
 Routes with any HTTP verbs
 ==========================
 
-It is possible to define a route with any HTTP verbs.
-You can use the ``add()`` method:
-
-.. literalinclude:: routing/031.php
-
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
     will not work.
 
+It is possible to define a route with any HTTP verbs.
+You can use the ``add()`` method:
+
+.. literalinclude:: routing/031.php
+
 .. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
+
+Mapping Multiple Routes
+=======================
+
+.. warning:: The ``map()`` method is not recommended as well as ``add()``
+    because it calls ``add()`` internally.
+
+While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
+the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
+define an array of routes and then pass it as the first parameter to the ``map()`` method:
+
+.. literalinclude:: routing/021.php
 
 .. _command-line-only-routes:
 
