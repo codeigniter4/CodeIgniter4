@@ -189,7 +189,7 @@ abstract class BaseModel
 
     /**
      * Whether rules should be removed that do not exist
-     * in the passed in data. Used between inserts/updates.
+     * in the passed data. Used in updates.
      *
      * @var bool
      */
@@ -701,12 +701,22 @@ abstract class BaseModel
     {
         $this->insertID = 0;
 
+        // Set $cleanValidationRules to false temporary.
+        $cleanValidationRules       = $this->cleanValidationRules;
+        $this->cleanValidationRules = false;
+
         $data = $this->transformDataToArray($data, 'insert');
 
         // Validate data before saving.
-        if (! $this->skipValidation && ! $this->cleanRules()->validate($data)) {
+        if (! $this->skipValidation && ! $this->validate($data)) {
+            // Restore $cleanValidationRules
+            $this->cleanValidationRules = $cleanValidationRules;
+
             return false;
         }
+
+        // Restore $cleanValidationRules
+        $this->cleanValidationRules = $cleanValidationRules;
 
         // Must be called first so we don't
         // strip out created_at values.
@@ -773,6 +783,10 @@ abstract class BaseModel
      */
     public function insertBatch(?array $set = null, ?bool $escape = null, int $batchSize = 100, bool $testing = false)
     {
+        // Set $cleanValidationRules to false temporary.
+        $cleanValidationRules       = $this->cleanValidationRules;
+        $this->cleanValidationRules = false;
+
         if (is_array($set)) {
             foreach ($set as &$row) {
                 // If $data is using a custom class with public or protected
@@ -789,8 +803,11 @@ abstract class BaseModel
                     $row = (array) $row;
                 }
 
-                // Validate every row..
-                if (! $this->skipValidation && ! $this->cleanRules()->validate($row)) {
+                // Validate every row.
+                if (! $this->skipValidation && ! $this->validate($row)) {
+                    // Restore $cleanValidationRules
+                    $this->cleanValidationRules = $cleanValidationRules;
+
                     return false;
                 }
 
@@ -810,6 +827,9 @@ abstract class BaseModel
                 }
             }
         }
+
+        // Restore $cleanValidationRules
+        $this->cleanValidationRules = $cleanValidationRules;
 
         return $this->doInsertBatch($set, $escape, $batchSize, $testing);
     }
@@ -832,7 +852,7 @@ abstract class BaseModel
         $data = $this->transformDataToArray($data, 'update');
 
         // Validate data before saving.
-        if (! $this->skipValidation && ! $this->cleanRules(true)->validate($data)) {
+        if (! $this->skipValidation && ! $this->validate($data)) {
             return false;
         }
 
@@ -906,7 +926,7 @@ abstract class BaseModel
                 }
 
                 // Validate data before saving.
-                if (! $this->skipValidation && ! $this->cleanRules(true)->validate($row)) {
+                if (! $this->skipValidation && ! $this->validate($row)) {
                     return false;
                 }
 
@@ -1027,7 +1047,7 @@ abstract class BaseModel
     public function replace(?array $data = null, bool $returnSQL = false)
     {
         // Validate data before saving.
-        if ($data && ! $this->skipValidation && ! $this->cleanRules(true)->validate($data)) {
+        if ($data && ! $this->skipValidation && ! $this->validate($data)) {
             return false;
         }
 
@@ -1581,7 +1601,11 @@ abstract class BaseModel
         // properties representing the collection elements, we need to grab
         // them as an array.
         if (is_object($data) && ! $data instanceof stdClass) {
-            $data = $this->objectToArray($data, ($type === 'update'), true);
+            // If it validates with entire rules, all fields are needed.
+            $onlyChanged = ($this->skipValidation === false && $this->cleanValidationRules === false)
+                ? false : ($type === 'update');
+
+            $data = $this->objectToArray($data, $onlyChanged, true);
         }
 
         // If it's still a stdClass, go ahead and convert to
