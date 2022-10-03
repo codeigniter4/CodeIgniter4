@@ -55,15 +55,22 @@ final class MiscUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_REFERER']      = $uri1;
         $_SESSION['_ci_previous_url'] = $uri2;
 
-        $uri = new URI('http://example.com/public');
+        $this->config->baseURL = 'http://example.com/public';
+
+        $uri = 'http://example.com/public';
+        $this->setRequest($uri);
+
+        $this->assertSame($uri2, previous_url());
+    }
+
+    private function setRequest(string $uri): void
+    {
+        $uri = new URI($uri);
         Services::injectMock('uri', $uri);
 
         // Since we're on a CLI, we must provide our own URI
-        $this->config->baseURL = 'http://example.com/public';
-        $request               = Services::request($this->config);
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
-
-        $this->assertSame($uri2, previous_url());
     }
 
     public function testPreviousURLUsesRefererIfNeeded()
@@ -72,13 +79,10 @@ final class MiscUrlTest extends CIUnitTestCase
 
         $_SERVER['HTTP_REFERER'] = $uri1;
 
-        $uri = new URI('http://example.com/public');
-        Services::injectMock('uri', $uri);
-
-        // Since we're on a CLI, we must provide our own URI
         $this->config->baseURL = 'http://example.com/public';
-        $request               = Services::request($this->config);
-        Services::injectMock('request', $request);
+
+        $uri = 'http://example.com/public';
+        $this->setRequest($uri);
 
         $this->assertSame($uri1, previous_url());
     }
@@ -87,23 +91,18 @@ final class MiscUrlTest extends CIUnitTestCase
 
     public function testIndexPage()
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uri = 'http://example.com/';
+        $this->setRequest($uri);
 
         $this->assertSame('index.php', index_page());
     }
 
     public function testIndexPageAlt()
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
         $this->config->indexPage = 'banana.php';
-        $request                 = Services::request($this->config);
-        Services::injectMock('request', $request);
+
+        $uri = 'http://example.com/';
+        $this->setRequest($uri);
 
         $this->assertSame('banana.php', index_page($this->config));
     }
@@ -163,11 +162,8 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAnchor($expected = '', $uri = '', $title = '', $attributes = '')
     {
-        $uriObj = new URI('http://example.com/');
-        Services::injectMock('uri', $uriObj);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -231,12 +227,10 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAnchorNoindex($expected = '', $uri = '', $title = '', $attributes = '')
     {
-        $uriObj = new URI('http://example.com/');
-        Services::injectMock('uri', $uriObj);
-
         $this->config->indexPage = '';
-        $request                 = Services::request($this->config);
-        Services::injectMock('request', $request);
+
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -290,12 +284,10 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAnchorTargetted($expected = '', $uri = '', $title = '', $attributes = '')
     {
-        $uriObj = new URI('http://example.com/');
-        Services::injectMock('uri', $uriObj);
-
         $this->config->indexPage = '';
-        $request                 = Services::request($this->config);
-        Services::injectMock('request', $request);
+
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -338,11 +330,8 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAnchorExamples($expected = '', $uri = '', $title = '', $attributes = '')
     {
-        $uriObj = new URI('http://example.com/');
-        Services::injectMock('uri', $uriObj);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, anchor($uri, $title, $attributes, $this->config));
     }
@@ -399,11 +388,8 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testAnchorPopup($expected = '', $uri = '', $title = '', $attributes = false)
     {
-        $uriObj = new URI('http://example.com/');
-        Services::injectMock('uri', $uriObj);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, anchor_popup($uri, $title, $attributes, $this->config));
     }
@@ -441,11 +427,8 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testMailto($expected = '', $email = '', $title = '', $attributes = '')
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::request($this->config);
-        Services::injectMock('request', $request);
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, mailto($email, $title, $attributes));
     }
@@ -483,11 +466,8 @@ final class MiscUrlTest extends CIUnitTestCase
      */
     public function testSafeMailto($expected = '', $email = '', $title = '', $attributes = '')
     {
-        $uri = new URI('http://example.com/');
-        Services::injectMock('uri', $uri);
-
-        $request = Services::incomingrequest($this->config);
-        Services::injectMock('request', $request);
+        $uriString = 'http://example.com/';
+        $this->setRequest($uriString);
 
         $this->assertSame($expected, safe_mailto($email, $title, $attributes));
     }
