@@ -140,9 +140,10 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/assets/image.jpg');
+        $uri = new URI('http://example.com/assets/image.jpg');
+        Services::injectMock('uri', $uri);
 
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('assets/image.jpg', uri_string());
@@ -153,9 +154,10 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/assets/image.jpg');
+        $uri = new URI('http://example.com/assets/image.jpg');
+        Services::injectMock('uri', $uri);
 
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('assets/image.jpg', uri_string(true));
@@ -167,9 +169,11 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
         $this->config->baseURL = 'http://example.com';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/assets/image.jpg');
 
+        $uri = new URI('http://example.com/assets/image.jpg');
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('assets/image.jpg', uri_string());
@@ -181,9 +185,11 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/assets/image.jpg';
 
         $this->config->baseURL = 'http://example.com';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/assets/image.jpg');
 
+        $uri = new URI('http://example.com/assets/image.jpg');
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('assets/image.jpg', uri_string(true));
@@ -191,9 +197,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testUriStringEmptyAbsolute()
     {
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/');
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
 
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('/', uri_string());
@@ -201,9 +208,10 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testUriStringEmptyRelative()
     {
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/');
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
 
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('', uri_string(true));
@@ -215,9 +223,11 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['REQUEST_URI'] = '/subfolder/assets/image.jpg';
 
         $this->config->baseURL = 'http://example.com/subfolder/';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
 
+        $uri = new URI('http://example.com/subfolder/assets/image.jpg');
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame('subfolder/assets/image.jpg', uri_string());
@@ -230,8 +240,11 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
 
         $this->config->baseURL = 'http://example.com/subfolder/';
-        $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/subfolder/assets/image.jpg');
+
+        $uri = new URI('http://example.com/subfolder/assets/image.jpg');
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($this->config);
 
         Services::injectMock('request', $request);
 
@@ -287,8 +300,10 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
 
-        $request      = Services::request();
-        $request->uri = new URI('http://example.com/' . $currentPath);
+        $uri = new URI('http://example.com/' . $currentPath);
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request();
         Services::injectMock('request', $request);
 
         $this->assertSame($expected, url_is($testPath));
@@ -299,12 +314,15 @@ final class CurrentUrlTest extends CIUnitTestCase
      */
     public function testUrlIsNoIndex(string $currentPath, string $testPath, bool $expected)
     {
-        $_SERVER['HTTP_HOST']    = 'example.com';
-        $_SERVER['REQUEST_URI']  = '/' . $currentPath;
+        $_SERVER['HTTP_HOST']   = 'example.com';
+        $_SERVER['REQUEST_URI'] = '/' . $currentPath;
+
         $this->config->indexPage = '';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/' . $currentPath);
+        $uri = new URI('http://example.com/' . $currentPath);
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame($expected, url_is($testPath));
@@ -318,10 +336,13 @@ final class CurrentUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/' . $currentPath;
         $_SERVER['SCRIPT_NAME'] = '/subfolder/index.php';
-        $this->config->baseURL  = 'http://example.com/subfolder/';
 
-        $request      = Services::request($this->config);
-        $request->uri = new URI('http://example.com/subfolder/' . $currentPath);
+        $this->config->baseURL = 'http://example.com/subfolder/';
+
+        $uri = new URI('http://example.com/subfolder/' . $currentPath);
+        Services::injectMock('uri', $uri);
+
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame($expected, url_is($testPath));
