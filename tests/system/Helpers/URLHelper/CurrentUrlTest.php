@@ -145,7 +145,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertSame('/assets/image.jpg', uri_string());
+        $this->assertSame('assets/image.jpg', uri_string());
     }
 
     public function testUriStringRelative()
@@ -172,7 +172,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertSame('/assets/image.jpg', uri_string());
+        $this->assertSame('assets/image.jpg', uri_string());
     }
 
     public function testUriStringNoTrailingSlashRelative()
@@ -220,7 +220,7 @@ final class CurrentUrlTest extends CIUnitTestCase
 
         Services::injectMock('request', $request);
 
-        $this->assertSame('/subfolder/assets/image.jpg', uri_string());
+        $this->assertSame('subfolder/assets/image.jpg', uri_string());
     }
 
     public function testUriStringSubfolderRelative()
