@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Helpers;
 
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
@@ -34,7 +33,7 @@ final class FormHelperTest extends CIUnitTestCase
         $this->resetServices();
     }
 
-    private function getRequest(): IncomingRequest
+    private function setRequest(): void
     {
         $uri = new URI('http://example.com/');
         Services::injectMock('uri', $uri);
@@ -43,12 +42,13 @@ final class FormHelperTest extends CIUnitTestCase
         $config->baseURL   = '';
         $config->indexPage = 'index.php';
 
-        return Services::request($config);
+        $request = Services::request($config);
+        Services::injectMock('request', $request);
     }
 
     public function testFormOpenBasic()
     {
-        $request = $this->getRequest();
+        $request = $this->setRequest();
         Services::injectMock('request', $request);
 
         $before = (new Filters())->globals['before'];
@@ -77,8 +77,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenHasLocale()
     {
-        $request = $this->getRequest();
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $expected = <<<'EOH'
             <form action="http://example.com/index.php/en/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
@@ -95,8 +94,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithoutAction()
     {
-        $request = $this->getRequest();
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -123,8 +121,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithoutMethod()
     {
-        $request = $this->getRequest();
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -151,8 +148,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithHidden()
     {
-        $request = $this->getRequest();
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -186,8 +182,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenMultipart()
     {
-        $request = $this->getRequest();
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
