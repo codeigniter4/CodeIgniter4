@@ -21,6 +21,11 @@ Enhancements
 
 none.
 
+Message Changes
+***************
+
+- Added missing item `valid_json` in `Language/en/Validation.php`
+
 Changes
 *******
 
