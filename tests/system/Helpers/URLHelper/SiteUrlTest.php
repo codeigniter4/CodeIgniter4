@@ -279,10 +279,11 @@ final class SiteUrlTest extends CIUnitTestCase
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
 
+        $uri = new URI('http://example.com/ci/v4/x/y');
+        Services::injectMock('uri', $uri);
+
         $this->config->baseURL = 'http://example.com/ci/v4/';
         $request               = Services::request($this->config);
-        $request->uri          = new URI('http://example.com/ci/v4/x/y');
-
         Services::injectMock('request', $request);
 
         $this->assertSame('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
