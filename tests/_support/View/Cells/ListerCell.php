@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace Tests\Support\View\Cells;
 
 use CodeIgniter\View\Cells\Cell;
@@ -10,9 +19,7 @@ class ListerCell extends Cell
 
     public function getItemsProperty()
     {
-        $items = array_map(function($item) {
-            return $item = '-'. $item;
-        }, $this->items);
+        $items = array_map(static fn ($item) => $item = '-' . $item, $this->items);
 
         return $items;
     }

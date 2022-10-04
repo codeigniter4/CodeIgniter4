@@ -63,7 +63,7 @@ final class ControlledCellTest extends CIUnitTestCase
     {
         $this->expectException(ViewException::class);
         $this->expectExceptionMessage(lang('View.invalidCellMethod', [
-            'class' => "Tests\Support\View\Cells\GreetingCell",
+            'class' => 'Tests\\Support\\View\\Cells\\GreetingCell',
             'method' => 'sayGoodbye',
         ]));
 
@@ -106,25 +106,25 @@ final class ControlledCellTest extends CIUnitTestCase
     {
         $result = view_cell('Tests\Support\View\Cells\AdditionCell');
 
-        $this->assertStringContainsString('2', (string)$result);
+        $this->assertStringContainsString('2', (string) $result);
     }
 
     public function testMountValuesWithParams()
     {
         $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3]);
 
-        $this->assertStringContainsString('3', (string)$result);
+        $this->assertStringContainsString('3', (string) $result);
     }
 
     public function testMountValuesWithParamsAndMountParams()
     {
         $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3, 'number' => 4, 'skipAddition' => false]);
 
-        $this->assertStringContainsString('7', (string)$result);
+        $this->assertStringContainsString('7', (string) $result);
 
         $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3, 'number' => 4, 'skipAddition' => true]);
 
-        $this->assertStringContainsString('3', (string)$result);
+        $this->assertStringContainsString('3', (string) $result);
     }
 
     public function testMountWithMissingParams()
@@ -132,11 +132,11 @@ final class ControlledCellTest extends CIUnitTestCase
         // Don't provide any params
         $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3]);
 
-        $this->assertStringContainsString('3', (string)$result);
+        $this->assertStringContainsString('3', (string) $result);
 
         // Skip a parameter in the mount param list
         $result = view_cell('Tests\Support\View\Cells\AdditionCell', ['value' => 3, $skipAddition = true]);
 
-        $this->assertStringContainsString('3', (string)$result);
+        $this->assertStringContainsString('3', (string) $result);
     }
 }

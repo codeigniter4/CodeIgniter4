@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace CodeIgniter\View\Cells;
 
 use CodeIgniter\Traits\PropertiesTrait;
@@ -63,26 +72,24 @@ class Cell
 
         // If no view is specified, we'll try to guess it based on the class name.
         if (empty($view)) {
-            $view = decamelize((new \ReflectionClass($this))->getShortName());
+            $view = decamelize((new ReflectionClass($this))->getShortName());
             $view = str_replace('_cell', '', $view);
         }
 
         // Locate our view, prefering the directory of the class.
         if (! is_file($view)) {
             // Get the local pathname of the Cell
-            $ref = new ReflectionClass($this);
-            $view = dirname($ref->getFileName()) . DIRECTORY_SEPARATOR . $view .'.php';
+            $ref  = new ReflectionClass($this);
+            $view = dirname($ref->getFileName()) . DIRECTORY_SEPARATOR . $view . '.php';
         }
 
-        $output = (function () use ($properties, $view): string {
+        return (function () use ($properties, $view): string {
             extract($properties);
             ob_start();
             include $view;
 
             return ob_get_clean() ?: '';
         })();
-
-        return $output;
     }
 
     /**
@@ -100,20 +107,20 @@ class Cell
     private function includeComputedProperties(array $properties): array
     {
         $reservedProperties = ['data', 'view'];
-        $privateProperties = $this->getNonPublicProperties();
+        $privateProperties  = $this->getNonPublicProperties();
 
         foreach ($privateProperties as $property) {
             $name = $property->getName();
 
             // don't include any methods in the base class
-            if (in_array($name, $reservedProperties)) {
+            if (in_array($name, $reservedProperties, true)) {
                 continue;
             }
 
-            $computedMethod = 'get'. ucfirst($name) .'Property';
+            $computedMethod = 'get' . ucfirst($name) . 'Property';
 
             if (method_exists($this, $computedMethod)) {
-                $properties[$name] = $this->$computedMethod();
+                $properties[$name] = $this->{$computedMethod}();
             }
         }
 

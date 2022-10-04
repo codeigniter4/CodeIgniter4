@@ -2,6 +2,9 @@
 
 namespace CodeIgniter\Traits;
 
+use ReflectionClass;
+use ReflectionProperty;
+
 /**
  * Trait PropertiesTrait
  *
@@ -34,15 +37,14 @@ trait PropertiesTrait
     {
         $properties = [];
 
-        $worker = new class {
-            public function getProperties($obj) {
+        $worker = new class () {
+            public function getProperties($obj)
+            {
                 return get_object_vars($obj);
             }
         };
 
-        $properties = $worker->getProperties($this);
-
-        return $properties;
+        return $worker->getProperties($this);
     }
 
     /**
@@ -55,8 +57,8 @@ trait PropertiesTrait
 
         $reflection = new \ReflectionClass($this);
 
-        foreach ($reflection->getProperties(\ReflectionProperty::IS_PRIVATE | \ReflectionProperty::IS_PROTECTED) as $property) {
-            if ($property->isStatic() || in_array($property->getName(), $exclude)) {
+        foreach ($reflection->getProperties(ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PROTECTED) as $property) {
+            if ($property->isStatic() || in_array($property->getName(), $exclude, true)) {
                 continue;
             }
 

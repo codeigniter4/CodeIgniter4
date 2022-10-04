@@ -198,13 +198,13 @@ class Cell
     {
         // Only allow public properties to be set, or protected/private
         // properties that have a method to get them (get<Foo>Property())
-        $publicProperties = $instance->getPublicProperties();
+        $publicProperties  = $instance->getPublicProperties();
         $privateProperties = array_column($instance->getNonPublicProperties(), 'name');
-        $publicParams = array_intersect_key($params, $publicProperties);
+        $publicParams      = array_intersect_key($params, $publicProperties);
 
         foreach ($params as $key => $value) {
             $getter = 'get' . ucfirst($key) . 'Property';
-            if (in_array($key, $privateProperties) && method_exists($instance, $getter)) {
+            if (in_array($key, $privateProperties, true) && method_exists($instance, $getter)) {
                 $publicParams[$key] = $value;
             }
         }
@@ -231,7 +231,7 @@ class Cell
      * for a method, in the order they are defined. This allows
      * them to be passed directly into the method.
      */
-    private function getMethodParams($instance, $method, $params)
+    private function getMethodParams(BaseCell $instance, string $method, array $params)
     {
         $mountParams = [];
 
@@ -257,6 +257,8 @@ class Cell
      * Renders the non-Cell class, passing in the string/array params.
      *
      * @todo Determine if this can be refactored to use $this-getMethodParams().
+     *
+     * @param object $instance
      */
     final protected function renderSimpleClass($instance, string $method, array $params, string $class): string
     {
