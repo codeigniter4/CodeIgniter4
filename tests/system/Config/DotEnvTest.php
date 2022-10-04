@@ -77,6 +77,7 @@ final class DotEnvTest extends CIUnitTestCase
             ['variable', 'character.export.var'],
             ['character', 'char.var'],
             ['imports', 'char.exports'],
+            ['banana', 'fruit.export'],
         ];
     }
 
