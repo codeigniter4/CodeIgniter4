@@ -59,6 +59,7 @@ return [
     'valid_url'             => 'The {field} field must contain a valid URL.',
     'valid_url_strict'      => 'The {field} field must contain a valid URL.',
     'valid_date'            => 'The {field} field must contain a valid date.',
+    'valid_json'            => 'The {field} field must contain a valid json.',
 
     // Credit Cards
     'valid_cc_num' => '{field} does not appear to be a valid credit card number.',

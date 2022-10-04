@@ -231,6 +231,7 @@ final class LanguageTest extends CIUnitTestCase
             ['RESTful'],
             ['Router'],
             ['Session'],
+            ['Test'],
             ['Time'],
             ['Validation'],
             ['View'],

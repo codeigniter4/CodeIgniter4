@@ -577,7 +577,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:
 
 .. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
     If you don't set the status code in the controller you set, the default status code ``200``
-    will be returned. See :php:func:`Response::setStatusCode() <setStatusCode>` for
+    will be returned. See :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for
     information on how to set the status code.
 
 Route Processing by Priority
