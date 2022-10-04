@@ -63,7 +63,7 @@ final class ControlledCellTest extends CIUnitTestCase
     {
         $this->expectException(ViewException::class);
         $this->expectExceptionMessage(lang('View.invalidCellMethod', [
-            'class' => 'Tests\\Support\\View\\Cells\\GreetingCell',
+            'class'  => 'Tests\\Support\\View\\Cells\\GreetingCell',
             'method' => 'sayGoodbye',
         ]));
 

@@ -216,7 +216,6 @@ class Cell
         // If there are any protected/private properties, we need to
         // send them to the mount() method.
         if (method_exists($instance, 'mount')) {
-
             // if any $params have keys that match the name of an argument in the
             // mount method, pass those variables to the method.
             $mountParams = $this->getMethodParams($instance, 'mount', $params);
