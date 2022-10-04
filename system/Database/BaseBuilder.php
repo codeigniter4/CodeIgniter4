@@ -1864,9 +1864,7 @@ class BaseBuilder
      */
     public function getCompiledUpsert()
     {
-        $currentTestMode = $this->testMode;
-
-        $this->testMode = true;
+        [$currentTestMode, $this->testMode] = [$this->testMode, true];
 
         $sql = implode(";\n", $this->upsert());
 
