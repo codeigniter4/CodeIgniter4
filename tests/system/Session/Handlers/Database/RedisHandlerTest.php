@@ -17,6 +17,8 @@ use Config\App as AppConfig;
 use Redis;
 
 /**
+ * @requires extension redis
+ *
  * @internal
  */
 final class RedisHandlerTest extends CIUnitTestCase
@@ -24,17 +26,6 @@ final class RedisHandlerTest extends CIUnitTestCase
     private string $sessionName     = 'ci_session';
     private string $sessionSavePath = 'tcp://127.0.0.1:6379';
     private string $userIpAddress   = '127.0.0.1';
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        if (! class_exists(Redis::class)) {
-            $this->markTestSkipped(
-                'Redis Session Handler requires PHP Redis extention and Redis server'
-            );
-        }
-    }
 
     private function getInstance($options = [])
     {
