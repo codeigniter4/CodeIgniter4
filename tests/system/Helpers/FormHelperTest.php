@@ -48,8 +48,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenBasic()
     {
-        $request = $this->setRequest();
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
