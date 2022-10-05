@@ -63,6 +63,28 @@ final class RedisHandlerTest extends CIUnitTestCase
         return new RedisHandler($appConfig, $this->userIpAddress);
     }
 
+    public function testSavePathTimeoutFloat()
+    {
+        $handler = $this->getInstance(
+            ['sessionSavePath' => 'tcp://127.0.0.1:6379?timeout=2.5']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame(2.5, $savePath['timeout']);
+    }
+
+    public function testSavePathTimeoutInt()
+    {
+        $handler = $this->getInstance(
+            ['sessionSavePath' => 'tcp://127.0.0.1:6379?timeout=10']
+        );
+
+        $savePath = $this->getPrivateProperty($handler, 'savePath');
+
+        $this->assertSame(10.0, $savePath['timeout']);
+    }
+
     public function testOpen()
     {
         $handler = $this->getInstance();
