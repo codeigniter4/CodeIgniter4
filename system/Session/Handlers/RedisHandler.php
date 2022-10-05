@@ -22,9 +22,6 @@ use ReturnTypeWillChange;
  */
 class RedisHandler extends BaseHandler
 {
-    /**
-     * @var int
-     */
     private const REDIS_DEFAULT_PORT = 6379;
 
     /**
