@@ -6,6 +6,10 @@ Many applications have small view fragments that can be repeated from page to pa
 
 CodeIgniter supports two types of View Cells: simple and controlled. Simple View Cells can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string. Controlled View Cells must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
 
+.. contents::
+    :local:
+    :depth: 2
+
 .. _app-cells:
 
 *******************
@@ -234,8 +238,9 @@ You can pass additional parameters to the ``mount()`` method by passing them as 
     // Called in main View:
     <?= view_cell('RecentPosts::show', ['categoryId' => 5]); ?>
 
+************
 Cell Caching
-------------
+************
 
 You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
 third parameter. This will use the currently configured cache engine.
