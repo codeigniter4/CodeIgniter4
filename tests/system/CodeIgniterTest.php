@@ -287,6 +287,22 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertSame('2.0', $response->getProtocolVersion());
     }
 
+    public function testSupportsHttp3()
+    {
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['SERVER_PROTOCOL'] = 'HTTP/3.0';
+
+        ob_start();
+        $this->codeigniter->run();
+        ob_get_clean();
+
+        $response = $this->getPrivateProperty($this->codeigniter, 'response');
+
+        $this->assertSame('3.0', $response->getProtocolVersion());
+    }
+
     public function testIgnoringErrorSuppressedByAt()
     {
         $_SERVER['argv'] = ['index.php', '/'];

@@ -34,6 +34,7 @@ class Message implements MessageInterface
         '1.0',
         '1.1',
         '2.0',
+        '3.0',
     ];
 
     /**
