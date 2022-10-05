@@ -6,6 +6,10 @@ Many applications have small view fragments that can be repeated from page to pa
 
 CodeIgniter supports two types of View Cells: simple and controlled. Simple View Cells can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string. Controlled View Cells must be generated from a class that extends ``Codeigniter\View\Cells\Cell`` class which provides additional capability making your View Cells more flexible and faster to use.
 
+.. contents::
+    :local:
+    :depth: 2
+
 .. _app-cells:
 
 *******************
