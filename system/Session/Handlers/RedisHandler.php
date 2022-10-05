@@ -71,6 +71,19 @@ class RedisHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
+        $this->setSavePath();
+
+        if ($this->matchIP === true) {
+            $this->keyPrefix .= $this->ipAddress . ':';
+        }
+
+        $this->sessionExpiration = empty($config->sessionExpiration)
+            ? (int) ini_get('session.gc_maxlifetime')
+            : (int) $config->sessionExpiration;
+    }
+
+    protected function setSavePath(): void
+    {
         if (empty($this->savePath)) {
             throw SessionException::forEmptySavepath();
         }
@@ -92,14 +105,6 @@ class RedisHandler extends BaseHandler
         } else {
             throw SessionException::forInvalidSavePathFormat($this->savePath);
         }
-
-        if ($this->matchIP === true) {
-            $this->keyPrefix .= $this->ipAddress . ':';
-        }
-
-        $this->sessionExpiration = empty($config->sessionExpiration)
-            ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->sessionExpiration;
     }
 
     /**
