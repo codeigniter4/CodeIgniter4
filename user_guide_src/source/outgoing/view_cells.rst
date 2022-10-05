@@ -238,8 +238,9 @@ You can pass additional parameters to the ``mount()`` method by passing them as 
     // Called in main View:
     <?= view_cell('RecentPosts::show', ['categoryId' => 5]); ?>
 
+************
 Cell Caching
-------------
+************
 
 You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
 third parameter. This will use the currently configured cache engine.
