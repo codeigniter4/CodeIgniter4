@@ -18,6 +18,11 @@ BREAKING
 - A bug that caused pages to be cached before after filters were executed when using page caching has been fixed. Adding response headers or changing the response body in after filters now caches them correctly.
 - Due to a bug fix, now :php:func:`random_string()` with the first parameter ``'crypto'`` throws ``InvalidArgumentException`` if the second parameter ``$len`` is an odd number.
 
+Message Changes
+***************
+
+- Fixed ``invalidRoute`` message in ``Language/en/HTTP.php``.
+
 Changes
 *******
 
