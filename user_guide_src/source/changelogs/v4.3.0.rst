@@ -46,6 +46,7 @@ Others
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 - The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
+- :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
 
 .. _v430-interface-changes:
 
