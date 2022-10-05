@@ -12,9 +12,16 @@
 namespace CodeIgniter\Helpers;
 
 use CodeIgniter\HTTP\URI;
+use CodeIgniter\Session\Handlers\ArrayHandler;
+use CodeIgniter\Session\Handlers\FileHandler;
+use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\Mock\MockSession;
+use CodeIgniter\Test\TestLogger;
 use Config\App;
+use Config\App as AppConfig;
 use Config\Filters;
+use Config\Logger as LoggerConfig;
 use Config\Services;
 
 /**
@@ -910,8 +917,46 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame('', set_radio('code', 'beta', false));
     }
 
+    private function createSession($options = []): Session
+    {
+        $defaults = [
+            'sessionDriver'            => FileHandler::class,
+            'sessionCookieName'        => 'ci_session',
+            'sessionExpiration'        => 7200,
+            'sessionSavePath'          => '',
+            'sessionMatchIP'           => false,
+            'sessionTimeToUpdate'      => 300,
+            'sessionRegenerateDestroy' => false,
+            'cookieDomain'             => '',
+            'cookiePrefix'             => '',
+            'cookiePath'               => '/',
+            'cookieSecure'             => false,
+            'cookieSameSite'           => 'Lax',
+        ];
+
+        $config    = array_merge($defaults, $options);
+        $appConfig = new AppConfig();
+
+        foreach ($config as $key => $c) {
+            $appConfig->{$key} = $c;
+        }
+
+        $session = new MockSession(new ArrayHandler($appConfig, '127.0.0.1'), $appConfig);
+        $session->setLogger(new TestLogger(new LoggerConfig()));
+
+        return $session;
+    }
+
+    private function setSession(): void
+    {
+        $session = $this->createSession();
+        Services::injectMock('session', $session);
+    }
+
     public function testValidationErrorsFromSession()
     {
+        $this->setSession();
+
         $_SESSION = ['_ci_validation_errors' => ['foo' => 'bar']];
 
         $this->assertSame(['foo' => 'bar'], validation_errors());
@@ -921,6 +966,8 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationErrorsFromValidation()
     {
+        $this->setSession();
+
         $validation = Services::validation();
         $validation->setRule('id', 'ID', 'required')->run([]);
 
@@ -929,6 +976,8 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationListErrors()
     {
+        $this->setSession();
+
         $validation = Services::validation();
         $validation->setRule('id', 'ID', 'required')->run([]);
 
@@ -939,6 +988,8 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testValidationShowError()
     {
+        $this->setSession();
+
         $validation = Services::validation();
         $validation->setRule('id', 'ID', 'required')->run([]);
 
