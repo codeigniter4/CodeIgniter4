@@ -139,7 +139,8 @@ class Autoloader
 
         // Should we load through Composer's namespaces, also?
         if ($modules->discoverInComposer) {
-            $this->loadComposerNamespaces($composer, $modules->composerPackages);
+            // @phpstan-ignore-next-line
+            $this->loadComposerNamespaces($composer, $modules->composerPackages ?? []);
         }
 
         unset($composer);
