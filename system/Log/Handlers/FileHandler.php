@@ -61,8 +61,8 @@ class FileHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string                  $level
+     * @param array|int|object|string $message
      *
      * @throws Exception
      */

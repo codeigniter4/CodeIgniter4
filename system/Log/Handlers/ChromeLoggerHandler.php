@@ -90,8 +90,8 @@ class ChromeLoggerHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string                  $level
+     * @param array|int|object|string $message
      */
     public function handle($level, $message): bool
     {
@@ -128,7 +128,7 @@ class ChromeLoggerHandler extends BaseHandler
     /**
      * Converts the object to display nicely in the Chrome Logger UI.
      *
-     * @param mixed $object
+     * @param array|int|object|string $object
      *
      * @return array
      */

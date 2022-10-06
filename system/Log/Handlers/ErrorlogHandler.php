@@ -62,11 +62,15 @@ class ErrorlogHandler extends BaseHandler
      * will stop. Any handlers that have not run, yet, will not
      * be run.
      *
-     * @param string $level
-     * @param string $message
+     * @param string                  $level
+     * @param array|int|object|string $message
      */
     public function handle($level, $message): bool
     {
+        if (! is_string($message)) {
+            $message = print_r($message, true);
+        }
+
         $message = strtoupper($level) . ' --> ' . $message . "\n";
 
         return $this->errorLog($message, $this->messageType);
