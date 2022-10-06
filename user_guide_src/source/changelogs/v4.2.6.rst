@@ -33,6 +33,7 @@ Bugs Fixed
 **********
 
 Many bugs fixed, but notably:
-- AssertionError occurs when using Validation in CLI `https://github.com/codeigniter4/CodeIgniter4/pull/6452`
+
+- AssertionError occurs when using Validation in CLI `#6452 <https://github.com/codeigniter4/CodeIgniter4/pull/6452>`_
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
