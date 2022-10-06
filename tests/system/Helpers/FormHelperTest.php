@@ -29,17 +29,26 @@ final class FormHelperTest extends CIUnitTestCase
         parent::setUp();
 
         helper('form');
+
+        $this->resetServices();
+    }
+
+    private function setRequest(): void
+    {
+        $uri = new URI('http://example.com/');
+        Services::injectMock('uri', $uri);
+
+        $config            = new App();
+        $config->baseURL   = '';
+        $config->indexPage = 'index.php';
+
+        $request = Services::request($config);
+        Services::injectMock('request', $request);
     }
 
     public function testFormOpenBasic()
     {
-        $config            = new App();
-        $config->baseURL   = '';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -67,13 +76,8 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenHasLocale()
     {
-        $config            = new App();
-        $config->baseURL   = '';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
+        $this->setRequest();
 
-        Services::injectMock('request', $request);
         $expected = <<<'EOH'
             <form action="http://example.com/index.php/en/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
@@ -89,13 +93,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithoutAction()
     {
-        $config            = new App();
-        $config->baseURL   = '';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -122,13 +120,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithoutMethod()
     {
-        $config            = new App();
-        $config->baseURL   = '';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -155,13 +147,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenWithHidden()
     {
-        $config            = new App();
-        $config->baseURL   = '';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {
@@ -195,13 +181,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     public function testFormOpenMultipart()
     {
-        $config            = new App();
-        $config->baseURL   = '';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/');
-
-        Services::injectMock('request', $request);
+        $this->setRequest();
 
         $before = (new Filters())->globals['before'];
         if (in_array('csrf', $before, true) || array_key_exists('csrf', $before)) {

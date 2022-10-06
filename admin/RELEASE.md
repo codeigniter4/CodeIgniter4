@@ -51,16 +51,7 @@ git clone git@github.com:codeigniter4/userguide.git
 * Create a new PR from `develop` to `master`:
     * Title: "4.x.x Ready code"
     * Description: blank
-* Merge the PR then fast-forward `develop` to catch the merge commit
-* Update the next minor upgrade branch `4.x`
-```console
-git fetch origin
-git checkout 4.x
-git merge origin/4.x
-git merge origin/develop
-git push origin HEAD
-```
-* Create a new Release:
+* Merge the PR then create a new Release:
     * Version: "v4.x.x"
     * Title: "CodeIgniter 4.x.x"
     * Description:
@@ -76,25 +67,23 @@ composer create-project codeigniter4/appstarter release-test
 cd release-test
 composer test && composer info codeigniter4/framework
 ```
-* publish any Security Advisories that were resolved from private forks
-
-## User Guide
-
-**This is now handled by GitHub Actions!**
-
-Verify that the Actions succeeded:
-* "Deploy User Guide", this repo
-* "Deploy Production", UG repo
-* "pages-build-deployment", both repos
-
-See the legacy notes in Appendix for reference or to help manually recover from workflow failures.
-
-## Announcement
-
-> Note: This forum is restricted to administrators.
-
-* Make a new topic in the "News & Discussion" forums: https://forum.codeigniter.com/forum-2.html
-* The content is somewhat organic, but should include any major features and changes as well as a link to the User Guide's changelog
+* Verify that the User Guide Actions succeeded:
+    * "Deploy User Guide", framework repo
+    * "Deploy Production", UG repo
+    * "pages-build-deployment", both repos
+* Fast-forward `develop` branch to catch the merge commit from `master`
+* Update the next minor upgrade branch `4.x`:
+```console
+git fetch origin
+git checkout 4.x
+git merge origin/4.x
+git merge origin/develop
+git push origin HEAD
+```
+* Publish any Security Advisories that were resolved from private forks
+* Announce the release on the forums and Slack channel (note: this forum is restricted to administrators):
+    * Make a new topic in the "News & Discussion" forums: https://forum.codeigniter.com/forum-2.html
+    * The content is somewhat organic, but should include any major features and changes as well as a link to the User Guide's changelog
 
 ## After Publishing Security Advisory
 

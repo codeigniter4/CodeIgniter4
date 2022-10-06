@@ -42,14 +42,14 @@ interface PagerInterface
      * Stores a set of pagination data for later display. Most commonly used
      * by the model to automate the process.
      *
-     * @return mixed
+     * @return $this
      */
     public function store(string $group, int $page, int $perPage, int $total);
 
     /**
      * Sets the path that an aliased group of links will use.
      *
-     * @return mixed
+     * @return $this
      */
     public function setPath(string $path, string $group = 'default');
 

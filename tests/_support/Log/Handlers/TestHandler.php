@@ -26,12 +26,15 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
      */
     protected static $logs = [];
 
+    protected string $destination;
+
     /**
      * Where would the log be written?
      */
     public function __construct(array $config)
     {
         parent::__construct($config);
+
         $this->handles     = $config['handles'] ?? [];
         $this->destination = $this->path . 'log-' . date('Y-m-d') . '.' . $this->fileExtension;
 

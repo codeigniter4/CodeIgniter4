@@ -104,10 +104,6 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/app/Config/Validation.php',
             __DIR__ . '/tests/system/Validation/StrictRules/ValidationTest.php',
             __DIR__ . '/tests/system/Validation/ValidationTest.php',
-
-            // expected Qualified name
-            __DIR__ . '/tests/system/Autoloader/FileLocatorTest.php',
-            __DIR__ . '/tests/system/Router/RouteCollectionTest.php',
         ],
 
         // sometime too detail
@@ -154,14 +150,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(MakeInheritedMethodVisibilitySameAsParentRector::class);
     $rectorConfig->rule(SimplifyEmptyArrayCheckRector::class);
     $rectorConfig->rule(NormalizeNamespaceByPSR4ComposerAutoloadRector::class);
-    $rectorConfig->ruleWithConfiguration(StringClassNameToClassConstantRector::class, [
-        'Error',
-        'Exception',
-        'InvalidArgumentException',
-        'Closure',
-        'stdClass',
-        'SQLite3',
-    ]);
+    $rectorConfig->rule(StringClassNameToClassConstantRector::class);
     $rectorConfig->rule(PrivatizeFinalClassPropertyRector::class);
     $rectorConfig->rule(CompleteDynamicPropertiesRector::class);
 };

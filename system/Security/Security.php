@@ -239,9 +239,9 @@ class Security implements SecurityInterface
     /**
      * CSRF Verify
      *
-     * @throws SecurityException
-     *
      * @return $this|false
+     *
+     * @throws SecurityException
      *
      * @deprecated Use `CodeIgniter\Security\Security::verify()` instead of using this method.
      *
@@ -279,9 +279,9 @@ class Security implements SecurityInterface
     /**
      * CSRF Verify
      *
-     * @throws SecurityException
-     *
      * @return $this
+     *
+     * @throws SecurityException
      */
     public function verify(RequestInterface $request)
     {
@@ -390,9 +390,9 @@ class Security implements SecurityInterface
      *
      * @params string $token CSRF token
      *
-     * @throws InvalidArgumentException "hex2bin(): Hexadecimal input string must have an even length"
-     *
      * @return string CSRF hash
+     *
+     * @throws InvalidArgumentException "hex2bin(): Hexadecimal input string must have an even length"
      */
     protected function derandomize(string $token): string
     {

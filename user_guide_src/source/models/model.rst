@@ -16,13 +16,15 @@ It comes out of the box with helper
 methods for much of the standard ways you would need to interact with a database table, including finding records,
 updating records, deleting records, and more.
 
+.. _accessing-models:
+
 Accessing Models
 ****************
 
 Models are typically stored in the ``app/Models`` directory. They should have a namespace that matches their
 location within the directory, like ``namespace App\Models``.
 
-You can access models within your classes by creating a new instance or using the ``model()`` helper function.
+You can access models within your classes by creating a new instance or using the :php:func:`model()` helper function.
 
 .. literalinclude:: model/001.php
 
@@ -189,9 +191,24 @@ $skipValidation
 ---------------
 
 Whether validation should be skipped during all **inserts** and **updates**. The default
-value is false, meaning that data will always attempt to be validated. This is
+value is ``false``, meaning that data will always attempt to be validated. This is
 primarily used by the ``skipValidation()`` method, but may be changed to ``true`` so
 this model will never validate.
+
+.. _clean-validation-rules:
+
+$cleanValidationRules
+---------------------
+
+Whether validation rules should be removed that do not exist in the passed data.
+This is used in **updates**.
+The default value is ``true``, meaning that validation rules for the fields
+that are not present in the passed data will be (temporarily) removed before the validation.
+This is to avoid validation errors when updating only some fields.
+
+You can also change the value by the ``cleanRules()`` method.
+
+.. note:: Prior to v4.2.7, ``$cleanValidationRules`` did not work due to a bug.
 
 $beforeInsert
 -------------
@@ -390,9 +407,12 @@ For many people, validating data in the model is the preferred way to ensure the
 standard, without duplicating code. The Model class provides a way to automatically have all data validated
 prior to saving to the database with the ``insert()``, ``update()``, or ``save()`` methods.
 
-.. important:: When you update data, the validation in the model class only validate provided fields.
-    So when you set the rule ``required``, if you don't pass the required field data,
-    the validation won't fail. This is to avoid validation errors when updating only some fields.
+.. important:: When you update data, by default, the validation in the model class only
+    validates provided fields. This is to avoid validation errors when updating only some fields.
+
+    But this means ``required*`` rules do not work as expected when updating.
+    If you want to check required fields, you can change the behavior by configuration.
+    See :ref:`clean-validation-rules` for details.
 
 The first step is to fill out the ``$validationRules`` class property with the fields and rules that should
 be applied. If you have custom error message that you want to use, place them in the ``$validationMessages`` array:

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\View\Exceptions\ViewException;
 use Config\View as ViewConfig;
 use ParseError;
@@ -72,10 +73,7 @@ class Parser extends View
     /**
      * Constructor
      *
-     * @param string          $viewPath
-     * @param mixed           $loader
-     * @param bool            $debug
-     * @param LoggerInterface $logger
+     * @param FileLocator|null $loader
      */
     public function __construct(ViewConfig $config, ?string $viewPath = null, $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
     {
@@ -90,9 +88,6 @@ class Parser extends View
      *
      * Parses pseudo-variables contained in the specified template view,
      * replacing them with any data that has already been set.
-     *
-     * @param array $options
-     * @param bool  $saveData
      */
     public function render(string $view, ?array $options = null, ?bool $saveData = null): string
     {
@@ -153,9 +148,6 @@ class Parser extends View
      *
      * Parses pseudo-variables contained in the specified string,
      * replacing them with any data that has already been set.
-     *
-     * @param array $options
-     * @param bool  $saveData
      */
     public function renderString(string $template, ?array $options = null, ?bool $saveData = null): string
     {
@@ -187,8 +179,8 @@ class Parser extends View
      * so that the variable is correctly handled within the
      * parsing itself, and contexts (including raw) are respected.
      *
-     * @param string $context The context to escape it for: html, css, js, url, raw
-     *                        If 'raw', no escaping will happen
+     * @param string|null $context The context to escape it for: html, css, js, url, raw
+     *                             If 'raw', no escaping will happen
      */
     public function setData(array $data = [], ?string $context = null): RendererInterface
     {
@@ -503,9 +495,9 @@ class Parser extends View
      * Handles replacing a pseudo-variable with the actual content. Will double-check
      * for escaping brackets.
      *
-     * @param mixed  $pattern
-     * @param string $content
-     * @param string $template
+     * @param array|string $pattern
+     * @param string       $content
+     * @param string       $template
      */
     protected function replaceSingle($pattern, $content, $template, bool $escape = false): string
     {
@@ -698,9 +690,9 @@ class Parser extends View
      * Converts an object to an array, respecting any
      * toArray() methods on an object.
      *
-     * @param mixed $value
+     * @param array|bool|float|int|object|string|null $value
      *
-     * @return mixed
+     * @return array|bool|float|int|string|null
      */
     protected function objectToArray($value)
     {

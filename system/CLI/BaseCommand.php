@@ -103,9 +103,9 @@ abstract class BaseCommand
     /**
      * Can be used by a command to run other commands.
      *
-     * @throws ReflectionException
-     *
      * @return mixed
+     *
+     * @throws ReflectionException
      */
     protected function call(string $command, array $params = [])
     {

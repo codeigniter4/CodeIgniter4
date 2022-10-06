@@ -187,9 +187,7 @@ class Table
     /**
      * Set "empty" cells
      *
-     * Can be passed as an array or discreet params
-     *
-     * @param mixed $value
+     * @param string $value
      *
      * @return Table
      */
@@ -256,7 +254,7 @@ class Table
     /**
      * Generate the table
      *
-     * @param mixed $tableData
+     * @param array|BaseResult|null $tableData
      *
      * @return string
      */
@@ -295,14 +293,20 @@ class Table
 
         // Is there a table heading to display?
         if (! empty($this->heading)) {
+            $headerTag = null;
+
+            if (preg_match('/(<)(td|th)(?=\h|>)/i', $this->template['heading_cell_start'], $matches) === 1) {
+                $headerTag = $matches[0];
+            }
+
             $out .= $this->template['thead_open'] . $this->newline . $this->template['heading_row_start'] . $this->newline;
 
             foreach ($this->heading as $heading) {
                 $temp = $this->template['heading_cell_start'];
 
                 foreach ($heading as $key => $val) {
-                    if ($key !== 'data') {
-                        $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                    if ($key !== 'data' && $headerTag !== null) {
+                        $temp = str_replace($headerTag, $headerTag . ' ' . $key . '="' . $val . '"', $temp);
                     }
                 }
 
@@ -355,14 +359,20 @@ class Table
 
         // Any table footing to display?
         if (! empty($this->footing)) {
+            $footerTag = null;
+
+            if (preg_match('/(<)(td|th)(?=\h|>)/i', $this->template['footing_cell_start'], $matches)) {
+                $footerTag = $matches[0];
+            }
+
             $out .= $this->template['tfoot_open'] . $this->newline . $this->template['footing_row_start'] . $this->newline;
 
             foreach ($this->footing as $footing) {
                 $temp = $this->template['footing_cell_start'];
 
                 foreach ($footing as $key => $val) {
-                    if ($key !== 'data') {
-                        $temp = str_replace('<th', '<th ' . $key . '="' . $val . '"', $temp);
+                    if ($key !== 'data' && $footerTag !== null) {
+                        $temp = str_replace($footerTag, $footerTag . ' ' . $key . '="' . $val . '"', $temp);
                     }
                 }
 

@@ -16,7 +16,7 @@ class User
     public function __set($name, $value)
     {
         if ($name === 'lastLogin') {
-            $this->lastLogin = DateTime::createFromFormat('U', $value);
+            $this->lastLogin = DateTime::createFromFormat('!U', $value);
         }
     }
 

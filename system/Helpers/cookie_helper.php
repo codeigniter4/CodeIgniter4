@@ -30,8 +30,8 @@ if (! function_exists('set_cookie')) {
      * @param string       $domain   For site-wide cookie. Usually: .yourdomain.com
      * @param string       $path     The cookie path
      * @param string       $prefix   The cookie prefix ('': the default prefix)
-     * @param bool         $secure   True makes the cookie secure
-     * @param bool         $httpOnly True makes the cookie accessible via http(s) only (no javascript)
+     * @param bool|null    $secure   True makes the cookie secure
+     * @param bool|null    $httpOnly True makes the cookie accessible via http(s) only (no javascript)
      * @param string|null  $sameSite The cookie SameSite value
      *
      * @see \CodeIgniter\HTTP\Response::setCookie()
@@ -43,8 +43,8 @@ if (! function_exists('set_cookie')) {
         string $domain = '',
         string $path = '/',
         string $prefix = '',
-        bool $secure = false,
-        bool $httpOnly = false,
+        ?bool $secure = null,
+        ?bool $httpOnly = null,
         ?string $sameSite = null
     ) {
         $response = Services::response();

@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockResponse;
 use Config\App;
+use Config\Cookie;
 use Config\Cookie as CookieConfig;
 use Config\Services;
 
@@ -85,6 +86,31 @@ final class CookieHelperTest extends CIUnitTestCase
         set_cookie($cookieAttr);
 
         $this->assertTrue($this->response->hasCookie($this->name, $this->value));
+
+        delete_cookie($this->name);
+    }
+
+    public function testSetCookieConfigCookieIsUsed()
+    {
+        /** @var Cookie $config */
+        $config           = config('Cookie');
+        $config->secure   = true;
+        $config->httponly = true;
+        $config->samesite = 'None';
+        Factories::injectMock('config', 'Cookie', $config);
+
+        $cookieAttr = [
+            'name'   => $this->name,
+            'value'  => $this->value,
+            'expire' => $this->expire,
+        ];
+        set_cookie($cookieAttr);
+
+        $cookie  = $this->response->getCookie($this->name);
+        $options = $cookie->getOptions();
+        $this->assertTrue($options['secure']);
+        $this->assertTrue($options['httponly']);
+        $this->assertSame('None', $options['samesite']);
 
         delete_cookie($this->name);
     }

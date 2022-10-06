@@ -419,9 +419,9 @@ if (! function_exists('esc')) {
      * @param array|string $data
      * @param string       $encoding
      *
-     * @throws InvalidArgumentException
-     *
      * @return array|string
+     *
+     * @throws InvalidArgumentException
      */
     function esc($data, string $context = 'html', ?string $encoding = null)
     {
@@ -1123,16 +1123,16 @@ if (! function_exists('view')) {
      * NOTE: Does not provide any escaping of the data, so that must
      * all be handled manually by the developer.
      *
-     * @param array $options Unused - reserved for third-party extensions.
+     * @param array $options Options for saveData or third-party extensions.
      */
     function view(string $name, array $data = [], array $options = []): string
     {
-        /**
-         * @var CodeIgniter\View\View $renderer
-         */
+        /** @var CodeIgniter\View\View $renderer */
         $renderer = Services::renderer();
 
-        $saveData = config(View::class)->saveData;
+        /** @var \CodeIgniter\Config\View $config */
+        $config   = config(View::class);
+        $saveData = $config->saveData;
 
         if (array_key_exists('saveData', $options)) {
             $saveData = (bool) $options['saveData'];

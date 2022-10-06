@@ -5,7 +5,12 @@ Release Date: February 1, 2021
 
 **4.1.1 release of CodeIgniter4**
 
-Bugs Fixed:
+.. contents::
+    :local:
+    :depth: 2
+
+Bugs Fixed
+----------
 
 - Fixed an issue where ``.gitattributes`` was preventing framework downloads.
 

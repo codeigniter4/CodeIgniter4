@@ -74,8 +74,8 @@ if (! function_exists('site_url')) {
     /**
      * Returns a site URL as defined by the App config.
      *
-     * @param mixed    $relativePath URI string or array of URI segments
-     * @param App|null $config       Alternate configuration to use
+     * @param array|string $relativePath URI string or array of URI segments
+     * @param App|null     $config       Alternate configuration to use
      */
     function site_url($relativePath = '', ?string $scheme = null, ?App $config = null): string
     {
@@ -369,7 +369,9 @@ if (! function_exists('safe_mailto')) {
         $x = array_reverse($x);
 
         // improve obfuscation by eliminating newlines & whitespace
-        $output = '<script type="text/javascript">'
+        $cspNonce = csp_script_nonce();
+        $cspNonce = $cspNonce ? ' ' . $cspNonce : $cspNonce;
+        $output   = '<script type="text/javascript"' . $cspNonce . '>'
                 . 'var l=new Array();';
 
         foreach ($x as $i => $value) {
@@ -553,7 +555,7 @@ if (! function_exists('url_is')) {
      * which will allow any valid character.
      *
      * Example:
-     *   if (url_is('admin*)) ...
+     *   if (url_is('admin*')) ...
      */
     function url_is(string $path): bool
     {

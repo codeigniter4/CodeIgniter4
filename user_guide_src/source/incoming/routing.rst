@@ -210,15 +210,6 @@ a simple view:
 
 .. literalinclude:: routing/020.php
 
-Mapping Multiple Routes
-=======================
-
-While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
-the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
-define an array of routes and then pass it as the first parameter to the ``map()`` method:
-
-.. literalinclude:: routing/021.php
-
 .. _redirecting-routes:
 
 Redirecting Routes
@@ -319,19 +310,31 @@ This has the added benefit of making the views more readable, too.
 Routes with any HTTP verbs
 ==========================
 
-It is possible to define a route with any HTTP verbs.
-You can use the ``add()`` method:
-
-.. literalinclude:: routing/031.php
-
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI specified in the ``add()`` method is accessible by the GET method, the CSRF protection
     will not work.
 
+It is possible to define a route with any HTTP verbs.
+You can use the ``add()`` method:
+
+.. literalinclude:: routing/031.php
+
 .. note:: Using the HTTP-verb-based routes will also provide a slight performance increase, since
     only routes that match the current request method are stored, resulting in fewer routes to scan through
     when trying to find a match.
+
+Mapping Multiple Routes
+=======================
+
+.. warning:: The ``map()`` method is not recommended as well as ``add()``
+    because it calls ``add()`` internally.
+
+While the ``add()`` method is simple to use, it is often handier to work with multiple routes at once, using
+the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
+define an array of routes and then pass it as the first parameter to the ``map()`` method:
+
+.. literalinclude:: routing/021.php
 
 .. _command-line-only-routes:
 
@@ -553,7 +556,7 @@ a valid class/method pair, just like you would show in any route, or a Closure:
 
 .. note:: The ``set404Override()`` method does not change the Response status code to ``404``.
     If you don't set the status code in the controller you set, the default status code ``200``
-    will be returned. See :php:func:`Response::setStatusCode() <setStatusCode>` for
+    will be returned. See :php:meth:`CodeIgniter\\HTTP\\Response::setStatusCode()` for
     information on how to set the status code.
 
 Route Processing by Priority

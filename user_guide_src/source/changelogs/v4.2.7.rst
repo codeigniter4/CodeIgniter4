@@ -1,7 +1,7 @@
 Version 4.2.7
 #############
 
-Release Date: Unreleased
+Release Date: October 6, 2022
 
 **4.2.7 release of CodeIgniter4**
 
@@ -12,12 +12,20 @@ Release Date: Unreleased
 BREAKING
 ********
 
-none.
+- The default values of the parameters in :php:func:`set_cookie()` and :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()` has been fixed. Now the default values of ``$secure`` and ``$httponly`` are ``null``, and these values will be replaced with the ``Config\Cookie`` values.
+-  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale.
+- The Validation rule ``Validation\Rule::required_without()`` and ``Validation\StrictRules\Rule::required_without()`` parameters have been changed and the logic of these rule has also been fixed.
 
 Enhancements
 ************
 
 none.
+
+Message Changes
+***************
+
+- Fixed typos in some items in ``Language/en/Email.php``.
+- Added missing item ``valid_json`` in ``Language/en/Validation.php``.
 
 Changes
 *******
@@ -32,6 +40,6 @@ none.
 Bugs Fixed
 **********
 
-none.
+- Fixed a bug that prevents CSP headers from being sent when ``Config\ContentSecurityPolicy::$autoNonce`` is false.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.

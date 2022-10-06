@@ -209,8 +209,8 @@ final class ArrayHelperTest extends CIUnitTestCase
     /**
      * @dataProvider deepSearchProvider
      *
-     * @param mixed $key
-     * @param mixed $expected
+     * @param int|string        $key
+     * @param array|string|null $expected
      */
     public function testArrayDeepSearch($key, $expected)
     {
@@ -247,12 +247,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
-     *
-     * @param mixed $data
-     * @param mixed $sortColumns
-     * @param mixed $expected
      */
-    public function testArraySortByMultipleKeysWithArray($data, $sortColumns, $expected)
+    public function testArraySortByMultipleKeysWithArray(array $data, array $sortColumns, array $expected)
     {
         $success = array_sort_by_multiple_keys($data, $sortColumns);
 
@@ -262,12 +258,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
-     *
-     * @param mixed $data
-     * @param mixed $sortColumns
-     * @param mixed $expected
      */
-    public function testArraySortByMultipleKeysWithObjects($data, $sortColumns, $expected)
+    public function testArraySortByMultipleKeysWithObjects(array $data, array $sortColumns, array $expected)
     {
         // Morph to objects
         foreach ($data as $index => $dataSet) {
@@ -282,12 +274,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
     /**
      * @dataProvider sortByMultipleKeysProvider
-     *
-     * @param mixed $data
-     * @param mixed $sortColumns
-     * @param mixed $expected
      */
-    public function testArraySortByMultipleKeysFailsEmptyParameter($data, $sortColumns, $expected)
+    public function testArraySortByMultipleKeysFailsEmptyParameter(array $data, array $sortColumns, array $expected)
     {
         // Both filled
         $success = array_sort_by_multiple_keys($data, $sortColumns);

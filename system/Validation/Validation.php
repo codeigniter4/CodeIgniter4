@@ -183,8 +183,8 @@ class Validation implements ValidationInterface
      * Runs the validation process, returning true or false
      * determining whether validation was successful or not.
      *
-     * @param mixed    $value
-     * @param string[] $errors
+     * @param array|bool|float|int|object|string|null $value
+     * @param string[]                                $errors
      */
     public function check($value, string $rule, array $errors = []): bool
     {
@@ -312,7 +312,7 @@ class Validation implements ValidationInterface
                     $found  = true;
                     $passed = $param === false
                         ? $set->{$rule}($value, $error)
-                        : $set->{$rule}($value, $param, $data, $error);
+                        : $set->{$rule}($value, $param, $data, $error, $field);
 
                     break;
                 }
@@ -416,9 +416,9 @@ class Validation implements ValidationInterface
      *
      * @param array|string $rules
      *
-     * @throws TypeError
-     *
      * @return $this
+     *
+     * @throws TypeError
      */
     public function setRule(string $field, ?string $label, $rules, array $errors = [])
     {
@@ -505,9 +505,9 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws InvalidArgumentException If group not found.
-     *
      * @return string[] Rule group.
+     *
+     * @throws InvalidArgumentException If group not found.
      */
     public function getRuleGroup(string $group): array
     {

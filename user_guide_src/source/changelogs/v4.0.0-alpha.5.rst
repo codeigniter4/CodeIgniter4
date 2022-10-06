@@ -5,7 +5,12 @@ Release Date: Jan 30, 2019
 
 **Next alpha release of CodeIgniter4**
 
-Highlights:
+.. contents::
+    :local:
+    :depth: 2
+
+Highlights
+----------
 
 - added $maxQueries setting to app/Config/Toolbar.php
 - updated PHP dependency to 7.2
@@ -17,6 +22,9 @@ Highlights:
 - code coverage is at 77% ... getting ever closer to our target of 80% :)
 
 We hope this will be the last alpha, and that the next pre-release will be our first beta ... fingers crossed!
+
+Changed Files
+-------------
 
 The list of changed files follows, with PR numbers shown.
 
@@ -200,8 +208,8 @@ The list of changed files follows, with PR numbers shown.
 - spark #1648
 - .travis.yml #1649, #1670
 
-PRs merged:
------------
+PRs merged
+----------
 
 - #1693 Docs/tutorial
 - #5951c3 Allow domain/sub-domain routes to overwrite existing routes

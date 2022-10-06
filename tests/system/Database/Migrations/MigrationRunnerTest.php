@@ -79,8 +79,13 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $db = $this->getPrivateProperty($runner, 'db');
 
         $this->assertInstanceOf(BaseConnection::class, $db);
+        $database = (
+            $dbConfig->tests['DBDriver'] === 'SQLite3'
+            && $dbConfig->tests['database'] !== ':memory:'
+            ? WRITEPATH : ''
+        ) . $dbConfig->tests['database'];
         $this->assertSame(
-            ($dbConfig->tests['DBDriver'] === 'SQLite3' ? WRITEPATH : '') . $dbConfig->tests['database'],
+            $database,
             $this->getPrivateProperty($db, 'database')
         );
         $this->assertSame($dbConfig->tests['DBDriver'], $this->getPrivateProperty($db, 'DBDriver'));

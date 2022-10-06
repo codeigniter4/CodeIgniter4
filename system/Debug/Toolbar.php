@@ -350,8 +350,6 @@ class Toolbar
      *
      * @param RequestInterface  $request
      * @param ResponseInterface $response
-     *
-     * @global \CodeIgniter\CodeIgniter $app
      */
     public function prepare(?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
@@ -360,7 +358,7 @@ class Toolbar
          * @var Response|null        $response
          */
         if (CI_DEBUG && ! is_cli()) {
-            global $app;
+            $app = Services::codeigniter();
 
             $request ??= Services::request();
             $response ??= Services::response();

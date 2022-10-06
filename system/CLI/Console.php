@@ -34,9 +34,9 @@ class Console
     /**
      * Runs the current command discovered on the CLI.
      *
-     * @throws Exception
-     *
      * @return mixed
+     *
+     * @throws Exception
      */
     public function run(bool $useSafeOutput = false)
     {

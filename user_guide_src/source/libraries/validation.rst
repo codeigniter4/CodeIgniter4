@@ -585,7 +585,7 @@ Allowing Parameters
 
 If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
-for rules like ``require_with`` that needs to check the value of another submitted field to base its result on:
+for rules like ``required_with`` that needs to check the value of another submitted field to base its result on:
 
 .. literalinclude:: validation/037.php
 
@@ -594,12 +594,15 @@ Custom errors can be returned as the fourth parameter, just as described above.
 Available Rules
 ***************
 
-The following is a list of all the native rules that are available to use:
-
 .. note:: Rule is a string; there must be **no spaces** between the parameters, especially the ``is_unique`` rule.
     There can be no spaces before and after ``ignore_value``.
 
 .. literalinclude:: validation/038.php
+
+Rules for General Use
+=====================
+
+The following is a list of all the native rules that are available to use:
 
 ======================= ========== ============================================= ===================================================
 Rule                    Parameter  Description                                   Example
@@ -676,9 +679,8 @@ required                No         Fails if the field is an empty array, empty
                                    string, null or false.
 required_with           Yes        The field is required when any of the other   required_with[field1,field2]
                                    required fields are present in the data.
-required_without        Yes        The field is required when all of the other   required_without[field1,field2]
-                                   fields are present in the data but not
-                                   required.
+required_without        Yes        The field is required when any of other       required_without[field1,field2]
+                                   fields do not pass ``required`` checks.
 string                  No         A generic alternative to the alpha* rules
                                    that confirms the element is a string
 timezone                No         Fails if field does match a timezone per
@@ -726,6 +728,10 @@ valid_cc_number         Yes        Verifies that the credit card number matches 
                                    HSBC Canada Card (hsbc)
 ======================= ========== ============================================= ===================================================
 
+.. note:: You can also use any native PHP functions that return boolean and
+    permit at least one parameter, the field data to validate.
+    The Validation library **never alters the data** to validate.
+
 .. _rules-for-file-uploads:
 
 Rules for File Uploads
@@ -761,7 +767,7 @@ max_dims                Yes         Fails if the maximum width and height of an 
                                     the width, and the third is the height. Will
                                     also fail if the file cannot be determined
                                     to be an image.
-mime_in                 Yes         Fails if the file's mime type is not one     mime_in[field_name,image/png,image/jpg]
+mime_in                 Yes         Fails if the file's mime type is not one     mime_in[field_name,image/png,image/jpeg]
                                     listed in the parameters.
 ext_in                  Yes         Fails if the file's extension is not one     ext_in[field_name,png,jpg,gif]
                                     listed in the parameters.
@@ -770,7 +776,3 @@ is_image                Yes         Fails if the file cannot be determined to be
 ======================= ========== ============================================= ===================================================
 
 The file validation rules apply for both single and multiple file uploads.
-
-.. note:: You can also use any native PHP functions that return boolean and
-    permit at least one parameter, the field data to validate.
-    The Validation library **never alters the data** to validate.
