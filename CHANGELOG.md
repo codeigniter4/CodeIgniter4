@@ -1,5 +1,37 @@
 # Changelog
 
+## [v4.2.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.7) (2022-10-06)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.6...v4.2.7)
+
+### Breaking Changes
+* fix: make Time::__toString() database-compatible on any locale by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6461
+* fix: set_cookie() does not use Config\Cookie values by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6544
+* fix: `required_without` rule logic in `Validation` class. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/6589
+
+### Fixed Bugs
+* fix: typos in messages in Language/en/Email.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6517
+* fix: table attribute cannot applied on td element by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/6538
+* add: set up "script_name" to handle every request by index.php file. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/6522
+* fix: CSP autoNonce = false by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6570
+* fix: inconsistent new line view in `date_helper` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/6582
+* fix: safe_mailto() does not work with CSP by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6604
+* fix: script_tag() does not work with CSP by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6611
+* fix: `$cleanValidationRules` does not work in Model updates by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6588
+* Fixed a bug that URLs with trailing newlines do not become invalid in validation. by @ytetsuro in https://github.com/codeigniter4/CodeIgniter4/pull/6618
+* fix: missing `valid_json` in Validation Language by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/6624
+* fix: default values for Session Redis Handler by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6614
+
+### Enhancements
+* Update coding-standards version by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6537
+* chore: update ThirdParty Kint to 4.2.2 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6583
+
+### Refactoring
+* Refactor: CodeIgniter::generateCacheName() by @iRedds in https://github.com/codeigniter4/CodeIgniter4/pull/6498
+* refactor: replace `global $app` with Services by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/6524
+* refactor: small refactoring in view() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6546
+* refactor: replace utf8_encode() with mb_convert_encoding() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6564
+* refactor: make $precision int in View Filter round by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6566
+
 ## [v4.2.6](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.6) (2022-09-04)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.5...v4.2.6)
 
