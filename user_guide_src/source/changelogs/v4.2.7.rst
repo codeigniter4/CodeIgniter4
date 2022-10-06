@@ -1,7 +1,7 @@
 Version 4.2.7
 #############
 
-Release Date: Unreleased
+Release Date: October 6, 2022
 
 **4.2.7 release of CodeIgniter4**
 
