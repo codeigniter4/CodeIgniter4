@@ -152,7 +152,7 @@ class Logger implements LoggerInterface
     /**
      * System is unusable.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function emergency($message, array $context = []): bool
     {
@@ -165,7 +165,7 @@ class Logger implements LoggerInterface
      * Example: Entire website down, database unavailable, etc. This should
      * trigger the SMS alerts and wake you up.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function alert($message, array $context = []): bool
     {
@@ -177,7 +177,7 @@ class Logger implements LoggerInterface
      *
      * Example: Application component unavailable, unexpected exception.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function critical($message, array $context = []): bool
     {
@@ -188,7 +188,7 @@ class Logger implements LoggerInterface
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function error($message, array $context = []): bool
     {
@@ -201,7 +201,7 @@ class Logger implements LoggerInterface
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function warning($message, array $context = []): bool
     {
@@ -211,7 +211,7 @@ class Logger implements LoggerInterface
     /**
      * Normal but significant events.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function notice($message, array $context = []): bool
     {
@@ -223,7 +223,7 @@ class Logger implements LoggerInterface
      *
      * Example: User logs in, SQL logs.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function info($message, array $context = []): bool
     {
@@ -233,7 +233,7 @@ class Logger implements LoggerInterface
     /**
      * Detailed debug information.
      *
-     * @param string $message
+     * @param array|object|string $message
      */
     public function debug($message, array $context = []): bool
     {
@@ -243,8 +243,8 @@ class Logger implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed  $level
-     * @param string $message
+     * @param string              $level
+     * @param array|object|string $message
      */
     public function log($level, $message, array $context = []): bool
     {
@@ -312,9 +312,9 @@ class Logger implements LoggerInterface
      * {file}
      * {line}
      *
-     * @param mixed $message
+     * @param array|object|string $message
      *
-     * @return mixed
+     * @return array|object|string
      */
     protected function interpolate($message, array $context = [])
     {
