@@ -16,6 +16,7 @@ use CodeIgniter\Test\Mock\MockFileLogger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
+use stdClass;
 use Tests\Support\Log\Handlers\TestHandler;
 
 /**
@@ -89,10 +90,85 @@ final class FileHandlerTest extends CIUnitTestCase
         $expected = 'log-' . $date . '.php';
         $logger->handle('info', 'This is a test log');
 
-        $result = file_get_contents($config->handlers[TestHandler::class]['path'] . $expected);
+        $fp     = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
+        $result = stream_get_contents($fp);
+        fclose($fp);
 
         // did the log file get created?
         $expectedResult = "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n\nINFO - " . $date . " --> This is a test log\n";
+        $this->assertSame($expectedResult, $result);
+    }
+
+    public function testHandleWithInteger()
+    {
+        $config                                       = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path'] = $this->start;
+        $logger                                       = new MockFileLogger($config->handlers[TestHandler::class]);
+
+        $logger->setDateFormat('Y-m-d');
+        $date     = date('Y-m-d');
+        $expected = 'log-' . $date . '.log';
+        $logger->handle('info', 123456);
+
+        $fp     = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
+        $result = stream_get_contents($fp);
+        fclose($fp);
+
+        // did the log file get created?
+        $expectedResult = 'INFO - ' . $date . " --> 123456\n";
+        $this->assertSame($expectedResult, $result);
+    }
+
+    public function testHandleWithArray()
+    {
+        $config                                       = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path'] = $this->start;
+        $logger                                       = new MockFileLogger($config->handlers[TestHandler::class]);
+
+        $logger->setDateFormat('Y-m-d');
+        $date    = date('Y-m-d');
+        $arrData = [
+            'firstName' => 'John',
+            'lastName'  => 'Doe',
+        ];
+        $expected = 'log-' . $date . '.log';
+        $logger->handle('info', print_r($arrData, true));
+
+        $fp     = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
+        $result = stream_get_contents($fp);
+        fclose($fp);
+
+        // did the log file get created?
+        $expectedResult = 'INFO - ' . $date . " --> Array\n(
+    [firstName] => John
+    [lastName] => Doe\n)\n\n";
+        $this->assertSame($expectedResult, $result);
+    }
+
+    public function testHandleWithObject()
+    {
+        $config                                       = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path'] = $this->start;
+        $logger                                       = new MockFileLogger($config->handlers[TestHandler::class]);
+
+        $logger->setDateFormat('Y-m-d');
+        $date = date('Y-m-d');
+
+        $obj            = new stdClass();
+        $obj->firstName = 'John';
+        $obj->lastName  = 'Doe';
+
+        $expected = 'log-' . $date . '.log';
+        $logger->handle('info', print_r($obj, true));
+
+        $fp     = fopen($config->handlers[TestHandler::class]['path'] . $expected, 'rb');
+        $result = stream_get_contents($fp);
+        fclose($fp);
+
+        // did the log file get created?
+        $expectedResult = 'INFO - ' . $date . " --> stdClass Object\n(
+    [firstName] => John
+    [lastName] => Doe\n)\n\n";
         $this->assertSame($expectedResult, $result);
     }
 
