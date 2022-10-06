@@ -15,6 +15,7 @@ use CodeIgniter\Log\Exceptions\LogException;
 use CodeIgniter\Log\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Stringable;
 use Throwable;
 
 /**
@@ -152,7 +153,7 @@ class Logger implements LoggerInterface
     /**
      * System is unusable.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function emergency($message, array $context = []): bool
     {
@@ -165,7 +166,7 @@ class Logger implements LoggerInterface
      * Example: Entire website down, database unavailable, etc. This should
      * trigger the SMS alerts and wake you up.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function alert($message, array $context = []): bool
     {
@@ -177,7 +178,7 @@ class Logger implements LoggerInterface
      *
      * Example: Application component unavailable, unexpected exception.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function critical($message, array $context = []): bool
     {
@@ -188,7 +189,7 @@ class Logger implements LoggerInterface
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function error($message, array $context = []): bool
     {
@@ -201,7 +202,7 @@ class Logger implements LoggerInterface
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function warning($message, array $context = []): bool
     {
@@ -211,7 +212,7 @@ class Logger implements LoggerInterface
     /**
      * Normal but significant events.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function notice($message, array $context = []): bool
     {
@@ -223,7 +224,7 @@ class Logger implements LoggerInterface
      *
      * Example: User logs in, SQL logs.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function info($message, array $context = []): bool
     {
@@ -233,7 +234,7 @@ class Logger implements LoggerInterface
     /**
      * Detailed debug information.
      *
-     * @param array|int|object|string $message
+     * @param string|Stringable $message
      */
     public function debug($message, array $context = []): bool
     {
@@ -243,8 +244,8 @@ class Logger implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param string                  $level
-     * @param array|int|object|string $message
+     * @param string            $level
+     * @param string|Stringable $message
      */
     public function log($level, $message, array $context = []): bool
     {
