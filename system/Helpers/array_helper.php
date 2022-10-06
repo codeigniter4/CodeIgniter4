@@ -46,9 +46,10 @@ if (! function_exists('_array_search_dot')) {
     function _array_search_dot(array $indexes, array $array)
     {
         // Grab the current index
-        $currentIndex = $indexes ? array_shift($indexes) : null;
+        $currentIndex    = $indexes ? array_shift($indexes) : null;
+        $intCurrentIndex = (int) $currentIndex;
 
-        if ((empty($currentIndex) && (int) $currentIndex !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*')) {
+        if (empty($currentIndex) && $intCurrentIndex !== 0 || (! isset($array[$currentIndex]) && $currentIndex !== '*')) {
             return null;
         }
 
