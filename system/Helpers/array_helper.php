@@ -48,7 +48,7 @@ if (! function_exists('_array_search_dot')) {
         // Grab the current index
         $currentIndex = $indexes ? array_shift($indexes) : null;
 
-        if ((empty($currentIndex) && (int) $currentIndex !== 0) || (! isset($array[$currentIndex]) && $currentIndex !== '*')) {
+        if (empty($currentIndex) || (! isset($array[$currentIndex]) && $currentIndex !== '*')) {
             return null;
         }
 
