@@ -58,9 +58,7 @@ Others
 Project Files
 *************
 
-A few files in the **project space** (root, app, public, writable) received cosmetic updates.
-You need not touch these files at all. There are some third-party CodeIgniter modules available
-to assist with merging changes to the project space: `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+Version ``4.2.7`` did not alter any executable code in project files.
 
 All Changes
 ===========
@@ -68,4 +66,4 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-*
+* app/Common.php

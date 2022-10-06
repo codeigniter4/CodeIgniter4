@@ -1,7 +1,7 @@
 Version 4.2.7
 #############
 
-Release Date: Unreleased
+Release Date: October 6, 2022
 
 **4.2.7 release of CodeIgniter4**
 
@@ -24,7 +24,8 @@ none.
 Message Changes
 ***************
 
-- Added missing item ``valid_json`` in ``Language/en/Validation.php``
+- Fixed typos in some items in ``Language/en/Email.php``.
+- Added missing item ``valid_json`` in ``Language/en/Validation.php``.
 
 Changes
 *******

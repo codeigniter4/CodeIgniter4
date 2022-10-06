@@ -22,6 +22,8 @@ use ReturnTypeWillChange;
  */
 class RedisHandler extends BaseHandler
 {
+    private const DEFAULT_PORT = 6379;
+
     /**
      * phpRedis instance
      *
@@ -58,12 +60,27 @@ class RedisHandler extends BaseHandler
     protected $sessionExpiration = 7200;
 
     /**
+     * @param string $ipAddress User's IP address
+     *
      * @throws SessionException
      */
     public function __construct(AppConfig $config, string $ipAddress)
     {
         parent::__construct($config, $ipAddress);
 
+        $this->setSavePath();
+
+        if ($this->matchIP === true) {
+            $this->keyPrefix .= $this->ipAddress . ':';
+        }
+
+        $this->sessionExpiration = empty($config->sessionExpiration)
+            ? (int) ini_get('session.gc_maxlifetime')
+            : (int) $config->sessionExpiration;
+    }
+
+    protected function setSavePath(): void
+    {
         if (empty($this->savePath)) {
             throw SessionException::forEmptySavepath();
         }
@@ -75,24 +92,16 @@ class RedisHandler extends BaseHandler
 
             $this->savePath = [
                 'host'     => $matches[1],
-                'port'     => empty($matches[2]) ? null : $matches[2],
+                'port'     => empty($matches[2]) ? self::DEFAULT_PORT : $matches[2],
                 'password' => preg_match('#auth=([^\s&]+)#', $matches[3], $match) ? $match[1] : null,
-                'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : null,
-                'timeout'  => preg_match('#timeout=(\d+\.\d+)#', $matches[3], $match) ? (float) $match[1] : null,
+                'database' => preg_match('#database=(\d+)#', $matches[3], $match) ? (int) $match[1] : 0,
+                'timeout'  => preg_match('#timeout=(\d+\.\d+|\d+)#', $matches[3], $match) ? (float) $match[1] : 0.0,
             ];
 
             preg_match('#prefix=([^\s&]+)#', $matches[3], $match) && $this->keyPrefix = $match[1];
         } else {
             throw SessionException::forInvalidSavePathFormat($this->savePath);
         }
-
-        if ($this->matchIP === true) {
-            $this->keyPrefix .= $this->ipAddress . ':';
-        }
-
-        $this->sessionExpiration = empty($config->sessionExpiration)
-            ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->sessionExpiration;
     }
 
     /**
@@ -266,14 +275,15 @@ class RedisHandler extends BaseHandler
      */
     protected function lockSession(string $sessionID): bool
     {
+        $lockKey = $this->keyPrefix . $sessionID . ':lock';
+
         // PHP 7 reuses the SessionHandler object on regeneration,
         // so we need to check here if the lock key is for the
         // correct session ID.
-        if ($this->lockKey === $this->keyPrefix . $sessionID . ':lock') {
+        if ($this->lockKey === $lockKey) {
             return $this->redis->expire($this->lockKey, 300);
         }
 
-        $lockKey = $this->keyPrefix . $sessionID . ':lock';
         $attempt = 0;
 
         do {
