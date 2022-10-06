@@ -144,9 +144,10 @@ final class ResponseTest extends CIUnitTestCase
     {
         $response = new Response(new App());
 
-        $response->setDate(DateTime::createFromFormat('Y-m-d', '2000-03-10'));
+        $datetime = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+        $response->setDate($datetime);
 
-        $date = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+        $date = clone $datetime;
         $date->setTimezone(new DateTimeZone('UTC'));
 
         $header = $response->getHeaderLine('Date');
