@@ -214,7 +214,7 @@ if (! function_exists('script_tag')) {
             }
         }
 
-        return $script . 'type="text/javascript"></script>';
+        return rtrim($script) . '></script>';
     }
 }
 

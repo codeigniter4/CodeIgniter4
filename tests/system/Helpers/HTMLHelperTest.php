@@ -232,42 +232,42 @@ final class HTMLHelperTest extends CIUnitTestCase
     public function testScriptTag()
     {
         $target   = 'http://site.com/js/mystyles.js';
-        $expected = '<script src="http://site.com/js/mystyles.js" type="text/javascript"></script>';
+        $expected = '<script src="http://site.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
     public function testScriptTagWithoutProtocol()
     {
         $target   = 'js/mystyles.js';
-        $expected = '<script src="http://example.com/js/mystyles.js" type="text/javascript"></script>';
+        $expected = '<script src="http://example.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
     public function testScriptTagWithIndexpage()
     {
         $target   = 'js/mystyles.js';
-        $expected = '<script src="http://example.com/index.php/js/mystyles.js" type="text/javascript"></script>';
+        $expected = '<script src="http://example.com/index.php/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target, true));
     }
 
     public function testScriptTagWithSrc()
     {
         $target   = ['src' => 'http://site.com/js/mystyles.js'];
-        $expected = '<script src="http://site.com/js/mystyles.js" type="text/javascript"></script>';
+        $expected = '<script src="http://site.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
     public function testScriptTagWithSrcWithoutProtocol()
     {
         $target   = ['src' => 'js/mystyles.js'];
-        $expected = '<script src="http://example.com/js/mystyles.js" type="text/javascript"></script>';
+        $expected = '<script src="http://example.com/js/mystyles.js"></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
     public function testScriptTagWithSrcAndAttributes()
     {
         $target   = ['src' => 'js/mystyles.js', 'charset' => 'UTF-8', 'defer' => '', 'async' => null];
-        $expected = '<script src="http://example.com/js/mystyles.js" charset="UTF-8" defer="" async type="text/javascript"></script>';
+        $expected = '<script src="http://example.com/js/mystyles.js" charset="UTF-8" defer="" async></script>';
         $this->assertSame($expected, script_tag($target));
     }
 
@@ -299,7 +299,7 @@ final class HTMLHelperTest extends CIUnitTestCase
      */
     public function testScriptTagWithoutAnyArg()
     {
-        $expected = '<script src="http://example.com/" type="text/javascript"></script>';
+        $expected = '<script src="http://example.com/"></script>';
         $this->assertSame($expected, script_tag());
     }
 
