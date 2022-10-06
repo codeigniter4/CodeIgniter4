@@ -26,11 +26,11 @@ final class FormHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
+        $this->resetServices();
+
         parent::setUp();
 
         helper('form');
-
-        $this->resetServices();
     }
 
     private function setRequest(): void
