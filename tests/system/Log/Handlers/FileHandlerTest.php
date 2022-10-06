@@ -77,6 +77,25 @@ final class FileHandlerTest extends CIUnitTestCase
         $this->assertStringContainsString($expectedResult, $line);
     }
 
+    public function testHandleCreateFilePHP()
+    {
+        $config                                                = new LoggerConfig();
+        $config->handlers[TestHandler::class]['path']          = $this->start;
+        $config->handlers[TestHandler::class]['fileExtension'] = 'php';
+        $logger                                                = new MockFileLogger($config->handlers[TestHandler::class]);
+
+        $logger->setDateFormat('Y-m-d');
+        $date     = date('Y-m-d');
+        $expected = 'log-' . $date . '.php';
+        $logger->handle('info', 'This is a test log');
+
+        $result = file_get_contents($config->handlers[TestHandler::class]['path'] . $expected);
+
+        // did the log file get created?
+        $expectedResult = "<?php defined('SYSTEMPATH') || exit('No direct script access allowed'); ?>\n\nINFO - " . $date . " --> This is a test log\n";
+        $this->assertSame($expectedResult, $result);
+    }
+
     public function testHandleDateTimeCorrectly()
     {
         $config                                       = new LoggerConfig();
