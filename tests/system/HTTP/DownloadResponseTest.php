@@ -50,7 +50,7 @@ final class DownloadResponseTest extends CIUnitTestCase
     {
         $response = new DownloadResponse('unit-test.txt', true);
 
-        $datetime = DateTime::createFromFormat('Y-m-d', '2000-03-10');
+        $datetime = DateTime::createFromFormat('!Y-m-d', '2000-03-10');
         $response->setDate($datetime);
 
         $date = clone $datetime;
