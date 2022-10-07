@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Router;
 
-use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Modules;
@@ -1489,12 +1488,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setDefaultController('Home');
         $routes->setDefaultMethod('index');
 
+        // The subdomain of the current URL is `doc`, so this route is registered.
         $routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+        // The subdomain route is already registered, so this route is not registered.
         $routes->get('/', 'Home::index');
 
-        // the second rule applies, so overwrites the first
-        $expects = '\\' . Home::class;
-
+        $expects = '\App\Controllers\Site\CDoc';
         $this->assertSame($expects, $router->handle('/'));
     }
 
