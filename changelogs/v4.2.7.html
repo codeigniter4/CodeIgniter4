@@ -280,16 +280,24 @@
 <p><strong>4.2.7 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
-<li><p><a class="reference internal" href="#enhancements" id="id2">Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#message-changes" id="id3">Message Changes</a></p></li>
-<li><p><a class="reference internal" href="#changes" id="id4">Changes</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id5">Deprecations</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id6">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#security" id="id1">SECURITY</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id2">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#enhancements" id="id3">Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#message-changes" id="id4">Message Changes</a></p></li>
+<li><p><a class="reference internal" href="#changes" id="id5">Changes</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id6">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id7">Bugs Fixed</a></p></li>
 </ul>
 </div>
+<section id="security">
+<h2><a class="toc-backref" href="#id1">SECURITY</a><a class="headerlink" href="#security" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><em>Secure or HttpOnly flag set in ConfigCookie is not reflected in Cookies issued</em> was fixed. See the <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-745p-r637-7vvp">Security advisory GHSA-745p-r637-7vvp</a> for more information.</p></li>
+<li><p>Fixed a bug that prevents CSP headers from being sent when <code class="docutils literal notranslate"><span class="pre">Config\ContentSecurityPolicy::$autoNonce</span></code> is false.</p></li>
+</ul>
+</section>
 <section id="breaking">
-<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The default values of the parameters in <a class="reference internal" href="../helpers/cookie_helper.html#set_cookie" title="set_cookie"><code class="xref php php-func docutils literal notranslate"><span class="pre">set_cookie()</span></code></a> and <a class="reference internal" href="../outgoing/response.html#CodeIgniter\HTTP\Response::setCookie" title="CodeIgniter\HTTP\Response::setCookie"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Response::setCookie()</span></code></a> has been fixed. Now the default values of <code class="docutils literal notranslate"><span class="pre">$secure</span></code> and <code class="docutils literal notranslate"><span class="pre">$httponly</span></code> are <code class="docutils literal notranslate"><span class="pre">null</span></code>, and these values will be replaced with the <code class="docutils literal notranslate"><span class="pre">Config\Cookie</span></code> values.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Time::__toString()</span></code> is now locale-independent. It returns database-compatible strings like ‘2022-09-07 12:00:00’ in any locale.</p></li>
@@ -297,29 +305,26 @@
 </ul>
 </section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id2">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
 <p>none.</p>
 </section>
 <section id="message-changes">
-<h2><a class="toc-backref" href="#id3">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Message Changes</a><a class="headerlink" href="#message-changes" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Fixed typos in some items in <code class="docutils literal notranslate"><span class="pre">Language/en/Email.php</span></code>.</p></li>
 <li><p>Added missing item <code class="docutils literal notranslate"><span class="pre">valid_json</span></code> in <code class="docutils literal notranslate"><span class="pre">Language/en/Validation.php</span></code>.</p></li>
 </ul>
 </section>
 <section id="changes">
-<h2><a class="toc-backref" href="#id4">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Changes</a><a class="headerlink" href="#changes" title="Permalink to this headline"></a></h2>
 <p>none.</p>
 </section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id5">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <p>none.</p>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id6">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
-<ul class="simple">
-<li><p>Fixed a bug that prevents CSP headers from being sent when <code class="docutils literal notranslate"><span class="pre">Config\ContentSecurityPolicy::$autoNonce</span></code> is false.</p></li>
-</ul>
+<h2><a class="toc-backref" href="#id7">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <p>See the repo’s <a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md">CHANGELOG.md</a> for a complete list of bugs fixed.</p>
 </section>
 </section>
@@ -336,7 +341,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 06, 2022.
+      <span class="lastupdated">Last updated on Oct 07, 2022.
       </span></p>
   </div>
 
