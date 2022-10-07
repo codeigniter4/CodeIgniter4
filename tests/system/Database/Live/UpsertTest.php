@@ -259,6 +259,7 @@ final class UpsertTest extends CIUnitTestCase
 
         $sql = $this->db->table('user')
             ->setData($userData)
+            ->onConstraint('email')
             ->getCompiledUpsert();
 
         $pos = strpos($sql, 'ahmadinejad@example.com');
