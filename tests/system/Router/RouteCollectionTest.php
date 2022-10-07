@@ -1188,24 +1188,20 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
     }
 
-    public function testRoutesOptionsWithSameFromTwoRoutes()
+    /**
+     * @dataProvider optionsProvider
+     */
+    public function testRoutesOptionsWithSameFromTwoRoutes(array $options1, array $options2)
     {
         $routes = $this->getCollector();
 
         // This is the first route for `administrator`.
-        $options1 = [
-            'as'  => 'admin',
-            'foo' => 'options1',
-        ];
         $routes->get(
             'administrator',
             static function () {},
             $options1
         );
         // The second route for `administrator` should be ignored.
-        $options2 = [
-            'foo' => 'options2',
-        ];
         $routes->get(
             'administrator',
             static function () {},
@@ -1215,6 +1211,48 @@ final class RouteCollectionTest extends CIUnitTestCase
         $options = $routes->getRoutesOptions('administrator');
 
         $this->assertSame($options, $options1);
+    }
+
+    public function optionsProvider()
+    {
+        yield from [
+            [
+                [
+                    'foo' => 'options1',
+                ],
+                [
+                    'foo' => 'options2',
+                ],
+            ],
+            [
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options1',
+                ],
+                [
+                    'foo' => 'options2',
+                ],
+            ],
+            [
+                [
+                    'foo' => 'options1',
+                ],
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options2',
+                ],
+            ],
+            [
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options1',
+                ],
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options2',
+                ],
+            ],
+        ];
     }
 
     public function testRoutesOptionsForDifferentVerbs()
