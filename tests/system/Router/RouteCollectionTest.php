@@ -1189,6 +1189,35 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
     }
 
+    public function testRoutesOptionsWithSameFromTwoRoutes()
+    {
+        $routes = $this->getCollector();
+
+        // This is the first route for `administrator`.
+        $options1 = [
+            'as'  => 'admin',
+            'foo' => 'options1',
+        ];
+        $routes->get(
+            'administrator',
+            static function () {},
+            $options1
+        );
+        // The second route for `administrator` should be ignored.
+        $options2 = [
+            'foo' => 'options2',
+        ];
+        $routes->get(
+            'administrator',
+            static function () {},
+            $options2
+        );
+
+        $options = $routes->getRoutesOptions('administrator');
+
+        $this->assertSame($options, $options1);
+    }
+
     public function testRoutesOptionsForDifferentVerbs()
     {
         $routes = $this->getCollector();
