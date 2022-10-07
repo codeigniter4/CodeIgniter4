@@ -283,7 +283,7 @@ class CLIRequest extends Request
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
-        return null;
+        return $this->returnNullOrEmptyArray($index);
     }
 
     /**
