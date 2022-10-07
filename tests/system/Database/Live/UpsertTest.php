@@ -262,10 +262,10 @@ final class UpsertTest extends CIUnitTestCase
             ->getCompiledUpsert();
 
         $pos = strpos($sql, 'ahmadinejad@example.com');
-        $this->assertTrue(($pos !== false));
+        $this->assertNotFalse($pos);
 
         $pos = strpos($sql, 'pedro@example.com');
-        $this->assertTrue(($pos !== false));
+        $this->assertNotFalse($pos);
     }
 
     public function testUpsertCauseConstraintError()
