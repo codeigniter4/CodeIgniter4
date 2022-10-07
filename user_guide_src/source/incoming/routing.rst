@@ -39,7 +39,10 @@ passed to it, then they would be listed after the method name, separated by forw
 
 .. literalinclude:: routing/002.php
 
-You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc):
+HTTP verbs
+==========
+
+You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
 .. literalinclude:: routing/003.php
 
