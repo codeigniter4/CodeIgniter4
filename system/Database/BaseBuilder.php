@@ -170,6 +170,7 @@ class BaseBuilder
      *   sql?: string,
      *   alias?: string
      * }
+     *
      * @var array
      */
     protected $QBOptions;
@@ -497,10 +498,10 @@ class BaseBuilder
      * @used-by selectAvg()
      * @used-by selectSum()
      *
-     * @return $this
-     *
      * @throws DatabaseException
      * @throws DataException
+     *
+     * @return $this
      */
     protected function maxMinAvgSum(string $select = '', string $alias = '', string $type = 'MAX')
     {
@@ -909,9 +910,9 @@ class BaseBuilder
      *
      * @param array|BaseBuilder|Closure|null $values The values searched on, or anonymous function with subquery
      *
-     * @return $this
-     *
      * @throws InvalidArgumentException
+     *
+     * @return $this
      */
     protected function _whereIn(?string $key = null, $values = null, bool $not = false, string $type = 'AND ', ?bool $escape = null, string $clause = 'QBWhere')
     {
@@ -1743,9 +1744,9 @@ class BaseBuilder
     /**
      * Compiles batch insert/update/upsert strings and runs the queries
      *
-     * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
-     *
      * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      */
     protected function batchExecute(string $renderMethod, int $batchSize = 100)
     {
@@ -1858,9 +1859,9 @@ class BaseBuilder
     /**
      * Compiles an upsert query and returns the sql
      *
-     * @return string
-     *
      * @throws DatabaseException
+     *
+     * @return string
      */
     public function getCompiledUpsert()
     {
@@ -1878,16 +1879,23 @@ class BaseBuilder
      *
      * @param array|object|null $set
      *
-     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
-     *
      * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
      */
     public function upsert($set = null, ?bool $escape = null)
     {
-        if ($set === null) {
-            $set = empty($this->binds) ? null : [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
+        if ($set === null && ! empty($this->binds)) {
+            $set = [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
 
             $this->binds = [];
+
+            $this->resetRun([
+                'QBSet'  => [],
+                'QBKeys' => [],
+            ]);
+        } elseif ($set === null && ! empty($this->QBSet)) {
+            $set = [$this->QBSet];
 
             $this->resetRun([
                 'QBSet'  => [],
@@ -1907,9 +1915,9 @@ class BaseBuilder
      *
      * @param array|object|string|null $set a dataset or select query
      *
-     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
-     *
      * @throws DatabaseException
+     *
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
@@ -2114,9 +2122,9 @@ class BaseBuilder
     /**
      * Compiles an insert query and returns the sql
      *
-     * @return bool|string
-     *
      * @throws DatabaseException
+     *
+     * @return bool|string
      */
     public function getCompiledInsert(bool $reset = true)
     {
@@ -2147,9 +2155,9 @@ class BaseBuilder
      *
      * @param array|object|null $set
      *
-     * @return bool
-     *
      * @throws DatabaseException
+     *
+     * @return bool
      */
     public function insert($set = null, ?bool $escape = null)
     {
@@ -2237,9 +2245,9 @@ class BaseBuilder
     /**
      * Compiles a replace into string and runs the query
      *
-     * @return BaseResult|false|Query|string
-     *
      * @throws DatabaseException
+     *
+     * @return BaseResult|false|Query|string
      */
     public function replace(?array $set = null)
     {
@@ -2490,9 +2498,9 @@ class BaseBuilder
      *
      * @param array|object $key
      *
-     * @return $this
-     *
      * @throws DatabaseException
+     *
+     * @return $this
      *
      * @deprecated
      */
@@ -2576,9 +2584,9 @@ class BaseBuilder
      *
      * @param mixed $where
      *
-     * @return bool|string
-     *
      * @throws DatabaseException
+     *
+     * @return bool|string
      */
     public function delete($where = '', ?int $limit = null, bool $resetData = true)
     {
