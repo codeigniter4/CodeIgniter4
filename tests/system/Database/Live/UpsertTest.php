@@ -242,6 +242,32 @@ final class UpsertTest extends CIUnitTestCase
             ->getCompiledUpsert());
     }
 
+    public function testGetCompiledUpsertBatch()
+    {
+        $userData = [
+            [
+                'email'   => 'ahmadinejad@example.com',
+                'name'    => 'Ahmadinejad',
+                'country' => 'Iran',
+            ],
+            [
+                'email'   => 'pedro@example.com',
+                'name'    => 'Pedro',
+                'country' => 'El Salvador',
+            ],
+        ];
+
+        $sql = $this->db->table('user')
+            ->setData($userData)
+            ->getCompiledUpsert();
+
+        $pos = strpos($sql, 'ahmadinejad@example.com');
+        $this->assertTrue(($pos !== false));
+
+        $pos = strpos($sql, 'pedro@example.com');
+        $this->assertTrue(($pos !== false));
+    }
+
     public function testUpsertCauseConstraintError()
     {
         $userData = [

@@ -1885,35 +1885,28 @@ class BaseBuilder
      */
     public function upsert($set = null, ?bool $escape = null)
     {
+        // if set() function was used then we need to convert to setData()
         if ($set === null && ! empty($this->binds)) {
-            $set = [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
-
+            $set         = [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
             $this->binds = [];
-
-            $this->resetRun([
-                'QBSet'  => [],
-                'QBKeys' => [],
-            ]);
         } elseif ($set === null && ! empty($this->QBSet)) {
-            $set = [$this->QBSet];
-
-            $this->resetRun([
-                'QBSet'  => [],
-                'QBKeys' => [],
-            ]);
-        } else {
-            $set = [$set];
+            $set = $this->QBSet;
         }
+
+        $this->resetRun([
+            'QBSet'  => [],
+            'QBKeys' => [],
+        ]);
 
         $this->setData($set, $escape);
 
-        return $this->batchExecute('_upsertBatch', 1);
+        return $this->batchExecute('_upsertBatch');
     }
 
     /**
      * Compiles batch upsert strings and runs the queries
      *
-     * @param array|object|string|null $set a dataset or select query
+     * @param array|object|null $set a dataset
      *
      * @throws DatabaseException
      *
