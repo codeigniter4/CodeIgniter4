@@ -17,7 +17,6 @@ use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Services;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use SessionHandlerInterface;
 
 /**
