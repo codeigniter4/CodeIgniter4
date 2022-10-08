@@ -17,7 +17,6 @@ use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Services;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use SessionHandlerInterface;
 
 /**
@@ -155,13 +154,6 @@ class Session implements SessionInterface
      * @var string
      */
     protected $sidRegexp;
-
-    /**
-     * Logger instance to record error messages and warnings.
-     *
-     * @var LoggerInterface
-     */
-    protected $logger;
 
     /**
      * Constructor.
