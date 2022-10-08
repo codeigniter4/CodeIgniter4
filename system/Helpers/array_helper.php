@@ -45,11 +45,15 @@ if (! function_exists('_array_search_dot')) {
      */
     function _array_search_dot(array $indexes, array $array)
     {
-        // Grab the current index
-        $currentIndex    = $indexes ? array_shift($indexes) : null;
-        $intCurrentIndex = (int) $currentIndex;
+        // If index is empty, returns null.
+        if ($indexes === []) {
+            return null;
+        }
 
-        if (empty($currentIndex) && $intCurrentIndex !== 0 || (! isset($array[$currentIndex]) && $currentIndex !== '*')) {
+        // Grab the current index
+        $currentIndex = array_shift($indexes);
+
+        if (! isset($array[$currentIndex]) && $currentIndex !== '*') {
             return null;
         }
 
