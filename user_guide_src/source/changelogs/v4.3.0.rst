@@ -55,6 +55,7 @@ Interface Changes
 
 - Added missing ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
 - Now ``ResponseInterface`` extends ``MessageInterface``.
+- Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
 
 Method Signature Changes
 ========================
@@ -96,6 +97,10 @@ Others
 - ``BaseBuilder::_updateBatch()``
     - The second parameter ``$values`` has changed to ``$keys``.
     - The third parameter ``$index`` has changed to ``$values``. The parameter type also has changed to ``array``.
+- The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
+- The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
+    - ``Debug\Exceptions::__construct()``
+    - ``Services::exceptions()``
 
 Enhancements
 ************
@@ -186,6 +191,7 @@ Deprecations
 - ``RouteCollection::localizeRoute()`` is deprecated.
 - ``RouteCollection::fillRouteParams()`` is deprecated. Use ``RouteCollection::buildReverseRoute()`` instead.
 - ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are deprecated. Use ``BaseBuilder::setData()`` instead.
+- The public property ``Response::$CSP`` is deprecated. It will be protected. Use ``Response::getCSP()`` instead.
 
 Bugs Fixed
 **********
