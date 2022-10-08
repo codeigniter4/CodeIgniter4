@@ -157,13 +157,6 @@ class Session implements SessionInterface
     protected $sidRegexp;
 
     /**
-     * Logger instance to record error messages and warnings.
-     *
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
      * Constructor.
      *
      * Extract configuration settings and save them here.
