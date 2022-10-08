@@ -55,14 +55,30 @@ final class DotEnvTest extends CIUnitTestCase
         $this->assertFalse($dotenv->load());
     }
 
-    public function testLoadsVars()
+    /**
+     * @dataProvider provideLoadVars
+     */
+    public function testLoadsVars(string $expected, string $varname)
     {
         $dotenv = new DotEnv($this->fixturesFolder);
         $dotenv->load();
-        $this->assertSame('bar', getenv('FOO'));
-        $this->assertSame('baz', getenv('BAR'));
-        $this->assertSame('with spaces', getenv('SPACED'));
-        $this->assertSame('', getenv('NULL'));
+
+        $this->assertSame($expected, getenv($varname));
+    }
+
+    public function provideLoadVars(): iterable
+    {
+        yield from [
+            ['bar', 'FOO'],
+            ['baz', 'BAR'],
+            ['with spaces', 'SPACED'],
+            ['', 'NULL'],
+            ['exported foo', 'char.expo.foo'],
+            ['variable', 'character.export.var'],
+            ['character', 'char.var'],
+            ['imports', 'char.exports'],
+            ['banana', 'fruit.export'],
+        ];
     }
 
     /**

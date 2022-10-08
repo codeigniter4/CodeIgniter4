@@ -116,7 +116,8 @@ class DotEnv
         $value = trim($value);
 
         // Sanitize the name
-        $name = str_replace(['export', '\'', '"'], '', $name);
+        $name = preg_replace('/^export[ \t]++(\S+)/', '$1', $name);
+        $name = str_replace(['\'', '"'], '', $name);
 
         // Sanitize the value
         $value = $this->sanitizeValue($value);
