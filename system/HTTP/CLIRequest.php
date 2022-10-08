@@ -279,7 +279,7 @@ class CLIRequest extends Request
      * @param int|null          $filter A filter name to be applied
      * @param mixed             $flags
      *
-     * @return null
+     * @return array|null
      */
     public function getCookie($index = null, $filter = null, $flags = null)
     {
