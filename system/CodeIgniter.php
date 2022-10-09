@@ -153,6 +153,11 @@ class CodeIgniter
     protected ?string $context = null;
 
     /**
+     * Whether to enable Control Filters.
+     */
+    protected bool $enableFilters = true;
+
+    /**
      * Constructor.
      */
     public function __construct(App $config)
@@ -400,6 +405,14 @@ class CodeIgniter
     }
 
     /**
+     * Disables Controller Filters.
+     */
+    public function disableFilters(): void
+    {
+        $this->enableFilters = false;
+    }
+
+    /**
      * Handles the main request logic and fires the controller.
      *
      * @return ResponseInterface
@@ -413,35 +426,37 @@ class CodeIgniter
 
         $uri = $this->determinePath();
 
-        // Start up the filters
-        $filters = Services::filters();
+        if ($this->enableFilters) {
+            // Start up the filters
+            $filters = Services::filters();
 
-        // If any filters were specified within the routes file,
-        // we need to ensure it's active for the current request
-        if ($routeFilter !== null) {
-            $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
-            if ($multipleFiltersEnabled) {
-                $filters->enableFilters($routeFilter, 'before');
-                $filters->enableFilters($routeFilter, 'after');
-            } else {
-                // for backward compatibility
-                $filters->enableFilter($routeFilter, 'before');
-                $filters->enableFilter($routeFilter, 'after');
+            // If any filters were specified within the routes file,
+            // we need to ensure it's active for the current request
+            if ($routeFilter !== null) {
+                $multipleFiltersEnabled = config('Feature')->multipleFilters ?? false;
+                if ($multipleFiltersEnabled) {
+                    $filters->enableFilters($routeFilter, 'before');
+                    $filters->enableFilters($routeFilter, 'after');
+                } else {
+                    // for backward compatibility
+                    $filters->enableFilter($routeFilter, 'before');
+                    $filters->enableFilter($routeFilter, 'after');
+                }
             }
-        }
 
-        // Run "before" filters
-        $this->benchmark->start('before_filters');
-        $possibleResponse = $filters->run($uri, 'before');
-        $this->benchmark->stop('before_filters');
+            // Run "before" filters
+            $this->benchmark->start('before_filters');
+            $possibleResponse = $filters->run($uri, 'before');
+            $this->benchmark->stop('before_filters');
 
-        // If a ResponseInterface instance is returned then send it back to the client and stop
-        if ($possibleResponse instanceof ResponseInterface) {
-            return $returnResponse ? $possibleResponse : $possibleResponse->send();
-        }
+            // If a ResponseInterface instance is returned then send it back to the client and stop
+            if ($possibleResponse instanceof ResponseInterface) {
+                return $returnResponse ? $possibleResponse : $possibleResponse->send();
+            }
 
-        if ($possibleResponse instanceof Request) {
-            $this->request = $possibleResponse;
+            if ($possibleResponse instanceof Request) {
+                $this->request = $possibleResponse;
+            }
         }
 
         $returned = $this->startController();
@@ -468,19 +483,24 @@ class CodeIgniter
         // so it can be used with the output.
         $this->gatherOutput($cacheConfig, $returned);
 
-        $filters->setResponse($this->response);
+        if ($this->enableFilters) {
+            $filters = Services::filters();
+            $filters->setResponse($this->response);
 
-        // After filter debug toolbar requires 'total_execution'.
-        $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
+            // After filter debug toolbar requires 'total_execution'.
+            $this->totalTime = $this->benchmark->getElapsedTime('total_execution');
 
-        // Run "after" filters
-        $this->benchmark->start('after_filters');
-        $response = $filters->run($uri, 'after');
-        $this->benchmark->stop('after_filters');
+            // Run "after" filters
+            $this->benchmark->start('after_filters');
+            $response = $filters->run($uri, 'after');
+            $this->benchmark->stop('after_filters');
 
-        if ($response instanceof ResponseInterface) {
-            $this->response = $response;
+            if ($response instanceof ResponseInterface) {
+                $this->response = $response;
+            }
         }
+
+        $response ??= $this->response;
 
         // Skip unnecessary processing for special Responses.
         if (! $response instanceof DownloadResponse && ! $response instanceof RedirectResponse) {
