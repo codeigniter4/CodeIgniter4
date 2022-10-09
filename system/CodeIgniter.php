@@ -501,7 +501,10 @@ class CodeIgniter
         }
 
         // Skip unnecessary processing for special Responses.
-        if (! $this->response instanceof DownloadResponse && ! $this->response instanceof RedirectResponse) {
+        if (
+            ! $this->response instanceof DownloadResponse
+            && ! $this->response instanceof RedirectResponse
+        ) {
             // Cache it without the performance metrics replaced
             // so that we can have live speed updates along the way.
             // Must be run after filters to preserve the Response headers.
