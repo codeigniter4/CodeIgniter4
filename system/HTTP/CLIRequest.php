@@ -223,7 +223,7 @@ class CLIRequest extends Request
      * @param int|null          $filter A filter name to apply.
      * @param mixed|null        $flags
      *
-     * @return null
+     * @return array|null
      */
     public function getGet($index = null, $filter = null, $flags = null)
     {
@@ -237,7 +237,7 @@ class CLIRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
-     * @return null
+     * @return array|null
      */
     public function getPost($index = null, $filter = null, $flags = null)
     {
@@ -251,7 +251,7 @@ class CLIRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
-     * @return null
+     * @return array|null
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
@@ -265,7 +265,7 @@ class CLIRequest extends Request
      * @param int|null          $filter A filter name to apply
      * @param mixed             $flags
      *
-     * @return null
+     * @return array|null
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
