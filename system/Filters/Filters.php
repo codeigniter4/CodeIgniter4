@@ -143,7 +143,7 @@ class Filters
     }
 
     /**
-     * Set the response explicity.
+     * Set the response explicitly.
      */
     public function setResponse(ResponseInterface $response)
     {
