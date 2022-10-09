@@ -147,7 +147,7 @@ class Filters
      */
     public function setResponse(ResponseInterface $response)
     {
-        $this->response = &$response;
+        $this->response = $response;
     }
 
     /**
