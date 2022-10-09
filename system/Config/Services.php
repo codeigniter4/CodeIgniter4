@@ -253,7 +253,7 @@ class Services extends BaseService
     public static function exceptions(
         ?ExceptionsConfig $config = null,
         ?IncomingRequest $request = null,
-        ?Response $response = null,
+        ?ResponseInterface $response = null,
         bool $getShared = true
     ) {
         if ($getShared) {
@@ -546,7 +546,7 @@ class Services extends BaseService
     /**
      * The Response class models an HTTP response.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public static function response(?App $config = null, bool $getShared = true)
     {

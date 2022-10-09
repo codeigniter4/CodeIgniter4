@@ -900,7 +900,7 @@ if (! function_exists('response')) {
     /**
      * Returns the shared Response.
      */
-    function response(): Response
+    function response(): ResponseInterface
     {
         return Services::response();
     }

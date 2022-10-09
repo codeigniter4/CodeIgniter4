@@ -96,8 +96,6 @@ class CURLRequest extends Request
      *  - baseURI
      *  - timeout
      *  - any other request options to use as defaults.
-     *
-     * @param ResponseInterface $response
      */
     public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
     {

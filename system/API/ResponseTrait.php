@@ -13,7 +13,7 @@ namespace CodeIgniter\API;
 
 use CodeIgniter\Format\FormatterInterface;
 use CodeIgniter\HTTP\IncomingRequest;
-use CodeIgniter\HTTP\Response;
+use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 
 /**
@@ -21,8 +21,8 @@ use Config\Services;
  * consistent HTTP responses under a variety of common
  * situations when working as an API.
  *
- * @property IncomingRequest $request
- * @property Response        $response
+ * @property IncomingRequest   $request
+ * @property ResponseInterface $response
  */
 trait ResponseTrait
 {
@@ -85,7 +85,7 @@ trait ResponseTrait
      *
      * @param array|string|null $data
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function respond($data = null, ?int $status = null, string $message = '')
     {
@@ -119,7 +119,7 @@ trait ResponseTrait
      * @param int          $status   HTTP status code
      * @param string|null  $code     Custom, API-specific, error code
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function fail($messages, int $status = 400, ?string $code = null, string $customMessage = '')
     {
@@ -145,7 +145,7 @@ trait ResponseTrait
      *
      * @param array|string|null $data
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function respondCreated($data = null, string $message = '')
     {
@@ -157,7 +157,7 @@ trait ResponseTrait
      *
      * @param array|string|null $data
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function respondDeleted($data = null, string $message = '')
     {
@@ -169,7 +169,7 @@ trait ResponseTrait
      *
      * @param array|string|null $data
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function respondUpdated($data = null, string $message = '')
     {
@@ -180,7 +180,7 @@ trait ResponseTrait
      * Used after a command has been successfully executed but there is no
      * meaningful reply to send back to the client.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function respondNoContent(string $message = 'No Content')
     {
@@ -192,7 +192,7 @@ trait ResponseTrait
      * or had bad authorization credentials. User is encouraged to try again
      * with the proper information.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failUnauthorized(string $description = 'Unauthorized', ?string $code = null, string $message = '')
     {
@@ -203,7 +203,7 @@ trait ResponseTrait
      * Used when access is always denied to this resource and no amount
      * of trying again will help.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failForbidden(string $description = 'Forbidden', ?string $code = null, string $message = '')
     {
@@ -213,7 +213,7 @@ trait ResponseTrait
     /**
      * Used when a specified resource cannot be found.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failNotFound(string $description = 'Not Found', ?string $code = null, string $message = '')
     {
@@ -223,7 +223,7 @@ trait ResponseTrait
     /**
      * Used when the data provided by the client cannot be validated.
      *
-     * @return Response
+     * @return ResponseInterface
      *
      * @deprecated Use failValidationErrors instead
      */
@@ -237,7 +237,7 @@ trait ResponseTrait
      *
      * @param string|string[] $errors
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failValidationErrors($errors, ?string $code = null, string $message = '')
     {
@@ -247,7 +247,7 @@ trait ResponseTrait
     /**
      * Use when trying to create a new resource and it already exists.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failResourceExists(string $description = 'Conflict', ?string $code = null, string $message = '')
     {
@@ -259,7 +259,7 @@ trait ResponseTrait
      * Not Found, because here we know the data previously existed, but is now gone,
      * where Not Found means we simply cannot find any information about it.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failResourceGone(string $description = 'Gone', ?string $code = null, string $message = '')
     {
@@ -269,7 +269,7 @@ trait ResponseTrait
     /**
      * Used when the user has made too many requests for the resource recently.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     protected function failTooManyRequests(string $description = 'Too Many Requests', ?string $code = null, string $message = '')
     {
@@ -282,10 +282,8 @@ trait ResponseTrait
      * @param string      $description The error message to show the user.
      * @param string|null $code        A custom, API-specific, error code.
      * @param string      $message     A custom "reason" message to return.
-     *
-     * @return Response The value of the Response's send() method.
      */
-    protected function failServerError(string $description = 'Internal Server Error', ?string $code = null, string $message = ''): Response
+    protected function failServerError(string $description = 'Internal Server Error', ?string $code = null, string $message = ''): ResponseInterface
     {
         return $this->fail($description, $this->codes['server_error'], $code, $message);
     }
