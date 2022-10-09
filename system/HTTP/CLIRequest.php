@@ -273,6 +273,20 @@ class CLIRequest extends Request
     }
 
     /**
+     * This is a place holder for calls from cookie_helper get_cookie().
+     *
+     * @param array|string|null $index  Index for item to be fetched from $_COOKIE
+     * @param int|null          $filter A filter name to be applied
+     * @param mixed             $flags
+     *
+     * @return array|null
+     */
+    public function getCookie($index = null, $filter = null, $flags = null)
+    {
+        return $this->returnNullOrEmptyArray($index);
+    }
+
+    /**
      * @param array|string|null $index
      *
      * @return array|null
