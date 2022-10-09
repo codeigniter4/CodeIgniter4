@@ -616,4 +616,11 @@ final class CLIRequestTest extends CIUnitTestCase
     {
         $this->assertSame('en', $this->request->getLocale());
     }
+
+    public function testGetCookie()
+    {
+        $this->assertNull($this->request->getCookie('TESTY'));
+
+        $this->assertSame($this->request->getCookie(), []);
+    }
 }

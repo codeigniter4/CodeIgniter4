@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Router;
 
-use App\Controllers\Home;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -1211,6 +1210,73 @@ final class RouteCollectionTest extends CIUnitTestCase
         $this->assertSame($options, ['as' => 'admin', 'foo' => 'baz']);
     }
 
+    /**
+     * @dataProvider optionsProvider
+     */
+    public function testRoutesOptionsWithSameFromTwoRoutes(array $options1, array $options2)
+    {
+        $routes = $this->getCollector();
+
+        // This is the first route for `administrator`.
+        $routes->get(
+            'administrator',
+            static function () {},
+            $options1
+        );
+        // The second route for `administrator` should be ignored.
+        $routes->get(
+            'administrator',
+            static function () {},
+            $options2
+        );
+
+        $options = $routes->getRoutesOptions('administrator');
+
+        $this->assertSame($options, $options1);
+    }
+
+    public function optionsProvider()
+    {
+        yield from [
+            [
+                [
+                    'foo' => 'options1',
+                ],
+                [
+                    'foo' => 'options2',
+                ],
+            ],
+            [
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options1',
+                ],
+                [
+                    'foo' => 'options2',
+                ],
+            ],
+            [
+                [
+                    'foo' => 'options1',
+                ],
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options2',
+                ],
+            ],
+            [
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options1',
+                ],
+                [
+                    'as'  => 'admin',
+                    'foo' => 'options2',
+                ],
+            ],
+        ];
+    }
+
     public function testRoutesOptionsForDifferentVerbs()
     {
         $routes = $this->getCollector();
@@ -1482,12 +1548,12 @@ final class RouteCollectionTest extends CIUnitTestCase
         $routes->setDefaultController('Home');
         $routes->setDefaultMethod('index');
 
+        // The subdomain of the current URL is `doc`, so this route is registered.
         $routes->get('/', '\App\Controllers\Site\CDoc::index', ['subdomain' => 'doc', 'as' => 'doc_index']);
+        // The subdomain route is already registered, so this route is not registered.
         $routes->get('/', 'Home::index');
 
-        // the second rule applies, so overwrites the first
-        $expects = '\\' . Home::class;
-
+        $expects = '\App\Controllers\Site\CDoc';
         $this->assertSame($expects, $router->handle('/'));
     }
 
