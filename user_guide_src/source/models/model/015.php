@@ -5,4 +5,4 @@ $data = [
     'email'    => 'd.vader@theempire.com',
 ];
 
-$userModel->insert($data);
+$userModel->insert($data, bool $returnID = true);
