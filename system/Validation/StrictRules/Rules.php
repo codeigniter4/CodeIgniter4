@@ -46,7 +46,7 @@ class Rules
     /**
      * Equals the static value provided.
      *
-     * @param string|null $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function equals($str, string $val): bool
     {
@@ -113,7 +113,7 @@ class Rules
      *    is_not_unique[table.field,where_field,where_value]
      *    is_not_unique[menu.id,active,1]
      *
-     * @param string|null $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
@@ -147,7 +147,7 @@ class Rules
      *    is_unique[table.field,ignore_field,ignore_value]
      *    is_unique[users.email,id,5]
      *
-     * @param string|null $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function is_unique($str, string $field, array $data): bool
     {
@@ -240,7 +240,7 @@ class Rules
     /**
      * Does not equal the static value provided.
      *
-     * @param string|null $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function not_equals($str, string $val): bool
     {
@@ -285,9 +285,9 @@ class Rules
      *
      *     required_with[password]
      *
-     * @param string|null $str
-     * @param string|null $fields List of fields that we should check if present
-     * @param array       $data   Complete list of fields from the form
+     * @param array|bool|float|int|object|string|null $str
+     * @param string|null                             $fields List of fields that we should check if present
+     * @param array                                   $data   Complete list of fields from the form
      */
     public function required_with($str = null, ?string $fields = null, array $data = []): bool
     {
@@ -302,9 +302,9 @@ class Rules
      *
      *     required_without[id,email]
      *
-     * @param string|null $str
-     * @param string|null $otherFields The param fields of required_without[].
-     * @param string|null $field       This rule param fields aren't present, this field is required.
+     * @param array|bool|float|int|object|string|null $str
+     * @param string|null                             $otherFields The param fields of required_without[].
+     * @param string|null                             $field       This rule param fields aren't present, this field is required.
      */
     public function required_without($str = null, ?string $otherFields = null, array $data = [], ?string $error = null, ?string $field = null): bool
     {
