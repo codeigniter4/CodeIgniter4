@@ -192,6 +192,7 @@ Deprecations
 - ``RouteCollection::fillRouteParams()`` is deprecated. Use ``RouteCollection::buildReverseRoute()`` instead.
 - ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are deprecated. Use ``BaseBuilder::setData()`` instead.
 - The public property ``Response::$CSP`` is deprecated. It will be protected. Use ``Response::getCSP()`` instead.
+- ``CodeIgniter::$path`` and ``CodeIgniter::setPath()`` are deprecated. No longer used.
 
 Bugs Fixed
 **********

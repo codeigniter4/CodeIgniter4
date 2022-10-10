@@ -130,6 +130,8 @@ class CodeIgniter
      * Request path to use.
      *
      * @var string
+     *
+     * @deprecated No longer used.
      */
     protected $path;
 
@@ -789,7 +791,7 @@ class CodeIgniter
 
     /**
      * Determines the path to use for us to try to route to, based
-     * on user input (setPath), or the CLI/IncomingRequest path.
+     * on the CLI/IncomingRequest path.
      *
      * @return string
      */
@@ -806,9 +808,11 @@ class CodeIgniter
      * Allows the request path to be set from outside the class,
      * instead of relying on CLIRequest or IncomingRequest for the path.
      *
-     * This is primarily used by the Console.
+     * This is not used now.
      *
      * @return $this
+     *
+     * @deprecated No longer used.
      */
     public function setPath(string $path)
     {
