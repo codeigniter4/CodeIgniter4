@@ -99,6 +99,20 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     }
 
     /**
+     * Deallocate prepared statements
+     */
+    public function _close(): bool
+    {
+        $error = true;
+        if (null !== $this->statement) {
+            $error = oci_free_statement($this->statement);
+            unset($this->statement);
+        }
+
+        return $error;
+    }
+
+    /**
      * Replaces the ? placeholders with :0, :1, etc parameters for use
      * within the prepared query.
      */

@@ -89,4 +89,18 @@ class PreparedQuery extends BasePreparedQuery
     {
         return $this->statement->get_result();
     }
+
+    /**
+     * Deallocate prepared statements
+     */
+    public function _close(): bool
+    {
+        $error = true;
+        if (isset($this->statement)) {
+            $error = $this->statement->close();
+            unset($this->statement);
+        }
+
+        return $error;
+    }
 }

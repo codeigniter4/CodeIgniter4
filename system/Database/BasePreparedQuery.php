@@ -147,16 +147,17 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     abstract public function _getResult();
 
     /**
-     * Explicitly closes the statement.
+     * Explicitly closes the prepared statement.
      */
-    public function close()
+    public function close(): bool
     {
-        if (! is_object($this->statement) || ! method_exists($this->statement, 'close')) {
-            return;
-        }
-
-        $this->statement->close();
+        return $this->_close();
     }
+
+    /**
+     * The database dependant version of the close method.
+     */
+    abstract public function _close(): bool;
 
     /**
      * Returns the SQL that has been prepared.

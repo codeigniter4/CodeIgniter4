@@ -99,6 +99,20 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
+     * Deallocate prepared statements
+     */
+    public function _close(): bool
+    {
+        $error = true;
+        if (isset($this->statement)) {
+            $error = (bool) pg_query($this->db->connID, 'DEALLOCATE ' . $this->name);
+            unset($this->statement);
+        }
+
+        return $error;
+    }
+
+    /**
      * Replaces the ? placeholders with $1, $2, etc parameters for use
      * within the prepared query.
      */
