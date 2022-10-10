@@ -186,7 +186,7 @@ class Forge extends BaseForge
                 . ' IN ' . $field['length'] . ')';
 
             $field['length'] = '(' . max(array_map('mb_strlen', explode("','", mb_substr($field['length'], 2, -2)))) . ')' . $constraint;
-        } elseif (count($this->primaryKeys) === 1 && $field['name'] === $this->primaryKeys[0]) {
+        } elseif (isset($this->primaryKeys['fields']) && count($this->primaryKeys['fields']) === 1 && $field['name'] === $this->primaryKeys['fields'][0]) {
             $field['unique'] = '';
         }
 
@@ -278,5 +278,15 @@ class Forge extends BaseForge
         }
 
         return $sql;
+    }
+
+    /**
+     * Constructs sql to check if key is a constraint.
+     */
+    protected function _dropKeyAsConstraint(string $table, string $constraintName): string
+    {
+        return "SELECT constraint_name FROM all_constraints WHERE table_name = '"
+            . trim($table, '"') . "' AND index_name = '"
+            . trim($constraintName, '"') . "'";
     }
 }
