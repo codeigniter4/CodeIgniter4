@@ -119,8 +119,9 @@ abstract class BaseCommand
     {
         $exception = $e;
         $message   = $e->getMessage();
+        $config    = config('Exceptions');
 
-        require APPPATH . 'Views/errors/cli/error_exception.php';
+        require $config->errorViewPath . '/cli/error_exception.php';
     }
 
     /**
