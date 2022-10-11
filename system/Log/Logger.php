@@ -243,7 +243,7 @@ class Logger implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed  $level
+     * @param string $level
      * @param string $message
      */
     public function log($level, $message, array $context = []): bool
@@ -308,9 +308,9 @@ class Logger implements LoggerInterface
      * {file}
      * {line}
      *
-     * @param mixed $message
+     * @param string $message
      *
-     * @return mixed
+     * @return string
      */
     protected function interpolate($message, array $context = [])
     {

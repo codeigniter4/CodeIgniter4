@@ -782,7 +782,7 @@ if (! function_exists('log_message')) {
      *  - info
      *  - debug
      *
-     * @return mixed
+     * @return bool
      */
     function log_message(string $level, string $message, array $context = [])
     {

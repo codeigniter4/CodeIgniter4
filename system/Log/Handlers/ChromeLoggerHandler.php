@@ -128,7 +128,7 @@ class ChromeLoggerHandler extends BaseHandler
     /**
      * Converts the object to display nicely in the Chrome Logger UI.
      *
-     * @param mixed $object
+     * @param array|int|object|string $object
      *
      * @return array
      */
