@@ -345,7 +345,7 @@ form elements, which you would pass as strings.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Creates an opening form tag with a site URL <strong>built from your config preferences</strong>.
+<p>Creates an opening form tag with a site URL <strong>built from your</strong> <code class="docutils literal notranslate"><span class="pre">Config\App::$baseURL</span></code>.
 It will optionally let you add form attributes and hidden input fields, and
 will always add the <cite>accept-charset</cite> attribute based on the charset value in your
 config file.</p>
@@ -362,7 +362,7 @@ it permits your site to be more portable in the event your URLs ever change.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>You can also add {locale} like the following:</p>
+<p>You can also add <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;{locale}/email/send&#39;</span><span class="p">);</span>
@@ -393,7 +393,7 @@ parameter, like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;http://example.com/index.php/email/send&quot;</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;email&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myform&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">accept</span><span class="o">-</span><span class="nx">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>If CSRF filter is turned on <cite>form_open()</cite> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the <code class="docutils literal notranslate"><span class="pre">$attribute</span></code> array:</p>
+<p>If CSRF filter is turned on <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the <code class="docutils literal notranslate"><span class="pre">$attribute</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;/u/sign-up&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;csrf_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-id&#39;</span><span class="p">]);</span>
@@ -557,6 +557,10 @@ the field name and value in the first and second parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">);</span>
+<span class="cm">/*</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Or you can pass an associative array containing any data you wish your
@@ -571,11 +575,26 @@ form to contain:</p>
     <span class="s1">&#39;size&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;50&#39;</span><span class="p">,</span>
     <span class="s1">&#39;style&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;width:50%&#39;</span><span class="p">,</span>
 <span class="p">];</span>
-
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
 <span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; id=&quot;username&quot; maxlength=&quot;100&quot; size=&quot;50&quot; style=&quot;width:50%&quot; /&gt;</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<p>If you want boolean attributes, pass the boolean value (<code class="docutils literal notranslate"><span class="pre">true</span></code>/<code class="docutils literal notranslate"><span class="pre">false</span></code>). In this case the boolean value does not matter:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="cm">/*</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;&quot; id=&quot;username&quot; required  /&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -585,6 +604,10 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="s1">&#39;onClick=&quot;some_function ()&quot;&#39;</span><span class="p">;</span>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="cm">/*</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ()&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>Or you can pass it as an array:</p>
@@ -592,6 +615,10 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 
 <span class="nv">$js</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;onClick&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;some_function ();&#39;</span><span class="p">];</span>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
+<span class="cm">/*</span>
+<span class="cm"> * Would produce:</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ();&quot; /&gt;</span>
+<span class="cm"> */</span>
 </pre></div>
 </div>
 <p>To support the expanded range of HTML5 input fields, you can pass an input type in as the fourth parameter:</p>
@@ -863,7 +890,7 @@ second parameter if you prefer to set additional attributes:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Produces a closing &lt;/fieldset&gt; tag. The only advantage to using this
+<p>Produces a closing <code class="docutils literal notranslate"><span class="pre">&lt;/fieldset&gt;</span></code> tag. The only advantage to using this
 function is it permits you to pass data to it which will be added below
 the tag. For example</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1121,7 +1148,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Produces a closing &lt;/form&gt; tag. The only advantage to using this
+<p>Produces a closing <code class="docutils literal notranslate"><span class="pre">&lt;/form&gt;</span></code> tag. The only advantage to using this
 function is it permits you to pass data to it which will be added below
 the tag. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1268,7 +1295,7 @@ This function is identical to the <a class="reference internal" href="#set_check
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 10, 2022.
+      <span class="lastupdated">Last updated on Oct 11, 2022.
       </span></p>
   </div>
 
