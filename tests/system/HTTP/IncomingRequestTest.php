@@ -252,13 +252,19 @@ final class IncomingRequestTest extends CIUnitTestCase
         // $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-        $this->assertSame(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
+        $this->assertSame(
+            'utf-8',
+            $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2'])
+        );
     }
 
     public function testNegotiatesMedia()
     {
         $this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
-        $this->assertSame('text/html', $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
+        $this->assertSame(
+            'text/html',
+            $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain'])
+        );
     }
 
     public function testNegotiatesEncoding()
