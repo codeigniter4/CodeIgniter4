@@ -253,7 +253,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
         $this->assertSame(
-            strtolower($this->request->config->charset),
+            'utf-8',
             $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2'])
         );
     }
