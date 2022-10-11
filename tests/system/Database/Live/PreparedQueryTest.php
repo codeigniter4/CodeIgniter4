@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
@@ -147,5 +148,27 @@ final class PreparedQueryTest extends CIUnitTestCase
         ]));
 
         $this->query->execute('foo', 'foo@example.com', 'US');
+    }
+
+    public function testDeallocatePreparedQuery()
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'    => 'a',
+            'email'   => 'b@example.com',
+            'country' => 'x',
+        ]));
+
+        $this->query->execute('foo', 'foo@example.com', 'US');
+
+        $this->query->close();
+
+        try {
+            $this->query->execute('bar', 'bar@example.com', 'GB');
+        } catch (BadMethodCallException $e) {
+            $this->assertSame('You must call prepare before trying to execute a prepared statement.', $e->getMessage());
+        }
+
+        $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
+        $this->dontSeeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
     }
 }
