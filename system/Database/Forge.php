@@ -1040,7 +1040,7 @@ class Forge
         }
     }
 
-    protected function _processPrimaryKeys(string $table): string
+    protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
     {
         $sql = '';
 
@@ -1053,7 +1053,12 @@ class Forge
         }
 
         if (isset($this->primaryKeys['fields']) && $this->primaryKeys['fields'] !== []) {
-            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers(($this->primaryKeys['keyName'] === '' ?
+            if ($asQuery === true) {
+                $sql .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $sql .= ",\n\t";
+            }
+            $sql .= "CONSTRAINT " . $this->db->escapeIdentifiers(($this->primaryKeys['keyName'] === '' ?
                 'pk_' . $table :
                 $this->primaryKeys['keyName']))
                     . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';

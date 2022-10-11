@@ -298,31 +298,6 @@ class Forge extends BaseForge
     }
 
     /**
-     * Process primary keys
-     */
-    protected function _processPrimaryKeys(string $table): string
-    {
-        if (isset($this->primaryKeys['fields'])) {
-            for ($i = 0, $c = count($this->primaryKeys['fields']); $i < $c; $i++) {
-                if (! isset($this->fields[$this->primaryKeys['fields'][$i]])) {
-                    unset($this->primaryKeys['fields'][$i]);
-                }
-            }
-
-            if ($this->primaryKeys['fields'] !== []) {
-                $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers(
-                    ($this->primaryKeys['keyName'] === '' ?
-                    'pk_' . $table :
-                    $this->primaryKeys['keyName'])
-                )
-                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
-            }
-        }
-
-        return $sql ?? '';
-    }
-
-    /**
      * Performs a data type mapping between different databases.
      */
     protected function _attributeType(array &$attributes)
