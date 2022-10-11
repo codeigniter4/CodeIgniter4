@@ -265,10 +265,6 @@ class Logger implements LoggerInterface
         // Parse our placeholders
         $message = $this->interpolate($message, $context);
 
-        if (! is_string($message)) {
-            $message = print_r($message, true);
-        }
-
         if ($this->cacheLogs) {
             $this->logCache[] = [
                 'level' => $level,
@@ -319,7 +315,7 @@ class Logger implements LoggerInterface
     protected function interpolate($message, array $context = [])
     {
         if (! is_string($message)) {
-            return $message;
+            return print_r($message, true);
         }
 
         // build a replacement array with braces around the context keys
@@ -329,7 +325,7 @@ class Logger implements LoggerInterface
             // Verify that the 'exception' key is actually an exception
             // or error, both of which implement the 'Throwable' interface.
             if ($key === 'exception' && $val instanceof Throwable) {
-                $val = $val->getMessage() . ' ' . $this->cleanFileNames($val->getFile()) . ':' . $val->getLine();
+                $val = $val->getMessage() . ' ' . clean_path($val->getFile()) . ':' . $val->getLine();
             }
 
             // todo - sanitize input before writing to file?
