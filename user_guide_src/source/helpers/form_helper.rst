@@ -175,6 +175,10 @@ The following functions are available:
 
     .. literalinclude:: form_helper/014.php
 
+    If you want boolean attributes, pass the boolean value (``true``/``false``). In this case the boolean value does not matter:
+
+    .. literalinclude:: form_helper/035.php
+
     If you would like your form to contain some additional data, like
     JavaScript, you can pass it as a string in the third parameter:
 
