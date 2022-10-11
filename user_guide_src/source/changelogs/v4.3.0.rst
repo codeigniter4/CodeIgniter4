@@ -200,6 +200,7 @@ Deprecations
 - The public property ``Response::$CSP`` is deprecated. It will be protected. Use ``Response::getCSP()`` instead.
 - ``CodeIgniter::$path`` and ``CodeIgniter::setPath()`` are deprecated. No longer used.
 - The public property ``IncomingRequest::$uri`` is deprecated. It will be protected. Use ``IncomingRequest::getUri()`` instead.
+- The public property ``IncomingRequest::$config`` is deprecated. It will be protected.
 
 Bugs Fixed
 **********

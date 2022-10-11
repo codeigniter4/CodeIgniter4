@@ -122,6 +122,8 @@ class IncomingRequest extends Request
      * Configuration settings.
      *
      * @var App
+     *
+     * @deprecated Will be protected.
      */
     public $config;
 
