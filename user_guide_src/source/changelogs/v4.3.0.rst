@@ -199,6 +199,7 @@ Deprecations
 - ``BaseBuilder::setUpdateBatch()`` and ``BaseBuilder::setInsertBatch()`` are deprecated. Use ``BaseBuilder::setData()`` instead.
 - The public property ``Response::$CSP`` is deprecated. It will be protected. Use ``Response::getCSP()`` instead.
 - ``CodeIgniter::$path`` and ``CodeIgniter::setPath()`` are deprecated. No longer used.
+- The public property ``IncomingRequest::$uri`` is deprecated. It will be protected. Use ``IncomingRequest::getUri()`` instead.
 
 Bugs Fixed
 **********
