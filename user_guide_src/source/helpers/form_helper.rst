@@ -53,7 +53,7 @@ The following functions are available:
     :returns:    An HTML form opening tag
     :rtype:    string
 
-    Creates an opening form tag with a site URL **built from your config preferences**.
+    Creates an opening form tag with a site URL **built from your** ``Config\App::$baseURL``.
     It will optionally let you add form attributes and hidden input fields, and
     will always add the `accept-charset` attribute based on the charset value in your
     config file.
