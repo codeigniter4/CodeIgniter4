@@ -105,7 +105,7 @@ class PreparedQuery extends BasePreparedQuery
     {
         $error = true;
         if (isset($this->statement)) {
-            $error = (bool) pg_query($this->db->connID, 'DEALLOCATE ' . $this->name);
+            $error = (bool) pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"');
             unset($this->statement);
         }
 
