@@ -8,7 +8,6 @@ $data = [
     'size'      => '50',
     'style'     => 'width:50%',
 ];
-
 echo form_input($data);
 /*
  * Would produce:
