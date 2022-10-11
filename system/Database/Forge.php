@@ -1067,6 +1067,51 @@ class Forge
         return $sql;
     }
 
+    /**
+     * Executes Sql to add indexes without createTable
+     */
+    public function processIndexes(string $table): bool
+    {
+        $sqls = [];
+        $fk   = $this->foreignKeys;
+
+        if (empty($this->fields)) {
+            $this->fields = array_flip(array_map(
+                static fn ($columnName) => $columnName->name,
+                $this->db->getFieldData($this->db->DBPrefix . $table)
+            ));
+        }
+
+        $fields = $this->fields;
+
+        if (! empty($this->keys)) {
+            $sqls = array_merge($sqls, $this->_processIndexes($this->db->DBPrefix . $table, true));
+
+            $pk = $this->_processPrimaryKeys($table, true);
+
+            if ($pk !== '') {
+                $sqls[] = $pk;
+            }
+        }
+
+        $this->foreignKeys = $fk;
+        $this->fields      = $fields;
+
+        if (! empty($this->foreignKeys)) {
+            $sqls = array_merge($sqls, $this->_processForeignKeys($table, true));
+        }
+
+        for ($i = 0, $sqls, $c = count($sqls); $i < $c; $i++) {
+            if ($this->db->query($sqls[$i]) === false) {
+                return false;
+            }
+        }
+
+        $this->reset();
+
+        return true;
+    }
+
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
