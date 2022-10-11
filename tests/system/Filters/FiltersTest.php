@@ -499,7 +499,7 @@ final class FiltersTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
         $request = $filters->run($uri, 'before');
 
-        $this->assertSame('http://google.com', $request->url);
+        $this->assertSame('http://google.com', $request->getBody());
     }
 
     public function testRunDoesAfter()
@@ -519,7 +519,7 @@ final class FiltersTest extends CIUnitTestCase
         $uri      = 'admin/foo/bar';
         $response = $filters->run($uri, 'after');
 
-        $this->assertSame('http://google.com', $response->csp);
+        $this->assertSame('http://google.com', $response->getBody());
     }
 
     public function testShortCircuit()
@@ -540,7 +540,7 @@ final class FiltersTest extends CIUnitTestCase
         $response = $filters->run($uri, 'before');
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertSame('http://google.com', $response->csp);
+        $this->assertSame('http://google.com', $response->getBody());
     }
 
     public function testOtherResult()
@@ -1103,8 +1103,8 @@ final class FiltersTest extends CIUnitTestCase
         $uri     = 'admin/foo/bar';
         $request = $filters->run($uri, 'before');
 
-        $this->assertSame('http://exampleMultipleURL.com', $request->url);
-        $this->assertSame('http://exampleMultipleCSP.com', $request->csp);
+        $this->assertSame('http://exampleMultipleURL.com', $request->header('x-url')->getValue());
+        $this->assertSame('http://exampleMultipleCSP.com', $request->header('x-csp')->getValue());
     }
 
     public function testFilterClass()

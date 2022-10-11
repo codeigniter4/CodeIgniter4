@@ -19,14 +19,14 @@ class GoogleMe implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $request->url = 'http://google.com';
+        $request->setBody('http://google.com');
 
         return $request;
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        $response->csp = 'http://google.com';
+        $response->setBody('http://google.com');
 
         return $response;
     }
