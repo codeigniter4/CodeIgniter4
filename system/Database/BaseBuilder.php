@@ -1888,16 +1888,27 @@ class BaseBuilder
         if ($set === null && ! empty($this->binds)) {
             $set         = [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
             $this->binds = [];
-        } elseif ($set === null && ! empty($this->QBSet)) {
+
+            $this->resetRun([
+                'QBSet'  => [],
+                'QBKeys' => [],
+            ]);
+
+            $this->setData($set, $escape);
+
+        // set() was used without escape - binds is not used
+        } elseif ($set === null && (! is_array(current($this->QBSet)) && (! is_object(current($this->QBSet)) || (current($this->QBSet) instanceof RawSql)))) {
             $set = $this->QBSet;
+
+            $this->resetRun([
+                'QBSet'  => [],
+                'QBKeys' => [],
+            ]);
+
+            $this->setData($set, false);
+        } elseif ($set !== null) {
+            $this->setData($set, $escape);
         }
-
-        $this->resetRun([
-            'QBSet'  => [],
-            'QBKeys' => [],
-        ]);
-
-        $this->setData($set, $escape);
 
         return $this->batchExecute('_upsertBatch');
     }

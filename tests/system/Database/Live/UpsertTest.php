@@ -267,6 +267,19 @@ final class UpsertTest extends CIUnitTestCase
 
         $pos = strpos($sql, 'pedro@example.com');
         $this->assertNotFalse($pos);
+
+        $insertString = 'INSERT INTO '
+            . $this->db->protectIdentifiers('db_user')
+            . ' (' . $this->db->protectIdentifiers('country')
+            . ', ' . $this->db->protectIdentifiers('email')
+            . ', ' . $this->db->protectIdentifiers('name') . ')';
+
+        if ($this->db->DBDriver === 'SQLSRV' || $this->db->DBDriver === 'OCI8') {
+            $insertString = 'INSERT ("country", "email", "name")';
+        }
+
+        $pos = strpos($sql, $insertString);
+        $this->assertNotFalse($pos);
     }
 
     public function testUpsertCauseConstraintError()
