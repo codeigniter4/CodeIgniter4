@@ -591,7 +591,7 @@ class Forge
         $columns = implode(',', $columns);
 
         $columns .= $this->_processPrimaryKeys($table);
-        $columns .= $this->_processForeignKeys($table);
+        $columns .= current($this->_processForeignKeys($table));
 
         if ($this->createTableKeys === true) {
             $indexes = current($this->_processIndexes($table));
@@ -1106,11 +1106,18 @@ class Forge
     /**
      * Generates SQL to process foreign keys
      */
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $sqls    = [];
+        $index   = 0;
+        $sqls[0] = '';
 
         foreach ($this->foreignKeys as $fkey) {
+            $index++;
+            if ($asQuery === false) {
+                $index = 0;
+            }
+
             $nameIndex = $fkey['fkName'] !== '' ?
             $fkey['fkName'] :
             $table . '_' . implode('_', $fkey['field']) . ($this->db->DBDriver === 'OCI8' ? '_fk' : '_foreign');
@@ -1120,19 +1127,26 @@ class Forge
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+            if ($asQuery === true) {
+                $sqls[$index] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $sqls[$index] .= ",\n\t";
+            }
+
+            $formatSql = "CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
+            $sqls[$index] .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $this->fkAllowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+                $sqls[$index] .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
             if ($this->db->DBDriver !== 'OCI8' && $fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $this->fkAllowActions, true)) {
-                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
+                $sqls[$index] .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
+
         }
 
-        return $sql;
+        return $sqls;
     }
 
     /**
