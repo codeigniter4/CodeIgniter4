@@ -105,7 +105,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     {
         $error = true;
         if (isset($this->statement)) {
-            $error = (bool) oci_free_statement($this->statement);
+            $error = oci_free_statement($this->statement);
             unset($this->statement);
         }
 
