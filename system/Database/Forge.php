@@ -594,7 +594,7 @@ class Forge
         $columns .= $this->_processForeignKeys($table);
 
         if ($this->createTableKeys === true) {
-            $indexes = $this->_processIndexes($table);
+            $indexes = current($this->_processIndexes($table));
             if (is_string($indexes)) {
                 $columns .= $indexes;
             }
@@ -1062,7 +1062,7 @@ class Forge
         return $sql;
     }
 
-    protected function _processIndexes(string $table)
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
