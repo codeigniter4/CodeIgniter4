@@ -1884,9 +1884,16 @@ class BaseBuilder
      */
     public function upsert($set = null, ?bool $escape = null)
     {
-        // if set() function was used then we need to convert to setData()
-        if ($set === null && ! empty($this->binds)) {
-            $set         = [array_map(static fn ($columnName) => $columnName[0], $this->binds)];
+        // if set() has been used merge QBSet with binds and then setData()
+        if ($set === null && ! is_array(current($this->QBSet))) {
+            $set = [];
+
+            foreach ($this->QBSet as $field => $value) {
+                $k = trim($field, $this->db->escapeChar);
+                // use binds if available else use QBSet value but with RawSql to avoid escape
+                $set[$k] = isset($this->binds[$k]) ? $this->binds[$k][0] : new RawSql($value);
+            }
+
             $this->binds = [];
 
             $this->resetRun([
@@ -1894,21 +1901,10 @@ class BaseBuilder
                 'QBKeys' => [],
             ]);
 
-            $this->setData($set, $escape);
-
-        // set() was used without escape - binds is not used
-        } elseif ($set === null && (! is_array(current($this->QBSet)) && (! is_object(current($this->QBSet)) || (current($this->QBSet) instanceof RawSql)))) {
-            $set = $this->QBSet;
-
-            $this->resetRun([
-                'QBSet'  => [],
-                'QBKeys' => [],
-            ]);
-
-            $this->setData($set, false);
+            $this->setData($set, true); // unescaped items are RawSql now
         } elseif ($set !== null) {
             $this->setData($set, $escape);
-        }
+        } // else setData() has already been used and we need to do nothing
 
         return $this->batchExecute('_upsertBatch');
     }
