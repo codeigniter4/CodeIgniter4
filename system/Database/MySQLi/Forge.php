@@ -218,11 +218,11 @@ class Forge extends BaseForge
             $keyName = $this->db->escapeIdentifiers(($this->keys[$i]['keyName'] === '') ?
                 implode('_', $this->keys[$i]['fields']) :
                 $this->keys[$i]['keyName']);
-                
+
             if ($asQuery === true) {
                 $sqls[$index] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . " ADD {$unique}KEY "
                     . $keyName
-                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ')';
+                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
             } else {
                 $sqls[$index] .= ",\n\t{$unique}KEY " . $keyName
                 . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
