@@ -216,6 +216,11 @@ final class FormatRulesTest extends CIUnitTestCase
                 false,
                 false,
             ],
+            [
+                "http://www.codeigniter.com\n",
+                false,
+                false,
+            ],
         ];
     }
 

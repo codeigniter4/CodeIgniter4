@@ -1211,6 +1211,11 @@ final class FormatRulesTest extends CIUnitTestCase
     {
         yield from [
             [
+                null,
+                'Y-m-d',
+                false,
+            ],
+            [
                 'Sun',
                 'D',
                 true,
