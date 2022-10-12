@@ -150,6 +150,8 @@ Primary Key.
 
 .. literalinclude:: forge/009.php
 
+.. _adding-keys:
+
 Adding Keys
 ===========
 
@@ -158,7 +160,8 @@ accomplished with ``$forge->addKey('field')``. The optional second
 parameter set to true will make it a primary key and the third
 parameter set to true will make it a unique key. You may specify a name
 with the fourth parameter. Note that ``addKey()`` must be followed by a
-call to ``createTable()``.
+call to ``createTable()`` or ``processIndexes()`` when the table already
+exists.
 
 Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
@@ -171,6 +174,10 @@ and unique keys with specific methods:
 .. literalinclude:: forge/011.php
 
 .. note:: When you add a primary key, MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
+
+You may add keys to an existing table by using ``processIndexes()``:
+
+.. literalinclude:: forge/029.php
 
 .. _adding-foreign-keys:
 
@@ -447,6 +454,15 @@ Class Reference
         :rtype:    bool
 
         Drops a table. Usage:  See `Dropping a Table`_.
+
+    .. php:method:: processIndexes($table)
+
+        :param    string    $table: Name of the table to add indexes to
+        :returns:    true on success, false on failure
+        :rtype:    bool
+
+        Used following ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()``,
+        and ``addForeignKey()`` to add indexes to an existing table.
 
     .. php:method:: modifyColumn($table, $field)
 

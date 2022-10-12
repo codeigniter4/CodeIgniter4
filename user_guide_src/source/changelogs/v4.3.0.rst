@@ -144,6 +144,7 @@ Database
 - Fixed ``Forge::dropKey()`` to allow droping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
 - Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
 - ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
+- Added ``Forge::processIndexes()`` allowing the creation of indexes on an existing table. See :ref:`adding-keys` for the details.
 
 Model
 =====
