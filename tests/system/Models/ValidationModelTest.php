@@ -238,15 +238,15 @@ final class ValidationModelTest extends LiveModelTestCase
 
     public function testValidationWithGroupName(): void
     {
-        $config = new Validation();
-
-        $config->grouptest = [
-            'name' => [
-                'required',
-                'min_length[3]',
-            ],
-            'token' => 'in_list[{id}]',
-        ];
+        $config = new class () extends Validation {
+            public $grouptest = [
+                'name' => [
+                    'required',
+                    'min_length[3]',
+                ],
+                'token' => 'in_list[{id}]',
+            ];
+        };
 
         $data = [
             'name'  => 'abc',
