@@ -1,3 +1,3 @@
 <?php
 
-$pQuery->close();
+$bool = $pQuery->close();

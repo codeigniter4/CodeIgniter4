@@ -232,6 +232,8 @@ Other Methods
 
 In addition to these two primary methods, the prepared query object also has the following methods:
 
+.. _database-queries-stmt-close:
+
 close()
 -------
 
@@ -239,6 +241,8 @@ While PHP does a pretty good job of closing all open statements with the databas
 close out the prepared statement when you're done with it:
 
 .. literalinclude:: queries/020.php
+
+.. note:: Since v4.3.0, the close() method deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8.
 
 getQueryString()
 ----------------
