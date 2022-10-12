@@ -623,4 +623,18 @@ final class UpsertTest extends CIUnitTestCase
 
         $this->db->table('user')->onConstraint('email')->upsertBatch();
     }
+
+    public function testUpsertWithMultipleSet()
+    {
+        $builder = $this->db->table('user');
+
+        $builder->set('email', 'jarvis@example.com');
+        $builder->set('name', 'Jarvis');
+        $builder->set('country', 'DATE(NOW())', false);
+        $builder->upsert();
+
+        $dt = date('Y-m-d');
+
+        $this->seeInDatabase('user', ['email' => 'jarvis@example.com', 'name' => 'Jarvis', 'country' => $dt]);
+    }
 }
