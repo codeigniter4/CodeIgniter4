@@ -171,10 +171,10 @@ final class ForgeTest extends CIUnitTestCase
         ])->addKey('id', true)->createTable('test_exists', true);
 
         // table exists in cache
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+        $this->assertTrue($this->db->tableExists('db_test_exists', true));
 
         // table exists without cached results
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+        $this->assertTrue($this->db->tableExists('db_test_exists', false));
 
         // try creating table when table exists
         $result = $this->forge->addField([
@@ -185,16 +185,16 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($result);
 
         // Delete table outside of forge. This should leave table in cache as existing.
-        $this->forge->getConnection()->query('DROP TABLE ' . $this->forge->getConnection()->protectIdentifiers('db_test_exists', true, null, false));
+        $this->db->query('DROP TABLE ' . $this->db->protectIdentifiers('db_test_exists', true, null, false));
 
         // table stil exists in cache
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+        $this->assertTrue($this->db->tableExists('db_test_exists', true));
 
         // table does not exist without cached results - this will update the cache
-        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', false));
+        $this->assertFalse($this->db->tableExists('db_test_exists', false));
 
         // the call above should update the cache - table should not exist in cache anymore
-        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', true));
+        $this->assertFalse($this->db->tableExists('db_test_exists', true));
 
         // try creating table when table does not exist but still in cache
         $result = $this->forge->addField([
@@ -205,7 +205,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($result);
 
         // check that the table does now exist without cached results
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+        $this->assertTrue($this->db->tableExists('db_test_exists', false));
 
         // drop table so that it doesn't mess up other tests
         $this->forge->dropTable('test_exists');
@@ -1474,5 +1474,167 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertCount(0, $indexes);
 
         $this->forge->dropTable('forge_test_users', true);
+    }
+
+    public function testProcessIndexes()
+    {
+        $this->forge->dropTable('actions', true);
+
+        $fields = [
+            'userid'      => ['type' => 'int', 'constraint' => 9],
+            'category'    => ['type' => 'varchar', 'constraint' => 63],
+            'name'        => ['type' => 'varchar', 'constraint' => 63],
+            'uid'         => ['type' => 'varchar', 'constraint' => 63],
+            'class'       => ['type' => 'varchar', 'constraint' => 63, 'null' => true],
+            'input'       => ['type' => 'varchar', 'constraint' => 63, 'null' => true],
+            'role'        => ['type' => 'varchar', 'constraint' => 63, 'default' => ''],
+            'icon'        => ['type' => 'varchar', 'constraint' => 63, 'default' => ''],
+            'summary'     => ['type' => 'varchar', 'constraint' => 255, 'default' => ''],
+            'description' => ['type' => 'text', 'null' => true],
+            'created_at'  => ['type' => 'datetime', 'null' => true],
+            'updated_at'  => ['type' => 'datetime', 'null' => true],
+            'deleted_at'  => ['type' => 'datetime', 'null' => true],
+        ];
+
+        $this->forge->addField('id');
+        $this->forge->addField($fields);
+
+        $this->forge->addKey('name', false, false, 'db_actions_name');
+        $this->forge->addKey('uid', false, false, 'db_actions_uid');
+        $this->forge->addKey(['category', 'name'], false, false, 'db_actions_category_name');
+        $this->forge->addKey(['deleted_at', 'id'], false, false, 'db_actions_deleted_at');
+        $this->forge->addKey('created_at', false, false, 'db_actions_created_at');
+
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->forge->addForeignKey('userid', 'user', 'id');
+        } else {
+            $this->forge->addForeignKey('userid', 'user', 'id', '', '', 'db_actions_userid_foreign');
+        }
+
+        $this->forge->createTable('actions');
+
+        // now drop columns and indexes
+        $this->forge->dropKey('actions', 'db_actions_category_name', false);
+
+        $indexes = array_filter(
+            $this->db->getIndexData('actions'),
+            static fn ($index) => ($index->name === 'db_actions_category_name')
+                    && ($index->fields === [0 => 'category', 1 => 'name'])
+        );
+        $this->assertCount(0, $indexes);
+
+        $this->forge->dropForeignKey('actions', 'db_actions_userid_foreign');
+
+        $this->assertCount(0, $this->db->getForeignKeyData('actions'));
+
+        // redefine id without auto increment
+        if ($this->db->DBDriver === 'MySQLi') {
+            $fields = [
+                'id' => [
+                    'name'       => 'id',
+                    'type'       => 'INT',
+                    'constraint' => 9,
+                ],
+            ];
+            $this->forge->modifyColumn('actions', $fields);
+        }
+
+        $this->forge->dropPrimaryKey('actions');
+
+        $indexes = array_filter(
+            $this->db->getIndexData('actions'),
+            static fn ($index) => $index->type === 'PRIMARY'
+        );
+        $this->assertCount(0, $indexes);
+
+        $this->forge->dropColumn('actions', [
+            'description',
+            'summary',
+            'category',
+            'icon',
+            'role',
+            'class',
+        ]);
+
+        // Add back columns and indexes
+        $this->forge->addColumn('actions', [
+            'class'       => ['type' => 'varchar', 'constraint' => 63, 'null' => true],
+            'role'        => ['type' => 'varchar', 'constraint' => 63, 'default' => ''],
+            'icon'        => ['type' => 'varchar', 'constraint' => 63, 'default' => ''],
+            'category'    => ['type' => 'varchar', 'constraint' => 63, 'default' => ''],
+            'summary'     => ['type' => 'varchar', 'constraint' => 255],
+            'description' => ['type' => 'text', 'constraint' => 255],
+        ]);
+
+        $this->forge->addKey(['category', 'name'], false, false, 'db_actions_category_name');
+        $this->forge->addPrimaryKey('id');
+
+        // SQLite does not support custom foreign key name
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->forge->addForeignKey('userid', 'user', 'id');
+        } else {
+            $this->forge->addForeignKey('userid', 'user', 'id', '', '', 'db_actions_userid_foreign');
+        }
+
+        $this->forge->processIndexes('actions');
+
+        $indexes = array_filter(
+            $this->db->getIndexData('actions'),
+            static fn ($index) => ($index->name === 'db_actions_category_name')
+                    && ($index->fields === [0 => 'category', 1 => 'name'])
+        );
+        $this->assertCount(1, $indexes);
+
+        $this->assertCount(1, $this->db->getForeignKeyData('actions'));
+
+        $indexes = array_filter(
+            $this->db->getIndexData('actions'),
+            static fn ($index) => $index->type === 'PRIMARY'
+        );
+        $this->assertCount(1, $indexes);
+
+        // redefine id as auto incrememnt
+        if ($this->db->DBDriver === 'MySQLi') {
+            $fields = [
+                'id' => [
+                    'name'           => 'id',
+                    'type'           => 'INT',
+                    'constraint'     => 9,
+                    'auto_increment' => true,
+                ],
+            ];
+            $this->forge->modifyColumn('actions', $fields);
+        }
+
+        // test inserting data
+        $data = [
+            [
+                'name'     => 'test name',
+                'uid'      => 't',
+                'category' => 'cat',
+                'userid'   => 1,
+            ],
+            [
+                'name'     => 'another name',
+                'uid'      => 't',
+                'category' => 'cat',
+                'userid'   => 1,
+            ],
+        ];
+        $this->db->table('actions')->insertBatch($data);
+
+        $this->seeInDatabase('actions', [
+            'id'     => 1,
+            'name'   => 'test name',
+            'userid' => '1',
+        ]);
+
+        $this->seeInDatabase('actions', [
+            'id'     => 2,
+            'name'   => 'another name',
+            'userid' => '1',
+        ]);
+
+        $this->forge->dropTable('actions', true);
     }
 }

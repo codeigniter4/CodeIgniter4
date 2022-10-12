@@ -242,8 +242,6 @@ class Forge extends BaseForge
 
     /**
      * Process indexes
-     *
-     * @return array
      */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
