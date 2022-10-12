@@ -41,7 +41,7 @@ class CreditCardRules
      *      'cc_num' => 'valid_cc_number[visa]'
      *  ];
      *
-     * @param mixed $ccNumber
+     * @param array|bool|float|int|object|string|null $ccNumber
      */
     public function valid_cc_number($ccNumber, string $type): bool
     {
