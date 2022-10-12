@@ -628,9 +628,16 @@ final class UpsertTest extends CIUnitTestCase
     {
         $builder = $this->db->table('user');
 
+        $ts = 'DATE(CURRENT_TIMESTAMP)';
+        if ($this->db->DBDriver === 'OCI8') {
+            $ts = "to_char(CURRENT_TIMESTAMP, 'yyyy-mm-dd')";
+        } elseif ($this->db->DBDriver === 'SQLSRV') {
+            $ts = 'CAST( GETDATE() AS date )';
+        }
+
         $builder->set('email', 'jarvis@example.com');
         $builder->set('name', 'Jarvis');
-        $builder->set('country', 'DATE(NOW())', false);
+        $builder->set('country', $ts, false);
         $builder->upsert();
 
         $dt = date('Y-m-d');
