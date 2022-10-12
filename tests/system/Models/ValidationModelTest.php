@@ -247,17 +247,16 @@ final class ValidationModelTest extends LiveModelTestCase
                 'token' => 'in_list[{id}]',
             ];
         };
+        Factories::injectMock('config', 'Validation', $config);
+
+        $this->createModel(ValidModel::class);
+        $this->setPrivateProperty($this->model, 'validationRules', 'grouptest');
 
         $data = [
             'name'  => 'abc',
             'id'    => 13,
             'token' => 13,
         ];
-
-        Factories::injectMock('config', 'Validation', $config);
-
-        $this->createModel(ValidModel::class);
-        $this->setPrivateProperty($this->model, 'validationRules', 'grouptest');
         $this->assertTrue($this->model->validate($data));
     }
 
