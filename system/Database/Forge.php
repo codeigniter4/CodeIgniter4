@@ -1161,9 +1161,8 @@ class Forge
             throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
         }
 
-        $sqls    = [];
+        $sqls    = [''];
         $index   = 0;
-        $sqls[0] = '';
         $i       = 0;
 
         foreach ($this->foreignKeys as $fkey) {
