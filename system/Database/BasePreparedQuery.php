@@ -163,7 +163,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     }
 
     /**
-     * The database dependant version of the close method.
+     * The database-dependent version of the close method.
      */
     abstract protected function _close(): bool;
 
