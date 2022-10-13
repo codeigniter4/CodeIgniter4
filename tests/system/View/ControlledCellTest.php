@@ -18,6 +18,7 @@ use Tests\Support\View\Cells\ColorsCell;
 use Tests\Support\View\Cells\GreetingCell;
 use Tests\Support\View\Cells\ListerCell;
 use Tests\Support\View\Cells\MultiplierCell;
+use Tests\Support\View\Cells\RenderedExtraDataNotice;
 use Tests\Support\View\Cells\RenderedNotice;
 use Tests\Support\View\Cells\SimpleNotice;
 
@@ -45,6 +46,13 @@ final class ControlledCellTest extends CIUnitTestCase
         $result = view_cell(RenderedNotice::class);
 
         $this->assertStringContainsString('4, 8, 15, 16, 23, 42', $result);
+    }
+
+    public function testCellThroughRenderMethodWithExtraData()
+    {
+        $result = view_cell(RenderedExtraDataNotice::class);
+
+        $this->assertStringContainsString('42, 23, 16, 15, 8, 4', $result);
     }
 
     public function testCellWithParameters()
