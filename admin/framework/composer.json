@@ -34,6 +34,8 @@
         "ext-memcache": "If you use Cache class MemcachedHandler with Memcache",
         "ext-memcached": "If you use Cache class MemcachedHandler with Memcached",
         "ext-redis": "If you use Cache class RedisHandler",
+        "ext-dom": "If you use TestResponse",
+        "ext-libxml": "If you use TestResponse",
         "ext-fileinfo": "Improves mime type detection for files",
         "ext-readline": "Improves CLI::input() usability"
     },
