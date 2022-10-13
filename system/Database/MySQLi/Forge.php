@@ -189,8 +189,8 @@ class Forge extends BaseForge
      */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
-        $sqls    = [''];
-        $index   = 0;
+        $sqls  = [''];
+        $index = 0;
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
             $index = $i;

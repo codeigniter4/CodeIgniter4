@@ -1516,11 +1516,11 @@ final class ForgeTest extends CIUnitTestCase
             ],
         ];
 
-        foreach ($data as $table => $dummy_data) {
+        foreach ($data as $table => $dummyData) {
             $this->db->table($table)->truncate();
 
-            foreach ($dummy_data as $single_dummy_data) {
-                $this->db->table($table)->insert($single_dummy_data);
+            foreach ($dummyData as $singleDummyData) {
+                $this->db->table($table)->insert($singleDummyData);
             }
         }
 
