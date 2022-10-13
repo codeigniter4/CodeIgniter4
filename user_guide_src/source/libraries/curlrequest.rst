@@ -332,7 +332,7 @@ is true:
 version
 =======
 
-To set the HTTP protocol to use, you can pass a string or float with the version number (typically either 1.0
-or 1.1, 2.0 is currently unsupported.):
+To set the HTTP protocol to use, you can pass a string or float with the version number (typically either ``1.0``
+or ``1.1``, 2.0 supported since ``v4.3.0``.):
 
 .. literalinclude:: curlrequest/033.php
