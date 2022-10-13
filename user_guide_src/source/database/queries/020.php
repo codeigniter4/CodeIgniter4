@@ -1,3 +1,7 @@
 <?php
 
-$bool = $pQuery->close();
+if ($pQuery->close()) {
+    echo 'Success!';
+} else {
+    echo 'Deallocation of prepared statements failed!';
+}
