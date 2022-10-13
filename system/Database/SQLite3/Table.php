@@ -241,8 +241,9 @@ class Table
         }
 
         // add array to keys of fields
-        $pk = ['fields' => $fields['fields'],
-            'type'      => 'primary',
+        $pk = [
+            'fields' => $fields['fields'],
+            'type'   => 'primary',
         ];
 
         $this->keys['primary'] = $pk;
