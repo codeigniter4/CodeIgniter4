@@ -4,7 +4,7 @@ $iterator = new \CodeIgniter\Debug\Iterator();
 
 // Add a new task
 $iterator->add('single_concat', static function () {
-    $str = 'Some basic' . 'little' . 'string concatenation test.';
+    $str = 'Some basiclittlestring concatenation test.';
 });
 
 // Add another task
