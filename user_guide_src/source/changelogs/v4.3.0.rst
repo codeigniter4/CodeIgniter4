@@ -151,6 +151,7 @@ Model
 Libraries
 =========
 
+- Added option version HTTP2 in ``CURLRequest``
 - Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
 - Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
 
