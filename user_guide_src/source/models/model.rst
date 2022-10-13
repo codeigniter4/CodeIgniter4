@@ -314,12 +314,14 @@ insert()
 The first parametre is an associative array of data to create a new row of data in the database. 
 If an object is passed instead of an array, it will attempt to convert it to an array.
 
-The array's keys must match the name of the columns in the ```$table```, while the array's values are the values to save for that key:
+The array's keys must match the name of the columns in the ``$table``, while the array's values are the values to save for that key.
+
+The optional second parameter is of type boolean, and if it is set to false, the method will return a boolean value, 
+which indicates the success or failure of the query.
+
+You can retrieve the last inserted row's primary key using the ``getInsertID()`` method.
 
 .. literalinclude:: model/015.php
-
-The second parametre is of type boolean which determines whether an insert ID should be returned. 
-If it is omitted, then the default return value is the insert id.
 
 update()
 --------
