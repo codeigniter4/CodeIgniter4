@@ -411,9 +411,6 @@ class FormatRulesTest extends CIUnitTestCase
 
     /**
      * @dataProvider alphaProvider
-     *
-     * @param $str
-     * @param $expected
      */
     public function testAlpha(?string $str, bool $expected): void
     {

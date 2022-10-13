@@ -48,7 +48,6 @@ final class MimesTest extends CIUnitTestCase
     /**
      * @dataProvider extensionsList
      *
-     * @param $expected
      * @param $ext
      * @param mixed $mime
      */
