@@ -103,13 +103,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
      */
     protected function _close(): bool
     {
-        $error = true;
-        if (isset($this->statement)) {
-            $error = oci_free_statement($this->statement);
-            unset($this->statement);
-        }
-
-        return $error;
+        return oci_free_statement($this->statement);
     }
 
     /**

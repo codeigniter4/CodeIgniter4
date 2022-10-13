@@ -97,12 +97,6 @@ class PreparedQuery extends BasePreparedQuery
      */
     protected function _close(): bool
     {
-        $error = true;
-        if (isset($this->statement)) {
-            $error = $this->statement->close();
-            unset($this->statement);
-        }
-
-        return $error;
+        return $this->statement->close();
     }
 }

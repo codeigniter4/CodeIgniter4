@@ -151,7 +151,15 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      */
     public function close(): bool
     {
-        return $this->_close();
+        if (! isset($this->statement)) {
+            return true;
+        }
+
+        try {
+            return $this->_close();
+        } finally {
+            unset($this->statement);
+        }
     }
 
     /**

@@ -103,13 +103,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     protected function _close(): bool
     {
-        $error = true;
-        if (isset($this->statement)) {
-            $error = (bool) pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"');
-            unset($this->statement);
-        }
-
-        return $error;
+        return (bool) pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"');
     }
 
     /**

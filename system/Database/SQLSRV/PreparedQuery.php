@@ -121,13 +121,7 @@ class PreparedQuery extends BasePreparedQuery
      */
     protected function _close(): bool
     {
-        $error = true;
-        if (isset($this->statement)) {
-            $error = sqlsrv_free_stmt($this->statement);
-            unset($this->statement);
-        }
-
-        return $error;
+        return sqlsrv_free_stmt($this->statement);
     }
 
     /**
