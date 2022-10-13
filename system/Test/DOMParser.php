@@ -61,9 +61,8 @@ class DOMParser
      */
     public function withString(string $content)
     {
-        // converts all special characters to HTML-Entities
-        $content = htmlentities($content);
-        $content = htmlspecialchars_decode($content);
+        // encode character to HTML numeric string reference
+        $content = mb_encode_numericentity($content, [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8');
 
         // turning off some errors
         libxml_use_internal_errors(true);
