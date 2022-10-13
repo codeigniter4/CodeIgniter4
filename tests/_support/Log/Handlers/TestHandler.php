@@ -46,6 +46,9 @@ class TestHandler extends \CodeIgniter\Log\Handlers\FileHandler
      * If the handler returns false, then execution of handlers
      * will stop. Any handlers that have not run, yet, will not
      * be run.
+     *
+     * @param string $level
+     * @param string $message
      */
     public function handle($level, $message): bool
     {
