@@ -1156,7 +1156,7 @@ class Forge
         }
 
         if ($errorNames !== []) {
-            $errorNames[0] = implode(', ', $errorNames);
+            $errorNames = [implode(', ', $errorNames)];
 
             throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
         }
