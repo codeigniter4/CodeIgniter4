@@ -242,7 +242,7 @@ close out the prepared statement when you're done with it:
 
 .. literalinclude:: queries/020.php
 
-.. note:: Since v4.3.0, the close() method deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8.
+.. note:: Since v4.3.0, the ``close()`` method deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8.
 
 getQueryString()
 ----------------
