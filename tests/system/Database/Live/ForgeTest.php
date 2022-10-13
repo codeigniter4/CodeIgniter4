@@ -1479,9 +1479,54 @@ final class ForgeTest extends CIUnitTestCase
     public function testProcessIndexes()
     {
         $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
+
+        $this->forge->addField([
+            'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'       => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'      => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'    => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at' => ['type' => 'DATETIME', 'null' => true],
+            'updated_at' => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user2', true);
+
+        $data = [
+            'user2' => [
+                [
+                    'name'    => 'Derek Jones2',
+                    'email'   => 'derek@world.com',
+                    'country' => 'France',
+                ],
+                [
+                    'name'    => 'Ahmadinejad2',
+                    'email'   => 'ahmadinejad@world.com',
+                    'country' => 'Greece',
+                ],
+                [
+                    'name'    => 'Richard A Causey2',
+                    'email'   => 'richard@world.com',
+                    'country' => 'France',
+                ],
+                [
+                    'name'    => 'Chris Martin2',
+                    'email'   => 'chris@world.com',
+                    'country' => 'Greece',
+                ],
+            ],
+        ];
+
+        foreach ($data as $table => $dummy_data) {
+            $this->db->table($table)->truncate();
+
+            foreach ($dummy_data as $single_dummy_data) {
+                $this->db->table($table)->insert($single_dummy_data);
+            }
+        }
 
         $fields = [
             'userid'      => ['type' => 'int', 'constraint' => 9],
+            'userid2'     => ['type' => 'int', 'constraint' => 9],
             'category'    => ['type' => 'varchar', 'constraint' => 63],
             'name'        => ['type' => 'varchar', 'constraint' => 63],
             'uid'         => ['type' => 'varchar', 'constraint' => 63],
@@ -1507,8 +1552,10 @@ final class ForgeTest extends CIUnitTestCase
 
         if ($this->db->DBDriver === 'SQLite3') {
             $this->forge->addForeignKey('userid', 'user', 'id');
+            $this->forge->addForeignKey('userid2', 'user2', 'id');
         } else {
             $this->forge->addForeignKey('userid', 'user', 'id', '', '', 'db_actions_userid_foreign');
+            $this->forge->addForeignKey('userid2', 'user2', 'id', '', '', 'db_actions_userid2_foreign');
         }
 
         $this->forge->createTable('actions');
@@ -1524,6 +1571,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertCount(0, $indexes);
 
         $this->forge->dropForeignKey('actions', 'db_actions_userid_foreign');
+        $this->forge->dropForeignKey('actions', 'db_actions_userid2_foreign');
 
         $this->assertCount(0, $this->db->getForeignKeyData('actions'));
 
@@ -1572,8 +1620,10 @@ final class ForgeTest extends CIUnitTestCase
         // SQLite does not support custom foreign key name
         if ($this->db->DBDriver === 'SQLite3') {
             $this->forge->addForeignKey('userid', 'user', 'id');
+            $this->forge->addForeignKey('userid2', 'user2', 'id');
         } else {
             $this->forge->addForeignKey('userid', 'user', 'id', '', '', 'db_actions_userid_foreign');
+            $this->forge->addForeignKey('userid2', 'user2', 'id', '', '', 'db_actions_userid2_foreign');
         }
 
         $this->forge->processIndexes('actions');
@@ -1585,7 +1635,7 @@ final class ForgeTest extends CIUnitTestCase
         );
         $this->assertCount(1, $indexes);
 
-        $this->assertCount(1, $this->db->getForeignKeyData('actions'));
+        $this->assertCount(2, $this->db->getForeignKeyData('actions'));
 
         $indexes = array_filter(
             $this->db->getIndexData('actions'),
@@ -1613,12 +1663,14 @@ final class ForgeTest extends CIUnitTestCase
                 'uid'      => 't',
                 'category' => 'cat',
                 'userid'   => 1,
+                'userid2'  => 1,
             ],
             [
                 'name'     => 'another name',
                 'uid'      => 't',
                 'category' => 'cat',
                 'userid'   => 1,
+                'userid2'  => 1,
             ],
         ];
         $this->db->table('actions')->insertBatch($data);
@@ -1636,5 +1688,6 @@ final class ForgeTest extends CIUnitTestCase
         ]);
 
         $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
     }
 }

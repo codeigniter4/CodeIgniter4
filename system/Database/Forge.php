@@ -1166,6 +1166,8 @@ class Forge
         foreach ($this->foreignKeys as $index => $fkey) {
             if ($asQuery === false) {
                 $index = 0;
+            } else {
+                $sqls[$index] = '';
             }
 
             $nameIndex = $fkey['fkName'] !== '' ?
@@ -1176,8 +1178,6 @@ class Forge
             $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
-
-            $sqls[$index] = '';
 
             if ($asQuery === true) {
                 $sqls[$index] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
