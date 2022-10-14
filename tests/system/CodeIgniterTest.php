@@ -245,6 +245,33 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->resetServices();
     }
 
+    public function testDisableControllerFilters()
+    {
+        $_SERVER['argv'] = ['index.php', 'pages/about'];
+        $_SERVER['argc'] = 2;
+
+        $_SERVER['REQUEST_URI'] = '/pages/about';
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->add(
+            'pages/about',
+            static fn () => Services::incomingrequest()->getBody(),
+            ['filter' => Customfilter::class]
+        );
+        $router = Services::router($routes, Services::incomingrequest());
+        Services::injectMock('router', $router);
+
+        ob_start();
+        $this->codeigniter->disableFilters();
+        $this->codeigniter->run();
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('', $output);
+
+        $this->resetServices();
+    }
+
     public function testResponseConfigEmpty()
     {
         $_SERVER['argv'] = ['index.php', '/'];
