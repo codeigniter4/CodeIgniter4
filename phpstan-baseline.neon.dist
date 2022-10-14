@@ -116,11 +116,6 @@ parameters:
 			path: system/Database/Migration.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/BasePreparedQuery.php
-
-		-
 			message: "#^Cannot access property \\$errno on bool\\|object\\|resource\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Connection.php
@@ -226,11 +221,6 @@ parameters:
 			path: system/Database/MySQLi/PreparedQuery.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
 			message: "#^Cannot access property \\$field_count on object\\|resource\\|false\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Result.php
@@ -271,19 +261,9 @@ parameters:
 			path: system/Database/MySQLi/Result.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/OCI8/PreparedQuery.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between array and false will always evaluate to false\\.$#"
 			count: 1
 			path: system/Database/Postgre/Connection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/Postgre/PreparedQuery.php
 
 		-
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
@@ -294,11 +274,6 @@ parameters:
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
 			count: 13
 			path: system/Database/SQLSRV/Forge.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/SQLSRV/PreparedQuery.php
 
 		-
 			message: "#^Cannot call method changes\\(\\) on bool\\|object\\|resource\\.$#"
@@ -367,11 +342,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method close\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Database/SQLite3/PreparedQuery.php
 

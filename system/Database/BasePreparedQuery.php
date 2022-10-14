@@ -25,7 +25,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The prepared statement itself.
      *
-     * @var object|resource
+     * @var object|resource|null
      */
     protected $statement;
 
@@ -158,7 +158,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         try {
             return $this->_close();
         } finally {
-            unset($this->statement);
+            $this->statement = null;
         }
     }
 
