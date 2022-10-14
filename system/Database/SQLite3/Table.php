@@ -254,7 +254,7 @@ class Table
     /**
      * Add a foreign key
      *
-     * @return Table
+     * @return $this
      */
     public function addForeignKey(array $foreignKeys)
     {
