@@ -860,6 +860,8 @@ The reason the second query worked is that the first parameter is set to ``false
 
 .. note:: This method doesn't work for batch inserts.
 
+.. _insert-batch-data:
+
 insertBatch
 ===========
 
@@ -877,6 +879,10 @@ The first parameter is an associative array of values.
 .. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
 
 .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+You can also insert from a query:
+
+.. literalinclude:: query_builder/117.php
 
 .. _upsert-data:
 
@@ -937,6 +943,10 @@ constraint by default. Here is an example using an array:
 The first parameter is an associative array of values.
 
 .. note:: All values are escaped automatically producing safer queries.
+
+You can also upsert from a query:
+
+.. literalinclude:: query_builder/115.php
 
 $builder->onConstraint()
 ------------------------
@@ -1073,6 +1083,10 @@ The first parameter is an associative array of values, the second parameter is t
 .. note:: ``affectedRows()`` won't give you proper results with this method,
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
+    
+You can also update from a query:
+
+.. literalinclude:: query_builder/116.php
 
 $builder->getCompiledUpdate()
 -----------------------------
@@ -1372,6 +1386,14 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Specifies the ``FROM`` clause of a query using a subquery.
+
+    .. php:method:: fromQuery($query)
+
+        :param mixed $query: Instance of the BaseBuilder or RawSql class or string
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Sets a query as a datasource for ``insertBatch()``, ``updateBatch()``, ``upsertBatch()``.
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
