@@ -385,14 +385,8 @@ this test by. The second parameter is the Closure, itself:</p>
 
 <span class="nv">$iterator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Debug\Iterator</span><span class="p">();</span>
 
-<span class="c1">// Add a new task</span>
-<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;single_concat&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nv">$str</span> <span class="o">=</span> <span class="s1">&#39;Some basic&#39;</span> <span class="o">.</span> <span class="s1">&#39;little&#39;</span> <span class="o">.</span> <span class="s1">&#39;string concatenation test.&#39;</span><span class="p">;</span>
-<span class="p">});</span>
-
-<span class="c1">// Add another task</span>
-<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$a</span> <span class="o">=</span> <span class="s1">&#39;little&#39;</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$str</span> <span class="o">=</span> <span class="s2">&quot;Some basic </span><span class="si">{</span><span class="nv">$little</span><span class="si">}</span><span class="s2"> string test.&quot;</span><span class="p">;</span>
+<span class="nv">$iterator</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;double&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$word</span> <span class="o">=</span> <span class="s1">&#39;little&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="s2">&quot;Some basic </span><span class="si">{</span><span class="nv">$word</span><span class="si">}</span><span class="s2"> string test.&quot;</span><span class="p">;</span>
 <span class="p">});</span>
 </pre></div>
 </div>
