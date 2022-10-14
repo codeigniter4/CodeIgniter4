@@ -1917,7 +1917,7 @@ class BaseBuilder
     /**
      * Compiles batch upsert strings and runs the queries
      *
-     * @param array|BaseBuilder|RawSql|object|null $set a dataset
+     * @param array|BaseBuilder|object|RawSql|null $set a dataset
      *
      * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
      *
@@ -2109,13 +2109,11 @@ class BaseBuilder
 
     /**
      * Gets column names from a select query
-     *
-     * @param string $sql
      */
     protected function fieldsFromQuery(string $sql): array
     {
         $sql = preg_replace('/\\(([^()]*+|(?R))*\\)/', '', $sql); // remove everything in parenthesis - removes "FROM" and commas
-        $d   = ['`',  "'", '"'];
+        $d   = ['`', "'", '"'];
 
         $o   = ' ';
         $r   = '$';
@@ -2162,7 +2160,7 @@ class BaseBuilder
     /**
      * Compiles batch insert strings and runs the queries
      *
-     * @param array|BaseBuilder|RawSql|object|null $set a dataset
+     * @param array|BaseBuilder|object|RawSql|null $set a dataset
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      */
@@ -2529,8 +2527,8 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queryies
      *
-     * @param array|BaseBuilder|RawSqwl|object|null        $set         a dataset or select query
-     * @param array|RawSql|string|null $constraints
+     * @param array|BaseBuilder|object|RawSqwl|null $set         a dataset or select query
+     * @param array|RawSql|string|null              $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
