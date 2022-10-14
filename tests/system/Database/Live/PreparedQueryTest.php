@@ -154,7 +154,7 @@ final class PreparedQueryTest extends CIUnitTestCase
         $this->query->execute('foo', 'foo@example.com', 'US');
     }
 
-    public function testDeallocatePreparedQuery()
+    public function testDeallocatePreparedQueryThenTryToExecute()
     {
         $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
             'name'    => 'a',
@@ -162,25 +162,29 @@ final class PreparedQueryTest extends CIUnitTestCase
             'country' => 'x',
         ]));
 
-        $this->query->execute('foo', 'foo@example.com', 'US');
-
         $this->query->close();
 
         // Try to execute a non-existing prepared statement
-        try {
-            $this->query->execute('bar', 'bar@example.com', 'GB');
-        } catch (BadMethodCallException $e) {
-            $this->assertSame('You must call prepare before trying to execute a prepared statement.', $e->getMessage());
-        }
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('You must call prepare before trying to execute a prepared statement.');
+
+        $this->query->execute('bar', 'bar@example.com', 'GB');
+    }
+
+    public function testDeallocatePreparedQueryThenTryToClose()
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
+            'name'    => 'a',
+            'email'   => 'b@example.com',
+            'country' => 'x',
+        ]));
+
+        $this->query->close();
 
         // Try to close a non-existing prepared statement
-        try {
-            $this->query->close();
-        } catch (BadMethodCallException $e) {
-            $this->assertSame('Cannot call close on a non-existing prepared statement.', $e->getMessage());
-        }
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Cannot call close on a non-existing prepared statement.');
 
-        $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
-        $this->dontSeeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+        $this->query->close();
     }
 }
