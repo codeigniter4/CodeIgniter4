@@ -156,7 +156,7 @@ final class MessageTest extends CIUnitTestCase
 
         $this->message->appendBody('\n');
 
-        $this->assertSame('moo' . '\n', $this->message->getBody());
+        $this->assertSame('moo\n', $this->message->getBody());
     }
 
     public function testSetHeaderReplacingHeader()

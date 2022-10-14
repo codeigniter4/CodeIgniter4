@@ -360,7 +360,7 @@ class Connection extends BaseConnection
         // Escape LIKE condition wildcards
         return str_replace(
             [$this->likeEscapeChar, '%', '_'],
-            ['\\' . $this->likeEscapeChar, '\\' . '%', '\\' . '_'],
+            ['\\' . $this->likeEscapeChar, '\\%', '\\_'],
             $str
         );
     }

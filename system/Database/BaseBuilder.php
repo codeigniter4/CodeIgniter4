@@ -1179,7 +1179,7 @@ class BaseBuilder
      */
     protected function addUnionStatement($union, bool $all = false)
     {
-        $this->QBUnion[] = "\n" . 'UNION '
+        $this->QBUnion[] = "\nUNION "
             . ($all ? 'ALL ' : '')
             . 'SELECT * FROM '
             . $this->buildSubquery($union, true, 'uwrp' . (count($this->QBUnion) + 1));

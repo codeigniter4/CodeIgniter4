@@ -33,6 +33,9 @@ $overrides = [
     'php_unit_internal_class'     => false,
     'no_unused_imports'           => false,
     'class_attributes_separation' => false,
+    'no_useless_concat_operator'  => [
+        'juggle_simple_strings' => true,
+    ],
 ];
 
 $options = [
