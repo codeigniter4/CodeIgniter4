@@ -844,7 +844,8 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
+<dd class="field-even"><p>$_POST and $_GET combined if no parameters specified (prefer POST value on conflict),
+otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
@@ -858,6 +859,8 @@ then in GET:</p>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPostGet</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>If no index is specified, it will return both POST and GET streams combined.
+Although POST data will be preferred in case of name conflict.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -874,20 +877,23 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
+<dd class="field-even"><p>$_GET and $_POST combined if no parameters specified (prefer GET value on conflict),
+otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
 </dd>
 </dl>
 <p>This method works pretty much the same way as <code class="docutils literal notranslate"><span class="pre">getPost()</span></code> and <code class="docutils literal notranslate"><span class="pre">getGet()</span></code>, only combined.
-It will search through both POST and GET streams for data, looking first in GET, and
+It will search through both GET and POST streams for data, looking first in GET, and
 then in POST:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getGetPost</span><span class="p">(</span><span class="s1">&#39;field1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>If no index is specified, it will return both GET and POST streams combined.
+Although GET data will be preferred in case of name conflict.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -1046,7 +1052,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 11, 2022.
+      <span class="lastupdated">Last updated on Oct 14, 2022.
       </span></p>
   </div>
 
