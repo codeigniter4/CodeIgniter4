@@ -83,7 +83,7 @@ class Builder extends BaseBuilder
 
             $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
 
-            $sql .= 'INNER JOIN (' . "\n{:_table_:}";
+            $sql .= "INNER JOIN (\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 
@@ -97,7 +97,7 @@ class Builder extends BaseBuilder
                 )
             ) . "\n";
 
-            $sql .= 'SET' . "\n";
+            $sql .= "SET\n";
 
             $sql .= implode(
                 ",\n",
