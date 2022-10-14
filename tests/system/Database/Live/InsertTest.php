@@ -150,7 +150,7 @@ final class InsertTest extends CIUnitTestCase
         $this->seeInDatabase('misc', ['value' => $hash]);
     }
 
-    public function testInsertWithQuery()
+    public function testInsertBatchWithQuery()
     {
         $this->forge = Database::forge($this->DBGroup);
 

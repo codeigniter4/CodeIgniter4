@@ -1917,7 +1917,7 @@ class BaseBuilder
     /**
      * Compiles batch upsert strings and runs the queries
      *
-     * @param array|object|null $set a dataset
+     * @param array|BaseBuilder|RawSql|object|null $set a dataset
      *
      * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
      *
@@ -1925,6 +1925,22 @@ class BaseBuilder
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
+        $this->fromQuery($set);
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $sql = $this->_upsertBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            $this->db->query($sql, null, false);
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
+
         if ($set !== null) {
             $this->setData($set, $escape);
         }
