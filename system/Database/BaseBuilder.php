@@ -163,6 +163,7 @@ class BaseBuilder
      *
      * @phpstan-var array{
      *   updateFieldsAdditional?: array,
+     *   tableIdentity?: string,
      *   updateFields?: array,
      *   constraints?: array,
      *   fromQuery?: string,
@@ -1852,6 +1853,115 @@ class BaseBuilder
         }
 
         return $this;
+    }
+
+    /**
+     * Compiles an upsert query and returns the sql
+     *
+     * @return string
+     *
+     * @throws DatabaseException
+     */
+    public function getCompiledUpsert()
+    {
+        [$currentTestMode, $this->testMode] = [$this->testMode, true];
+
+        $sql = implode(";\n", $this->upsert());
+
+        $this->testMode = $currentTestMode;
+
+        return $this->compileFinalQuery($sql);
+    }
+
+    /**
+     * Converts call to batchUpsert
+     *
+     * @param array|object|null $set
+     *
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
+     */
+    public function upsert($set = null, ?bool $escape = null)
+    {
+        // if set() has been used merge QBSet with binds and then setData()
+        if ($set === null && ! is_array(current($this->QBSet))) {
+            $set = [];
+
+            foreach ($this->QBSet as $field => $value) {
+                $k = trim($field, $this->db->escapeChar);
+                // use binds if available else use QBSet value but with RawSql to avoid escape
+                $set[$k] = isset($this->binds[$k]) ? $this->binds[$k][0] : new RawSql($value);
+            }
+
+            $this->binds = [];
+
+            $this->resetRun([
+                'QBSet'  => [],
+                'QBKeys' => [],
+            ]);
+
+            $this->setData($set, true); // unescaped items are RawSql now
+        } elseif ($set !== null) {
+            $this->setData($set, $escape);
+        } // else setData() has already been used and we need to do nothing
+
+        return $this->batchExecute('_upsertBatch');
+    }
+
+    /**
+     * Compiles batch upsert strings and runs the queries
+     *
+     * @param array|object|null $set a dataset
+     *
+     * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
+     */
+    public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
+    {
+        if ($set !== null) {
+            $this->setData($set, $escape);
+        }
+
+        return $this->batchExecute('_upsertBatch', $batchSize);
+    }
+
+    /**
+     * Generates a platform-specific upsertBatch string from the supplied data
+     */
+    protected function _upsertBatch(string $table, array $keys, array $values): string
+    {
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys)->QBOptions['updateFields'] ?? [];
+
+            $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ')' . "\n"
+                . '{:_table_:}'
+                . 'ON DUPLICATE KEY UPDATE' . "\n"
+                . implode(
+                    ",\n",
+                    array_map(
+                        static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
+                            ' = ' . $value :
+                            ' = ' . 'VALUES(' . $value . ')'),
+                        array_keys($updateFields),
+                        $updateFields
+                    )
+                );
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
+        }
+
+        return str_replace('{:_table_:}', $data, $sql);
     }
 
     /**
