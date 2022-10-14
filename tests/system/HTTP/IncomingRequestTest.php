@@ -569,6 +569,26 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($_GET, $this->request->getGetPost());
     }
 
+    public function testPostGetSecondStream()
+    {
+        $_GET['get'] = '3';
+        $this->assertSame($_GET, $this->request->getPostGet());
+    }
+
+    public function testGetPostSecondStream()
+    {
+        $_POST['post'] = '5';
+        $this->assertSame($_POST, $this->request->getGetPost());
+    }
+
+    public function testGetPostSecondStreams()
+    {
+        $_GET['get']   = '3';
+        $_POST['post'] = '5';
+        $this->assertSame(array_merge($_GET, $_POST), $this->request->getPostGet());
+        $this->assertSame(array_merge($_POST, $_GET), $this->request->getGetPost());
+    }
+
     public function testWithFalseBody()
     {
         // Use `false` here to simulate file_get_contents returning a false value

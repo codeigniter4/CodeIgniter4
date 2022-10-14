@@ -36,6 +36,6 @@ none.
 Bugs Fixed
 **********
 
-none.
+- Fixed a bug when the ``CodeIgniter\HTTP\IncomingRequest::getPostGet()`` and ``CodeIgniter\HTTP\IncomingRequest::getGetPost()`` methods didn't return values from the other stream when ``index`` was set to ``null``.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.

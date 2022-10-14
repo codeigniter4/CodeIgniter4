@@ -339,7 +339,8 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :returns:       $_POST and $_GET combined if no parameters specified (prefer POST value on conflict),
+                        otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null
         :rtype: mixed|null
 
         This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
@@ -348,6 +349,9 @@ The methods provided by the parent classes that are available are:
 
         .. literalinclude:: incomingrequest/032.php
 
+        If no index is specified, it will return both POST and GET streams combined.
+        Although POST data will be preferred in case of name conflict.
+
     .. php:method:: getGetPost([$index = null[, $filter = null[, $flags = null]]])
 
         :param  string  $index: The name of the variable/key to look for.
@@ -355,14 +359,18 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :returns:       $_GET and $_POST combined if no parameters specified (prefer GET value on conflict),
+                        otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null
         :rtype: mixed|null
 
         This method works pretty much the same way as ``getPost()`` and ``getGet()``, only combined.
-        It will search through both POST and GET streams for data, looking first in GET, and
+        It will search through both GET and POST streams for data, looking first in GET, and
         then in POST:
 
         .. literalinclude:: incomingrequest/033.php
+
+        If no index is specified, it will return both GET and POST streams combined.
+        Although GET data will be preferred in case of name conflict.
 
     .. php:method:: getCookie([$index = null[, $filter = null[, $flags = null]]])
         :noindex:

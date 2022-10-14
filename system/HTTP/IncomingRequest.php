@@ -615,6 +615,9 @@ class IncomingRequest extends Request
      */
     public function getPostGet($index = null, $filter = null, $flags = null)
     {
+        if ($index === null) {
+            return array_merge($this->getGet($index, $filter, $flags), $this->getPost($index, $filter, $flags));
+        }
         // Use $_POST directly here, since filter_has_var only
         // checks the initial POST data, not anything that might
         // have been added since.
@@ -632,6 +635,9 @@ class IncomingRequest extends Request
      */
     public function getGetPost($index = null, $filter = null, $flags = null)
     {
+        if ($index === null) {
+            return array_merge($this->getPost($index, $filter, $flags), $this->getGet($index, $filter, $flags));
+        }
         // Use $_GET directly here, since filter_has_var only
         // checks the initial GET data, not anything that might
         // have been added since.
