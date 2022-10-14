@@ -23,6 +23,11 @@ use Tests\Support\Log\Handlers\TestHandler;
  */
 final class LoggerTest extends CIUnitTestCase
 {
+    protected function pregLogEntry(string $level, string $message, bool $same = true): string
+    {
+        return '|^' . preg_quote($level, '|') . '\s-\s[0-9]{4}-[0-9]{2}-[0-9]{2}\s\-\-\>\s' . preg_quote($message, '|') . ($same ? '$' : '') . '|';
+    }
+
     public function testThrowsExceptionWithBadHandlerSettings()
     {
         $config           = new LoggerConfig();
@@ -61,13 +66,13 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('DEBUG', 'Test message');
         $logger->log('debug', 'Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogDoesnotLogUnhandledLevels()
@@ -91,14 +96,14 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message bar baz';
+        $expected = $this->pregLogEntry('DEBUG', 'Test message bar baz');
 
         $logger->log('debug', 'Test message {foo} {bar}', ['foo' => 'bar', 'bar' => 'baz']);
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogInterpolatesPost()
@@ -108,14 +113,14 @@ final class LoggerTest extends CIUnitTestCase
         $logger = new Logger($config);
 
         $_POST    = ['foo' => 'bar'];
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_POST: ' . print_r($_POST, true);
+        $expected = $this->pregLogEntry('DEBUG', 'Test message $_POST: ' . print_r($_POST, true));
 
         $logger->log('debug', 'Test message {post_vars}');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogInterpolatesGet()
@@ -125,14 +130,14 @@ final class LoggerTest extends CIUnitTestCase
         $logger = new Logger($config);
 
         $_GET     = ['bar' => 'baz'];
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_GET: ' . print_r($_GET, true);
+        $expected = $this->pregLogEntry('DEBUG', 'Test message $_GET: ' . print_r($_GET, true));
 
         $logger->log('debug', 'Test message {get_vars}');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogInterpolatesSession()
@@ -142,14 +147,14 @@ final class LoggerTest extends CIUnitTestCase
         $logger = new Logger($config);
 
         $_SESSION = ['xxx' => 'yyy'];
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message $_SESSION: ' . print_r($_SESSION, true);
+        $expected = $this->pregLogEntry('DEBUG', 'Test message $_SESSION: ' . print_r($_SESSION, true));
 
         $logger->log('debug', 'Test message {session_vars}');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogInterpolatesCurrentEnvironment()
@@ -158,14 +163,14 @@ final class LoggerTest extends CIUnitTestCase
 
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message ' . ENVIRONMENT;
+        $expected = $this->pregLogEntry('DEBUG', 'Test message ' . ENVIRONMENT);
 
         $logger->log('debug', 'Test message {env}');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogInterpolatesEnvironmentVars()
@@ -176,14 +181,14 @@ final class LoggerTest extends CIUnitTestCase
 
         $_ENV['foo'] = 'bar';
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message bar';
+        $expected = $this->pregLogEntry('DEBUG', 'Test message bar');
 
         $logger->log('debug', 'Test message {env:foo}');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogInterpolatesFileAndLine()
@@ -208,7 +213,7 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'ERROR - ' . date('Y-m-d') . ' --> [ERROR] These are not the droids you are looking for';
+        $expected = $this->pregLogEntry('ERROR', '[ERROR] These are not the droids you are looking for', false);
 
         try {
             throw new Exception('These are not the droids you are looking for');
@@ -219,7 +224,7 @@ final class LoggerTest extends CIUnitTestCase
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame(0, strpos($logs[0], $expected));
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testEmergencyLogsCorrectly()
@@ -227,14 +232,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'EMERGENCY - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('EMERGENCY', 'Test message');
 
         $logger->emergency('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testAlertLogsCorrectly()
@@ -242,14 +247,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'ALERT - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('ALERT', 'Test message');
 
         $logger->alert('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testCriticalLogsCorrectly()
@@ -257,14 +262,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'CRITICAL - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('CRITICAL', 'Test message');
 
         $logger->critical('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testErrorLogsCorrectly()
@@ -272,14 +277,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'ERROR - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('ERROR', 'Test message');
 
         $logger->error('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testWarningLogsCorrectly()
@@ -287,14 +292,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('WARNING', 'Test message');
 
         $logger->warning('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testNoticeLogsCorrectly()
@@ -302,14 +307,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'NOTICE - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('NOTICE', 'Test message');
 
         $logger->notice('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testInfoLogsCorrectly()
@@ -317,14 +322,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'INFO - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('INFO', 'Test message');
 
         $logger->info('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testDebugLogsCorrectly()
@@ -332,14 +337,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'DEBUG - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('DEBUG', 'Test message');
 
         $logger->debug('Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testLogLevels()
@@ -347,14 +352,14 @@ final class LoggerTest extends CIUnitTestCase
         $config = new LoggerConfig();
         $logger = new Logger($config);
 
-        $expected = 'WARNING - ' . date('Y-m-d') . ' --> Test message';
+        $expected = $this->pregLogEntry('WARNING', 'Test message');
 
         $logger->log(5, 'Test message');
 
         $logs = TestHandler::getLogs();
 
         $this->assertCount(1, $logs);
-        $this->assertSame($expected, $logs[0]);
+        $this->assertMatchesRegularExpression($expected, $logs[0]);
     }
 
     public function testNonStringMessage()
