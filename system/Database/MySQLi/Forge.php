@@ -183,9 +183,9 @@ class Forge extends BaseForge
     }
 
     /**
-     * Process indexes
+     * Generates SQL to add indexes
      *
-     * @param string $table (ignored)
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
      */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {

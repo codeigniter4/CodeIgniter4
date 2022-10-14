@@ -1027,6 +1027,11 @@ class Forge
         }
     }
 
+    /**
+     * Generates SQL to add primary key
+     *
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
+     */
     protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
     {
         $sql = '';
@@ -1099,6 +1104,11 @@ class Forge
         return true;
     }
 
+    /**
+     * Generates SQL to add indexes
+     *
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
+     */
     protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
@@ -1141,7 +1151,9 @@ class Forge
     }
 
     /**
-     * Generates SQL to process foreign keys
+     * Generates SQL to add foreign keys
+     *
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
      */
     protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
