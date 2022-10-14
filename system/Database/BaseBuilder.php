@@ -2068,6 +2068,72 @@ class BaseBuilder
     }
 
     /**
+     * Sets data source as a query for insert/update/upsert
+     *
+     * @param BaseBuilder|string $query
+     */
+    public function fromQuery($query): BaseBuilder
+    {
+        if (! empty($query)) {
+            if ($query instanceof BaseBuilder) {
+                $query = $query->getCompiledSelect();
+            }
+
+            if (is_string($query)) {
+                $this->QBOptions['fromQuery'] = $query;
+                $this->QBKeys                 = $this->db->protectIdentifiers($this->fieldsFromQuery($query));
+                $this->QBSet                  = [];
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets column names from a select query
+     *
+     * @param string $sql
+     */
+    protected function fieldsFromQuery(string $sql): array
+    {
+        $sql = preg_replace('/\\(([^()]*+|(?R))*\\)/', '', $sql); // remove everything in parenthesis - removes "FROM" and commas
+        $d   = ['`',  "'", '"'];
+
+        $o   = ' ';
+        $r   = '$';
+        $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
+        $sql = preg_replace_callback("~{$d[1]}([^{$d[1]}]*){$d[1]}~", static fn ($s) => str_replace($o, $r, "{$d[1]}{$s[1]}{$d[1]}"), $sql);
+        $sql = preg_replace_callback("~{$d[2]}([^{$d[2]}]*){$d[2]}~", static fn ($s) => str_replace($o, $r, "{$d[2]}{$s[1]}{$d[2]}"), $sql);
+
+        $o   = ',';
+        $r   = '';
+        $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
+        $sql = preg_replace_callback("~{$d[1]}([^{$d[1]}]*){$d[1]}~", static fn ($s) => str_replace($o, $r, "{$d[1]}{$s[1]}{$d[1]}"), $sql);
+        $sql = preg_replace_callback("~{$d[2]}([^{$d[2]}]*){$d[2]}~", static fn ($s) => str_replace($o, $r, "{$d[2]}{$s[1]}{$d[2]}"), $sql);
+        $sql = preg_replace("/[\n\r]/", ' ', $sql);
+
+        // pull out main select fields
+        preg_match('/select(.*?) from /is', $sql, $matches);
+
+        $sql = $matches[1];
+
+        $columnsStrings = explode(',', $sql);
+
+        $newColumns = [];
+
+        foreach ($columnsStrings as $string) {
+            $words = preg_replace('/\.+/', ' ', $string);
+            $words = explode(' ', trim($words));
+            $word  = trim(str_replace('$', ' ', trim(end($words))));
+            $word  = trim(str_replace($d, '', $word));
+
+            $newColumns[] = $word;
+        }
+
+        return $newColumns;
+    }
+
+    /**
      * Converts value array of array to array of strings
      */
     protected function formatValues(array $values): array
@@ -2429,7 +2495,7 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queryies
      *
-     * @param array|object|null        $set         a dataset or select query
+     * @param array|BaseBuilder|RawSqwl|object|null        $set         a dataset or select query
      * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
