@@ -870,7 +870,7 @@ final class URITest extends CIUnitTestCase
 
         $config            = new App();
         $config->baseURL   = 'http://example.com/ci/v4/';
-        $config->indexPage = 'index.php';
+        $config->indexPage = '';
         Factories::injectMock('config', 'App', $config);
 
         $request = Services::request($config);
