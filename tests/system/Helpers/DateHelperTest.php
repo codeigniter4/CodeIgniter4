@@ -32,8 +32,8 @@ final class DateHelperTest extends CIUnitTestCase
 
     public function testNowSpecific()
     {
-        // Chicago should be two hours ahead of Vancouver
-        $this->assertCloseEnough(7200, now('America/Chicago') - now('America/Vancouver'));
+        // Chicago should be two hours ahead of Vancouver (+- 10 sec)
+        $this->assertCloseEnough(7200, now('America/Chicago') - now('America/Vancouver'), '', 10);
     }
 
     public function testTimezoneSelectDefault()
