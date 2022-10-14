@@ -15,6 +15,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 use stdclass;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -653,5 +654,80 @@ final class UpsertTest extends CIUnitTestCase
         $sql = $builder->getCompiledUpsert();
 
         $this->assertStringContainsString('upsertone@test.com', $sql);
+    }
+
+    public function testUpsertBatchWithQuery()
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->forge->dropTable('user2', true);
+
+        $this->forge->addField([
+            'id'          => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'        => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'       => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'     => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at'  => ['type' => 'DATETIME', 'null' => true],
+            'updated_at'  => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at'  => ['type' => 'DATETIME', 'null' => true],
+            'last_loggin' => ['type' => 'DATETIME', 'null' => true],
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user2', true);
+
+        $data = [
+            [
+                'name'    => 'Derek Jones user2',
+                'email'   => 'derek@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Ahmadinejad user2',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Richard A Causey user2',
+                'email'   => 'richard@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Chris Martin user2',
+                'email'   => 'chris@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'New User user2',
+                'email'   => 'newuser@example.com',
+                'country' => 'US',
+            ],
+            [
+                'name'    => 'New User2 user2',
+                'email'   => 'newuser2@example.com',
+                'country' => 'US',
+            ],
+        ];
+        $this->db->table('user2')->insertBatch($data);
+
+        $rawSql = new RawSql('CURRENT_TIMESTAMP');
+
+        $updateFields = ['updated_at' => $rawSql];
+
+        $subQuery = $this->db->table('user2')->select('email, name, country');
+
+        $this->db->table('user')->updateFields($updateFields, true)->onConstraint('email')->upsertBatch($subQuery);
+
+        $this->seeInDatabase('user', ['name' => 'Derek Jones user2', 'email' => 'derek@world.com']);
+        $this->seeInDatabase('user', ['name' => 'New User user2', 'email' => 'newuser@example.com']);
+
+        $result = $this->db->table('user')->get()->getResultArray();
+
+        foreach ($result as $row) {
+            if ($row['email'] === 'newuser@example.com' || $row['email'] === 'newuser2@example.com') {
+                $this->assertNull($row['updated_at']);
+            } else {
+                $this->assertNotNull($row['updated_at']);
+            }
+        }
+
+        $this->forge->dropTable('user2', true);
     }
 }
