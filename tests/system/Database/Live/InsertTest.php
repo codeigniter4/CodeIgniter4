@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -147,5 +148,69 @@ final class InsertTest extends CIUnitTestCase
         ]);
 
         $this->seeInDatabase('misc', ['value' => $hash]);
+    }
+
+    public function testInsertWithQuery()
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->forge->dropTable('user2', true);
+
+        $this->forge->addField([
+            'id'          => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'        => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'       => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'     => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at'  => ['type' => 'DATETIME', 'null' => true],
+            'updated_at'  => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at'  => ['type' => 'DATETIME', 'null' => true],
+            'last_loggin' => ['type' => 'DATETIME', 'null' => true],
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user2', true);
+
+        $data = [
+            [
+                'name'    => 'Derek Jones user2',
+                'email'   => 'derek@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Ahmadinejad user2',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Richard A Causey user2',
+                'email'   => 'richard@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Chris Martin user2',
+                'email'   => 'chris@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'New User user2',
+                'email'   => 'newuser@example.com',
+                'country' => 'US',
+            ],
+            [
+                'name'    => 'New User2 user2',
+                'email'   => 'newuser2@example.com',
+                'country' => 'US',
+            ],
+        ];
+        $this->db->table('user2')->insertBatch($data);
+
+        $subQuery = $this->db->table('user2')
+            ->select('user2.name, user2.email, user2.country')
+            ->join('user', 'user.email = user2.email', 'left')
+            ->where('user.email IS NULL');
+
+        $this->db->table('user')->insertBatch($subQuery);
+
+        $this->seeInDatabase('user', ['name' => 'New User user2']);
+        $this->seeInDatabase('user', ['name' => 'New User2 user2']);
+
+        $this->forge->dropTable('user2', true);
     }
 }
