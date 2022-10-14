@@ -152,7 +152,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     public function close(): bool
     {
         if (! isset($this->statement)) {
-            return true;
+            throw new BadMethodCallException('Cannot call close on a non-existing prepared statement.');
         }
 
         try {

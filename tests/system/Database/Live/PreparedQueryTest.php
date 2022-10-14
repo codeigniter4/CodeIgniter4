@@ -43,7 +43,11 @@ final class PreparedQueryTest extends CIUnitTestCase
         parent::tearDown();
 
         if ($this->query !== null) {
-            $this->query->close();
+            try {
+                $this->query->close();
+            } catch (BadMethodCallException $e) {
+                $this->query = null;
+            }
         }
     }
 
@@ -162,10 +166,18 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->query->close();
 
+        // Try to execute a non-existing prepared statement
         try {
             $this->query->execute('bar', 'bar@example.com', 'GB');
         } catch (BadMethodCallException $e) {
             $this->assertSame('You must call prepare before trying to execute a prepared statement.', $e->getMessage());
+        }
+
+        // Try to close a non-existing prepared statement
+        try {
+            $this->query->close();
+        } catch (BadMethodCallException $e) {
+            $this->assertSame('Cannot call close on a non-existing prepared statement.', $e->getMessage());
         }
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
