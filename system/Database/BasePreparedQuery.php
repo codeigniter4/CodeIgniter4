@@ -148,6 +148,8 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
 
     /**
      * Explicitly closes the prepared statement.
+     *
+     * @throws BadMethodCallException
      */
     public function close(): bool
     {
