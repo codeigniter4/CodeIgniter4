@@ -329,6 +329,8 @@ is true:
 
 .. literalinclude:: curlrequest/032.php
 
+.. _curlrequest-version:
+
 version
 =======
 
