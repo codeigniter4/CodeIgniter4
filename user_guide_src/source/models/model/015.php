@@ -13,4 +13,3 @@ $userModel->insert($data, false);
 
 // Returns inserted row's primary key
 $userModel->getInsertID();
-
