@@ -2070,13 +2070,15 @@ class BaseBuilder
     /**
      * Sets data source as a query for insert/update/upsert
      *
-     * @param BaseBuilder|string $query
+     * @param BaseBuilder|RawSql|string $query
      */
     public function fromQuery($query): BaseBuilder
     {
         if (! empty($query)) {
             if ($query instanceof BaseBuilder) {
                 $query = $query->getCompiledSelect();
+            } elseif ($query instanceof RawSql) {
+                $query = $query->__toString();
             }
 
             if (is_string($query)) {
@@ -2502,7 +2504,23 @@ class BaseBuilder
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
+        $this->fromQuery($set);
+
         $this->onConstraint($constraints);
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $sql = $this->_updateBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            $this->db->query($sql, null, false);
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
 
         if ($set !== null && $set !== []) {
             $this->setData($set, true);
