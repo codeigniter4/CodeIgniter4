@@ -262,11 +262,8 @@ final class UpsertTest extends CIUnitTestCase
             ->onConstraint('email')
             ->getCompiledUpsert();
 
-        $pos = strpos($sql, 'ahmadinejad@example.com');
-        $this->assertNotFalse($pos);
-
-        $pos = strpos($sql, 'pedro@example.com');
-        $this->assertNotFalse($pos);
+        $this->assertStringContainsString('ahmadinejad@example.com', $sql);
+        $this->assertStringContainsString('pedro@example.com', $sql);
 
         $insertString = 'INSERT INTO '
             . $this->db->protectIdentifiers('db_user')
@@ -278,8 +275,7 @@ final class UpsertTest extends CIUnitTestCase
             $insertString = 'INSERT ("country", "email", "name")';
         }
 
-        $pos = strpos($sql, $insertString);
-        $this->assertNotFalse($pos);
+        $this->assertStringContainsString($insertString, $sql);
     }
 
     public function testUpsertCauseConstraintError()
