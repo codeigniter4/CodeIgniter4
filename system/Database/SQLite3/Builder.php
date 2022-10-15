@@ -185,7 +185,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
                         ' = ' . $value :
-                        ' = ' . '`excluded`.' . $value),
+                        ' = `excluded`.' . $value),
                     array_keys($updateFields),
                     $updateFields
                 )

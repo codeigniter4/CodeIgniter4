@@ -264,7 +264,7 @@ class Builder extends BaseBuilder
             // Oracle doesn't support ignore on updates so we will use MERGE
             $sql = 'MERGE INTO ' . $table . "\n";
 
-            $sql .= 'USING (' . "\n{:_table_:}";
+            $sql .= "USING (\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 
@@ -280,7 +280,7 @@ class Builder extends BaseBuilder
 
             $sql .= "WHEN MATCHED THEN UPDATE\n";
 
-            $sql .= 'SET' . "\n";
+            $sql .= "SET\n";
 
             $sql .= implode(
                 ",\n",
@@ -365,7 +365,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
                         $key :
-                        $table . '.' . $key . ' = ' . '"_upsert".' . $key),
+                        $table . '.' . $key . ' = "_upsert".' . $key),
                     $constraints
                 )
             ) . ")\n";
@@ -377,7 +377,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
                         ' = ' . $value :
-                        ' = ' . '"_upsert".' . $value),
+                        ' = "_upsert".' . $value),
                     array_keys($updateFields),
                     $updateFields
                 )

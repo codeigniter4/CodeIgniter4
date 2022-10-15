@@ -1938,19 +1938,16 @@ class BaseBuilder
         if ($sql === '') {
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys)->QBOptions['updateFields'] ?? [];
 
-            $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ')' . "\n"
-                . '{:_table_:}'
-                . 'ON DUPLICATE KEY UPDATE' . "\n"
-                . implode(
-                    ",\n",
-                    array_map(
-                        static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
-                            ' = ' . $value :
-                            ' = ' . 'VALUES(' . $value . ')'),
-                        array_keys($updateFields),
-                        $updateFields
-                    )
-                );
+            $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $keys) . ")\n{:_table_:}ON DUPLICATE KEY UPDATE\n" . implode(
+                ",\n",
+                array_map(
+                    static fn ($key, $value) => $table . '.' . $key . ($value instanceof RawSql ?
+                        ' = ' . $value :
+                        ' = VALUES(' . $value . ')'),
+                    array_keys($updateFields),
+                    $updateFields
+                )
+            );
 
             $this->QBOptions['sql'] = $sql;
         }
@@ -2443,7 +2440,7 @@ class BaseBuilder
 
             $sql = 'UPDATE ' . $this->compileIgnore('update') . $table . "\n";
 
-            $sql .= 'SET' . "\n";
+            $sql .= "SET\n";
 
             $sql .= implode(
                 ",\n",
@@ -2456,7 +2453,7 @@ class BaseBuilder
                 )
             ) . "\n";
 
-            $sql .= 'FROM (' . "\n{:_table_:}";
+            $sql .= "FROM (\n{:_table_:}";
 
             $sql .= ') ' . $alias . "\n";
 

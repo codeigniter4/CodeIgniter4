@@ -704,7 +704,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key) => ($key instanceof RawSql ?
                         $key :
-                        $fullTableName . '.' . $key . ' = ' . '"_upsert".' . $key),
+                        $fullTableName . '.' . $key . ' = "_upsert".' . $key),
                     $constraints
                 )
             ) . ")\n";
@@ -716,7 +716,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
                         ' = ' . $value :
-                        ' = ' . '"_upsert".' . $value),
+                        ' = "_upsert".' . $value),
                     array_keys($updateFields),
                     $updateFields
                 )
