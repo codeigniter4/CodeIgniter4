@@ -33,8 +33,6 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
-      matrix:
-        php-versions: ['8.0', '8.1']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,7 +40,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: '8.1'
           extensions: intl
 
       - name: Use latest Composer
