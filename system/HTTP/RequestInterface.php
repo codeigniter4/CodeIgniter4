@@ -14,7 +14,7 @@ namespace CodeIgniter\HTTP;
 /**
  * Expected behavior of an HTTP request
  */
-interface RequestInterface
+interface RequestInterface extends MessageInterface
 {
     /**
      * Gets the user's IP address.

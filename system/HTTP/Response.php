@@ -29,7 +29,7 @@ use Config\Services;
  * - Headers
  * - Message body
  */
-class Response extends Message implements MessageInterface, ResponseInterface
+class Response extends Message implements ResponseInterface
 {
     use ResponseTrait;
 

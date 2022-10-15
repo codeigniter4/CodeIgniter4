@@ -16,7 +16,7 @@ use CodeIgniter\Validation\FormatRules;
 /**
  * Representation of an HTTP request.
  */
-class Request extends Message implements MessageInterface, RequestInterface
+class Request extends Message implements RequestInterface
 {
     use RequestTrait;
 
