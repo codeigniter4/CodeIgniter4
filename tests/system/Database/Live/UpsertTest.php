@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
@@ -27,6 +28,11 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 final class UpsertTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+
+    /**
+     * @var Forge|mixed
+     */
+    public $forge;
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -24,6 +25,11 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 final class InsertTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+
+    /**
+     * @var Forge|mixed
+     */
+    public $forge;
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
