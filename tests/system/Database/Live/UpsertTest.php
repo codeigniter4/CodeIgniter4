@@ -624,13 +624,11 @@ final class UpsertTest extends CIUnitTestCase
     {
         $builder = $this->db->table('user');
 
-        $ts = 'DATE(CURRENT_TIMESTAMP)';
+        $ts = "DATE('2022-10-01 12:00:00')";
         if ($this->db->DBDriver === 'OCI8') {
-            $ts = "to_char(CURRENT_TIMESTAMP, 'yyyy-mm-dd')";
+            $ts = "to_char(TO_DATE('2022-10-01 12:00:00','yyyy/mm/dd hh24:mi:ss'), 'yyyy-mm-dd')";
         } elseif ($this->db->DBDriver === 'SQLSRV') {
-            $ts = 'CAST( GETDATE() AS date )';
-        } elseif ($this->db->DBDriver === 'SQLite3') {
-            $ts = "DATE(datetime(CURRENT_TIMESTAMP, 'localtime'))";
+            $ts = "CAST('2022-10-01 12:00:00' AS date )";
         }
 
         $builder->set('email', 'jarvis@example.com');
@@ -638,7 +636,7 @@ final class UpsertTest extends CIUnitTestCase
         $builder->set('country', $ts, false);
         $builder->upsert();
 
-        $dt = date('Y-m-d');
+        $dt = '2022-10-01';
 
         $this->seeInDatabase('user', ['email' => 'jarvis@example.com', 'name' => 'Jarvis', 'country' => $dt]);
     }
