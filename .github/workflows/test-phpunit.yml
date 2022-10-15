@@ -186,7 +186,7 @@ jobs:
           COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
 
   coveralls-finish:
-    if: github.repository_owner == 'codeigniter4'
+    if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
     needs: [tests]
     runs-on: ubuntu-20.04
 
