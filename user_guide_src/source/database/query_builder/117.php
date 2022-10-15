@@ -1,9 +1,9 @@
 <?php
 
-$query = "SELECT user2.name, user2.email, user2.country
+$query = 'SELECT user2.name, user2.email, user2.country
           FROM user2
           LEFT JOIN user ON user.email = user2.email
-          WHERE user.email IS NULL";
+          WHERE user.email IS NULL';
 
 $sql = $builder->ignore(true)->fromQuery($query)->insertBatch();
 /* MySQLi produces:

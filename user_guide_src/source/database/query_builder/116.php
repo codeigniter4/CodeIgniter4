@@ -28,4 +28,3 @@ $sql = $builder->table('user')
  * `mytable`.`country` = `u`.`country`,
  * `mytable`.`updated_at` = CURRENT_TIMESTAMP()
  */
-
