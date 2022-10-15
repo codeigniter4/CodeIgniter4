@@ -40,7 +40,7 @@ use LogicException;
 /**
  * This class is the core of the framework, and will analyse the
  * request, route it to a controller, and send back the response.
- * Of course, there are variations to that flow, but this is the brains.
+ * Of course, there are variations to that flow: but this is the brains.
  */
 class CodeIgniter
 {
