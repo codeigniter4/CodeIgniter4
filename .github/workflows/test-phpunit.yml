@@ -184,15 +184,3 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_PARALLEL: true
           COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
-
-  coveralls-finish:
-    if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
-    needs: [tests]
-    runs-on: ubuntu-20.04
-
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
