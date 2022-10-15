@@ -628,7 +628,7 @@ final class UpsertTest extends CIUnitTestCase
         if ($this->db->DBDriver === 'OCI8') {
             $ts = "to_char(TO_DATE('2022-10-01 12:00:00','yyyy/mm/dd hh24:mi:ss'), 'yyyy-mm-dd')";
         } elseif ($this->db->DBDriver === 'SQLSRV') {
-            $ts = "CAST('2022-10-01 12:00:00' AS date )";
+            $ts = "CAST('2022-10-01 12:00:00' AS date)";
         }
 
         $builder->set('email', 'jarvis@example.com');
