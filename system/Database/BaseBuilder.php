@@ -1785,7 +1785,9 @@ class BaseBuilder
             }
         }
 
-        $this->resetWrite();
+        if (! $this->testMode) {
+            $this->resetWrite();
+        }
 
         return $this->testMode ? $savedSQL : $affectedRows;
     }
