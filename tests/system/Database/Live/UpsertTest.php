@@ -629,6 +629,8 @@ final class UpsertTest extends CIUnitTestCase
             $ts = "to_char(CURRENT_TIMESTAMP, 'yyyy-mm-dd')";
         } elseif ($this->db->DBDriver === 'SQLSRV') {
             $ts = 'CAST( GETDATE() AS date )';
+        } elseif ($this->db->DBDriver === 'SQLite3') {
+            $ts = "DATE(datetime(CURRENT_TIMESTAMP, 'localtime'))";
         }
 
         $builder->set('email', 'jarvis@example.com');
