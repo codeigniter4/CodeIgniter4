@@ -59,9 +59,8 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
     private function getHostFromUri(URI $uri): string
     {
         $host = $uri->getHost();
-        $host .= $uri->getPort() ? ':' . $uri->getPort() : '';
 
-        return $host;
+        return $host . ($uri->getPort() ? ':' . $uri->getPort() : '');
     }
 
     /**
@@ -157,6 +156,6 @@ class OutgoingRequest extends Message implements OutgoingRequestInterface
             return true;
         }
 
-        return (bool) ($this->header('Host')->getValue() === '');
+        return $this->header('Host')->getValue() === '';
     }
 }
