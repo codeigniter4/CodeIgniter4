@@ -12,9 +12,10 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Validation\FormatRules;
+use Config\App;
 
 /**
- * Representation of an HTTP request.
+ * Representation of an incoming, server-side HTTP request.
  */
 class Request extends OutgoingRequest implements RequestInterface
 {
@@ -32,7 +33,7 @@ class Request extends OutgoingRequest implements RequestInterface
     /**
      * Constructor.
      *
-     * @param object $config
+     * @param App $config
      *
      * @deprecated The $config is no longer needed and will be removed in a future version
      */
