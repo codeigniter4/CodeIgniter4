@@ -454,3 +454,8 @@ parameters:
 			message: "#^Property Config\\\\View\\:\\:\\$plugins \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/View/Parser.php
+
+		-
+			message: "#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#"
+			count: 1
+			path: system/HTTP/CURLRequest.php
