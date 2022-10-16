@@ -471,7 +471,7 @@ trait ResponseTrait
         header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReasonPhrase()), true, $this->getStatusCode());
 
         // Send all of our headers
-        foreach (array_keys($this->getHeaders()) as $name) {
+        foreach (array_keys($this->headers()) as $name) {
             header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
         }
 
