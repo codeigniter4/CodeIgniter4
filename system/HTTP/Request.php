@@ -16,7 +16,7 @@ use CodeIgniter\Validation\FormatRules;
 /**
  * Representation of an HTTP request.
  */
-class Request extends Message implements RequestInterface
+class Request extends OutgoingRequest implements RequestInterface
 {
     use RequestTrait;
 
@@ -28,20 +28,6 @@ class Request extends Message implements RequestInterface
      * @deprecated Check the App config directly
      */
     protected $proxyIPs;
-
-    /**
-     * Request method.
-     *
-     * @var string
-     */
-    protected $method;
-
-    /**
-     * A URI instance.
-     *
-     * @var URI
-     */
-    protected $uri;
 
     /**
      * Constructor.
