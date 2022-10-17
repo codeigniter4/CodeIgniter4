@@ -59,7 +59,7 @@ final class TestCaseTest extends CIUnitTestCase
     public function testStreamFilter()
     {
         CLI::write('first.');
-        $expected = "\nfirst.\n";
+        $expected = PHP_EOL . 'first.' . PHP_EOL;
         $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
