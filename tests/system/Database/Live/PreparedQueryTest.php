@@ -42,12 +42,10 @@ final class PreparedQueryTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        if ($this->query !== null) {
-            try {
-                $this->query->close();
-            } catch (BadMethodCallException $e) {
-                $this->query = null;
-            }
+        try {
+            $this->query->close();
+        } catch (BadMethodCallException $e) {
+            $this->query = null;
         }
     }
 
