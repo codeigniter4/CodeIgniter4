@@ -319,13 +319,17 @@ Saving Data
 insert()
 --------
 
-An associative array of data is passed into this method as the only parameter to create a new
-row of data in the database. The array's keys must match the name of the columns in a ``$table``, while
-the array's values are the values to save for that key:
+The first parametre is an associative array of data to create a new row of data in the database.
+If an object is passed instead of an array, it will attempt to convert it to an array.
 
-.. literalinclude:: model/015.php
+The array's keys must match the name of the columns in the ``$table``, while the array's values are the values to save for that key.
+
+The optional second parameter is of type boolean, and if it is set to false, the method will return a boolean value,
+which indicates the success or failure of the query.
 
 You can retrieve the last inserted row's primary key using the ``getInsertID()`` method.
+
+.. literalinclude:: model/015.php
 
 .. _model-allow-empty-inserts:
 
