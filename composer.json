@@ -24,7 +24,7 @@
         "phpstan/phpstan": "^1.7.1",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.14.5"
+        "rector/rector": "0.14.6"
     },
     "suggest": {
         "ext-imagick": "If you use Image class ImageMagickHandler",
