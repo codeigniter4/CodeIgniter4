@@ -14,10 +14,19 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
- * Expected behavior of an HTTP request
+ * Expected behavior of an HTTP messages
  */
 interface MessageInterface
 {
+    /**
+     * Retrieves the HTTP protocol version as a string.
+     *
+     * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
+     *
+     * @return string HTTP protocol version.
+     */
+    public function getProtocolVersion(): string;
+
     /**
      * Sets the body of the current message.
      *
