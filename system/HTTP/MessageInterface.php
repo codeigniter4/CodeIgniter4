@@ -14,7 +14,7 @@ namespace CodeIgniter\HTTP;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 
 /**
- * Expected behavior of an HTTP messages
+ * Expected behavior of an HTTP message
  */
 interface MessageInterface
 {
