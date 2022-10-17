@@ -99,6 +99,14 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
+     * Deallocate prepared statements
+     */
+    protected function _close(): bool
+    {
+        return pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"') !== false;
+    }
+
+    /**
      * Replaces the ? placeholders with $1, $2, etc parameters for use
      * within the prepared query.
      */

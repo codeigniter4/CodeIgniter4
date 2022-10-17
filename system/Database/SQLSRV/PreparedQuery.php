@@ -117,6 +117,14 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
+     * Deallocate prepared statements
+     */
+    protected function _close(): bool
+    {
+        return sqlsrv_free_stmt($this->statement);
+    }
+
+    /**
      * Handle parameters
      */
     protected function parameterize(string $queryString): array

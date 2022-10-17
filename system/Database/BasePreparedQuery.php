@@ -25,7 +25,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The prepared statement itself.
      *
-     * @var object|resource
+     * @var object|resource|null
      */
     protected $statement;
 
@@ -147,16 +147,27 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     abstract public function _getResult();
 
     /**
-     * Explicitly closes the statement.
+     * Explicitly closes the prepared statement.
+     *
+     * @throws BadMethodCallException
      */
-    public function close()
+    public function close(): bool
     {
-        if (! is_object($this->statement) || ! method_exists($this->statement, 'close')) {
-            return;
+        if (! isset($this->statement)) {
+            throw new BadMethodCallException('Cannot call close on a non-existing prepared statement.');
         }
 
-        $this->statement->close();
+        try {
+            return $this->_close();
+        } finally {
+            $this->statement = null;
+        }
     }
+
+    /**
+     * The database-dependent version of the close method.
+     */
+    abstract protected function _close(): bool;
 
     /**
      * Returns the SQL that has been prepared.

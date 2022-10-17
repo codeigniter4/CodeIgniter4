@@ -56,8 +56,6 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
-     *
-     * @todo finalize()
      */
     public function _execute(array $data): bool
     {
@@ -92,5 +90,13 @@ class PreparedQuery extends BasePreparedQuery
     public function _getResult()
     {
         return $this->result;
+    }
+
+    /**
+     * Deallocate prepared statements
+     */
+    protected function _close(): bool
+    {
+        return $this->statement->close();
     }
 }

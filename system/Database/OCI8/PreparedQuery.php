@@ -68,7 +68,7 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
      */
     public function _execute(array $data): bool
     {
-        if (null === $this->statement) {
+        if (! isset($this->statement)) {
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
@@ -96,6 +96,14 @@ class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
     public function _getResult()
     {
         return $this->statement;
+    }
+
+    /**
+     * Deallocate prepared statements
+     */
+    protected function _close(): bool
+    {
+        return oci_free_statement($this->statement);
     }
 
     /**
