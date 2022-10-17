@@ -15,6 +15,8 @@ use InvalidArgumentException;
 
 /**
  * Representation of an outgoing, client-side request.
+ *
+ * Corresponds to Psr7\RequestInterface.
  */
 interface OutgoingRequestInterface extends MessageInterface
 {

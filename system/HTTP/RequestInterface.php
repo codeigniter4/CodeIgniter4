@@ -13,6 +13,8 @@ namespace CodeIgniter\HTTP;
 
 /**
  * Representation of an incoming, server-side HTTP request.
+ *
+ * Corresponds to Psr7\ServerRequestInterface.
  */
 interface RequestInterface extends OutgoingRequestInterface
 {
