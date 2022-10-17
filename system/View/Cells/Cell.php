@@ -65,10 +65,11 @@ class Cell
      * current scope and captures the output buffer instead of
      * relying on the view service.
      */
-    final protected function view(?string $view): string
+    final protected function view(?string $view, array $data = []): string
     {
         $properties = $this->getPublicProperties();
         $properties = $this->includeComputedProperties($properties);
+        $properties = array_merge($properties, $data);
 
         // If no view is specified, we'll try to guess it based on the class name.
         if (empty($view)) {
