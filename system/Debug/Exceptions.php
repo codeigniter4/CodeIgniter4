@@ -153,6 +153,20 @@ class Exceptions
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
+        if ($this->config->failOnDeprecated !== true && $severity === E_DEPRECATED) {
+            if ($this->config->log === true) {
+                $exception = new ErrorException($message, 0, $severity, $file, $line);
+                log_message('warning', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                    'message' => $exception->getMessage(),
+                    'exFile'  => clean_path($exception->getFile()), // {file} refers to THIS file
+                    'exLine'  => $exception->getLine(), // {line} refers to THIS line
+                    'trace'   => self::renderBacktrace($exception->getTrace()),
+                ]);
+            }
+
+            return;
+        }
+
         if (! (error_reporting() & $severity)) {
             return;
         }

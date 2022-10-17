@@ -35,6 +35,19 @@ class Exceptions extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
+     * DO NOT FAIL ON DEPRECATIONS
+     * --------------------------------------------------------------------------
+     * By default deprecation errors will be thrown as exception stopping
+     * the framework from further code execution. With this parameter set to
+     * true the deprecations will not throw exception but instead will be written
+     * to the log with warning level.
+     *
+     * @var bool
+     */
+    public $failOnDeprecated = true;
+
+    /**
+     * --------------------------------------------------------------------------
      * Error Views Path
      * --------------------------------------------------------------------------
      * This is the path to the directory that contains the 'cli' and 'html'
