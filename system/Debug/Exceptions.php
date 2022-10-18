@@ -15,9 +15,8 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
@@ -36,6 +35,8 @@ class Exceptions
      * Nesting level of the output buffering mechanism
      *
      * @var int
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     public $ob_level;
 
@@ -44,6 +45,8 @@ class Exceptions
      * cli and html error view directories.
      *
      * @var string
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     protected $viewPath;
 
@@ -57,7 +60,7 @@ class Exceptions
     /**
      * The request.
      *
-     * @var CLIRequest|IncomingRequest
+     * @var RequestInterface
      */
     protected $request;
 
@@ -69,12 +72,10 @@ class Exceptions
     protected $response;
 
     /**
-     * @param CLIRequest|IncomingRequest $request
+     * @param RequestInterface $request
      */
     public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response)
     {
-        $this->ob_level = ob_get_level();
-        $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
         $this->config   = $config;
         $this->request  = $request;
         $this->response = $response;
@@ -106,8 +107,6 @@ class Exceptions
      * Catches any uncaught errors and exceptions, including most Fatal errors
      * (Yay PHP7!). Will log the error, display it if display_errors is on,
      * and fire an event that allows custom actions to be taken at this point.
-     *
-     * @codeCoverageIgnore
      */
     public function exceptionHandler(Throwable $exception)
     {
@@ -122,6 +121,27 @@ class Exceptions
             ]);
         }
 
+        // For upgraded users.
+        if (! method_exists($this->config, 'handler')) {
+            $this->defaultExceptionHandler($exception, $statusCode, $exitCode);
+
+            return;
+        }
+
+        $handler = $this->config->handler($statusCode, $exception);
+
+        if (! $handler instanceof BaseExceptionHandler) {
+            exit('Exception Handler not found.');
+        }
+
+        $handler->handle($exception, $this->request, $this->response, $statusCode, $exitCode);
+    }
+
+    /**
+     * @deprecated This method is only for backward compatibility.
+     */
+    private function defaultExceptionHandler(Throwable $exception, int $statusCode, int $exitCode)
+    {
         if (! is_cli()) {
             try {
                 $this->response->setStatusCode($statusCode);
@@ -139,6 +159,8 @@ class Exceptions
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
 
                 exit($exitCode);
+
+                return; // @phpstan-ignore-line
             }
         }
 
@@ -195,6 +217,8 @@ class Exceptions
      * whether an HTTP or CLI request, etc.
      *
      * @return string The path and filename of the view file to use
+     *
+     * @deprecated No longer used. Moved to ExceptionHandler.
      */
     protected function determineView(Throwable $exception, string $templatePath): string
     {
@@ -221,6 +245,8 @@ class Exceptions
 
     /**
      * Given an exception and status code will display the error to the client.
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     protected function render(Throwable $exception, int $statusCode)
     {
@@ -265,6 +291,8 @@ class Exceptions
 
     /**
      * Gathers the variables that will be made available to the view.
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     protected function collectVars(Throwable $exception, int $statusCode): array
     {
@@ -289,6 +317,8 @@ class Exceptions
      * Mask sensitive data in the trace.
      *
      * @param array|object $trace
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     protected function maskSensitiveData(&$trace, array $keysToMask, string $path = '')
     {
