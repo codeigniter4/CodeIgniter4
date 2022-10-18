@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Debug\BaseExceptionHandler;
+use CodeIgniter\Debug\ExceptionHandler;
 use Psr\Log\LogLevel;
 use Throwable;
 
@@ -98,6 +99,6 @@ class Exceptions extends BaseConfig
      */
     public function handler(int $statusCode, Throwable $exception): BaseExceptionHandler
     {
-        return new \CodeIgniter\Debug\ExceptionHandler($this);
+        return new ExceptionHandler($this);
     }
 }
