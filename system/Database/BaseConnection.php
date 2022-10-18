@@ -1538,20 +1538,34 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Disables foreign key checks temporarily.
+     *
+     * @return bool
      */
     public function disableForeignKeyChecks()
     {
         $sql = $this->_disableForeignKeyChecks();
+
+        if ($sql === '') {
+            // The feature is not supported.
+            return false;
+        }
 
         return $this->query($sql);
     }
 
     /**
      * Enables foreign key checks temporarily.
+     *
+     * @return bool
      */
     public function enableForeignKeyChecks()
     {
         $sql = $this->_enableForeignKeyChecks();
+
+        if ($sql === '') {
+            // The feature is not supported.
+            return false;
+        }
 
         return $this->query($sql);
     }
@@ -1646,6 +1660,28 @@ abstract class BaseConnection implements ConnectionInterface
      * @see    getForeignKeyData()
      */
     abstract protected function _foreignKeyData(string $table): array;
+
+    /**
+     * Platform-specific SQL statement to disable foreign key checks.
+     *
+     * If this feature is not supported, return empty string.
+     *
+     * @return string
+     *
+     * @see disableForeignKeyChecks()
+     */
+    abstract protected function _disableForeignKeyChecks();
+
+    /**
+     * Platform-specific SQL statement to enable foreign key checks.
+     *
+     * If this feature is not supported, return empty string.
+     *
+     * @return string
+     *
+     * @see enableForeignKeyChecks()
+     */
+    abstract protected function _enableForeignKeyChecks();
 
     /**
      * Accessor for properties if they exist.

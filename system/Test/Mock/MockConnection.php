@@ -240,4 +240,14 @@ class MockConnection extends BaseConnection
     {
         return true;
     }
+
+    protected function _disableForeignKeyChecks()
+    {
+        return '';
+    }
+
+    protected function _enableForeignKeyChecks()
+    {
+        return '';
+    }
 }

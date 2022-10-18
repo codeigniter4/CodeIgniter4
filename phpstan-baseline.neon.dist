@@ -101,16 +101,6 @@ parameters:
 			path: system/Database/BaseBuilder.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_disableForeignKeyChecks\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_enableForeignKeyChecks\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#"
 			count: 1
 			path: system/Database/BaseConnection.php
