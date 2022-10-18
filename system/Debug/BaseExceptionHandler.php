@@ -28,12 +28,12 @@ abstract class BaseExceptionHandler
     /**
      * ResponseTrait needs this.
      */
-    protected ?RequestInterface $request;
+    protected ?RequestInterface $request = null;
 
     /**
      * ResponseTrait needs this.
      */
-    protected ?ResponseInterface $response;
+    protected ?ResponseInterface $response = null;
 
     /**
      * Config for debug exceptions.
@@ -241,9 +241,8 @@ abstract class BaseExceptionHandler
             // CLI error views output to STDERR/STDOUT, so ob_start() does not work.
             ob_start();
             include $viewFile;
-            $output = ob_get_clean();
 
-            return $output;
+            return ob_get_clean();
         })();
     }
 }

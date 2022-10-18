@@ -130,10 +130,6 @@ class Exceptions
 
         $handler = $this->config->handler($statusCode, $exception);
 
-        if (! $handler instanceof BaseExceptionHandler) {
-            exit('Exception Handler not found.');
-        }
-
         $handler->handle($exception, $this->request, $this->response, $statusCode, $exitCode);
     }
 
@@ -159,8 +155,6 @@ class Exceptions
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
 
                 exit($exitCode);
-
-                return; // @phpstan-ignore-line
             }
         }
 

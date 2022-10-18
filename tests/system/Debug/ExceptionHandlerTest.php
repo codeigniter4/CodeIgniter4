@@ -94,8 +94,8 @@ final class ExceptionHandlerTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $json = json_decode($output);
-        $this->assertSame('CodeIgniter\Exceptions\PageNotFoundException', $json->title);
-        $this->assertSame('CodeIgniter\Exceptions\PageNotFoundException', $json->type);
+        $this->assertSame(PageNotFoundException::class, $json->title);
+        $this->assertSame(PageNotFoundException::class, $json->type);
         $this->assertSame(404, $json->code);
         $this->assertSame('Controller or its method is not found: Foo::bar', $json->message);
     }
