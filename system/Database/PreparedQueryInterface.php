@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Database;
 
+use BadMethodCallException;
+
 /**
  * Prepared query interface
  *
@@ -36,8 +38,10 @@ interface PreparedQueryInterface
 
     /**
      * Explicity closes the statement.
+     *
+     * @throws BadMethodCallException
      */
-    public function close();
+    public function close(): bool;
 
     /**
      * Returns the SQL that has been prepared.
