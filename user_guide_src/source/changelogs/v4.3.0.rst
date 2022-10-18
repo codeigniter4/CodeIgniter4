@@ -53,7 +53,7 @@ Others
 Interface Changes
 =================
 
-- Added missing ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
+- Added missing ``getProtocolVersion()``, ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
 - Now ``RequestInterface`` extends ``MessageInterface``.
 - Now ``ResponseInterface`` extends ``MessageInterface``.
 - Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
