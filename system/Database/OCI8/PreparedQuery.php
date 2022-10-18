@@ -18,6 +18,8 @@ use CodeIgniter\Database\PreparedQueryInterface;
 
 /**
  * Prepared query for OCI8
+ *
+ * @extends BasePreparedQuery<resource>
  */
 class PreparedQuery extends BasePreparedQuery implements PreparedQueryInterface
 {

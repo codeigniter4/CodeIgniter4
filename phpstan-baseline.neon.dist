@@ -201,26 +201,6 @@ parameters:
 			path: system/Database/MySQLi/PreparedQuery.php
 
 		-
-			message: "#^Cannot call method bind_param\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method execute\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method get_result\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method close\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
 			message: "#^Cannot access property \\$field_count on object\\|resource\\|false\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Result.php
@@ -316,16 +296,6 @@ parameters:
 			path: system/Database/SQLite3/Connection.php
 
 		-
-			message: "#^Cannot call method bindValue\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method execute\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
 			message: "#^Cannot call method lastErrorCode\\(\\) on bool\\|object\\|resource\\.$#"
 			count: 1
 			path: system/Database/SQLite3/PreparedQuery.php
@@ -337,11 +307,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method prepare\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method close\\(\\) on object\\|resource\\.$#"
 			count: 1
 			path: system/Database/SQLite3/PreparedQuery.php
 

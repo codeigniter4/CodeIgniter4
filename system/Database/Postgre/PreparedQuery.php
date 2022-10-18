@@ -18,6 +18,8 @@ use Exception;
 
 /**
  * Prepared query for Postgre
+ *
+ * @extends BasePreparedQuery<\PgSql\Result>
  */
 class PreparedQuery extends BasePreparedQuery
 {

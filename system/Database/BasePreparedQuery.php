@@ -19,6 +19,8 @@ use ErrorException;
 
 /**
  * Base prepared query
+ *
+ * @template TStatement of object|resource
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
@@ -26,6 +28,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * The prepared statement itself.
      *
      * @var object|resource|null
+     * @phpstan-var TStatement|null
      */
     protected $statement;
 
