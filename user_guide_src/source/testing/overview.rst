@@ -126,7 +126,12 @@ Additional Assertions
 assertLogged($level, $expectedMessage)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Ensure that something you expected to be logged actually was:
+Ensure that something you expected to be logged was actually logged:
+
+assertLogContains($level, $logMessage)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ensure that there's a record in the logs which contains a message part.
 
 .. literalinclude:: overview/007.php
 

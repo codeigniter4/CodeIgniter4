@@ -128,6 +128,8 @@ Testing
 - The CITestStreamFilter filter class now implements methods for adding a filter to streams. See :ref:`testing-cli-output`.
 - Added the ``PhpStreamWrapper`` to make it easier to work with setting data to ``php://stdin``. See :ref:`testing-cli-input`.
 - Added method :ref:`benchmark-timer-record` to measure performance in a callable. Also enhanced common function ``timer()`` to accept optional callable.
+- A boolean third parameter ``$useExactComparison`` is added to ``TestLogger::didLog()`` which sets whether log messages are checked verbatim. This defaults to ``true``.
+- Added method ``CIUnitTestCase::assertLogContains()`` which compares log messages by parts instead of the whole of the message.
 
 Database
 ========
