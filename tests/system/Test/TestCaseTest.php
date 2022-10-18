@@ -45,6 +45,12 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertLogged('error', 'Some variable did not contain a value.');
     }
 
+    public function testAssertLogContains()
+    {
+        log_message('error', 'Some variable did not contain a value.');
+        $this->assertLogContains('error', 'variable did not');
+    }
+
     public function testEventTriggering()
     {
         Events::on('foo', static function ($arg) use (&$result) {
