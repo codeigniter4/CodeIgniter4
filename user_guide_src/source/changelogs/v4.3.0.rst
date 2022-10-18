@@ -90,7 +90,7 @@ The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` t
 Others
 ------
 
-- The return type of ``CodeIgniter\Database\BasePreparedQuery::close()`` has been changed to ``bool``.
+- The return types of ``CodeIgniter\Database\BasePreparedQuery::close()`` and ``CodeIgniter\Database\PreparedQueryInterface`` have been changed to ``bool`` (previously untyped).
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
 - Parameter ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
