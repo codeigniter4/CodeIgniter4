@@ -10,7 +10,7 @@ use Throwable;
 class MyExceptionHandler extends BaseExceptionHandler
 {
     // You can override the view path.
-    protected string $viewPath = APPPATH . 'Views/exception/';
+    protected ?string $viewPath = APPPATH . 'Views/exception/';
 
     public function handle(
         Throwable $exception,

@@ -49,14 +49,17 @@ abstract class BaseExceptionHandler
      * The path to the directory containing the
      * cli and html error view directories.
      */
-    protected string $viewPath;
+    protected ?string $viewPath = null;
 
     public function __construct(ExceptionsConfig $config)
     {
         $this->config = $config;
 
-        $this->obLevel  = ob_get_level();
-        $this->viewPath = rtrim($this->config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+        $this->obLevel = ob_get_level();
+
+        if ($this->viewPath === null) {
+            $this->viewPath = rtrim($this->config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+        }
     }
 
     /**
