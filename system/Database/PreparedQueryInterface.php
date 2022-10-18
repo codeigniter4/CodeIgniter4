@@ -13,6 +13,8 @@ namespace CodeIgniter\Database;
 
 /**
  * Prepared query interface
+ *
+ * @template TStatement of object|resource
  */
 interface PreparedQueryInterface
 {

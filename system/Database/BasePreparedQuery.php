@@ -21,6 +21,8 @@ use ErrorException;
  * Base prepared query
  *
  * @template TStatement of object|resource
+ *
+ * @implements PreparedQueryInterface<TStatement>
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
