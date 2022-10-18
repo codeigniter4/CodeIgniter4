@@ -76,6 +76,10 @@ class Exceptions
      */
     public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response)
     {
+        // For backward compatibility
+        $this->ob_level = ob_get_level();
+        $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
+
         $this->config   = $config;
         $this->request  = $request;
         $this->response = $response;
