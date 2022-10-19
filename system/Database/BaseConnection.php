@@ -1666,22 +1666,34 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * If this feature is not supported, return empty string.
      *
+     * @TODO This method should be abstract, but due to historical reasons,
+     *      it provides the default implementation.
+     *
      * @return string
      *
      * @see disableForeignKeyChecks()
      */
-    abstract protected function _disableForeignKeyChecks();
+    protected function _disableForeignKeyChecks()
+    {
+        return '';
+    }
 
     /**
      * Platform-specific SQL statement to enable foreign key checks.
      *
      * If this feature is not supported, return empty string.
      *
+     * @TODO This method should be abstract, but due to historical reasons,
+     *      it provides the default implementation.
+     *
      * @return string
      *
      * @see enableForeignKeyChecks()
      */
-    abstract protected function _enableForeignKeyChecks();
+    protected function _enableForeignKeyChecks()
+    {
+        return '';
+    }
 
     /**
      * Accessor for properties if they exist.
