@@ -823,10 +823,10 @@ if (! function_exists('old')) {
      * Provides access to "old input" that was set in the session
      * during a redirect()->withInput().
      *
-     * @param null        $default
+     * @param string|null $default
      * @param bool|string $escape
      *
-     * @return mixed|null
+     * @return array|string|null
      */
     function old(string $key, $default = null, $escape = 'html')
     {
@@ -932,7 +932,7 @@ if (! function_exists('session')) {
      *
      * @param string $val
      *
-     * @return mixed|Session|null
+     * @return array|bool|float|int|object|Session|string|null
      */
     function session(?string $val = null)
     {
