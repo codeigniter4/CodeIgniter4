@@ -415,7 +415,7 @@ if (! function_exists('esc')) {
      * 'value' of the key/value pairs.
      *
      * @param array|string $data
-     * @param string       $context  Valid context values: html, js, css, url, attr, raw
+     * @param 'html'|'js'|'css'|'url'|'attr'|'raw' $context
      * @param string|null  $encoding Current encoding for escaping.
      *                               If not UTF-8, we convert strings from this encoding
      *                               pre-escaping and back to this encoding post-escaping.
