@@ -824,8 +824,9 @@ if (! function_exists('old')) {
      * Provides access to "old input" that was set in the session
      * during a redirect()->withInput().
      *
-     * @param string|null $default
-     * @param bool|string $escape
+     * @param string|null  $default
+     * @param false|string $escape
+     * @phpstan-param false|'attr'|'css'|'html'|'js'|'raw'|'url' $escape
      *
      * @return array|string|null
      */
