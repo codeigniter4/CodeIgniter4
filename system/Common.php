@@ -414,10 +414,11 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * Valid context values: html, js, css, url, attr, raw
-     *
      * @param array|string $data
-     * @param string       $encoding
+     * @param string       $context  Valid context values: html, js, css, url, attr, raw
+     * @param string|null  $encoding Current encoding for escaping.
+     *                               If not UTF-8, we convert strings from this encoding
+     *                               pre-escaping and back to this encoding post-escaping.
      *
      * @return array|string
      *
