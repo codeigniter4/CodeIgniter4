@@ -52,3 +52,14 @@ React
 .. code-block:: javascript
 
     axios.get("your url", {headers: {'Content-Type': 'application/json'}})
+
+htmx
+=====
+
+You can use `ajax-header <https://htmx.org/extensions/ajax-header/>`_ extension.
+
+.. code-block:: html
+
+    <body hx-ext="ajax-header">
+    ...
+    </body>
