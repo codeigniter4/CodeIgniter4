@@ -148,7 +148,7 @@ if (! function_exists('form_input')) {
             'value' => $value,
         ];
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . htmltag_endline() . "\n";
     }
 }
 
@@ -194,7 +194,7 @@ if (! function_exists('form_upload')) {
 
         $data['type'] = 'file';
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . htmltag_endline() . "\n";
     }
 }
 
@@ -365,7 +365,7 @@ if (! function_exists('form_checkbox')) {
             $defaults['checked'] = 'checked';
         }
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . htmltag_endline() . "\n";
     }
 }
 

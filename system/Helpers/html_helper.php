@@ -128,7 +128,7 @@ if (! function_exists('img')) {
             unset($attributes['alt'], $attributes['src']);
         }
 
-        return $img . stringify_attributes($attributes) . ' />';
+        return $img . stringify_attributes($attributes) . htmltag_endline();
     }
 }
 

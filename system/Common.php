@@ -563,6 +563,30 @@ if (! function_exists('function_usable')) {
     }
 }
 
+if (! function_exists('htmltag_endline')) {
+    /**
+     * Endline HTML Tag
+     *
+     * Generates endline html tag by document type
+     */
+    function htmltag_endline(): string
+    {
+        $config       = new Config\DocTypes();
+        $doctype      = $config->endlineTag;
+        $listDoctypes = $config->list;
+
+        if (! array_key_exists($doctype, $listDoctypes)) {
+            return '';
+        }
+
+        if ($doctype === 'html5') {
+            return '>';
+        }
+
+        return '/>';
+    }
+}
+
 if (! function_exists('helper')) {
     /**
      * Loads a helper file into memory. Supports namespaced helpers,

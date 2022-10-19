@@ -182,21 +182,21 @@ final class HTMLHelperTest extends CIUnitTestCase
     public function testIMG()
     {
         $target   = 'http://site.com/images/picture.jpg';
-        $expected = '<img src="http://site.com/images/picture.jpg" alt="" />';
+        $expected = '<img src="http://site.com/images/picture.jpg" alt="">';
         $this->assertSame($expected, img($target));
     }
 
     public function testIMGWithoutProtocol()
     {
         $target   = 'assets/mugshot.jpg';
-        $expected = '<img src="http://example.com/assets/mugshot.jpg" alt="" />';
+        $expected = '<img src="http://example.com/assets/mugshot.jpg" alt="">';
         $this->assertSame($expected, img($target));
     }
 
     public function testIMGWithIndexpage()
     {
         $target   = 'assets/mugshot.jpg';
-        $expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="" />';
+        $expected = '<img src="http://example.com/index.php/assets/mugshot.jpg" alt="">';
         $this->assertSame($expected, img($target, true));
     }
 
