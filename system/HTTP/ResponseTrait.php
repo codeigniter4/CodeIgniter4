@@ -252,7 +252,7 @@ trait ResponseTrait
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @return mixed|string
+     * @return string|null
      *
      * @throws InvalidArgumentException If the body property is not array.
      */
