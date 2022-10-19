@@ -640,4 +640,18 @@ final class UpsertTest extends CIUnitTestCase
 
         $this->seeInDatabase('user', ['email' => 'jarvis@example.com', 'name' => 'Jarvis', 'country' => $dt]);
     }
+
+    public function testUpsertWithTestModeAndGetCompiledUpsert()
+    {
+        $userData = [
+            'email'   => 'upsertone@test.com',
+            'name'    => 'Upsert One',
+            'country' => 'US',
+        ];
+        $builder = $this->db->table('user');
+        $builder->testMode()->upsert($userData);
+        $sql = $builder->getCompiledUpsert();
+
+        $this->assertStringContainsString('upsertone@test.com', $sql);
+    }
 }
