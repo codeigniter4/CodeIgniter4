@@ -416,7 +416,7 @@ abstract class BaseModel
      * through soft deletes (deleted = 1)
      * This methods works only with dbCalls
      *
-     * @return bool|string
+     * @return bool|string Returns a string if in test mode.
      */
     abstract protected function doPurgeDeleted();
 
