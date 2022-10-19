@@ -353,6 +353,7 @@ if (! function_exists('form_checkbox')) {
 
         if (is_array($data) && array_key_exists('checked', $data)) {
             $checked = $data['checked'];
+
             if ($checked === false) {
                 unset($data['checked']);
             } else {
@@ -362,8 +363,6 @@ if (! function_exists('form_checkbox')) {
 
         if ($checked === true) {
             $defaults['checked'] = 'checked';
-        } elseif (isset($defaults['checked'])) {
-            unset($defaults['checked']);
         }
 
         return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
