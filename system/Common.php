@@ -934,6 +934,7 @@ if (! function_exists('session')) {
      * @param string $val
      *
      * @return array|bool|float|int|object|Session|string|null
+     * @phpstan-return ($val is null ? Session : array|bool|float|int|object|string|null)
      */
     function session(?string $val = null)
     {
