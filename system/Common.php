@@ -437,7 +437,7 @@ if (! function_exists('esc')) {
             // Provide a way to NOT escape data since
             // this could be called automatically by
             // the View library.
-            if (empty($context) || $context === 'raw') {
+            if ($context === 'raw') {
                 return $data;
             }
 
