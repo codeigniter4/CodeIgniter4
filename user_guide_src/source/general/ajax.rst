@@ -54,7 +54,7 @@ React
     axios.get("your url", {headers: {'Content-Type': 'application/json'}})
 
 htmx
-=====
+====
 
 You can use `ajax-header <https://htmx.org/extensions/ajax-header/>`_ extension.
 
