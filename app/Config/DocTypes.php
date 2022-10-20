@@ -34,15 +34,11 @@ class DocTypes
     /**
      * Endline HTML Tag
      *
-     * Generate endline HTML Tag by Document Type
-     *
-     * Currently :
-     * - html5
-     * - Older HTML like `xhtml`
+     * This setting is for html and form helpers.
      *
      * For :
      * - `<input>`
      * - `<img>`
      */
-    public string $endlineTag = 'html5';
+    public bool $xhtml = false;
 }

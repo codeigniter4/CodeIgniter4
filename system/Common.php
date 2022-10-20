@@ -571,19 +571,14 @@ if (! function_exists('htmltag_endline')) {
      */
     function htmltag_endline(): string
     {
-        $config       = new Config\DocTypes();
-        $doctype      = $config->endlineTag;
-        $listDoctypes = $config->list;
+        $config  = config('DocTypes');
+        $doctype = $config->xhtml;
 
-        if (! array_key_exists($doctype, $listDoctypes)) {
-            return '';
+        if ($doctype) {
+            return '/>';
         }
 
-        if ($doctype === 'html5') {
-            return '>';
-        }
-
-        return '/>';
+        return '>';
     }
 }
 
