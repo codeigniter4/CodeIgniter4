@@ -25,7 +25,7 @@ class XMLFormatter implements FormatterInterface
      *
      * @param mixed $data
      *
-     * @return bool|string (XML string | false)
+     * @return false|string (XML string | false)
      */
     public function format($data)
     {

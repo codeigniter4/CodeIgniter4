@@ -147,7 +147,7 @@ abstract class CIUnitTestCase extends TestCase
     /**
      * Migration Runner instance.
      *
-     * @var MigrationRunner|mixed
+     * @var MigrationRunner|null
      */
     protected $migrations;
 
