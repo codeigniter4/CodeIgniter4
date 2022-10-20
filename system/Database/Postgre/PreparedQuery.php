@@ -15,11 +15,13 @@ use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
+use PgSql\Connection as PgSqlConnection;
+use PgSql\Result as PgSqlResult;
 
 /**
  * Prepared query for Postgre
  *
- * @extends BasePreparedQuery<\PgSql\Result>
+ * @extends BasePreparedQuery<false|PgSqlConnection, PgSqlResult>
  */
 class PreparedQuery extends BasePreparedQuery
 {

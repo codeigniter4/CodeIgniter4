@@ -20,6 +20,8 @@ use stdClass;
 
 /**
  * Connection for OCI8
+ *
+ * @extends BaseConnection<false|resource>
  */
 class Connection extends BaseConnection implements ConnectionInterface
 {
@@ -113,7 +115,7 @@ class Connection extends BaseConnection implements ConnectionInterface
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|resource
      */
     public function connect(bool $persistent = false)
     {

@@ -106,87 +106,12 @@ parameters:
 			path: system/Database/Migration.php
 
 		-
-			message: "#^Cannot access property \\$errno on bool\\|object\\|resource\\.$#"
+			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli\\|false\\>\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Connection.php
 
 		-
-			message: "#^Cannot access property \\$error on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot access property \\$insert_id on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method autocommit\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 3
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method begin_transaction\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method close\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method commit\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method more_results\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method next_result\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method query\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method real_escape_string\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method rollback\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method select_db\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method store_result\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\MySQLi\\\\Connection\\:\\:\\$mysqli \\(mysqli\\) in empty\\(\\) is not falsy\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$mysqli\\.$#"
+			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli\\|false\\>\\:\\:\\$mysqli\\.$#"
 			count: 3
 			path: system/Database/MySQLi/PreparedQuery.php
 
@@ -244,61 +169,6 @@ parameters:
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
 			count: 13
 			path: system/Database/SQLSRV/Forge.php
-
-		-
-			message: "#^Cannot call method changes\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method close\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method escapeString\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method exec\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 4
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastErrorCode\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastErrorMsg\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastInsertRowID\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method query\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastErrorCode\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method lastErrorMsg\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method prepare\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
 
 		-
 			message: "#^Cannot call method columnName\\(\\) on object\\|resource\\|false\\.$#"
@@ -566,7 +436,7 @@ parameters:
 			path: system/Test/FeatureTestCase.php
 
 		-
-			message: "#^Cannot access property \\$insert_id on bool\\|object\\|resource\\.$#"
+			message: "#^Cannot access property \\$insert_id on object\\|resource\\|false\\.$#"
 			count: 1
 			path: system/Test/Mock/MockConnection.php
 

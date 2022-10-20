@@ -19,7 +19,7 @@ use Exception;
 /**
  * Prepared query for Postgre
  *
- * @extends BasePreparedQuery<resource>
+ * @extends BasePreparedQuery<false|resource, resource>
  */
 class PreparedQuery extends BasePreparedQuery
 {

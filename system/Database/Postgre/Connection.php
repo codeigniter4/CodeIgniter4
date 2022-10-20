@@ -15,10 +15,13 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use ErrorException;
+use PgSql\Connection as PgSqlConnection;
 use stdClass;
 
 /**
  * Connection for Postgre
+ *
+ * @extends BaseConnection<false|PgSqlConnection>
  */
 class Connection extends BaseConnection
 {
@@ -51,7 +54,8 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|resource
+     * @phpstan-return false|PgSqlConnection
      */
     public function connect(bool $persistent = false)
     {

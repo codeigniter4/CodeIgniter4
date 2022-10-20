@@ -21,6 +21,8 @@ use stdClass;
 
 /**
  * Connection for SQLite3
+ *
+ * @extends BaseConnection<SQLite3>
  */
 class Connection extends BaseConnection
 {
@@ -55,7 +57,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return SQLite3
      *
      * @throws DatabaseException
      */
@@ -153,7 +155,7 @@ class Connection extends BaseConnection
      */
     protected function _escapeString(string $str): string
     {
-        if (! $this->connID) {
+        if (! $this->connID instanceof SQLite3) {
             $this->initialize();
         }
 
@@ -200,7 +202,7 @@ class Connection extends BaseConnection
             return $this->dataCache['field_names'][$table];
         }
 
-        if (empty($this->connID)) {
+        if (! $this->connID instanceof SQLite3) {
             $this->initialize();
         }
 

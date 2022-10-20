@@ -14,12 +14,13 @@ namespace CodeIgniter\Database\MySQLi;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use mysqli;
 use mysqli_stmt;
 
 /**
  * Prepared query for MySQLi
  *
- * @extends BasePreparedQuery<mysqli_stmt>
+ * @extends BasePreparedQuery<false|mysqli, mysqli_stmt>
  */
 class PreparedQuery extends BasePreparedQuery
 {

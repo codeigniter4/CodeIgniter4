@@ -16,6 +16,7 @@ use BadMethodCallException;
 /**
  * Prepared query interface
  *
+ * @template TConnection of false|object|resource
  * @template TStatement of object|resource
  */
 interface PreparedQueryInterface

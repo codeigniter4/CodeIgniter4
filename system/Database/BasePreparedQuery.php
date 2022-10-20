@@ -20,9 +20,10 @@ use ErrorException;
 /**
  * Base prepared query
  *
+ * @template TConnection of false|object|resource
  * @template TStatement of object|resource
  *
- * @implements PreparedQueryInterface<TStatement>
+ * @implements PreparedQueryInterface<TConnection, TStatement>
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
@@ -60,6 +61,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * A reference to the db connection to use.
      *
      * @var BaseConnection
+     * @phpstan-var BaseConnection<TConnection>
      */
     protected $db;
 

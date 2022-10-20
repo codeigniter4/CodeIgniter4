@@ -14,12 +14,13 @@ namespace CodeIgniter\Database\SQLite3;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use SQLite3;
 use SQLite3Stmt;
 
 /**
  * Prepared query for SQLite3
  *
- * @extends BasePreparedQuery<SQLite3Stmt>
+ * @extends BasePreparedQuery<SQLite3, SQLite3Stmt>
  */
 class PreparedQuery extends BasePreparedQuery
 {
