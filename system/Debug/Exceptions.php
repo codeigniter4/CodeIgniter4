@@ -344,6 +344,11 @@ class Exceptions
         return ($error & $deprecations) !== 0;
     }
 
+    /**
+     * @noRector \Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector
+     *
+     * @return true
+     */
     private function handleDeprecationError(string $message, ?string $file = null, ?int $line = null): bool
     {
         // Remove the trace of the error handler.
