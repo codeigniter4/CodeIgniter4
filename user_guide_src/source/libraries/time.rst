@@ -368,7 +368,7 @@ You can use either ``getX()`` methods, or access the calculate values as if they
 
 .. literalinclude:: time/040.php
 
-humanize()
+humanize(bool $rawPhrase = false)
 ----------
 
 Much like Time's ``humanize()`` method, this returns a string that displays the difference between the times in a
