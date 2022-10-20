@@ -1001,7 +1001,7 @@ class Time extends DateTime
      *
      * @throws Exception
      */
-    public function humanize($rawPhrase = false)
+    public function humanize(bool $rawPhrase = false)
     {
         $now  = IntlCalendar::fromDateTime(self::now($this->timezone));
         $time = $this->getCalendar()->getTime();
