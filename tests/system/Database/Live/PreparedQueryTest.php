@@ -138,7 +138,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteSelectQueryAndCheckTypeAndResult()
     {
-        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select('id, name, email')->where([
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select(' name, email, country')->where([
             'name' => 'foo',
         ])->get());
 
@@ -146,7 +146,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->assertInstanceOf(ResultInterface::class, $result);
 
-        $expectedRow = ['id' => 1, 'name' => 'Derek Jones', 'email' => 'derek@world.com'];
+        $expectedRow = ['name' => 'Derek Jones', 'email' => 'derek@world.com', 'country' => 'US'];
         $this->assertSame($expectedRow, $result->getRowArray());
     }
 }
