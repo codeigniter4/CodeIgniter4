@@ -1482,53 +1482,9 @@ final class ForgeTest extends CIUnitTestCase
         $this->forge->dropTable('actions', true);
         $this->forge->dropTable('user2', true);
 
-        // create user2 table
-        $this->forge->addField([
-            'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
-            'name'       => ['type' => 'VARCHAR', 'constraint' => 80],
-            'email'      => ['type' => 'VARCHAR', 'constraint' => 100],
-            'country'    => ['type' => 'VARCHAR', 'constraint' => 40],
-            'created_at' => ['type' => 'DATETIME', 'null' => true],
-            'updated_at' => ['type' => 'DATETIME', 'null' => true],
-            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
-        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user2', true);
-
-        // populate user2 table
-        $data = [
-            [
-                'name'    => 'Derek Jones2',
-                'email'   => 'derek@world.com',
-                'country' => 'France',
-            ],
-            [
-                'name'    => 'Ahmadinejad2',
-                'email'   => 'ahmadinejad@world.com',
-                'country' => 'Greece',
-            ],
-            [
-                'name'    => 'Richard A Causey2',
-                'email'   => 'richard@world.com',
-                'country' => 'France',
-            ],
-            [
-                'name'    => 'Chris Martin2',
-                'email'   => 'chris@world.com',
-                'country' => 'Greece',
-            ],
-        ];
-        $this->db->table('user2')->insertBatch($data);
-
-        // create actions table
-        $fields = [
-            'id'       => ['type' => 'int', 'constraint' => 9],
-            'userid'   => ['type' => 'int', 'constraint' => 9],
-            'userid2'  => ['type' => 'int', 'constraint' => 9],
-            'category' => ['type' => 'varchar', 'constraint' => 63],
-            'name'     => ['type' => 'varchar', 'constraint' => 63],
-        ];
-
-        $this->forge->addField($fields);
-        $this->forge->createTable('actions');
+        $this->createUser2TableWithKeys();
+        $this->populateUser2Table();
+        $this->createActionsTable();
 
         // define indexes, primary key, and foreign keys on existing table
         $this->forge->addKey('name', false, false, 'db_actions_name');
@@ -1577,6 +1533,73 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertCount(2, $this->db->getForeignKeyData('actions'));
 
         // test inserting data
+        $this->insertDataTest();
+
+        // drop tables to avoid any future conflicts
+        $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
+    }
+
+    private function createUser2TableWithKeys()
+    {
+        $fields = [
+            'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'       => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'      => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'    => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at' => ['type' => 'DATETIME', 'null' => true],
+            'updated_at' => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+        ];
+        $this->forge->addField($fields)
+            ->addKey('id', true)
+            ->addUniqueKey('email')
+            ->addKey('country')
+            ->createTable('user2', true);
+    }
+
+    private function populateUser2Table()
+    {
+        $data = [
+            [
+                'name'    => 'Derek Jones2',
+                'email'   => 'derek@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Ahmadinejad2',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Richard A Causey2',
+                'email'   => 'richard@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Chris Martin2',
+                'email'   => 'chris@world.com',
+                'country' => 'Greece',
+            ],
+        ];
+        $this->db->table('user2')->insertBatch($data);
+    }
+
+    private function createActionsTable()
+    {
+        $fields = [
+            'id'       => ['type' => 'int', 'constraint' => 9],
+            'userid'   => ['type' => 'int', 'constraint' => 9],
+            'userid2'  => ['type' => 'int', 'constraint' => 9],
+            'category' => ['type' => 'varchar', 'constraint' => 63],
+            'name'     => ['type' => 'varchar', 'constraint' => 63],
+        ];
+        $this->forge->addField($fields);
+        $this->forge->createTable('actions');
+    }
+
+    private function insertDataTest()
+    {
         $data = [
             [
                 'id'       => 1,
@@ -1610,9 +1633,5 @@ final class ForgeTest extends CIUnitTestCase
             'userid'  => '2',
             'userid2' => '2',
         ]);
-
-        // drop tables to avoid any future conflicts
-        $this->forge->dropTable('actions', true);
-        $this->forge->dropTable('user2', true);
     }
 }
