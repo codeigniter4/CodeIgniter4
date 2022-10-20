@@ -884,6 +884,8 @@ You can also insert from a query:
 
 .. literalinclude:: query_builder/117.php
 
+.. note:: It is required to alias the columns of the select query to match those of the target table. 
+
 .. _upsert-data:
 
 **************
@@ -947,6 +949,8 @@ The first parameter is an associative array of values.
 You can also upsert from a query:
 
 .. literalinclude:: query_builder/115.php
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->onConstraint()
 ------------------------
@@ -1087,6 +1091,8 @@ The first parameter is an associative array of values, the second parameter is t
 You can also update from a query:
 
 .. literalinclude:: query_builder/116.php
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->getCompiledUpdate()
 -----------------------------
