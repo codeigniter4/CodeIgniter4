@@ -397,10 +397,11 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * Valid context values: html, js, css, url, attr, raw
-     *
      * @param array|string $data
-     * @param string       $encoding
+     * @phpstan-param 'html'|'js'|'css'|'url'|'attr'|'raw' $context
+     * @param string|null $encoding Current encoding for escaping.
+     *                              If not UTF-8, we convert strings from this encoding
+     *                              pre-escaping and back to this encoding post-escaping.
      *
      * @return array|string
      *
@@ -806,10 +807,11 @@ if (! function_exists('old')) {
      * Provides access to "old input" that was set in the session
      * during a redirect()->withInput().
      *
-     * @param null        $default
-     * @param bool|string $escape
+     * @param string|null  $default
+     * @param false|string $escape
+     * @phpstan-param false|'attr'|'css'|'html'|'js'|'raw'|'url' $escape
      *
-     * @return mixed|null
+     * @return array|string|null
      */
     function old(string $key, $default = null, $escape = 'html')
     {
@@ -938,7 +940,8 @@ if (! function_exists('session')) {
      *
      * @param string $val
      *
-     * @return mixed|Session|null
+     * @return array|bool|float|int|object|Session|string|null
+     * @phpstan-return ($val is null ? Session : array|bool|float|int|object|string|null)
      */
     function session(?string $val = null)
     {

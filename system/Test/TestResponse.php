@@ -347,7 +347,7 @@ class TestResponse extends TestCase
     /**
      * Returns the response's body as JSON
      *
-     * @return false|mixed
+     * @return false|string|null
      */
     public function getJSON()
     {

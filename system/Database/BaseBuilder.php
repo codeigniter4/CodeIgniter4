@@ -2582,7 +2582,7 @@ class BaseBuilder
      *
      * @param mixed $where
      *
-     * @return bool|string
+     * @return bool|string Returns a string if in test mode.
      *
      * @throws DatabaseException
      */

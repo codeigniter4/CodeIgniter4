@@ -673,7 +673,7 @@ class IncomingRequest extends Request
      * with redirect_with_input(). It first checks for the data in the old
      * POST data, then the old GET data and finally check for dot arrays
      *
-     * @return mixed
+     * @return array|string|null
      */
     public function getOldInput(string $key)
     {

@@ -480,7 +480,7 @@ class Session implements SessionInterface
      *
      * @param string|null $key Identifier of the session property to retrieve
      *
-     * @return mixed The property value(s)
+     * @return array|bool|float|int|object|string|null The property value(s)
      */
     public function get(?string $key = null)
     {

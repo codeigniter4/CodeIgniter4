@@ -433,7 +433,7 @@ class Model extends BaseModel
      * through soft deletes (deleted = 1)
      * This methods works only with dbCalls
      *
-     * @return bool|mixed
+     * @return bool|string Returns a string if in test mode.
      */
     protected function doPurgeDeleted()
     {
