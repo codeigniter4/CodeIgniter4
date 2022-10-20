@@ -141,11 +141,7 @@ class Exceptions
     }
 
     /**
-     * Even in PHP7, some errors make it through to the errorHandler, so
-     * convert these to Exceptions and let the exception handler log it and
-     * display it.
-     *
-     * This seems to be primarily when a user triggers it with trigger_error().
+     * The callback to be registered to `set_error_handler()`.
      *
      * @return bool
      *
