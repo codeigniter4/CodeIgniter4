@@ -408,19 +408,6 @@ class Forge
     {
         $fieldName  = (array) $fieldName;
         $tableField = (array) $tableField;
-        $errorNames = [];
-
-        foreach ($fieldName as $name) {
-            if (! isset($this->fields[$name])) {
-                $errorNames[] = $name;
-            }
-        }
-
-        if ($errorNames !== []) {
-            $errorNames[0] = implode(', ', $errorNames);
-
-            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
-        }
 
         $this->foreignKeys[] = [
             'field'          => $fieldName,
@@ -591,10 +578,10 @@ class Forge
         $columns = implode(',', $columns);
 
         $columns .= $this->_processPrimaryKeys($table);
-        $columns .= $this->_processForeignKeys($table);
+        $columns .= current($this->_processForeignKeys($table));
 
         if ($this->createTableKeys === true) {
-            $indexes = $this->_processIndexes($table);
+            $indexes = current($this->_processIndexes($table));
             if (is_string($indexes)) {
                 $columns .= $indexes;
             }
@@ -1040,7 +1027,12 @@ class Forge
         }
     }
 
-    protected function _processPrimaryKeys(string $table): string
+    /**
+     * Generates SQL to add primary key
+     *
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
+     */
+    protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
     {
         $sql = '';
 
@@ -1053,7 +1045,12 @@ class Forge
         }
 
         if (isset($this->primaryKeys['fields']) && $this->primaryKeys['fields'] !== []) {
-            $sql .= ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers(($this->primaryKeys['keyName'] === '' ?
+            if ($asQuery === true) {
+                $sql .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $sql .= ",\n\t";
+            }
+            $sql .= 'CONSTRAINT ' . $this->db->escapeIdentifiers(($this->primaryKeys['keyName'] === '' ?
                 'pk_' . $table :
                 $this->primaryKeys['keyName']))
                     . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
@@ -1062,7 +1059,57 @@ class Forge
         return $sql;
     }
 
-    protected function _processIndexes(string $table)
+    /**
+     * Executes Sql to add indexes without createTable
+     */
+    public function processIndexes(string $table): bool
+    {
+        $sqls = [];
+        $fk   = $this->foreignKeys;
+
+        if (empty($this->fields)) {
+            $this->fields = array_flip(array_map(
+                static fn ($columnName) => $columnName->name,
+                $this->db->getFieldData($this->db->DBPrefix . $table)
+            ));
+        }
+
+        $fields = $this->fields;
+
+        if (! empty($this->keys)) {
+            $sqls = $this->_processIndexes($this->db->DBPrefix . $table, true);
+
+            $pk = $this->_processPrimaryKeys($table, true);
+
+            if ($pk !== '') {
+                $sqls[] = $pk;
+            }
+        }
+
+        $this->foreignKeys = $fk;
+        $this->fields      = $fields;
+
+        if (! empty($this->foreignKeys)) {
+            $sqls = array_merge($sqls, $this->_processForeignKeys($table, true));
+        }
+
+        foreach ($sqls as $sql) {
+            if ($this->db->query($sql) === false) {
+                return false;
+            }
+        }
+
+        $this->reset();
+
+        return true;
+    }
+
+    /**
+     * Generates SQL to add indexes
+     *
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
+     */
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
@@ -1104,13 +1151,37 @@ class Forge
     }
 
     /**
-     * Generates SQL to process foreign keys
+     * Generates SQL to add foreign keys
+     *
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
      */
-    protected function _processForeignKeys(string $table): string
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $errorNames = [];
 
-        foreach ($this->foreignKeys as $fkey) {
+        foreach ($this->foreignKeys as $name) {
+            foreach ($name['field'] as $f) {
+                if (! isset($this->fields[$f])) {
+                    $errorNames[] = $f;
+                }
+            }
+        }
+
+        if ($errorNames !== []) {
+            $errorNames = [implode(', ', $errorNames)];
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $sqls = [''];
+
+        foreach ($this->foreignKeys as $index => $fkey) {
+            if ($asQuery === false) {
+                $index = 0;
+            } else {
+                $sqls[$index] = '';
+            }
+
             $nameIndex = $fkey['fkName'] !== '' ?
             $fkey['fkName'] :
             $table . '_' . implode('_', $fkey['field']) . ($this->db->DBDriver === 'OCI8' ? '_fk' : '_foreign');
@@ -1120,19 +1191,25 @@ class Forge
             $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
             $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
 
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
+            if ($asQuery === true) {
+                $sqls[$index] .= 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->DBPrefix . $table) . ' ADD ';
+            } else {
+                $sqls[$index] .= ",\n\t";
+            }
+
+            $formatSql = 'CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)';
+            $sqls[$index] .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
 
             if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $this->fkAllowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
+                $sqls[$index] .= ' ON DELETE ' . $fkey['onDelete'];
             }
 
             if ($this->db->DBDriver !== 'OCI8' && $fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $this->fkAllowActions, true)) {
-                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
+                $sqls[$index] .= ' ON UPDATE ' . $fkey['onUpdate'];
             }
         }
 
-        return $sql;
+        return $sqls;
     }
 
     /**

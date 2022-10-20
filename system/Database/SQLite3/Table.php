@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\Exceptions\DataException;
+use stdclass;
 
 /**
  * Class Table
@@ -228,6 +229,55 @@ class Table
     }
 
     /**
+     * Adds primary key
+     */
+    public function addPrimaryKey(array $fields): Table
+    {
+        $primaryIndexes = array_filter($this->keys, static fn ($index) => strtolower($index['type']) === 'primary');
+
+        // if primary key already exists we can't add another one
+        if ($primaryIndexes !== []) {
+            return $this;
+        }
+
+        // add array to keys of fields
+        $pk = [
+            'fields' => $fields['fields'],
+            'type'   => 'primary',
+        ];
+
+        $this->keys['primary'] = $pk;
+
+        return $this;
+    }
+
+    /**
+     * Add a foreign key
+     *
+     * @return $this
+     */
+    public function addForeignKey(array $foreignKeys)
+    {
+        $fk = [];
+
+        // convert to object
+        foreach ($foreignKeys as $row) {
+            $obj                      = new stdClass();
+            $obj->column_name         = $row['field'];
+            $obj->foreign_table_name  = $row['referenceTable'];
+            $obj->foreign_column_name = $row['referenceField'];
+            $obj->on_delete           = $row['onDelete'];
+            $obj->on_update           = $row['onUpdate'];
+
+            $fk[] = $obj;
+        }
+
+        $this->foreignKeys = array_merge($this->foreignKeys, $fk);
+
+        return $this;
+    }
+
+    /**
      * Creates the new table based on our current fields.
      *
      * @return mixed
@@ -276,6 +326,14 @@ class Table
                         break;
                 }
             }
+        }
+
+        foreach ($this->foreignKeys as $foreignKey) {
+            $this->forge->addForeignKey(
+                $foreignKey->column_name,
+                trim($foreignKey->foreign_table_name, $this->db->DBPrefix),
+                $foreignKey->foreign_column_name
+            );
         }
 
         return $this->forge->createTable($this->tableName);

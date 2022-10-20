@@ -241,11 +241,11 @@ class Forge extends BaseForge
     }
 
     /**
-     * Process indexes
+     * Generates SQL to add indexes
      *
-     * @return array|string
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
      */
-    protected function _processIndexes(string $table)
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
@@ -295,31 +295,6 @@ class Forge extends BaseForge
             . $field['auto_increment']
             . ''
             . $field['unique'];
-    }
-
-    /**
-     * Process primary keys
-     */
-    protected function _processPrimaryKeys(string $table): string
-    {
-        if (isset($this->primaryKeys['fields'])) {
-            for ($i = 0, $c = count($this->primaryKeys['fields']); $i < $c; $i++) {
-                if (! isset($this->fields[$this->primaryKeys['fields'][$i]])) {
-                    unset($this->primaryKeys['fields'][$i]);
-                }
-            }
-
-            if ($this->primaryKeys['fields'] !== []) {
-                $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers(
-                    ($this->primaryKeys['keyName'] === '' ?
-                    'pk_' . $table :
-                    $this->primaryKeys['keyName'])
-                )
-                    . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys['fields'])) . ')';
-            }
-        }
-
-        return $sql ?? '';
     }
 
     /**

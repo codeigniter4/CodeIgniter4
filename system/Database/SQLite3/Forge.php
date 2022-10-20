@@ -236,4 +236,60 @@ class Forge extends BaseForge
 
         throw new DatabaseException('SQLite does not support foreign key names. CodeIgniter will refer to them in the format: prefix_table_column_referencecolumn_foreign');
     }
+
+    /**
+     * Generates SQL to add primary key
+     *
+     * @param bool $asQuery When true recreates table with key, else partial SQL used with CREATE TABLE
+     */
+    protected function _processPrimaryKeys(string $table, bool $asQuery = false): string
+    {
+        if ($asQuery === false) {
+            return parent::_processPrimaryKeys($table, $asQuery);
+        }
+
+        $sqlTable = new Table($this->db, $this);
+
+        $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->addPrimaryKey($this->primaryKeys)
+            ->run();
+
+        return '';
+    }
+
+    /**
+     * Generates SQL to add foreign keys
+     *
+     * @param bool $asQuery When true recreates table with key, else partial SQL used with CREATE TABLE
+     */
+    protected function _processForeignKeys(string $table, bool $asQuery = false): array
+    {
+        if ($asQuery === false) {
+            return parent::_processForeignKeys($table, $asQuery);
+        }
+
+        $errorNames = [];
+
+        foreach ($this->foreignKeys as $name) {
+            foreach ($name['field'] as $f) {
+                if (! isset($this->fields[$f])) {
+                    $errorNames[] = $f;
+                }
+            }
+        }
+
+        if ($errorNames !== []) {
+            $errorNames = [implode(', ', $errorNames)];
+
+            throw new DatabaseException(lang('Database.fieldNotExists', $errorNames));
+        }
+
+        $sqlTable = new Table($this->db, $this);
+
+        $sqlTable->fromTable($this->db->DBPrefix . $table)
+            ->addForeignKey($this->foreignKeys)
+            ->run();
+
+        return [];
+    }
 }

@@ -183,15 +183,21 @@ class Forge extends BaseForge
     }
 
     /**
-     * Process indexes
+     * Generates SQL to add indexes
      *
-     * @param string $table (ignored)
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
      */
-    protected function _processIndexes(string $table): string
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
-        $sql = '';
+        $sqls  = [''];
+        $index = 0;
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
+            $index = $i;
+            if ($asQuery === false) {
+                $index = 0;
+            }
+
             if (isset($this->keys[$i]['fields'])) {
                 for ($i2 = 0, $c2 = count($this->keys[$i]['fields']); $i2 < $c2; $i2++) {
                     if (! isset($this->fields[$this->keys[$i]['fields'][$i2]])) {
@@ -212,13 +218,19 @@ class Forge extends BaseForge
                 implode('_', $this->keys[$i]['fields']) :
                 $this->keys[$i]['keyName']);
 
-            $sql .= ",\n\t{$unique}KEY " . $keyName
+            if ($asQuery === true) {
+                $sqls[$index] = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . " ADD {$unique}KEY "
+                    . $keyName
+                    . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
+            } else {
+                $sqls[$index] .= ",\n\t{$unique}KEY " . $keyName
                 . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ')';
+            }
         }
 
         $this->keys = [];
 
-        return $sql;
+        return $sqls;
     }
 
     /**

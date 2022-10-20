@@ -171,10 +171,10 @@ final class ForgeTest extends CIUnitTestCase
         ])->addKey('id', true)->createTable('test_exists', true);
 
         // table exists in cache
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+        $this->assertTrue($this->db->tableExists('db_test_exists', true));
 
         // table exists without cached results
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+        $this->assertTrue($this->db->tableExists('db_test_exists', false));
 
         // try creating table when table exists
         $result = $this->forge->addField([
@@ -185,16 +185,16 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($result);
 
         // Delete table outside of forge. This should leave table in cache as existing.
-        $this->forge->getConnection()->query('DROP TABLE ' . $this->forge->getConnection()->protectIdentifiers('db_test_exists', true, null, false));
+        $this->db->query('DROP TABLE ' . $this->db->protectIdentifiers('db_test_exists', true, null, false));
 
         // table stil exists in cache
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', true));
+        $this->assertTrue($this->db->tableExists('db_test_exists', true));
 
         // table does not exist without cached results - this will update the cache
-        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', false));
+        $this->assertFalse($this->db->tableExists('db_test_exists', false));
 
         // the call above should update the cache - table should not exist in cache anymore
-        $this->assertFalse($this->forge->getConnection()->tableExists('db_test_exists', true));
+        $this->assertFalse($this->db->tableExists('db_test_exists', true));
 
         // try creating table when table does not exist but still in cache
         $result = $this->forge->addField([
@@ -205,7 +205,7 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertTrue($result);
 
         // check that the table does now exist without cached results
-        $this->assertTrue($this->forge->getConnection()->tableExists('db_test_exists', false));
+        $this->assertTrue($this->db->tableExists('db_test_exists', false));
 
         // drop table so that it doesn't mess up other tests
         $this->forge->dropTable('test_exists');
@@ -1474,5 +1474,164 @@ final class ForgeTest extends CIUnitTestCase
         $this->assertCount(0, $indexes);
 
         $this->forge->dropTable('forge_test_users', true);
+    }
+
+    public function testProcessIndexes()
+    {
+        // make sure tables don't exist
+        $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
+
+        $this->createUser2TableWithKeys();
+        $this->populateUser2Table();
+        $this->createActionsTable();
+
+        // define indexes, primary key, and foreign keys on existing table
+        $this->forge->addKey('name', false, false, 'db_actions_name');
+        $this->forge->addKey(['category', 'name'], false, true, 'db_actions_category_name');
+        $this->forge->addPrimaryKey('id');
+
+        // SQLite does not support custom foreign key name
+        if ($this->db->DBDriver === 'SQLite3') {
+            $this->forge->addForeignKey('userid', 'user', 'id');
+            $this->forge->addForeignKey('userid2', 'user2', 'id');
+        } else {
+            $this->forge->addForeignKey('userid', 'user', 'id', '', '', 'db_actions_userid_foreign');
+            $this->forge->addForeignKey('userid2', 'user2', 'id', '', '', 'db_actions_userid2_foreign');
+        }
+
+        // create indexes
+        $this->forge->processIndexes('actions');
+
+        // get a list of all indexes
+        $allIndexes = $this->db->getIndexData('actions');
+
+        // check that db_actions_name key exists
+        $indexes = array_filter(
+            $allIndexes,
+            static fn ($index) => ($index->name === 'db_actions_name')
+                    && ($index->fields === [0 => 'name'])
+        );
+        $this->assertCount(1, $indexes);
+
+        // check that db_actions_category_name key exists
+        $indexes = array_filter(
+            $allIndexes,
+            static fn ($index) => ($index->name === 'db_actions_category_name')
+                    && ($index->fields === [0 => 'category', 1 => 'name'])
+        );
+        $this->assertCount(1, $indexes);
+
+        // check that the primary key exists
+        $indexes = array_filter(
+            $allIndexes,
+            static fn ($index) => $index->type === 'PRIMARY'
+        );
+        $this->assertCount(1, $indexes);
+
+        // check that the two foreign keys exist
+        $this->assertCount(2, $this->db->getForeignKeyData('actions'));
+
+        // test inserting data
+        $this->insertDataTest();
+
+        // drop tables to avoid any future conflicts
+        $this->forge->dropTable('actions', true);
+        $this->forge->dropTable('user2', true);
+    }
+
+    private function createUser2TableWithKeys()
+    {
+        $fields = [
+            'id'         => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'       => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'      => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'    => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at' => ['type' => 'DATETIME', 'null' => true],
+            'updated_at' => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at' => ['type' => 'DATETIME', 'null' => true],
+        ];
+        $this->forge->addField($fields)
+            ->addKey('id', true)
+            ->addUniqueKey('email')
+            ->addKey('country')
+            ->createTable('user2', true);
+    }
+
+    private function populateUser2Table()
+    {
+        $data = [
+            [
+                'name'    => 'Derek Jones2',
+                'email'   => 'derek@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Ahmadinejad2',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Richard A Causey2',
+                'email'   => 'richard@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Chris Martin2',
+                'email'   => 'chris@world.com',
+                'country' => 'Greece',
+            ],
+        ];
+        $this->db->table('user2')->insertBatch($data);
+    }
+
+    private function createActionsTable()
+    {
+        $fields = [
+            'id'       => ['type' => 'int', 'constraint' => 9],
+            'userid'   => ['type' => 'int', 'constraint' => 9],
+            'userid2'  => ['type' => 'int', 'constraint' => 9],
+            'category' => ['type' => 'varchar', 'constraint' => 63],
+            'name'     => ['type' => 'varchar', 'constraint' => 63],
+        ];
+        $this->forge->addField($fields);
+        $this->forge->createTable('actions');
+    }
+
+    private function insertDataTest()
+    {
+        $data = [
+            [
+                'id'       => 1,
+                'name'     => 'test name',
+                'category' => 'cat',
+                'userid'   => 1,
+                'userid2'  => 1,
+            ],
+            [
+                'id'       => 2,
+                'name'     => 'another name',
+                'category' => 'cat',
+                'userid'   => 2,
+                'userid2'  => 2,
+            ],
+        ];
+        $this->db->table('actions')->insertBatch($data);
+
+        // check that first row of data was inserted
+        $this->seeInDatabase('actions', [
+            'id'      => 1,
+            'name'    => 'test name',
+            'userid'  => '1',
+            'userid2' => '1',
+        ]);
+
+        // check that second row of data was inserted
+        $this->seeInDatabase('actions', [
+            'id'      => 2,
+            'name'    => 'another name',
+            'userid'  => '2',
+            'userid2' => '2',
+        ]);
     }
 }
