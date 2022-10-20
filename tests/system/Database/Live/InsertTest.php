@@ -92,6 +92,35 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame('Cab Driver', $row->name);
     }
 
+    public function testReplaceTwice()
+    {
+        $builder = $this->db->table('job');
+
+        $data = [
+            'id'          => 1,
+            'name'        => 'John Smith',
+            'description' => 'American',
+        ];
+        $builder->replace($data);
+
+        $row = $this->db->table('job')
+            ->getwhere(['id' => 1])
+            ->getRow();
+        $this->assertSame('John Smith', $row->name);
+
+        $data = [
+            'id'          => 2,
+            'name'        => 'Hans Schmidt',
+            'description' => 'German',
+        ];
+        $builder->replace($data);
+
+        $row = $this->db->table('job')
+            ->getwhere(['id' => 2])
+            ->getRow();
+        $this->assertSame('Hans Schmidt', $row->name);
+    }
+
     public function testBug302()
     {
         $code = "my code \\'CodeIgniter\\Autoloader\\'";
