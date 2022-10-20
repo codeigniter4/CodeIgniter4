@@ -177,6 +177,12 @@ final class CommonFunctionsTest extends CIUnitTestCase
         esc(['width' => '800', 'height' => '600'], 'bogus');
     }
 
+    public function testEscapeBadContextZero()
+    {
+        $this->expectException('InvalidArgumentException');
+        esc('<script>', '0');
+    }
+
     /**
      * @runInSeparateProcess
      *
