@@ -1666,8 +1666,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * If this feature is not supported, return empty string.
      *
-     * @TODO This method should be abstract, but due to historical reasons,
-     *      it provides the default implementation.
+     * @TODO This method should be moved to an interface that represents foreign key support.
      *
      * @return string
      *
@@ -1683,8 +1682,7 @@ abstract class BaseConnection implements ConnectionInterface
      *
      * If this feature is not supported, return empty string.
      *
-     * @TODO This method should be abstract, but due to historical reasons,
-     *      it provides the default implementation.
+     * @TODO This method should be moved to an interface that represents foreign key support.
      *
      * @return string
      *
