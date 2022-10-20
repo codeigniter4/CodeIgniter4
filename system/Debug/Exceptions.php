@@ -147,17 +147,19 @@ class Exceptions
      *
      * This seems to be primarily when a user triggers it with trigger_error().
      *
+     * @return bool
+     *
      * @throws ErrorException
      *
      * @codeCoverageIgnore
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
-        if (! (error_reporting() & $severity)) {
-            return;
+        if (error_reporting() & $severity) {
+            throw new ErrorException($message, 0, $severity, $file, $line);
         }
 
-        throw new ErrorException($message, 0, $severity, $file, $line);
+        return false; // return false to propagate the error to PHP standard error handler
     }
 
     /**
