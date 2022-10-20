@@ -420,7 +420,7 @@ if (! function_exists('esc')) {
             // Provide a way to NOT escape data since
             // this could be called automatically by
             // the View library.
-            if (empty($context) || $context === 'raw') {
+            if ($context === 'raw') {
                 return $data;
             }
 
@@ -1060,7 +1060,7 @@ if (! function_exists('stringify_attributes')) {
      * Helper function used to convert a string, array, or object
      * of attributes to a string.
      *
-     * @param mixed $attributes string, array, object
+     * @param array|object|string $attributes string, array, object that can be cast to array
      */
     function stringify_attributes($attributes, bool $js = false): string
     {
