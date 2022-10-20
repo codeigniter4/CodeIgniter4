@@ -1001,7 +1001,7 @@ class Time extends DateTime
      *
      * @throws Exception
      */
-    public function humanize()
+    public function humanize($rawPhrase = false)
     {
         $now  = IntlCalendar::fromDateTime(self::now($this->timezone));
         $time = $this->getCalendar()->getTime();
@@ -1043,7 +1043,7 @@ class Time extends DateTime
             return lang('Time.now');
         }
 
-        return $before ? lang('Time.ago', [$phrase]) : lang('Time.inFuture', [$phrase]);
+        return $rawPhrase ? $phrase : ($before ? lang('Time.ago', [$phrase]) : lang('Time.inFuture', [$phrase]));
     }
 
     /**
