@@ -31,6 +31,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+env:
+  COVERAGE_PHP_VERSION: '8.0'
+
 jobs:
   tests:
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
@@ -133,9 +136,10 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
           extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, oci8, pgsql
-          coverage: xdebug
+          coverage: ${{ env.COVERAGE_DRIVER }}
         env:
           update: true
+          COVERAGE_DRIVER: ${{ matrix.php-versions == env.COVERAGE_PHP_VERSION && 'xdebug' || 'none'}}
 
       - name: Install latest ImageMagick
         run: |
@@ -158,19 +162,22 @@ jobs:
         run: |
           composer update --ansi --no-interaction
           composer remove --ansi --dev --unused -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
-      - name: Profile slow tests in PHP 8.0
-        if: matrix.php-versions == '8.0'
+      - name: Profile slow tests in PHP ${{ env.COVERAGE_PHP_VERSION }}
+        if: matrix.php-versions == env.COVERAGE_PHP_VERSION
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
       - name: Compute coverage option
         uses: actions/github-script@v6
         id: phpunit-coverage-option
         with:
-          script: 'return "${{ matrix.php-versions }}" == "8.0" ? "" : "--no-coverage"'
+          script: |
+            const { COVERAGE_NAME } = process.env
+
+            return "${{ matrix.php-versions }}" == "${{ env.COVERAGE_PHP_VERSION }}" ? `--coverage-php build/cov/coverage-${COVERAGE_NAME}.cov` : "--no-coverage"
           result-encoding: string
+        env:
+          COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
 
       - name: Test with PHPUnit
         run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review ${{ steps.phpunit-coverage-option.outputs.result }}"
@@ -178,24 +185,61 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - name: Run Coveralls
-        if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
-        run: |
-          composer global require --ansi php-coveralls/php-coveralls:^2.4
-          php-coveralls --coverage_clover=build/logs/clover.xml -v
+      - name: Upload coverage file
+        if: matrix.php-versions == env.COVERAGE_PHP_VERSION
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.COVERAGE_NAME }}
+          path: build/cov/coverage-${{ env.COVERAGE_NAME }}.cov
+          if-no-files-found: error
+          retention-days: 1
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+          COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
 
-  coveralls-finish:
+  coveralls:
     if: github.repository_owner == 'codeigniter4'
-    needs: [tests]
+    needs: tests
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+          php-version: ${{ env.COVERAGE_PHP_VERSION }}
+          tools: composer
+          coverage: xdebug
+        env:
+          update: true
+
+      - name: Download coverage files
+        uses: actions/download-artifact@v3
+        with:
+          path: build/cov
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: build/cov
+
+      - name: Get composer cache directory
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction
+
+      - name: Merge coverage files
+        run: vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
+
+      - name: Upload coverage to Coveralls
+        run: vendor/bin/php-coveralls --verbose --exclude-no-stmt --ansi
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
