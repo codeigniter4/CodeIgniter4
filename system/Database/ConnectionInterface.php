@@ -13,27 +13,31 @@ namespace CodeIgniter\Database;
 
 /**
  * Interface ConnectionInterface
+ *
+ * @template TConnection of false|object|resource
  */
 interface ConnectionInterface
 {
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed
+     * @return void
      */
     public function initialize();
 
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return TConnection
      */
     public function connect(bool $persistent = false);
 
     /**
      * Create a persistent database connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return TConnection
      */
     public function persistentConnect();
 
@@ -41,7 +45,7 @@ interface ConnectionInterface
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
-     * @return mixed
+     * @return void
      */
     public function reconnect();
 
@@ -51,7 +55,8 @@ interface ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return TConnection
      */
     public function getConnection(?string $alias = null);
 

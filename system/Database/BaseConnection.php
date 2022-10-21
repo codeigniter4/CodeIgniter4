@@ -45,6 +45,10 @@ use Throwable;
  * @property int        $transDepth
  * @property bool       $transFailure
  * @property bool       $transStatus
+ *
+ * @template TConnection of false|object|resource
+ *
+ * @implements ConnectionInterface<TConnection>
  */
 abstract class BaseConnection implements ConnectionInterface
 {
@@ -189,7 +193,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var bool|object|resource
+     * @var false|object|resource
+     * @phpstan-var TConnection
      */
     public $connID = false;
 
@@ -457,7 +462,8 @@ abstract class BaseConnection implements ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return TConnection
      */
     public function getConnection(?string $alias = null)
     {

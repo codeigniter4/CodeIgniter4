@@ -14,13 +14,15 @@ namespace CodeIgniter\Database\MySQLi;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
-use MySQLi;
+use mysqli;
 use mysqli_sql_exception;
 use stdClass;
 use Throwable;
 
 /**
  * Connection for MySQLi
+ *
+ * @extends BaseConnection<false|mysqli>
  */
 class Connection extends BaseConnection
 {
@@ -54,7 +56,7 @@ class Connection extends BaseConnection
      *
      * Has to be preserved without being assigned to $conn_id.
      *
-     * @var MySQLi
+     * @var false|mysqli
      */
     public $mysqli;
 
@@ -72,7 +74,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|mysqli
      *
      * @throws DatabaseException
      */
