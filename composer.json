@@ -28,6 +28,8 @@
     },
     "suggest": {
         "ext-imagick": "If you use Image class ImageMagickHandler",
+        "ext-gd": "If you use Image class GDHandler",
+        "ext-exif": "If you run Image class tests",
         "ext-simplexml": "If you format XML",
         "ext-mysqli": "If you use MySQL",
         "ext-oci8": "If you use Oracle Database",
