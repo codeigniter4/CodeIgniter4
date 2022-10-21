@@ -2654,6 +2654,102 @@ class BaseBuilder
     }
 
     /**
+     * Sets data and calls batchExecute to run queries
+     *
+     * @param array|object|null        $set         a dataset or select query
+     * @param array|RawSql|string|null $constraints
+     *
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     */
+    public function deleteBatch($set = null, $constraints = null, int $batchSize = 100)
+    {
+        $this->onConstraint($constraints);
+
+        if ($set !== null && $set !== []) {
+            $this->setData($set, true);
+        }
+
+        return $this->batchExecute('_deleteBatch', $batchSize);
+    }
+
+    /**
+     * Generates a platform-specific batch update string from the supplied data
+     */
+    protected function _deleteBatch(string $table, array $keys, array $values): string
+    {
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $constraints = $this->QBOptions['constraints'] ?? [];
+
+            if ($constraints === []) {
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('You must specify a constraint to match on for batch deletes.'); // @codeCoverageIgnore
+                }
+
+                return ''; // @codeCoverageIgnore
+            }
+
+            $updateFields = $this->QBOptions['updateFields'] ??
+                $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
+                [];
+
+            $alias = $this->QBOptions['alias'] ?? '_u';
+
+            $sql = 'DELETE ' . $table . ' FROM ' . $table . "\n";
+
+            $sql .= "INNER JOIN (\n{:_table_:}";
+
+            $sql .= ') ' . $alias . "\n";
+
+            $sql .= 'ON ' . implode(
+                ' AND ',
+                array_map(
+                    static fn ($key) => ($key instanceof RawSql ?
+                    $key :
+                    $table . '.' . $key . ' = ' . $alias . '.' . $key),
+                    $constraints
+                )
+            );
+
+            // convert binds in where
+            foreach ($this->QBWhere as $key => $where) {
+                foreach ($this->binds as $field => $bind) {
+                    $this->QBWhere[$key]['condition'] = str_replace(':' . $field . ':', $bind[0], $where['condition']);
+                }
+            }
+
+            // remove database prefix from alias in where
+            $sql .= ' ' . str_replace(
+                $this->db->DBPrefix . trim($alias, $this->db->escapeChar),
+                trim($alias, $this->db->escapeChar),
+                $this->compileWhereHaving('QBWhere')
+            );
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = implode(
+                " UNION ALL\n",
+                array_map(
+                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index) => $index . ' ' . $key,
+                        $keys,
+                        $value
+                    )),
+                    $values
+                )
+            ) . "\n";
+        }
+
+        return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
      * Increments a numeric column by the specified value.
      *
      * @return bool
