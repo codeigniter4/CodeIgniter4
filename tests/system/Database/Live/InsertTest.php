@@ -92,6 +92,9 @@ final class InsertTest extends CIUnitTestCase
         $this->assertSame('Cab Driver', $row->name);
     }
 
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6726
+     */
     public function testReplaceTwice()
     {
         $builder = $this->db->table('job');
