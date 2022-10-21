@@ -428,10 +428,6 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
-            $updateFields = $this->QBOptions['updateFields'] ??
-                $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
-                [];
-
             $alias = $this->QBOptions['alias'] ?? '_u';
 
             $sql = 'DELETE FROM ' . $table . "\n";
