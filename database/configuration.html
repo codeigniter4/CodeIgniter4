@@ -551,7 +551,12 @@ default group’s configuration settings. The values should be name following th
 <td><p>The password used to connect to the database.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>database</strong></p></td>
-<td><p>The name of the database you want to connect to.</p></td>
+<td><p>The name of the database you want to connect to.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>CodeIgniter doesn’t support dots (<code class="docutils literal notranslate"><span class="pre">.</span></code>) in the database, table, and column names.</p>
+</div>
+</td>
 </tr>
 <tr class="row-odd"><td><p><strong>DBDriver</strong></p></td>
 <td><p>The database type. e.g.,: <code class="docutils literal notranslate"><span class="pre">MySQLi</span></code>, <code class="docutils literal notranslate"><span class="pre">Postgres</span></code>, etc. The case must match the driver name</p></td>
@@ -646,7 +651,7 @@ you are using MySQL.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 20, 2022.
+      <span class="lastupdated">Last updated on Oct 21, 2022.
       </span></p>
   </div>
 
