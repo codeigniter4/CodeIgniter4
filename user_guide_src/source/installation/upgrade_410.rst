@@ -17,5 +17,5 @@ Breaking Changes
 
 **Legacy Autoloading**
 
-``Autoloader::loadLegacy()`` method was originally for transition to CodeIgniter v4. Since 4.1.0,
+``Autoloader::loadLegacy()`` method was originally for transition to CodeIgniter v4. Since v4.1.0,
 this support was removed. All classes must be namespaced.
