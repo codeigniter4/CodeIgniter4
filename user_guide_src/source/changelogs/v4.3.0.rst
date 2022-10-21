@@ -176,6 +176,11 @@ Helpers and Functions
 - Added :php:func:`request()` and :php:func:`response()` functions.
 - Add :php:func:`decamelize()` function to convert camelCase to snake_case.
 
+Error Handling
+==============
+
+- You can now log deprecation errors instead of throwing them. See :ref:`logging_deprecation_errors` for details.
+
 Others
 ======
 

@@ -133,3 +133,31 @@ Since v4.3.0, you can specify the exit code for your Exception class to implemen
 ``HasExitCodeInterface``.
 
 When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
+
+.. _logging_deprecation_errors:
+
+Logging Deprecation Errors
+==========================
+
+.. versionadded:: 4.3.0
+
+By default, all errors reported by ``error_reporting()`` will be thrown as an ``ErrorException`` object. These
+include both ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors. With the surge in use of PHP 8.1+, many users
+may see exceptions thrown for `passing null to non-nullable arguments of internal functions <https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg>`_.
+To ease the migration to PHP 8.1, you can instruct CodeIgniter to log the deprecations instead of throwing them.
+
+First, make sure your copy of ``Config\Exceptions`` is updated with the two new properties and set as follows:
+
+.. literalinclude:: errors/012.php
+
+Next, depending on the log level you set in ``Config\Exceptions::$deprecationLogLevel``, check whether the
+logger threshold defined in ``Config\Logger::$threshold`` covers the deprecation log level. If not, adjust
+it accordingly.
+
+.. literalinclude:: errors/013.php
+
+After that, subsequent deprecations will be logged instead of thrown.
+
+This feature also works with user deprecations:
+
+.. literalinclude:: errors/014.php
