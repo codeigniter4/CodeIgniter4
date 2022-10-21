@@ -61,7 +61,7 @@ class PreparedQuery extends BasePreparedQuery
 
     /**
      * Takes a new set of data and runs it against the currently
-     * prepared query. Upon success, will return a Results object.
+     * prepared query.
      */
     public function _execute(array $data): bool
     {
@@ -77,7 +77,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the statement resource for the prepared query.
      *
      * @return mixed
      */

@@ -138,7 +138,7 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testExecuteSelectQueryAndCheckTypeAndResult()
     {
-        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select(' name, email, country')->where([
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select('name, email, country')->where([
             'name' => 'foo',
         ])->get());
 
