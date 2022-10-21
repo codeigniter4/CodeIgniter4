@@ -76,7 +76,7 @@ final class ExceptionsTest extends CIUnitTestCase
         $this->exception->initialize();
 
         @trigger_error('Hello! I am a deprecation!', E_USER_DEPRECATED);
-        $this->assertLogContains('error', '[DEPRECATED] Hello! I am a deprecation!', false);
+        $this->assertLogContains('error', '[DEPRECATED] Hello! I am a deprecation!');
 
         restore_error_handler();
         restore_exception_handler();
