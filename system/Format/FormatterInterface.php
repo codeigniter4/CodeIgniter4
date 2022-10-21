@@ -21,7 +21,7 @@ interface FormatterInterface
      *
      * @param array|string $data
      *
-     * @return bool|string
+     * @return false|string
      */
     public function format($data);
 }
