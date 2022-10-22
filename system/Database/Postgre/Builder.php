@@ -179,6 +179,7 @@ class Builder extends BaseBuilder
 
         unset($builder);
         $this->resetWrite();
+        $this->binds = [];
 
         return $result;
     }
