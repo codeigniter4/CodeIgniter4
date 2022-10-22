@@ -66,6 +66,16 @@ final class CodeIgniterTest extends CIUnitTestCase
         $this->assertStringContainsString('Welcome to CodeIgniter', $output);
     }
 
+    public function testRunEmptyDefaultRouteReturnResponse()
+    {
+        $_SERVER['argv'] = ['index.php'];
+        $_SERVER['argc'] = 1;
+
+        $response = $this->codeigniter->useSafeOutput(true)->run(null, true);
+
+        $this->assertStringContainsString('Welcome to CodeIgniter', $response->getBody());
+    }
+
     public function testRunClosureRoute()
     {
         $_SERVER['argv'] = ['index.php', 'pages/about'];
@@ -124,6 +134,23 @@ final class CodeIgniterTest extends CIUnitTestCase
         $output = ob_get_clean();
 
         $this->assertStringContainsString('Oops', $output);
+    }
+
+    public function testRun404OverrideReturnResponse()
+    {
+        $_SERVER['argv'] = ['index.php', '/'];
+        $_SERVER['argc'] = 2;
+
+        // Inject mock router.
+        $routes = Services::routes();
+        $routes->setAutoRoute(false);
+        $routes->set404Override('Tests\Support\Controllers\Popcorn::pop');
+        $router = Services::router($routes, Services::incomingrequest());
+        Services::injectMock('router', $router);
+
+        $response = $this->codeigniter->useSafeOutput(true)->run($routes, true);
+
+        $this->assertStringContainsString('Oops', $response->getBody());
     }
 
     public function testRun404OverrideByClosure()
