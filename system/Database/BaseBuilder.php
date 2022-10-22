@@ -1969,6 +1969,7 @@ class BaseBuilder
     public function setAlias(string $alias): BaseBuilder
     {
         if ($alias !== '') {
+            $this->db->addTableAlias($alias);
             $this->QBOptions['alias'] = $this->db->protectIdentifiers($alias);
         }
 
@@ -2042,6 +2043,10 @@ class BaseBuilder
             foreach ($set as $key => $value) {
                 if (! ($value instanceof RawSql)) {
                     $value = $this->db->protectIdentifiers($value);
+                }
+
+                if (is_string($key)) {
+                    $key = $this->db->protectIdentifiers($key);
                 }
 
                 $this->QBOptions['constraints'][$key] = $value;
@@ -2462,9 +2467,20 @@ class BaseBuilder
             $sql .= 'WHERE ' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key) => ($key instanceof RawSql ?
-                    $key :
-                    $table . '.' . $key . ' = ' . $alias . '.' . $key),
+                    static fn ($key, $value) => (
+                        ($value instanceof RawSql && is_string($key))
+                        ?
+                        $table . '.' . $key . ' = ' . $value
+                        :
+                        (
+                            $value instanceof RawSql
+                            ?
+                            $value
+                            :
+                            $table . '.' . $value . ' = ' . $alias . '.' . $value
+                        )
+                    ),
+                    array_keys($constraints),
                     $constraints
                 )
             );
