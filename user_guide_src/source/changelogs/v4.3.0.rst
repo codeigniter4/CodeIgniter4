@@ -7,7 +7,12 @@ Release Date: Unreleased
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
+
+Highlights
+**********
+
+- TBD
 
 BREAKING
 ********
@@ -42,10 +47,10 @@ Others
 
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
 - ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
-- The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
 - :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
 
 .. _v430-interface-changes:
@@ -57,6 +62,7 @@ Interface Changes
 - Now ``RequestInterface`` extends ``MessageInterface``.
 - Now ``ResponseInterface`` extends ``MessageInterface``.
 - Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
+- See also `Validation Changes`_.
 
 Method Signature Changes
 ========================
@@ -87,8 +93,8 @@ Validation
 
 The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty.
 
-Others
-------
+Database
+--------
 
 - The return types of ``CodeIgniter\Database\BasePreparedQuery::close()`` and ``CodeIgniter\Database\PreparedQueryInterface`` have been changed to ``bool`` (previously untyped).
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
@@ -99,10 +105,10 @@ Others
 - ``BaseBuilder::_updateBatch()``
     - The second parameter ``$values`` has changed to ``$keys``.
     - The third parameter ``$index`` has changed to ``$values``. The parameter type also has changed to ``array``.
-- The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
-- The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
-    - ``Debug\Exceptions::__construct()``
-    - ``Services::exceptions()``
+
+Database Forge
+--------------
+
 - The method signature of ``Forge::dropKey()`` has changed. An additional optional parameter ``$prefixKeyName`` has been added.
 - The method signature of ``Forge::addKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 - The method signature of ``Forge::addPrimaryKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
@@ -112,6 +118,14 @@ Others
 - In addition to the added ``$asQuery`` parameter above the following methods also now return an array.
     - ``CodeIgniter\Database\Forge::_processIndexes()``
     - ``CodeIgniter\Database\Forge::_processForeignKeys()``
+
+Others
+------
+
+- The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
+- The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
+    - ``Debug\Exceptions::__construct()``
+    - ``Services::exceptions()``
 
 Enhancements
 ************
@@ -139,19 +153,30 @@ Testing
 Database
 ========
 
-- SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
-- SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
-- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
-- The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
+Query Builder
+-------------
+
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
-- Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
-- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
-- Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
-- Fixed ``Forge::dropKey()`` to allow droping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
 - Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
-- ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
+
+Forge
+-----
+
 - Added ``Forge::processIndexes()`` allowing the creation of indexes on an existing table. See :ref:`adding-keys` for the details.
+- Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
+- The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
+- Fixed ``Forge::dropKey()`` to allow dropping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
+- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
+- SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
+
+Others
+------
+
+- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
+- Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
+- SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
+- ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
 
 Model
 =====
@@ -163,9 +188,9 @@ Model
 Libraries
 =========
 
-- Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
 - Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
 - Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
+- Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
 
 Helpers and Functions
 =====================
@@ -185,14 +210,22 @@ Others
 ======
 
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
-- Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 - Added new ``$routes->view()`` method to return a the view directly. See :ref:`View Routes <view-routes>`.
 - View Cells are now first-class citizens and can located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
 - Add ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
+- Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
+
+Message Changes
+***************
+
+- Updated English language strings to be more consistent.
 
 Changes
 *******
 
+- Config
+    - All atomic type properties in ``Config`` classes have been typed.
+    - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
 - DBDebug
     - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']`` and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these settings, an exception is always thrown when a database error occurs.
     - Now ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true. Previously, it is thrown if ``CI_DEBUG`` is true.
@@ -204,10 +237,6 @@ Changes
     - The ``CodeIgniter\CLI\CommandRunner`` class has been removed due to a change in Spark commands processing.
     - The system route configuration file ``system/Config/Routes.php`` has been removed.
     - The route configuration file ``app/Config/Routes.php`` has been changed. Removed include of system routes configuration file.
-- Config
-    - All atomic type properties in ``Config`` classes have been typed.
-    - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
-- Updated English language strings to be more consistent.
 
 Deprecations
 ************
