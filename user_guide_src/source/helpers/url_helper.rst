@@ -96,7 +96,7 @@ The following functions are available:
 
         .. literalinclude:: url_helper/006.php
 
-.. important:: Prior to **4.1.2** this function had a bug causing it to ignore the configuration on ``App::$indexPage``.
+.. important:: Prior to v4.1.2, this function had a bug causing it to ignore the configuration on ``App::$indexPage``.
 
 .. php:function:: previous_url([$returnObject = false])
 

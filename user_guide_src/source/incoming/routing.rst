@@ -226,7 +226,7 @@ redirect and is recommended in most cases:
 
 .. literalinclude:: routing/022.php
 
-.. note:: Since v4.2.0 ``addRedirect()`` can use placeholders.
+.. note:: Since v4.2.0, ``addRedirect()`` can use placeholders.
 
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
