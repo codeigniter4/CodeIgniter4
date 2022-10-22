@@ -7,7 +7,7 @@ Release Date: Unreleased
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 3
 
 Highlights
 **********
