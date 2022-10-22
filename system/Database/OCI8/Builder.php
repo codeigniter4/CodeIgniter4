@@ -271,9 +271,20 @@ class Builder extends BaseBuilder
             $sql .= 'ON (' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key) => ($key instanceof RawSql ?
-                    $key :
-                    $table . '.' . $key . ' = ' . $alias . '.' . $key),
+                    static fn ($key, $value) => (
+                        ($value instanceof RawSql && is_string($key))
+                        ?
+                        $table . '.' . $key . ' = ' . $value
+                        :
+                        (
+                            $value instanceof RawSql
+                            ?
+                            $value
+                            :
+                            $table . '.' . $value . ' = ' . $alias . '.' . $value
+                        )
+                    ),
+                    array_keys($constraints),
                     $constraints
                 )
             ) . ")\n";
@@ -354,18 +365,31 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
+            $alias = $this->QBOptions['alias'] ?? '"_upsert"';
+
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
 
             $sql = 'MERGE INTO ' . $table . "\nUSING (\n{:_table_:}";
 
-            $sql .= ') "_upsert"' . "\nON (";
+            $sql .= ") {$alias}\nON (";
 
             $sql .= implode(
                 ' AND ',
                 array_map(
-                    static fn ($key) => ($key instanceof RawSql ?
-                        $key :
-                        $table . '.' . $key . ' = "_upsert".' . $key),
+                    static fn ($key, $value) => (
+                        ($value instanceof RawSql && is_string($key))
+                        ?
+                        $table . '.' . $key . ' = ' . $value
+                        :
+                        (
+                            $value instanceof RawSql
+                            ?
+                            $value
+                            :
+                            $table . '.' . $value . ' = ' . $alias . '.' . $value
+                        )
+                    ),
+                    array_keys($constraints),
                     $constraints
                 )
             ) . ")\n";
@@ -376,8 +400,8 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
-                        ' = ' . $value :
-                        ' = "_upsert".' . $value),
+                    " = {$value}" :
+                    " = {$alias}.{$value}"),
                     array_keys($updateFields),
                     $updateFields
                 )
@@ -386,7 +410,7 @@ class Builder extends BaseBuilder
             $sql .= "\nWHEN NOT MATCHED THEN INSERT (" . implode(', ', $keys) . ")\nVALUES ";
 
             $sql .= (' ('
-                . implode(', ', array_map(static fn ($columnName) => '"_upsert".' . $columnName, $keys))
+                . implode(', ', array_map(static fn ($columnName) => "{$alias}.{$columnName}", $keys))
                 . ')');
 
             $this->QBOptions['sql'] = $sql;
