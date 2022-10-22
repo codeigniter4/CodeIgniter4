@@ -619,7 +619,7 @@ final class CodeIgniterTest extends CIUnitTestCase
         // Clear Page cache
         command('cache:clear');
 
-        // Remove stream fliters
+        // Remove stream filters
         stream_filter_remove($outputStreamFilter);
         stream_filter_remove($errorStreamFilter);
     }
@@ -654,7 +654,7 @@ final class CodeIgniterTest extends CIUnitTestCase
             $_SERVER['REQUEST_URI'] = '/' . $testingUrl;
             $routes                 = Services::routes(true);
             $routes->add($testingUrl, static function () {
-                CodeIgniter::cache(0); // Dont cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings from the dataProvider
+                CodeIgniter::cache(0); // Don't cache the page in the run() function because CodeIgniter class will create default $cacheConfig and overwrite settings from the dataProvider
                 $response = Services::response();
                 $string   = 'This is a test page, to check cache configuration';
 
