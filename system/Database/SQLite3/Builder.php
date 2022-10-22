@@ -231,14 +231,11 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
-            $alias = $this->QBOptions['alias'] ?? '_u';
-
             $sql = 'DELETE FROM ' . $table . "\n";
 
-            if (current($constraints) instanceof RawSql) {
-                if ($this->db->DBDebug) {
-                    throw new DatabaseException('You cannot use RawSql for constraint in SQLite.'); // @codeCoverageIgnore
-                }
+            if (current($constraints) instanceof RawSql && $this->db->DBDebug) {
+                throw new DatabaseException('You cannot use RawSql for constraint in SQLite.');
+                // @codeCoverageIgnore
             }
 
             if (is_string(current(array_keys($constraints)))) {
@@ -252,10 +249,9 @@ class Builder extends BaseBuilder
             $sql .= "WHERE {$concat1} IN (SELECT {$concat2} FROM (\n{:_table_:}))";
 
             // where is not supported
-            if ($this->QBWhere !== []) {
-                if ($this->db->DBDebug) {
-                    throw new DatabaseException('You cannot use WHERE with SQLite.'); // @codeCoverageIgnore
-                }
+            if ($this->QBWhere !== [] && $this->db->DBDebug) {
+                throw new DatabaseException('You cannot use WHERE with SQLite.');
+                // @codeCoverageIgnore
             }
 
             $this->QBOptions['sql'] = $sql;
