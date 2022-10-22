@@ -185,6 +185,11 @@ Others
 - View Cells are now first-class citizens and can located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
 - Add ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
 
+Message Changes
+***************
+
+- Updated English language strings to be more consistent.
+
 Changes
 *******
 
@@ -202,7 +207,6 @@ Changes
 - Config
     - All atomic type properties in ``Config`` classes have been typed.
     - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
-- Updated English language strings to be more consistent.
 
 Deprecations
 ************
