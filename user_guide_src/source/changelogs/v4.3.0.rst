@@ -62,6 +62,7 @@ Interface Changes
 - Now ``RequestInterface`` extends ``MessageInterface``.
 - Now ``ResponseInterface`` extends ``MessageInterface``.
 - Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
+- See also `Validation Changes`_.
 
 Method Signature Changes
 ========================
