@@ -9,6 +9,11 @@ Release Date: Unreleased
     :local:
     :depth: 2
 
+Highlights
+**********
+
+- TBD
+
 BREAKING
 ********
 
