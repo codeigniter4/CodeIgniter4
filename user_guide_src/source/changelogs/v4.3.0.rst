@@ -153,19 +153,30 @@ Testing
 Database
 ========
 
-- SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
-- SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
-- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
-- The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
+Query Builder
+-------------
+
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
-- Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
-- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
+- Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
+
+Forge
+-----
+
+- SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
+- The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
+- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
 - Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
 - Fixed ``Forge::dropKey()`` to allow droping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
-- Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
-- ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
 - Added ``Forge::processIndexes()`` allowing the creation of indexes on an existing table. See :ref:`adding-keys` for the details.
+
+Others
+------
+
+- SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
+- ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
+- Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
+- ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
 
 Model
 =====
