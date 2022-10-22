@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
+use ErrorException;
 use RuntimeException;
 
 /**
@@ -32,7 +33,53 @@ final class ExceptionsTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->exception = new Exceptions(new ExceptionsConfig(), Services::request(), Services::response());
+    }
+
+    /**
+     * @requires PHP >= 8.1
+     */
+    public function testDeprecationsOnPhp81DoNotThrow(): void
+    {
+        $config = new ExceptionsConfig();
+
+        $config->logDeprecationsOnly = true;
+        $config->deprecationLogLevel = 'error';
+
+        $this->exception = new Exceptions($config, Services::request(), Services::response());
+        $this->exception->initialize();
+
+        // this is only needed for IDEs not to complain that strlen does not accept explicit null
+        $maybeNull = PHP_VERSION_ID >= 80100 ? null : 'random string';
+
+        try {
+            strlen($maybeNull);
+            $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
+        } catch (ErrorException $e) {
+            $this->fail('The catch block should not be reached.');
+        } finally {
+            restore_error_handler();
+            restore_exception_handler();
+        }
+    }
+
+    public function testSuppressedDeprecationsAreLogged(): void
+    {
+        $config = new ExceptionsConfig();
+
+        $config->logDeprecationsOnly = true;
+        $config->deprecationLogLevel = 'error';
+
+        $this->exception = new Exceptions($config, Services::request(), Services::response());
+        $this->exception->initialize();
+
+        @trigger_error('Hello! I am a deprecation!', E_USER_DEPRECATED);
+        $this->assertLogContains('error', '[DEPRECATED] Hello! I am a deprecation!');
+
+        restore_error_handler();
+        restore_exception_handler();
     }
 
     public function testDetermineViews(): void

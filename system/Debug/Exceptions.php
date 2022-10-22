@@ -22,6 +22,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
 use ErrorException;
+use Psr\Log\LogLevel;
 use Throwable;
 
 /**
@@ -81,6 +82,10 @@ class Exceptions
         // workaround for upgraded users
         if (! isset($this->config->sensitiveDataInTrace)) {
             $this->config->sensitiveDataInTrace = [];
+        }
+        if (! isset($this->config->logDeprecationsOnly, $this->config->deprecationLogLevel)) {
+            $this->config->logDeprecationsOnly = false;
+            $this->config->deprecationLogLevel = LogLevel::WARNING;
         }
     }
 
@@ -155,6 +160,10 @@ class Exceptions
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
+        if ($this->isDeprecationError($severity) && $this->config->logDeprecationsOnly) {
+            return $this->handleDeprecationError($message, $file, $line);
+        }
+
         if (! (error_reporting() & $severity)) {
             return;
         }
@@ -326,6 +335,37 @@ class Exceptions
         }
 
         return [$statusCode, $exitStatus];
+    }
+
+    private function isDeprecationError(int $error): bool
+    {
+        $deprecations = E_DEPRECATED | E_USER_DEPRECATED;
+
+        return ($error & $deprecations) !== 0;
+    }
+
+    /**
+     * @noRector \Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector
+     *
+     * @return true
+     */
+    private function handleDeprecationError(string $message, ?string $file = null, ?int $line = null): bool
+    {
+        // Remove the trace of the error handler.
+        $trace = array_slice(debug_backtrace(), 2);
+
+        log_message(
+            $this->config->deprecationLogLevel,
+            "[DEPRECATED] {message} in {errFile} on line {errLine}.\n{trace}",
+            [
+                'message' => $message,
+                'errFile' => clean_path($file ?? ''),
+                'errLine' => $line ?? 0,
+                'trace'   => self::renderBacktrace($trace),
+            ]
+        );
+
+        return true;
     }
 
     // --------------------------------------------------------------------
