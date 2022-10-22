@@ -67,4 +67,22 @@ final class DeleteTest extends CIUnitTestCase
 
         $this->seeNumRecords(1, 'user', ['country' => 'US']);
     }
+
+    public function testDeleteBatch()
+    {
+        $data = [
+            ['userid' => 1, 'username' => 'Derek J', 'unused' => 'You can have fields you dont use'],
+            ['userid' => 2, 'username' => 'Ahmadinejad', 'unused' => 'You can have fields you dont use'],
+        ];
+
+        $this->db->table('user')
+            ->setAlias('data')
+            ->setData($data)
+            ->onConstraint(['id' => 'userid', 'name' => 'username'])
+            ->deleteBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
+
+        $this->dontSeeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'name' => 'Ahmadinejad']);
+    }
 }
