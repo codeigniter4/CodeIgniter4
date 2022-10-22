@@ -156,7 +156,7 @@ example:
 
 Your project has users and groups. In your test case you want to create various scenarios
 with groups of different sizes, so you use ``Fabricator`` to create a bunch of groups.
-Now you want to create fake users but don't want to assign them to a non-existant group ID.
+Now you want to create fake users but don't want to assign them to a non-existent group ID.
 Your model's fake method could look like this:
 
 .. literalinclude:: fabricator/021.php

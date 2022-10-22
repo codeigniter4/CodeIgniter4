@@ -2,7 +2,7 @@
 Database Commands
 #################
 
-CodeIgniter provides some simple commands for databse management.
+CodeIgniter provides some simple commands for database management.
 
 .. contents::
     :local:

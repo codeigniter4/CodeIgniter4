@@ -7,4 +7,4 @@ $result->assertSee('Hello World', 'h1');
 // Check that "Hello World" is within an element with the "notice" class
 $result->assertSee('Hello World', '.notice');
 // Check that "Hello World" is within an element with id of "title"
-$result->assertSee('Hellow World', '#title');
+$result->assertSee('Hello World', '#title');
