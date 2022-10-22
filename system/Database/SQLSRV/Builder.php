@@ -685,13 +685,15 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
+            $alias = $this->QBOptions['alias'] ?? '"_upsert"';
+
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
 
             $sql = 'MERGE INTO ' . $fullTableName . "\nUSING (\n";
 
             $sql .= '{:_table_:}';
 
-            $sql .= ') "_upsert" (';
+            $sql .= ") {$alias} (";
 
             $sql .= implode(', ', $keys);
 
@@ -702,9 +704,20 @@ class Builder extends BaseBuilder
             $sql .= implode(
                 ' AND ',
                 array_map(
-                    static fn ($key) => ($key instanceof RawSql ?
-                        $key :
-                        $fullTableName . '.' . $key . ' = "_upsert".' . $key),
+                    static fn ($key, $value) => (
+                        ($value instanceof RawSql && is_string($key))
+                        ?
+                        $fullTableName . '.' . $key . ' = ' . $value
+                        :
+                        (
+                            $value instanceof RawSql
+                            ?
+                            $value
+                            :
+                            $fullTableName . '.' . $value . ' = ' . $alias . '.' . $value
+                        )
+                    ),
+                    array_keys($constraints),
                     $constraints
                 )
             ) . ")\n";
@@ -716,7 +729,7 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
                         ' = ' . $value :
-                        ' = "_upsert".' . $value),
+                    " = {$alias}.{$value}"),
                     array_keys($updateFields),
                     $updateFields
                 )
@@ -729,10 +742,10 @@ class Builder extends BaseBuilder
                     ', ',
                     array_map(
                         static fn ($columnName) => $columnName === $tableIdentity
-                    ? 'CASE WHEN "_upsert".' . $columnName . ' IS NULL THEN (SELECT '
+                    ? "CASE WHEN {$alias}.{$columnName} IS NULL THEN (SELECT "
                     . 'isnull(IDENT_CURRENT(\'' . $fullTableName . '\')+IDENT_INCR(\''
-                    . $fullTableName . '\'),1)) ELSE "_upsert".' . $columnName . ' END'
-                    : '"_upsert".' . $columnName,
+                    . $fullTableName . "'),1)) ELSE {$alias}.{$columnName} END"
+                    : "{$alias}.{$columnName}",
                         $keys
                     )
                 ) . ');'
