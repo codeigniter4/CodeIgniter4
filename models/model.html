@@ -335,7 +335,7 @@ location within the directory, like <code class="docutils literal notranslate"><
 
 <span class="c1">// Create shared instance with a supplied database connection</span>
 <span class="c1">// When no namespace is given, it will search through all namespaces</span>
-<span class="c1">// the system knows about and attempt to located the UserModel class.</span>
+<span class="c1">// the system knows about and attempts to locate the UserModel class.</span>
 <span class="nv">$db</span>        <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">);</span>
 <span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$db</span><span class="p">);</span>
 </pre></div>
@@ -693,7 +693,7 @@ the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
 <h3><a class="toc-backref" href="#id10">Saving Data</a><a class="headerlink" href="#saving-data" title="Permalink to this headline"></a></h3>
 <section id="insert">
 <h4>insert()<a class="headerlink" href="#insert" title="Permalink to this headline"></a></h4>
-<p>The first parametre is an associative array of data to create a new row of data in the database.
+<p>The first parameter is an associative array of data to create a new row of data in the database.
 If an object is passed instead of an array, it will attempt to convert it to an array.</p>
 <p>The array’s keys must match the name of the columns in the <code class="docutils literal notranslate"><span class="pre">$table</span></code>, while the array’s values are the values to save for that key.</p>
 <p>The optional second parameter is of type boolean, and if it is set to false, the method will return a boolean value,
@@ -1237,7 +1237,7 @@ it is reset to its default value.</p>
 </section>
 <section id="asobject">
 <h4>asObject()<a class="headerlink" href="#asobject" title="Permalink to this headline"></a></h4>
-<p>Returns data from the next <strong>find*()</strong> method as standard objects or custom class intances:</p>
+<p>Returns data from the next <strong>find*()</strong> method as standard objects or custom class instances:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Return as standard objects</span>
