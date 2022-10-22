@@ -31,7 +31,7 @@ none.
 Deprecations
 ************
 
-none.
+- The third parameter ``$returnResponse`` of ``CodeIgniter::handleRequest()`` is deprecated, and no longer used.
 
 Bugs Fixed
 **********
