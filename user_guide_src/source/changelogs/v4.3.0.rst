@@ -93,8 +93,8 @@ Validation
 
 The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty.
 
-Others
-------
+Database
+--------
 
 - The return types of ``CodeIgniter\Database\BasePreparedQuery::close()`` and ``CodeIgniter\Database\PreparedQueryInterface`` have been changed to ``bool`` (previously untyped).
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
@@ -105,10 +105,10 @@ Others
 - ``BaseBuilder::_updateBatch()``
     - The second parameter ``$values`` has changed to ``$keys``.
     - The third parameter ``$index`` has changed to ``$values``. The parameter type also has changed to ``array``.
-- The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
-- The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
-    - ``Debug\Exceptions::__construct()``
-    - ``Services::exceptions()``
+
+Database Forge
+--------------
+
 - The method signature of ``Forge::dropKey()`` has changed. An additional optional parameter ``$prefixKeyName`` has been added.
 - The method signature of ``Forge::addKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 - The method signature of ``Forge::addPrimaryKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
@@ -118,6 +118,14 @@ Others
 - In addition to the added ``$asQuery`` parameter above the following methods also now return an array.
     - ``CodeIgniter\Database\Forge::_processIndexes()``
     - ``CodeIgniter\Database\Forge::_processForeignKeys()``
+
+Others
+------
+
+- The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
+- The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
+    - ``Debug\Exceptions::__construct()``
+    - ``Services::exceptions()``
 
 Enhancements
 ************
