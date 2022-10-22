@@ -20,6 +20,11 @@ namespace CodeIgniter\Test;
  */
 final class PhpStreamWrapper
 {
+    /**
+     * @var resource|null
+     */
+    public $context;
+
     private static string $content = '';
     private int $position          = 0;
 
