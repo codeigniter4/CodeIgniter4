@@ -164,6 +164,8 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
+            $alias = '`excluded`';
+
             $updateFields = $this->QBOptions['updateFields'] ??
                 $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
                 [];
@@ -184,8 +186,8 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
-                        ' = ' . $value :
-                        ' = `excluded`.' . $value),
+                        " = {$value}" :
+                        " = {$alias}.{$value}"),
                     array_keys($updateFields),
                     $updateFields
                 )
