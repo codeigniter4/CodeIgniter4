@@ -456,7 +456,7 @@ class Builder extends BaseBuilder
             // remove database prefix from alias in where
             $sql .= ' ' . str_replace(
                 'WHERE ',
-                ' AND ',
+                'AND ',
                 str_replace(
                     $this->db->DBPrefix . trim($alias, $this->db->escapeChar),
                     trim($alias, $this->db->escapeChar),
