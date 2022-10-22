@@ -475,9 +475,33 @@ final class UpdateTest extends CIUnitTestCase
 
         $builder = $this->db->table('user');
 
-        $builder->setData($data, true, 'db_myalias')
+        $builder->setData($data, true, 'myalias')
             ->updateFields('name, country')
             ->onConstraint(new RawSql($this->db->protectIdentifiers('user.email') . ' = ' . $this->db->protectIdentifiers('myalias.email')))
+            ->updateBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
+    }
+
+    public function testRawSqlConstraintWithKey()
+    {
+        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+            $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
+        }
+
+        $data = [
+            [
+                'name'    => 'Derek Jones',
+                'email'   => 'derek@world.com',
+                'country' => 'Germany',
+            ],
+        ];
+
+        $builder = $this->db->table('user');
+
+        $builder->setData($data, true, 'myalias')
+            ->updateFields('name, country')
+            ->onConstraint(['email' => new RawSql($this->db->protectIdentifiers('myalias.email'))])
             ->updateBatch();
 
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
