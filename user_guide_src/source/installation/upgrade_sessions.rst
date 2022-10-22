@@ -23,7 +23,7 @@ Upgrade Guide
     - To access session data use the syntax ``$session->item`` or ``$session->get('item')`` instead of the CI3 syntax ``$this->session->name``.
     - To set data use ``$session->set($array);`` instead of ``$this->session->set_userdata($array);``.
     - To remove data use ``unset($_SESSION['some_name']);`` or ``$session->remove('some_name');`` instead of ``$this->session->unset_userdata('some_name');``.
-    - To mark session data as flasdata, which will only be available for the next request, use ``$session->markAsFlashdata('item');`` instead of ``$this->session->mark_as_flash('item');```
+    - To mark session data as flashdata, which will only be available for the next request, use ``$session->markAsFlashdata('item');`` instead of ``$this->session->mark_as_flash('item');```
 
 Code Example
 ============

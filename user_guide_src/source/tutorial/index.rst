@@ -53,7 +53,7 @@ Enjoy your exploration of the CodeIgniter framework.
 Getting Up and Running
 **********************
 
-Installing CodeIgnier
+Installing CodeIgniter
 =====================
 
 You can download a release manually from the site, but for this tutorial we will

@@ -11,6 +11,6 @@ $userModel = model('App\Models\UserModel');
 
 // Create shared instance with a supplied database connection
 // When no namespace is given, it will search through all namespaces
-// the system knows about and attempt to located the UserModel class.
+// the system knows about and attempts to locate the UserModel class.
 $db        = db_connect('custom');
 $userModel = model('UserModel', true, $db);

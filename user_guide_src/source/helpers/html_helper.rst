@@ -165,10 +165,10 @@ The following functions are available:
             <li>shapes
                 <ul>
                     <li>round</li>
-                    <li>suare</li>
+                    <li>square</li>
                     <li>circles
                         <ul>
-                            <li>elipse</li>
+                            <li>ellipse</li>
                             <li>oval</li>
                             <li>sphere</li>
                         </ul>

@@ -179,7 +179,7 @@ PRs merged
 - #1943 Model, Entity, Exception & Migration test cases
 - #1939 Remove section that prevents hotlinking
 - #1938 Database typos changes
-- #1936 Docs: improce app testing writeup
+- #1936 Docs: improve app testing writeup
 - #1935 Update phpunit.xml scripts. Fixes #1932
 - #1933 having (Is NULL deletion)
 - #1931 Toolbar IE11 fix
