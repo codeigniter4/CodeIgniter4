@@ -54,7 +54,7 @@ Getting Up and Running
 **********************
 
 Installing CodeIgniter
-=====================
+======================
 
 You can download a release manually from the site, but for this tutorial we will
 use the recommended way and install the AppStarter package through Composer.
