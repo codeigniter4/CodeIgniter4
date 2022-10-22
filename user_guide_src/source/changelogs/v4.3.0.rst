@@ -167,7 +167,7 @@ Forge
 - The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
 - :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
 - Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
-- Fixed ``Forge::dropKey()`` to allow droping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
+- Fixed ``Forge::dropKey()`` to allow dropping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
 - Added ``Forge::processIndexes()`` allowing the creation of indexes on an existing table. See :ref:`adding-keys` for the details.
 
 Others
