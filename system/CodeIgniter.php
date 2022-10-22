@@ -152,6 +152,11 @@ class CodeIgniter
     protected ?string $context = null;
 
     /**
+     * Whether to return Response object or send response.
+     */
+    protected bool $returnResponse = false;
+
+    /**
      * Constructor.
      */
     public function __construct(App $config)
@@ -291,6 +296,8 @@ class CodeIgniter
      */
     public function run(?RouteCollectionInterface $routes = null, bool $returnResponse = false)
     {
+        $this->returnResponse = $returnResponse;
+
         if ($this->context === null) {
             throw new LogicException('Context must be set before run() is called. If you are upgrading from 4.1.x, you need to merge `public/index.php` and `spark` file from `vendor/codeigniter4/framework`.');
         }
@@ -309,7 +316,11 @@ class CodeIgniter
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             $this->response->setStatusCode(405)->setBody('Method Not Allowed');
 
-            $this->sendResponse();
+            if (! $this->returnResponse) {
+                $this->sendResponse();
+            } else {
+                return $this->response;
+            }
 
             return;
         }
@@ -345,13 +356,22 @@ class CodeIgniter
             // If the route is a 'redirect' route, it throws
             // the exception with the $to as the message
             $this->response->redirect(base_url($e->getMessage()), 'auto', $e->getCode());
-            $this->sendResponse();
+
+            if (! $this->returnResponse) {
+                $this->sendResponse();
+            } else {
+                return $this->response;
+            }
 
             $this->callExit(EXIT_SUCCESS);
 
             return;
         } catch (PageNotFoundException $e) {
-            $this->display404errors($e);
+            $return = $this->display404errors($e);
+
+            if ($return instanceof ResponseInterface) {
+                return $return;
+            }
         }
     }
 
@@ -400,6 +420,8 @@ class CodeIgniter
      *
      * @throws PageNotFoundException
      * @throws RedirectException
+     *
+     * @deprecated $returnResponse is deprecated, and no longer used.
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
@@ -433,7 +455,8 @@ class CodeIgniter
 
             // If a ResponseInterface instance is returned then send it back to the client and stop
             if ($possibleResponse instanceof ResponseInterface) {
-                return $returnResponse ? $possibleResponse : $possibleResponse->pretend($this->useSafeOutput)->send();
+                return $this->returnResponse ? $possibleResponse
+                    : $possibleResponse->pretend($this->useSafeOutput)->send();
             }
 
             if ($possibleResponse instanceof Request) {
@@ -512,7 +535,7 @@ class CodeIgniter
 
         unset($uri);
 
-        if (! $returnResponse) {
+        if (! $this->returnResponse) {
             $this->sendResponse();
         }
 
@@ -910,6 +933,8 @@ class CodeIgniter
     /**
      * Displays a 404 Page Not Found error. If set, will try to
      * call the 404Override controller/method that was set in routing config.
+     *
+     * @return ResponseInterface|void
      */
     protected function display404errors(PageNotFoundException $e)
     {
@@ -934,7 +959,11 @@ class CodeIgniter
 
             $cacheConfig = new Cache();
             $this->gatherOutput($cacheConfig, $returned);
-            $this->sendResponse();
+            if (! $this->returnResponse) {
+                $this->sendResponse();
+            } else {
+                return $this->response;
+            }
 
             return;
         }
