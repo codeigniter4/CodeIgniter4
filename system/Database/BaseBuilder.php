@@ -2704,7 +2704,7 @@ class BaseBuilder
                 array_map(
                     static fn ($key, $value, $id) => (
                         $value instanceof RawSql ?
-                    $key :
+                    $value :
                     (
                         is_string($key) ?
                     $table . '.' . $id . $key . $id . ' = ' . $alias . '.' . $value :
