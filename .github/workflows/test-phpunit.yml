@@ -32,7 +32,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  COVERAGE_PHP_VERSION: '8.0'
+  COVERAGE_PHP_VERSION: '8.1'
 
 jobs:
   tests:
