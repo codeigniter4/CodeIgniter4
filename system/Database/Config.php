@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use Config\Database as DbConfig;
 use InvalidArgumentException;
 
 /**
@@ -55,13 +56,14 @@ class Config extends BaseConfig
             $group  = 'custom-' . md5(json_encode($config));
         }
 
-        $config ??= config('Database');
+        /** @var DbConfig $dbConfig */
+        $dbConfig = config('Database');
 
         if (empty($group)) {
-            $group = ENVIRONMENT === 'testing' ? 'tests' : $config->defaultGroup;
+            $group = ENVIRONMENT === 'testing' ? 'tests' : $dbConfig->defaultGroup;
         }
 
-        if (is_string($group) && ! isset($config->{$group}) && strpos($group, 'custom-') !== 0) {
+        if (is_string($group) && ! isset($dbConfig->{$group}) && strpos($group, 'custom-') !== 0) {
             throw new InvalidArgumentException($group . ' is not a valid database connection group.');
         }
 
@@ -71,8 +73,12 @@ class Config extends BaseConfig
 
         static::ensureFactory();
 
-        if (isset($config->{$group})) {
-            $config = $config->{$group};
+        if (isset($dbConfig->{$group})) {
+            $config = $dbConfig->{$group};
+        }
+
+        if (! isset($config)) {
+            throw new InvalidArgumentException('There is no valid database config.');
         }
 
         $connection = static::$factory->load($config, $group);
