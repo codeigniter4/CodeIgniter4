@@ -62,6 +62,8 @@ class Config extends BaseConfig
                 $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
             }
 
+            assert(is_string($group));
+
             if (! isset($dbConfig->{$group})) {
                 throw new InvalidArgumentException($group . ' is not a valid database connection group.');
             }
