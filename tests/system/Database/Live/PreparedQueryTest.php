@@ -15,6 +15,7 @@ use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
@@ -171,18 +172,36 @@ final class PreparedQueryTest extends CIUnitTestCase
 
     public function testDeallocatePreparedQueryThenTryToClose()
     {
-        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->insert([
-            'name'    => 'a',
-            'email'   => 'b@example.com',
-            'country' => 'x',
-        ]));
+        $this->query = $this->db->prepare(
+            static fn ($db) => $db->table('user')->insert([
+                'name'    => 'a',
+                'email'   => 'b@example.com',
+                'country' => 'x',
+            ])
+        );
 
         $this->query->close();
 
         // Try to close a non-existing prepared statement
         $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage('Cannot call close on a non-existing prepared statement.');
+        $this->expectExceptionMessage(
+            'Cannot call close on a non-existing prepared statement.'
+        );
 
         $this->query->close();
+    }
+
+    public function testExecuteSelectQueryAndCheckTypeAndResult()
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select('name, email, country')->where([
+            'name' => 'foo',
+        ])->get());
+
+        $result = $this->query->execute('Derek Jones');
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+
+        $expectedRow = ['name' => 'Derek Jones', 'email' => 'derek@world.com', 'country' => 'US'];
+        $this->assertSame($expectedRow, $result->getRowArray());
     }
 }
