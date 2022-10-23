@@ -65,18 +65,12 @@ class Config extends BaseConfig
             if (! isset($dbConfig->{$group})) {
                 throw new InvalidArgumentException($group . ' is not a valid database connection group.');
             }
+
+            $config = $dbConfig->{$group};
         }
 
         if ($getShared && isset(static::$instances[$group])) {
             return static::$instances[$group];
-        }
-
-        if (isset($dbConfig->{$group})) {
-            $config = $dbConfig->{$group};
-        }
-
-        if (! isset($config)) {
-            throw new InvalidArgumentException('There is no valid database config.');
         }
 
         static::ensureFactory();
