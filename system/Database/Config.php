@@ -54,17 +54,17 @@ class Config extends BaseConfig
         if (is_array($group)) {
             $config = $group;
             $group  = 'custom-' . md5(json_encode($config));
-        }
+        } else {
+            /** @var DbConfig $dbConfig */
+            $dbConfig = config('Database');
 
-        /** @var DbConfig $dbConfig */
-        $dbConfig = config('Database');
+            if ($group === null) {
+                $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
+            }
 
-        if ($group === null) {
-            $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
-        }
-
-        if (is_string($group) && ! isset($dbConfig->{$group}) && strpos($group, 'custom-') !== 0) {
-            throw new InvalidArgumentException($group . ' is not a valid database connection group.');
+            if (is_string($group) && ! isset($dbConfig->{$group}) && strpos($group, 'custom-') !== 0) {
+                throw new InvalidArgumentException($group . ' is not a valid database connection group.');
+            }
         }
 
         if ($getShared && isset(static::$instances[$group])) {
