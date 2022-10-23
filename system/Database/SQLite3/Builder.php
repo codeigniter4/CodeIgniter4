@@ -166,7 +166,7 @@ class Builder extends BaseBuilder
 
             $alias = $this->QBOptions['alias'] ?? '`excluded`';
 
-            if (strtolower($alias) !== '"excluded"' && $this->db->DBDebug) {
+            if (strtolower($alias) !== '`excluded`' && $this->db->DBDebug) {
                 throw new DatabaseException('SQLite alias is always named "excluded". A custom alias cannot be used.');
             }
 
