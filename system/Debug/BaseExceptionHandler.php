@@ -118,6 +118,8 @@ abstract class BaseExceptionHandler
     /**
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
+     *
+     * @used-by app/Views/errors/html/error_exception.php
      */
     protected static function describeMemory(int $bytes): string
     {
@@ -134,6 +136,8 @@ abstract class BaseExceptionHandler
 
     /**
      * Creates a syntax-highlighted version of a PHP file.
+     *
+     * @used-by app/Views/errors/html/error_exception.php
      *
      * @return bool|string
      */
