@@ -432,7 +432,7 @@ in uppercase or lowercase.</p>
 as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">([</span><span class="s1">&#39;SERVER_PROTOCOL&#39;</span><span class="p">,</span> <span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -466,7 +466,7 @@ as an array.</p>
 as an array.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$require</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">&#39;CI_ENVIRONMENT&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">]);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">([</span><span class="s1">&#39;CI_ENVIRONMENT&#39;</span><span class="p">,</span> <span class="s1">&#39;S3_BUCKET&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -528,7 +528,7 @@ Can optionally filter the input when you retrieve it by passing in a filter.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 22, 2022.
+      <span class="lastupdated">Last updated on Oct 23, 2022.
       </span></p>
   </div>
 
