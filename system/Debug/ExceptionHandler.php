@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Debug;
 
+use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -21,6 +22,18 @@ use Throwable;
 
 class ExceptionHandler extends BaseExceptionHandler
 {
+    use ResponseTrait;
+
+    /**
+     * ResponseTrait needs this.
+     */
+    protected ?RequestInterface $request = null;
+
+    /**
+     * ResponseTrait needs this.
+     */
+    protected ?ResponseInterface $response = null;
+
     /**
      * Determines the correct way to display the error.
      *

@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Debug;
 
-use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
@@ -23,18 +22,6 @@ use Throwable;
  */
 abstract class BaseExceptionHandler
 {
-    use ResponseTrait;
-
-    /**
-     * ResponseTrait needs this.
-     */
-    protected ?RequestInterface $request = null;
-
-    /**
-     * ResponseTrait needs this.
-     */
-    protected ?ResponseInterface $response = null;
-
     /**
      * Config for debug exceptions.
      */
