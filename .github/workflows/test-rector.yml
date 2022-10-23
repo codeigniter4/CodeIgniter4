@@ -29,6 +29,10 @@ on:
       - composer.json
       - rector.php
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: PHP ${{ matrix.php-versions }} Analyze code (Rector) on ${{ matrix.paths }}
