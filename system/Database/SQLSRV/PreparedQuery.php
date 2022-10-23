@@ -77,7 +77,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the statement resource for the prepared query.
+     * Returns the statement resource for the prepared query or false when preparing failed.
      *
      * @return mixed
      */
