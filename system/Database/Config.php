@@ -71,8 +71,6 @@ class Config extends BaseConfig
             return static::$instances[$group];
         }
 
-        static::ensureFactory();
-
         if (isset($dbConfig->{$group})) {
             $config = $dbConfig->{$group};
         }
@@ -80,6 +78,8 @@ class Config extends BaseConfig
         if (! isset($config)) {
             throw new InvalidArgumentException('There is no valid database config.');
         }
+
+        static::ensureFactory();
 
         $connection = static::$factory->load($config, $group);
 
