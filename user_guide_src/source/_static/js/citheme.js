@@ -23,8 +23,8 @@ window.onload = function() {
 		var chapter = sanitizeClass(index[1]);
 		var subject = sanitizeClass(index[2]);
 
-		// Documentation are generated into an html-folder for developers.
-		// This aren't a valid chapter. We are on documentation index.
+		// Documentation is generated into an html-folder for developers.
+		// This isn't a valid chapter. We are on documentation index.
 		if (chapter === 'html')
 		{
 			index = null;

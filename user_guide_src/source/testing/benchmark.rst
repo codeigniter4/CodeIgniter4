@@ -82,7 +82,7 @@ the only parameter. The default value is 4 numbers behind the decimal point:
 
 .. literalinclude:: benchmark/005.php
 
-The timers are automatically displayed in the :doc:`Debub Toolbar </testing/debugging>`.
+The timers are automatically displayed in the :doc:`Debug Toolbar </testing/debugging>`.
 
 Displaying Execution Time
 =========================

@@ -319,7 +319,7 @@ Saving Data
 insert()
 --------
 
-The first parametre is an associative array of data to create a new row of data in the database.
+The first parameter is an associative array of data to create a new row of data in the database.
 If an object is passed instead of an array, it will attempt to convert it to an array.
 
 The array's keys must match the name of the columns in the ``$table``, while the array's values are the values to save for that key.
@@ -614,7 +614,7 @@ Returns data from the next **find*()** method as associative arrays:
 asObject()
 ----------
 
-Returns data from the next **find*()** method as standard objects or custom class intances:
+Returns data from the next **find*()** method as standard objects or custom class instances:
 
 .. literalinclude:: model/048.php
 
