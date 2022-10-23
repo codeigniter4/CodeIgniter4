@@ -37,7 +37,7 @@ env:
 jobs:
   tests:
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     strategy:
@@ -144,7 +144,7 @@ jobs:
       - name: Install latest ImageMagick
         run: |
           sudo apt-get update
-          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback ttf-dejavu-core
+          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
           sudo apt-get install -y imagemagick
           sudo apt-get install --fix-broken
 
@@ -199,7 +199,7 @@ jobs:
   coveralls:
     if: github.repository_owner == 'codeigniter4'
     needs: tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout

@@ -15,7 +15,7 @@ jobs:
   build:
     name: Deploy to api
     if: github.repository == 'codeigniter4/CodeIgniter4'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Setup credentials
