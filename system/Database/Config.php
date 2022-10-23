@@ -59,7 +59,7 @@ class Config extends BaseConfig
         /** @var DbConfig $dbConfig */
         $dbConfig = config('Database');
 
-        if (empty($group)) {
+        if ($group === null) {
             $group = ENVIRONMENT === 'testing' ? 'tests' : $dbConfig->defaultGroup;
         }
 
