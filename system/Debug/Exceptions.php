@@ -429,6 +429,8 @@ class Exceptions
     /**
      * Describes memory usage in real-world units. Intended for use
      * with memory_get_usage, etc.
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     public static function describeMemory(int $bytes): string
     {
@@ -447,6 +449,8 @@ class Exceptions
      * Creates a syntax-highlighted version of a PHP file.
      *
      * @return bool|string
+     *
+     * @deprecated No longer used. Moved to BaseExceptionHandler.
      */
     public static function highlightFile(string $file, int $lineNumber, int $lines = 15)
     {
