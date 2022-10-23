@@ -364,7 +364,11 @@ class Builder extends BaseBuilder
                 }
             }
 
-            $alias = '"excluded"';
+            $alias = $this->QBOptions['alias'] ?? '"excluded"';
+
+            if (strtolower($alias) !== '"excluded"' && $this->db->DBDebug) {
+                throw new DatabaseException('Postgres alias is always named "excluded". A custom alias cannot be used.');
+            }
 
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
 
