@@ -60,7 +60,7 @@ class Config extends BaseConfig
         $dbConfig = config('Database');
 
         if ($group === null) {
-            $group = ENVIRONMENT === 'testing' ? 'tests' : $dbConfig->defaultGroup;
+            $group = (ENVIRONMENT === 'testing') ? 'tests' : $dbConfig->defaultGroup;
         }
 
         if (is_string($group) && ! isset($dbConfig->{$group}) && strpos($group, 'custom-') !== 0) {
