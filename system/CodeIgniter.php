@@ -316,11 +316,11 @@ class CodeIgniter
         if ($this->request instanceof IncomingRequest && strtolower($this->request->getMethod()) === 'cli') {
             $this->response->setStatusCode(405)->setBody('Method Not Allowed');
 
-            if (! $this->returnResponse) {
-                $this->sendResponse();
-            } else {
+            if ($this->returnResponse) {
                 return $this->response;
             }
+
+            $this->sendResponse();
 
             return;
         }
@@ -357,11 +357,11 @@ class CodeIgniter
             // the exception with the $to as the message
             $this->response->redirect(base_url($e->getMessage()), 'auto', $e->getCode());
 
-            if (! $this->returnResponse) {
-                $this->sendResponse();
-            } else {
+            if ($this->returnResponse) {
                 return $this->response;
             }
+
+            $this->sendResponse();
 
             $this->callExit(EXIT_SUCCESS);
 
@@ -959,11 +959,11 @@ class CodeIgniter
 
             $cacheConfig = new Cache();
             $this->gatherOutput($cacheConfig, $returned);
-            if (! $this->returnResponse) {
-                $this->sendResponse();
-            } else {
+            if ($this->returnResponse) {
                 return $this->response;
             }
+
+            $this->sendResponse();
 
             return;
         }
