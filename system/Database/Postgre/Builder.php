@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\InvalidArgumentException;
 use CodeIgniter\Database\RawSql;
 
 /**
@@ -367,7 +368,7 @@ class Builder extends BaseBuilder
             $alias = $this->QBOptions['alias'] ?? '"excluded"';
 
             if (strtolower($alias) !== '"excluded"') {
-                throw new DatabaseException('Postgres alias is always named "excluded". A custom alias cannot be used.');
+                throw new InvalidArgumentException('Postgres alias is always named "excluded". A custom alias cannot be used.');
             }
 
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];

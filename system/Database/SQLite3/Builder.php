@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\InvalidArgumentException;
 use CodeIgniter\Database\RawSql;
 
 /**
@@ -167,7 +168,7 @@ class Builder extends BaseBuilder
             $alias = $this->QBOptions['alias'] ?? '`excluded`';
 
             if (strtolower($alias) !== '`excluded`') {
-                throw new DatabaseException('SQLite alias is always named "excluded". A custom alias cannot be used.');
+                throw new InvalidArgumentException('SQLite alias is always named "excluded". A custom alias cannot be used.');
             }
 
             $updateFields = $this->QBOptions['updateFields'] ??
