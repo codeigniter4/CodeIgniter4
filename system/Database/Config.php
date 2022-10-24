@@ -39,9 +39,10 @@ class Config extends BaseConfig
     /**
      * Creates the default
      *
-     * @param array|BaseConnection|string|null $group     The name of the connection group to use,
-     *                                                    or an array of configuration settings.
-     * @param bool                             $getShared Whether to return a shared instance of the connection.
+     * @param array|BaseConnection|string|null $group The name of the connection group to use,
+     *                                                or an array of configuration settings.
+     * @phpstan-param array|BaseConnection|non-empty-string|null $group
+     * @param bool $getShared Whether to return a shared instance of the connection.
      *
      * @return BaseConnection
      */
@@ -124,6 +125,8 @@ class Config extends BaseConfig
 
     /**
      * Returns a new instance of the Database Seeder.
+     *
+     * @phpstan-param null|non-empty-string $group
      *
      * @return Seeder
      */

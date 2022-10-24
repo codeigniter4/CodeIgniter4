@@ -134,6 +134,7 @@ abstract class CIUnitTestCase extends TestCase
      * If not present, will use the defaultGroup.
      *
      * @var string
+     * @phpstan-var non-empty-string
      */
     protected $DBGroup = 'tests';
 

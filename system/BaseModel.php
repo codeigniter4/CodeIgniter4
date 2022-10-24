@@ -64,6 +64,7 @@ abstract class BaseModel
      * should be instantiated.
      *
      * @var string
+     * @phpstan-var non-empty-string
      */
     protected $DBGroup;
 
