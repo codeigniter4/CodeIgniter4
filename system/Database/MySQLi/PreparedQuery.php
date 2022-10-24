@@ -15,13 +15,14 @@ use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use mysqli;
+use mysqli_result;
 use mysqli_sql_exception;
 use mysqli_stmt;
 
 /**
  * Prepared query for MySQLi
  *
- * @extends BasePreparedQuery<false|mysqli, mysqli_stmt>
+ * @extends BasePreparedQuery<mysqli, mysqli_stmt, mysqli_result>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -94,7 +95,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Returns the result object for the prepared query or false on failure.
      *
-     * @return mixed
+     * @return false|mysqli_result
      */
     public function _getResult()
     {

@@ -18,7 +18,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 /**
  * Prepared query for OCI8
  *
- * @extends BasePreparedQuery<false|resource, resource>
+ * @extends BasePreparedQuery<resource, resource, resource>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -87,7 +87,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Returns the statement resource for the prepared query or false when preparing failed.
      *
-     * @return mixed
+     * @return resource|null
      */
     public function _getResult()
     {

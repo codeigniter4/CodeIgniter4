@@ -20,7 +20,7 @@ use stdClass;
 /**
  * Connection for OCI8
  *
- * @extends BaseConnection<false|resource>
+ * @extends BaseConnection<resource, resource>
  */
 class Connection extends BaseConnection
 {
@@ -185,7 +185,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return bool
+     * @return false|resource
      */
     protected function execute(string $sql)
     {

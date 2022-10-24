@@ -12,9 +12,8 @@
 namespace CodeIgniter\Database;
 
 /**
- * Interface ConnectionInterface
- *
- * @template TConnection of false|object|resource
+ * @template TConnection of object|resource
+ * @template TResult of object|resource
  */
 interface ConnectionInterface
 {
@@ -29,7 +28,7 @@ interface ConnectionInterface
      * Connect to the database.
      *
      * @return false|object|resource
-     * @phpstan-return TConnection
+     * @phpstan-return false|TConnection
      */
     public function connect(bool $persistent = false);
 
@@ -37,7 +36,7 @@ interface ConnectionInterface
      * Create a persistent database connection.
      *
      * @return false|object|resource
-     * @phpstan-return TConnection
+     * @phpstan-return false|TConnection
      */
     public function persistentConnect();
 
@@ -56,7 +55,7 @@ interface ConnectionInterface
      * connection is present, it must return the sole connection.
      *
      * @return false|object|resource
-     * @phpstan-return TConnection
+     * @phpstan-return false|TConnection
      */
     public function getConnection(?string $alias = null);
 
@@ -102,6 +101,7 @@ interface ConnectionInterface
      * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query
+     * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
      */
     public function query(string $sql, $binds = null);
 
@@ -110,7 +110,8 @@ interface ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     public function simpleQuery(string $sql);
 

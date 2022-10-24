@@ -21,7 +21,7 @@ use PgSql\Result as PgSqlResult;
 /**
  * Prepared query for Postgre
  *
- * @extends BasePreparedQuery<false|PgSqlConnection, PgSqlResult>
+ * @extends BasePreparedQuery<PgSqlConnection, PgSqlResult, PgSqlResult>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -37,7 +37,7 @@ class PreparedQuery extends BasePreparedQuery
      * The result resource from a successful
      * pg_exec. Or false.
      *
-     * @var bool|Result
+     * @var false|PgSqlResult
      */
     protected $result;
 
@@ -93,7 +93,8 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Returns the result object for the prepared query or false on failure.
      *
-     * @return mixed
+     * @return resource|null
+     * @phpstan-return PgSqlResult|null
      */
     public function _getResult()
     {

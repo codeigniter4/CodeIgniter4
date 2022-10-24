@@ -16,12 +16,13 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
 use ErrorException;
 use PgSql\Connection as PgSqlConnection;
+use PgSql\Result as PgSqlResult;
 use stdClass;
 
 /**
  * Connection for Postgre
  *
- * @extends BaseConnection<false|PgSqlConnection>
+ * @extends BaseConnection<PgSqlConnection, PgSqlResult>
  */
 class Connection extends BaseConnection
 {
@@ -138,6 +139,7 @@ class Connection extends BaseConnection
      * Executes the query against the database.
      *
      * @return false|resource
+     * @phpstan-return false|PgSqlResult
      */
     protected function execute(string $sql)
     {
