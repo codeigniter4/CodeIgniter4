@@ -88,7 +88,7 @@ class BaseBuilder
      * QB keys
      * list of column names.
      *
-     * @var array
+     * @var string[]
      * @phpstan-var list<string>
      */
     protected $QBKeys = [];
@@ -131,7 +131,7 @@ class BaseBuilder
     /**
      * QB data sets
      *
-     * @var array
+     * @var array[]|string[]
      * @phpstan-var array<string, string>|list<list<string|int>>
      */
     protected $QBSet = [];
