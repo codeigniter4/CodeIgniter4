@@ -227,7 +227,8 @@ query:
 
 .. literalinclude:: queries/019.php
 
-This returns a standard :doc:`result set </database/results>`.
+For queries of type "write" it returns true or false, indicating the success or failure of the query.
+For queries of type "read" it returns a standard :doc:`result set </database/results>`.
 
 Other Methods
 =============

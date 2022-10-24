@@ -41,9 +41,9 @@ class PreparedQuery extends BasePreparedQuery
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the MySQLi driver.
      *
-     * @return $this
+     * @throws DatabaseException
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         if (! ($this->statement = $this->db->connID->prepare($sql))) {
             $this->errorCode   = $this->db->connID->lastErrorCode();
@@ -87,7 +87,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the result object for the prepared query or false on failure.
      *
      * @return mixed
      */

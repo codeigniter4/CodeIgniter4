@@ -14,7 +14,6 @@ namespace CodeIgniter\Database\SQLSRV;
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use Exception;
 
 /**
  * Prepared query for Postgre
@@ -51,11 +50,9 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $options Options takes an associative array;
      *
-     * @return mixed
-     *
-     * @throws Exception
+     * @throws DatabaseException
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         // Prepare parameters for the query
         $queryString = $this->getQueryString();
