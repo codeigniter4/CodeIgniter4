@@ -61,7 +61,10 @@ class DOMParser
      */
     public function withString(string $content)
     {
-        // encode character to HTML numeric string reference
+        // DOMDocument::loadHTML() will treat your string as being in ISO-8859-1
+        // (the HTTP/1.1 default character set) unless you tell it otherwise.
+        // https://stackoverflow.com/a/8218649
+        // So encode characters to HTML numeric string references.
         $content = mb_encode_numericentity($content, [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8');
 
         // turning off some errors
