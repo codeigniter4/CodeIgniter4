@@ -421,10 +421,12 @@ class CodeIgniter
      * @throws PageNotFoundException
      * @throws RedirectException
      *
-     * @deprecated $returnResponse is deprecated, and no longer used.
+     * @deprecated $returnResponse is deprecated.
      */
     protected function handleRequest(?RouteCollectionInterface $routes, Cache $cacheConfig, bool $returnResponse = false)
     {
+        $this->returnResponse = $returnResponse;
+
         $routeFilter = $this->tryToRouteIt($routes);
 
         $uri = $this->determinePath();
