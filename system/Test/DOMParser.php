@@ -89,7 +89,7 @@ class DOMParser
      * Loads the contents of a file as a string
      * so that we can work with it.
      *
-     * @return DOMParser
+     * @return $this
      */
     public function withFile(string $path)
     {
@@ -184,7 +184,7 @@ class DOMParser
     /**
      * Search the DOM using an XPath expression.
      *
-     * @return DOMNodeList
+     * @return DOMNodeList|false
      */
     protected function doXPath(?string $search, string $element, array $paths = [])
     {
