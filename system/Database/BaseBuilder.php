@@ -2427,8 +2427,10 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param array $keys   QBKeys
-     * @param array $values QBSet
+     * @param string[] $keys QBKeys
+     * @phpstan-param list<string> $keys QBKeys
+     * @param array[] $values QBSet
+     * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
