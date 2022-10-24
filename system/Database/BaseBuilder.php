@@ -86,8 +86,10 @@ class BaseBuilder
 
     /**
      * QB keys
+     * list of column names.
      *
-     * @var array
+     * @var string[]
+     * @phpstan-var list<string>
      */
     protected $QBKeys = [];
 
@@ -129,7 +131,8 @@ class BaseBuilder
     /**
      * QB data sets
      *
-     * @var array
+     * @var array[]|string[]
+     * @phpstan-var array<string, string>|list<list<string|int>>
      */
     protected $QBSet = [];
 
@@ -1931,6 +1934,8 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific upsertBatch string from the supplied data
+     *
+     * @used-by batchExecute
      */
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
@@ -2077,6 +2082,8 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific insert string from the supplied data.
+     *
+     * @used-by batchExecute
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -2417,6 +2424,13 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific batch update string from the supplied data
+     *
+     * @used-by batchExecute
+     *
+     * @param string[] $keys QBKeys
+     * @phpstan-param list<string> $keys QBKeys
+     * @param array[] $values QBSet
+     * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _updateBatch(string $table, array $keys, array $values): string
     {
