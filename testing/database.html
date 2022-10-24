@@ -460,11 +460,6 @@ but the path to the single directory that holds the sub-directory.</p>
 <h4>seed($name)<a class="headerlink" href="#seed-name" title="Permalink to this headline"></a></h4>
 <p>Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
 must be present within the path specified in <code class="docutils literal notranslate"><span class="pre">$basePath</span></code>.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$username</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">grabFromDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">]);</span>
-</pre></div>
-</div>
 </section>
 <section id="hasindatabase-table-data">
 <h4>hasInDatabase($table, $data)<a class="headerlink" href="#hasindatabase-table-data" title="Permalink to this headline"></a></h4>
@@ -487,6 +482,11 @@ array with the data to insert into the table.</p>
 <h4>grabFromDatabase($table, $column, $criteria)<a class="headerlink" href="#grabfromdatabase-table-column-criteria" title="Permalink to this headline"></a></h4>
 <p>Returns the value of <code class="docutils literal notranslate"><span class="pre">$column</span></code> from the specified table where the row matches <code class="docutils literal notranslate"><span class="pre">$criteria</span></code>. If more than one
 row is found, it will only return the first one.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$username</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">grabFromDatabase</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="assertions">
@@ -545,7 +545,7 @@ row is found, it will only return the first one.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 23, 2022.
+      <span class="lastupdated">Last updated on Oct 24, 2022.
       </span></p>
   </div>
 
