@@ -13,7 +13,7 @@ namespace CodeIgniter\Database\SQLite3;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\Database\InvalidArgumentException;
+use CodeIgniter\Database\Exceptions\InvalidArgumentException;
 use CodeIgniter\Database\RawSql;
 
 /**
