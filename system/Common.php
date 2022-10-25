@@ -144,7 +144,12 @@ if (! function_exists('command')) {
             } elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor)) {
                 $args[] = stripcslashes($match[1]);
             } else {
-                throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10))); // @codeCoverageIgnore
+                // @codeCoverageIgnoreStart
+                throw new InvalidArgumentException(sprintf(
+                    'Unable to parse input near "... %s ...".',
+                    substr($command, $cursor, 10)
+                ));
+                // @codeCoverageIgnoreEnd
             }
 
             $cursor += strlen($match[0]);
