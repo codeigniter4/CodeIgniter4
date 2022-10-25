@@ -396,9 +396,15 @@ class IncomingRequest extends Request
 
         $config ??= $this->config;
 
+        if ($config->baseURL === '') {
+            // @codeCoverageIgnoreStart
+            exit('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
+            // @codeCoverageIgnoreEnd
+        }
+
         // It's possible the user forgot a trailing slash on their
         // baseURL, so let's help them out.
-        $baseURL = $config->baseURL === '' ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
+        $baseURL = rtrim($config->baseURL, '/ ') . '/';
 
         // Based on our baseURL provided by the developer
         // set our current domain name, scheme
@@ -414,10 +420,6 @@ class IncomingRequest extends Request
             if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
                 $this->uri->setScheme('https');
             }
-        } elseif (! is_cli()) {
-            // @codeCoverageIgnoreStart
-            exit('You have an empty or invalid base URL. The baseURL value must be set in Config\App.php, or through the .env file.');
-            // @codeCoverageIgnoreEnd
         }
 
         return $this;
