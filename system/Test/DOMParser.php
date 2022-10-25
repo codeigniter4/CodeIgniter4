@@ -61,8 +61,11 @@ class DOMParser
      */
     public function withString(string $content)
     {
-        // converts all special characters to utf-8
-        $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
+        // DOMDocument::loadHTML() will treat your string as being in ISO-8859-1
+        // (the HTTP/1.1 default character set) unless you tell it otherwise.
+        // https://stackoverflow.com/a/8218649
+        // So encode characters to HTML numeric string references.
+        $content = mb_encode_numericentity($content, [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8');
 
         // turning off some errors
         libxml_use_internal_errors(true);
@@ -86,7 +89,7 @@ class DOMParser
      * Loads the contents of a file as a string
      * so that we can work with it.
      *
-     * @return DOMParser
+     * @return $this
      */
     public function withFile(string $path)
     {
@@ -181,7 +184,7 @@ class DOMParser
     /**
      * Search the DOM using an XPath expression.
      *
-     * @return DOMNodeList
+     * @return DOMNodeList|false
      */
     protected function doXPath(?string $search, string $element, array $paths = [])
     {
