@@ -2099,8 +2099,12 @@ class BaseBuilder
 
             if (is_string($query)) {
                 $this->QBOptions['fromQuery'] = $query;
-                $this->QBKeys                 = $this->db->protectIdentifiers($this->fieldsFromQuery($query));
+                $this->QBKeys                 = $this->fieldsFromQuery($query);
                 $this->QBSet                  = [];
+
+                foreach ($this->QBKeys as $key => $value) {
+                    $this->QBKeys[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
+                }
             }
         }
 
@@ -2175,7 +2179,9 @@ class BaseBuilder
                 return false; // @codeCoverageIgnore
             }
 
-            $this->db->query($sql, null, false);
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
 
             $this->resetWrite();
 
@@ -2528,7 +2534,7 @@ class BaseBuilder
      * Sets data and calls batchExecute to run queries
      *
      * @param array|BaseBuilder|object|RawSql|null $set         a dataset or select query
-     * @param array|RawSql|string|null              $constraints
+     * @param array|RawSql|string|null             $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
