@@ -1395,7 +1395,7 @@ Class Reference
 
     .. php:method:: fromQuery($query)
 
-        :param mixed $query: Instance of the BaseBuilder or RawSql class or string
+        :param BaseBuilder|RawSql|string $query: Instance of the BaseBuilder, RawSql class or string
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 

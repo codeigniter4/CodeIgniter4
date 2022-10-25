@@ -211,6 +211,7 @@ Query Builder
 - Added ``deleteBatch()`` method to QueryBuilder. See :ref:`delete-batch`.
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
+- Added ``BaseBuilder::fromQuery()`` which allows insert, update, upsert from a query. See :ref:`insert-batch-data`.
 
 Forge
 -----
@@ -230,7 +231,6 @@ Others
 - Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
 - SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
 - ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
-- Added ``BaseBuilder::fromQuery()`` which allows insert, update, upsert from a query. See :ref:`insert-batch-data`.
 
 Model
 =====

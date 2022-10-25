@@ -30,7 +30,7 @@ final class UpsertTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     /**
-     * @var Forge|mixed
+     * @var Forge
      */
     public $forge;
 
