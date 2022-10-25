@@ -77,8 +77,13 @@ trait TimeTrait
 
         // If a test instance has been provided, use it instead.
         if ($time === '' && static::$testNow instanceof self) {
-            $timezone = $timezone ?: static::$testNow->getTimezone();
-            $time     = static::$testNow->format('Y-m-d H:i:s');
+            if ($timezone !== null) {
+                $testNow = static::$testNow->setTimezone($timezone);
+                $time    = $testNow->format('Y-m-d H:i:s');
+            } else {
+                $timezone = static::$testNow->getTimezone();
+                $time     = static::$testNow->format('Y-m-d H:i:s');
+            }
         }
 
         $timezone       = $timezone ?: date_default_timezone_get();

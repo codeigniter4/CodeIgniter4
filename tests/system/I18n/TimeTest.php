@@ -1132,6 +1132,15 @@ final class TimeTest extends CIUnitTestCase
         $this->assertNotSame($time1, $time2);
     }
 
+    public function testSetTestNowWithTimeZone()
+    {
+        Time::setTestNow('2017/03/10 12:00', 'Asia/Tokyo');
+
+        $now = Time::now('UTC');
+
+        $this->assertSame('2017-03-10T03:00:00+00:00', $now->format('c'));
+    }
+
     public function testSetTestNowWithFaLocale()
     {
         Locale::setDefault('fa');
