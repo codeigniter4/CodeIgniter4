@@ -18,8 +18,6 @@ if (! function_exists('now')) {
      * Returns time() based on the timezone parameter or on the
      * app_timezone() setting
      *
-     * @param string $timezone
-     *
      * @throws Exception
      */
     function now(?string $timezone = null): int
