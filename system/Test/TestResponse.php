@@ -28,6 +28,8 @@ use PHPUnit\Framework\TestCase;
  * @no-final
  *
  * @internal
+ *
+ * @mixin DOMParser
  */
 class TestResponse extends TestCase
 {
