@@ -29,7 +29,16 @@ if (! function_exists('now')) {
         }
 
         $datetime = new DateTime('now', new DateTimeZone($timezone));
-        sscanf($datetime->format('j-n-Y G:i:s'), '%d-%d-%d %d:%d:%d', $day, $month, $year, $hour, $minute, $second);
+        sscanf(
+            $datetime->format('j-n-Y G:i:s'),
+            '%d-%d-%d %d:%d:%d',
+            $day,
+            $month,
+            $year,
+            $hour,
+            $minute,
+            $second
+        );
 
         return mktime($hour, $minute, $second, $month, $day, $year);
     }

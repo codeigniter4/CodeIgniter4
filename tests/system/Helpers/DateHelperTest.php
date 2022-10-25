@@ -33,7 +33,10 @@ final class DateHelperTest extends CIUnitTestCase
     public function testNowSpecific()
     {
         // Chicago should be two hours ahead of Vancouver
-        $this->assertCloseEnough(7200, now('America/Chicago') - now('America/Vancouver'));
+        $this->assertCloseEnough(
+            7200,
+            now('America/Chicago') - now('America/Vancouver')
+        );
     }
 
     public function testTimezoneSelectDefault()
@@ -66,7 +69,10 @@ final class DateHelperTest extends CIUnitTestCase
 
         $expected .= ("</select>\n");
 
-        $this->assertSame($expected, timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion));
+        $this->assertSame(
+            $expected,
+            timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion)
+        );
     }
 
     public function testTimezoneSelectSingle()
@@ -84,6 +90,9 @@ final class DateHelperTest extends CIUnitTestCase
 
         $expected .= ("</select>\n");
 
-        $this->assertSame($expected, timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion, $country));
+        $this->assertSame(
+            $expected,
+            timezone_select('custom-select', 'Asia/Jakarta', $spesificRegion, $country)
+        );
     }
 }
