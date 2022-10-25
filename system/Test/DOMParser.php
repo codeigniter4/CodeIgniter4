@@ -37,10 +37,7 @@ class DOMParser
     public function __construct()
     {
         if (! extension_loaded('DOM')) {
-            // always there in travis-ci
-            // @codeCoverageIgnoreStart
-            throw new BadMethodCallException('DOM extension is required, but not currently loaded.');
-            // @codeCoverageIgnoreEnd
+            throw new BadMethodCallException('DOM extension is required, but not currently loaded.'); // @codeCoverageIgnore
         }
 
         $this->dom = new DOMDocument('1.0', 'utf-8');

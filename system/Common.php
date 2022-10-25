@@ -144,9 +144,7 @@ if (! function_exists('command')) {
             } elseif (preg_match('/' . $regexString . '/A', $command, $match, 0, $cursor)) {
                 $args[] = stripcslashes($match[1]);
             } else {
-                // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)));
-                // @codeCoverageIgnoreEnd
+                throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10))); // @codeCoverageIgnore
             }
 
             $cursor += strlen($match[0]);
@@ -357,12 +355,10 @@ if (! function_exists('dd')) {
      */
     function dd(...$vars)
     {
-        // @codeCoverageIgnoreStart
         Kint::$aliases[] = 'dd';
         Kint::dump(...$vars);
 
         exit;
-        // @codeCoverageIgnoreEnd
     }
 }
 
@@ -494,18 +490,13 @@ if (! function_exists('force_https')) {
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
-            // @codeCoverageIgnoreStart
-            return;
-            // @codeCoverageIgnoreEnd
+            return; // @codeCoverageIgnore
         }
 
         // If the session status is active, we should regenerate
         // the session ID for safety sake.
         if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE) {
-            // @codeCoverageIgnoreStart
-            Services::session(null, true)
-                ->regenerate();
-            // @codeCoverageIgnoreEnd
+            Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
         $baseURL = config(App::class)->baseURL;
@@ -530,9 +521,7 @@ if (! function_exists('force_https')) {
         $response->sendHeaders();
 
         if (ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
-            exit();
-            // @codeCoverageIgnoreEnd
+            exit(); // @codeCoverageIgnore
         }
     }
 }
@@ -796,10 +785,7 @@ if (! function_exists('log_message')) {
             return $logger->log($level, $message, $context);
         }
 
-        // @codeCoverageIgnoreStart
-        return Services::logger(true)
-            ->log($level, $message, $context);
-        // @codeCoverageIgnoreEnd
+        return Services::logger(true)->log($level, $message, $context); // @codeCoverageIgnore
     }
 }
 
@@ -834,9 +820,7 @@ if (! function_exists('old')) {
     {
         // Ensure the session is loaded
         if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
-            session();
-            // @codeCoverageIgnoreEnd
+            session(); // @codeCoverageIgnore
         }
 
         $request = Services::request();

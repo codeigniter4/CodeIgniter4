@@ -34,10 +34,7 @@ class XMLFormatter implements FormatterInterface
         // SimpleXML is installed but default
         // but best to check, and then provide a fallback.
         if (! extension_loaded('simplexml')) {
-            // never thrown in travis-ci
-            // @codeCoverageIgnoreStart
-            throw FormatException::forMissingExtension();
-            // @codeCoverageIgnoreEnd
+            throw FormatException::forMissingExtension(); // @codeCoverageIgnore
         }
 
         $options = $config->formatterOptions['application/xml'] ?? 0;
