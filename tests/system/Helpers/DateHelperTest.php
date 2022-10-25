@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Helpers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use DateTimeZone;
 
@@ -27,16 +28,24 @@ final class DateHelperTest extends CIUnitTestCase
 
     public function testNowDefault()
     {
-        $this->assertCloseEnough(now(), time());  // close enough
+        Time::setTestNow('June 20, 2022', 'America/Chicago');
+
+        $this->assertSame(now(), 1_655_701_200);
+
+        Time::setTestNow();
     }
 
     public function testNowSpecific()
     {
+        Time::setTestNow('June 20, 2022', 'America/Chicago');
+
         // Chicago should be two hours ahead of Vancouver
-        $this->assertCloseEnough(
+        $this->assertSame(
             7200,
             now('America/Chicago') - now('America/Vancouver')
         );
+
+        Time::setTestNow();
     }
 
     public function testTimezoneSelectDefault()

@@ -9,6 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\I18n\Time;
+
 // CodeIgniter Date Helpers
 
 if (! function_exists('now')) {
@@ -25,12 +27,14 @@ if (! function_exists('now')) {
         $timezone = empty($timezone) ? app_timezone() : $timezone;
 
         if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
-            return time();
+            $time = Time::now();
+
+            return $time->getTimestamp();
         }
 
-        $datetime = new DateTime('now', new DateTimeZone($timezone));
+        $time = Time::now($timezone);
         sscanf(
-            $datetime->format('j-n-Y G:i:s'),
+            $time->format('j-n-Y G:i:s'),
             '%d-%d-%d %d:%d:%d',
             $day,
             $month,
