@@ -315,7 +315,7 @@ trait TimeTrait
 
     /**
      * Creates an instance of Time that will be returned during testing
-     * when calling 'Time::now' instead of the current time.
+     * when calling 'Time::now()' instead of the current time.
      *
      * @param DateTimeInterface|self|string|null $datetime
      * @param DateTimeZone|string|null           $timezone
