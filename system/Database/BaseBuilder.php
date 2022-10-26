@@ -2088,7 +2088,7 @@ class BaseBuilder
     /**
      * Sets data source as a query for insert/update/upsert
      *
-     * @param BaseBuilder|RawSql|string $query
+     * @param BaseBuilder|RawSql $query
      */
     public function fromQuery($query): BaseBuilder
     {

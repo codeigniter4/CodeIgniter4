@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\BaseBuilder;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -48,7 +49,7 @@ final class FromQueryTest extends CIUnitTestCase
                 WHERE id IN (SELECT MAX(id) FROM user LEFT JOIN job ON job.id = user.id WHERE id > 0)
             SQL;
 
-        $query = $builder->testMode()->fromQuery($sql)->insertBatch();
+        $query = $builder->testMode()->fromQuery(new RawSql($sql))->insertBatch();
 
         $expected = 'INSERT INTO "test" ("id", "name", "if_column", "sub_query", "escape1", "escape2", "escape3", "two words")';
 
