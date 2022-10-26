@@ -20,6 +20,8 @@ use Tests\Support\Models\UserModel;
 use Tests\Support\Models\ValidModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class MiscellaneousModelTest extends LiveModelTestCase

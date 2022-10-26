@@ -16,6 +16,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class MigrationTest extends CIUnitTestCase
