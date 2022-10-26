@@ -152,6 +152,18 @@ class Exceptions
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
         if (error_reporting() & $severity) {
+            // Workaround for Faker deprecation errors in PHP 8.2.
+            // See https://github.com/FakerPHP/Faker/issues/479
+            // @TODO Remove if Faker is fixed.
+            if (
+                $severity === E_DEPRECATED
+                && strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
+                && $message === 'Use of "static" in callables is deprecated'
+            ) {
+                // Ignore the error.
+                return true;
+            }
+
             throw new ErrorException($message, 0, $severity, $file, $line);
         }
 
