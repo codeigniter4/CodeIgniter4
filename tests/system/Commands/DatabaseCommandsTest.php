@@ -15,6 +15,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class DatabaseCommandsTest extends CIUnitTestCase

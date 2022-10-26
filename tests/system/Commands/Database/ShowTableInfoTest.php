@@ -18,6 +18,8 @@ use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class ShowTableInfoTest extends CIUnitTestCase

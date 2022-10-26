@@ -229,7 +229,15 @@ final class GetTest extends CIUnitTestCase
 
     public function testGetRowWithCustomReturnType()
     {
-        $testClass = new class () {};
+        $testClass = new class () {
+            public $id;
+            public $name;
+            public $email;
+            public $country;
+            public $created_at;
+            public $updated_at;
+            public $deleted_at;
+        };
 
         $user = $this->db->table('user')->get()->getRow(0, get_class($testClass));
 
