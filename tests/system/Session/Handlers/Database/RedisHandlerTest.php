@@ -17,6 +17,8 @@ use Config\App as AppConfig;
 use Redis;
 
 /**
+ * @group DatabaseLive
+ *
  * @requires extension redis
  *
  * @internal

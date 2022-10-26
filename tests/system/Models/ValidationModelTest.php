@@ -21,6 +21,8 @@ use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class ValidationModelTest extends LiveModelTestCase

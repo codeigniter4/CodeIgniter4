@@ -20,6 +20,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 use Config\Database;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class CreateDatabaseTest extends CIUnitTestCase
