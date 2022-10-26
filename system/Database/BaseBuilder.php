@@ -2702,18 +2702,17 @@ class BaseBuilder
             $sql .= 'ON ' . implode(
                 ' AND ',
                 array_map(
-                    static fn ($key, $value, $id) => (
+                    static fn ($key, $value) => (
                         $value instanceof RawSql ?
                     $value :
                     (
                         is_string($key) ?
-                    $table . '.' . $id . $key . $id . ' = ' . $alias . '.' . $value :
+                    $table . '.' . $key . ' = ' . $alias . '.' . $value :
                     $table . '.' . $value . ' = ' . $alias . '.' . $value
                     )
                     ),
                     array_keys($constraints),
-                    $constraints,
-                    array_fill(0, count($constraints), $this->db->escapeChar)
+                    $constraints
                 )
             );
 
