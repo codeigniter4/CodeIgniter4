@@ -2092,21 +2092,19 @@ class BaseBuilder
      */
     public function fromQuery($query): BaseBuilder
     {
-        if (! empty($query)) {
-            if ($query instanceof BaseBuilder) {
-                $query = $query->getCompiledSelect();
-            } elseif ($query instanceof RawSql) {
-                $query = $query->__toString();
-            }
+        if ($query instanceof BaseBuilder) {
+            $query = $query->getCompiledSelect();
+        } elseif ($query instanceof RawSql) {
+            $query = $query->__toString();
+        }
 
-            if (is_string($query)) {
-                $this->QBOptions['fromQuery'] = $query;
-                $this->QBKeys                 = $this->fieldsFromQuery($query);
-                $this->QBSet                  = [];
+        if (is_string($query)) {
+            $this->QBOptions['fromQuery'] = $query;
+            $this->QBKeys                 = $this->fieldsFromQuery($query);
+            $this->QBSet                  = [];
 
-                foreach ($this->QBKeys as $key => $value) {
-                    $this->QBKeys[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
-                }
+            foreach ($this->QBKeys as $key => $value) {
+                $this->QBKeys[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
             }
         }
 
@@ -2121,7 +2119,7 @@ class BaseBuilder
         $sql = preg_replace('/\\(([^()]*+|(?R))*\\)/', '', $sql); // remove everything in parenthesis - removes "FROM" and commas
         $d   = ['`', "'", '"']; // delimeters - delimits identifiers
 
-        // Replace any spaces that are inside the delimeters. We need to explode on space but not those inside delimiters 
+        // Replace any spaces that are inside the delimeters. We need to explode on space but not those inside delimiters
         $o   = ' '; // original string
         $r   = '$'; // replace string
         $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
