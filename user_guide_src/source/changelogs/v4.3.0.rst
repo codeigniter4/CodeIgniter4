@@ -58,6 +58,10 @@ Others
 Interface Changes
 =================
 
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
 OutgoingRequestInterface
 ------------------------
 
