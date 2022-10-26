@@ -407,25 +407,23 @@ class IncomingRequest extends Request
 
         $host = $this->determineHost($config, $baseURL);
 
-        // Based on our baseURL provided by the developer
-        // set our current domain name, scheme
-        if ($baseURL !== '') {
-            $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-            $this->uri->setHost($host);
-            $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
+        // Based on $baseURL and $allowedHostnames provided by Config\App,
+        // set our current domain name, scheme.
+        $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
+        $this->uri->setHost($host);
+        $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
 
-            // Update Config\App::$baseURL
-            $uri = new URI($baseURL);
-            $uri->setHost($host);
-            $this->config->baseURL = $uri;
+        // Update Config\App::$baseURL
+        $uri = new URI($baseURL);
+        $uri->setHost($host);
+        $this->config->baseURL = $uri;
 
-            // Ensure we have any query vars
-            $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
+        // Ensure we have any query vars
+        $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
 
-            // Check if the baseURL scheme needs to be coerced into its secure version
-            if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
-                $this->uri->setScheme('https');
-            }
+        // Check if the baseURL scheme needs to be coerced into its secure version
+        if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
+            $this->uri->setScheme('https');
         }
 
         return $this;
