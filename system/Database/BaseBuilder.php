@@ -1934,7 +1934,9 @@ class BaseBuilder
                 return false; // @codeCoverageIgnore
             }
 
-            $this->db->query($sql, null, false);
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
 
             $this->resetWrite();
 
@@ -2551,7 +2553,9 @@ class BaseBuilder
                 return false; // @codeCoverageIgnore
             }
 
-            $this->db->query($sql, null, false);
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
 
             $this->resetWrite();
 
