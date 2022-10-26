@@ -196,6 +196,7 @@ class IncomingRequest extends Request
     protected function detectURI(string $protocol, string $baseURL)
     {
         // Passing the config is unnecessary but left for legacy purposes
+        // @TODO For what? Why clone?
         $config          = clone $this->config;
         $config->baseURL = $baseURL;
 
