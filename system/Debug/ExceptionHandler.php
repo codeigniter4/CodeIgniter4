@@ -20,7 +20,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Config\Paths;
 use Throwable;
 
-class ExceptionHandler extends BaseExceptionHandler
+final class ExceptionHandler extends BaseExceptionHandler
 {
     use ResponseTrait;
 
