@@ -2119,16 +2119,16 @@ class BaseBuilder
     protected function fieldsFromQuery(string $sql): array
     {
         $sql = preg_replace('/\\(([^()]*+|(?R))*\\)/', '', $sql); // remove everything in parenthesis - removes "FROM" and commas
-        $d   = ['`', "'", '"'];
+        $d   = ['`', "'", '"']; // delimeters - delimits identifiers
 
-        $o   = ' ';
-        $r   = '$';
+        $o   = ' '; // original string
+        $r   = '$'; // replace string
         $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
         $sql = preg_replace_callback("~{$d[1]}([^{$d[1]}]*){$d[1]}~", static fn ($s) => str_replace($o, $r, "{$d[1]}{$s[1]}{$d[1]}"), $sql);
         $sql = preg_replace_callback("~{$d[2]}([^{$d[2]}]*){$d[2]}~", static fn ($s) => str_replace($o, $r, "{$d[2]}{$s[1]}{$d[2]}"), $sql);
 
-        $o   = ',';
-        $r   = '';
+        $o   = ','; // original string
+        $r   = ''; // replace string
         $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
         $sql = preg_replace_callback("~{$d[1]}([^{$d[1]}]*){$d[1]}~", static fn ($s) => str_replace($o, $r, "{$d[1]}{$s[1]}{$d[1]}"), $sql);
         $sql = preg_replace_callback("~{$d[2]}([^{$d[2]}]*){$d[2]}~", static fn ($s) => str_replace($o, $r, "{$d[2]}{$s[1]}{$d[2]}"), $sql);
@@ -2144,10 +2144,10 @@ class BaseBuilder
         $newColumns = [];
 
         foreach ($columnsStrings as $string) {
-            $words = preg_replace('/\.+/', ' ', $string);
+            $words = preg_replace('/\.+/', ' ', $string); // separate db, schema, columns into seperate "words"
             $words = explode(' ', trim($words));
-            $word  = trim(str_replace('$', ' ', trim(end($words))));
-            $word  = trim(str_replace($d, '', $word));
+            $word  = trim(str_replace('$', ' ', trim(end($words)))); // put spaces back in last word
+            $word  = trim(str_replace($d, '', $word)); // remove escape characters from identifiers
 
             $newColumns[] = $word;
         }
