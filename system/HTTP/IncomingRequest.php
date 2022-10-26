@@ -145,9 +145,7 @@ class IncomingRequest extends Request
      * Constructor
      *
      * @param App         $config
-     * @param URI         $uri
      * @param string|null $body
-     * @param UserAgent   $userAgent
      */
     public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
     {
