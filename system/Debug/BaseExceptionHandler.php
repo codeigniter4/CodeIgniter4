@@ -123,15 +123,9 @@ abstract class BaseExceptionHandler
      */
     protected static function describeMemory(int $bytes): string
     {
-        if ($bytes < 1024) {
-            return $bytes . 'B';
-        }
+        helper('number');
 
-        if ($bytes < 1_048_576) {
-            return round($bytes / 1024, 2) . 'KB';
-        }
-
-        return round($bytes / 1_048_576, 2) . 'MB';
+        return number_to_size($bytes, 2);
     }
 
     /**
