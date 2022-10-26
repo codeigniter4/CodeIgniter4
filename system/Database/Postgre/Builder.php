@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Postgre;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use InvalidArgumentException;
 
 /**
  * Builder for Postgre
@@ -365,6 +366,12 @@ class Builder extends BaseBuilder
                 }
             }
 
+            $alias = $this->QBOptions['alias'] ?? '"excluded"';
+
+            if (strtolower($alias) !== '"excluded"') {
+                throw new InvalidArgumentException('Postgres alias is always named "excluded". A custom alias cannot be used.');
+            }
+
             $updateFields = $this->QBOptions['updateFields'] ?? $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ?? [];
 
             $sql = 'INSERT INTO ' . $table . ' (';
@@ -383,8 +390,8 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
-                        ' = ' . $value :
-                        ' = "excluded".' . $value),
+                    " = {$value}" :
+                    " = {$alias}.{$value}"),
                     array_keys($updateFields),
                     $updateFields
                 )

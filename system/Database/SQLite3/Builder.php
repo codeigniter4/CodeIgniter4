@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\SQLite3;
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\RawSql;
+use InvalidArgumentException;
 
 /**
  * Builder for SQLite3
@@ -164,6 +165,12 @@ class Builder extends BaseBuilder
                 return ''; // @codeCoverageIgnore
             }
 
+            $alias = $this->QBOptions['alias'] ?? '`excluded`';
+
+            if (strtolower($alias) !== '`excluded`') {
+                throw new InvalidArgumentException('SQLite alias is always named "excluded". A custom alias cannot be used.');
+            }
+
             $updateFields = $this->QBOptions['updateFields'] ??
                 $this->updateFields($keys, false, $constraints)->QBOptions['updateFields'] ??
                 [];
@@ -184,8 +191,8 @@ class Builder extends BaseBuilder
                 ",\n",
                 array_map(
                     static fn ($key, $value) => $key . ($value instanceof RawSql ?
-                        ' = ' . $value :
-                        ' = `excluded`.' . $value),
+                        " = {$value}" :
+                        " = {$alias}.{$value}"),
                     array_keys($updateFields),
                     $updateFields
                 )
