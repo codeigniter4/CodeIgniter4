@@ -2121,12 +2121,14 @@ class BaseBuilder
         $sql = preg_replace('/\\(([^()]*+|(?R))*\\)/', '', $sql); // remove everything in parenthesis - removes "FROM" and commas
         $d   = ['`', "'", '"']; // delimeters - delimits identifiers
 
+        // Replace any spaces that are inside the delimeters. We need to explode on space but not those inside delimiters 
         $o   = ' '; // original string
         $r   = '$'; // replace string
         $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
         $sql = preg_replace_callback("~{$d[1]}([^{$d[1]}]*){$d[1]}~", static fn ($s) => str_replace($o, $r, "{$d[1]}{$s[1]}{$d[1]}"), $sql);
         $sql = preg_replace_callback("~{$d[2]}([^{$d[2]}]*){$d[2]}~", static fn ($s) => str_replace($o, $r, "{$d[2]}{$s[1]}{$d[2]}"), $sql);
 
+        // Remove any commas that are inside the delimeters. This way we can use the remaning commas to explode.
         $o   = ','; // original string
         $r   = ''; // replace string
         $sql = preg_replace_callback("~{$d[0]}([^{$d[0]}]*){$d[0]}~", static fn ($s) => str_replace($o, $r, "{$d[0]}{$s[1]}{$d[0]}"), $sql);
