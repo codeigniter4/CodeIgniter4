@@ -28,6 +28,7 @@ use Config\Autoload;
 use Config\Modules;
 use Config\Services;
 use Exception;
+use Nexus\PHPUnit\Extension\Expeditable;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,6 +36,7 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class CIUnitTestCase extends TestCase
 {
+    use Expeditable;
     use ReflectionHelper;
 
     /**
