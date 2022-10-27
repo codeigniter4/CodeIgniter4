@@ -285,7 +285,7 @@ final class SiteUrlTest extends CIUnitTestCase
 
         $this->config->baseURL = 'http://example.com/ci/v4/';
 
-        $request = Services::request($this->config);
+        $request = Services::incomingrequest($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame(
