@@ -513,4 +513,14 @@ class Builder extends BaseBuilder
 
         return str_replace('{:_table_:}', $data, $sql);
     }
+
+    /**
+     * Gets column names from a select query
+     */
+    protected function fieldsFromQuery(string $sql): array
+    {
+        $query = $this->db->query('SELECT * FROM (' . $sql . ') "_u_" WHERE ROWNUM = 1')->getResultArray();
+
+        return array_keys(current($query));
+    }
 }
