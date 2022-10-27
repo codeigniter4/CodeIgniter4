@@ -79,7 +79,7 @@ class Factories
      *
      * @phpstan-param class-string<T> $name
      *
-     * @return object
+     * @return Model
      * @phpstan-return T
      */
     public static function models(string $name, array $options = [], ?ConnectionInterface &$conn = null)
