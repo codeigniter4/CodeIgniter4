@@ -20,6 +20,7 @@ use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Paths;
 use ErrorException;
+use Psr\Log\LogLevel;
 use Throwable;
 
 /**
@@ -160,6 +161,16 @@ class Exceptions
                 && strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
                 && $message === 'Use of "static" in callables is deprecated'
             ) {
+                log_message(
+                    LogLevel::WARNING,
+                    '[DEPRECATED] {message} in {errFile} on line {errLine}.',
+                    [
+                        'message' => $message,
+                        'errFile' => clean_path($file ?? ''),
+                        'errLine' => $line ?? 0,
+                    ]
+                );
+
                 // Ignore the error.
                 return true;
             }
