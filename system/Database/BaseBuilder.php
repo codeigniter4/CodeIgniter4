@@ -2100,18 +2100,17 @@ class BaseBuilder
         }
 
         if (is_string($query)) {
-            if ($columns !== null) {
-                if (is_string($columns)) {
-                    $columns = explode(',', $columns);
-                    $columns = array_map(static fn ($key) => trim($key), $columns);
-                }
-
-                $columns = (array) $columns;
-
-                if ($columns === []) {
-                    $columns = $this->fieldsFromQuery($query);
-                }
+            if ($columns !== null && is_string($columns)) {
+                $columns = explode(',', $columns);
+                $columns = array_map(static fn ($key) => trim($key), $columns);
             }
+
+            $columns = (array) $columns;
+
+            if ($columns === []) {
+                $columns = $this->fieldsFromQuery($query);
+            }
+
             $this->QBOptions['fromQuery'] = $query;
             $this->QBKeys                 = $columns;
             $this->QBSet                  = [];
