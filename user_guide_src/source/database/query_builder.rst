@@ -1107,6 +1107,17 @@ the data to the first parameter of the method:
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
 
+.. _delete-batch:
+
+$builder->deleteBatch()
+------------------
+
+Generates a batch **DELETE** statement based on a set of data.
+
+.. literalinclude:: query_builder/118.php
+
+This method may be especially useful when deleting data in a table with a composite primary key.
+
 $builder->emptyTable()
 ----------------------
 
@@ -1871,6 +1882,16 @@ Class Reference
         :rtype:     ``BaseBuilder|false``
 
         Compiles and executes a ``DELETE`` query.
+
+    .. php:method:: deleteBatch([$set = null[, $constraints = null[, $batchSize = 100]]])
+
+        :param array|object|null $set: Field name, or an associative array of field/value pairs
+        :param array|RawSql|string|null $constraints: The field or fields used as keys to delete on.
+        :param int $batchSize: Count of conditions to group in a single query
+        :returns:   Number of rows deleted or ``false`` on failure
+        :rtype:     int|false
+
+        Compiles and executes batch ``DELETE`` query.
 
     .. php:method:: increment($column[, $value = 1])
 
