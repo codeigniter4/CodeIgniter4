@@ -1393,13 +1393,15 @@ Class Reference
 
         Specifies the ``FROM`` clause of a query using a subquery.
 
-    .. php:method:: fromQuery($query)
+    .. php:method:: fromQuery($query[, $columns = null])
 
         :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
+        :param array|string|null $columns: Array or comma delimited string of columns in the query
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
         Sets a query as a datasource for ``insertBatch()``, ``updateBatch()``, ``upsertBatch()``.
+        If ``$columns`` is null the query will be run to generate column names.
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
