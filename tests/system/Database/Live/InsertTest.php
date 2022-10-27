@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Forge;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -156,10 +157,8 @@ final class InsertTest extends CIUnitTestCase
         $this->seeInDatabase('misc', ['value' => $hash]);
     }
 
-    public function testInsertBatchWithQuery()
+    public function setupUser2()
     {
-        $this->forge = Database::forge($this->DBGroup);
-
         $this->forge->dropTable('user2', true);
 
         $this->forge->addField([
@@ -206,6 +205,13 @@ final class InsertTest extends CIUnitTestCase
             ],
         ];
         $this->db->table('user2')->insertBatch($data);
+    }
+
+    public function testInsertBatchWithQuery()
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->setupUser2();
 
         $subQuery = $this->db->table('user2')
             ->select('user2.name, user2.email, user2.country')
@@ -213,6 +219,28 @@ final class InsertTest extends CIUnitTestCase
             ->where('user.email IS NULL');
 
         $this->db->table('user')->insertBatch($subQuery);
+
+        $this->seeInDatabase('user', ['name' => 'New User user2']);
+        $this->seeInDatabase('user', ['name' => 'New User2 user2']);
+
+        $this->forge->dropTable('user2', true);
+    }
+
+    public function testInsertBatchWithQueryAndRawSqlAndManualColumns()
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->setupUser2();
+
+        $sql = $this->db->table('user2')
+            ->select('user2.name, user2.email, user2.country')
+            ->join('user', 'user.email = user2.email', 'left')
+            ->where('user.email IS NULL')
+            ->getCompiledSelect();
+
+        $this->db->table('user')
+            ->fromQuery(new RawSql($sql), 'name, email, country')
+            ->insertBatch();
 
         $this->seeInDatabase('user', ['name' => 'New User user2']);
         $this->seeInDatabase('user', ['name' => 'New User2 user2']);
