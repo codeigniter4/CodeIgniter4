@@ -15,7 +15,6 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\HasExitCodeInterface;
 use CodeIgniter\Exceptions\HTTPExceptionInterface;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Exceptions as ExceptionsConfig;
@@ -125,46 +124,14 @@ class Exceptions
             ]);
         }
 
-        // For upgraded users.
+        // For upgraded users who did not update the config file.
         if (! method_exists($this->config, 'handler')) {
-            $this->defaultExceptionHandler($exception, $statusCode, $exitCode);
-
-            return;
+            $handler = new ExceptionHandler($this->config);
+        } else {
+            $handler = $this->config->handler($statusCode, $exception);
         }
-
-        $handler = $this->config->handler($statusCode, $exception);
 
         $handler->handle($exception, $this->request, $this->response, $statusCode, $exitCode);
-    }
-
-    /**
-     * @deprecated This method is only for backward compatibility.
-     */
-    private function defaultExceptionHandler(Throwable $exception, int $statusCode, int $exitCode)
-    {
-        if (! is_cli()) {
-            try {
-                $this->response->setStatusCode($statusCode);
-            } catch (HTTPException $e) {
-                // Workaround for invalid HTTP status code.
-                $statusCode = 500;
-                $this->response->setStatusCode($statusCode);
-            }
-
-            if (! headers_sent()) {
-                header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
-            }
-
-            if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false) {
-                $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
-
-                exit($exitCode);
-            }
-        }
-
-        $this->render($exception, $statusCode);
-
-        exit($exitCode);
     }
 
     /**
