@@ -27,12 +27,12 @@ final class ExceptionHandler extends BaseExceptionHandler
     /**
      * ResponseTrait needs this.
      */
-    protected ?RequestInterface $request = null;
+    private ?RequestInterface $request = null;
 
     /**
      * ResponseTrait needs this.
      */
-    protected ?ResponseInterface $response = null;
+    private ?ResponseInterface $response = null;
 
     /**
      * Determines the correct way to display the error.
