@@ -2089,8 +2089,9 @@ class BaseBuilder
      * Sets data source as a query for insert/update/upsert
      *
      * @param BaseBuilder|RawSql $query
+     * @param array|string|null  $columns an array or comma delimited string of columns
      */
-    public function fromQuery($query): BaseBuilder
+    public function fromQuery($query, $columns = null): BaseBuilder
     {
         if ($query instanceof BaseBuilder) {
             $query = $query->getCompiledSelect();
@@ -2099,8 +2100,20 @@ class BaseBuilder
         }
 
         if (is_string($query)) {
+            if ($columns !== null) {
+                if (is_string($columns)) {
+                    $columns = explode(',', $columns);
+                    $columns = array_map(static fn ($key) => trim($key), $columns);
+                }
+
+                $columns = (array) $columns;
+
+                if ($columns === []) {
+                    $columns = $this->fieldsFromQuery($query);
+                }
+            }
             $this->QBOptions['fromQuery'] = $query;
-            $this->QBKeys                 = $this->fieldsFromQuery($query);
+            $this->QBKeys                 = $columns;
             $this->QBSet                  = [];
 
             foreach ($this->QBKeys as $key => $value) {
