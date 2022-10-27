@@ -53,7 +53,7 @@ class Factories
      * Mapping of class basenames (no namespace) to
      * their instances.
      *
-     * @var array[]
+     * @var array<string, array<string, string>>
      * @phpstan-var array<string, array<string, class-string>>
      */
     protected static $basenames = [];
@@ -64,7 +64,7 @@ class Factories
      * A multi-dimensional array with components as
      * keys to the array of name-indexed instances.
      *
-     * @var array[]
+     * @var array<string, array<string, object>>
      * @phpstan-var  array<string, array<class-string, object>>
      */
     protected static $instances = [];
