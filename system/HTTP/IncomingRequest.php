@@ -433,13 +433,16 @@ class IncomingRequest extends Request
     {
         $host = parse_url($baseURL, PHP_URL_HOST);
 
+        if (empty($config->allowedHostnames)) {
+            return $host;
+        }
+
         // Update host if it is valid.
         $httpHostPort = $this->getServer('HTTP_HOST');
         if ($httpHostPort !== null) {
-            $httpHost         = explode(':', $httpHostPort)[0];
-            $allowedHostnames = $config->allowedHostnames ?? [];
+            $httpHost = explode(':', $httpHostPort)[0];
 
-            if (in_array($httpHost, $allowedHostnames, true)) {
+            if (in_array($httpHost, $config->allowedHostnames, true)) {
                 $host = $httpHost;
             }
         }
