@@ -31,8 +31,7 @@ class Factories
      * Store of component-specific options, usually
      * from CodeIgniter\Config\Factory.
      *
-     * @var array[]
-     * @phpstan-var array<string, array<string, string|bool|null>>
+     * @var array<string, array<string, bool|string|null>>
      */
     protected static $options = [];
 
@@ -40,7 +39,7 @@ class Factories
      * Explicit options for the Config
      * component to prevent logic loops.
      *
-     * @phpstan-var array<string, string|bool|null>
+     * @var array<string, bool|string|null>
      */
     private static array $configOptions = [
         'component'  => 'config',
@@ -232,7 +231,7 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      *
-     * @phpstan-return array<string, string|null|bool>
+     * @return array<string, bool|string|null>
      */
     public static function getOptions(string $component): array
     {
@@ -257,8 +256,7 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      *
-     * @return array The result after applying defaults and normalization
-     * @phpstan-return array<string, string|null|bool>
+     * @return array<string, bool|string|null> The result after applying defaults and normalization
      */
     public static function setOptions(string $component, array $values): array
     {
