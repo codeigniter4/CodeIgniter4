@@ -70,7 +70,8 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame($expectedSiteUrl, site_url($path, $scheme, $this->config));
 
         // base_url is always the trimmed site_url without index page
-        $expectedBaseUrl = $indexPage === '' ? $expectedSiteUrl : str_replace('/' . $indexPage, '', $expectedSiteUrl);
+        $expectedBaseUrl = ($indexPage === '') ? $expectedSiteUrl
+            : str_replace('/' . $indexPage, '', $expectedSiteUrl);
         $expectedBaseUrl = rtrim($expectedBaseUrl, '/');
         $this->assertSame($expectedBaseUrl, base_url($path, $scheme));
     }
@@ -286,7 +287,13 @@ final class SiteUrlTest extends CIUnitTestCase
         $request               = Services::request($this->config);
         Services::injectMock('request', $request);
 
-        $this->assertSame('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
-        $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
+        $this->assertSame(
+            'http://example.com/ci/v4/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+        $this->assertSame(
+            'http://example.com/ci/v4/controller/method',
+            base_url('controller/method', null)
+        );
     }
 }
