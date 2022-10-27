@@ -261,10 +261,10 @@ final class SiteUrlTest extends CIUnitTestCase
      */
     public function testBaseURLDiscovery()
     {
-        $this->config->baseURL = 'http://example.com/';
-
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/test';
+
+        $this->config->baseURL = 'http://example.com/';
 
         $this->assertSame('http://example.com', base_url());
 
@@ -284,7 +284,8 @@ final class SiteUrlTest extends CIUnitTestCase
         Services::injectMock('uri', $uri);
 
         $this->config->baseURL = 'http://example.com/ci/v4/';
-        $request               = Services::request($this->config);
+
+        $request = Services::request($this->config);
         Services::injectMock('request', $request);
 
         $this->assertSame(
