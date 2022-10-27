@@ -114,7 +114,7 @@ a new ``News`` controller is defined. Create the new controller at
 .. literalinclude:: news_section/003.php
 
 Looking at the code, you may see some similarity with the files we
-created earlier. First, it extends a core CodeIgniter class, ``Controller``,
+created earlier. First, it extends ``BaseController`` that extends a core CodeIgniter class, ``Controller``,
 which provides a couple of helper methods, and makes sure that you have
 access to the current ``Request`` and ``Response`` objects, as well as the
 ``Logger`` class, for saving information to disk.
