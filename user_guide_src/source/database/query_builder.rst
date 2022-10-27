@@ -1110,7 +1110,7 @@ method, or ``emptyTable()``.
 .. _delete-batch:
 
 $builder->deleteBatch()
-------------------
+-----------------------
 
 Generates a batch **DELETE** statement based on a set of data.
 
