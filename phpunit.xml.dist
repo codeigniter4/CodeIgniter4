@@ -64,6 +64,9 @@
                     <element key="tabulate">
                         <boolean>false</boolean>
                     </element>
+                    <element key="collectBare">
+                        <boolean>true</boolean>
+                    </element>
                 </array>
             </arguments>
         </extension>
