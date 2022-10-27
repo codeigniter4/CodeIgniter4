@@ -96,7 +96,6 @@ if (! function_exists('base_url')) {
      * Base URLs are trimmed site URLs without the index page.
      *
      * @param array|string $relativePath URI string or array of URI segments
-     * @param string       $scheme
      */
     function base_url($relativePath = '', ?string $scheme = null): string
     {
