@@ -2656,7 +2656,7 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|object|null        $set         a dataset or select query
+     * @param array|object|null $set         a dataset or select query
      * @param array|RawSql|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
