@@ -2,19 +2,19 @@
 
 $data = [
     [
-        'order' => 48372,
+        'order'   => 48372,
         'line'    => 3,
         'product' => 'Keyboard',
         'qty'     => 1,
     ],
     [
-        'order' => 48372,
+        'order'   => 48372,
         'line'    => 4,
         'product' => 'Mouse',
         'qty'     => 1,
     ],
     [
-        'order' => 48372,
+        'order'   => 48372,
         'line'    => 5,
         'product' => 'Monitor',
         'qty'     => 2,
