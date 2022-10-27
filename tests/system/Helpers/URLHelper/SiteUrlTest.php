@@ -288,4 +288,42 @@ final class SiteUrlTest extends CIUnitTestCase
         $this->assertSame('http://example.com/ci/v4/index.php/controller/method', site_url('controller/method', null, $this->config));
         $this->assertSame('http://example.com/ci/v4/controller/method', base_url('controller/method', null));
     }
+
+    public function testSiteURLWithAllowedHostname()
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        // URI object are updated in IncomingRequest constructor.
+        $request = Services::incomingrequest($this->config);
+        Services::injectMock('request', $request);
+
+        $this->assertSame(
+            'http://www.example.jp/public/index.php/controller/method',
+            site_url('controller/method', null, $this->config)
+        );
+    }
+
+    public function testBaseURLWithAllowedHostname()
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public/';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        // URI object are updated in IncomingRequest constructor.
+        $request = Services::incomingrequest($this->config);
+        Services::injectMock('request', $request);
+
+        $this->assertSame(
+            'http://www.example.jp/public/controller/method',
+            base_url('controller/method', null)
+        );
+    }
 }
