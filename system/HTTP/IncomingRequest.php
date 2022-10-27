@@ -440,7 +440,7 @@ class IncomingRequest extends Request
         // Update host if it is valid.
         $httpHostPort = $this->getServer('HTTP_HOST');
         if ($httpHostPort !== null) {
-            $httpHost = explode(':', $httpHostPort)[0];
+            [$httpHost] = explode(':', $httpHostPort, 2);
 
             if (in_array($httpHost, $config->allowedHostnames, true)) {
                 $host = $httpHost;
