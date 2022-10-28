@@ -221,7 +221,9 @@ Helpers and Functions
 Error Handling
 ==============
 
-- You can now log deprecation errors instead of throwing them. See :ref:`logging_deprecation_errors` for details.
+- You can now log deprecation warnings instead of throwing exceptions. See :ref:`logging_deprecation_warnings` for details.
+- Logging of deprecations is turned on by default.
+- To *temporarily* enable throwing of deprecations, set the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 
 Others
 ======

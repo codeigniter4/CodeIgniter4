@@ -134,10 +134,10 @@ Since v4.3.0, you can specify the exit code for your Exception class to implemen
 
 When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
 
-.. _logging_deprecation_errors:
+.. _logging_deprecation_warnings:
 
-Logging Deprecation Errors
-==========================
+Logging Deprecation Warnings
+============================
 
 .. versionadded:: 4.3.0
 
@@ -161,3 +161,6 @@ After that, subsequent deprecations will be logged instead of thrown.
 This feature also works with user deprecations:
 
 .. literalinclude:: errors/014.php
+
+For testing your application you may want to always throw on deprecations. You may configure this by
+setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
