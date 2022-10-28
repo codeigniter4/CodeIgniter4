@@ -19,4 +19,6 @@ class News extends BaseController
             . view('news/overview')
             . view('templates/footer');
     }
+
+    // ...
 }
