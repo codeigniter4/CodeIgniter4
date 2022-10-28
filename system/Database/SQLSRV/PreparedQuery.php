@@ -50,7 +50,7 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $options Options takes an associative array;
      *
-     * @throws Exception
+     * @throws DatabaseException
      */
     public function _prepare(string $sql, array $options = []): PreparedQuery
     {
