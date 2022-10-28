@@ -31,7 +31,7 @@ use ReturnTypeWillChange;
  *
  * @property string $date
  */
-class Time extends DateTime
+class Time extends DateTimeImmutable
 {
     /**
      * @var DateTimeZone
