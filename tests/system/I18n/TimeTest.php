@@ -32,6 +32,9 @@ final class TimeTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        // Need to reset Services::language() that lang() uses in Time::humanize()
+        $this->resetServices();
+
         helper('date');
 
         $this->currentLocale = Locale::getDefault();
