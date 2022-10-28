@@ -16,6 +16,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SecureHeadersTest extends CIUnitTestCase
 {

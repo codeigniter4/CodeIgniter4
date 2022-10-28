@@ -18,6 +18,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileMovingTest extends CIUnitTestCase
 {

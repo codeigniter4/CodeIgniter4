@@ -15,6 +15,8 @@ use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class InflectorHelperTest extends CIUnitTestCase
 {

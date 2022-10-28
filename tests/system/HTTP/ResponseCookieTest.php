@@ -21,6 +21,8 @@ use Config\Cookie as CookieConfig;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ResponseCookieTest extends CIUnitTestCase
 {

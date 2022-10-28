@@ -20,6 +20,8 @@ use Tests\Support\View\WorldDecorator;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DecoratorsTest extends CIUnitTestCase
 {

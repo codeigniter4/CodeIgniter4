@@ -19,6 +19,8 @@ use Config\Filters as FilterConfig;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class DebugToolbarTest extends CIUnitTestCase
 {

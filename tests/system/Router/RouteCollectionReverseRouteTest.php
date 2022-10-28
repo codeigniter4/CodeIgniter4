@@ -19,6 +19,8 @@ use Generator;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class RouteCollectionReverseRouteTest extends CIUnitTestCase
 {

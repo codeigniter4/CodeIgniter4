@@ -17,6 +17,8 @@ use Config\Services;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class AutoRouteCollectorTest extends CIUnitTestCase
 {

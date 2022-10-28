@@ -25,6 +25,8 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class CurrentUrlTest extends CIUnitTestCase
 {

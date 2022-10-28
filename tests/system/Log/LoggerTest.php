@@ -20,6 +20,8 @@ use Tests\Support\Log\Handlers\TestHandler;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class LoggerTest extends CIUnitTestCase
 {

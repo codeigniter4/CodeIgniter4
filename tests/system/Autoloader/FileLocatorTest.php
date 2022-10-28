@@ -18,6 +18,8 @@ use Config\Modules;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileLocatorTest extends CIUnitTestCase
 {

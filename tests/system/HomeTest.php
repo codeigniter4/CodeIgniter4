@@ -17,6 +17,8 @@ use CodeIgniter\Test\TestResponse;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class HomeTest extends CIUnitTestCase
 {

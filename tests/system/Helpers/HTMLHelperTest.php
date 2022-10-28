@@ -18,6 +18,8 @@ use Config\App;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class HTMLHelperTest extends CIUnitTestCase
 {

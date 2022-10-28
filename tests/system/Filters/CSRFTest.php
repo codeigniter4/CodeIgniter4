@@ -18,6 +18,8 @@ use CodeIgniter\Test\CIUnitTestCase;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class CSRFTest extends CIUnitTestCase
 {

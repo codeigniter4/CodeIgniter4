@@ -18,6 +18,8 @@ use Tests\Support\Config\Services;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SecurityHelperTest extends CIUnitTestCase
 {

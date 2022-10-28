@@ -19,6 +19,8 @@ use Config\App;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TestCaseTest extends CIUnitTestCase
 {

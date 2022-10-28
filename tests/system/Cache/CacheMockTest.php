@@ -17,6 +17,8 @@ use CodeIgniter\Test\Mock\MockCache;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CacheMockTest extends CIUnitTestCase
 {

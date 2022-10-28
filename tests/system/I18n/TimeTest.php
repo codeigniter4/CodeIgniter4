@@ -23,6 +23,8 @@ use Locale;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TimeTest extends CIUnitTestCase
 {
