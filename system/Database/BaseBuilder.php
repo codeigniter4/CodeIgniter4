@@ -2128,9 +2128,7 @@ class BaseBuilder
      */
     protected function fieldsFromQuery(string $sql): array
     {
-        $fields = $this->db->query('SELECT * FROM (' . $sql . ') _u_ LIMIT 1')->getFieldNames();
-
-        return $fields;
+        return $this->db->query('SELECT * FROM (' . $sql . ') _u_ LIMIT 1')->getFieldNames();
     }
 
     /**
