@@ -43,6 +43,9 @@ final class TimeLegacyTest extends CIUnitTestCase
         parent::tearDown();
 
         Locale::setDefault($this->currentLocale);
+
+        // Reset current time.
+        TimeLegacy::setTestNow();
     }
 
     public function testNewTimeNow()
