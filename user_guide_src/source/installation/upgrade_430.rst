@@ -177,6 +177,8 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
+* ``app/Config/Exceptions.php``
+    * Two additional public properties were added: ``$logDeprecationsOnly`` and ``$deprecationLogLevel``.
 * ``app/Config/Routes.php``
     * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework.
 
@@ -186,5 +188,6 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+* app/Config/Exceptions.php
 * app/Config/Routes.php
 * spark
