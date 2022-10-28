@@ -39,7 +39,13 @@ if (! function_exists('_get_uri')) {
         // If a full URI was passed then convert it
         if (is_int(strpos($relativePath, '://'))) {
             $full         = new URI($relativePath);
-            $relativePath = URI::createURIString(null, null, $full->getPath(), $full->getQuery(), $full->getFragment());
+            $relativePath = URI::createURIString(
+                null,
+                null,
+                $full->getPath(),
+                $full->getQuery(),
+                $full->getFragment()
+            );
         }
 
         $relativePath = URI::removeDotSegments($relativePath);
@@ -86,7 +92,13 @@ if (! function_exists('site_url')) {
 
         $uri = _get_uri($relativePath, $config);
 
-        return URI::createURIString($scheme ?? $uri->getScheme(), $uri->getAuthority(), $uri->getPath(), $uri->getQuery(), $uri->getFragment());
+        return URI::createURIString(
+            $scheme ?? $uri->getScheme(),
+            $uri->getAuthority(),
+            $uri->getPath(),
+            $uri->getQuery(),
+            $uri->getFragment()
+        );
     }
 }
 
