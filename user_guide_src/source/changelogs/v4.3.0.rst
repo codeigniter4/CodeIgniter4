@@ -58,8 +58,23 @@ Others
 Interface Changes
 =================
 
+.. note:: As long as you have not extended the relevant CodeIgniter core classes
+    or implemented these interfaces, all these changes are backward compatible
+    and require no intervention.
+
+OutgoingRequestInterface
+------------------------
+
+- Added new ``OutgoingRequestInterface`` that represents an outgoing request.
+- Added new ``OutgoingRequest`` class that implements ``OutgoingRequestInterface``.
+- Now ``RequestInterface`` extends ``OutgoingRequestInterface``.
+- Now ``CURLRequest`` extends ``OutgoingRequest``.
+- Now ``Request`` extends ``OutgoingRequest``.
+
+Others
+------
+
 - Added missing ``getProtocolVersion()``, ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
-- Now ``RequestInterface`` extends ``MessageInterface``.
 - Now ``ResponseInterface`` extends ``MessageInterface``.
 - Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
 - Added missing ``CodeIgniter\Database\ResultInterface::getNumRows()`` method.

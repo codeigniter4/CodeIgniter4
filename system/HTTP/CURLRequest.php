@@ -19,7 +19,7 @@ use InvalidArgumentException;
 /**
  * A lightweight HTTP client for sending synchronous HTTP requests via cURL.
  */
-class CURLRequest extends Request
+class CURLRequest extends OutgoingRequest
 {
     /**
      * The response object associated with this request
@@ -103,7 +103,7 @@ class CURLRequest extends Request
             throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
 
-        parent::__construct($config);
+        parent::__construct('GET', $uri);
 
         $this->response       = $response;
         $this->baseURI        = $uri->useRawQueryString();
