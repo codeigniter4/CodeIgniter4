@@ -770,8 +770,8 @@ class Builder extends BaseBuilder
      */
     protected function fieldsFromQuery(string $sql): array
     {
-        $query = $this->db->query('SELECT TOP 1 * FROM (' . $sql . ') _u_')->getResultArray();
+        $fields = $this->db->query('SELECT TOP 1 * FROM (' . $sql . ') _u_')->getFieldNames();
 
-        return array_keys(current($query));
+        return $fields;
     }
 }

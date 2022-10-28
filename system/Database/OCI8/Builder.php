@@ -519,8 +519,8 @@ class Builder extends BaseBuilder
      */
     protected function fieldsFromQuery(string $sql): array
     {
-        $query = $this->db->query('SELECT * FROM (' . $sql . ') "_u_" WHERE ROWNUM = 1')->getResultArray();
+        $fields = $this->db->query('SELECT * FROM (' . $sql . ') "_u_" WHERE ROWNUM = 1')->getFieldNames();
 
-        return array_keys(current($query));
+        return $fields;
     }
 }
