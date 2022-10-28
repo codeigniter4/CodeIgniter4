@@ -209,8 +209,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQuery'])) {
+            $data = $this->QBOptions['setQuery'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
@@ -400,8 +400,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQuery'])) {
+            $data = $this->QBOptions['setQuery'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }

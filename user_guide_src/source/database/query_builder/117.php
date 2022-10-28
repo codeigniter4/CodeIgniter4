@@ -9,7 +9,7 @@ $query = 'SELECT user2.name, user2.email, user2.country
 
 $sql = $builder
     ->ignore(true)
-    ->fromQuery(new RawSql($query), 'name, country, email')
+    ->setQuery(new RawSql($query), null, 'name, country, email')
     ->insertBatch();
 /* MySQLi produces:
     INSERT IGNORE INTO `db_user` (`name`, `country`, `email`)

@@ -169,7 +169,7 @@ class BaseBuilder
      *   tableIdentity?: string,
      *   updateFields?: array,
      *   constraints?: array,
-     *   fromQuery?: string,
+     *   setQuery?: string,
      *   sql?: string,
      *   alias?: string
      * }
@@ -1925,9 +1925,9 @@ class BaseBuilder
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        $this->fromQuery($set);
+        $this->setQuery($set);
 
-        if (isset($this->QBOptions['fromQuery'])) {
+        if (isset($this->QBOptions['setQuery'])) {
             $sql = $this->_upsertBatch($this->QBFrom[0], $this->QBKeys, []);
 
             if ($sql === '') {
@@ -1983,8 +1983,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQuery'])) {
+            $data = $this->QBOptions['setQuery'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }
@@ -2089,9 +2089,10 @@ class BaseBuilder
      * Sets data source as a query for insert/update/upsert
      *
      * @param BaseBuilder|RawSql $query
+     * @param string             $alias
      * @param array|string|null  $columns an array or comma delimited string of columns
      */
-    public function fromQuery($query, $columns = null): BaseBuilder
+    public function setQuery($query, $alias = null, $columns = null): BaseBuilder
     {
         if ($query instanceof BaseBuilder) {
             $query = $query->getCompiledSelect();
@@ -2111,13 +2112,17 @@ class BaseBuilder
                 $columns = $this->fieldsFromQuery($query);
             }
 
-            $this->QBOptions['fromQuery'] = $query;
-            $this->QBKeys                 = $columns;
-            $this->QBSet                  = [];
-
-            foreach ($this->QBKeys as $key => $value) {
-                $this->QBKeys[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
+            if ($alias !== null) {
+                $this->setAlias($alias);
             }
+
+            foreach ($columns as $key => $value) {
+                $columns[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
+            }
+
+            $this->QBOptions['setQuery'] = $query;
+            $this->QBKeys                = $columns;
+            $this->QBSet                 = [];
         }
 
         return $this;
@@ -2148,9 +2153,9 @@ class BaseBuilder
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        $this->fromQuery($set);
+        $this->setQuery($set);
 
-        if (isset($this->QBOptions['fromQuery'])) {
+        if (isset($this->QBOptions['setQuery'])) {
             $sql = $this->_insertBatch($this->QBFrom[0], $this->QBKeys, []);
 
             if ($sql === '') {
@@ -2196,8 +2201,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQuery'])) {
+            $data = $this->QBOptions['setQuery'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
@@ -2518,11 +2523,11 @@ class BaseBuilder
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
-        $this->fromQuery($set);
+        $this->setQuery($set);
 
         $this->onConstraint($constraints);
 
-        if (isset($this->QBOptions['fromQuery'])) {
+        if (isset($this->QBOptions['setQuery'])) {
             $sql = $this->_updateBatch($this->QBFrom[0], $this->QBKeys, []);
 
             if ($sql === '') {
@@ -2621,8 +2626,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQuery'])) {
+            $data = $this->QBOptions['setQuery'];
         } else {
             $data = implode(
                 " UNION ALL\n",

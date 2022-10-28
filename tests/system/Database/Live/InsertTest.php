@@ -239,7 +239,7 @@ final class InsertTest extends CIUnitTestCase
             ->getCompiledSelect();
 
         $this->db->table('user')
-            ->fromQuery(new RawSql($sql), 'name, email, country')
+            ->setQuery(new RawSql($sql), null, 'name, email, country')
             ->insertBatch();
 
         $this->seeInDatabase('user', ['name' => 'New User user2']);
