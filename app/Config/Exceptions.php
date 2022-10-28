@@ -60,7 +60,7 @@ class Exceptions extends BaseConfig
      * Use this option to temporarily cease the warnings and instead log those.
      * This option also works for user deprecations.
      */
-    public bool $logDeprecationsOnly = false;
+    public bool $logDeprecationsOnly = true;
 
     /**
      * --------------------------------------------------------------------------

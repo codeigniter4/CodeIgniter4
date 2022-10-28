@@ -158,7 +158,11 @@ class Exceptions
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
-        if ($this->isDeprecationError($severity) && $this->config->logDeprecationsOnly) {
+        if ($this->isDeprecationError($severity)) {
+            if (! $this->config->logDeprecationsOnly || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
+                throw new ErrorException($message, 0, $severity, $file, $line);
+            }
+
             return $this->handleDeprecationError($message, $file, $line);
         }
 
