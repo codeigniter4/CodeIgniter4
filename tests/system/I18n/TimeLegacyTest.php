@@ -1161,4 +1161,15 @@ final class TimeLegacyTest extends CIUnitTestCase
             ['fa'],
         ];
     }
+
+    public function testModify()
+    {
+        $time  = new TimeLegacy('2017/03/10 12:00');
+        $time2 = $time->modify('+1 day');
+
+        $this->assertInstanceOf(TimeLegacy::class, $time2);
+        $this->assertSame($time, $time2); // mutable
+        $this->assertSame('2017-03-11 12:00:00', (string) $time);
+        $this->assertSame('2017-03-11 12:00:00', (string) $time2);
+    }
 }
