@@ -83,8 +83,8 @@ class Exceptions
         if (! isset($this->config->sensitiveDataInTrace)) {
             $this->config->sensitiveDataInTrace = [];
         }
-        if (! isset($this->config->logDeprecationsOnly, $this->config->deprecationLogLevel)) {
-            $this->config->logDeprecationsOnly = false;
+        if (! isset($this->config->logDeprecations, $this->config->deprecationLogLevel)) {
+            $this->config->logDeprecations     = false;
             $this->config->deprecationLogLevel = LogLevel::WARNING;
         }
     }
@@ -164,7 +164,7 @@ class Exceptions
                 return true;
             }
 
-            if (! $this->config->logDeprecationsOnly || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
+            if (! $this->config->logDeprecations || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
                 throw new ErrorException($message, 0, $severity, $file, $line);
             }
 

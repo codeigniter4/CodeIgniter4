@@ -178,7 +178,7 @@ The following files received significant changes (including deprecations or visu
 and it is recommended that you merge the updated versions with your application:
 
 * ``app/Config/Exceptions.php``
-    * Two additional public properties were added: ``$logDeprecationsOnly`` and ``$deprecationLogLevel``.
+    * Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
 * ``app/Config/Routes.php``
     * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework.
 

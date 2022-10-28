@@ -59,7 +59,7 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $config = new ExceptionsConfig();
 
-        $config->logDeprecationsOnly = true;
+        $config->logDeprecations     = true;
         $config->deprecationLogLevel = 'error';
 
         $this->exception = new Exceptions($config, Services::request(), Services::response());
@@ -83,7 +83,7 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $config = new ExceptionsConfig();
 
-        $config->logDeprecationsOnly = true;
+        $config->logDeprecations     = true;
         $config->deprecationLogLevel = 'error';
 
         $this->exception = new Exceptions($config, Services::request(), Services::response());
