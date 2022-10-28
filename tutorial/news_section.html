@@ -361,11 +361,7 @@ supported database systems</span></a>. The Model class
 also allows you to easily work with the Query Builder and provides
 some additional tools to make working with data simpler. Add the
 following code to your model.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">class</span> <span class="nc">NewsModel</span> <span class="k">extends</span> <span class="nx">Model</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">getNews</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span>    <span class="k">public</span> <span class="k">function</span> <span class="nf">getNews</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nv">$slug</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
@@ -373,7 +369,6 @@ following code to your model.</p>
 
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">([</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="nv">$slug</span><span class="p">])</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
     <span class="p">}</span>
-<span class="p">}</span>
 </pre></div>
 </div>
 <p>With this code, you can perform two different queries. You can get all
@@ -419,7 +414,7 @@ a new <code class="docutils literal notranslate"><span class="pre">News</span></
 </pre></div>
 </div>
 <p>Looking at the code, you may see some similarity with the files we
-created earlier. First, it extends a core CodeIgniter class, <code class="docutils literal notranslate"><span class="pre">Controller</span></code>,
+created earlier. First, it extends <code class="docutils literal notranslate"><span class="pre">BaseController</span></code> that extends a core CodeIgniter class, <code class="docutils literal notranslate"><span class="pre">Controller</span></code>,
 which provides a couple of helper methods, and makes sure that you have
 access to the current <code class="docutils literal notranslate"><span class="pre">Request</span></code> and <code class="docutils literal notranslate"><span class="pre">Response</span></code> objects, as well as the
 <code class="docutils literal notranslate"><span class="pre">Logger</span></code> class, for saving information to disk.</p>
@@ -455,6 +450,8 @@ the views. Modify the <code class="docutils literal notranslate"><span class="pr
             <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/overview&#39;</span><span class="p">)</span>
             <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
     <span class="p">}</span>
+
+    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -489,10 +486,10 @@ and add the next piece of code.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>We are again using using <code class="docutils literal notranslate"><span class="pre">esc()</span></code> to help prevent XSS attacks.
+<p>We are again using using <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a> to help prevent XSS attacks.
 But this time we also passed “url” as a second parameter. That’s because
 attack patterns are different depending on the context in which the output
-is used. You can read more about it <a class="reference internal" href="../general/common_functions.html"><span class="doc">here</span></a>.</p>
+is used.</p>
 </div>
 <p>Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template
@@ -511,6 +508,8 @@ add some code to the controller and create a new view. Go back to the
 
 <span class="k">class</span> <span class="nc">News</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$slug</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">NewsModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
@@ -577,7 +576,7 @@ to display just the one article.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 27, 2022.
+      <span class="lastupdated">Last updated on Oct 28, 2022.
       </span></p>
   </div>
 
