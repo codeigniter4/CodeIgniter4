@@ -37,11 +37,12 @@
 
     <testsuites>
         <testsuite name="AutoReview">
-            <directory>./tests/AutoReview</directory>
+            <directory>./tests/system/AutoReview</directory>
         </testsuite>
         <testsuite name="System">
             <directory>./tests/system</directory>
             <exclude>./tests/system/Database</exclude>
+            <exclude>./tests/system/AutoReview</exclude>
         </testsuite>
         <testsuite name="Database">
             <directory>./tests/system/Database</directory>
