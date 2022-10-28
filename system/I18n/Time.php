@@ -1047,7 +1047,7 @@ class Time extends DateTimeImmutable
     }
 
     /**
-     * @param mixed $testTime
+     * @param DateTimeInterface|string|Time $testTime
      *
      * @return TimeDifference
      *
@@ -1068,7 +1068,7 @@ class Time extends DateTimeImmutable
     /**
      * Returns a Time instance with the timezone converted to UTC.
      *
-     * @param mixed $time
+     * @param DateTimeInterface|string|Time $time
      *
      * @return DateTime|static
      *
