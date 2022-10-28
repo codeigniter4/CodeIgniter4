@@ -88,6 +88,7 @@ some additional tools to make working with data simpler. Add the
 following code to your model.
 
 .. literalinclude:: news_section/002.php
+    :lines: 11-18
 
 With this code, you can perform two different queries. You can get all
 news records, or get a news item by its slug. You might have
@@ -113,7 +114,7 @@ a new ``News`` controller is defined. Create the new controller at
 .. literalinclude:: news_section/003.php
 
 Looking at the code, you may see some similarity with the files we
-created earlier. First, it extends a core CodeIgniter class, ``Controller``,
+created earlier. First, it extends ``BaseController`` that extends a core CodeIgniter class, ``Controller``,
 which provides a couple of helper methods, and makes sure that you have
 access to the current ``Request`` and ``Response`` objects, as well as the
 ``Logger`` class, for saving information to disk.
@@ -143,10 +144,10 @@ and add the next piece of code.
 
 .. literalinclude:: news_section/005.php
 
-.. note:: We are again using using ``esc()`` to help prevent XSS attacks.
+.. note:: We are again using using :php:func:`esc()` to help prevent XSS attacks.
     But this time we also passed "url" as a second parameter. That's because
     attack patterns are different depending on the context in which the output
-    is used. You can read more about it :doc:`here </general/common_functions>`.
+    is used.
 
 Here, each news item is looped and displayed to the user. You can see we
 wrote our template in PHP mixed with HTML. If you prefer to use a template

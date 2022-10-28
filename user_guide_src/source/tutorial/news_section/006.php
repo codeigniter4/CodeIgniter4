@@ -6,6 +6,8 @@ use App\Models\NewsModel;
 
 class News extends BaseController
 {
+    // ...
+
     public function view($slug = null)
     {
         $model = model(NewsModel::class);
