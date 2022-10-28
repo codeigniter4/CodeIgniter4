@@ -101,7 +101,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Deallocate prepared statements
+     * Deallocate prepared statements.
      */
     protected function _close(): bool
     {

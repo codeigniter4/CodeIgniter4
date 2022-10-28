@@ -109,7 +109,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Deallocate prepared statements
+     * Deallocate prepared statements.
      */
     protected function _close(): bool
     {
@@ -117,7 +117,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Handle parameters
+     * Handle parameters.
      */
     protected function parameterize(string $queryString): array
     {

@@ -85,7 +85,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the statement resource for the prepared query or false when preparing failed
+     * Returns the statement resource for the prepared query or false when preparing failed.
      *
      * @return mixed
      */
@@ -95,7 +95,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Deallocate prepared statements
+     * Deallocate prepared statements.
      */
     protected function _close(): bool
     {
