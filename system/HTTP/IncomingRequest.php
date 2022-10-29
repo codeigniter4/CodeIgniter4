@@ -252,7 +252,10 @@ class IncomingRequest extends Request
         $uri   = $parts['path'] ?? '';
 
         // Strip the SCRIPT_NAME path from the URI
-        if ($uri !== '' && isset($_SERVER['SCRIPT_NAME'][0]) && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php') {
+        if (
+            $uri !== '' && isset($_SERVER['SCRIPT_NAME'][0])
+            && pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_EXTENSION) === 'php'
+        ) {
             // Compare each segment, dropping them until there is no match
             $segments = $keep = explode('/', $uri);
 
@@ -357,7 +360,8 @@ class IncomingRequest extends Request
      */
     public function isAJAX(): bool
     {
-        return $this->hasHeader('X-Requested-With') && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
+        return $this->hasHeader('X-Requested-With')
+            && strtolower($this->header('X-Requested-With')->getValue()) === 'xmlhttprequest';
     }
 
     /**
@@ -484,7 +488,10 @@ class IncomingRequest extends Request
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
-        if (strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false && $this->body !== null) {
+        if (
+            strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false
+            && $this->body !== null
+        ) {
             if ($index === null) {
                 return $this->getJSON();
             }
@@ -621,7 +628,9 @@ class IncomingRequest extends Request
         // Use $_POST directly here, since filter_has_var only
         // checks the initial POST data, not anything that might
         // have been added since.
-        return isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags));
+        return isset($_POST[$index])
+            ? $this->getPost($index, $filter, $flags)
+            : (isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : $this->getPost($index, $filter, $flags));
     }
 
     /**
@@ -641,7 +650,9 @@ class IncomingRequest extends Request
         // Use $_GET directly here, since filter_has_var only
         // checks the initial GET data, not anything that might
         // have been added since.
-        return isset($_GET[$index]) ? $this->getGet($index, $filter, $flags) : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags));
+        return isset($_GET[$index])
+            ? $this->getGet($index, $filter, $flags)
+            : (isset($_POST[$index]) ? $this->getPost($index, $filter, $flags) : $this->getGet($index, $filter, $flags));
     }
 
     /**
