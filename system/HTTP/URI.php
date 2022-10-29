@@ -144,8 +144,13 @@ class URI
      * @param string $query
      * @param string $fragment
      */
-    public static function createURIString(?string $scheme = null, ?string $authority = null, ?string $path = null, ?string $query = null, ?string $fragment = null): string
-    {
+    public static function createURIString(
+        ?string $scheme = null,
+        ?string $authority = null,
+        ?string $path = null,
+        ?string $query = null,
+        ?string $fragment = null
+    ): string {
         $uri = '';
         if (! empty($scheme)) {
             $uri .= $scheme . '://';
@@ -156,7 +161,9 @@ class URI
         }
 
         if (isset($path) && $path !== '') {
-            $uri .= substr($uri, -1, 1) !== '/' ? '/' . ltrim($path, '/') : ltrim($path, '/');
+            $uri .= substr($uri, -1, 1) !== '/'
+                ? '/' . ltrim($path, '/')
+                : ltrim($path, '/');
         }
 
         if ($query) {

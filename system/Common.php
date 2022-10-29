@@ -48,7 +48,7 @@ if (! function_exists('app_timezone')) {
     function app_timezone(): string
     {
         /** @var App $config */
-        $config = config(App::class);
+        $config = config('App');
 
         return $config->appTimezone;
     }
@@ -471,12 +471,13 @@ if (! function_exists('force_https')) {
         if ($request === null) {
             $request = Services::request(null, true);
         }
-        if ($response === null) {
-            $response = Services::response(null, true);
-        }
 
         if (! $request instanceof IncomingRequest) {
             return;
+        }
+
+        if ($response === null) {
+            $response = Services::response(null, true);
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
@@ -489,17 +490,19 @@ if (! function_exists('force_https')) {
             Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config(App::class)->baseURL;
+        $baseURL = config('App')->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
-            $baseURL = substr($baseURL, strlen('https://'));
+            $authority = substr($baseURL, strlen('https://'));
         } elseif (strpos($baseURL, 'http://') === 0) {
-            $baseURL = substr($baseURL, strlen('http://'));
+            $authority = substr($baseURL, strlen('http://'));
+        } else {
+            $authority = $baseURL;
         }
 
         $uri = URI::createURIString(
             'https',
-            $baseURL,
+            $authority,
             $request->getUri()->getPath(), // Absolute URIs should use a "/" for an empty path
             $request->getUri()->getQuery(),
             $request->getUri()->getFragment()
@@ -1020,7 +1023,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config = config(App::class);
+        $config = config('App');
 
         if (! property_exists($config, $item)) {
             return null;

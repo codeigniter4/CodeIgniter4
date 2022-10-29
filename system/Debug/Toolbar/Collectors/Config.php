@@ -12,7 +12,6 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\CodeIgniter;
-use Config\App;
 use Config\Services;
 
 /**
@@ -25,7 +24,7 @@ class Config
      */
     public static function display(): array
     {
-        $config = config(App::class);
+        $config = config('App');
 
         return [
             'ciVersion'   => CodeIgniter::CI_VERSION,
