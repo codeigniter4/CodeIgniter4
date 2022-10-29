@@ -492,14 +492,16 @@ if (! function_exists('force_https')) {
         $baseURL = config(App::class)->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
-            $baseURL = substr($baseURL, strlen('https://'));
+            $authority = substr($baseURL, strlen('https://'));
         } elseif (strpos($baseURL, 'http://') === 0) {
-            $baseURL = substr($baseURL, strlen('http://'));
+            $authority = substr($baseURL, strlen('http://'));
+        } else {
+            $authority = $baseURL;
         }
 
         $uri = URI::createURIString(
             'https',
-            $baseURL,
+            $authority,
             $request->getUri()->getPath(), // Absolute URIs should use a "/" for an empty path
             $request->getUri()->getQuery(),
             $request->getUri()->getFragment()
