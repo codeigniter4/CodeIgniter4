@@ -192,14 +192,12 @@ class IncomingRequest extends Request
      * Sets up our URI object based on the information we have. This is
      * either provided by the user in the baseURL Config setting, or
      * determined from the environment as needed.
+     *
+     * @deprecated $protocol and $baseURL are deprecated. No longer used.
      */
     protected function detectURI(string $protocol, string $baseURL)
     {
-        // Passing the config is unnecessary but left for legacy purposes
-        $config          = clone $this->config;
-        $config->baseURL = $baseURL;
-
-        $this->setPath($this->detectPath($protocol), $config);
+        $this->setPath($this->detectPath($this->config->uriProtocol), $this->config);
     }
 
     /**
