@@ -40,6 +40,8 @@ final class RedirectResponseTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        $this->resetServices();
+
         $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $this->config          = new App();
@@ -48,7 +50,12 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->routes = new RouteCollection(Services::locator(), new Modules());
         Services::injectMock('routes', $this->routes);
 
-        $this->request = new MockIncomingRequest($this->config, new URI('http://example.com'), null, new UserAgent());
+        $this->request = new MockIncomingRequest(
+            $this->config,
+            new URI('http://example.com'),
+            null,
+            new UserAgent()
+        );
         Services::injectMock('request', $this->request);
     }
 
