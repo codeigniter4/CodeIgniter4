@@ -471,12 +471,13 @@ if (! function_exists('force_https')) {
         if ($request === null) {
             $request = Services::request(null, true);
         }
-        if ($response === null) {
-            $response = Services::response(null, true);
-        }
 
         if (! $request instanceof IncomingRequest) {
             return;
+        }
+
+        if ($response === null) {
+            $response = Services::response(null, true);
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
