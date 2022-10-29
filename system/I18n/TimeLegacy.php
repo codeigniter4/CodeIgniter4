@@ -108,7 +108,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -125,7 +125,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -139,7 +139,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -153,7 +153,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -167,7 +167,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -182,7 +182,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -196,7 +196,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -210,7 +210,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -234,7 +234,7 @@ class TimeLegacy extends DateTime
      * @param string                   $datetime
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -253,7 +253,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -268,7 +268,7 @@ class TimeLegacy extends DateTime
     /**
      * Takes an instance of DateTimeInterface and returns an instance of Time with it's same values.
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -283,7 +283,7 @@ class TimeLegacy extends DateTime
     /**
      * Takes an instance of DateTime and returns an instance of Time with it's same values.
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      *
@@ -319,7 +319,7 @@ class TimeLegacy extends DateTime
      * Creates an instance of Time that will be returned during testing
      * when calling 'TimeLegacy::now()' instead of the current time.
      *
-     * @param DateTimeInterface|string|Time|null $datetime
+     * @param DateTimeInterface|self|string|null $datetime
      * @param DateTimeZone|string|null           $timezone
      *
      * @throws Exception
@@ -522,7 +522,7 @@ class TimeLegacy extends DateTime
      *
      * @param int|string $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -536,7 +536,7 @@ class TimeLegacy extends DateTime
      *
      * @param int|string $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -558,7 +558,7 @@ class TimeLegacy extends DateTime
      *
      * @param int|string $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -582,7 +582,7 @@ class TimeLegacy extends DateTime
      *
      * @param int|string $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -600,7 +600,7 @@ class TimeLegacy extends DateTime
      *
      * @param int|string $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -618,7 +618,7 @@ class TimeLegacy extends DateTime
      *
      * @param int|string $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -636,7 +636,7 @@ class TimeLegacy extends DateTime
      *
      * @param int $value
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -663,7 +663,7 @@ class TimeLegacy extends DateTime
      *
      * @param DateTimeZone|string $timezone
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -680,7 +680,7 @@ class TimeLegacy extends DateTime
      *
      * @param int $timestamp
      *
-     * @return TimeLegacy
+     * @return self
      *
      * @throws Exception
      */
@@ -918,7 +918,7 @@ class TimeLegacy extends DateTime
      * and are not required to be in the same timezone, as both times are
      * converted to UTC and compared that way.
      *
-     * @param DateTimeInterface|string|Time $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -936,7 +936,7 @@ class TimeLegacy extends DateTime
     /**
      * Ensures that the times are identical, taking timezone into account.
      *
-     * @param DateTimeInterface|string|Time $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -960,7 +960,7 @@ class TimeLegacy extends DateTime
      * Determines if the current instance's time is before $testTime,
      * after converting to UTC.
      *
-     * @param mixed $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -976,7 +976,7 @@ class TimeLegacy extends DateTime
      * Determines if the current instance's time is after $testTime,
      * after converting in UTC.
      *
-     * @param mixed $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -1000,7 +1000,7 @@ class TimeLegacy extends DateTime
      *  - in 4 days
      *  - 6 hours ago
      *
-     * @return mixed
+     * @return string
      *
      * @throws Exception
      */
@@ -1050,7 +1050,7 @@ class TimeLegacy extends DateTime
     }
 
     /**
-     * @param mixed $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @return TimeDifference
      *
@@ -1071,7 +1071,7 @@ class TimeLegacy extends DateTime
     /**
      * Returns a Time instance with the timezone converted to UTC.
      *
-     * @param mixed $time
+     * @param DateTimeInterface|self|string $time
      *
      * @return DateTime|static
      *
@@ -1142,7 +1142,7 @@ class TimeLegacy extends DateTime
      *
      * @param string $name
      *
-     * @return mixed
+     * @return array|bool|DateTimeInterface|DateTimeZone|int|intlCalendar|self|string|null
      */
     public function __get($name)
     {

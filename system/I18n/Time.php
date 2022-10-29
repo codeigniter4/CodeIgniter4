@@ -105,7 +105,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -122,7 +122,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -136,7 +136,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -150,7 +150,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -164,7 +164,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -179,7 +179,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -193,7 +193,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -207,7 +207,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -231,7 +231,7 @@ class Time extends DateTimeImmutable
      * @param string                   $datetime
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -250,7 +250,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string|null $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -265,7 +265,7 @@ class Time extends DateTimeImmutable
     /**
      * Takes an instance of DateTimeInterface and returns an instance of Time with it's same values.
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -280,7 +280,7 @@ class Time extends DateTimeImmutable
     /**
      * Takes an instance of DateTime and returns an instance of Time with it's same values.
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      *
@@ -316,7 +316,7 @@ class Time extends DateTimeImmutable
      * Creates an instance of Time that will be returned during testing
      * when calling 'Time::now' instead of the current time.
      *
-     * @param DateTimeInterface|string|Time|null $datetime
+     * @param DateTimeInterface|self|string|null $datetime
      * @param DateTimeZone|string|null           $timezone
      *
      * @throws Exception
@@ -519,7 +519,7 @@ class Time extends DateTimeImmutable
      *
      * @param int|string $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -533,7 +533,7 @@ class Time extends DateTimeImmutable
      *
      * @param int|string $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -555,7 +555,7 @@ class Time extends DateTimeImmutable
      *
      * @param int|string $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -579,7 +579,7 @@ class Time extends DateTimeImmutable
      *
      * @param int|string $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -597,7 +597,7 @@ class Time extends DateTimeImmutable
      *
      * @param int|string $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -615,7 +615,7 @@ class Time extends DateTimeImmutable
      *
      * @param int|string $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -633,7 +633,7 @@ class Time extends DateTimeImmutable
      *
      * @param int $value
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -660,7 +660,7 @@ class Time extends DateTimeImmutable
      *
      * @param DateTimeZone|string $timezone
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -677,7 +677,7 @@ class Time extends DateTimeImmutable
      *
      * @param int $timestamp
      *
-     * @return Time
+     * @return self
      *
      * @throws Exception
      */
@@ -915,7 +915,7 @@ class Time extends DateTimeImmutable
      * and are not required to be in the same timezone, as both times are
      * converted to UTC and compared that way.
      *
-     * @param DateTimeInterface|string|Time $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -933,7 +933,7 @@ class Time extends DateTimeImmutable
     /**
      * Ensures that the times are identical, taking timezone into account.
      *
-     * @param DateTimeInterface|string|Time $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -957,7 +957,7 @@ class Time extends DateTimeImmutable
      * Determines if the current instance's time is before $testTime,
      * after converting to UTC.
      *
-     * @param mixed $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -973,7 +973,7 @@ class Time extends DateTimeImmutable
      * Determines if the current instance's time is after $testTime,
      * after converting in UTC.
      *
-     * @param mixed $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @throws Exception
      */
@@ -997,7 +997,7 @@ class Time extends DateTimeImmutable
      *  - in 4 days
      *  - 6 hours ago
      *
-     * @return mixed
+     * @return string
      *
      * @throws Exception
      */
@@ -1047,7 +1047,7 @@ class Time extends DateTimeImmutable
     }
 
     /**
-     * @param DateTimeInterface|string|Time $testTime
+     * @param DateTimeInterface|self|string $testTime
      *
      * @return TimeDifference
      *
@@ -1068,7 +1068,7 @@ class Time extends DateTimeImmutable
     /**
      * Returns a Time instance with the timezone converted to UTC.
      *
-     * @param DateTimeInterface|string|Time $time
+     * @param DateTimeInterface|self|string $time
      *
      * @return DateTime|static
      *
@@ -1139,7 +1139,7 @@ class Time extends DateTimeImmutable
      *
      * @param string $name
      *
-     * @return mixed
+     * @return array|bool|DateTimeInterface|DateTimeZone|int|intlCalendar|self|string|null
      */
     public function __get($name)
     {
