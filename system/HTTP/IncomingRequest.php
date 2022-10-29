@@ -405,6 +405,8 @@ class IncomingRequest extends Request
         // Based on our baseURL provided by the developer
         // set our current domain name, scheme
         if ($baseURL !== '') {
+            $this->uri->setBaseURL($baseURL);
+
             $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
             $this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
             $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
