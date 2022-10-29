@@ -405,10 +405,15 @@ class IncomingRequest extends Request
         // Based on our baseURL provided by the developer
         // set our current domain name, scheme
         if ($baseURL !== '') {
-            $this->uri->setBaseURL($baseURL);
+            $host = $this->determineHost($config, $baseURL);
+
+            // Set URI::$baseURL
+            $uri            = new URI($baseURL);
+            $currentBaseURL = (string) $uri->setHost($host);
+            $this->uri->setBaseURL($currentBaseURL);
 
             $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-            $this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
+            $this->uri->setHost($host);
             $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
 
             // Ensure we have any query vars
@@ -425,6 +430,27 @@ class IncomingRequest extends Request
         }
 
         return $this;
+    }
+
+    private function determineHost(App $config, string $baseURL): string
+    {
+        $host = parse_url($baseURL, PHP_URL_HOST);
+
+        if (empty($config->allowedHostnames)) {
+            return $host;
+        }
+
+        // Update host if it is valid.
+        $httpHostPort = $this->getServer('HTTP_HOST');
+        if ($httpHostPort !== null) {
+            [$httpHost] = explode(':', $httpHostPort, 2);
+
+            if (in_array($httpHost, $config->allowedHostnames, true)) {
+                $host = $httpHost;
+            }
+        }
+
+        return $host;
     }
 
     /**
