@@ -145,9 +145,7 @@ class IncomingRequest extends Request
      * Constructor
      *
      * @param App         $config
-     * @param URI         $uri
      * @param string|null $body
-     * @param UserAgent   $userAgent
      */
     public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
     {
@@ -383,12 +381,13 @@ class IncomingRequest extends Request
 
     /**
      * Sets the relative path and updates the URI object.
+     *
      * Note: Since current_url() accesses the shared request
      * instance, this can be used to change the "current URL"
      * for testing.
      *
-     * @param string $path   URI path relative to SCRIPT_NAME
-     * @param App    $config Optional alternate config to use
+     * @param string   $path   URI path relative to SCRIPT_NAME
+     * @param App|null $config Optional alternate config to use
      *
      * @return $this
      */
