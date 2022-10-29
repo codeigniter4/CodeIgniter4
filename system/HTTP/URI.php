@@ -232,9 +232,12 @@ class URI
     /**
      * Constructor.
      *
-     * @param string $uri
+     * @param string|null $uri The URI to parse.
      *
      * @throws InvalidArgumentException
+     *
+     * @TODO null for param $uri should be removed.
+     *      See https://www.php-fig.org/psr/psr-17/#26-urifactoryinterface
      */
     public function __construct(?string $uri = null)
     {
