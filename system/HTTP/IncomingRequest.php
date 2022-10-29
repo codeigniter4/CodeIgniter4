@@ -400,7 +400,7 @@ class IncomingRequest extends Request
 
         // It's possible the user forgot a trailing slash on their
         // baseURL, so let's help them out.
-        $baseURL = $config->baseURL === '' ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
+        $baseURL = ($config->baseURL === '') ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
 
         // Based on our baseURL provided by the developer
         // set our current domain name, scheme
