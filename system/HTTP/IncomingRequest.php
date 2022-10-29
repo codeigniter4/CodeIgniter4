@@ -270,7 +270,7 @@ class IncomingRequest extends Request
         }
 
         // This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
-        // URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
+        // URI is found, and also fixes the QUERY_STRING Server var and $_GET array.
         if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
             $query                   = explode('?', $query, 2);
             $uri                     = $query[0];
