@@ -40,7 +40,7 @@ if (! function_exists('_get_uri')) {
         }
 
         // If a full URI was passed then convert it
-        if (is_int(strpos($relativePath, '://'))) {
+        if (strpos($relativePath, '://') !== false) {
             $full         = new URI($relativePath);
             $relativePath = URI::createURIString(
                 null,
