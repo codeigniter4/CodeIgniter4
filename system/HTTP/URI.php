@@ -13,7 +13,6 @@ namespace CodeIgniter\HTTP;
 
 use BadMethodCallException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
-use InvalidArgumentException;
 
 /**
  * Abstraction for a uniform resource identifier (URI).
@@ -245,7 +244,7 @@ class URI
      *
      * @param string|null $uri The URI to parse.
      *
-     * @throws InvalidArgumentException
+     * @throws HTTPException
      *
      * @TODO null for param $uri should be removed.
      *      See https://www.php-fig.org/psr/psr-17/#26-urifactoryinterface
@@ -287,6 +286,8 @@ class URI
      * Sets and overwrites any current URI information.
      *
      * @return URI
+     *
+     * @throws HTTPException
      */
     public function setURI(?string $uri = null)
     {
