@@ -400,8 +400,8 @@ class IncomingRequest extends Request
         // baseURL, so let's help them out.
         $baseURL = ($config->baseURL === '') ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
 
-        // Based on our baseURL provided by the developer
-        // set our current domain name, scheme
+        // Based on our baseURL and allowedHostnames provided by the developer
+        // and HTTP_HOST, set our current domain name, scheme.
         if ($baseURL !== '') {
             $host = $this->determineHost($config, $baseURL);
 
@@ -417,7 +417,7 @@ class IncomingRequest extends Request
             // Ensure we have any query vars
             $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
 
-            // Check if the baseURL scheme needs to be coerced into its secure version
+            // Check if the scheme needs to be coerced into its secure version
             if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
                 $this->uri->setScheme('https');
             }
