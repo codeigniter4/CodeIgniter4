@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use BadMethodCallException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use InvalidArgumentException;
 
@@ -35,6 +36,11 @@ class URI
      * @var string
      */
     protected $uriString;
+
+    /**
+     * The Current baseURL.
+     */
+    protected ?string $baseURL = null;
 
     /**
      * List of URI segments.
@@ -750,6 +756,26 @@ class URI
         $this->segments = ($tempPath === '') ? [] : explode('/', $tempPath);
 
         return $this;
+    }
+
+    /**
+     * Sets the current baseURL.
+     */
+    public function setBaseURL(string $baseURL): void
+    {
+        $this->baseURL = $baseURL;
+    }
+
+    /**
+     * Returns the current baseURL.
+     */
+    public function getBaseURL(): string
+    {
+        if ($this->baseURL === null) {
+            throw new BadMethodCallException('The $baseURL is not set.');
+        }
+
+        return $this->baseURL;
     }
 
     /**
