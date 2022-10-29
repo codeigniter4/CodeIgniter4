@@ -48,7 +48,7 @@ if (! function_exists('app_timezone')) {
     function app_timezone(): string
     {
         /** @var App $config */
-        $config = config(App::class);
+        $config = config('App');
 
         return $config->appTimezone;
     }
@@ -489,7 +489,7 @@ if (! function_exists('force_https')) {
             Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config(App::class)->baseURL;
+        $baseURL = config('App')->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
             $authority = substr($baseURL, strlen('https://'));
@@ -1022,7 +1022,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config = config(App::class);
+        $config = config('App');
 
         if (! property_exists($config, $item)) {
             return null;

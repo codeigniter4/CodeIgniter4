@@ -72,7 +72,7 @@ if (! function_exists('get_cookie')) {
             $cookie = config('Cookie');
 
             // @TODO Remove Config\App fallback when deprecated `App` members are removed.
-            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config(App::class)->cookiePrefix;
+            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config('App')->cookiePrefix;
         }
 
         $request = Services::request();

@@ -196,7 +196,7 @@ if (! function_exists('index_page')) {
     function index_page(?App $altConfig = null): string
     {
         // use alternate config if provided, else default one
-        $config = $altConfig ?? config(App::class);
+        $config = $altConfig ?? config('App');
 
         return $config->indexPage;
     }
@@ -216,7 +216,7 @@ if (! function_exists('anchor')) {
     function anchor($uri = '', string $title = '', $attributes = '', ?App $altConfig = null): string
     {
         // use alternate config if provided, else default one
-        $config = $altConfig ?? config(App::class);
+        $config = $altConfig ?? config('App');
 
         $siteUrl = is_array($uri) ? site_url($uri, null, $config) : (preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config));
         // eliminate trailing slash
@@ -249,7 +249,7 @@ if (! function_exists('anchor_popup')) {
     function anchor_popup($uri = '', string $title = '', $attributes = false, ?App $altConfig = null): string
     {
         // use alternate config if provided, else default one
-        $config = $altConfig ?? config(App::class);
+        $config = $altConfig ?? config('App');
 
         $siteUrl = preg_match('#^(\w+:)?//#i', $uri) ? $uri : site_url($uri, null, $config);
         $siteUrl = rtrim($siteUrl, '/');
