@@ -9,6 +9,8 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Router\Exceptions\RouterException;
@@ -19,14 +21,15 @@ use Config\Services;
 
 if (! function_exists('_get_uri')) {
     /**
-     * Used by the other URL functions to build a
-     * framework-specific URI based on the App config.
+     * Used by the other URL functions to build a framework-specific URI
+     * based on $request->getUri()->getBaseURL() and the App config.
      *
-     * @internal Outside of the framework this should not be used directly.
+     * @internal Outside the framework this should not be used directly.
      *
      * @param string $relativePath May include queries or fragments
      *
-     * @throws InvalidArgumentException For invalid paths or config
+     * @throws HTTPException            For invalid paths.
+     * @throws InvalidArgumentException For invalid config.
      */
     function _get_uri(string $relativePath = '', ?App $config = null): URI
     {
@@ -51,7 +54,14 @@ if (! function_exists('_get_uri')) {
         $relativePath = URI::removeDotSegments($relativePath);
 
         // Build the full URL based on $config and $relativePath
-        $url = rtrim($config->baseURL, '/ ') . '/';
+        $request = Services::request();
+
+        if ($request instanceof CLIRequest) {
+            /** @var App $config */
+            $url = rtrim($config->baseURL, '/ ') . '/';
+        } else {
+            $url = $request->getUri()->getBaseURL();
+        }
 
         // Check for an index page
         if ($config->indexPage !== '') {
