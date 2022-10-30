@@ -61,7 +61,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testExistence()
     {
@@ -73,7 +73,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testReportOnly()
     {
@@ -86,7 +86,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testDefaults()
     {
@@ -105,7 +105,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testChildSrc()
     {
@@ -122,7 +122,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testConnectSrc()
     {
@@ -138,7 +138,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testFontSrc()
     {
@@ -156,7 +156,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testFormAction()
     {
@@ -174,7 +174,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testFrameAncestor()
     {
@@ -191,7 +191,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testFrameSrc()
     {
@@ -208,7 +208,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testImageSrc()
     {
@@ -225,7 +225,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testMediaSrc()
     {
@@ -242,7 +242,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testManifestSrc()
     {
@@ -259,7 +259,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testPluginType()
     {
@@ -276,7 +276,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testPluginArray()
     {
@@ -291,7 +291,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testObjectSrc()
     {
@@ -308,7 +308,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testScriptSrc()
     {
@@ -325,7 +325,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testStyleSrc()
     {
@@ -342,7 +342,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testBaseURIDefault()
     {
@@ -355,7 +355,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testBaseURI()
     {
@@ -369,7 +369,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testBaseURIRich()
     {
@@ -383,7 +383,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testDefaultSrc()
     {
@@ -399,7 +399,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testReportURI()
     {
@@ -414,7 +414,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testSandboxFlags()
     {
@@ -430,7 +430,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testUpgradeInsecureRequests()
     {
@@ -444,7 +444,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testBodyEmpty()
     {
@@ -457,7 +457,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testBodyScriptNonce()
     {
@@ -534,7 +534,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testBodyStyleNonce()
     {
@@ -573,7 +573,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testHeaderWrongCaseNotFound()
     {
@@ -586,7 +586,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testHeaderIgnoreCase()
     {
@@ -599,7 +599,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testCSPDisabled()
     {
@@ -630,7 +630,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testHeaderScriptNonceEmittedOnceGetScriptNonceCalled()
     {

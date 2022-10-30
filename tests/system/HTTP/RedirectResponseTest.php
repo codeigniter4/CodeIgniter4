@@ -117,7 +117,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWithInput()
     {
@@ -137,7 +137,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWithValidationErrors()
     {
@@ -157,7 +157,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWith()
     {
@@ -173,7 +173,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testRedirectBack()
     {
@@ -189,7 +189,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testRedirectBackMissing()
     {
@@ -204,7 +204,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2119
      */
@@ -245,7 +245,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWithCookiesWithEmptyCookies()
     {

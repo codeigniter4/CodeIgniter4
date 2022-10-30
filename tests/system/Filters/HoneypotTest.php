@@ -80,7 +80,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testAfter()
     {
@@ -102,7 +102,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testAfterNotApplicable()
     {

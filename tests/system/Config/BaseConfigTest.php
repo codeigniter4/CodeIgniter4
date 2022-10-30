@@ -80,7 +80,7 @@ final class BaseConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testServerValues()
     {
@@ -176,7 +176,7 @@ final class BaseConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testSetsDefaultValuesEncryptionUsingHex2Bin()
     {
@@ -191,7 +191,7 @@ final class BaseConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testSetDefaultValuesEncryptionUsingBase64()
     {
