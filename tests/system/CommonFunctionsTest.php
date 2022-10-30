@@ -171,7 +171,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
     public function testSolidusElementXHTML()
     {
         $doctypes        = config('DocTypes');
-        $default = $doctypes->html5;
+        $default         = $doctypes->html5;
         $doctypes->html5 = false;
 
         $this->assertSame(' /', _solidus());
