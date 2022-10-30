@@ -47,7 +47,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.2.7';
+    public const CI_VERSION = '4.2.8';
 
     /**
      * App startup time.
