@@ -43,8 +43,7 @@ final class EventsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testInitialize()
     {

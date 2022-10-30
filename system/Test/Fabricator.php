@@ -374,7 +374,7 @@ class Fabricator
             $result = [];
 
             foreach ($this->formatters as $field => $formatter) {
-                $result[$field] = $this->faker->{$formatter};
+                $result[$field] = $this->faker->{$formatter}();
             }
         }
         // If no formatters were defined then look for a model fake() method
