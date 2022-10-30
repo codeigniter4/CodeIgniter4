@@ -83,8 +83,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testLoadsHex2Bin()
     {
@@ -98,8 +97,7 @@ final class DotEnvTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testLoadsBase64()
     {
