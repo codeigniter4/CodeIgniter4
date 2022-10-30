@@ -381,8 +381,7 @@ final class AutoloaderTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testLoadHelpers(): void
     {
