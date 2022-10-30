@@ -28,7 +28,6 @@ use CodeIgniter\Router\RouteCollectionInterface;
 use CodeIgniter\Router\Router;
 use Config\App;
 use Config\Cache;
-use Config\Kint as KintConfig;
 use Config\Services;
 use Exception;
 use Kint;
@@ -189,10 +188,6 @@ class CodeIgniter
         date_default_timezone_set($this->config->appTimezone ?? 'UTC');
 
         $this->initializeKint();
-
-        if (! CI_DEBUG) {
-            Kint::$enabled_mode = false; // @codeCoverageIgnore
-        }
     }
 
     /**
@@ -249,8 +244,7 @@ class CodeIgniter
             require_once SYSTEMPATH . 'ThirdParty/Kint/init.php';
         }
 
-        /** @var \Config\Kint $config */
-        $config = config(KintConfig::class);
+        $config = config('Kint');
 
         Kint::$depth_limit         = $config->maxDepth;
         Kint::$display_called_from = $config->displayCalledFrom;
@@ -280,6 +274,10 @@ class CodeIgniter
         CliRenderer::$force_utf8         = $config->cliForceUTF8;
         CliRenderer::$detect_width       = $config->cliDetectWidth;
         CliRenderer::$min_terminal_width = $config->cliMinWidth;
+
+        if (! CI_DEBUG) {
+            Kint::$enabled_mode = false; // @codeCoverageIgnore
+        }
     }
 
     /**
