@@ -185,7 +185,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testSessionInstance()
@@ -197,7 +196,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testSessionVariable()
@@ -211,7 +209,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testSessionVariableNotThere()
@@ -295,7 +292,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testOldInput()
@@ -331,7 +327,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testOldInputSerializeData()
@@ -367,7 +362,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/1492
      *
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testOldInputArray()
@@ -481,7 +475,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState disabled
      */
     public function testTrace()
@@ -505,7 +498,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testForceHttpsNullRequestAndResponse()
@@ -586,7 +578,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testTraceWithCSP()

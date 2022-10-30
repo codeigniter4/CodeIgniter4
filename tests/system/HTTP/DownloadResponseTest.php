@@ -300,7 +300,6 @@ final class DownloadResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
      * @preserveGlobalState  disabled
      */
     public function testRealOutput()
