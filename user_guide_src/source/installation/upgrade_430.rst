@@ -156,6 +156,7 @@ Others
 Breaking Enhancements
 *********************
 
+- Since void HTML element (e.g. ``<input>``) in ``html_helper``, ``form_helper`` or common functions has been changed to HTML5 valid by default. If you need to be compatible with XHTML, set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
 - Since the launch of Spark Commands was extracted from ``CodeIgniter\CodeIgniter``, there may be problems running these commands if the ``Services::codeigniter()`` service has been overridden.
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``. Extending classes should likewise change the type.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``. Extending classes should likewise change the type.
@@ -177,6 +178,8 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
+* ``app/Config/DocTypes.php``
+    * The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML elements (e.g. ``<input>``) is added, and set true for HTML5 compatibility by default.
 * ``app/Config/Exceptions.php``
     * Two additional public properties were added: ``$logDeprecationsOnly`` and ``$deprecationLogLevel``.
 * ``app/Config/Routes.php``
@@ -188,6 +191,7 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
+* app/Config/DocTypes.php
 * app/Config/Exceptions.php
 * app/Config/Routes.php
 * spark
