@@ -45,7 +45,7 @@ For example, the Exit code has been changed like the following:
 Others
 ------
 
-- Now ``form_helper``, ``html_helper`` and common functions have been changed to appear void HTML elements (e.g. ``<input>``) with valid HTML5 by default.
+- Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
 - The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
