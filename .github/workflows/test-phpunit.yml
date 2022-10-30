@@ -47,13 +47,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0', '8.1']
+        php-versions: ['7.4', '8.0', '8.1', '8.2']
         db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV', 'OCI8']
         mysql-versions: ['5.7']
         include:
           - php-versions: '7.4'
             db-platforms: MySQLi
             mysql-versions: '8.0'
+          - php-versions: '8.2'
+            composer-option: '--ignore-platform-req=php'
 
     services:
       mysql:
@@ -148,8 +150,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer update --ansi --no-interaction
-          composer remove --ansi --dev --unused -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
+          composer update --ansi --no-interaction ${{ matrix.composer-option }}
+          composer remove --ansi --dev --unused ${{ matrix.composer-option }} -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
 
       - name: Profile slow tests in PHP ${{ env.COVERAGE_PHP_VERSION }}
         if: matrix.php-versions == env.COVERAGE_PHP_VERSION
