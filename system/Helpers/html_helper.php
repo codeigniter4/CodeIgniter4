@@ -241,11 +241,7 @@ if (! function_exists('link_tag')) {
         }
 
         if (! preg_match('#^([a-z]+:)?//#i', $href)) {
-            if ($indexPage === true) {
-                $attributes['href'] = site_url($href);
-            } else {
-                $attributes['href'] = slash_item('baseURL') . $href;
-            }
+            $attributes['href'] = $indexPage ? site_url($href) : slash_item('baseURL') . $href;
         } else {
             $attributes['href'] = $href;
         }
