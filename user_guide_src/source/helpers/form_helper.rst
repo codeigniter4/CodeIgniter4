@@ -9,6 +9,11 @@ forms.
     :local:
     :depth: 2
 
+Configuration
+=============
+
+Since ``v4.3.0``, void HTML elements (e.g. ``<input>``) in ``form_helper`` functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
+
 Loading this Helper
 ===================
 
