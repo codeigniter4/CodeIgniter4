@@ -128,8 +128,6 @@ seed($name)
 Allows you to manually load a Seed into the database. The only parameter is the name of the seed to run. The seed
 must be present within the path specified in ``$basePath``.
 
-.. literalinclude:: database/006.php
-
 hasInDatabase($table, $data)
 ----------------------------
 
@@ -146,6 +144,8 @@ grabFromDatabase($table, $column, $criteria)
 
 Returns the value of ``$column`` from the specified table where the row matches ``$criteria``. If more than one
 row is found, it will only return the first one.
+
+.. literalinclude:: database/006.php
 
 Assertions
 ==========

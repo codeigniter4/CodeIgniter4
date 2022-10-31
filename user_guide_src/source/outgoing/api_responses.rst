@@ -2,7 +2,7 @@
 API Response Trait
 ##################
 
-Much of modern PHP development requires building API's, whether simply to provide data for a javascript-heavy
+Much of modern PHP development requires building APIs, whether simply to provide data for a javascript-heavy
 single page application, or as a standalone product. CodeIgniter provides an API Response trait that can be
 used with any controller to make common response types simple, with no need to remember which HTTP status code
 should be returned for which response types.

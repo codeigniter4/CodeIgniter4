@@ -863,56 +863,56 @@ final class URITest extends CIUnitTestCase
 
     public function testBasedNoIndex()
     {
-        $this->resetServices();
-
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/controller/method';
 
-        $config            = new App();
-        $config->baseURL   = 'http://example.com/ci/v4';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/ci/v4/controller/method');
+        $this->resetServices();
 
+        $config            = new App();
+        $config->baseURL   = 'http://example.com/ci/v4/';
+        $config->indexPage = '';
+        Factories::injectMock('config', 'App', $config);
+
+        $request = Services::request($config);
         Services::injectMock('request', $request);
 
         // going through request
         $this->assertSame('http://example.com/ci/v4/controller/method', (string) $request->getUri());
-        $this->assertSame('/ci/v4/controller/method', $request->getUri()->getPath());
+        $this->assertSame('ci/v4/controller/method', $request->getUri()->getPath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/controller/method');
         $this->assertSame('http://example.com/ci/v4/controller/method', (string) $uri);
         $this->assertSame('/ci/v4/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
+        $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
     }
 
     public function testBasedWithIndex()
     {
-        $this->resetServices();
-
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/index.php/controller/method';
 
-        $config            = new App();
-        $config->baseURL   = 'http://example.com/ci/v4';
-        $config->indexPage = 'index.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/ci/v4/index.php/controller/method');
+        $this->resetServices();
 
+        $config            = new App();
+        $config->baseURL   = 'http://example.com/ci/v4/';
+        $config->indexPage = 'index.php';
+        Factories::injectMock('config', 'App', $config);
+
+        $request = Services::request($config);
         Services::injectMock('request', $request);
 
         // going through request
         $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $request->getUri());
-        $this->assertSame('/ci/v4/index.php/controller/method', $request->getUri()->getPath());
+        $this->assertSame('ci/v4/index.php/controller/method', $request->getUri()->getPath());
 
         // standalone
         $uri = new URI('http://example.com/ci/v4/index.php/controller/method');
         $this->assertSame('http://example.com/ci/v4/index.php/controller/method', (string) $uri);
         $this->assertSame('/ci/v4/index.php/controller/method', $uri->getPath());
 
-        $this->assertSame($uri->getPath(), $request->getUri()->getPath());
+        $this->assertSame($uri->getPath(), '/' . $request->getUri()->getPath());
     }
 
     public function testForceGlobalSecureRequests()

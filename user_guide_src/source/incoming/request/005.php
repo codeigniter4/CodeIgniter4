@@ -1,3 +1,3 @@
 <?php
 
-$require->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);
+$request->getServer(['SERVER_PROTOCOL', 'REQUEST_URI']);

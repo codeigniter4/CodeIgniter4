@@ -118,7 +118,7 @@ The host portion of the URI is typically the domain name of the URL. This can be
 Port
 ----
 
-The port is an integer number between 0 and 65535. Each sheme has a default value associated with it.
+The port is an integer number between 0 and 65535. Each scheme has a default value associated with it.
 
 .. literalinclude:: uri/015.php
 
@@ -174,7 +174,7 @@ you can use the ``stripQuery()`` and ``keepQuery()`` methods to change the actua
 Fragment
 --------
 
-Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URL's these are links
+Fragments are the portion at the end of the URL, preceded by the pound-sign (#). In HTML URLs these are links
 to an on-page anchor. Media URI's can make use of them in various other ways.
 
 .. literalinclude:: uri/022.php

@@ -16,6 +16,8 @@ use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class MySQLiHandlerTest extends AbstractHandlerTestCase

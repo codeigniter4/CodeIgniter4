@@ -40,7 +40,7 @@ Media
 
 The first aspect to look at is handling 'media' negotiations. These are provided by the ``Accept`` header and
 is one of the most complex headers available. A common example is the client telling the server what format it
-wants the data in. This is especially common in API's. For example, a client might request JSON formatted data
+wants the data in. This is especially common in APIs. For example, a client might request JSON formatted data
 from an API endpoint::
 
     GET /foo HTTP/1.1

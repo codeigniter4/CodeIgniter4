@@ -277,7 +277,7 @@ class Parser extends View
         // have something to loop over.
         preg_match_all(
             '#' . $this->leftDelimiter . '\s*' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '(.+?)' .
-            $this->leftDelimiter . '\s*' . '/' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '#s',
+            $this->leftDelimiter . '\s*/' . preg_quote($variable, '#') . '\s*' . $this->rightDelimiter . '#s',
             $template,
             $matches,
             PREG_SET_ORDER

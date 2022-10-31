@@ -816,8 +816,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testSetRadioFromSessionOldInput()
     {
@@ -837,8 +836,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testSetRadioFromPost()
     {
@@ -851,8 +849,7 @@ final class FormHelperTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testSetRadioFromPostWithValueZero()
     {

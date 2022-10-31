@@ -9,6 +9,12 @@ Release Date: October 6, 2022
     :local:
     :depth: 2
 
+SECURITY
+********
+
+- *Secure or HttpOnly flag set in Config\Cookie is not reflected in Cookies issued* was fixed. See the `Security advisory GHSA-745p-r637-7vvp <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-745p-r637-7vvp>`_ for more information.
+- Fixed a bug that prevents CSP headers from being sent when ``Config\ContentSecurityPolicy::$autoNonce`` is false.
+
 BREAKING
 ********
 
@@ -39,7 +45,5 @@ none.
 
 Bugs Fixed
 **********
-
-- Fixed a bug that prevents CSP headers from being sent when ``Config\ContentSecurityPolicy::$autoNonce`` is false.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.

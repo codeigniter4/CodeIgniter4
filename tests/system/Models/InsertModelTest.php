@@ -22,6 +22,8 @@ use Tests\Support\Models\UserObjModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class InsertModelTest extends LiveModelTestCase

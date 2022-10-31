@@ -249,6 +249,9 @@ final class CellTest extends CIUnitTestCase
 
     public function testCallInitControllerIfMethodExists()
     {
-        $this->assertSame(Response::class, $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index'));
+        $this->assertSame(
+            Response::class,
+            $this->cell->render('\Tests\Support\View\SampleClassWithInitController::index')
+        );
     }
 }

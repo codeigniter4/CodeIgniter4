@@ -71,10 +71,6 @@ final class GeneralModelTest extends CIUnitTestCase
         $this->assertFalse(isset($this->model->foobar));
         $this->assertNull($this->model->foobar);
 
-        $this->model->flavor = 'chocolate';
-        $this->assertTrue(isset($this->model->flavor));
-        $this->assertSame('chocolate', $this->model->flavor);
-
         // from DB
         $this->assertTrue(isset($this->model->DBPrefix));
         $this->assertSame('utf8', $this->model->charset);

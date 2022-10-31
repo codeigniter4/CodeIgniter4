@@ -80,7 +80,7 @@ Formatting The Request
 You can set the format of your request's body using the ``withBodyFormat()`` method. Currently this supports either
 `json` or `xml`. This will take the parameters passed into ``call()``, ``post()``, ``get()``... and assign them to the
 body of the request in the given format. This will also set the `Content-Type` header for your request accordingly.
-This is useful when testing JSON or XML API's so that you can set the request in the form that the controller will expect.
+This is useful when testing JSON or XML APIs so that you can set the request in the form that the controller will expect.
 
 .. literalinclude:: feature/008.php
 
@@ -88,7 +88,7 @@ Setting the Body
 ----------------
 
 You can set the body of your request with the ``withBody()`` method. This allows you to format the body how you want
-to format it. It is recommended that you use this if you have more complicated xml's to test. This will also not set
+to format it. It is recommended that you use this if you have more complicated XMLs to test. This will also not set
 the Content-Type header for you so if you need that, you can set it with the ``withHeaders()`` method.
 
 Checking the Response

@@ -467,9 +467,9 @@ final class PagerTest extends CIUnitTestCase
         $config            = new App();
         $config->baseURL   = 'http://example.com/ci/v4/';
         $config->indexPage = 'fc.php';
-        $request           = Services::request($config);
-        $request->uri      = new URI('http://example.com/ci/v4/x/y');
+        Factories::injectMock('config', 'App', $config);
 
+        $request = Services::request($config);
         Services::injectMock('request', $request);
 
         $this->config = new PagerConfig();

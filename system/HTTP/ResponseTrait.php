@@ -252,7 +252,7 @@ trait ResponseTrait
     /**
      * Returns the current body, converted to JSON is it isn't already.
      *
-     * @return mixed|string
+     * @return string|null
      *
      * @throws InvalidArgumentException If the body property is not array.
      */
@@ -471,7 +471,7 @@ trait ResponseTrait
         header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReasonPhrase()), true, $this->getStatusCode());
 
         // Send all of our headers
-        foreach (array_keys($this->getHeaders()) as $name) {
+        foreach (array_keys($this->headers()) as $name) {
             header($name . ': ' . $this->getHeaderLine($name), false, $this->getStatusCode());
         }
 

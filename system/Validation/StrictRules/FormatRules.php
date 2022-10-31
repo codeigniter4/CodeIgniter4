@@ -30,7 +30,7 @@ class FormatRules
     /**
      * Alpha
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function alpha($str = null): bool
     {
@@ -44,7 +44,7 @@ class FormatRules
     /**
      * Alpha with spaces.
      *
-     * @param mixed $value Value.
+     * @param array|bool|float|int|object|string|null $value Value.
      *
      * @return bool True if alpha with spaces, else false.
      */
@@ -60,7 +60,7 @@ class FormatRules
     /**
      * Alphanumeric with underscores and dashes
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function alpha_dash($str = null): bool
     {
@@ -82,7 +82,7 @@ class FormatRules
      * _ underscore, + plus, = equals, | vertical bar, : colon, . period
      * ~ ! # $ % & * - _ + = | : .
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      *
      * @return bool
      */
@@ -102,7 +102,7 @@ class FormatRules
     /**
      * Alphanumeric
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function alpha_numeric($str = null): bool
     {
@@ -120,7 +120,7 @@ class FormatRules
     /**
      * Alphanumeric w/ spaces
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function alpha_numeric_space($str = null): bool
     {
@@ -138,7 +138,7 @@ class FormatRules
     /**
      * Any type of string
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function string($str = null): bool
     {
@@ -148,7 +148,7 @@ class FormatRules
     /**
      * Decimal number
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function decimal($str = null): bool
     {
@@ -166,7 +166,7 @@ class FormatRules
     /**
      * String of hexidecimal characters
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function hex($str = null): bool
     {
@@ -184,7 +184,7 @@ class FormatRules
     /**
      * Integer
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function integer($str = null): bool
     {
@@ -202,7 +202,7 @@ class FormatRules
     /**
      * Is a Natural number  (0,1,2,3, etc.)
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function is_natural($str = null): bool
     {
@@ -220,7 +220,7 @@ class FormatRules
     /**
      * Is a Natural number, but not a zero  (1,2,3, etc.)
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function is_natural_no_zero($str = null): bool
     {
@@ -238,7 +238,7 @@ class FormatRules
     /**
      * Numeric
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function numeric($str = null): bool
     {
@@ -256,7 +256,7 @@ class FormatRules
     /**
      * Compares value against a regular expression pattern.
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function regex_match($str, string $pattern): bool
     {
@@ -273,7 +273,7 @@ class FormatRules
      *
      * @see http://php.net/manual/en/datetimezone.listidentifiers.php
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function timezone($str = null): bool
     {
@@ -290,7 +290,7 @@ class FormatRules
      * Tests a string for characters outside of the Base64 alphabet
      * as defined by RFC 2045 http://www.faqs.org/rfcs/rfc2045
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function valid_base64($str = null): bool
     {
@@ -304,7 +304,7 @@ class FormatRules
     /**
      * Valid JSON
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function valid_json($str = null): bool
     {
@@ -318,7 +318,7 @@ class FormatRules
     /**
      * Checks for a correctly formatted email address
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function valid_email($str = null): bool
     {
@@ -335,7 +335,7 @@ class FormatRules
      * Example:
      *     valid_emails[one@example.com,two@example.com]
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function valid_emails($str = null): bool
     {
@@ -349,8 +349,8 @@ class FormatRules
     /**
      * Validate an IP address (human readable format or binary string - inet_pton)
      *
-     * @param mixed       $ip
-     * @param string|null $which IP protocol: 'ipv4' or 'ipv6'
+     * @param array|bool|float|int|object|string|null $ip
+     * @param string|null                             $which IP protocol: 'ipv4' or 'ipv6'
      */
     public function valid_ip($ip = null, ?string $which = null): bool
     {
@@ -367,7 +367,7 @@ class FormatRules
      * Warning: this rule will pass basic strings like
      * "banana"; use valid_url_strict for a stricter rule.
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function valid_url($str = null): bool
     {
@@ -381,8 +381,8 @@ class FormatRules
     /**
      * Checks a URL to ensure it's formed correctly.
      *
-     * @param mixed       $str
-     * @param string|null $validSchemes comma separated list of allowed schemes
+     * @param array|bool|float|int|object|string|null $str
+     * @param string|null                             $validSchemes comma separated list of allowed schemes
      */
     public function valid_url_strict($str = null, ?string $validSchemes = null): bool
     {
@@ -396,7 +396,7 @@ class FormatRules
     /**
      * Checks for a valid date and matches a given date format
      *
-     * @param mixed $str
+     * @param array|bool|float|int|object|string|null $str
      */
     public function valid_date($str = null, ?string $format = null): bool
     {

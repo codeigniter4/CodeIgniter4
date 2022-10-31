@@ -17,6 +17,8 @@ use Tests\Support\Models\JobModel;
 use Tests\Support\Models\UserModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class ModelFactoryTest extends CIUnitTestCase

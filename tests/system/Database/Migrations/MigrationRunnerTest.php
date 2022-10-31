@@ -222,18 +222,16 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     public function testFindMigrationsReturnsEmptyArrayWithNoneFound()
     {
-        $config       = $this->config;
-        $config->type = 'timestamp';
-
+        $config = $this->config;
         $runner = new MigrationRunner($config);
+
         $this->assertSame([], $runner->findMigrations());
     }
 
     public function testFindMigrationsSuccessTimestamp()
     {
-        $config       = $this->config;
-        $config->type = 'timestamp';
-        $runner       = new MigrationRunner($config);
+        $config = $this->config;
+        $runner = new MigrationRunner($config);
 
         $runner = $runner->setNamespace('Tests\Support\MigrationTestMigrations');
 

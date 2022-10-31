@@ -53,7 +53,7 @@ The following functions are available:
     :returns:    An HTML form opening tag
     :rtype:    string
 
-    Creates an opening form tag with a site URL **built from your config preferences**.
+    Creates an opening form tag with a site URL **built from your** ``Config\App::$baseURL``.
     It will optionally let you add form attributes and hidden input fields, and
     will always add the `accept-charset` attribute based on the charset value in your
     config file.
@@ -70,7 +70,7 @@ The following functions are available:
 
         <form action="http://example.com/index.php/email/send" method="post" accept-charset="utf-8">
 
-    You can also add {locale} like the following:
+    You can also add ``{locale}`` like the following:
 
     .. literalinclude:: form_helper/004.php
 
@@ -94,7 +94,7 @@ The following functions are available:
 
             <form action="http://example.com/index.php/email/send" class="email" id="myform" method="post" accept-charset="utf-8">
 
-        If CSRF filter is turned on `form_open()` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
+        If CSRF filter is turned on ``form_open()`` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
 
         .. literalinclude:: form_helper/007.php
 
@@ -174,6 +174,10 @@ The following functions are available:
     form to contain:
 
     .. literalinclude:: form_helper/014.php
+
+    If you want boolean attributes, pass the boolean value (``true``/``false``). In this case the boolean value does not matter:
+
+    .. literalinclude:: form_helper/035.php
 
     If you would like your form to contain some additional data, like
     JavaScript, you can pass it as a string in the third parameter:
@@ -301,7 +305,7 @@ The following functions are available:
     :returns:    An HTML fieldset closing tag
     :rtype:    string
 
-    Produces a closing </fieldset> tag. The only advantage to using this
+    Produces a closing ``</fieldset>`` tag. The only advantage to using this
     function is it permits you to pass data to it which will be added below
     the tag. For example
 
@@ -425,7 +429,7 @@ The following functions are available:
     :returns:    An HTML form closing tag
     :rtype:    string
 
-    Produces a closing </form> tag. The only advantage to using this
+    Produces a closing ``</form>`` tag. The only advantage to using this
     function is it permits you to pass data to it which will be added below
     the tag. For example:
 

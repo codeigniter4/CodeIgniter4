@@ -413,7 +413,7 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageReorientLandscape()
     {
         for ($i = 0; $i <= 8; $i++) {
-            $source = $this->origin . 'EXIFsamples/landscape_' . '' . $i . '.jpg';
+            $source = $this->origin . 'EXIFsamples/landscape_' . $i . '.jpg';
 
             $this->handler->withFile($source);
             $this->handler->reorient();
@@ -429,7 +429,7 @@ final class GDHandlerTest extends CIUnitTestCase
     public function testImageReorientPortrait()
     {
         for ($i = 0; $i <= 8; $i++) {
-            $source = $this->origin . 'EXIFsamples/portrait_' . '' . $i . '.jpg';
+            $source = $this->origin . 'EXIFsamples/portrait_' . $i . '.jpg';
 
             $this->handler->withFile($source);
             $this->handler->reorient();

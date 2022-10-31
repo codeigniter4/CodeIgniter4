@@ -64,10 +64,10 @@ To ignore logging on other status codes, you can set the status code to ignore i
 .. note:: It is possible that logging still will not happen for exceptions if your current Log settings
     are not set up to log **critical** errors, which all exceptions are logged as.
 
-Custom Exceptions
-=================
+Framework Exceptions
+====================
 
-The following custom exceptions are available:
+The following framework exceptions are available:
 
 PageNotFoundException
 ---------------------

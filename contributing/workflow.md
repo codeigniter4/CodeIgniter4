@@ -363,28 +363,16 @@ Update your `4.3` branch:
 > git push origin 4.3
 ```
 
-Create a new branch `feat-ab.new` from the correct branch `4.3`:
+(Optional) Create a new branch as a backup, just in case:
 
 ```console
-> git switch -c feat-abc.new 4.3
+> git branch feat-abc.bk feat-abc
 ```
 
-Cherry-pick the commits you did:
+Rebase your PR branch from `develop` onto `4.3`:
 
 ```console
-> git cherry-pick <commit_id> <commit_id> <commit_id> ...
-```
-
-Rename the PR branch `feat-abc`:
-
-```console
-> git branch -m feat-abc feat-abc.old
-```
-
-Rename the new branch  `feat-abc.new` to `feat-abc`.
-
-```console
-> git branch -m feat-abc.new feat-abc
+> git rebase --onto 4.3 develop feat-abc
 ```
 
 Force push.

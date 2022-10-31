@@ -18,6 +18,8 @@ use Tests\Support\Models\SecondaryModel;
 use Tests\Support\Models\UserModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class FindModelTest extends LiveModelTestCase

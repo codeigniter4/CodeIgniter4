@@ -7,7 +7,7 @@ Throttler
     :depth: 2
 
 The Throttler class provides a very simple way to limit an activity to be performed to a certain number of attempts
-within a set period of time. This is most often used for performing rate limiting on API's, or restricting the number
+within a set period of time. This is most often used for performing rate limiting on APIs, or restricting the number
 of attempts a user can make against a form to help prevent brute force attacks. The class itself can be used
 for anything that you need to throttle based on actions within a set time interval.
 

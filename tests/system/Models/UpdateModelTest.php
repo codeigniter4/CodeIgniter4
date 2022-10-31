@@ -22,6 +22,8 @@ use Tests\Support\Models\ValidModel;
 use Tests\Support\Models\WithoutAutoIncrementModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class UpdateModelTest extends LiveModelTestCase

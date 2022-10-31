@@ -20,7 +20,7 @@ Shield
 `CodeIgniter Shield <https://github.com/codeigniter4/shield>`_ is an authentication
 and authorization framework for CodeIgniter 4. It is designed to be secure, flexible,
 and easily extendable to meet the needs of many different types of websites.
-Among the many featues, it includes:
+Among the many features, it includes:
 
 * Session-based authentication
 * Personal access token authentication
@@ -56,7 +56,7 @@ DevKit
 
 `CodeIgniter DevKit <https://github.com/codeigniter4/devkit>`_ provides all of the
 development tools that CodeIgniter uses to help ensure quality code, including
-our coding standard, static analysys tools and rules, unit testing, data generation,
+our coding standard, static analysis tools and rules, unit testing, data generation,
 file-system mocking, security advisories, and more. This can be used in any of
 your personal projects or libraries to get you rapidly setup with 17 different tools.
 

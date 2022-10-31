@@ -28,13 +28,6 @@ class PreparedQuery extends BasePreparedQuery
     protected $parameters = [];
 
     /**
-     * The result boolean from a sqlsrv_execute.
-     *
-     * @var bool
-     */
-    protected $result;
-
-    /**
      * Prepares the query against the database, and saves the connection
      * info necessary to execute the query later.
      *
@@ -68,7 +61,7 @@ class PreparedQuery extends BasePreparedQuery
 
     /**
      * Takes a new set of data and runs it against the currently
-     * prepared query. Upon success, will return a Results object.
+     * prepared query.
      */
     public function _execute(array $data): bool
     {
@@ -80,19 +73,17 @@ class PreparedQuery extends BasePreparedQuery
             $this->parameters[$key] = $value;
         }
 
-        $this->result = sqlsrv_execute($this->statement);
-
-        return (bool) $this->result;
+        return sqlsrv_execute($this->statement);
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the statement resource for the prepared query or false when preparing failed.
      *
      * @return mixed
      */
     public function _getResult()
     {
-        return $this->result;
+        return $this->statement;
     }
 
     /**

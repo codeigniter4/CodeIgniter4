@@ -18,14 +18,16 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @no-final
  */
-final class FormatRulesTest extends CIUnitTestCase
+class FormatRulesTest extends CIUnitTestCase
 {
     public const ALPHABET     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ';
     public const ALPHANUMERIC = 'abcdefghijklmnopqrstuvwxyzABCDEFGHLIJKLMNOPQRSTUVWXYZ0123456789';
 
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -213,6 +215,11 @@ final class FormatRulesTest extends CIUnitTestCase
             ],
             [
                 '//example.com',
+                false,
+                false,
+            ],
+            [
+                "http://www.codeigniter.com\n",
                 false,
                 false,
             ],
@@ -404,9 +411,6 @@ final class FormatRulesTest extends CIUnitTestCase
 
     /**
      * @dataProvider alphaProvider
-     *
-     * @param $str
-     * @param $expected
      */
     public function testAlpha(?string $str, bool $expected): void
     {

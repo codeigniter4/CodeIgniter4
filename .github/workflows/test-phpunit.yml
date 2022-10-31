@@ -27,10 +27,21 @@ on:
       - phpunit.xml.dist
       - .github/workflows/test-phpunit.yml
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  COVERAGE_PHP_VERSION: '8.1'
+  NLS_LANG: 'AMERICAN_AMERICA.UTF8'
+  NLS_DATE_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
+  NLS_TIMESTAMP_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
+  NLS_TIMESTAMP_TZ_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
+
 jobs:
   tests:
     name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     strategy:
@@ -65,7 +76,7 @@ jobs:
         options: --health-cmd=pg_isready --health-interval=10s --health-timeout=5s --health-retries=3
 
       mssql:
-        image: mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-20.04
+        image: mcr.microsoft.com/mssql/server:2022-latest
         env:
           SA_PASSWORD: 1Secure*Password1
           ACCEPT_EULA: Y
@@ -75,12 +86,18 @@ jobs:
         options: --health-cmd="/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'" --health-interval=10s --health-timeout=5s --health-retries=3
 
       oracle:
-        image: quillbuilduser/oracle-18-xe
+        image: gvenzl/oracle-xe:21
         env:
-          ORACLE_ALLOW_REMOTE: true
+          ORACLE_RANDOM_PASSWORD: true
+          APP_USER: ORACLE
+          APP_USER_PASSWORD: ORACLE
         ports:
           - 1521:1521
-        options: --health-cmd="/opt/oracle/product/18c/dbhomeXE/bin/sqlplus -s sys/Oracle18@oracledbxe/XE as sysdba <<< 'SELECT 1 FROM DUAL'" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd healthcheck.sh
+          --health-interval 20s
+          --health-timeout 10s
+          --health-retries 10
 
       redis:
         image: redis
@@ -98,28 +115,6 @@ jobs:
         if: matrix.db-platforms == 'SQLSRV'
         run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
 
-      - name: Install Oracle InstantClient
-        if: matrix.db-platforms == 'OCI8'
-        run: |
-          sudo apt-get install wget libaio1 alien
-          sudo wget https://download.oracle.com/otn_software/linux/instantclient/185000/oracle-instantclient18.5-basic-18.5.0.0.0-3.x86_64.rpm
-          sudo wget https://download.oracle.com/otn_software/linux/instantclient/185000/oracle-instantclient18.5-devel-18.5.0.0.0-3.x86_64.rpm
-          sudo wget https://download.oracle.com/otn_software/linux/instantclient/185000/oracle-instantclient18.5-sqlplus-18.5.0.0.0-3.x86_64.rpm
-          sudo alien oracle-instantclient18.5-basic-18.5.0.0.0-3.x86_64.rpm
-          sudo alien oracle-instantclient18.5-devel-18.5.0.0.0-3.x86_64.rpm
-          sudo alien oracle-instantclient18.5-sqlplus-18.5.0.0.0-3.x86_64.rpm
-          sudo dpkg -i oracle-instantclient18.5-basic_18.5.0.0.0-4_amd64.deb oracle-instantclient18.5-devel_18.5.0.0.0-4_amd64.deb oracle-instantclient18.5-sqlplus_18.5.0.0.0-4_amd64.deb
-          echo "LD_LIBRARY_PATH=/lib/oracle/18.5/client64/lib/" >> $GITHUB_ENV
-          echo "NLS_LANG=AMERICAN_AMERICA.UTF8" >> $GITHUB_ENV
-          echo "C_INCLUDE_PATH=/usr/include/oracle/18.5/client64" >> $GITHUB_ENV
-          echo 'NLS_DATE_FORMAT=YYYY-MM-DD HH24:MI:SS' >> $GITHUB_ENV
-          echo 'NLS_TIMESTAMP_FORMAT=YYYY-MM-DD HH24:MI:SS' >> $GITHUB_ENV
-          echo 'NLS_TIMESTAMP_TZ_FORMAT=YYYY-MM-DD HH24:MI:SS' >> $GITHUB_ENV
-
-      - name: Create database for Oracle Database
-        if: matrix.db-platforms == 'OCI8'
-        run: echo -e "ALTER SESSION SET CONTAINER = XEPDB1;\nCREATE BIGFILE TABLESPACE \"TEST\" DATAFILE '/opt/oracle/product/18c/dbhomeXE/dbs/TEST' SIZE 10M AUTOEXTEND ON MAXSIZE UNLIMITED SEGMENT SPACE MANAGEMENT AUTO EXTENT MANAGEMENT LOCAL AUTOALLOCATE;\nCREATE USER \"ORACLE\" IDENTIFIED BY \"ORACLE\" DEFAULT TABLESPACE \"TEST\" TEMPORARY TABLESPACE TEMP QUOTA UNLIMITED ON \"TEST\";\nGRANT CONNECT,RESOURCE TO \"ORACLE\";\nexit;" | /lib/oracle/18.5/client64/bin/sqlplus -s sys/Oracle18@localhost:1521/XE as sysdba
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -129,25 +124,25 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
           extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, oci8, pgsql
-          coverage: xdebug
+          coverage: ${{ env.COVERAGE_DRIVER }}
         env:
           update: true
+          COVERAGE_DRIVER: ${{ matrix.php-versions == env.COVERAGE_PHP_VERSION && 'xdebug' || 'none'}}
 
       - name: Install latest ImageMagick
         run: |
           sudo apt-get update
-          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback ttf-dejavu-core
+          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
           sudo apt-get install -y imagemagick
           sudo apt-get install --fix-broken
 
       - name: Get composer cache directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ${{ steps.composercache.outputs.dir }}
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
@@ -155,19 +150,22 @@ jobs:
         run: |
           composer update --ansi --no-interaction
           composer remove --ansi --dev --unused -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
-      - name: Profile slow tests in PHP 8.0
-        if: matrix.php-versions == '8.0'
+      - name: Profile slow tests in PHP ${{ env.COVERAGE_PHP_VERSION }}
+        if: matrix.php-versions == env.COVERAGE_PHP_VERSION
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
       - name: Compute coverage option
         uses: actions/github-script@v6
         id: phpunit-coverage-option
         with:
-          script: 'return "${{ matrix.php-versions }}" == "8.0" ? "" : "--no-coverage"'
+          script: |
+            const { COVERAGE_NAME } = process.env
+
+            return "${{ matrix.php-versions }}" == "${{ env.COVERAGE_PHP_VERSION }}" ? `--coverage-php build/cov/coverage-${COVERAGE_NAME}.cov` : "--no-coverage"
           result-encoding: string
+        env:
+          COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
 
       - name: Test with PHPUnit
         run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review ${{ steps.phpunit-coverage-option.outputs.result }}"
@@ -175,24 +173,61 @@ jobs:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color
 
-      - name: Run Coveralls
-        if: github.repository_owner == 'codeigniter4' && matrix.php-versions == '8.0'
-        run: |
-          composer global require --ansi php-coveralls/php-coveralls:^2.4
-          php-coveralls --coverage_clover=build/logs/clover.xml -v
+      - name: Upload coverage file
+        if: matrix.php-versions == env.COVERAGE_PHP_VERSION
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.COVERAGE_NAME }}
+          path: build/cov/coverage-${{ env.COVERAGE_NAME }}.cov
+          if-no-files-found: error
+          retention-days: 1
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_PARALLEL: true
-          COVERALLS_FLAG_NAME: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+          COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
 
-  coveralls-finish:
+  coveralls:
     if: github.repository_owner == 'codeigniter4'
-    needs: [tests]
-    runs-on: ubuntu-20.04
+    needs: tests
+    runs-on: ubuntu-22.04
 
     steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+          php-version: ${{ env.COVERAGE_PHP_VERSION }}
+          tools: composer
+          coverage: xdebug
+        env:
+          update: true
+
+      - name: Download coverage files
+        uses: actions/download-artifact@v3
+        with:
+          path: build/cov
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: build/cov
+
+      - name: Get composer cache directory
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update --ansi --no-interaction
+
+      - name: Merge coverage files
+        run: vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
+
+      - name: Upload coverage to Coveralls
+        run: vendor/bin/php-coveralls --verbose --exclude-no-stmt --ansi
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}

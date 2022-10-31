@@ -55,8 +55,7 @@ final class ConfigTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testInjection()
     {

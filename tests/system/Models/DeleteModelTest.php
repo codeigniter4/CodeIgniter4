@@ -18,6 +18,8 @@ use Tests\Support\Models\StringifyPkeyModel;
 use Tests\Support\Models\UserModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class DeleteModelTest extends LiveModelTestCase

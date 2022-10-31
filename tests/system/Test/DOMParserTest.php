@@ -80,8 +80,9 @@ final class DOMParserTest extends CIUnitTestCase
     public function provideText()
     {
         return [
-            ['Hello World'],
-            ['Hellö Wörld'],
+            'en' => ['Hello World'],
+            'sv' => ['Hej, världen'],
+            'ja' => ['こんにちは、世界'],
         ];
     }
 

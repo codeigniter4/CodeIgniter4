@@ -14,10 +14,14 @@ on:
       - '**.php'
       - .github/workflows/test-autoreview.yml
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   auto-review-tests:
     name: Automatic Code Review
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -30,13 +34,12 @@ jobs:
           coverage: none
 
       - name: Get composer cache directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ${{ steps.composercache.outputs.dir }}
+          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 

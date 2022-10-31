@@ -101,16 +101,6 @@ parameters:
 			path: system/Database/BaseBuilder.php
 
 		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_disableForeignKeyChecks\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\BaseConnection\\:\\:_enableForeignKeyChecks\\(\\)\\.$#"
-			count: 1
-			path: system/Database/BaseConnection.php
-
-		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#"
 			count: 1
 			path: system/Database/BaseConnection.php
@@ -301,7 +291,7 @@ parameters:
 			path: system/Database/MySQLi/Result.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between array and false will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between array<string, int|string|null> and false will always evaluate to false\\.$#"
 			count: 1
 			path: system/Database/Postgre/Connection.php
 
@@ -554,11 +544,6 @@ parameters:
 			message: "#^Right side of && is always true\\.$#"
 			count: 1
 			path: system/Helpers/filesystem_helper.php
-
-		-
-			message: "#^Offset 'checked' on array\\{type\\: 'checkbox', name\\: mixed, value\\: string\\} in isset\\(\\) does not exist\\.$#"
-			count: 1
-			path: system/Helpers/form_helper.php
 
 		-
 			message: "#^Binary operation \"\\+\" between 0 and string results in an error\\.$#"

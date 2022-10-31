@@ -15,6 +15,8 @@ use CodeIgniter\Database\Exceptions\DataException;
 use Tests\Support\Models\EventModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class EventsModelTest extends LiveModelTestCase

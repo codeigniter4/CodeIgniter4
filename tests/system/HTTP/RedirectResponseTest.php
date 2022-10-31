@@ -73,12 +73,12 @@ final class RedirectResponseTest extends CIUnitTestCase
         $this->assertTrue($response->hasHeader('Location'));
         $this->assertSame('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
 
-        $this->routes->add('exampleRoute', 'Home::index', ['as' => 'home']);
+        $this->routes->add('exampleRoute2', 'Home::index', ['as' => 'home']);
 
         $response->route('home');
 
         $this->assertTrue($response->hasHeader('Location'));
-        $this->assertSame('http://example.com/index.php/exampleRoute', $response->getHeaderLine('Location'));
+        $this->assertSame('http://example.com/index.php/exampleRoute2', $response->getHeaderLine('Location'));
     }
 
     public function testRedirectRouteBadNamedRoute()
@@ -117,8 +117,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWithInput()
     {
@@ -138,8 +137,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWithValidationErrors()
     {
@@ -159,8 +157,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWith()
     {
@@ -176,8 +173,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testRedirectBack()
     {
@@ -193,8 +189,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testRedirectBackMissing()
     {
@@ -209,8 +204,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/2119
      */
@@ -251,8 +245,7 @@ final class RedirectResponseTest extends CIUnitTestCase
 
     /**
      * @runInSeparateProcess
-     *
-     * @preserveGlobalState  disabled
+     * @preserveGlobalState disabled
      */
     public function testWithCookiesWithEmptyCookies()
     {

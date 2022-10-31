@@ -19,7 +19,7 @@ class Multiple2 implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $request->url = 'http://exampleMultipleURL.com';
+        $request->setHeader('x-url', 'http://exampleMultipleURL.com');
 
         return $request;
     }

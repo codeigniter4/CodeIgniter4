@@ -6,8 +6,8 @@ Custom Function Calls
     :local:
     :depth: 2
 
-$db->callFunction();
-============================
+$db->callFunction()
+===================
 
 This function enables you to call PHP database functions that are not
 natively included in CodeIgniter, in a platform-independent manner. For
@@ -17,7 +17,7 @@ do so like this:
 
 .. literalinclude:: call_function/001.php
 
-You must supply the name of the function, **without** the mysql\_
+You must supply the name of the function, **without** the ``mysql_``
 prefix, in the first parameter. The prefix is added automatically based
 on which database driver is currently being used. This permits you to
 run the same function on different database platforms. Obviously, not all

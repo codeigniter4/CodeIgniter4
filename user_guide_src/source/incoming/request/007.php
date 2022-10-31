@@ -1,3 +1,3 @@
 <?php
 
-$require->getEnv(['CI_ENVIRONMENT', 'S3_BUCKET']);
+$request->getEnv(['CI_ENVIRONMENT', 'S3_BUCKET']);

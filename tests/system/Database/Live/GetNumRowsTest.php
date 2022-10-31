@@ -16,6 +16,8 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class GetNumRowsTest extends CIUnitTestCase

@@ -120,7 +120,7 @@ final class FabricatorTest extends CIUnitTestCase
 
         $faker = $fabricator->getFaker();
 
-        $this->assertIsNumeric($faker->randomDigit);
+        $this->assertIsNumeric($faker->randomDigit());
     }
 
     public function testSetFormattersChangesFormatters()

@@ -21,6 +21,8 @@ use Tests\Support\Models\ValidErrorsModel;
 use Tests\Support\Models\ValidModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class ValidationModelTest extends LiveModelTestCase
@@ -238,26 +240,25 @@ final class ValidationModelTest extends LiveModelTestCase
 
     public function testValidationWithGroupName(): void
     {
-        $config = new Validation();
+        $config = new class () extends Validation {
+            public $grouptest = [
+                'name' => [
+                    'required',
+                    'min_length[3]',
+                ],
+                'token' => 'in_list[{id}]',
+            ];
+        };
+        Factories::injectMock('config', 'Validation', $config);
 
-        $config->grouptest = [
-            'name' => [
-                'required',
-                'min_length[3]',
-            ],
-            'token' => 'in_list[{id}]',
-        ];
+        $this->createModel(ValidModel::class);
+        $this->setPrivateProperty($this->model, 'validationRules', 'grouptest');
 
         $data = [
             'name'  => 'abc',
             'id'    => 13,
             'token' => 13,
         ];
-
-        Factories::injectMock('config', 'Validation', $config);
-
-        $this->createModel(ValidModel::class);
-        $this->setPrivateProperty($this->model, 'validationRules', 'grouptest');
         $this->assertTrue($this->model->validate($data));
     }
 

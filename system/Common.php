@@ -145,7 +145,10 @@ if (! function_exists('command')) {
                 $args[] = stripcslashes($match[1]);
             } else {
                 // @codeCoverageIgnoreStart
-                throw new InvalidArgumentException(sprintf('Unable to parse input near "... %s ...".', substr($command, $cursor, 10)));
+                throw new InvalidArgumentException(sprintf(
+                    'Unable to parse input near "... %s ...".',
+                    substr($command, $cursor, 10)
+                ));
                 // @codeCoverageIgnoreEnd
             }
 
@@ -357,12 +360,10 @@ if (! function_exists('dd')) {
      */
     function dd(...$vars)
     {
-        // @codeCoverageIgnoreStart
         Kint::$aliases[] = 'dd';
         Kint::dump(...$vars);
 
         exit;
-        // @codeCoverageIgnoreEnd
     }
 }
 
@@ -414,10 +415,11 @@ if (! function_exists('esc')) {
      * If $data is an array, then it loops over it, escaping each
      * 'value' of the key/value pairs.
      *
-     * Valid context values: html, js, css, url, attr, raw
-     *
      * @param array|string $data
-     * @param string       $encoding
+     * @phpstan-param 'html'|'js'|'css'|'url'|'attr'|'raw' $context
+     * @param string|null $encoding Current encoding for escaping.
+     *                              If not UTF-8, we convert strings from this encoding
+     *                              pre-escaping and back to this encoding post-escaping.
      *
      * @return array|string
      *
@@ -437,7 +439,7 @@ if (! function_exists('esc')) {
             // Provide a way to NOT escape data since
             // this could be called automatically by
             // the View library.
-            if (empty($context) || $context === 'raw') {
+            if ($context === 'raw') {
                 return $data;
             }
 
@@ -493,18 +495,13 @@ if (! function_exists('force_https')) {
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
-            // @codeCoverageIgnoreStart
-            return;
-            // @codeCoverageIgnoreEnd
+            return; // @codeCoverageIgnore
         }
 
         // If the session status is active, we should regenerate
         // the session ID for safety sake.
         if (ENVIRONMENT !== 'testing' && session_status() === PHP_SESSION_ACTIVE) {
-            // @codeCoverageIgnoreStart
-            Services::session(null, true)
-                ->regenerate();
-            // @codeCoverageIgnoreEnd
+            Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
         $baseURL = config(App::class)->baseURL;
@@ -529,9 +526,7 @@ if (! function_exists('force_https')) {
         $response->sendHeaders();
 
         if (ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
-            exit();
-            // @codeCoverageIgnoreEnd
+            exit(); // @codeCoverageIgnore
         }
     }
 }
@@ -782,7 +777,7 @@ if (! function_exists('log_message')) {
      *  - info
      *  - debug
      *
-     * @return mixed
+     * @return bool
      */
     function log_message(string $level, string $message, array $context = [])
     {
@@ -795,10 +790,7 @@ if (! function_exists('log_message')) {
             return $logger->log($level, $message, $context);
         }
 
-        // @codeCoverageIgnoreStart
-        return Services::logger(true)
-            ->log($level, $message, $context);
-        // @codeCoverageIgnoreEnd
+        return Services::logger(true)->log($level, $message, $context); // @codeCoverageIgnore
     }
 }
 
@@ -823,18 +815,17 @@ if (! function_exists('old')) {
      * Provides access to "old input" that was set in the session
      * during a redirect()->withInput().
      *
-     * @param null        $default
-     * @param bool|string $escape
+     * @param string|null  $default
+     * @param false|string $escape
+     * @phpstan-param false|'attr'|'css'|'html'|'js'|'raw'|'url' $escape
      *
-     * @return mixed|null
+     * @return array|string|null
      */
     function old(string $key, $default = null, $escape = 'html')
     {
         // Ensure the session is loaded
         if (session_status() === PHP_SESSION_NONE && ENVIRONMENT !== 'testing') {
-            // @codeCoverageIgnoreStart
-            session();
-            // @codeCoverageIgnoreEnd
+            session(); // @codeCoverageIgnore
         }
 
         $request = Services::request();
@@ -932,7 +923,8 @@ if (! function_exists('session')) {
      *
      * @param string $val
      *
-     * @return mixed|Session|null
+     * @return array|bool|float|int|object|Session|string|null
+     * @phpstan-return ($val is null ? Session : array|bool|float|int|object|string|null)
      */
     function session(?string $val = null)
     {
@@ -1054,7 +1046,7 @@ if (! function_exists('stringify_attributes')) {
      * Helper function used to convert a string, array, or object
      * of attributes to a string.
      *
-     * @param mixed $attributes string, array, object
+     * @param array|object|string $attributes string, array, object that can be cast to array
      */
     function stringify_attributes($attributes, bool $js = false): string
     {

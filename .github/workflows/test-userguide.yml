@@ -10,10 +10,14 @@ on:
       - 'user_guide_src/**'
       - '.github/workflows/test-userguide.yml'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   syntax_check:
     name: Check User Guide syntax
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout

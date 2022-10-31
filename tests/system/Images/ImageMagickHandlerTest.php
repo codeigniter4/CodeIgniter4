@@ -408,7 +408,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageReorientLandscape()
     {
         for ($i = 0; $i <= 8; $i++) {
-            $source = $this->origin . 'EXIFsamples/landscape_' . '' . $i . '.jpg';
+            $source = $this->origin . 'EXIFsamples/landscape_' . $i . '.jpg';
             $result = $this->root . 'landscape_' . $i . '_reoriented.jpg';
 
             $this->handler->withFile($source);
@@ -427,7 +427,7 @@ final class ImageMagickHandlerTest extends CIUnitTestCase
     public function testImageReorientPortrait()
     {
         for ($i = 0; $i <= 8; $i++) {
-            $source = $this->origin . 'EXIFsamples/portrait_' . '' . $i . '.jpg';
+            $source = $this->origin . 'EXIFsamples/portrait_' . $i . '.jpg';
             $result = $this->root . 'portrait_' . $i . '_reoriented.jpg';
 
             $this->handler->withFile($source);

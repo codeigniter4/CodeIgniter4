@@ -47,12 +47,8 @@ final class MimesTest extends CIUnitTestCase
 
     /**
      * @dataProvider extensionsList
-     *
-     * @param $expected
-     * @param $ext
-     * @param mixed $mime
      */
-    public function testGuessExtensionFromType($expected, $mime)
+    public function testGuessExtensionFromType(?string $expected, string $mime)
     {
         $this->assertSame($expected, Mimes::guessExtensionFromType($mime));
     }
@@ -85,11 +81,8 @@ final class MimesTest extends CIUnitTestCase
 
     /**
      * @dataProvider mimesList
-     *
-     * @param mixed $expected
-     * @param mixed $ext
      */
-    public function testGuessTypeFromExtension($expected, $ext)
+    public function testGuessTypeFromExtension(?string $expected, string $ext)
     {
         $this->assertSame($expected, Mimes::guessTypeFromExtension($ext));
     }

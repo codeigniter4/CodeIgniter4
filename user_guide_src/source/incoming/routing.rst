@@ -39,7 +39,10 @@ passed to it, then they would be listed after the method name, separated by forw
 
 .. literalinclude:: routing/002.php
 
-You can use any standard HTTP verb (GET, POST, PUT, DELETE, etc):
+HTTP verbs
+==========
+
+You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):
 
 .. literalinclude:: routing/003.php
 
@@ -223,7 +226,7 @@ redirect and is recommended in most cases:
 
 .. literalinclude:: routing/022.php
 
-.. note:: Since v4.2.0 ``addRedirect()`` can use placeholders.
+.. note:: Since v4.2.0, ``addRedirect()`` can use placeholders.
 
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
@@ -458,7 +461,7 @@ Offsetting the Matched Parameters
 You can offset the matched parameters in your route by any numeric value with the ``offset`` option, with the
 value being the number of segments to offset.
 
-This can be beneficial when developing API's with the first URI segment being the version number. It can also
+This can be beneficial when developing APIs with the first URI segment being the version number. It can also
 be used when the first parameter is a language string:
 
 .. literalinclude:: routing/042.php

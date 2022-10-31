@@ -78,7 +78,7 @@ Setting Page Manually
 =====================
 
 If you need to specify which page of results to return you can specify the page as the 3rd argument. This can be
-handy when you have a different manner than the default ``$_GET`` varibable to control which page to show.
+handy when you have a different manner than the default ``$_GET`` variable to control which page to show.
 
 .. literalinclude:: pagination/005.php
 

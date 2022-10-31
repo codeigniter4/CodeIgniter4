@@ -59,9 +59,9 @@ place this code and save it to your **app/Views/** directory::
     <h3>Your file was successfully uploaded!</h3>
 
     <ul>
-        <li>name: <?= esc($uploaded_flleinfo->getBasename()) ?></li>
-        <li>size: <?= esc($uploaded_flleinfo->getSizeByUnit('kb')) ?> KB</li>
-        <li>extension: <?= esc($uploaded_flleinfo->guessExtension()) ?></li>
+        <li>name: <?= esc($uploaded_fileinfo->getBasename()) ?></li>
+        <li>size: <?= esc($uploaded_fileinfo->getSizeByUnit('kb')) ?> KB</li>
+        <li>extension: <?= esc($uploaded_fileinfo->guessExtension()) ?></li>
     </ul>
 
     <p><?= anchor('upload', 'Upload Another File!') ?></p>

@@ -134,7 +134,7 @@ prefix followed by a dot (.), and then the variable name itself.
 Namespace Separator
 -------------------
 
-Some environments, e.g., Docker, CloudFormation, do not permit variable name with dots (``.``). In such case, since v4.1.5, you could also use underscores (``_``) as a seperator.
+Some environments, e.g., Docker, CloudFormation, do not permit variable name with dots (``.``). In such case, since v4.1.5, you could also use underscores (``_``) as a separator.
 
 ::
 

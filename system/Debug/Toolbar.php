@@ -386,7 +386,7 @@ class Toolbar
                 mkdir(WRITEPATH . 'debugbar', 0777);
             }
 
-            write_file(WRITEPATH . 'debugbar/' . 'debugbar_' . $time . '.json', $data, 'w+');
+            write_file(WRITEPATH . 'debugbar/debugbar_' . $time . '.json', $data, 'w+');
 
             $format = $response->getHeaderLine('content-type');
 

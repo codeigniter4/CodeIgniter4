@@ -14,6 +14,8 @@ namespace CodeIgniter\Models;
 use Tests\Support\Models\UserModel;
 
 /**
+ * @group DatabaseLive
+ *
  * @internal
  */
 final class CountAllModelTest extends LiveModelTestCase

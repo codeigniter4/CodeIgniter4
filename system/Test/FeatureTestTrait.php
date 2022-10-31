@@ -149,11 +149,9 @@ trait FeatureTestTrait
 
         // Clean up any open output buffers
         // not relevant to unit testing
-        // @codeCoverageIgnoreStart
         if (\ob_get_level() > 0 && (! isset($this->clean) || $this->clean === true)) {
-            \ob_end_clean();
+            \ob_end_clean(); // @codeCoverageIgnore
         }
-        // @codeCoverageIgnoreEnd
 
         // Simulate having a blank session
         $_SESSION                  = [];
@@ -197,15 +195,13 @@ trait FeatureTestTrait
         Services::router()->setDirectory(null);
 
         // Ensure the output buffer is identical so no tests are risky
-        // @codeCoverageIgnoreStart
         while (\ob_get_level() > $buffer) {
-            \ob_end_clean();
+            \ob_end_clean(); // @codeCoverageIgnore
         }
 
         while (\ob_get_level() < $buffer) {
-            \ob_start();
+            \ob_start(); // @codeCoverageIgnore
         }
-        // @codeCoverageIgnoreEnd
 
         return new TestResponse($response);
     }

@@ -427,13 +427,6 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * Connect to the database.
-     *
-     * @return mixed
-     */
-    abstract public function connect(bool $persistent = false);
-
-    /**
      * Close the database connection.
      */
     public function close()
@@ -462,14 +455,6 @@ abstract class BaseConnection implements ConnectionInterface
     }
 
     /**
-     * Keep or establish the connection if no queries have been sent for
-     * a length of time exceeding the server's idle timeout.
-     *
-     * @return mixed
-     */
-    abstract public function reconnect();
-
-    /**
      * Returns the actual connection object. If both a 'read' and 'write'
      * connection has been specified, you can pass either term in to
      * get that connection. If you pass either alias in and only a single
@@ -482,13 +467,6 @@ abstract class BaseConnection implements ConnectionInterface
         // @todo work with read/write connections
         return $this->connID;
     }
-
-    /**
-     * Select a specific database table to use.
-     *
-     * @return mixed
-     */
-    abstract public function setDatabase(string $databaseName);
 
     /**
      * Returns the name of the current database being used.
@@ -525,11 +503,6 @@ abstract class BaseConnection implements ConnectionInterface
     {
         return $this->DBDriver;
     }
-
-    /**
-     * Returns a string containing the version of the database being used.
-     */
-    abstract public function getVersion(): string;
 
     /**
      * Sets the Table Aliases to use. These are typically
@@ -1538,20 +1511,34 @@ abstract class BaseConnection implements ConnectionInterface
 
     /**
      * Disables foreign key checks temporarily.
+     *
+     * @return bool
      */
     public function disableForeignKeyChecks()
     {
         $sql = $this->_disableForeignKeyChecks();
+
+        if ($sql === '') {
+            // The feature is not supported.
+            return false;
+        }
 
         return $this->query($sql);
     }
 
     /**
      * Enables foreign key checks temporarily.
+     *
+     * @return bool
      */
     public function enableForeignKeyChecks()
     {
         $sql = $this->_enableForeignKeyChecks();
+
+        if ($sql === '') {
+            // The feature is not supported.
+            return false;
+        }
 
         return $this->query($sql);
     }
@@ -1646,6 +1633,38 @@ abstract class BaseConnection implements ConnectionInterface
      * @see    getForeignKeyData()
      */
     abstract protected function _foreignKeyData(string $table): array;
+
+    /**
+     * Platform-specific SQL statement to disable foreign key checks.
+     *
+     * If this feature is not supported, return empty string.
+     *
+     * @TODO This method should be moved to an interface that represents foreign key support.
+     *
+     * @return string
+     *
+     * @see disableForeignKeyChecks()
+     */
+    protected function _disableForeignKeyChecks()
+    {
+        return '';
+    }
+
+    /**
+     * Platform-specific SQL statement to enable foreign key checks.
+     *
+     * If this feature is not supported, return empty string.
+     *
+     * @TODO This method should be moved to an interface that represents foreign key support.
+     *
+     * @return string
+     *
+     * @see enableForeignKeyChecks()
+     */
+    protected function _enableForeignKeyChecks()
+    {
+        return '';
+    }
 
     /**
      * Accessor for properties if they exist.

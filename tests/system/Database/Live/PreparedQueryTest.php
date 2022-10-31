@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\ResultInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Tests\Support\Database\Seeds\CITestSeeder;
@@ -133,5 +134,19 @@ final class PreparedQueryTest extends CIUnitTestCase
 
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'foo', 'email' => 'foo@example.com']);
         $this->seeInDatabase($this->db->DBPrefix . 'user', ['name' => 'bar', 'email' => 'bar@example.com']);
+    }
+
+    public function testExecuteSelectQueryAndCheckTypeAndResult()
+    {
+        $this->query = $this->db->prepare(static fn ($db) => $db->table('user')->select('name, email, country')->where([
+            'name' => 'foo',
+        ])->get());
+
+        $result = $this->query->execute('Derek Jones');
+
+        $this->assertInstanceOf(ResultInterface::class, $result);
+
+        $expectedRow = ['name' => 'Derek Jones', 'email' => 'derek@world.com', 'country' => 'US'];
+        $this->assertSame($expectedRow, $result->getRowArray());
     }
 }

@@ -10,6 +10,8 @@ Queries
 Query Basics
 ************
 
+.. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
+
 Regular Queries
 ===============
 
