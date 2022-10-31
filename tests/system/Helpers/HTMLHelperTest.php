@@ -345,14 +345,28 @@ final class HTMLHelperTest extends CIUnitTestCase
     public function testLinkTag()
     {
         $target   = 'css/mystyles.css';
+        $expected = '<link href="http://example.com/css/mystyles.css" rel="stylesheet" type="text/css">';
+        $this->assertSame($expected, link_tag($target));
+    }
+
+    public function testLinkTagXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $target   = 'css/mystyles.css';
         $expected = '<link href="http://example.com/css/mystyles.css" rel="stylesheet" type="text/css" />';
         $this->assertSame($expected, link_tag($target));
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testLinkTagComplete()
     {
         $target   = 'https://styles.com/css/mystyles.css';
-        $expected = '<link href="https://styles.com/css/mystyles.css" rel="banana" type="fruit" media="VHS" title="Go away" />';
+        $expected = '<link href="https://styles.com/css/mystyles.css" rel="banana" type="fruit" media="VHS" title="Go away">';
         $this->assertSame($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
     }
 
@@ -362,7 +376,7 @@ final class HTMLHelperTest extends CIUnitTestCase
             'href'      => 'css/mystyles.css',
             'indexPage' => true,
         ];
-        $expected = '<link href="http://example.com/index.php/css/mystyles.css" rel="stylesheet" type="text/css" />';
+        $expected = '<link href="http://example.com/index.php/css/mystyles.css" rel="stylesheet" type="text/css">';
         $this->assertSame($expected, link_tag($parms));
     }
 
@@ -404,8 +418,8 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $expected = <<<'EOH'
             <video src="http://example.com/test.mp4" controls>
-              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No">
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes">
               Your browser does not support the video tag.
             </video>
 
@@ -417,12 +431,40 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $video);
     }
 
+    public function testVideoWithTracksXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $expected = <<<'EOH'
+            <video src="http://example.com/test.mp4" controls>
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              Your browser does not support the video tag.
+            </video>
+
+            EOH;
+
+        $target  = 'test.mp4';
+        $message = 'Your browser does not support the video tag.';
+        $tracks  = [
+            track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
+            track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes'),
+        ];
+        $video = video($target, $message, 'controls', $tracks);
+        $this->assertSame($expected, $video);
+
+        // Reset
+        $doctypes->html5 = $default;
+    }
+
     public function testVideoWithTracksAndIndex()
     {
         $expected = <<<'EOH'
             <video src="http://example.com/index.php/test.mp4" controls>
-              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No">
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes">
               Your browser does not support the video tag.
             </video>
 
@@ -436,6 +478,37 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testVideoMultipleSources()
     {
+        $expected = <<<'EOH'
+            <video class="test" controls>
+              <source src="http://example.com/movie.mp4" type="video/mp4" class="test">
+              <source src="http://example.com/movie.ogg" type="video/ogg">
+              <source src="http://example.com/movie.mov" type="video/quicktime">
+              <source src="http://example.com/movie.ogv" type="video/ogv; codecs=dirac, speex">
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No">
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes">
+              Your browser does not support the video tag.
+            </video>
+
+            EOH;
+
+        $sources = [
+            source('movie.mp4', 'video/mp4', 'class="test"'),
+            source('movie.ogg', 'video/ogg'),
+            source('movie.mov', 'video/quicktime'),
+            source('movie.ogv', 'video/ogv; codecs=dirac, speex'),
+        ];
+        $message = 'Your browser does not support the video tag.';
+        $video   = video($sources, $message, 'class="test" controls', $this->tracks);
+
+        $this->assertSame($expected, $video);
+    }
+
+    public function testVideoMultipleSourcesXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
         $expected = <<<'EOH'
             <video class="test" controls>
               <source src="http://example.com/movie.mp4" type="video/mp4" class="test" />
@@ -456,13 +529,47 @@ final class HTMLHelperTest extends CIUnitTestCase
             source('movie.ogv', 'video/ogv; codecs=dirac, speex'),
         ];
         $message = 'Your browser does not support the video tag.';
-        $video   = video($sources, $message, 'class="test" controls', $this->tracks);
+        $tracks  = [
+            track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
+            track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes'),
+        ];
+        $video = video($sources, $message, 'class="test" controls', $tracks);
 
         $this->assertSame($expected, $video);
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testAudio()
     {
+        $expected = <<<'EOH'
+            <audio id="test" controls>
+              <source src="http://example.com/sound.ogg" type="audio/ogg">
+              <source src="http://example.com/sound.mpeg" type="audio/mpeg">
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No">
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes">
+              Your browser does not support the audio tag.
+            </audio>
+
+            EOH;
+
+        $sources = [
+            source('sound.ogg', 'audio/ogg'),
+            source('sound.mpeg', 'audio/mpeg'),
+        ];
+        $message = 'Your browser does not support the audio tag.';
+        $audio   = audio($sources, $message, 'id="test" controls', $this->tracks);
+
+        $this->assertSame($expected, $audio);
+    }
+
+    public function testAudioXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
         $expected = <<<'EOH'
             <audio id="test" controls>
               <source src="http://example.com/sound.ogg" type="audio/ogg" />
@@ -478,10 +585,17 @@ final class HTMLHelperTest extends CIUnitTestCase
             source('sound.ogg', 'audio/ogg'),
             source('sound.mpeg', 'audio/mpeg'),
         ];
+        $tracks = [
+            track('subtitles_no.vtt', 'subtitles', 'no', 'Norwegian No'),
+            track('subtitles_yes.vtt', 'subtitles', 'yes', 'Norwegian Yes'),
+        ];
         $message = 'Your browser does not support the audio tag.';
-        $audio   = audio($sources, $message, 'id="test" controls', $this->tracks);
+        $audio   = audio($sources, $message, 'id="test" controls', $tracks);
 
         $this->assertSame($expected, $audio);
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testAudioSimple()
@@ -536,8 +650,8 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $expected = <<<'EOH'
             <audio src="http://example.com/sound.mpeg" type="audio/mpeg" id="test" controls>
-              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No" />
-              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes" />
+              <track src="subtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian No">
+              <track src="subtitles_yes.vtt" kind="subtitles" srclang="yes" label="Norwegian Yes">
               Your browser does not support the audio tag.
             </audio>
 
@@ -564,8 +678,8 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $expected = <<<'EOH'
             <av>
-              <source src="http://example.com/sound.ogg" type="audio/ogg" />
-              <source src="http://example.com/sound.mpeg" type="audio/mpeg" />
+              <source src="http://example.com/sound.ogg" type="audio/ogg">
+              <source src="http://example.com/sound.mpeg" type="audio/mpeg">
             </av>
 
             EOH;
@@ -578,14 +692,27 @@ final class HTMLHelperTest extends CIUnitTestCase
 
     public function testSource()
     {
+        $expected = '<source src="http://example.com/index.php/sound.mpeg" type="audio/mpeg">';
+        $this->assertSame($expected, source('sound.mpeg', 'audio/mpeg', '', true));
+    }
+
+    public function testSourceXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
         $expected = '<source src="http://example.com/index.php/sound.mpeg" type="audio/mpeg" />';
         $this->assertSame($expected, source('sound.mpeg', 'audio/mpeg', '', true));
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testEmbed()
     {
         $expected = <<<'EOH'
-            <embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
+            <embed src="http://example.com/movie.mov" type="video/quicktime" class="test">
 
             EOH;
 
@@ -594,10 +721,29 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, $embed);
     }
 
+    public function testEmbedXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $expected = <<<'EOH'
+            <embed src="http://example.com/movie.mov" type="video/quicktime" class="test" />
+
+            EOH;
+
+        $type  = 'video/quicktime';
+        $embed = embed('movie.mov', $type, 'class="test"');
+        $this->assertSame($expected, $embed);
+
+        // Reset
+        $doctypes->html5 = $default;
+    }
+
     public function testEmbedIndexed()
     {
         $expected = <<<'EOH'
-            <embed src="http://example.com/index.php/movie.mov" type="video/quicktime" class="test" />
+            <embed src="http://example.com/index.php/movie.mov" type="video/quicktime" class="test">
 
             EOH;
 
@@ -623,6 +769,29 @@ final class HTMLHelperTest extends CIUnitTestCase
     {
         $expected = <<<'EOH'
             <object data="http://example.com/movie.swf" class="test">
+              <param name="foo" type="ref" value="bar" class="test">
+              <param name="hello" type="ref" value="world" class="test">
+            </object>
+
+            EOH;
+
+        $type  = 'application/x-shockwave-flash';
+        $parms = [
+            param('foo', 'bar', 'ref', 'class="test"'),
+            param('hello', 'world', 'ref', 'class="test"'),
+        ];
+        $object = object('movie.swf', $type, 'class="test"', $parms);
+        $this->assertSame($expected, $object);
+    }
+
+    public function testObjectWithParamsXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $expected = <<<'EOH'
+            <object data="http://example.com/movie.swf" class="test">
               <param name="foo" type="ref" value="bar" class="test" />
               <param name="hello" type="ref" value="world" class="test" />
             </object>
@@ -636,6 +805,9 @@ final class HTMLHelperTest extends CIUnitTestCase
         ];
         $object = object('movie.swf', $type, 'class="test"', $parms);
         $this->assertSame($expected, $object);
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testObjectIndexed()
