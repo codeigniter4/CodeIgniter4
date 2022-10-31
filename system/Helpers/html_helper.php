@@ -229,8 +229,6 @@ if (! function_exists('link_tag')) {
      */
     function link_tag($href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false, string $hreflang = ''): string
     {
-        $link = '<link ';
-
         // extract fields if needed
         if (is_array($href)) {
             $rel       = $href['rel'] ?? $rel;
@@ -244,33 +242,33 @@ if (! function_exists('link_tag')) {
 
         if (! preg_match('#^([a-z]+:)?//#i', $href)) {
             if ($indexPage === true) {
-                $link .= 'href="' . site_url($href) . '" ';
+                $attributes['href'] = site_url($href);
             } else {
-                $link .= 'href="' . slash_item('baseURL') . $href . '" ';
+                $attributes['href'] = slash_item('baseURL') . $href;
             }
         } else {
-            $link .= 'href="' . $href . '" ';
+            $attributes['href'] = $href;
         }
 
         if ($hreflang !== '') {
-            $link .= 'hreflang="' . $hreflang . '" ';
+            $attributes['hreflang'] = $hreflang;
         }
 
-        $link .= 'rel="' . $rel . '" ';
+        $attributes['rel'] = $rel;
 
         if (! in_array($rel, ['alternate', 'canonical'], true)) {
-            $link .= 'type="' . $type . '" ';
+            $attributes['type'] = $type;
         }
 
         if ($media !== '') {
-            $link .= 'media="' . $media . '" ';
+            $attributes['media'] = $media;
         }
 
         if ($title !== '') {
-            $link .= 'title="' . $title . '" ';
+            $attributes['title'] = $title;
         }
 
-        return $link . '/>';
+        return '<link' . stringify_attributes($attributes) . _solidus() . '>';
     }
 }
 
@@ -423,7 +421,7 @@ if (! function_exists('source')) {
             $source .= ' ' . $attributes;
         }
 
-        return $source . ' />';
+        return $source . _solidus() . '>';
     }
 }
 
@@ -442,7 +440,7 @@ if (! function_exists('track')) {
                 . '" kind="' . $kind
                 . '" srclang="' . $srcLanguage
                 . '" label="' . $label
-                . '" />';
+                . '"' . _solidus() . '>';
     }
 }
 
@@ -496,7 +494,7 @@ if (! function_exists('param')) {
         return '<param name="' . $name
                 . '" type="' . $type
                 . '" value="' . $value
-                . '" ' . $attributes . ' />';
+                . '" ' . $attributes . _solidus() . '>';
     }
 }
 
@@ -518,7 +516,7 @@ if (! function_exists('embed')) {
 
         return '<embed src="' . $src
                 . '" type="' . $type . '" '
-                . $attributes . " />\n";
+                . $attributes . _solidus() . ">\n";
     }
 }
 
