@@ -1,7 +1,7 @@
 Version 4.2.8
 #############
 
-Release Date: Unreleased
+Release Date: October 30, 2022
 
 **4.2.8 release of CodeIgniter4**
 
@@ -13,6 +13,7 @@ BREAKING
 ********
 
 none.
+
 Enhancements
 ************
 
