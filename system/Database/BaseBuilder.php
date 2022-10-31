@@ -2094,6 +2094,10 @@ class BaseBuilder
      */
     public function setQuery($query, $alias = null, $columns = null): BaseBuilder
     {
+        if (is_string($query)) {
+            throw new InvalidArgumentException('$query parameter must be BaseBuilder or RawSql class.');
+        }
+
         if ($query instanceof BaseBuilder) {
             $query = $query->getCompiledSelect();
         } elseif ($query instanceof RawSql) {
