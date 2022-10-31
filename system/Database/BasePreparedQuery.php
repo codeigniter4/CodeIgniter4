@@ -111,7 +111,9 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * Takes a new set of data and runs it against the currently
      * prepared query. Upon success, will return a Results object.
      *
-     * @return ResultInterface
+     * @return bool|ResultInterface
+     *
+     * @throws DatabaseException
      */
     public function execute(...$data)
     {
@@ -119,19 +121,63 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
         $startTime = microtime(true);
 
         try {
-            $this->_execute($data);
-        } catch (ArgumentCountError|ErrorException $e) {
-            throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+            $exception = null;
+            $result    = $this->_execute($data);
+        } catch (ArgumentCountError|ErrorException $exception) {
+            $result = false;
         }
 
         // Update our query object
         $query = clone $this->query;
         $query->setBinds($data);
 
+        if ($result === false) {
+            $query->setDuration($startTime, $startTime);
+
+            // This will trigger a rollback if transactions are being used
+            if ($this->db->transDepth !== 0) {
+                $this->db->transStatus = false;
+            }
+
+            if ($this->db->DBDebug) {
+                // We call this function in order to roll-back queries
+                // if transactions are enabled. If we don't call this here
+                // the error message will trigger an exit, causing the
+                // transactions to remain in limbo.
+                while ($this->db->transDepth !== 0) {
+                    $transDepth = $this->db->transDepth;
+                    $this->db->transComplete();
+
+                    if ($transDepth === $this->db->transDepth) {
+                        log_message('error', 'Database: Failure during an automated transaction commit/rollback!');
+                        break;
+                    }
+                }
+
+                // Let others do something with this query.
+                Events::trigger('DBQuery', $query);
+
+                if ($exception !== null) {
+                    throw new DatabaseException($exception->getMessage(), $exception->getCode(), $exception);
+                }
+
+                return false;
+            }
+
+            // Let others do something with this query.
+            Events::trigger('DBQuery', $query);
+
+            return false;
+        }
+
         $query->setDuration($startTime);
 
         // Let others do something with this query
         Events::trigger('DBQuery', $query);
+
+        if ($this->db->isWriteType($query)) {
+            return true;
+        }
 
         // Return a result object
         $resultClass = str_replace('PreparedQuery', 'Result', static::class);

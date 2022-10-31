@@ -51,11 +51,9 @@ class PreparedQuery extends BasePreparedQuery
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the MySQLi driver.
      *
-     * @return mixed
-     *
      * @throws Exception
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         $this->name = (string) random_int(1, 10_000_000_000_000_000);
 
@@ -93,7 +91,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the result object for the prepared query or false on failure.
      *
      * @return mixed
      */
@@ -103,7 +101,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Deallocate prepared statements
+     * Deallocate prepared statements.
      */
     protected function _close(): bool
     {

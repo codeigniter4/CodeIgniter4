@@ -52,6 +52,7 @@ Others
 - ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
 - :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
+- ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
 
 .. _v430-interface-changes:
 
@@ -268,4 +269,5 @@ Deprecations
 Bugs Fixed
 **********
 
-none.
+- Fixed a bug when all types of ``Prepared Queries`` were returning a ``Result`` object instead of a bool value for write-type queries.
+

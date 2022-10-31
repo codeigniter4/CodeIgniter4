@@ -15,6 +15,7 @@ use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use mysqli;
+use mysqli_sql_exception;
 use mysqli_stmt;
 
 /**
@@ -33,10 +34,8 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the MySQLi driver.
-     *
-     * @return mixed
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         // Mysqli driver doesn't like statements
         // with terminating semicolons.
@@ -81,11 +80,19 @@ class PreparedQuery extends BasePreparedQuery
         // Bind it
         $this->statement->bind_param($bindTypes, ...$data);
 
-        return $this->statement->execute();
+        try {
+            return $this->statement->execute();
+        } catch (mysqli_sql_exception $e) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+            }
+
+            return false;
+        }
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the result object for the prepared query or false on failure.
      *
      * @return mixed
      */
@@ -95,7 +102,7 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Deallocate prepared statements
+     * Deallocate prepared statements.
      */
     protected function _close(): bool
     {
