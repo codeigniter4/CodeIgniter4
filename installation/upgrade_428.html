@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 3.x to 4.x &mdash; CodeIgniter 4.2.8 documentation</title>
+  <title>Upgrading from 4.2.7 to 4.2.8 &mdash; CodeIgniter 4.2.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrade Models" href="upgrade_models.html" />
-    <link rel="prev" title="Upgrading from 4.0.x to 4.0.4" href="upgrade_404.html" /> 
+    <link rel="next" title="Upgrading from 4.2.6 to 4.2.7" href="upgrade_427.html" />
+    <link rel="prev" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -258,14 +258,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_4xx.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_428.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Installation</a> &raquo;</li>
           <li><a href="upgrading.html">Upgrading From a Previous Version</a> &raquo;</li>
-      <li>Upgrading from 3.x to 4.x</li>
+      <li>Upgrading from 4.2.7 to 4.2.8</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -274,207 +274,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-3-x-to-4-x">
-<h1>Upgrading from 3.x to 4.x<a class="headerlink" href="#upgrading-from-3-x-to-4-x" title="Permalink to this headline"></a></h1>
-<p>CodeIgniter 4 is a rewrite of the framework and is not backwards compatible.
-It is more appropriate to think of converting your app, rather than upgrading it.
-Once you have done that, upgrading from one version of CodeIgniter 4 to the next
-will be straightforward.</p>
-<p>The “lean, mean and simple” philosophy has been retained, but the
-implementation has a lot of differences, compared to CodeIgniter 3.</p>
-<p>There is no 12-step checklist for upgrading. Instead, start with a copy
-of CodeIgniter 4 in a new project folder,
-<a class="reference internal" href="index.html"><span class="doc">however you wish to install and use it</span></a>,
-and then convert and integrate your app components.
-We’ll try to point out the most important considerations here.</p>
-<p>To upgrade your project, we figured out two major tasks you have to work on.
-First of all, there are some general adjustments which are significant to every
-project and have to be handled. The second one are the libraries in which
-CodeIgniter is built up and contain some of the most important functions.
-These libraries operate separately from each other, so you have to look at
-them one by one.</p>
-<p><strong>Do read the user guide</strong> before embarking on a project conversion!</p>
+  <section id="upgrading-from-4-2-7-to-4-2-8">
+<h1>Upgrading from 4.2.7 to 4.2.8<a class="headerlink" href="#upgrading-from-4-2-7-to-4-2-8" title="Permalink to this headline"></a></h1>
+<p>Please refer to the upgrade instructions corresponding to your installation method.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
+<li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
+<li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
+</ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#general-adjustments" id="id1">General Adjustments</a></p>
+<li><p><a class="reference internal" href="#project-files" id="id1">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#downloads" id="id2">Downloads</a></p></li>
-<li><p><a class="reference internal" href="#namespaces" id="id3">Namespaces</a></p></li>
-<li><p><a class="reference internal" href="#application-structure" id="id4">Application Structure</a></p></li>
-<li><p><a class="reference internal" href="#routing" id="id5">Routing</a></p></li>
-<li><p><a class="reference internal" href="#model-view-and-controller" id="id6">Model, View and Controller</a></p></li>
-<li><p><a class="reference internal" href="#class-loading" id="id7">Class Loading</a></p></li>
-<li><p><a class="reference internal" href="#libraries" id="id8">Libraries</a></p></li>
-<li><p><a class="reference internal" href="#helpers" id="id9">Helpers</a></p></li>
-<li><p><a class="reference internal" href="#events" id="id10">Events</a></p></li>
-<li><p><a class="reference internal" href="#extending-the-framework" id="id11">Extending the Framework</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id2">All Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#upgrading-libraries" id="id12">Upgrading Libraries</a></p></li>
 </ul>
 </div>
-<section id="general-adjustments">
-<h2><a class="toc-backref" href="#id1">General Adjustments</a><a class="headerlink" href="#general-adjustments" title="Permalink to this headline"></a></h2>
-<section id="downloads">
-<h3><a class="toc-backref" href="#id2">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this headline"></a></h3>
+<section id="project-files">
+<h2><a class="toc-backref" href="#id1">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<p>The following files had changes to code or behavior that merit updating in your projects:</p>
 <ul class="simple">
-<li><p>CI4 is still available as a ready-to-run zip or tarball.</p></li>
-<li><p>It can also be installed using Composer.</p></li>
+<li><p>app/Views/errors/html/error_exception.php</p></li>
+</ul>
+<section id="all-changes">
+<h3><a class="toc-backref" href="#id2">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<p>This is a list of all files in the <strong>project space</strong> that received changes;
+many will be simple comments or formatting that have no effect on the runtime:</p>
+<ul class="simple">
+<li><p>app/Config/Logger.php</p></li>
+<li><p>app/Views/errors/html/error_exception.php</p></li>
 </ul>
 </section>
-<section id="namespaces">
-<h3><a class="toc-backref" href="#id3">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>CI4 is built for PHP 7.4+, and everything in the framework is namespaced, except for the helpers.</p></li>
-</ul>
-</section>
-<section id="application-structure">
-<h3><a class="toc-backref" href="#id4">Application Structure</a><a class="headerlink" href="#application-structure" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>The <strong>application</strong> folder is renamed as <strong>app</strong> and the framework still has <strong>system</strong> folders,
-with the same interpretation as before.</p></li>
-<li><p>The framework now provides for a <strong>public</strong> folder, intended as the document root for your app.</p></li>
-<li><p>There is also a <strong>writable</strong> folder, to hold cache data, logs, and session data.</p></li>
-<li><p>The <strong>app</strong> folder looks very similar to <strong>application</strong> for CI3, with some
-name changes, and some subfolders moved to the <strong>writable</strong> folder.</p></li>
-<li><p>There is no longer a nested <strong>application/core</strong> folder, as we have
-a different mechanism for extending framework components (see below).</p></li>
-</ul>
-</section>
-<section id="routing">
-<h3><a class="toc-backref" href="#id5">Routing</a><a class="headerlink" href="#routing" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>The Auto Routing is disabled by default. If you want to use the Auto Routing in the same way as CI3, you need to enable <a class="reference internal" href="../incoming/routing.html#auto-routing"><span class="std std-ref">Auto Routing (Legacy)</span></a>.</p></li>
-<li><p>CI4 also has an optional new more secure <a class="reference internal" href="../incoming/routing.html#auto-routing-improved"><span class="std std-ref">Auto Routing (Improved)</span></a>.</p></li>
-</ul>
-</section>
-<section id="model-view-and-controller">
-<h3><a class="toc-backref" href="#id6">Model, View and Controller</a><a class="headerlink" href="#model-view-and-controller" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>CodeIgniter is based on the MVC concept. Thus, the changes on the Model, View and Controller
-are one of the most important things you have to handle.</p></li>
-<li><p>In CodeIgniter 4, models are now located in <strong>app/Models</strong> and you have to add the lines
-<code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code> along with <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Model;</span></code> right after the opening php tag.
-The last step is to replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
-<li><p>The views of CodeIgniter 4 have been moved to <strong>app/Views</strong>. Furthermore, you have to change
-the syntax of loading views from <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;view('directory_name/file_name')</span></code> to
-<code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">view('directory_name/file_name');</span></code>.</p></li>
-<li><p>Controllers of CodeIgniter 4 have to be moved to <strong>app/Controllers</strong>. After that,
-add <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Controllers;</span></code> after the opening php tag.
-Lastly, replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Controller</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">BaseController</span></code>.</p></li>
-<li><p>For more information we recommend you the following upgrade guides, which will give
-you some step-by-step instructions to convert the MVC classes in CodeIgniter4:</p></li>
-</ul>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_models.html">Upgrade Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_views.html">Upgrade Views</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_controllers.html">Upgrade Controllers</a></li>
-</ul>
-</div>
-</section>
-<section id="class-loading">
-<h3><a class="toc-backref" href="#id7">Class Loading</a><a class="headerlink" href="#class-loading" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>There is no longer a CodeIgniter “superobject”, with framework component
-references magically injected as properties of your controller.</p></li>
-<li><p>Classes are instantiated where needed, and components are managed
-by <code class="docutils literal notranslate"><span class="pre">Services</span></code>.</p></li>
-<li><p>The class loader automatically handles PSR-4 style class locating,
-within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (<strong>app</strong>) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e., <strong>system</strong>) top level
-namespaces; with Composer autoloading support.</p></li>
-<li><p>You can configure the class loading to support whatever application structure
-you are most comfortable with, including the “HMVC” style.</p></li>
-</ul>
-</section>
-<section id="libraries">
-<h3><a class="toc-backref" href="#id8">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component.</p></li>
-</ul>
-</section>
-<section id="helpers">
-<h3><a class="toc-backref" href="#id9">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Helpers are pretty much the same as before, though some have been simplified.</p></li>
-<li><dl class="simple">
-<dt>In CI4, <code class="docutils literal notranslate"><span class="pre">redirect()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance instead of redirecting and terminating script execution. You must return it.</dt><dd><ul>
-<li><p><a class="reference external" href="https://codeigniter.com/userguide3/helpers/url_helper.html#redirect">redirect() Documentation CodeIgniter 3.X</a></p></li>
-<li><p><a class="reference external" href="../general/common_functions.html#redirect">redirect() Documentation CodeIgniter 4.X</a></p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</section>
-<section id="events">
-<h3><a class="toc-backref" href="#id10">Events</a><a class="headerlink" href="#events" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>Hooks have been replaced by Events.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use
-<code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code>.</p></li>
-<li><p>Events are always enabled, and are available globally.</p></li>
-</ul>
-</section>
-<section id="extending-the-framework">
-<h3><a class="toc-backref" href="#id11">Extending the Framework</a><a class="headerlink" href="#extending-the-framework" title="Permalink to this headline"></a></h3>
-<ul class="simple">
-<li><p>You don’t need a <strong>core</strong> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
-component extensions or replacements.</p></li>
-<li><p>You don’t need <code class="docutils literal notranslate"><span class="pre">MY_x</span></code> classes inside your libraries folder
-to extend or replace CI4 pieces.</p></li>
-<li><p>Make any such classes where you like, and add appropriate
-service methods in <strong>app/Config/Services.php</strong> to load
-your components instead of the default ones.</p></li>
-</ul>
-</section>
-</section>
-<section id="upgrading-libraries">
-<h2><a class="toc-backref" href="#id12">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
-<ul class="simple">
-<li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,
-following namespaced conventions for your component.</p></li>
-<li><p>Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
-libraries, you have to find a new way to implement your functions. These
-libraries are <a class="reference external" href="http://codeigniter.com/userguide3/libraries/calendar.html">Calendaring</a>,
-<a class="reference external" href="http://codeigniter.com/userguide3/libraries/ftp.html">FTP</a>,
-<a class="reference external" href="http://codeigniter.com/userguide3/libraries/javascript.html">Javascript</a>,
-<a class="reference external" href="http://codeigniter.com/userguide3/libraries/cart.html">Shopping Cart</a>,
-<a class="reference external" href="http://codeigniter.com/userguide3/libraries/trackback.html">Trackback</a>,
-<a class="reference external" href="http://codeigniter.com/userguide3/libraries/xmlrpc.html">XML-RPC /-Server</a>,
-and <a class="reference external" href="http://codeigniter.com/userguide3/libraries/zip.html">Zip Encoding</a>.</p></li>
-<li><p>CI3’s <a class="reference external" href="http://codeigniter.com/userguide3/libraries/input.html">Input</a> corresponds to CI4’s <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a>.</p></li>
-<li><p>CI3’s <a class="reference external" href="http://codeigniter.com/userguide3/libraries/output.html">Output</a> corresponds to CI4’s <a class="reference internal" href="../outgoing/response.html"><span class="doc">Responses</span></a>.</p></li>
-<li><p>All the other libraries, which exist in both CodeIgniter versions, can be upgraded with some adjustments.
-The most important and mostly used libraries received an Upgrade Guide, which will help you with simple
-steps and examples to adjust your code.</p></li>
-</ul>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_configuration.html">Upgrade Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_database.html">Upgrade Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_emails.html">Upgrade Emails</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_encryption.html">Upgrade Encryption</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_file_upload.html">Upgrade Working with Uploaded Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_html_tables.html">Upgrade HTML Tables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_localization.html">Upgrade Localization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_migrations.html">Upgrade Migrations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_pagination.html">Upgrade Pagination</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_responses.html">Upgrade HTTP Responses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_routing.html">Upgrade Routing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_security.html">Upgrade Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_sessions.html">Upgrade Sessions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_validations.html">Upgrade Validations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="upgrade_view_parser.html">Upgrade View Parser</a></li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>More upgrade guides coming soon</p>
-</div>
 </section>
 </section>
 
@@ -482,8 +313,8 @@ steps and examples to adjust your code.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_404.html" class="btn btn-neutral float-left" title="Upgrading from 4.0.x to 4.0.4" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="upgrade_models.html" class="btn btn-neutral float-right" title="Upgrade Models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-left" title="Backward Compatibility Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_427.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.6 to 4.2.7" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
