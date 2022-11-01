@@ -388,7 +388,7 @@ for details.</p>
 <p>Allows you to pass in a modified version of <strong>ConfigApp.php</strong> to test with different settings:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$config</span>              <span class="o">=</span> <span class="k">new</span> <span class="nx">Config\App</span><span class="p">();</span>
+<span class="nv">$config</span>              <span class="o">=</span> <span class="k">new</span> <span class="nx">\Config\App</span><span class="p">();</span>
 <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">appTimezone</span> <span class="o">=</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">;</span>
 
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">withConfig</span><span class="p">(</span><span class="nv">$config</span><span class="p">)</span>
@@ -687,7 +687,7 @@ to streamline your test methods.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Oct 31, 2022.
+      <span class="lastupdated">Last updated on Nov 01, 2022.
       </span></p>
   </div>
 
