@@ -83,7 +83,7 @@ Validation Changes
 Time Fixes
 ==========
 
-Due to bug fixes, some methods in :doc:`Time <../libraries/time>` has been changed the behavior from mutable to immutable. See :ref:`ChangeLog <v430-time-fix>` for details.
+Due to bug fixes, some methods in :doc:`Time <../libraries/time>` have changed from mutable behavior to immutable; ``Time`` now extends ``DateTimeImmutable``. See :ref:`ChangeLog <v430-time-fix>` for details.
 
 If you need the behavior of ``Time`` before the modification, a compatible ``TimeLegacy`` class has been added. Please replace all ``Time`` with ``TimeLegacy`` in your application code.
 
