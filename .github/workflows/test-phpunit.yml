@@ -125,7 +125,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer, pecl
-          extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, oci8, pgsql
+          extensions: imagick, sqlsrv, gd, sqlite3, redis, memcached, oci8, pgsql, xdebug
           coverage: ${{ env.COVERAGE_DRIVER }}
         env:
           update: true
@@ -200,7 +200,8 @@ jobs:
         with:
           php-version: ${{ env.COVERAGE_PHP_VERSION }}
           tools: composer
-          coverage: xdebug
+          extensions: xdebug
+          coverage: none
         env:
           update: true
 
