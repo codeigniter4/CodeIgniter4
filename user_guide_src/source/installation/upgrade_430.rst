@@ -83,11 +83,39 @@ Validation Changes
 Time Fixes
 ==========
 
-Due to bug fixes, some methods in :doc:`Time <../libraries/time>` have changed from mutable behavior to immutable; ``Time`` now extends ``DateTimeImmutable``. See :ref:`ChangeLog <v430-time-fix>` for details.
+- Due to bug fixes, some methods in :doc:`Time <../libraries/time>` have changed from mutable behavior to immutable; ``Time`` now extends ``DateTimeImmutable``. See :ref:`ChangeLog <v430-time-fix>` for details.
+- If you need the behavior of ``Time`` before the modification, a compatible ``TimeLegacy`` class has been added. Please replace all ``Time`` with ``TimeLegacy`` in your application code.
+- But ``TimeLegacy`` is deprecated. So we recommend you update your code.
 
-If you need the behavior of ``Time`` before the modification, a compatible ``TimeLegacy`` class has been added. Please replace all ``Time`` with ``TimeLegacy`` in your application code.
+E.g.::
 
-But ``TimeLegacy`` is deprecated. So we recommend you update your code.
+    // Before
+    $time = Time::now();
+    // ...
+    if ($time instanceof DateTime) {
+        // ...
+    }
+
+    // After
+    $time = Time::now();
+    // ...
+    if ($time instanceof DateTimeInterface) {
+        // ...
+    }
+
+::
+
+    // Before
+    $time1 = new Time('2022-10-31 12:00');
+    $time2 = $time1->modify('+1 day');
+    echo $time1; // 2022-11-01 12:00:00
+    echo $time2; // 2022-11-01 12:00:00
+
+    // After
+    $time1 = new Time('2022-10-31 12:00');
+    $time2 = $time1->modify('+1 day');
+    echo $time1; // 2022-10-31 12:00:00
+    echo $time2; // 2022-11-01 12:00:00
 
 .. _upgrade-430-stream-filter:
 
