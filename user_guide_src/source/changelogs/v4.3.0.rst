@@ -45,6 +45,7 @@ For example, the Exit code has been changed like the following:
 Others
 ------
 
+- Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
 - The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
 - The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
@@ -212,6 +213,7 @@ Libraries
 Helpers and Functions
 =====================
 
+- Creation of void HTML elements like ``<input>`` via ``form_helper``, ``html_helper`` or common functions can be configured to exclude or not the solidus character (``/``) before the right angle bracket (``>``) by setting the ``$html5`` property in **app/Config/DocTypes.php** to ``true``.
 - Now you can autoload helpers by **app/Config/Autoload.php**.
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.

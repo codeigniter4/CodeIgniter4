@@ -163,6 +163,23 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(Response::class, $response);
     }
 
+    public function testSolidusElement()
+    {
+        $this->assertSame('', _solidus());
+    }
+
+    public function testSolidusElementXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $this->assertSame(' /', _solidus());
+
+        // Reset
+        $doctypes->html5 = $default;
+    }
+
     public function testView()
     {
         $data = [

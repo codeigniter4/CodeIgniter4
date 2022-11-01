@@ -281,7 +281,7 @@ if (! function_exists('csrf_field')) {
      */
     function csrf_field(?string $id = null): string
     {
-        return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
+        return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -291,7 +291,7 @@ if (! function_exists('csrf_meta')) {
      */
     function csrf_meta(?string $id = null): string
     {
-        return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '" />';
+        return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -849,6 +849,22 @@ if (! function_exists('redirect')) {
         }
 
         return $response;
+    }
+}
+
+if (! function_exists('_solidus')) {
+    /**
+     * Generates the solidus character (`/`) depending on the HTML5 compatibility flag in `Config\DocTypes`
+     *
+     * @internal
+     */
+    function _solidus(): string
+    {
+        if (config('DocTypes')->html5 ?? false) {
+            return '';
+        }
+
+        return ' /';
     }
 }
 

@@ -8,4 +8,4 @@ $link = [
 ];
 
 echo link_tag($link);
-// <link href="http://site.com/css/printer.css" rel="stylesheet" type="text/css" media="print" />
+// <link href="http://site.com/css/printer.css" rel="stylesheet" type="text/css" media="print">
