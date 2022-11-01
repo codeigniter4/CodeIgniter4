@@ -42,6 +42,22 @@ For example, the Exit code has been changed like the following:
 - If an uncaught ``CastException`` occurs, the Exit code is ``EXIT_CONFIG`` (= ``3``) instead of ``9``.
 - If an uncaught ``DatabaseException`` occurs, the Exit code is ``EXIT_DATABASE`` (= ``8``) instead of ``17``.
 
+.. _v430-time-fix:
+
+Time
+----
+
+The following methods of the :doc:`Time <../libraries/time>` class had bugs that changed the state of the current object. To fix these bugs, the Time class has been fixed:
+    - ``add()``
+    - ``modify()``
+    - ``setDate()``
+    - ``setISODate()``
+    - ``setTime()``
+    - ``sub()``
+
+- Now the ``Time`` class extends ``DateTimeImmutable`` and is completely immutable.
+- ``TimeLegacy`` class has been added for backward compatibility, which behaves the same as the unmodified ``Time`` class.
+
 Others
 ------
 

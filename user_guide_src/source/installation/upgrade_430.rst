@@ -80,6 +80,15 @@ Validation Changes
 - ``ValidationInterface`` has been changed. Implemented classes should likewise add the methods and the parameters so as not to break LSP. See :ref:`v430-validation-changes` for details.
 - The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty. Update the code if you depend on the behavior.
 
+Time Fixes
+==========
+
+Due to bug fixes, some methods in :doc:`Time <../libraries/time>` has been changed the behavior from mutable to immutable. See :ref:`ChangeLog <v430-time-fix>` for details.
+
+If you need the behavior of ``Time`` before the modification, a compatible ``TimeLegacy`` class has been added. Please replace all ``Time`` with ``TimeLegacy`` in your application code.
+
+But ``TimeLegacy`` is deprecated. So we recommend you update your code.
+
 .. _upgrade-430-stream-filter:
 
 Capturing STDERR and STDOUT streams in tests

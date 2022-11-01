@@ -6,8 +6,12 @@ CodeIgniter provides a fully-localized, immutable, date/time class that is built
 extension's features to convert times across timezones and display the output correctly for different locales. This class
 is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
-.. note:: Since the Time class extends DateTimeImmutable, if there are features that you need that this class doesn't provide,
-    you can likely find them within the `DateTime <https://www.php.net/manual/en/class.datetimeimmutable.php>`_  class itself.
+.. note:: Since the Time class extends ``DateTimeImmutable``, if there are features that you need that this class doesn't provide,
+    you can likely find them within the `DateTimeImmutable <https://www.php.net/manual/en/class.datetimeimmutable.php>`_  class itself.
+
+.. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed
+    the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
+    compatibility, you can use deprecated ``TimeLegay`` class for the time being.
 
 .. contents::
     :local:
