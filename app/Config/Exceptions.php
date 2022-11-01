@@ -60,13 +60,13 @@ class Exceptions extends BaseConfig
      * Use this option to temporarily cease the warnings and instead log those.
      * This option also works for user deprecations.
      */
-    public bool $logDeprecationsOnly = false;
+    public bool $logDeprecations = true;
 
     /**
      * --------------------------------------------------------------------------
      * LOG LEVEL THRESHOLD FOR DEPRECATIONS
      * --------------------------------------------------------------------------
-     * If `$logDeprecationsOnly` is set to `true`, this sets the log level
+     * If `$logDeprecations` is set to `true`, this sets the log level
      * to which the deprecation will be logged. This should be one of the log
      * levels recognized by PSR-3.
      *

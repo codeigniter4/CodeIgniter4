@@ -31,6 +31,20 @@ final class ExceptionsTest extends CIUnitTestCase
 
     private \CodeIgniter\Debug\Exceptions $exception;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        unset($_SERVER['CODEIGNITER_SCREAM_DEPRECATIONS']);
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        $_SERVER['CODEIGNITER_SCREAM_DEPRECATIONS'] = '1';
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,7 +59,7 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $config = new ExceptionsConfig();
 
-        $config->logDeprecationsOnly = true;
+        $config->logDeprecations     = true;
         $config->deprecationLogLevel = 'error';
 
         $this->exception = new Exceptions($config, Services::request(), Services::response());
@@ -69,7 +83,7 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $config = new ExceptionsConfig();
 
-        $config->logDeprecationsOnly = true;
+        $config->logDeprecations     = true;
         $config->deprecationLogLevel = 'error';
 
         $this->exception = new Exceptions($config, Services::request(), Services::response());

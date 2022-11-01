@@ -223,7 +223,10 @@ Helpers and Functions
 Error Handling
 ==============
 
-- You can now log deprecation errors instead of throwing them. See :ref:`logging_deprecation_errors` for details.
+- You can now log deprecation warnings instead of throwing exceptions. See :ref:`logging_deprecation_warnings` for details.
+- Logging of deprecations is turned on by default.
+- To *temporarily* enable throwing of deprecations, set the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
+- ``Config\Logger::$threshold`` is now, by default, environment-specific. For production environment, default threshold is still ``4`` but changed to ``9`` for other environments.
 
 Others
 ======
@@ -272,4 +275,3 @@ Bugs Fixed
 **********
 
 - Fixed a bug when all types of ``Prepared Queries`` were returning a ``Result`` object instead of a bool value for write-type queries.
-

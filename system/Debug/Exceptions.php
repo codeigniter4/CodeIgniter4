@@ -83,8 +83,8 @@ class Exceptions
         if (! isset($this->config->sensitiveDataInTrace)) {
             $this->config->sensitiveDataInTrace = [];
         }
-        if (! isset($this->config->logDeprecationsOnly, $this->config->deprecationLogLevel)) {
-            $this->config->logDeprecationsOnly = false;
+        if (! isset($this->config->logDeprecations, $this->config->deprecationLogLevel)) {
+            $this->config->logDeprecations     = false;
             $this->config->deprecationLogLevel = LogLevel::WARNING;
         }
     }
@@ -158,17 +158,20 @@ class Exceptions
      */
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
-        if ($this->isDeprecationError($severity) && $this->config->logDeprecationsOnly) {
+        if ($this->isDeprecationError($severity)) {
+            // @TODO Remove if Faker is fixed.
+            if ($this->isFakerDeprecationError($message, $file, $line)) {
+                return true;
+            }
+
+            if (! $this->config->logDeprecations || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
+                throw new ErrorException($message, 0, $severity, $file, $line);
+            }
+
             return $this->handleDeprecationError($message, $file, $line);
         }
 
         if (error_reporting() & $severity) {
-            // @TODO Remove if Faker is fixed.
-            if ($this->isFakerDeprecationError($severity, $message, $file, $line)) {
-                // Ignore the error.
-                return true;
-            }
-
             throw new ErrorException($message, 0, $severity, $file, $line);
         }
 
@@ -180,11 +183,10 @@ class Exceptions
      *
      * @see https://github.com/FakerPHP/Faker/issues/479
      */
-    private function isFakerDeprecationError(int $severity, string $message, ?string $file = null, ?int $line = null)
+    private function isFakerDeprecationError(string $message, ?string $file = null, ?int $line = null)
     {
         if (
-            $severity === E_DEPRECATED
-            && strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
+            strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
             && $message === 'Use of "static" in callables is deprecated'
         ) {
             log_message(

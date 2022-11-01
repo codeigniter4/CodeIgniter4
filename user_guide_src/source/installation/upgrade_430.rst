@@ -181,7 +181,7 @@ and it is recommended that you merge the updated versions with your application:
 * ``app/Config/DocTypes.php``
     * The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
 * ``app/Config/Exceptions.php``
-    * Two additional public properties were added: ``$logDeprecationsOnly`` and ``$deprecationLogLevel``.
+    * Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
 * ``app/Config/Routes.php``
     * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework.
 
