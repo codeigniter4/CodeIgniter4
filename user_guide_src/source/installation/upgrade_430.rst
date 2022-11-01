@@ -123,7 +123,7 @@ Interface Changes
 Some interfaces has been fixed. See :ref:`v430-interface-changes` for details.
 
 Foreign Key Data
-=====================================================
+================
 
 - The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
   You will need to adjust any code depending on this method to use the new structure.
