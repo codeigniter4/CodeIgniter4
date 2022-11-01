@@ -109,7 +109,7 @@ ValidationInterface
 Validation
 ^^^^^^^^^^
 
-The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty.
+The return value of  ``Validation::loadRuleGroup()`` has been changed from ``null`` to ``[]`` when the ``$group`` is empty.
 
 Database
 --------
@@ -117,7 +117,7 @@ Database
 - The return types of ``CodeIgniter\Database\BasePreparedQuery::close()`` and ``CodeIgniter\Database\PreparedQueryInterface`` have been changed to ``bool`` (previously untyped).
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``.
-- Parameter ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
+- Parameter name ``$column`` has changed in ``Table::dropForeignKey()`` to ``$foreignName``.
 - The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts types array, string, or ``RawSql``. Extending classes should likewise change types.
 - The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data.
 - ``BaseBuilder::_updateBatch()``
@@ -185,7 +185,7 @@ Forge
 - Added the ability to manually set index names. These methods include: ``Forge::addKey()``, ``Forge::addPrimaryKey()``, and ``Forge::addUniqueKey()``
 - The new method ``Forge::dropPrimaryKey()`` allows dropping the primary key on a table. See :ref:`dropping-a-primary-key`.
 - Fixed ``Forge::dropKey()`` to allow dropping unique indexes. This required the ``DROP CONSTRAINT`` SQL command.
-- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to manual set foreign key names. Not supported in SQLite3.
+- :php:meth:`CodeIgniter\\Database\\Forge::addForeignKey()` now includes a name parameter to set foreign key names manually. This is not supported in SQLite3.
 - SQLSRV now automatically drops ``DEFAULT`` constraint when using :ref:`Forge::dropColumn() <db-forge-dropColumn>`.
 
 Others
@@ -218,7 +218,7 @@ Helpers and Functions
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 - Added :php:func:`request()` and :php:func:`response()` functions.
-- Add :php:func:`decamelize()` function to convert camelCase to snake_case.
+- Added :php:func:`decamelize()` function to convert camelCase to snake_case.
 
 Error Handling
 ==============
@@ -232,9 +232,9 @@ Others
 ======
 
 - Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
-- Added new ``$routes->view()`` method to return a the view directly. See :ref:`View Routes <view-routes>`.
-- View Cells are now first-class citizens and can located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
-- Add ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
+- Added new ``$routes->view()`` method to return the view directly. See :ref:`View Routes <view-routes>`.
+- View Cells are now first-class citizens and can be located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
+- Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
 - Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 
 Message Changes
