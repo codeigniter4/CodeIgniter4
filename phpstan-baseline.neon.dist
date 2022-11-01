@@ -76,11 +76,6 @@ parameters:
 			path: system/Database/BaseConnection.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 3
-			path: system/Database/BaseResult.php
-
-		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 2
 			path: system/Database/BaseResult.php
@@ -106,54 +101,14 @@ parameters:
 			path: system/Database/Migration.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli\\|false\\>\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
+			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli,mysqli_result\\>\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Connection.php
 
 		-
-			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli\\|false\\>\\:\\:\\$mysqli\\.$#"
+			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli, mysqli_result\\>\\:\\:\\$mysqli\\.$#"
 			count: 3
 			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot access property \\$field_count on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot access property \\$num_rows on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method data_seek\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_assoc\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_field\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_fields\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_object\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method field_seek\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
 
 		-
 			message: "#^Strict comparison using \\=\\=\\= between array<string, int|string|null> and false will always evaluate to false\\.$#"
@@ -169,31 +124,6 @@ parameters:
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
 			count: 13
 			path: system/Database/SQLSRV/Forge.php
-
-		-
-			message: "#^Cannot call method columnName\\(\\) on object\\|resource\\|false\\.$#"
-			count: 2
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method columnType\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method fetchArray\\(\\) on object\\|resource\\|false\\.$#"
-			count: 2
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method numColumns\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method reset\\(\\) on object\\|resource\\|false\\.$#"
-			count: 2
-			path: system/Database/SQLite3/Result.php
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"

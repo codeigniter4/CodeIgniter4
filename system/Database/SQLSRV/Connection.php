@@ -18,7 +18,7 @@ use stdClass;
 /**
  * Connection for SQLSRV
  *
- * @extends BaseConnection<false|resource>
+ * @extends BaseConnection<resource, resource>
  */
 class Connection extends BaseConnection
 {

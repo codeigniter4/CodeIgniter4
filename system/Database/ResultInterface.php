@@ -12,7 +12,8 @@
 namespace CodeIgniter\Database;
 
 /**
- * Interface ResultInterface
+ * @template TConnection of object|resource
+ * @template TResult of object|resource
  */
 interface ResultInterface
 {

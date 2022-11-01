@@ -22,7 +22,7 @@ use stdClass;
 /**
  * Connection for SQLite3
  *
- * @extends BaseConnection<SQLite3>
+ * @extends BaseConnection<SQLite3, SQLite3Result>
  */
 class Connection extends BaseConnection
 {
@@ -123,7 +123,7 @@ class Connection extends BaseConnection
     /**
      * Execute the query
      *
-     * @return bool|SQLite3Result
+     * @return false|SQLite3Result
      */
     protected function execute(string $sql)
     {

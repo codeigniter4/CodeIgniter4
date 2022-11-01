@@ -15,19 +15,20 @@ use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use SQLite3;
+use SQLite3Result;
 use SQLite3Stmt;
 
 /**
  * Prepared query for SQLite3
  *
- * @extends BasePreparedQuery<SQLite3, SQLite3Stmt>
+ * @extends BasePreparedQuery<SQLite3, SQLite3Stmt, SQLite3Result>
  */
 class PreparedQuery extends BasePreparedQuery
 {
     /**
      * The SQLite3Result resource, or false.
      *
-     * @var bool|Result
+     * @var false|SQLite3Result
      */
     protected $result;
 
@@ -87,7 +88,7 @@ class PreparedQuery extends BasePreparedQuery
     /**
      * Returns the result object for the prepared query or false on failure.
      *
-     * @return mixed
+     * @return false|SQLite3Result
      */
     public function _getResult()
     {

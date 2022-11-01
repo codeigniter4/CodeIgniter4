@@ -18,12 +18,11 @@ use CodeIgniter\Events\Events;
 use ErrorException;
 
 /**
- * Base prepared query
- *
- * @template TConnection of false|object|resource
+ * @template TConnection of object|resource
  * @template TStatement of object|resource
+ * @template TResult of object|resource
  *
- * @implements PreparedQueryInterface<TConnection, TStatement>
+ * @implements PreparedQueryInterface<TConnection, TStatement, TResult>
  */
 abstract class BasePreparedQuery implements PreparedQueryInterface
 {
@@ -61,7 +60,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * A reference to the db connection to use.
      *
      * @var BaseConnection
-     * @phpstan-var BaseConnection<TConnection>
+     * @phpstan-var BaseConnection<TConnection, TResult>
      */
     protected $db;
 
@@ -77,7 +76,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * NOTE: This version is based on SQL code. Child classes should
      * override this method.
      *
-     * @return mixed
+     * @return $this
      */
     public function prepare(string $sql, array $options = [], string $queryClass = Query::class)
     {
@@ -103,7 +102,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * The database-dependent portion of the prepare statement.
      *
-     * @return mixed
+     * @return $this
      */
     abstract public function _prepare(string $sql, array $options = []);
 
@@ -112,6 +111,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
      * prepared query. Upon success, will return a Results object.
      *
      * @return bool|ResultInterface
+     * @phpstan-return bool|ResultInterface<TConnection, TResult>
      *
      * @throws DatabaseException
      */
@@ -195,7 +195,7 @@ abstract class BasePreparedQuery implements PreparedQueryInterface
     /**
      * Returns the result object for the prepared query.
      *
-     * @return mixed
+     * @return object|resource|null
      */
     abstract public function _getResult();
 

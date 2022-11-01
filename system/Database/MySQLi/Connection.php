@@ -15,6 +15,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use LogicException;
 use mysqli;
+use mysqli_result;
 use mysqli_sql_exception;
 use stdClass;
 use Throwable;
@@ -22,7 +23,7 @@ use Throwable;
 /**
  * Connection for MySQLi
  *
- * @extends BaseConnection<false|mysqli>
+ * @extends BaseConnection<mysqli, mysqli_result>
  */
 class Connection extends BaseConnection
 {
@@ -279,7 +280,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return bool|object
+     * @return false|mysqli_result;
      */
     protected function execute(string $sql)
     {

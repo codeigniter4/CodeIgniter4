@@ -15,10 +15,14 @@ use Closure;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Entity\Entity;
+use SQLite3;
+use SQLite3Result;
 use stdClass;
 
 /**
  * Result for SQLite3
+ *
+ * @extends BaseResult<SQLite3, SQLite3Result>
  */
 class Result extends BaseResult
 {

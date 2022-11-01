@@ -46,9 +46,10 @@ use Throwable;
  * @property bool       $transFailure
  * @property bool       $transStatus
  *
- * @template TConnection of false|object|resource
+ * @template TConnection of object|resource
+ * @template TResult of object|resource
  *
- * @implements ConnectionInterface<TConnection>
+ * @implements ConnectionInterface<TConnection, TResult>
  */
 abstract class BaseConnection implements ConnectionInterface
 {
@@ -194,14 +195,15 @@ abstract class BaseConnection implements ConnectionInterface
      * Connection ID
      *
      * @var false|object|resource
-     * @phpstan-var TConnection
+     * @phpstan-var false|TConnection
      */
     public $connID = false;
 
     /**
      * Result ID
      *
-     * @var bool|object|resource
+     * @var false|object|resource
+     * @phpstan-var false|TResult
      */
     public $resultID = false;
 
@@ -538,7 +540,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return bool|object|resource
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     abstract protected function execute(string $sql);
 
@@ -553,6 +556,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query BaseResult when “read” type query, bool when “write” type query, Query when prepared query
+     * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
      *
      * @todo BC set $queryClass default as null in 4.1
      */
@@ -662,7 +666,8 @@ abstract class BaseConnection implements ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     public function simpleQuery(string $sql)
     {
