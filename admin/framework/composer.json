@@ -38,6 +38,7 @@
         "ext-redis": "If you use Cache class RedisHandler",
         "ext-dom": "If you use TestResponse",
         "ext-libxml": "If you use TestResponse",
+        "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()",
         "ext-fileinfo": "Improves mime type detection for files",
         "ext-readline": "Improves CLI::input() usability"
     },
