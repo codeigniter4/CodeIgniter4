@@ -1,6 +1,6 @@
 # When a new release is created, deploy relevant
 # files to each of the generated repos.
-name: Deploy Framework
+name: Deploy Distributable Repos
 
 on:
   release:
