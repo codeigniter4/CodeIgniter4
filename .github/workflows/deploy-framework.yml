@@ -1,4 +1,4 @@
-# When a new Release is created, deploy relevant
+# When a new release is created, deploy relevant
 # files to each of the generated repos.
 name: Deploy Framework
 
@@ -7,10 +7,34 @@ on:
     types: [published]
 
 jobs:
+  check-version:
+    name: Check for updated version
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all tags
+
+      - name: Get latest version
+        run: |
+          echo 'LATEST_VERSION<<EOF' >> $GITHUB_ENV
+          echo $(git describe --tags --abbrev=0) | sed "s/v//" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+
+      - name: Search for updated version
+        if: ${{ env.LATEST_VERSION }}
+        run: |
+          chmod +x ${GITHUB_WORKSPACE}/.github/scripts/validate-version
+          ${GITHUB_WORKSPACE}/.github/scripts/validate-version ${{ env.LATEST_VERSION }}
+
   framework:
     name: Deploy to framework
     if: github.repository == 'codeigniter4/CodeIgniter4'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    needs: check-version
+
     steps:
       - name: Identify
         run: |
@@ -55,7 +79,9 @@ jobs:
   appstarter:
     name: Deploy to appstarter
     if: github.repository == 'codeigniter4/CodeIgniter4'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    needs: check-version
+
     steps:
       - name: Identify
         run: |
