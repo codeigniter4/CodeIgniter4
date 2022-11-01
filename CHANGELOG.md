@@ -1,5 +1,10 @@
 # Changelog
 
+## [v4.2.9](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.9) (2022-10-30)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.8...v4.2.9)
+
+**Hotfix release to fix PHPUnit errors (see https://github.com/codeigniter4/CodeIgniter4/pull/6794)**
+
 ## [v4.2.8](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.8) (2022-10-30)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.7...v4.2.8)
 

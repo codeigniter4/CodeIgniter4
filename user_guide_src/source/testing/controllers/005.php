@@ -1,6 +1,6 @@
 <?php
 
-$config              = new Config\App();
+$config              = new \Config\App();
 $config->appTimezone = 'America/Chicago';
 
 $results = $this->withConfig($config)

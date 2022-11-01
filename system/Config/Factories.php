@@ -31,7 +31,7 @@ class Factories
      * Store of component-specific options, usually
      * from CodeIgniter\Config\Factory.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, bool|string|null>>
      */
     protected static $options = [];
 
@@ -39,7 +39,7 @@ class Factories
      * Explicit options for the Config
      * component to prevent logic loops.
      *
-     * @var array<string, mixed>
+     * @var array<string, bool|string|null>
      */
     private static array $configOptions = [
         'component'  => 'config',
@@ -53,7 +53,8 @@ class Factories
      * Mapping of class basenames (no namespace) to
      * their instances.
      *
-     * @var array<string, string[]>
+     * @var array<string, array<string, string>>
+     * @phpstan-var array<string, array<string, class-string>>
      */
     protected static $basenames = [];
 
@@ -63,7 +64,8 @@ class Factories
      * A multi-dimensional array with components as
      * keys to the array of name-indexed instances.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, object>>
+     * @phpstan-var  array<string, array<class-string, object>>
      */
     protected static $instances = [];
 
@@ -74,9 +76,10 @@ class Factories
      *
      * @template T of Model
      *
-     * @param class-string<T> $name
+     * @phpstan-param class-string<T> $name
      *
-     * @return T
+     * @return Model
+     * @phpstan-return T
      */
     public static function models(string $name, array $options = [], ?ConnectionInterface &$conn = null)
     {
@@ -228,7 +231,7 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      *
-     * @return array<string, mixed>
+     * @return array<string, bool|string|null>
      */
     public static function getOptions(string $component): array
     {
@@ -253,7 +256,7 @@ class Factories
      *
      * @param string $component Lowercase, plural component name
      *
-     * @return array<string, mixed> The result after applying defaults and normalization
+     * @return array<string, bool|string|null> The result after applying defaults and normalization
      */
     public static function setOptions(string $component, array $values): array
     {
