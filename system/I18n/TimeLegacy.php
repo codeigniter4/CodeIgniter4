@@ -11,17 +11,20 @@
 
 namespace CodeIgniter\I18n;
 
-use DateTimeImmutable;
+use DateTime;
 
 /**
- * A localized date/time package inspired
- * by Nesbot/Carbon and CakePHP/Chronos.
+ * Legacy Time class.
  *
- * Requires the intl PHP extension.
+ * This class is only for backward compatibility. Do not use.
+ * This is not immutable! Some methods are immutable,
+ * but some methods can alter the state.
  *
  * @property string $date
+ *
+ * @deprecated Use Time instead.
  */
-class Time extends DateTimeImmutable
+class TimeLegacy extends DateTime
 {
     use TimeTrait;
 }

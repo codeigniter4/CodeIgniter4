@@ -1,5 +1,5 @@
 #############################
-Upgrading from 4.2.1 to 4.3.0
+Upgrading from 4.2.9 to 4.3.0
 #############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
@@ -80,6 +80,43 @@ Validation Changes
 - ``ValidationInterface`` has been changed. Implemented classes should likewise add the methods and the parameters so as not to break LSP. See :ref:`v430-validation-changes` for details.
 - The return value of  ``Validation::loadRuleGroup()`` has been changed ``null`` to ``[]`` when the ``$group`` is empty. Update the code if you depend on the behavior.
 
+Time Fixes
+==========
+
+- Due to bug fixes, some methods in :doc:`Time <../libraries/time>` have changed from mutable behavior to immutable; ``Time`` now extends ``DateTimeImmutable``. See :ref:`ChangeLog <v430-time-fix>` for details.
+- If you need the behavior of ``Time`` before the modification, a compatible ``TimeLegacy`` class has been added. Please replace all ``Time`` with ``TimeLegacy`` in your application code.
+- But ``TimeLegacy`` is deprecated. So we recommend you update your code.
+
+E.g.::
+
+    // Before
+    $time = Time::now();
+    // ...
+    if ($time instanceof DateTime) {
+        // ...
+    }
+
+    // After
+    $time = Time::now();
+    // ...
+    if ($time instanceof DateTimeInterface) {
+        // ...
+    }
+
+::
+
+    // Before
+    $time1 = new Time('2022-10-31 12:00');
+    $time2 = $time1->modify('+1 day');
+    echo $time1; // 2022-11-01 12:00:00
+    echo $time2; // 2022-11-01 12:00:00
+
+    // After
+    $time1 = new Time('2022-10-31 12:00');
+    $time2 = $time1->modify('+1 day');
+    echo $time1; // 2022-10-31 12:00:00
+    echo $time2; // 2022-11-01 12:00:00
+
 .. _upgrade-430-stream-filter:
 
 Capturing STDERR and STDOUT streams in tests
@@ -123,7 +160,7 @@ Interface Changes
 Some interfaces has been fixed. See :ref:`v430-interface-changes` for details.
 
 Foreign Key Data
-=====================================================
+================
 
 - The data structure returned by ``BaseConnection::getForeignKeyData()`` has been changed.
   You will need to adjust any code depending on this method to use the new structure.

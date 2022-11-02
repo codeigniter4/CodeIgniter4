@@ -18,6 +18,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
+use DateTimeInterface;
 use ReflectionException;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
@@ -408,7 +409,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->eighth = 'March 12, 2017';
 
-        $this->assertInstanceOf(DateTime::class, $entity->eighth);
+        $this->assertInstanceOf(DateTimeInterface::class, $entity->eighth);
         $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 
