@@ -474,7 +474,7 @@ class CURLRequest extends Request
                 }
 
                 if (isset($matches[2])) {
-                    $this->response->setStatusCode($matches[2], $matches[3] ?? null);
+                    $this->response->setStatusCode((int) $matches[2], $matches[3] ?? null);
                 }
             }
         }

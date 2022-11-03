@@ -141,7 +141,7 @@ class Connection extends BaseConnection
         $errors = [];
 
         foreach (sqlsrv_errors(SQLSRV_ERR_ERRORS) as $error) {
-            $errors[] = preg_replace('/(\[.+\]\[.+\](?:\[.+\])?)(.+)/', '$2', $error['message']);
+            $errors[] = (string) preg_replace('/(\[.+\]\[.+\](?:\[.+\])?)(.+)/', '$2', $error['message']);
         }
 
         throw new DatabaseException(implode("\n", $errors));

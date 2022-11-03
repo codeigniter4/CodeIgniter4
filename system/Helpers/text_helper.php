@@ -598,7 +598,7 @@ if (! function_exists('increment_string')) {
     {
         preg_match('/(.+)' . preg_quote($separator, '/') . '([0-9]+)$/', $str, $match);
 
-        return isset($match[2]) ? $match[1] . $separator . ($match[2] + 1) : $str . $separator . $first;
+        return isset($match[2]) ? $match[1] . $separator . ((int) $match[2] + 1) : $str . $separator . $first;
     }
 }
 
