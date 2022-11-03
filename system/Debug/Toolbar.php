@@ -400,6 +400,7 @@ class Toolbar
             $kintScript         = @Kint::dump('');
             Kint::$mode_default = $oldKintMode;
             $kintScript         = substr($kintScript, 0, strpos($kintScript, '</style>') + 8);
+            $kintScript         = ($kintScript === '0') ? '' : $kintScript;
 
             $script = PHP_EOL
                 . '<script ' . csp_script_nonce() . ' id="debugbar_loader" '
