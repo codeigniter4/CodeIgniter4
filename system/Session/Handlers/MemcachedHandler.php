@@ -103,7 +103,7 @@ class MemcachedHandler extends BaseHandler
                 continue;
             }
 
-            if (! $this->memcached->addServer($match[1], $match[2], $match[3] ?? 0)) {
+            if (! $this->memcached->addServer($match[1], (int) $match[2], $match[3] ?? 0)) {
                 $this->logger->error('Could not add ' . $match[1] . ':' . $match[2] . ' to Memcached server pool.');
             } else {
                 $serverList[] = $match[1] . ':' . $match[2];
