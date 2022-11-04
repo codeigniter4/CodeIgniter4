@@ -19,6 +19,8 @@ use Throwable;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class BaseConnectionTest extends CIUnitTestCase
 {

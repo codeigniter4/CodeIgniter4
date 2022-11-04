@@ -17,6 +17,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class PublisherOutputTest extends CIUnitTestCase
 {

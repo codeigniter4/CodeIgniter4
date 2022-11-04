@@ -24,6 +24,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ResponseTraitTest extends CIUnitTestCase
 {

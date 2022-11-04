@@ -22,6 +22,8 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class MiscUrlTest extends CIUnitTestCase
 {

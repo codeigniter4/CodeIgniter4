@@ -26,6 +26,8 @@ use Config\Services;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CookieHelperTest extends CIUnitTestCase
 {

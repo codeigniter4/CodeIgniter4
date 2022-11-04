@@ -23,6 +23,8 @@ use DateTimeZone;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ResponseTest extends CIUnitTestCase
 {

@@ -16,6 +16,8 @@ use Tests\Support\Controllers\Hello;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ControllerFinderTest extends CIUnitTestCase
 {

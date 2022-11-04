@@ -41,6 +41,8 @@ require_once __DIR__ . '/fixtures/Role.php';
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class FiltersTest extends CIUnitTestCase
 {

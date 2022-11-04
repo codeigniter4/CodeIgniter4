@@ -17,6 +17,8 @@ use org\bovigo\vfs\visitor\vfsStreamStructureVisitor;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FilesystemHelperTest extends CIUnitTestCase
 {

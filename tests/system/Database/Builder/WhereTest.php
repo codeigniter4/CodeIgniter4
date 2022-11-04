@@ -22,6 +22,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class WhereTest extends CIUnitTestCase
 {

@@ -19,6 +19,8 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  *
+ * @group Others
+ *
  * @no-final
  */
 class FormatRulesTest extends CIUnitTestCase

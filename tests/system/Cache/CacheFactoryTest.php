@@ -18,6 +18,8 @@ use Config\Cache;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CacheFactoryTest extends CIUnitTestCase
 {

@@ -23,6 +23,8 @@ use Config\Security as SecurityConfig;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SecurityCSRFCookieRandomizeTokenTest extends CIUnitTestCase
 {

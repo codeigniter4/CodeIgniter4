@@ -17,6 +17,8 @@ use ZipArchive;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileTest extends CIUnitTestCase
 {

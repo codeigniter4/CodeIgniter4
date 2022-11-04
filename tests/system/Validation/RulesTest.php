@@ -20,6 +20,8 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  *
+ * @group Others
+ *
  * @no-final
  */
 class RulesTest extends CIUnitTestCase

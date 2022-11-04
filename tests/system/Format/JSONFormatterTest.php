@@ -16,6 +16,8 @@ use RuntimeException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class JSONFormatterTest extends CIUnitTestCase
 {

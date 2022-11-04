@@ -18,6 +18,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CreditCardRulesTest extends CIUnitTestCase
 {

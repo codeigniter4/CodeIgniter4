@@ -17,6 +17,8 @@ use Faker\Generator;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DatabaseSeederTest extends CIUnitTestCase
 {

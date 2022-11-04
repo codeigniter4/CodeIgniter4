@@ -18,6 +18,8 @@ use Config\Encryption as EncryptionConfig;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class OpenSSLHandlerTest extends CIUnitTestCase
 {
