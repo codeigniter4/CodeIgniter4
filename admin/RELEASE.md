@@ -60,15 +60,15 @@ CodeIgniter 4.x.x release.
 
 See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
 ```
-* Watch for the "Deploy Framework" Action to make sure **framework** and **appstarter** get updated
-* Run the following commands to install and test AppStarter and verify the new version:
+* Watch for the "Deploy Distributable Repos" action to make sure **framework**, **appstarter**, and **userguide** get updated
+* Run the following commands to install and test `appstarter` and verify the new version:
 ```console
 composer create-project codeigniter4/appstarter release-test
 cd release-test
 composer test && composer info codeigniter4/framework
 ```
-* Verify that the User Guide Actions succeeded:
-    * "Deploy User Guide", framework repo
+* Verify that the user guide actions succeeded:
+    * "Deploy Distributable Repos", framework repo
     * "Deploy Production", UG repo
     * "pages-build-deployment", both repos
 * Fast-forward `develop` branch to catch the merge commit from `master`
