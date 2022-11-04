@@ -1969,7 +1969,7 @@ class BaseBuilder
     }
 
     /**
-     * Set table alias for dataset sudo table.
+     * Set table alias for dataset pseudo table.
      */
     private function setAlias(string $alias): BaseBuilder
     {
