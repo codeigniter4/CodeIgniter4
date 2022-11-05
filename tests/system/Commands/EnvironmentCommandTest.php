@@ -16,6 +16,8 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class EnvironmentCommandTest extends CIUnitTestCase
 {

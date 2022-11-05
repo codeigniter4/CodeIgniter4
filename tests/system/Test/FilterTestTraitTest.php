@@ -25,6 +25,8 @@ use Tests\Support\Filters\Customfilter;
  *  - class: \Tests\Support\Filters\Customfilter::class
  *
  * @internal
+ *
+ * @group Others
  */
 final class FilterTestTraitTest extends CIUnitTestCase
 {

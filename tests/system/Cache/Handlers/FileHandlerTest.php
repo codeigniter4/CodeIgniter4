@@ -17,6 +17,8 @@ use Config\Cache;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileHandlerTest extends AbstractHandlerTest
 {

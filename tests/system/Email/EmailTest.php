@@ -18,6 +18,8 @@ use ErrorException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class EmailTest extends CIUnitTestCase
 {

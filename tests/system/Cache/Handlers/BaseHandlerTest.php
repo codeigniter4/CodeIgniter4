@@ -17,6 +17,8 @@ use Tests\Support\Cache\RestrictiveHandler;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class BaseHandlerTest extends CIUnitTestCase
 {

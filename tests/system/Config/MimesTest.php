@@ -16,6 +16,8 @@ use Config\Mimes;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class MimesTest extends CIUnitTestCase
 {

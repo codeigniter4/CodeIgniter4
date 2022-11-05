@@ -26,6 +26,8 @@ use Tests\Support\SomeEntity;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class EntityTest extends CIUnitTestCase
 {

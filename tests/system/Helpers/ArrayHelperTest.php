@@ -17,6 +17,8 @@ use ValueError;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ArrayHelperTest extends CIUnitTestCase
 {

@@ -16,6 +16,8 @@ use Config\Mimes;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileCollectionTest extends CIUnitTestCase
 {

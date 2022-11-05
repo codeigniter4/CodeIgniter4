@@ -17,6 +17,8 @@ use Tests\Support\Commands\AppInfo;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class BaseCommandTest extends CIUnitTestCase
 {

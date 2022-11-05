@@ -22,6 +22,8 @@ use Config\Modules;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class AutoRouterImprovedTest extends CIUnitTestCase
 {

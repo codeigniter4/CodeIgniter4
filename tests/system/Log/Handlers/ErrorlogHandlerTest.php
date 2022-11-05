@@ -17,6 +17,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ErrorlogHandlerTest extends CIUnitTestCase
 {

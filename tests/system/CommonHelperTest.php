@@ -21,6 +21,8 @@ use Tests\Support\Autoloader\FatalLocator;
 /**
  * @internal
  *
+ * @group Others
+ *
  * @covers ::helper
  */
 final class CommonHelperTest extends CIUnitTestCase

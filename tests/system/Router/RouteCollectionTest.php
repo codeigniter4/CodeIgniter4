@@ -18,6 +18,8 @@ use Tests\Support\Controllers\Hello;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class RouteCollectionTest extends CIUnitTestCase
 {

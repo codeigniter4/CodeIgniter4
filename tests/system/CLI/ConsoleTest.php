@@ -21,6 +21,8 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConsoleTest extends CIUnitTestCase
 {

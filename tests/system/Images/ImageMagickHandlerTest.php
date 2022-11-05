@@ -28,6 +28,8 @@ use Imagick;
  * Was unable to test fontPath & related logic.
  *
  * @internal
+ *
+ * @group Others
  */
 final class ImageMagickHandlerTest extends CIUnitTestCase
 {

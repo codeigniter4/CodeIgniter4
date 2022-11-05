@@ -23,6 +23,8 @@ use Tests\Support\Models\UserModel;
  * features without requiring a database connection.
  *
  * @internal
+ *
+ * @group Others
  */
 final class GeneralModelTest extends CIUnitTestCase
 {

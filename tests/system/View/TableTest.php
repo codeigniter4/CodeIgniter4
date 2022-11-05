@@ -18,6 +18,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TableTest extends CIUnitTestCase
 {

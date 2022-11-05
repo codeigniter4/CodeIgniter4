@@ -22,6 +22,8 @@ use Tests\Support\Filters\Customfilter;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class RouterTest extends CIUnitTestCase
 {

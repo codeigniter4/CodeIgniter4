@@ -21,6 +21,8 @@ use LogicException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CookieTest extends CIUnitTestCase
 {

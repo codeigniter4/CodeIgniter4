@@ -28,6 +28,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  * testing saving only.
  *
  * @internal
+ *
+ * @group Others
  */
 final class BaseHandlerTest extends CIUnitTestCase
 {

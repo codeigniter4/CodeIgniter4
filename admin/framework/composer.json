@@ -17,7 +17,7 @@
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "~3.12.0",
+        "friendsofphp/php-cs-fixer": "~3.13.0",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
         "phpunit/phpunit": "^9.1",
@@ -38,6 +38,7 @@
         "ext-redis": "If you use Cache class RedisHandler",
         "ext-dom": "If you use TestResponse",
         "ext-libxml": "If you use TestResponse",
+        "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()",
         "ext-fileinfo": "Improves mime type detection for files",
         "ext-readline": "Improves CLI::input() usability"
     },

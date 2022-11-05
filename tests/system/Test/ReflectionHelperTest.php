@@ -13,6 +13,8 @@ namespace CodeIgniter\Test;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ReflectionHelperTest extends CIUnitTestCase
 {

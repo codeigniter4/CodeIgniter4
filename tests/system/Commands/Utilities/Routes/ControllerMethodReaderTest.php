@@ -17,6 +17,8 @@ use Tests\Support\Controllers\Remap;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ControllerMethodReaderTest extends CIUnitTestCase
 {

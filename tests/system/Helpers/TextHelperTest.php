@@ -16,6 +16,8 @@ use InvalidArgumentException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TextHelperTest extends CIUnitTestCase
 {

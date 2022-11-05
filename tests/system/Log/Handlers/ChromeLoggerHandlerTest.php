@@ -20,6 +20,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ChromeLoggerHandlerTest extends CIUnitTestCase
 {
