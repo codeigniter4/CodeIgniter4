@@ -19,6 +19,8 @@ use Config\Services;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ScaffoldGeneratorTest extends CIUnitTestCase
 {

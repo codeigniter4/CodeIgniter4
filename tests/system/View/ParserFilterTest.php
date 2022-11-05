@@ -17,6 +17,8 @@ use Config\View;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ParserFilterTest extends CIUnitTestCase
 {

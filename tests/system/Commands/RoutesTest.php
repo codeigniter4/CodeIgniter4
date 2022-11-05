@@ -18,6 +18,8 @@ use Config\Services;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class RoutesTest extends CIUnitTestCase
 {

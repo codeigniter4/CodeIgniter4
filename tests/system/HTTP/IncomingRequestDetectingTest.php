@@ -18,6 +18,8 @@ use Config\App;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class IncomingRequestDetectingTest extends CIUnitTestCase
 {

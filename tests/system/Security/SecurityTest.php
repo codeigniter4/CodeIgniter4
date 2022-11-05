@@ -27,6 +27,8 @@ use Config\Services;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class SecurityTest extends CIUnitTestCase
 {

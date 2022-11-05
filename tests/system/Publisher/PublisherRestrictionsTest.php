@@ -21,6 +21,8 @@ use CodeIgniter\Test\CIUnitTestCase;
  * file properly prevent disallowed actions.
  *
  * @internal
+ *
+ * @group Others
  */
 final class PublisherRestrictionsTest extends CIUnitTestCase
 {

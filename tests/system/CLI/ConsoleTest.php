@@ -20,6 +20,8 @@ use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConsoleTest extends CIUnitTestCase
 {

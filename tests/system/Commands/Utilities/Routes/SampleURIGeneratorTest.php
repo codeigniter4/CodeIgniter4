@@ -17,6 +17,8 @@ use Generator;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SampleURIGeneratorTest extends CIUnitTestCase
 {

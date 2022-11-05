@@ -16,6 +16,8 @@ use CodeIgniter\Test\ReflectionHelper;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ConfigTest extends CIUnitTestCase
 {

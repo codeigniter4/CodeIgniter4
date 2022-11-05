@@ -20,6 +20,8 @@ use Tests\Support\Widgets\SomeWidget;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FactoriesTest extends CIUnitTestCase
 {

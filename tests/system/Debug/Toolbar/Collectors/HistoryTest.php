@@ -17,6 +17,8 @@ use DateTime;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class HistoryTest extends CIUnitTestCase
 {

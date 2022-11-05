@@ -17,6 +17,8 @@ use Tests\Support\Publishers\TestPublisher;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class PublishCommandTest extends CIUnitTestCase
 {

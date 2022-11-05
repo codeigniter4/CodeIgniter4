@@ -22,6 +22,8 @@ use CURLFile;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CURLRequestTest extends CIUnitTestCase
 {

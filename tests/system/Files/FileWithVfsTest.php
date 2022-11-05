@@ -16,6 +16,8 @@ use org\bovigo\vfs\vfsStream;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FileWithVfsTest extends CIUnitTestCase
 {

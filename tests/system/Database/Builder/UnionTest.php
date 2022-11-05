@@ -18,6 +18,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class UnionTest extends CIUnitTestCase
 {

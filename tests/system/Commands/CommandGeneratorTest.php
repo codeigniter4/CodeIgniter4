@@ -16,6 +16,8 @@ use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CommandGeneratorTest extends CIUnitTestCase
 {

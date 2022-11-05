@@ -27,6 +27,8 @@ use Tests\Support\Filters\Customfilter;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class CodeIgniterTest extends CIUnitTestCase
 {

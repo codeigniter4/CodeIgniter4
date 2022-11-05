@@ -28,6 +28,8 @@ use Config\Modules;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FilterFinderTest extends CIUnitTestCase
 {

@@ -20,6 +20,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class SelectTest extends CIUnitTestCase
 {

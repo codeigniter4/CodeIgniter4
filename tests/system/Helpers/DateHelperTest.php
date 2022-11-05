@@ -16,6 +16,8 @@ use DateTimeZone;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class DateHelperTest extends CIUnitTestCase
 {

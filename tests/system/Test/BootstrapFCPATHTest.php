@@ -22,6 +22,8 @@ namespace CodeIgniter\Test;
  * from correctFCPATH();
  *
  * @internal
+ *
+ * @group Others
  */
 final class BootstrapFCPATHTest extends CIUnitTestCase
 {

@@ -18,6 +18,8 @@ use CodeIgniter\View\Exceptions\ViewException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CellTest extends CIUnitTestCase
 {

@@ -21,6 +21,8 @@ use ReflectionMethod;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CommonSingleServiceTest extends CIUnitTestCase
 {

@@ -16,6 +16,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class HeaderTest extends CIUnitTestCase
 {

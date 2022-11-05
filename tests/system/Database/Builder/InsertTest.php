@@ -19,6 +19,8 @@ use CodeIgniter\Test\Mock\MockConnection;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class InsertTest extends CIUnitTestCase
 {

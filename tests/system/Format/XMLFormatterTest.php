@@ -16,6 +16,8 @@ use DOMDocument;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class XMLFormatterTest extends CIUnitTestCase
 {

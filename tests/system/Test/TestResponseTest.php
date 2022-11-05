@@ -20,6 +20,8 @@ use PHPUnit\Framework\AssertionFailedError;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TestResponseTest extends CIUnitTestCase
 {

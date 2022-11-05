@@ -33,6 +33,8 @@ use Tests\Support\Config\Validation;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class ControllerTest extends CIUnitTestCase
 {

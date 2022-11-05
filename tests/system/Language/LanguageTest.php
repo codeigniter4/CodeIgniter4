@@ -19,6 +19,8 @@ use Tests\Support\Language\SecondMockLanguage;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class LanguageTest extends CIUnitTestCase
 {

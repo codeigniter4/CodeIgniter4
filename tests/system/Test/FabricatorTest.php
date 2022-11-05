@@ -20,6 +20,8 @@ use Tests\Support\Models\UserModel;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FabricatorTest extends CIUnitTestCase
 {

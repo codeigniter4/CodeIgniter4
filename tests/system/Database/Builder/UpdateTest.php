@@ -19,6 +19,8 @@ use CodeIgniter\Test\Mock\MockQuery;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class UpdateTest extends CIUnitTestCase
 {

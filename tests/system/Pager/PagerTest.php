@@ -25,6 +25,8 @@ use Config\Services;
  * @backupGlobals enabled
  *
  * @internal
+ *
+ * @group Others
  */
 final class PagerTest extends CIUnitTestCase
 {

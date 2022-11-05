@@ -17,6 +17,8 @@ use DateTimeImmutable;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CookieStoreTest extends CIUnitTestCase
 {

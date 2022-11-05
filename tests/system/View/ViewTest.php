@@ -19,6 +19,8 @@ use RuntimeException;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ViewTest extends CIUnitTestCase
 {

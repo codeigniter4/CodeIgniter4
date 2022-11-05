@@ -21,6 +21,8 @@ use stdClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ParserTest extends CIUnitTestCase
 {

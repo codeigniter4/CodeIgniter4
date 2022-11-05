@@ -21,6 +21,8 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class InvalidCharsTest extends CIUnitTestCase
 {

@@ -17,6 +17,8 @@ use Tests\Support\Validation\TestRules;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class FormatRulesTest extends TraditionalFormatRulesTest
 {

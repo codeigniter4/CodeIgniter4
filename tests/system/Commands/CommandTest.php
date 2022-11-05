@@ -18,6 +18,8 @@ use Tests\Support\Commands\ParamsReveal;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class CommandTest extends CIUnitTestCase
 {

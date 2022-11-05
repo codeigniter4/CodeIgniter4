@@ -28,6 +28,8 @@ use org\bovigo\vfs\vfsStreamDirectory;
  * Was unable to test fontPath & related logic.
  *
  * @internal
+ *
+ * @group Others
  */
 final class GDHandlerTest extends CIUnitTestCase
 {

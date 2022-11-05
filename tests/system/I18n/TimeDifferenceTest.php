@@ -16,6 +16,8 @@ use Locale;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TimeDifferenceTest extends CIUnitTestCase
 {

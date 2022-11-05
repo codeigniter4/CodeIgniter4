@@ -23,6 +23,8 @@ use UnnamespacedClass;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class AutoloaderTest extends CIUnitTestCase
 {
