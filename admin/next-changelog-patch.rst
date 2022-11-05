@@ -1,14 +1,30 @@
-Version |version|
-====================================================
+Version {version}
+#################
 
-Release Date: Not released
+Release Date: Unreleased
 
-**Next alpha release of CodeIgniter4**
+**{version} release of CodeIgniter4**
 
+.. contents::
+    :local:
+    :depth: 3
 
-The list of changed files follows, with PR numbers shown.
+BREAKING
+********
 
+Enhancements
+************
 
-PRs merged:
------------
+Message Changes
+***************
 
+Changes
+*******
+
+Deprecations
+************
+
+Bugs Fixed
+**********
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
