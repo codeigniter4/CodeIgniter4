@@ -1,0 +1,17 @@
+Version 4.2.10
+##############
+
+Release Date: November 5, 2022
+
+**4.2.10 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+Bugs Fixed
+**********
+
+- Fixed incorrect PHPDoc types in Session.
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.

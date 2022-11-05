@@ -1,5 +1,16 @@
 # Changelog
 
+## [v4.2.10](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.10) (2022-11-05)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.9...v4.2.10)
+
+### Fixed Bugs
+* docs: fix PHPDoc types in Session by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6796
+* fix: output "0" at the end of toolbar js when Kint::$enabled_mode is false by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6809
+
+### Refactoring
+* Refactor assertHeaderEmitted and assertHeaderNotEmitted by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6806
+* fix: variable types for PHPStan 1.9.0 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6810
+
 ## [v4.2.9](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.9) (2022-10-30)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.8...v4.2.9)
 
