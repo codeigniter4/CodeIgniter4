@@ -263,7 +263,7 @@ class Model extends BaseModel
         $escape       = $this->escape;
         $this->escape = [];
 
-        // Require non empty primaryKey when
+        // Require non-empty primaryKey when
         // not using auto-increment feature
         if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
@@ -301,7 +301,7 @@ class Model extends BaseModel
     {
         if (is_array($set)) {
             foreach ($set as $row) {
-                // Require non empty primaryKey when
+                // Require non-empty primaryKey when
                 // not using auto-increment feature
                 if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');

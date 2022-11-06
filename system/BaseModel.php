@@ -312,8 +312,8 @@ abstract class BaseModel
     }
 
     /**
-     * Fetches the row of database
-     * This methods works only with dbCalls
+     * Fetches the row of database.
+     * This method works only with dbCalls.
      *
      * @param bool                  $singleton Single or multiple results
      * @param array|int|string|null $id        One primary key or an array of primary keys
@@ -323,8 +323,8 @@ abstract class BaseModel
     abstract protected function doFind(bool $singleton, $id = null);
 
     /**
-     * Fetches the column of database
-     * This methods works only with dbCalls
+     * Fetches the column of database.
+     * This method works only with dbCalls.
      *
      * @param string $columnName Column Name
      *
@@ -336,7 +336,7 @@ abstract class BaseModel
 
     /**
      * Fetches all results, while optionally limiting them.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @param int $limit  Limit
      * @param int $offset Offset
@@ -347,15 +347,15 @@ abstract class BaseModel
 
     /**
      * Returns the first row of the result set.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @return array|object|null
      */
     abstract protected function doFirst();
 
     /**
-     * Inserts data into the current database
-     * This method works only with dbCalls
+     * Inserts data into the current database.
+     * This method works only with dbCalls.
      *
      * @param array $data Data
      *
@@ -365,7 +365,7 @@ abstract class BaseModel
 
     /**
      * Compiles batch insert and runs the queries, validating each row prior.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @param array|null $set       An associative array of insert values
      * @param bool|null  $escape    Whether to escape values
@@ -378,7 +378,7 @@ abstract class BaseModel
 
     /**
      * Updates a single record in the database.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @param array|int|string|null $id   ID
      * @param array|null            $data Data
@@ -386,8 +386,8 @@ abstract class BaseModel
     abstract protected function doUpdate($id = null, $data = null): bool;
 
     /**
-     * Compiles an update and runs the query
-     * This methods works only with dbCalls
+     * Compiles an update and runs the query.
+     * This method works only with dbCalls.
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
@@ -401,8 +401,8 @@ abstract class BaseModel
     abstract protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false);
 
     /**
-     * Deletes a single record from the database where $id matches
-     * This methods works only with dbCalls
+     * Deletes a single record from the database where $id matches.
+     * This method works only with dbCalls.
      *
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
@@ -414,9 +414,9 @@ abstract class BaseModel
     abstract protected function doDelete($id = null, bool $purge = false);
 
     /**
-     * Permanently deletes all rows that have been marked as deleted
-     * through soft deletes (deleted = 1)
-     * This methods works only with dbCalls
+     * Permanently deletes all rows that have been marked as deleted.
+     * through soft deletes (deleted = 1).
+     * This method works only with dbCalls.
      *
      * @return bool|string Returns a string if in test mode.
      */
@@ -425,13 +425,13 @@ abstract class BaseModel
     /**
      * Works with the find* methods to return only the rows that
      * have been deleted.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      */
     abstract protected function doOnlyDeleted();
 
     /**
-     * Compiles a replace and runs the query
-     * This methods works only with dbCalls
+     * Compiles a replace and runs the query.
+     * This method works only with dbCalls.
      *
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
@@ -442,14 +442,14 @@ abstract class BaseModel
 
     /**
      * Grabs the last error(s) that occurred from the Database connection.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @return array|null
      */
     abstract protected function doErrors();
 
     /**
-     * Returns the id value for the data array or object
+     * Returns the id value for the data array or object.
      *
      * @param array|object $data Data
      *
@@ -460,8 +460,8 @@ abstract class BaseModel
     abstract protected function idValue($data);
 
     /**
-     * Public getter to return the id value using the idValue() method
-     * For example with SQL this will return $data->$this->primaryKey
+     * Public getter to return the id value using the idValue() method.
+     * For example with SQL this will return $data->$this->primaryKey.
      *
      * @param array|object $data
      *
@@ -476,7 +476,7 @@ abstract class BaseModel
 
     /**
      * Override countAllResults to account for soft deleted accounts.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @param bool $reset Reset
      * @param bool $test  Test
@@ -487,7 +487,7 @@ abstract class BaseModel
 
     /**
      * Loops over records in batches, allowing you to operate on them.
-     * This methods works only with dbCalls
+     * This method works only with dbCalls.
      *
      * @param int     $size     Size
      * @param Closure $userFunc Callback Function
@@ -497,7 +497,7 @@ abstract class BaseModel
     abstract public function chunk(int $size, Closure $userFunc);
 
     /**
-     * Fetches the row of database
+     * Fetches the row of database.
      *
      * @param array|int|string|null $id One primary key or an array of primary keys
      *
@@ -539,7 +539,7 @@ abstract class BaseModel
     }
 
     /**
-     * Fetches the column of database
+     * Fetches the column of database.
      *
      * @param string $columnName Column Name
      *
@@ -668,8 +668,8 @@ abstract class BaseModel
     }
 
     /**
-     * This method is called on save to determine if entry have to be updated
-     * If this method return false insert operation will be executed
+     * This method is called on save to determine if entry have to be updated.
+     * If this method returns false insert operation will be executed
      *
      * @param array|object $data Data
      */
@@ -720,7 +720,7 @@ abstract class BaseModel
         // Restore $cleanValidationRules
         $this->cleanValidationRules = $cleanValidationRules;
 
-        // Must be called first so we don't
+        // Must be called first, so we don't
         // strip out created_at values.
         $data = $this->doProtectFields($data);
 
@@ -897,7 +897,7 @@ abstract class BaseModel
     }
 
     /**
-     * Compiles an update and runs the query
+     * Compiles an update and runs the query.
      *
      * @param array|null  $set       An associative array of update values
      * @param string|null $index     The where key
@@ -954,7 +954,7 @@ abstract class BaseModel
     }
 
     /**
-     * Deletes a single record from the database where $id matches
+     * Deletes a single record from the database where $id matches.
      *
      * @param array|int|string|null $id    The rows primary key(s)
      * @param bool                  $purge Allows overriding the soft deletes setting.
@@ -996,7 +996,7 @@ abstract class BaseModel
 
     /**
      * Permanently deletes all rows that have been marked as deleted
-     * through soft deletes (deleted = 1)
+     * through soft deletes (deleted = 1).
      *
      * @return bool|string Returns a string if in test mode.
      */
@@ -1039,7 +1039,7 @@ abstract class BaseModel
     }
 
     /**
-     * Compiles a replace and runs the query
+     * Compiles a replace and runs the query.
      *
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
@@ -1064,6 +1064,7 @@ abstract class BaseModel
      * Grabs the last error(s) that occurred. If data was validated,
      * it will first check for errors there, otherwise will try to
      * grab the last error from the Database connection.
+     *
      * The return array should be in the following format:
      *  ['source' => 'message']
      *
@@ -1171,7 +1172,7 @@ abstract class BaseModel
     }
 
     /**
-     * Sets the date or current date if null value is passed
+     * Sets the date or current date if null value is passed.
      *
      * @param int|null $userData An optional PHP timestamp to be converted.
      *
@@ -1221,7 +1222,7 @@ abstract class BaseModel
     }
 
     /**
-     * Converts Time value to string using $this->dateFormat
+     * Converts Time value to string using $this->dateFormat.
      *
      * The available time formats are:
      *  - 'int'      - Stores the date as an integer timestamp
@@ -1398,7 +1399,7 @@ abstract class BaseModel
     }
 
     /**
-     * Returns the model's define validation messages so they
+     * Returns the model's define validation messages, so they
      * can be used elsewhere, if needed.
      */
     public function getValidationMessages(): array
@@ -1455,7 +1456,7 @@ abstract class BaseModel
      *
      * Each $eventData array MUST have a 'data' key with the relevant
      * data for callback methods (like an array of key/value pairs to insert
-     * or update, an array of results, etc)
+     * or update, an array of results, etc.)
      *
      * If callbacks are not allowed then returns $eventData immediately.
      *
@@ -1514,14 +1515,14 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class and returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array suitable for use in creates and updates.
      * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
      * @param object|string $data        Data
      * @param bool          $onlyChanged Only Changed Property
-     * @param bool          $recursive   If true, inner entities will be casted as array as well
+     * @param bool          $recursive   If true, inner entities will be cast as array as well
      *
      * @return array Array
      *
@@ -1580,7 +1581,7 @@ abstract class BaseModel
     }
 
     /**
-     * Transform data to array
+     * Transform data to array.
      *
      * @param array|object|null $data Data
      * @param string            $type Type of data (insert|update)
