@@ -262,7 +262,7 @@ final class MessageTest extends CIUnitTestCase
 
     public function testPopulateHeadersWithoutHTTP()
     {
-        // fail path, if arguement does't have the HTTP_*
+        // fail path, if argument doesn't have the HTTP_*
         $original = $_SERVER;
         $_SERVER  = [
             'USER_AGENT'     => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405',
