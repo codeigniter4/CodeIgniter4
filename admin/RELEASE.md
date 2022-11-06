@@ -43,7 +43,7 @@ git clone git@github.com:codeigniter4/userguide.git
 * Set the date in **user_guide_src/source/changelogs/{version}.rst** to format `Release Date: January 31, 2021`
 * Create a new changelog for the next version at **user_guide_src/source/changelogs/{next_version}.rst** and add it to **index.rst**
 * Create **user_guide_src/source/installation/upgrade_{ver}.rst**, fill in the "All Changes" section, and add it to **upgrading.rst**
-    * git diff --name-status master
+    * git diff --name-status master -- . ':!system'
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
     * Title: "Prep for 4.x.x release"
