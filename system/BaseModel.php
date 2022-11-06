@@ -1399,7 +1399,7 @@ abstract class BaseModel
     }
 
     /**
-     * Returns the model's define validation messages, so they
+     * Returns the model's validation messages, so they
      * can be used elsewhere, if needed.
      */
     public function getValidationMessages(): array
