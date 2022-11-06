@@ -240,17 +240,18 @@ final class MessageTest extends CIUnitTestCase
 
     public function testPopulateHeadersWithoutContentType()
     {
-        // fail path, if the CONTENT_TYPE doesn't exist
         $original    = $_SERVER;
-        $_SERVER     = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
         $originalEnv = getenv('CONTENT_TYPE');
+
+        // fail path, if the CONTENT_TYPE doesn't exist
+        $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'en-us,en;q=0.50'];
         putenv('CONTENT_TYPE');
 
         $this->message->populateHeaders();
 
         $this->assertNull($this->message->header('content-type'));
-        putenv("CONTENT_TYPE={$originalEnv}");
 
+        putenv("CONTENT_TYPE={$originalEnv}");
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
