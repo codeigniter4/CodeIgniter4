@@ -67,8 +67,13 @@ trait RequestTrait
         $this->ipAddress = $this->getServer('REMOTE_ADDR');
 
         if ($proxyIPs) {
-            foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_CLIENT_IP', 'HTTP_X_CLIENT_IP', 'HTTP_X_CLUSTER_CLIENT_IP'] as $header) {
-                if (($spoof = $this->getServer($header)) !== null) {
+            foreach (['x-forwarded-for', 'client-ip', 'x-client-ip', 'x-cluster-client-ip'] as $header) {
+                $spoof     = null;
+                $headerObj = $this->header($header);
+
+                if ($headerObj !== null) {
+                    $spoof = $headerObj->getValue();
+
                     // Some proxies typically list the whole chain of IP
                     // addresses through which the client has reached us.
                     // e.g. client_ip, proxy_ip1, proxy_ip2, etc.
