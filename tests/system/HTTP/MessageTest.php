@@ -257,6 +257,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertNull($this->message->header('content-type'));
         putenv("CONTENT_TYPE={$originalEnv}");
         $this->message->removeHeader('accept-language');
+
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
@@ -273,6 +274,7 @@ final class MessageTest extends CIUnitTestCase
 
         $this->assertNull($this->message->header('user-agent'));
         $this->assertNull($this->message->header('request-method'));
+
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
@@ -289,6 +291,7 @@ final class MessageTest extends CIUnitTestCase
 
         $this->assertSame('', $this->message->header('accept-charset')->getValue());
         $this->message->removeHeader('accept-charset');
+
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 
@@ -307,6 +310,7 @@ final class MessageTest extends CIUnitTestCase
         $this->assertSame('en-us,en;q=0.50', $this->message->header('accept-language')->getValue());
         $this->message->removeHeader('content-type');
         $this->message->removeHeader('accept-language');
+
         $_SERVER = $original; // restore so code coverage doesn't break
     }
 }
