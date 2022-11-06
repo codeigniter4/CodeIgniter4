@@ -16,6 +16,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\BaseResult;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
+use CodeIgniter\Database\Query;
 use CodeIgniter\Exceptions\ModelException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\Pager;
@@ -393,7 +394,7 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -435,7 +436,7 @@ abstract class BaseModel
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
      *
-     * @return mixed
+     * @return BaseResult|false|Query|string
      */
     abstract protected function doReplace(?array $data = null, bool $returnSQL = false);
 
@@ -480,7 +481,7 @@ abstract class BaseModel
      * @param bool $reset Reset
      * @param bool $test  Test
      *
-     * @return mixed
+     * @return int|string
      */
     abstract public function countAllResults(bool $reset = true, bool $test = false);
 
@@ -903,7 +904,7 @@ abstract class BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      * @throws ReflectionException
@@ -997,7 +998,7 @@ abstract class BaseModel
      * Permanently deletes all rows that have been marked as deleted
      * through soft deletes (deleted = 1)
      *
-     * @return mixed
+     * @return bool|string Returns a string if in test mode.
      */
     public function purgeDeleted()
     {
@@ -1043,7 +1044,7 @@ abstract class BaseModel
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
      *
-     * @return mixed
+     * @return BaseResult|false|Query|string
      */
     public function replace(?array $data = null, bool $returnSQL = false)
     {
@@ -1174,7 +1175,7 @@ abstract class BaseModel
      *
      * @param int|null $userData An optional PHP timestamp to be converted.
      *
-     * @return mixed
+     * @return int|string
      *
      * @throws ModelException
      */
@@ -1461,7 +1462,7 @@ abstract class BaseModel
      * @param string $event     Event
      * @param array  $eventData Event Data
      *
-     * @return mixed
+     * @return array
      *
      * @throws DataException
      */
