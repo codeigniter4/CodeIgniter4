@@ -94,6 +94,10 @@ final class TimerTest extends CIUnitTestCase
         $timer->stop('test1');
     }
 
+    /**
+     * This test might fail if your timezone has Daylight Saving Time.
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/6823
+     */
     public function testLongExecutionTime()
     {
         $timer = new Timer();
