@@ -1254,7 +1254,7 @@ abstract class BaseModel
      */
     protected function setDate(?int $userData = null)
     {
-        $currentDate = $userData ?? time();
+        $currentDate = $userData ?? Time::now()->getTimestamp();
 
         return $this->intToDate($currentDate);
     }

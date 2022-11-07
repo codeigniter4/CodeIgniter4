@@ -230,7 +230,6 @@ final class TimeTest extends CIUnitTestCase
         $time = Time::createFromFormat('F j, Y', 'January 15, 2017', 'America/Chicago');
 
         $this->assertCloseEnoughString(date('2017-01-15 H:i:s', $now->getTimestamp()), $time->toDateTimeString());
-        Time::setTestNow();
     }
 
     public function testCreateFromFormatWithTimezoneString()
