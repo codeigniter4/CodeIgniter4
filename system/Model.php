@@ -263,7 +263,7 @@ class Model extends BaseModel
         $escape       = $this->escape;
         $this->escape = [];
 
-        // Require non empty primaryKey when
+        // Require non-empty primaryKey when
         // not using auto-increment feature
         if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
@@ -301,7 +301,7 @@ class Model extends BaseModel
     {
         if (is_array($set)) {
             foreach ($set as $row) {
-                // Require non empty primaryKey when
+                // Require non-empty primaryKey when
                 // not using auto-increment feature
                 if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
@@ -347,7 +347,7 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -432,7 +432,7 @@ class Model extends BaseModel
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
      *
-     * @return mixed
+     * @return BaseResult|false|Query|string
      */
     protected function doReplace(?array $data = null, bool $returnSQL = false)
     {
@@ -533,7 +533,7 @@ class Model extends BaseModel
     /**
      * Override countAllResults to account for soft deleted accounts.
      *
-     * @return mixed
+     * @return int|string
      */
     public function countAllResults(bool $reset = true, bool $test = false)
     {
