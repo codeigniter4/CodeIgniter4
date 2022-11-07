@@ -35,7 +35,7 @@ jobs:
         with:
           php-version: '8.1'
           tools: phpstan, phpunit
-          extensions: intl, json, mbstring, xml
+          extensions: intl, json, mbstring, xml, oci8
           coverage: none
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
