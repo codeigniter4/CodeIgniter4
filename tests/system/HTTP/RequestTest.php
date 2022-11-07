@@ -613,6 +613,7 @@ final class RequestTest extends CIUnitTestCase
         $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $this->request                   = new Request($config);
+        $this->request->populateHeaders();
 
         // we should see the original forwarded address
         $this->assertSame($expected, $this->request->getIPAddress());
@@ -626,6 +627,7 @@ final class RequestTest extends CIUnitTestCase
         $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $this->request                   = new Request($config);
+        $this->request->populateHeaders();
 
         // spoofed address invalid
         $this->assertSame('10.0.1.200', $this->request->getIPAddress());
@@ -639,6 +641,7 @@ final class RequestTest extends CIUnitTestCase
         $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $this->request                   = new Request($config);
+        $this->request->populateHeaders();
 
         // spoofed address invalid
         $this->assertSame('10.10.1.200', $this->request->getIPAddress());
@@ -652,6 +655,7 @@ final class RequestTest extends CIUnitTestCase
         $config->proxyIPs                = ['192.168.5.0/24'];
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $this->request                   = new Request($config);
+        $this->request->populateHeaders();
 
         // we should see the original forwarded address
         $this->assertSame($expected, $this->request->getIPAddress());
@@ -665,6 +669,7 @@ final class RequestTest extends CIUnitTestCase
         $config->proxyIPs                = ['192.168.5.0/28'];
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $this->request                   = new Request($config);
+        $this->request->populateHeaders();
 
         // we should see the original forwarded address
         $this->assertSame('192.168.5.21', $this->request->getIPAddress());
