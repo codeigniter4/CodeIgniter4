@@ -710,8 +710,13 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (
-            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-            && ! empty($data->{$this->primaryKey}))
+            method_exists($data, 'toRawArray')
+            && (
+                ! empty($properties)
+                && ! empty($this->primaryKey)
+                && ! in_array($this->primaryKey, $properties, true)
+                && ! empty($data->{$this->primaryKey})
+            )
         ) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
         }
