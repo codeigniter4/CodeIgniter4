@@ -398,6 +398,10 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame($expected, $time->timestamp);
     }
 
+    /**
+     * This test might fail if your timezone has Daylight Saving Time.
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/6818
+     */
     public function testGetAge()
     {
         $time = Time::parse('5 years ago');
@@ -455,9 +459,10 @@ final class TimeTest extends CIUnitTestCase
     public function testGetDST()
     {
         // America/Chicago. DST from early March -> early Nov
-        $time = Time::createFromDate(2012, 1, 1);
+        $time = Time::createFromDate(2012, 1, 1, 'America/Chicago');
         $this->assertFalse($time->dst);
-        $time = Time::createFromDate(2012, 9, 1);
+
+        $time = Time::createFromDate(2012, 9, 1, 'America/Chicago');
         $this->assertTrue($time->dst);
     }
 

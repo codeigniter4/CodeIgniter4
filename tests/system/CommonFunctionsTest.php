@@ -316,7 +316,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testAppTimezone()
     {
-        $this->assertSame('America/Chicago', app_timezone());
+        $this->assertSame('UTC', app_timezone());
     }
 
     public function testCSRFToken()
