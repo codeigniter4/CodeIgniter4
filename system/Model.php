@@ -119,11 +119,11 @@ class Model extends BaseModel
     protected $escape = [];
 
     /**
-     * Primary Key data when inserting and useAutoIncrement is false.
+     * Primary Key value when inserting and useAutoIncrement is false.
      *
      * @var int|string|null
      */
-    private $tempPrimaryKeyData;
+    private $tempPrimaryKeyValue;
 
     /**
      * Builder method names that should not be used in the Model.
@@ -271,10 +271,10 @@ class Model extends BaseModel
         $this->escape = [];
 
         // If $useAutoIncrement is false, add the primary key data.
-        if ($this->useAutoIncrement === false && $this->tempPrimaryKeyData !== null) {
-            $data[$this->primaryKey] = $this->tempPrimaryKeyData;
+        if ($this->useAutoIncrement === false && $this->tempPrimaryKeyValue !== null) {
+            $data[$this->primaryKey] = $this->tempPrimaryKeyValue;
 
-            $this->tempPrimaryKeyData = null;
+            $this->tempPrimaryKeyValue = null;
         }
 
         // Require non-empty primaryKey when
@@ -676,7 +676,7 @@ class Model extends BaseModel
         }
 
         if ($this->useAutoIncrement === false && isset($data[$this->primaryKey])) {
-            $this->tempPrimaryKeyData = $data[$this->primaryKey];
+            $this->tempPrimaryKeyValue = $data[$this->primaryKey];
         }
 
         $this->escape   = $this->tempData['escape'] ?? [];
