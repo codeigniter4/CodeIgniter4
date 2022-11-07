@@ -459,9 +459,10 @@ final class TimeTest extends CIUnitTestCase
     public function testGetDST()
     {
         // America/Chicago. DST from early March -> early Nov
-        $time = Time::createFromDate(2012, 1, 1);
+        $time = Time::createFromDate(2012, 1, 1, 'America/Chicago');
         $this->assertFalse($time->dst);
-        $time = Time::createFromDate(2012, 9, 1);
+
+        $time = Time::createFromDate(2012, 9, 1, 'America/Chicago');
         $this->assertTrue($time->dst);
     }
 
