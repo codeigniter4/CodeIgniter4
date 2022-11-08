@@ -12,13 +12,13 @@
 ## What is CodeIgniter?
 
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](http://codeigniter.com).
+More information can be found at the [official site](https://codeigniter.com).
 
 This repository holds the source code for CodeIgniter 4 only.
 Version 4 is a complete rewrite to bring the quality and the code into a more modern version,
 while still keeping as many of the things intact that has made people love the framework over the years.
 
-More information about the plans for version 4 can be found in [the announcement](http://forum.codeigniter.com/thread-62615.html) on the forums.
+More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
 
 ### Documentation
 
@@ -69,12 +69,12 @@ to optional packages, with their own repository.
 
 ## Contributing
 
-We **are** accepting contributions from the community! It doesn't matter whether you can code, write documentation, or help find bugs, 
-all contributions are welcome. 
+We **are** accepting contributions from the community! It doesn't matter whether you can code, write documentation, or help find bugs,
+all contributions are welcome.
 
 Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/contributing/README.md).
 
-CodeIgniter has had thousands on contributions from people since its creation. This project would not be what it is without them. 
+CodeIgniter has had thousands on contributions from people since its creation. This project would not be what it is without them.
 
 <a href="https://github.com/codeigniter4/CodeIgniter4/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=codeigniter4/CodeIgniter4" />
@@ -86,7 +86,6 @@ Made with [contrib.rocks](https://contrib.rocks).
 
 PHP version 7.4 or higher is required, with the following extensions installed:
 
-
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
@@ -95,7 +94,7 @@ Additionally, make sure that the following extensions are enabled in your PHP:
 
 - json (enabled by default - don't turn it off)
 - xml (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php)
+- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
 
 ## Running CodeIgniter Tests
 
