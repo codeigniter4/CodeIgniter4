@@ -80,7 +80,7 @@ library. This will make the database class available through the
 Now that the database and a model have been set up, you'll need a method
 to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter -
-:doc:`Query Builder <../database/query_builder>` - is used in the ``CodeIgnite\Model``. This makes it
+:doc:`Query Builder <../database/query_builder>` - is used in the ``CodeIgniter\Model``. This makes it
 possible to write your 'queries' once and make them work on :doc:`all
 supported database systems <../intro/requirements>`. The Model class
 also allows you to easily work with the Query Builder and provides
