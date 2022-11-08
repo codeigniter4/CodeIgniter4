@@ -23,7 +23,7 @@ class Request extends Message implements MessageInterface, RequestInterface
     /**
      * Proxy IPs
      *
-     * @var array|string
+     * @var array<string, string>
      *
      * @deprecated Check the App config directly
      */

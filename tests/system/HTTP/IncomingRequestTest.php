@@ -714,9 +714,12 @@ final class IncomingRequestTest extends CIUnitTestCase
         $expected                        = '123.123.123.123';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
 
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+        ];
         $this->request = new Request($config);
         $this->request->populateHeaders();
 
@@ -729,9 +732,12 @@ final class IncomingRequestTest extends CIUnitTestCase
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
         $expected                        = '10.0.1.200';
         $_SERVER['REMOTE_ADDR']          = $expected;
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
 
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+        ];
         $this->request = new Request($config);
         $this->request->populateHeaders();
 
@@ -744,9 +750,12 @@ final class IncomingRequestTest extends CIUnitTestCase
         $expected                        = '10.10.1.200';
         $_SERVER['REMOTE_ADDR']          = $expected;
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
 
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+        ];
         $this->request = new Request($config);
         $this->request->populateHeaders();
 
@@ -759,10 +768,10 @@ final class IncomingRequestTest extends CIUnitTestCase
         $expected                        = '123.123.123.123';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
         $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $config                          = new App();
-        $config->proxyIPs                = ['192.168.5.0/24'];
 
-        $this->request = new Request($config);
+        $config           = new App();
+        $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
+        $this->request    = new Request($config);
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
@@ -773,10 +782,11 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $expected                        = '192.168.5.21';
         $_SERVER['REMOTE_ADDR']          = $expected;
-        $config                          = new App();
-        $config->proxyIPs                = ['192.168.5.0/28'];
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
-        $this->request                   = new Request($config);
+
+        $config           = new App();
+        $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];
+        $this->request    = new Request($config);
         $this->request->populateHeaders();
 
         // we should see the original forwarded address
