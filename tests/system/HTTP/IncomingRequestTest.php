@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -791,6 +792,36 @@ final class IncomingRequestTest extends CIUnitTestCase
 
         // we should see the original forwarded address
         $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyInvalidConfigString()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
+        );
+
+        $config           = new App();
+        $config->proxyIPs = '192.168.5.0/28';
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
+
+        $this->request->getIPAddress();
+    }
+
+    public function testGetIPAddressThruProxyInvalidConfigArray()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
+        );
+
+        $config           = new App();
+        $config->proxyIPs = ['192.168.5.0/28'];
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
+
+        $this->request->getIPAddress();
     }
 
     // @TODO getIPAddress should have more testing, to 100% code coverage
