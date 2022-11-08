@@ -119,6 +119,13 @@ class Model extends BaseModel
     protected $escape = [];
 
     /**
+     * Primary Key value when inserting and useAutoIncrement is false.
+     *
+     * @var int|string|null
+     */
+    private $tempPrimaryKeyValue;
+
+    /**
      * Builder method names that should not be used in the Model.
      *
      * @var string[] method name
@@ -262,6 +269,13 @@ class Model extends BaseModel
     {
         $escape       = $this->escape;
         $this->escape = [];
+
+        // If $useAutoIncrement is false, add the primary key data.
+        if ($this->useAutoIncrement === false && $this->tempPrimaryKeyValue !== null) {
+            $data[$this->primaryKey] = $this->tempPrimaryKeyValue;
+
+            $this->tempPrimaryKeyValue = null;
+        }
 
         // Require non-empty primaryKey when
         // not using auto-increment feature
@@ -688,6 +702,10 @@ class Model extends BaseModel
             }
         }
 
+        if ($this->useAutoIncrement === false && isset($data[$this->primaryKey])) {
+            $this->tempPrimaryKeyValue = $data[$this->primaryKey];
+        }
+
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
@@ -737,8 +755,13 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (
-            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-            && ! empty($data->{$this->primaryKey}))
+            method_exists($data, 'toRawArray')
+            && (
+                ! empty($properties)
+                && ! empty($this->primaryKey)
+                && ! in_array($this->primaryKey, $properties, true)
+                && ! empty($data->{$this->primaryKey})
+            )
         ) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
         }
