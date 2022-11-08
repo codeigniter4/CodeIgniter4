@@ -80,23 +80,11 @@ trait RequestTrait
                     // An IP address (and not a subnet) is specified.
                     // We can compare right away.
                     if ($proxyIP === $this->ipAddress) {
-                        $spoof     = null;
-                        $headerObj = $this->header($header);
+                        $spoof = $this->getClientIP($header);
 
-                        if ($headerObj !== null) {
-                            $spoof = $headerObj->getValue();
-
-                            // Some proxies typically list the whole chain of IP
-                            // addresses through which the client has reached us.
-                            // e.g. client_ip, proxy_ip1, proxy_ip2, etc.
-                            sscanf($spoof, '%[^,]', $spoof);
-
-                            if (! $ipValidator($spoof)) {
-                                $spoof = null;
-                            } else {
-                                $this->ipAddress = $spoof;
-                                break;
-                            }
+                        if ($spoof !== null) {
+                            $this->ipAddress = $spoof;
+                            break;
                         }
                     }
 
@@ -148,23 +136,11 @@ trait RequestTrait
 
                 // Convert to binary and finally compare
                 if (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === 0) {
-                    $spoof     = null;
-                    $headerObj = $this->header($header);
+                    $spoof = $this->getClientIP($header);
 
-                    if ($headerObj !== null) {
-                        $spoof = $headerObj->getValue();
-
-                        // Some proxies typically list the whole chain of IP
-                        // addresses through which the client has reached us.
-                        // e.g. client_ip, proxy_ip1, proxy_ip2, etc.
-                        sscanf($spoof, '%[^,]', $spoof);
-
-                        if (! $ipValidator($spoof)) {
-                            $spoof = null;
-                        } else {
-                            $this->ipAddress = $spoof;
-                            break;
-                        }
+                    if ($spoof !== null) {
+                        $this->ipAddress = $spoof;
+                        break;
                     }
                 }
             }
@@ -175,6 +151,34 @@ trait RequestTrait
         }
 
         return empty($this->ipAddress) ? '' : $this->ipAddress;
+    }
+
+    /**
+     * Gets the client IP address from the HTTP header.
+     */
+    private function getClientIP(string $header): ?string
+    {
+        $ipValidator = [
+            new FormatRules(),
+            'valid_ip',
+        ];
+        $spoof     = null;
+        $headerObj = $this->header($header);
+
+        if ($headerObj !== null) {
+            $spoof = $headerObj->getValue();
+
+            // Some proxies typically list the whole chain of IP
+            // addresses through which the client has reached us.
+            // e.g. client_ip, proxy_ip1, proxy_ip2, etc.
+            sscanf($spoof, '%[^,]', $spoof);
+
+            if (! $ipValidator($spoof)) {
+                $spoof = null;
+            }
+        }
+
+        return $spoof;
     }
 
     /**
