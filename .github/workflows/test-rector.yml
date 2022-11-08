@@ -7,7 +7,6 @@ on:
     branches:
       - 'develop'
       - '4.*'
-      - 'dependabot/composer/rector/rector-*'
     paths:
       - 'app/**.php'
       - 'system/**.php'
