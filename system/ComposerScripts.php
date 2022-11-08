@@ -88,6 +88,8 @@ final class ComposerScripts
     {
         if (! is_dir($directory)) {
             echo sprintf('Cannot recursively delete "%s" as it does not exist.', $directory);
+
+            return;
         }
 
         /** @var SplFileInfo $file */
