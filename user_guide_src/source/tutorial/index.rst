@@ -110,12 +110,19 @@ This means that your application works and you can start making changes to it.
 Debugging
 *********
 
-Now that you're in development mode, you'll see a toolbar on the bottom of your application.
+Debug Toolbar
+=============
+
+Now that you're in development mode, you'll see the CodeIgniter flame on the right bottom of your application. Click it and you'll see the debug toolbar.
+
 This toolbar contains a number of helpful items that you can reference during development.
 This will never show in production environments. Clicking any of the tabs along the bottom
 brings up additional information. Clicking the X on the right of the toolbar minimizes it
 to a small square with the CodeIgniter flame on it. If you click that the toolbar
 will show again.
+
+Error Pages
+===========
 
 In addition to this, CodeIgniter has some helpful error pages when you hit exceptions or
 other errors in your program. Open up ``app/Controllers/Home.php`` and change some line
