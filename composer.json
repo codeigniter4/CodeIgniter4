@@ -102,7 +102,7 @@
         "cs-fix": "Fix the coding style"
     },
     "support": {
-        "forum": "http://forum.codeigniter.com/",
+        "forum": "https://forum.codeigniter.com/",
         "source": "https://github.com/codeigniter4/CodeIgniter4",
         "slack": "https://codeigniterchat.slack.com"
     }
