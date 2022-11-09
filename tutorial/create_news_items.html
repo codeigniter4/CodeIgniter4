@@ -275,12 +275,21 @@
              
   <section id="create-news-items">
 <h1>Create News Items<a class="headerlink" href="#create-news-items" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#enable-csrf-filter" id="id1">Enable CSRF Filter</a></p></li>
+<li><p><a class="reference internal" href="#create-a-form" id="id2">Create a Form</a></p></li>
+<li><p><a class="reference internal" href="#model-updating" id="id3">Model Updating</a></p></li>
+<li><p><a class="reference internal" href="#routing" id="id4">Routing</a></p></li>
+<li><p><a class="reference internal" href="#congratulations" id="id5">Congratulations</a></p></li>
+</ul>
+</div>
 <p>You now know how you can read data from a database using CodeIgniter, but
 you haven’t written any information to the database yet. In this section,
 you’ll expand your news controller and model created earlier to include
 this functionality.</p>
 <section id="enable-csrf-filter">
-<h2>Enable CSRF Filter<a class="headerlink" href="#enable-csrf-filter" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Enable CSRF Filter</a><a class="headerlink" href="#enable-csrf-filter" title="Permalink to this headline"></a></h2>
 <p>Before creating a form, let’s enable the CSRF protection.</p>
 <p>Open the <strong>app/Config/Filters.php</strong> file and update the <code class="docutils literal notranslate"><span class="pre">$methods</span></code> property like the following:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -303,13 +312,13 @@ this functionality.</p>
 You can read more about the CSRF protection in <a class="reference internal" href="../libraries/security.html"><span class="doc">Security</span></a> library.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>
-because auto-routing permits any HTTP method to access a controller.
+<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable  Auto Routing (Legacy)</span></a>
+because <a class="reference internal" href="../incoming/routing.html#auto-routing"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller.
 Accessing the controller with a method you don’t expect could bypass the filter.</p>
 </div>
 </section>
 <section id="create-a-form">
-<h2>Create a Form<a class="headerlink" href="#create-a-form" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Create a Form</a><a class="headerlink" href="#create-a-form" title="Permalink to this headline"></a></h2>
 <p>To input data into the database, you need to create a form where you can
 input the information to be stored. This means you’ll be needing a form
 with two fields, one for the title and one for the text. You’ll derive
@@ -397,7 +406,7 @@ slug, perfect for creating URIs.</p>
 </div>
 </section>
 <section id="model-updating">
-<h2>Model Updating<a class="headerlink" href="#model-updating" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Model Updating</a><a class="headerlink" href="#model-updating" title="Permalink to this headline"></a></h2>
 <p>The only thing that remains is ensuring that your model is set up
 to allow data to be saved properly. The <code class="docutils literal notranslate"><span class="pre">save()</span></code> method that was
 used will determine whether the information should be inserted
@@ -429,7 +438,7 @@ This helps protect against Mass Assignment Vulnerabilities. If your model is
 handling your timestamps, you would also leave those out.</p>
 </section>
 <section id="routing">
-<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Routing</a><a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
 <p>Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to <strong>app/Config/Routes.php</strong> file. Make sure your
 file contains the following. This makes sure CodeIgniter sees <code class="docutils literal notranslate"><span class="pre">create()</span></code>
@@ -455,7 +464,7 @@ Add some news and check out the different pages you made.</p>
 <a class="reference internal image-reference" href="../_images/tutorial4.png"><img alt="../_images/tutorial4.png" class="align-center" src="../_images/tutorial4.png" style="width: 45%; height: 415px;" /></a>
 </section>
 <section id="congratulations">
-<h2>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Congratulations</a><a class="headerlink" href="#congratulations" title="Permalink to this headline"></a></h2>
 <p>You just completed your first CodeIgniter4 application!</p>
 <p>The image underneath shows your project’s <strong>app</strong> folder,
 with all of the files that you created in red.
@@ -476,7 +485,7 @@ The two modified configuration files (<strong>Config/Routes.php</strong> &amp; <
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 07, 2022.
+      <span class="lastupdated">Last updated on Nov 09, 2022.
       </span></p>
   </div>
 

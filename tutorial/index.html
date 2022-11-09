@@ -274,8 +274,27 @@
              
   <section id="build-your-first-application">
 <h1>Build Your First Application<a class="headerlink" href="#build-your-first-application" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id2">Overview</a></p></li>
+<li><p><a class="reference internal" href="#getting-up-and-running" id="id3">Getting Up and Running</a></p>
+<ul>
+<li><p><a class="reference internal" href="#installing-codeigniter" id="id4">Installing CodeIgniter</a></p></li>
+<li><p><a class="reference internal" href="#setting-development-mode" id="id5">Setting Development Mode</a></p></li>
+<li><p><a class="reference internal" href="#running-development-server" id="id6">Running Development Server</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#the-welcome-page" id="id7">The Welcome Page</a></p></li>
+<li><p><a class="reference internal" href="#debugging" id="id8">Debugging</a></p>
+<ul>
+<li><p><a class="reference internal" href="#debug-toolbar" id="id9">Debug Toolbar</a></p></li>
+<li><p><a class="reference internal" href="#error-pages" id="id10">Error Pages</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p>This tutorial is intended to introduce you to the CodeIgniter4 framework
 and the basic principles of MVC architecture. It will show you how a
 basic CodeIgniter application is constructed in a step-by-step fashion.</p>
@@ -312,9 +331,9 @@ further reading and other resources.</p></li>
 </div>
 </section>
 <section id="getting-up-and-running">
-<h2>Getting Up and Running<a class="headerlink" href="#getting-up-and-running" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Getting Up and Running</a><a class="headerlink" href="#getting-up-and-running" title="Permalink to this headline"></a></h2>
 <section id="installing-codeigniter">
-<h3>Installing CodeIgniter<a class="headerlink" href="#installing-codeigniter" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Installing CodeIgniter</a><a class="headerlink" href="#installing-codeigniter" title="Permalink to this headline"></a></h3>
 <p>You can download a release manually from the site, but for this tutorial we will
 use the recommended way and install the AppStarter package through Composer.
 From your command line type the following:</p>
@@ -325,7 +344,7 @@ From your command line type the following:</p>
 CodeIgniter installed in the vendor folder.</p>
 </section>
 <section id="setting-development-mode">
-<span id="id1"></span><h3>Setting Development Mode<a class="headerlink" href="#setting-development-mode" title="Permalink to this headline"></a></h3>
+<span id="id1"></span><h3><a class="toc-backref" href="#id5">Setting Development Mode</a><a class="headerlink" href="#setting-development-mode" title="Permalink to this headline"></a></h3>
 <p>By default, CodeIgniter starts up in production mode. This is a safety feature
 to keep your site a bit more secure in case settings are messed up once it is live.
 So first let’s fix that. Copy or rename the <code class="docutils literal notranslate"><span class="pre">env</span></code> file to <code class="docutils literal notranslate"><span class="pre">.env</span></code>. Open it up.</p>
@@ -339,7 +358,7 @@ out. So uncomment the line with <code class="docutils literal notranslate"><span
 </div>
 </section>
 <section id="running-development-server">
-<h3>Running Development Server<a class="headerlink" href="#running-development-server" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Running Development Server</a><a class="headerlink" href="#running-development-server" title="Permalink to this headline"></a></h3>
 <p>With that out of the way it’s time to view your application in a browser. You can
 serve it through any server of your choice, Apache, Nginx, etc, but CodeIgniter
 comes with a simple command that takes advantage of PHP’s built-in server to get
@@ -351,7 +370,7 @@ command line from the root of your project:</p>
 </section>
 </section>
 <section id="the-welcome-page">
-<h2>The Welcome Page<a class="headerlink" href="#the-welcome-page" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">The Welcome Page</a><a class="headerlink" href="#the-welcome-page" title="Permalink to this headline"></a></h2>
 <p>Now point your browser to the correct URL you will be greeted by a welcome screen.
 Try it now by heading to the following URL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">localhost</span><span class="o">:</span><span class="mi">8080</span>
@@ -362,13 +381,18 @@ Try it now by heading to the following URL:</p>
 <p>This means that your application works and you can start making changes to it.</p>
 </section>
 <section id="debugging">
-<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline"></a></h2>
-<p>Now that you’re in development mode, you’ll see a toolbar on the bottom of your application.
-This toolbar contains a number of helpful items that you can reference during development.
+<h2><a class="toc-backref" href="#id8">Debugging</a><a class="headerlink" href="#debugging" title="Permalink to this headline"></a></h2>
+<section id="debug-toolbar">
+<h3><a class="toc-backref" href="#id9">Debug Toolbar</a><a class="headerlink" href="#debug-toolbar" title="Permalink to this headline"></a></h3>
+<p>Now that you’re in development mode, you’ll see the CodeIgniter flame on the right bottom of your application. Click it and you’ll see the debug toolbar.</p>
+<p>This toolbar contains a number of helpful items that you can reference during development.
 This will never show in production environments. Clicking any of the tabs along the bottom
 brings up additional information. Clicking the X on the right of the toolbar minimizes it
 to a small square with the CodeIgniter flame on it. If you click that the toolbar
 will show again.</p>
+</section>
+<section id="error-pages">
+<h3><a class="toc-backref" href="#id10">Error Pages</a><a class="headerlink" href="#error-pages" title="Permalink to this headline"></a></h3>
 <p>In addition to this, CodeIgniter has some helpful error pages when you hit exceptions or
 other errors in your program. Open up <code class="docutils literal notranslate"><span class="pre">app/Controllers/Home.php</span></code> and change some line
 to generate an error (removing a semi-colon or brace should do the trick!). You will be
@@ -386,6 +410,7 @@ the arguments that were passed into that function call.</p></li>
 small news application.</p>
 </section>
 </section>
+</section>
 
 
            </div>
@@ -399,7 +424,7 @@ small news application.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 07, 2022.
+      <span class="lastupdated">Last updated on Nov 09, 2022.
       </span></p>
   </div>
 

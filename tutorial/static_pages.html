@@ -275,6 +275,14 @@
              
   <section id="static-pages">
 <h1>Static Pages<a class="headerlink" href="#static-pages" title="Permalink to this headline"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#let-s-make-our-first-controller" id="id1">Let’s Make our First Controller</a></p></li>
+<li><p><a class="reference internal" href="#adding-logic-to-the-controller" id="id2">Adding Logic to the Controller</a></p></li>
+<li><p><a class="reference internal" href="#routing" id="id3">Routing</a></p></li>
+<li><p><a class="reference internal" href="#running-the-app" id="id4">Running the App</a></p></li>
+</ul>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This tutorial assumes you’ve downloaded CodeIgniter and
@@ -285,7 +293,7 @@ development environment.</p>
 static pages. A controller is simply a class that helps delegate work.
 It is the glue of your web application.</p>
 <section id="let-s-make-our-first-controller">
-<h2>Let’s Make our First Controller<a class="headerlink" href="#let-s-make-our-first-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id1">Let’s Make our First Controller</a><a class="headerlink" href="#let-s-make-our-first-controller" title="Permalink to this headline"></a></h2>
 <p>Create a file at <strong>app/Controllers/Pages.php</strong> with the following
 code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -358,7 +366,7 @@ XSS attacks. You can read more about it <a class="reference internal" href="../g
 </div>
 </section>
 <section id="adding-logic-to-the-controller">
-<h2>Adding Logic to the Controller<a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Adding Logic to the Controller</a><a class="headerlink" href="#adding-logic-to-the-controller" title="Permalink to this headline"></a></h2>
 <p>Earlier you set up a controller with a <code class="docutils literal notranslate"><span class="pre">view()</span></code> method. The method
 accepts one parameter, which is the name of the page to be loaded. The
 static page bodies will be located in the <strong>app/Views/pages/</strong>
@@ -418,7 +426,7 @@ throw errors on case-sensitive platforms. You can read more about it
 </div>
 </section>
 <section id="routing">
-<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Routing</a><a class="headerlink" href="#routing" title="Permalink to this headline"></a></h2>
 <p>We have made the controller. The next thing is to set routing rules.
 Routing associates a URI with a controller’s method.</p>
 <p>Let’s do that. Open the routing file located at
@@ -458,7 +466,7 @@ using the wildcard string <code class="docutils literal notranslate"><span class
 <code class="docutils literal notranslate"><span class="pre">view()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
 </section>
 <section id="running-the-app">
-<h2>Running the App<a class="headerlink" href="#running-the-app" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Running the App</a><a class="headerlink" href="#running-the-app" title="Permalink to this headline"></a></h2>
 <p>Ready to test? You cannot run the app using PHP’s built-in server,
 since it will not properly process the <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> rules that are provided in
 <code class="docutils literal notranslate"><span class="pre">public</span></code>, and which eliminate the need to specify “index.php/”
@@ -524,7 +532,7 @@ asked for it.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 07, 2022.
+      <span class="lastupdated">Last updated on Nov 09, 2022.
       </span></p>
   </div>
 
