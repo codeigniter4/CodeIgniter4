@@ -189,9 +189,6 @@ final class LikeTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
-    /**
-     * @group single
-     */
     public function testCaseInsensitiveLike()
     {
         $builder = new BaseBuilder('job', $this->db);

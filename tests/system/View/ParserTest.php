@@ -744,9 +744,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame($result, $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testCanAddAndRemovePlugins()
     {
         $this->parser->addPlugin('first', static fn ($str) => $str);
@@ -762,9 +759,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('first', $setParsers);
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserPluginNoMatches()
     {
         $template = 'hit:it';
@@ -772,9 +766,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('hit:it', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserPluginNoParams()
     {
         $this->parser->addPlugin('hit:it', static fn ($str) => str_replace('here', 'Hip to the Hop', $str), true);
@@ -784,9 +775,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame(' stuff Hip to the Hop ', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserPluginClosure()
     {
         $config                   = $this->config;
@@ -799,9 +787,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Hello, world', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserPluginParams()
     {
         $this->parser->addPlugin('growth', static function ($str, array $params) {
@@ -822,9 +807,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame(' 2 4 6 8', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserSingleTag()
     {
         $this->parser->addPlugin('hit:it', static fn () => 'Hip to the Hop', false);
@@ -834,9 +816,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('Hip to the Hop', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserSingleTagWithParams()
     {
         $this->parser->addPlugin('hit:it', static fn (array $params = []) => "{$params['first']} to the {$params['last']}", false);
@@ -846,9 +825,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('foo to the bar', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserSingleTagWithSingleParams()
     {
         $this->parser->addPlugin('hit:it', static fn (array $params = []) => "{$params[0]} to the {$params[1]}", false);
@@ -858,9 +834,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('foo to the bar', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserSingleTagWithQuotedParams()
     {
         $this->parser->addPlugin('count', static function (array $params = []) {
@@ -878,9 +851,6 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('0. foo bar 1. baz 2. foo bar ', $this->parser->renderString($template));
     }
 
-    /**
-     * @group parserplugins
-     */
     public function testParserSingleTagWithNamedParams()
     {
         $this->parser->addPlugin('read_params', static function (array $params = []) {
