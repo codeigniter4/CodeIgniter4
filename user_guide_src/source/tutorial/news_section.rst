@@ -1,6 +1,10 @@
 News Section
 ############
 
+.. contents::
+    :local:
+    :depth: 2
+
 In the last section, we went over some basic concepts of the framework
 by writing a class that references static pages. We cleaned up the URI by
 adding custom routing rules. Now it's time to introduce dynamic content

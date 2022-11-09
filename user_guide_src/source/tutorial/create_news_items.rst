@@ -1,6 +1,10 @@
 Create News Items
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 You now know how you can read data from a database using CodeIgniter, but
 you haven't written any information to the database yet. In this section,
 you'll expand your news controller and model created earlier to include
