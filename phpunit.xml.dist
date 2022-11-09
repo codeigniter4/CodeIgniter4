@@ -7,27 +7,30 @@
          beStrictAboutTodoAnnotatedTests="true"
          cacheResultFile="build/.phpunit.cache/test-results"
          colors="true"
+         columns="max"
          failOnRisky="true"
          failOnWarning="true"
          verbose="true">
 
-    <coverage processUncoveredFiles="true" ignoreDeprecatedCodeUnits="true">
+    <coverage cacheDirectory="build/.phpunit.cache/code-coverage"
+              processUncoveredFiles="true"
+              ignoreDeprecatedCodeUnits="true">
         <include>
-            <directory suffix=".php">./system</directory>
+            <directory suffix=".php">system</directory>
         </include>
 
         <exclude>
-            <directory>./system/Commands/Generators/Views</directory>
-            <directory>./system/Debug/Toolbar/Views</directory>
-            <directory>./system/Pager/Views</directory>
-            <directory>./system/ThirdParty</directory>
-            <directory>./system/Validation/Views</directory>
-            <file>./system/bootstrap.php</file>
-            <file>./system/ComposerScripts.php</file>
-            <file>./system/Config/Routes.php</file>
-            <file>./system/Test/bootstrap.php</file>
-            <file>./system/Test/ControllerTester.php</file>
-            <file>./system/Test/FeatureTestCase.php</file>
+            <directory>system/Commands/Generators/Views</directory>
+            <directory>system/Debug/Toolbar/Views</directory>
+            <directory>system/Pager/Views</directory>
+            <directory>system/ThirdParty</directory>
+            <directory>system/Validation/Views</directory>
+            <file>system/bootstrap.php</file>
+            <file>system/ComposerScripts.php</file>
+            <file>system/Config/Routes.php</file>
+            <file>system/Test/bootstrap.php</file>
+            <file>system/Test/ControllerTester.php</file>
+            <file>system/Test/FeatureTestCase.php</file>
         </exclude>
 
         <report>
@@ -36,16 +39,8 @@
     </coverage>
 
     <testsuites>
-        <testsuite name="AutoReview">
-            <directory>./tests/system/AutoReview</directory>
-        </testsuite>
         <testsuite name="System">
-            <directory>./tests/system</directory>
-            <exclude>./tests/system/Database</exclude>
-            <exclude>./tests/system/AutoReview</exclude>
-        </testsuite>
-        <testsuite name="Database">
-            <directory>./tests/system/Database</directory>
+            <directory>tests/system</directory>
         </testsuite>
     </testsuites>
 
