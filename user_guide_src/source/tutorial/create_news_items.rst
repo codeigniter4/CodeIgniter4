@@ -1,6 +1,10 @@
 Create News Items
 #################
 
+.. contents::
+    :local:
+    :depth: 2
+
 You now know how you can read data from a database using CodeIgniter, but
 you haven't written any information to the database yet. In this section,
 you'll expand your news controller and model created earlier to include
@@ -18,8 +22,8 @@ Open the **app/Config/Filters.php** file and update the ``$methods`` property li
 It configures the CSRF filter to be enabled for all **POST** requests.
 You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
 
-.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
-    because auto-routing permits any HTTP method to access a controller.
+.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable  Auto Routing (Legacy) <use-defined-routes-only>`
+    because :ref:`auto-routing` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 Create a Form

@@ -1,6 +1,10 @@
 Static Pages
 ############
 
+.. contents::
+    :local:
+    :depth: 2
+
 .. note:: This tutorial assumes you've downloaded CodeIgniter and
    :doc:`installed the framework <../installation/index>` in your
    development environment.

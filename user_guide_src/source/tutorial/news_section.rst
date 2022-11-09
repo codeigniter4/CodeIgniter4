@@ -1,6 +1,10 @@
 News Section
 ############
 
+.. contents::
+    :local:
+    :depth: 2
+
 In the last section, we went over some basic concepts of the framework
 by writing a class that references static pages. We cleaned up the URI by
 adding custom routing rules. Now it's time to introduce dynamic content
@@ -15,7 +19,7 @@ In this tutorial, we provide SQL code for a MySQL database, and
 we also assume that you have a suitable client for issuing database
 commands (mysql, MySQL Workbench, or phpMyAdmin).
 
-You need to create a database that can be used for this tutorial,
+You need to create a database ``ci4tutorial`` that can be used for this tutorial,
 and then configure CodeIgniter to use it.
 
 Using your database client, connect to your database and run the SQL command below (MySQL)::
@@ -80,7 +84,7 @@ library. This will make the database class available through the
 Now that the database and a model have been set up, you'll need a method
 to get all of our posts from our database. To do this, the database
 abstraction layer that is included with CodeIgniter -
-:doc:`Query Builder <../database/query_builder>` - is used in the ``CodeIgnite\Model``. This makes it
+:doc:`Query Builder <../database/query_builder>` - is used in the ``CodeIgniter\Model``. This makes it
 possible to write your 'queries' once and make them work on :doc:`all
 supported database systems <../intro/requirements>`. The Model class
 also allows you to easily work with the Query Builder and provides
