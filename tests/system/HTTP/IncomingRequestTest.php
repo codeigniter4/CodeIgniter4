@@ -728,7 +728,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyInvalid()
+    public function testGetIPAddressThruProxyInvalidIPAddress()
     {
         $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
         $expected                        = '10.0.1.200';
@@ -779,7 +779,7 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyOutofSubnet()
+    public function testGetIPAddressThruProxyOutOfSubnet()
     {
         $expected                        = '192.168.5.21';
         $_SERVER['REMOTE_ADDR']          = $expected;
