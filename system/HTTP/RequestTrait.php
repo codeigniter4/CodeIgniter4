@@ -64,7 +64,7 @@ trait RequestTrait
         $proxyIPs = $this->proxyIPs ?? config('App')->proxyIPs;
         if (! empty($proxyIPs)) {
             // @phpstan-ignore-next-line
-            if (! is_array($proxyIPs) || is_int(array_keys($proxyIPs)[0])) {
+            if (! is_array($proxyIPs) || is_int(array_key_first($proxyIPs))) {
                 throw new ConfigException(
                     'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
                 );
