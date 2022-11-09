@@ -193,6 +193,14 @@ Others
 Breaking Enhancements
 *********************
 
+Multiple Domain Support
+=======================
+
+- If you set ``Config\App::$allowedHostnames``, URL-related functions such as :php:func:`base_url()`, :php:func:`current_url()`, :php:func:`site_url()` will return the URL with the hostname set in ``Config\App::$allowedHostnames`` if the current URL matches.
+
+Others
+======
+
 - Since void HTML elements (e.g. ``<input>``) in ``html_helper``, ``form_helper`` or common functions have been changed to be HTML5-compatible by default and you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
 - Since the launch of Spark Commands was extracted from ``CodeIgniter\CodeIgniter``, there may be problems running these commands if the ``Services::codeigniter()`` service has been overridden.
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``. Extending classes should likewise change the type.
