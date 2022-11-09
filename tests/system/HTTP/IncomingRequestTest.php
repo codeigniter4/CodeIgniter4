@@ -875,6 +875,24 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
+    public function testGetIPAddressThruProxyBothIPv4AndIPv6()
+    {
+        $expected                        = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '192.168.5.0/28'     => 'X-Forwarded-For',
+            '2001:db8:1234::/48' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
     public function testGetIPAddressThruProxyInvalidConfigString()
     {
         $this->expectException(ConfigException::class);
