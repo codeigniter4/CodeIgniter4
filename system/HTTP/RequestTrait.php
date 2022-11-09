@@ -44,7 +44,9 @@ trait RequestTrait
     /**
      * Gets the user's IP address.
      *
-     * @return string IP address
+     * @return string IP address if it can be detected, or empty string.
+     *                If the IP address is not a valid IP address,
+     *                then will return '0.0.0.0'.
      */
     public function getIPAddress(): string
     {
