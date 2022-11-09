@@ -64,9 +64,9 @@ final class ParserPluginTest extends CIUnitTestCase
      */
     public function testMailtoWithDashAndParenthesis()
     {
-        $template = '{+ mailto email=foo-bar@example.com title="Scilly (the Great)" +}';
+        $template = '{+ mailto email=foo-bar@example.com title="Online español test level" +}';
 
-        $this->assertSame(mailto('foo-bar@example.com', 'Scilly (the Great)'), $this->parser->renderString($template));
+        $this->assertSame(mailto('foo-bar@example.com', 'Online español test level'), $this->parser->renderString($template));
     }
 
     public function testSafeMailto()
