@@ -74,6 +74,7 @@ trait RequestTrait
         $this->ipAddress = $this->getServer('REMOTE_ADDR');
 
         if ($proxyIPs) {
+            // @TODO Extract all this IP address logic to another class.
             foreach ($proxyIPs as $proxyIP => $header) {
                 // Check if we have an IP address or a subnet
                 if (strpos($proxyIP, '/') === false) {
