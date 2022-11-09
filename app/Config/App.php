@@ -338,7 +338,7 @@ class App extends BaseConfig
      * You need to set a proxy IP address or IP address with subnets and
      * the HTTP header for the client IP address.
      *
-     * Here are an examples:
+     * Here are some examples:
      *     [
      *         '10.0.1.200'     => 'X-Forwarded-For',
      *         '192.168.5.0/24' => 'X-Real-IP',
