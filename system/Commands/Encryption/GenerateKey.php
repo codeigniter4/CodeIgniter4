@@ -163,18 +163,24 @@ class GenerateKey extends BaseCommand
             copy($baseEnv, $envFile);
         }
 
-        $envFileContents = (string) file_get_contents($envFile);
+        $oldFileContents = (string) file_get_contents($envFile);
         $replacementKey  = "\nencryption.key = {$newKey}";
 
-        if (strpos($envFileContents, 'encryption.key') === false) {
+        if (strpos($oldFileContents, 'encryption.key') === false) {
             return file_put_contents($envFile, $replacementKey, FILE_APPEND) !== false;
         }
 
-        return file_put_contents($envFile, preg_replace(
-            $this->keyPattern($oldKey),
-            $replacementKey,
-            $envFileContents
-        )) !== false;
+        $newFileContents = preg_replace($this->keyPattern($oldKey), $replacementKey, $oldFileContents);
+
+        if ($newFileContents === $oldFileContents) {
+            $newFileContents = preg_replace(
+                '/^[#\s]*encryption.key[=\s]*(?:hex2bin\:[a-f0-9]{64}|base64\:(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?)$/m',
+                $replacementKey,
+                $oldFileContents
+            );
+        }
+
+        return file_put_contents($envFile, $newFileContents) !== false;
     }
 
     /**

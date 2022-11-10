@@ -128,4 +128,40 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString('Application\'s new encryption key was successfully set.', $this->getBuffer());
         $this->assertSame("\nencryption.key = " . env('encryption.key'), file_get_contents($this->envPath));
     }
+
+    public function testKeyGenerateWhenNewHexKeyIsSubsequentlyCommentedOut()
+    {
+        command('key:generate');
+        $key = env('encryption.key', '');
+        file_put_contents($this->envPath, str_replace(
+            'encryption.key = ' . $key,
+            '# encryption.key = ' . $key,
+            file_get_contents($this->envPath),
+            $count
+        ));
+        $this->assertSame(1, $count, 'Failed commenting out the previously set application key.');
+
+        CITestStreamFilter::$buffer = '';
+        command('key:generate --force');
+        $this->assertStringContainsString('was successfully set.', $this->getBuffer());
+        $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
+    }
+
+    public function testKeyGenerateWhenNewBase64KeyIsSubsequentlyCommentedOut()
+    {
+        command('key:generate --prefix base64');
+        $key = env('encryption.key', '');
+        file_put_contents($this->envPath, str_replace(
+            'encryption.key = ' . $key,
+            '# encryption.key = ' . $key,
+            file_get_contents($this->envPath),
+            $count
+        ));
+        $this->assertSame(1, $count, 'Failed commenting out the previously set application key.');
+
+        CITestStreamFilter::$buffer = '';
+        command('key:generate --force');
+        $this->assertStringContainsString('was successfully set.', $this->getBuffer());
+        $this->assertNotSame($key, env('encryption.key', $key), 'Failed replacing the commented out key.');
+    }
 }
