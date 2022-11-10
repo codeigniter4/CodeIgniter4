@@ -39,7 +39,7 @@ class URI
     /**
      * The Current baseURL.
      */
-    protected ?string $baseURL = null;
+    private ?string $baseURL = null;
 
     /**
      * List of URI segments.
@@ -761,6 +761,8 @@ class URI
 
     /**
      * Sets the current baseURL.
+     *
+     * @interal
      */
     public function setBaseURL(string $baseURL): void
     {
@@ -769,6 +771,8 @@ class URI
 
     /**
      * Returns the current baseURL.
+     *
+     * @interal
      */
     public function getBaseURL(): string
     {
