@@ -74,13 +74,13 @@ final class GenerateKeyTest extends CIUnitTestCase
 
     public function testGenerateKeyShowsEncodedKey()
     {
-        command('key:generate -show');
+        command('key:generate --show');
         $this->assertStringContainsString('hex2bin:', $this->getBuffer());
 
-        command('key:generate -prefix base64 -show');
+        command('key:generate --prefix base64 --show');
         $this->assertStringContainsString('base64:', $this->getBuffer());
 
-        command('key:generate -prefix hex2bin -show');
+        command('key:generate --prefix hex2bin --show');
         $this->assertStringContainsString('hex2bin:', $this->getBuffer());
     }
 
@@ -95,12 +95,12 @@ final class GenerateKeyTest extends CIUnitTestCase
         $this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
         $this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
 
-        command('key:generate -prefix base64 -force');
+        command('key:generate --prefix base64 --force');
         $this->assertStringContainsString('successfully set.', $this->getBuffer());
         $this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
         $this->assertStringContainsString('base64:', file_get_contents($this->envPath));
 
-        command('key:generate -prefix hex2bin -force');
+        command('key:generate --prefix hex2bin --force');
         $this->assertStringContainsString('successfully set.', $this->getBuffer());
         $this->assertStringContainsString(env('encryption.key'), file_get_contents($this->envPath));
         $this->assertStringContainsString('hex2bin:', file_get_contents($this->envPath));
@@ -114,5 +114,18 @@ final class GenerateKeyTest extends CIUnitTestCase
 
         $this->assertStringContainsString('Both default shipped', $this->getBuffer());
         $this->assertStringContainsString('Error in setting', $this->getBuffer());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6838
+     */
+    public function testKeyGenerateWhenKeyIsMissingInDotEnvFile()
+    {
+        file_put_contents($this->envPath, '');
+
+        command('key:generate');
+
+        $this->assertStringContainsString('Application\'s new encryption key was successfully set.', $this->getBuffer());
+        $this->assertSame("\nencryption.key = " . env('encryption.key'), file_get_contents($this->envPath));
     }
 }
