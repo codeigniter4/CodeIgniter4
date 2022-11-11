@@ -244,6 +244,12 @@ Error Handling
 - To *temporarily* enable throwing of deprecations, set the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 - ``Config\Logger::$threshold`` is now, by default, environment-specific. For production environment, default threshold is still ``4`` but changed to ``9`` for other environments.
 
+Multiple Domain Support
+=======================
+
+- Added ``Config\App::$allowedHostnames`` to set hostnames other than the hostname in the baseURL.
+- If you set ``Config\App::$allowedHostnames``, URL-related functions such as :php:func:`base_url()`, :php:func:`current_url()`, :php:func:`site_url()` will return the URL with the hostname set in ``Config\App::$allowedHostnames`` if the current URL matches.
+
 Others
 ======
 

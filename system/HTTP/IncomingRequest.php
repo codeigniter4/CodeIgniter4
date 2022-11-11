@@ -192,14 +192,12 @@ class IncomingRequest extends Request
      * Sets up our URI object based on the information we have. This is
      * either provided by the user in the baseURL Config setting, or
      * determined from the environment as needed.
+     *
+     * @deprecated $protocol and $baseURL are deprecated. No longer used.
      */
     protected function detectURI(string $protocol, string $baseURL)
     {
-        // Passing the config is unnecessary but left for legacy purposes
-        $config          = clone $this->config;
-        $config->baseURL = $baseURL;
-
-        $this->setPath($this->detectPath($protocol), $config);
+        $this->setPath($this->detectPath($this->config->uriProtocol), $this->config);
     }
 
     /**
@@ -270,7 +268,7 @@ class IncomingRequest extends Request
         }
 
         // This section ensures that even on servers that require the URI to contain the query string (Nginx) a correct
-        // URI is found, and also fixes the QUERY_STRING getServer var and $_GET array.
+        // URI is found, and also fixes the QUERY_STRING Server var and $_GET array.
         if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0) {
             $query                   = explode('?', $query, 2);
             $uri                     = $query[0];
@@ -400,19 +398,26 @@ class IncomingRequest extends Request
 
         // It's possible the user forgot a trailing slash on their
         // baseURL, so let's help them out.
-        $baseURL = $config->baseURL === '' ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
+        $baseURL = ($config->baseURL === '') ? $config->baseURL : rtrim($config->baseURL, '/ ') . '/';
 
-        // Based on our baseURL provided by the developer
-        // set our current domain name, scheme
+        // Based on our baseURL and allowedHostnames provided by the developer
+        // and HTTP_HOST, set our current domain name, scheme.
         if ($baseURL !== '') {
+            $host = $this->determineHost($config, $baseURL);
+
+            // Set URI::$baseURL
+            $uri            = new URI($baseURL);
+            $currentBaseURL = (string) $uri->setHost($host);
+            $this->uri->setBaseURL($currentBaseURL);
+
             $this->uri->setScheme(parse_url($baseURL, PHP_URL_SCHEME));
-            $this->uri->setHost(parse_url($baseURL, PHP_URL_HOST));
+            $this->uri->setHost($host);
             $this->uri->setPort(parse_url($baseURL, PHP_URL_PORT));
 
             // Ensure we have any query vars
             $this->uri->setQuery($_SERVER['QUERY_STRING'] ?? '');
 
-            // Check if the baseURL scheme needs to be coerced into its secure version
+            // Check if the scheme needs to be coerced into its secure version
             if ($config->forceGlobalSecureRequests && $this->uri->getScheme() === 'http') {
                 $this->uri->setScheme('https');
             }
@@ -423,6 +428,27 @@ class IncomingRequest extends Request
         }
 
         return $this;
+    }
+
+    private function determineHost(App $config, string $baseURL): string
+    {
+        $host = parse_url($baseURL, PHP_URL_HOST);
+
+        if (empty($config->allowedHostnames)) {
+            return $host;
+        }
+
+        // Update host if it is valid.
+        $httpHostPort = $this->getServer('HTTP_HOST');
+        if ($httpHostPort !== null) {
+            [$httpHost] = explode(':', $httpHostPort, 2);
+
+            if (in_array($httpHost, $config->allowedHostnames, true)) {
+                $host = $httpHost;
+            }
+        }
+
+        return $host;
     }
 
     /**
