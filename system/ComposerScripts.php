@@ -87,7 +87,7 @@ final class ComposerScripts
     private static function recursiveDelete(string $directory): void
     {
         if (! is_dir($directory)) {
-            echo sprintf('Cannot recursively delete "%s" as it does not exist.', $directory);
+            echo sprintf('Cannot recursively delete "%s" as it does not exist.', $directory) . PHP_EOL;
 
             return;
         }
