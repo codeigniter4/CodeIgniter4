@@ -216,7 +216,7 @@ class ContentSecurityPolicy
      *
      * @var boolean
      */
-    protected $nounceEnabled = false;
+    protected $nonceEnabled = false;
 
     /**
      * An array of header info since we have
@@ -684,7 +684,7 @@ class ContentSecurityPolicy
         $body = preg_replace_callback($pattern, function ($match) {
             $nonce = $match[0] === $this->styleNonceTag ? $this->getStyleNonce() : $this->getScriptNonce();
 
-            return $this->nounceEnabled === false ? "" : "nonce=\"{$nonce}\"";
+            return $this->nonceEnabled === false ? "" : "nonce=\"{$nonce}\"";
         }, $body);
 
         $response->setBody($body);
@@ -795,7 +795,7 @@ class ContentSecurityPolicy
             }
 
             if (strpos($value, 'nonce-') === 0) {
-                if ($this->nounceEnabled === false) {
+                if ($this->nonceEnabled === false) {
                     $value = str_replace('nonce-', '', $value);
                 } else {
                     $value = "'{$value}'";
