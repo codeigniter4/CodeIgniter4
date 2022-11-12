@@ -128,7 +128,11 @@ final class ComposerScripts
             exit(1);
         }
 
-        @mkdir($targetDir, 0755, true);
+        if (! @mkdir($targetDir, 0755, true)) {
+            echo sprintf('Cannot create the target directory: "%s"' . PHP_EOL, $targetDir);
+
+            exit(1);
+        }
 
         $dirLen = strlen($originDir);
 
