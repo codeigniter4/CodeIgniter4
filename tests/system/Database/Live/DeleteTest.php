@@ -53,11 +53,6 @@ final class DeleteTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Developer']);
     }
 
-    /**
-     * @group  single
-     *
-     * @throws DatabaseException
-     */
     public function testDeleteWithLimit()
     {
         $this->seeNumRecords(2, 'user', ['country' => 'US']);

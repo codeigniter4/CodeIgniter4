@@ -663,8 +663,6 @@ final class URITest extends CIUnitTestCase
     /**
      * @dataProvider defaultResolutions
      *
-     * @group        single
-     *
      * @param mixed $rel
      * @param mixed $expected
      */
@@ -792,8 +790,6 @@ final class URITest extends CIUnitTestCase
 
     /**
      * @see   https://github.com/codeigniter4/CodeIgniter4/issues/331
-     *
-     * @group single
      */
     public function testNoExtraSlashes()
     {

@@ -49,4 +49,4 @@ jobs:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
       - name: Run AutoReview Tests
-        run: vendor/bin/phpunit --color=always --group=auto-review --no-coverage
+        run: vendor/bin/phpunit --color=always --group=AutoReview --no-coverage

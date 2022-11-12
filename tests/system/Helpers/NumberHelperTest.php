@@ -123,9 +123,6 @@ final class NumberHelperTest extends CIUnitTestCase
         $this->assertSame('123.5 quadrillion', number_to_amount('123,456,700,000,000,000', 1, 'en_US'));
     }
 
-    /**
-     * @group single
-     */
     public function testCurrencyCurrentLocale()
     {
         $this->assertSame('$1,235', number_to_currency(1234.56, 'USD', 'en_US'));

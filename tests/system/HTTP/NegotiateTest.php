@@ -81,9 +81,6 @@ final class NegotiateTest extends CIUnitTestCase
         $this->assertSame('', $this->negotiate->media(['text/plain'], true));
     }
 
-    /**
-     * @group single
-     */
     public function testAcceptCharsetMatchesBasics()
     {
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');

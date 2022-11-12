@@ -100,9 +100,6 @@ final class BaseConnectionTest extends CIUnitTestCase
         $this->assertSame(123, $db->getConnection());
     }
 
-    /**
-     * @group single
-     */
     public function testCanConnectToFailoverWhenNoConnectionAvailable()
     {
         $options             = $this->options;

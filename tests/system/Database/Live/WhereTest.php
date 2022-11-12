@@ -106,9 +106,6 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame('Accountant', $jobs[1]->name);
     }
 
-    /**
-     * @group single
-     */
     public function testWhereNotIn()
     {
         $jobs = $this->db->table('job')
