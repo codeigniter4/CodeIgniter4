@@ -185,4 +185,12 @@ class ContentSecurityPolicy extends BaseConfig
      * @var bool
      */
     public $autoNonce = true;
+    
+    /**
+     * When enabled will add nonce to script, style and headers.
+     *
+     * @var bool
+     */
+    public $nonceEnabled = true;
+    
 }
