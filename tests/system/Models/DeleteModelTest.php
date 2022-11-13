@@ -186,12 +186,14 @@ final class DeleteModelTest extends LiveModelTestCase
      */
     public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue): void
     {
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
-
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
-        $this->createModel(UserModel::class)->delete($emptyValue);
+        try {
+            $this->createModel(UserModel::class)->delete($emptyValue);
+        } catch (DatabaseException $e) {
+            // Do nothing.
+        }
+
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
     }
 
