@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Cache\Exceptions\CacheException;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Throwable;
 
@@ -91,7 +92,7 @@ class FileHandler extends BaseHandler
         $key = static::validateKey($key, $this->prefix);
 
         $contents = [
-            'time' => time(),
+            'time' => Time::now()->getTimestamp(),
             'ttl'  => $ttl,
             'data' => $value,
         ];
