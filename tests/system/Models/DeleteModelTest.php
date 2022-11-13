@@ -175,6 +175,7 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
         $this->createModel(UserModel::class)->delete($emptyValue);
     }
 
