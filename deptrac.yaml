@@ -201,6 +201,7 @@ parameters:
       - Cookie
       - HTTP
       - Database
+      - I18n
     Throttle:
       - Cache
     Validation:
