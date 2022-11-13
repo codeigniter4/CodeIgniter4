@@ -25,4 +25,12 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <directory name="tests/_support/View/Cells" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+    </issueHandlers>
 </psalm>
