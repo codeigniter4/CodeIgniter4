@@ -167,7 +167,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue): void
     {
@@ -181,7 +181,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue): void
     {
