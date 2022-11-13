@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\CLI\CLI;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 
 /**
@@ -108,7 +109,7 @@ final class PredisHandlerTest extends AbstractHandlerTest
         $metaData = $this->handler->getMetaData(self::$key1);
 
         $this->assertNull($metaData['expire']);
-        $this->assertLessThanOrEqual(1, $metaData['mtime'] - time());
+        $this->assertLessThanOrEqual(1, $metaData['mtime'] - Time::now()->getTimestamp());
         $this->assertSame('value', $metaData['data']);
 
         $this->assertTrue($this->handler->delete(self::$key1));
