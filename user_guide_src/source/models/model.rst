@@ -332,6 +332,8 @@ of the columns in a ``$table``, while the array's values are the values to save 
 
 .. literalinclude:: model/016.php
 
+.. important:: If the ``$primaryKey`` field is set to ``null`` then the update will affect all records in the table.
+
 Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:
 
 .. literalinclude:: model/017.php
