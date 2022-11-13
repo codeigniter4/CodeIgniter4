@@ -63,9 +63,9 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f composer.lock ]; then
-            composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader
+            composer install --no-progress
           else
-            composer update --no-progress --no-interaction --prefer-dist --optimize-autoloader
+            composer update --no-progress
           fi
 
       - name: Run Psalm analysis
