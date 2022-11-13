@@ -25,9 +25,9 @@ if [ "$FILES" != "" ]; then
 
     # Run on whole codebase
     if [ -d /proc/cygdrive ]; then
-        ./vendor/bin/phpstan analyse
+        ./vendor/bin/phpstan analyse --xdebug
     else
-        php ./vendor/bin/phpstan analyse
+        php ./vendor/bin/phpstan analyse --xdebug
     fi
 
     if [ $? != 0 ]; then

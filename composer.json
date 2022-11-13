@@ -77,7 +77,7 @@
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
         "analyze": [
-            "phpstan analyze",
+            "phpstan analyze --xdebug",
             "rector process --dry-run"
         ],
         "sa": "@analyze",
