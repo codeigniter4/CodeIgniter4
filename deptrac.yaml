@@ -162,6 +162,7 @@ parameters:
       - Entity
       - Events
     Email:
+      - I18n
       - Events
     Entity:
       - I18n
