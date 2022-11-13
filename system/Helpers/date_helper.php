@@ -9,13 +9,24 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\I18n\Time;
+
+/**
+ * This file is part of CodeIgniter 4 framework.
+ *
+ * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 // CodeIgniter Date Helpers
 
 if (! function_exists('now')) {
     /**
      * Get "now" time
      *
-     * Returns time() based on the timezone parameter or on the
+     * Returns Time::now()->getTimestamp() based on the timezone parameter or on the
      * app_timezone() setting
      *
      * @param string $timezone
@@ -27,7 +38,7 @@ if (! function_exists('now')) {
         $timezone = empty($timezone) ? app_timezone() : $timezone;
 
         if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
-            return time();
+            return Time::now()->getTimestamp();
         }
 
         $datetime = new DateTime('now', new DateTimeZone($timezone));
