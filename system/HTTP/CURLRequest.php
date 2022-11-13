@@ -293,6 +293,11 @@ class CURLRequest extends Request
             unset($options['delay']);
         }
 
+        if (array_key_exists('body', $options)) {
+            $this->setBody($options['body']);
+            unset($options['body']);
+        }
+
         foreach ($options as $key => $value) {
             $this->config[$key] = $value;
         }
