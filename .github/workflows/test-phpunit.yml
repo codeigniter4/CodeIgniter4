@@ -31,221 +31,153 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-env:
-  COVERAGE_PHP_VERSION: '8.1'
-  NLS_LANG: 'AMERICAN_AMERICA.UTF8'
-  NLS_DATE_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
-  NLS_TIMESTAMP_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
-  NLS_TIMESTAMP_TZ_FORMAT: 'YYYY-MM-DD HH24:MI:SS'
-
 jobs:
-  tests:
-    name: PHP ${{ matrix.php-versions }} - ${{ matrix.db-platforms }}
+  # Any environment variables set in an env context defined at the workflow level
+  # in the caller workflow are not propagated to the called workflow.
+  coverage-php-version:
+    name: Setup PHP Version for Code Coverage
     runs-on: ubuntu-22.04
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    outputs:
+      version: ${{ steps.coverage-php-version.outputs.version }}
+    steps:
+      - id: coverage-php-version
+        run: |
+          echo "version=8.1" >> $GITHUB_OUTPUT
+
+  sanity-tests:
+    needs: coverage-php-version
+
+    strategy:
+      matrix:
+        php-version:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+        include:
+          - php-version: '8.2'
+            composer-option: '--ignore-platform-req=php'
+
+    uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: Sanity Tests
+      php-version: ${{ matrix.php-version }}
+      job-id: sanity-tests
+      group-name: Others
+      enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-coverage: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      extra-extensions: imagick, redis, memcached
+      extra-composer-options: ${{ matrix.composer-option }}
+
+  database-live-tests:
+    needs:
+      - coverage-php-version
+      - sanity-tests
 
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.4', '8.0', '8.1', '8.2']
-        db-platforms: ['MySQLi', 'Postgre', 'SQLite3', 'SQLSRV', 'OCI8']
-        mysql-versions: ['5.7']
+        php-version:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+        db-platform:
+          - MySQLi
+          - OCI8
+          - Postgre
+          - SQLSRV
+          - SQLite3
+        mysql-version:
+          - '5.7'
         include:
-          - php-versions: '7.4'
-            db-platforms: MySQLi
-            mysql-versions: '8.0'
-          - php-versions: '8.2'
+          - php-version: '7.4'
+            db-platform: MySQLi
+            mysql-version: '8.0'
+          - php-version: '8.2'
             composer-option: '--ignore-platform-req=php'
 
-    services:
-      mysql:
-        image: mysql:${{ matrix.mysql-versions }}
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: test
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: Database Live Tests
+      php-version: ${{ matrix.php-version }}
+      job-id: database-live-tests
+      db-platform: ${{ matrix.db-platform }}
+      mysql-version: ${{ matrix.mysql-version }}
+      group-name: DatabaseLive
+      enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-coverage: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      extra-extensions: mysqli, oci8, pgsql, sqlsrv-5.10.1, sqlite3
+      extra-composer-options: ${{ matrix.composer-option }}
 
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
-        ports:
-          - 5432:5432
-        options: --health-cmd=pg_isready --health-interval=10s --health-timeout=5s --health-retries=3
+  separate-process-tests:
+    needs:
+      - coverage-php-version
+      - sanity-tests
 
-      mssql:
-        image: mcr.microsoft.com/mssql/server:2022-latest
-        env:
-          SA_PASSWORD: 1Secure*Password1
-          ACCEPT_EULA: Y
-          MSSQL_PID: Developer
-        ports:
-          - 1433:1433
-        options: --health-cmd="/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q 'SELECT @@VERSION'" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      matrix:
+        php-version:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+        include:
+          - php-version: '8.2'
+            composer-option: '--ignore-platform-req=php'
 
-      oracle:
-        image: gvenzl/oracle-xe:21
-        env:
-          ORACLE_RANDOM_PASSWORD: true
-          APP_USER: ORACLE
-          APP_USER_PASSWORD: ORACLE
-        ports:
-          - 1521:1521
-        options: >-
-          --health-cmd healthcheck.sh
-          --health-interval 20s
-          --health-timeout 10s
-          --health-retries 10
+    uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: Separate Process Tests
+      php-version: ${{ matrix.php-version }}
+      job-id: separate-process-tests
+      group-name: SeparateProcess
+      enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-coverage: true # needs xdebug for assertHeaderEmitted() tests
+      enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      extra-extensions: mysqli, oci8, pgsql, sqlsrv-5.10.1, sqlite3
+      extra-composer-options: ${{ matrix.composer-option }}
 
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+  cache-live-tests:
+    needs:
+      - coverage-php-version
+      - sanity-tests
 
-      memcached:
-        image: memcached:1.6-alpine
-        ports:
-          - 11211:11211
+    strategy:
+      matrix:
+        php-version:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+        include:
+          - php-version: '8.2'
+            composer-option: '--ignore-platform-req=php'
 
-    steps:
-      - name: Create database for MSSQL Server
-        if: matrix.db-platforms == 'SQLSRV'
-        run: sqlcmd -S 127.0.0.1 -U sa -P 1Secure*Password1 -Q "CREATE DATABASE test"
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          tools: composer, pecl
-          extensions: imagick, sqlsrv-5.10.1, gd, sqlite3, redis, memcached, oci8, pgsql
-          coverage: ${{ env.COVERAGE_DRIVER }}
-        env:
-          update: true
-          COVERAGE_DRIVER: ${{ matrix.php-versions == env.COVERAGE_PHP_VERSION && 'xdebug' || 'none'}}
-
-      - name: Install latest ImageMagick
-        run: |
-          sudo apt-get update
-          sudo apt-get install --reinstall libgs9-common fonts-noto-mono libgs9:amd64 libijs-0.35:amd64 fonts-urw-base35 ghostscript poppler-data libjbig2dec0:amd64 gsfonts libopenjp2-7:amd64 fonts-droid-fallback fonts-dejavu-core
-          sudo apt-get install -y imagemagick
-          sudo apt-get install --fix-broken
-
-      - name: Get composer cache directory
-        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: |
-          composer update --ansi --no-interaction ${{ matrix.composer-option }}
-          composer remove --ansi --dev --unused ${{ matrix.composer-option }} -W -- rector/rector phpstan/phpstan friendsofphp/php-cs-fixer nexusphp/cs-config codeigniter/coding-standard
-
-      - name: Profile slow tests in PHP ${{ env.COVERAGE_PHP_VERSION }}
-        if: matrix.php-versions == env.COVERAGE_PHP_VERSION
-        run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
-
-      - name: Cache PHPUnit's static analysis cache
-        uses: actions/cache@v3
-        with:
-          path: build/.phpunit.cache/code-coverage
-          key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
-          restore-keys: |
-            phpunit-code-coverage-
-
-      - name: Compute coverage option
-        uses: actions/github-script@v6
-        id: phpunit-coverage-option
-        with:
-          script: |
-            const { COVERAGE_NAME } = process.env
-
-            return "${{ matrix.php-versions }}" == "${{ env.COVERAGE_PHP_VERSION }}" ? `--coverage-php build/cov/coverage-${COVERAGE_NAME}.cov` : "--no-coverage"
-          result-encoding: string
-        env:
-          COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
-
-      - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=AutoReview ${{ steps.phpunit-coverage-option.outputs.result }}"
-        env:
-          DB: ${{ matrix.db-platforms }}
-          TERM: xterm-256color
-
-      - name: Upload coverage file
-        if: matrix.php-versions == env.COVERAGE_PHP_VERSION
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.COVERAGE_NAME }}
-          path: build/cov/coverage-${{ env.COVERAGE_NAME }}.cov
-          if-no-files-found: error
-          retention-days: 1
-        env:
-          COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
+    uses: ./.github/workflows/reusable-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: Cache Live Tests
+      php-version: ${{ matrix.php-version }}
+      job-id: cache-live-tests
+      group-name: CacheLive
+      enable-artifact-upload: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-coverage: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      enable-profiling: ${{ matrix.php-version == needs.coverage-php-version.outputs.version }}
+      extra-extensions: redis, memcached
+      extra-composer-options: ${{ matrix.composer-option }}
 
   coveralls:
+    name: Upload coverage results to Coveralls
     if: github.repository_owner == 'codeigniter4'
-    needs: tests
-    runs-on: ubuntu-22.04
+    needs:
+      - coverage-php-version
+      - sanity-tests
+      - cache-live-tests
+      - database-live-tests
+      - separate-process-tests
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.COVERAGE_PHP_VERSION }}
-          tools: composer
-          coverage: xdebug
-        env:
-          update: true
-
-      - name: Download coverage files
-        uses: actions/download-artifact@v3
-        with:
-          path: build/cov
-
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: build/cov
-
-      - name: Get composer cache directory
-        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer update --ansi --no-interaction
-
-      - name: Cache PHPUnit's static analysis cache
-        uses: actions/cache@v3
-        with:
-          path: build/.phpunit.cache/code-coverage
-          key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
-          restore-keys: |
-            phpunit-code-coverage-
-
-      - name: Merge coverage files
-        run: vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
-
-      - name: Upload coverage to Coveralls
-        run: vendor/bin/php-coveralls --verbose --exclude-no-stmt --ansi
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: ./.github/workflows/reusable-coveralls.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      php-version: ${{ needs.coverage-php-version.outputs.version }}
