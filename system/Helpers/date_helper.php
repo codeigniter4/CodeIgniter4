@@ -11,11 +11,13 @@
 
 // CodeIgniter Date Helpers
 
+use CodeIgniter\I18n\Time;
+
 if (! function_exists('now')) {
     /**
      * Get "now" time
      *
-     * Returns time() based on the timezone parameter or on the
+     * Returns Time::now()->getTimestamp() based on the timezone parameter or on the
      * app_timezone() setting
      *
      * @param string $timezone
@@ -27,7 +29,7 @@ if (! function_exists('now')) {
         $timezone = empty($timezone) ? app_timezone() : $timezone;
 
         if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
-            return time();
+            return Time::now()->getTimestamp();
         }
 
         $datetime = new DateTime('now', new DateTimeZone($timezone));
