@@ -148,8 +148,8 @@ class CreateDatabase extends BaseCommand
         } catch (Throwable $e) {
             $this->showError($e);
         } finally {
-            // Reset the altered config no matter what happens.
             Factories::reset('config');
+            Database::connect(null, false);
         }
     }
 }
