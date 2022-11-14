@@ -12,6 +12,7 @@
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\CodeIgniter;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 use CodeIgniter\Debug\Toolbar\Collectors\Config;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
@@ -380,7 +381,7 @@ class Toolbar
             helper('filesystem');
 
             // Updated to microtime() so we can get history
-            $time = sprintf('%.6f', microtime(true));
+            $time = sprintf('%.6f', Time::now()->format('u'));
 
             if (! is_dir(WRITEPATH . 'debugbar')) {
                 mkdir(WRITEPATH . 'debugbar', 0777);
