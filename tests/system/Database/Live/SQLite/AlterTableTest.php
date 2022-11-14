@@ -38,12 +38,6 @@ final class AlterTableTest extends CIUnitTestCase
     protected $migrate = false;
 
     private Table $table;
-
-    /**
-     * @var Connection
-     */
-    protected $db;
-
     private Forge $forge;
 
     protected function setUp(): void
