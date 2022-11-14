@@ -69,7 +69,6 @@
     "autoload-dev": {
         "psr-4": {
             "CodeIgniter\\": "tests/system/",
-            "CodeIgniter\\AutoReview\\": "tests/AutoReview/",
             "Utils\\": "utils/"
         }
     },

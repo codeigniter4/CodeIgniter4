@@ -33,13 +33,13 @@ To verify your commits, you will need to setup a GPG key, and attach it
 to your GitHub account.
 
 See the [git tools](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) page
-for directions on doing this. The complete story is part of [GitHub help](https://help.github.com/categories/gpg/).
+for directions on doing this. The complete story is part of [GitHub help](https://support.github.com/?q=GPG).
 
 The basic steps are
 
 - [generate your GPG key](https://help.github.com/articles/generating-a-new-gpg-key/),
     and copy the ASCII representation of it.
-- [Add your GPG key to your GitHub account](https://help.github.com/articles/adding-a-new-gpg-key-to-your-github-account/).
+- [Add your GPG key to your GitHub account](https://docs.github.com/en/authentication/managing-commit-signature-verification/adding-a-gpg-key-to-your-github-account).
 - [Tell Git](https://help.github.com/articles/telling-git-about-your-gpg-key/)
     about your GPG key.
 - [Set default signing](https://help.github.com/articles/signing-commits-using-gpg/)

@@ -17,7 +17,7 @@ if (! function_exists('now')) {
     /**
      * Get "now" time
      *
-     * Returns time() based on the timezone parameter or on the
+     * Returns Time::now()->getTimestamp() based on the timezone parameter or on the
      * app_timezone() setting
      *
      * @throws Exception
@@ -27,9 +27,7 @@ if (! function_exists('now')) {
         $timezone = empty($timezone) ? app_timezone() : $timezone;
 
         if ($timezone === 'local' || $timezone === date_default_timezone_get()) {
-            $time = Time::now();
-
-            return $time->getTimestamp();
+            return Time::now()->getTimestamp();
         }
 
         $time = Time::now($timezone);

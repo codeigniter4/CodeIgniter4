@@ -170,7 +170,7 @@ jobs:
           COVERAGE_NAME: php-v${{ env.COVERAGE_PHP_VERSION }}-${{ matrix.db-platforms }}
 
       - name: Test with PHPUnit
-        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=auto-review ${{ steps.phpunit-coverage-option.outputs.result }}"
+        run: script -e -c "vendor/bin/phpunit --color=always --exclude-group=AutoReview ${{ steps.phpunit-coverage-option.outputs.result }}"
         env:
           DB: ${{ matrix.db-platforms }}
           TERM: xterm-256color

@@ -463,9 +463,6 @@ final class SessionTest extends CIUnitTestCase
         $this->assertLessThanOrEqual($_SESSION['__ci_vars']['baz'], $time + 200);
     }
 
-    /**
-     * @group single
-     */
     public function testGetTestDataReturnsAll()
     {
         $session = $this->getInstance();

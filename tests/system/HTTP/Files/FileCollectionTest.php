@@ -218,9 +218,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertSame('zip', $file->guessExtension());
     }
 
-    /**
-     * @group single
-     */
     public function testAllReturnsValidSingleFileNestedName()
     {
         $_FILES = [
@@ -309,9 +306,6 @@ final class FileCollectionTest extends CIUnitTestCase
         $this->assertTrue($collection->hasFile('userfile2'));
     }
 
-    /**
-     * @group single
-     */
     public function testHasFileWithSingleFileNestedName()
     {
         $_FILES = [

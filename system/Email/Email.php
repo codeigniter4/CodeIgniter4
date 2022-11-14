@@ -12,6 +12,7 @@
 namespace CodeIgniter\Email;
 
 use CodeIgniter\Events\Events;
+use CodeIgniter\I18n\Time;
 use Config\Mimes;
 use ErrorException;
 
@@ -2038,8 +2039,8 @@ class Email
             // See https://bugs.php.net/bug.php?id=39598 and http://php.net/manual/en/function.fwrite.php#96951
             if ($result === 0) {
                 if ($timestamp === 0) {
-                    $timestamp = time();
-                } elseif ($timestamp < (time() - $this->SMTPTimeout)) {
+                    $timestamp = Time::now()->getTimestamp();
+                } elseif ($timestamp < (Time::now()->getTimestamp() - $this->SMTPTimeout)) {
                     $result = false;
 
                     break;

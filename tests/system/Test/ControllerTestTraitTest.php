@@ -13,10 +13,12 @@ namespace CodeIgniter\Test;
 
 use App\Controllers\Home;
 use App\Controllers\NeverHeardOfIt;
+use CodeIgniter\Controller;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\Mock\MockLogger as LoggerConfig;
 use Config\App;
 use Config\Services;
+use Exception;
 use Tests\Support\Controllers\Popcorn;
 
 /**
@@ -240,5 +242,21 @@ final class ControllerTestTraitTest extends CIUnitTestCase
         $result = $this->controller(Popcorn::class)
             ->execute('toindex');
         $this->assertTrue($result->isRedirect());
+    }
+
+    public function testUsesRequestBody()
+    {
+        $this->controller = new class () extends Controller {
+            public function throwsBody(): void
+            {
+                throw new Exception($this->request->getBody());
+            }
+        };
+        $this->controller->initController($this->request, $this->response, $this->logger);
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('banana');
+
+        $this->withBody('banana')->execute('throwsBody');
     }
 }

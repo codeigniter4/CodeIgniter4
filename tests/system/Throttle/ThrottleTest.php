@@ -107,9 +107,6 @@ final class ThrottleTest extends CIUnitTestCase
         $this->assertTrue($throttler->check('127.0.0.1', 1, MINUTE));
     }
 
-    /**
-     * @group single
-     */
     public function testDecrementsValues()
     {
         $throttler = new Throttler($this->cache);
