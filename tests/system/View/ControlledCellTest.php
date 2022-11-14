@@ -24,6 +24,8 @@ use Tests\Support\View\Cells\SimpleNotice;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class ControlledCellTest extends CIUnitTestCase
 {
