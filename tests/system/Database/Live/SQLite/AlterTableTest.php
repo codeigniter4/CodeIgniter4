@@ -22,6 +22,8 @@ use Config\Database;
 /**
  * @group DatabaseLive
  *
+ * @requires extension sqlite3
+ *
  * @internal
  */
 final class AlterTableTest extends CIUnitTestCase
