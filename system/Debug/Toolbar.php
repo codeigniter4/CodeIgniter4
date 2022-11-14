@@ -12,7 +12,6 @@
 namespace CodeIgniter\Debug;
 
 use CodeIgniter\CodeIgniter;
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Debug\Toolbar\Collectors\BaseCollector;
 use CodeIgniter\Debug\Toolbar\Collectors\Config;
 use CodeIgniter\Debug\Toolbar\Collectors\History;
@@ -23,6 +22,7 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\I18n\Time;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
