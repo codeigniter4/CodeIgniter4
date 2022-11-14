@@ -46,6 +46,7 @@ jobs:
         with:
           php-version: '8.1'
           extensions: intl
+          coverage: none
 
       - name: Use latest Composer
         run: composer self-update
@@ -77,4 +78,4 @@ jobs:
         run: composer update --ansi --no-interaction
 
       - name: Run static analysis
-        run: vendor/bin/phpstan analyse --xdebug
+        run: vendor/bin/phpstan analyse
