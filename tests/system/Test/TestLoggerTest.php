@@ -15,6 +15,8 @@ use Config\Logger;
 
 /**
  * @internal
+ *
+ * @group Others
  */
 final class TestLoggerTest extends CIUnitTestCase
 {
