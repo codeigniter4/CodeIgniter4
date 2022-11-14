@@ -63,7 +63,7 @@ final class HeaderTest extends CIUnitTestCase
         $name  = 'foo';
         $value = new stdClass();
 
-        $header = new Header($name, $value);
+        new Header($name, $value);
     }
 
     public function testHeaderStoresArrayValues()
