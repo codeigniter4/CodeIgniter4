@@ -12,6 +12,7 @@
 namespace CodeIgniter\HTTP;
 
 use CodeIgniter\Test\CIUnitTestCase;
+use Error;
 use stdClass;
 
 /**
@@ -43,6 +44,28 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame('', $header->getValue());
     }
 
+    public function testHeaderStoresBasicWithInt()
+    {
+        $name  = 'foo';
+        $value = 123;
+
+        $header = new Header($name, $value);
+
+        $this->assertSame($name, $header->getName());
+        $this->assertSame((string) $value, $header->getValue());
+    }
+
+    public function testHeaderStoresBasicWithObject()
+    {
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Object of class stdClass could not be converted to string');
+
+        $name  = 'foo';
+        $value = new stdClass();
+
+        $header = new Header($name, $value);
+    }
+
     public function testHeaderStoresArrayValues()
     {
         $name  = 'foo';
@@ -62,7 +85,7 @@ final class HeaderTest extends CIUnitTestCase
         $name  = 'foo';
         $value = [
             'bar',
-            'baz',
+            123,
         ];
 
         $header = new Header($name);
@@ -74,7 +97,7 @@ final class HeaderTest extends CIUnitTestCase
         $header->setName($name)->setValue($value);
         $this->assertSame($name, $header->getName());
         $this->assertSame($value, $header->getValue());
-        $this->assertSame($name . ': bar, baz', (string) $header);
+        $this->assertSame($name . ': bar, 123', (string) $header);
     }
 
     public function testHeaderAppendsValueSkippedForNull()
@@ -150,19 +173,6 @@ final class HeaderTest extends CIUnitTestCase
         ];
 
         $expected = 'bar, baz';
-
-        $header = new Header($name, $value);
-
-        $this->assertSame($name, $header->getName());
-        $this->assertSame($expected, $header->getValueLine());
-    }
-
-    public function testHeaderLineValueNotStringOrArray()
-    {
-        $name  = 'foo';
-        $value = new stdClass();
-
-        $expected = '';
 
         $header = new Header($name, $value);
 

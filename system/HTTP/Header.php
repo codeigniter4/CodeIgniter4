@@ -84,7 +84,7 @@ class Header
      */
     public function setValue($value = null)
     {
-        $this->value = $value ?? '';
+        $this->value = is_array($value) ? $value : (string) $value;
 
         return $this;
     }
@@ -108,7 +108,7 @@ class Header
         }
 
         if (! in_array($value, $this->value, true)) {
-            $this->value[] = $value;
+            $this->value[] = is_array($value) ? $value : (string) $value;
         }
 
         return $this;
