@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Redis;
@@ -293,7 +294,7 @@ class RedisHandler extends BaseHandler
                 continue;
             }
 
-            if (! $this->redis->setex($lockKey, 300, (string) time())) {
+            if (! $this->redis->setex($lockKey, 300, (string) Time::now()->getTimestamp())) {
                 $this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
                 return false;
