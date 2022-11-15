@@ -31,21 +31,23 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         CITestStreamFilter::$buffer = '';
 
         $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
         $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
         $this->connection   = Database::connect();
 
-        parent::setUp();
         $this->dropDatabase();
     }
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         stream_filter_remove($this->streamFilter);
 
-        parent::tearDown();
         $this->dropDatabase();
     }
 
