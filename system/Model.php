@@ -419,13 +419,9 @@ class Model extends BaseModel
 
         if ($this->useSoftDeletes && ! $purge) {
             if (empty($builder->getCompiledQBWhere())) {
-                if (CI_DEBUG) {
-                    throw new DatabaseException(
-                        'Deletes are not allowed unless they contain a "where" or "like" clause.'
-                    );
-                }
-
-                return false; // @codeCoverageIgnore
+                throw new DatabaseException(
+                    'Deletes are not allowed unless they contain a "where" or "like" clause.'
+                );
             }
 
             $builder->where($this->deletedField);
