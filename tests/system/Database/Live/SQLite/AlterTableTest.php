@@ -22,6 +22,8 @@ use Config\Database;
 /**
  * @group DatabaseLive
  *
+ * @requires extension sqlite3
+ *
  * @internal
  */
 final class AlterTableTest extends CIUnitTestCase
@@ -36,12 +38,6 @@ final class AlterTableTest extends CIUnitTestCase
     protected $migrate = false;
 
     private Table $table;
-
-    /**
-     * @var Connection
-     */
-    protected $db;
-
     private Forge $forge;
 
     protected function setUp(): void
@@ -50,7 +46,7 @@ final class AlterTableTest extends CIUnitTestCase
 
         $config = [
             'DBDriver' => 'SQLite3',
-            'database' => 'database.db',
+            'database' => ':memory:',
             'DBDebug'  => true,
         ];
 

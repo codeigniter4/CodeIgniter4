@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Memcached;
@@ -167,7 +168,7 @@ class MemcachedHandler extends BaseHandler
         }
 
         if (isset($this->lockKey)) {
-            $this->memcached->replace($this->lockKey, time(), 300);
+            $this->memcached->replace($this->lockKey, Time::now()->getTimestamp(), 300);
 
             if ($this->fingerprint !== ($fingerprint = md5($data))) {
                 if ($this->memcached->set($this->keyPrefix . $id, $data, $this->sessionExpiration)) {
@@ -245,7 +246,7 @@ class MemcachedHandler extends BaseHandler
     protected function lockSession(string $sessionID): bool
     {
         if (isset($this->lockKey)) {
-            return $this->memcached->replace($this->lockKey, time(), 300);
+            return $this->memcached->replace($this->lockKey, Time::now()->getTimestamp(), 300);
         }
 
         $lockKey = $this->keyPrefix . $sessionID . ':lock';
@@ -258,7 +259,7 @@ class MemcachedHandler extends BaseHandler
                 continue;
             }
 
-            if (! $this->memcached->set($lockKey, time(), 300)) {
+            if (! $this->memcached->set($lockKey, Time::now()->getTimestamp(), 300)) {
                 $this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
                 return false;

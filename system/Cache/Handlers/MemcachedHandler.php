@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
 use Memcache;
@@ -155,7 +156,7 @@ class MemcachedHandler extends BaseHandler
         if (! $this->config['raw']) {
             $value = [
                 $value,
-                time(),
+                Time::now()->getTimestamp(),
                 $ttl,
             ];
         }

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use ReturnTypeWillChange;
@@ -276,7 +277,7 @@ class FileHandler extends BaseHandler
             return false;
         }
 
-        $ts = time() - $max_lifetime;
+        $ts = Time::now()->getTimestamp() - $max_lifetime;
 
         $pattern = $this->matchIP === true ? '[0-9a-f]{32}' : '';
 

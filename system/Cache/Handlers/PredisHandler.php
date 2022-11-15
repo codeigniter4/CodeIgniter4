@@ -12,6 +12,7 @@
 namespace CodeIgniter\Cache\Handlers;
 
 use CodeIgniter\Exceptions\CriticalError;
+use CodeIgniter\I18n\Time;
 use Config\Cache;
 use Exception;
 use Predis\Client;
@@ -128,7 +129,7 @@ class PredisHandler extends BaseHandler
         }
 
         if ($ttl) {
-            $this->redis->expireat($key, time() + $ttl);
+            $this->redis->expireat($key, Time::now()->getTimestamp() + $ttl);
         }
 
         return true;
@@ -204,11 +205,11 @@ class PredisHandler extends BaseHandler
         $data = array_combine(['__ci_value'], $this->redis->hmget($key, ['__ci_value']));
 
         if (isset($data['__ci_value']) && $data['__ci_value'] !== false) {
-            $time = time();
+            $time = Time::now()->getTimestamp();
             $ttl  = $this->redis->ttl($key);
 
             return [
-                'expire' => $ttl > 0 ? time() + $ttl : null,
+                'expire' => $ttl > 0 ? $time + $ttl : null,
                 'mtime'  => $time,
                 'data'   => $data['__ci_value'],
             ];

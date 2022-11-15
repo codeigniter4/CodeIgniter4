@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Database;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\StreamFilterTrait;
@@ -29,20 +30,32 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
     protected $migrateOnce = true;
 
-    private function getResultWithoutControlCode(): string
+    protected function setUp(): void
     {
-        return str_replace(
-            ["\033[0;30m", "\033[0;33m", "\033[43m", "\033[0m"],
-            '',
-            $this->getStreamFilterBuffer()
-        );
+        parent::setUp();
+
+        putenv('NO_COLOR=1');
+        CLI::init();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        putenv('NO_COLOR');
+        CLI::init();
+    }
+
+    private function getNormalizedResult(): string
+    {
+        return str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
     }
 
     public function testDbTable(): void
     {
         command('db:table db_migrations');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
@@ -59,7 +72,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table --show');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'The following is a list of the names of all database tables:';
         $this->assertStringContainsString($expected, $result);
@@ -76,7 +89,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_migrations --metadata');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'List of Metadata Information in Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
@@ -95,7 +108,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
         command('db:table db_user --desc');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);
@@ -117,7 +130,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_user --limit-field-value 5');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);
@@ -139,7 +152,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_user --limit-rows 2');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);
@@ -159,7 +172,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_user --limit-rows 2 --limit-field-value 5 --desc');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);

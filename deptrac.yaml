@@ -155,6 +155,8 @@ parameters:
     API:
       - Format
       - HTTP
+    Cache:
+      - I18n
     Controller:
       - HTTP
       - Validation
