@@ -11,7 +11,6 @@
 
 namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -26,22 +25,22 @@ final class MetadataTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    private ?Forge $forge = null;
-    protected $refresh    = true;
-    protected $seed       = CITestSeeder::class;
-
     /**
-     * Array of expected tables.
+     * The seed file used for all tests within this test case.
+     *
+     * @var string
      */
-    private array $expectedTables;
+    protected $seed = CITestSeeder::class;
+
+    private array $expectedTables = [];
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        // Prepare the array of expected tables once
-        $prefix               = $this->db->getPrefix();
-        $this->expectedTables = [
+        $prefix = $this->db->getPrefix();
+
+        $tables = [
             $prefix . 'migrations',
             $prefix . 'user',
             $prefix . 'job',
@@ -55,55 +54,90 @@ final class MetadataTest extends CIUnitTestCase
         ];
 
         if (in_array($this->db->DBDriver, ['MySQLi', 'Postgre'], true)) {
-            $this->expectedTables[] = $prefix . 'ci_sessions';
+            $tables[] = $prefix . 'ci_sessions';
+        }
+
+        sort($tables);
+        $this->expectedTables = $tables;
+    }
+
+    private function createExtraneousTable(): void
+    {
+        $oldPrefix = $this->db->getPrefix();
+        $this->db->setPrefix('tmp_');
+
+        Database::forge($this->DBGroup)
+            ->addField([
+                'name'       => ['type' => 'varchar', 'constraint' => 31],
+                'created_at' => ['type' => 'datetime', 'null' => true],
+            ])
+            ->createTable('widgets');
+
+        $this->db->setPrefix($oldPrefix);
+    }
+
+    private function dropExtraneousTable(): void
+    {
+        $oldPrefix = $this->db->getPrefix();
+        $this->db->setPrefix('tmp_');
+
+        Database::forge($this->DBGroup)->dropTable('widgets');
+
+        $this->db->setPrefix($oldPrefix);
+    }
+
+    public function testListTablesUnconstrainedByPrefixReturnsAllTables()
+    {
+        try {
+            $this->createExtraneousTable();
+
+            $tables = $this->db->listTables();
+            $this->assertIsArray($tables);
+            $this->assertNotSame([], $tables);
+
+            $expectedTables   = $this->expectedTables;
+            $expectedTables[] = 'tmp_widgets';
+
+            sort($tables);
+            $this->assertSame($expectedTables, array_values($tables));
+        } finally {
+            $this->dropExtraneousTable();
         }
     }
 
-    public function testListTables()
+    public function testListTablesConstrainedByPrefixReturnsOnlyTablesWithMatchingPrefix()
     {
-        $result = $this->db->listTables(true);
+        try {
+            $this->createExtraneousTable();
 
-        $this->assertSame($this->expectedTables, array_values($result));
+            $tables = $this->db->listTables(true);
+            $this->assertIsArray($tables);
+            $this->assertNotSame([], $tables);
+
+            sort($tables);
+            $this->assertSame($this->expectedTables, array_values($tables));
+        } finally {
+            $this->dropExtraneousTable();
+        }
     }
 
-    public function testListTablesConstrainPrefix()
+    public function testListTablesConstrainedByExtraneousPrefixReturnsOnlyTheExtraneousTable()
     {
-        $result = $this->db->listTables(true);
+        try {
+            $this->createExtraneousTable();
 
-        $this->assertSame($this->expectedTables, array_values($result));
-    }
+            $oldPrefix = $this->db->getPrefix();
+            $this->db->setPrefix('tmp_');
 
-    public function testConstrainPrefixIgnoresOtherTables()
-    {
-        $this->forge = Database::forge($this->DBGroup);
+            $tables = $this->db->listTables(true);
+            $this->assertIsArray($tables);
+            $this->assertNotSame([], $tables);
 
-        // Stash the prefix and change it
-        $DBPrefix = $this->db->getPrefix();
-        $this->db->setPrefix('tmp_');
-
-        // Create a table with the new prefix
-        $fields = [
-            'name' => [
-                'type'       => 'varchar',
-                'constraint' => 31,
-            ],
-            'created_at' => [
-                'type' => 'datetime',
-                'null' => true,
-            ],
-        ];
-        $this->forge->addField($fields);
-        $this->forge->createTable('widgets');
-
-        // Restore the prefix and get the tables with the original prefix
-        $this->db->setPrefix($DBPrefix);
-        $result = $this->db->listTables(true);
-
-        $this->assertSame($this->expectedTables, array_values($result));
-
-        // Clean up temporary table
-        $this->db->setPrefix('tmp_');
-        $this->forge->dropTable('widgets');
-        $this->db->setPrefix($DBPrefix);
+            sort($tables);
+            $this->assertSame(['tmp_widgets'], array_values($tables));
+        } finally {
+            $this->db->setPrefix($oldPrefix);
+            $this->dropExtraneousTable();
+        }
     }
 }
