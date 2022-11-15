@@ -19,17 +19,18 @@ writing we are running version 9.x. Support for this has been built into the
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
 ```console
-> composer install
+composer install
 ```
 
 If running under macOS or Linux, you can create a symbolic link to make running tests a touch nicer.
 
 ```console
-> ln -s ./vendor/bin/phpunit ./phpunit
+ln -s ./vendor/bin/phpunit ./phpunit
 ```
 
-You also need to install [XDebug](https://xdebug.org/docs/install) in order
-for code coverage to be calculated successfully. After installing `XDebug`, you must add `xdebug.mode=coverage` in the **php.ini** file to enable code coverage.
+You also need to install [Xdebug](https://xdebug.org/docs/install) in order
+for code coverage to be calculated successfully. After installing `Xdebug`, you must
+add `xdebug.mode=coverage` in the **php.ini** file to enable code coverage.
 
 ## Setting Up
 
@@ -56,41 +57,55 @@ More details on a test database setup are in the
 [Testing Your Database](https://codeigniter4.github.io/CodeIgniter4/testing/database.html) section of the documentation.
 
 If you want to run the tests without using live database you can
-exclude `@DatabaseLive` group. Or make a copy of **phpunit.dist.xml** -
-call it **phpunit.xml** - and comment out the `<testsuite>` named `Database`. This will make
-the tests run quite a bit faster.
+exclude `@DatabaseLive` group. This will make the tests run quite a bit faster.
+
+## Groups
+
+Each test class that we are running should belong to at least one
+[@group](https://phpunit.readthedocs.io/en/9.5/annotations.html#group) that is written at class-level
+doc block.
+
+The available groups to use are:
+
+| Group           | Purpose                                                               |
+| --------------- | --------------------------------------------------------------------- |
+| AutoReview      | Used for tests that perform automatic code reviews                    |
+| CacheLive       | Used for cache tests that need external services (redis, memcached)   |
+| DatabaseLive    | Used for database tests that need to run on actual database drivers   |
+| SeparateProcess | Used for tests that need to run on separate PHP processes             |
+| Others          | Used as a "catch-all" group for tests not falling in the above groups |
 
 ## Running the tests
 
 The entire test suite can be run by simply typing one command-line command from the main directory.
 
 ```console
-> ./phpunit
+./phpunit
 ```
 
 If you are using Windows, use the following command.
 
 ```console
-> vendor\bin\phpunit
+vendor\bin\phpunit
 ```
 
 You can limit tests to those within a single test directory by specifying the
 directory name after phpunit. All core tests are stored under **tests/system**.
 
 ```console
-> ./phpunit tests/system/HTTP/
+./phpunit tests/system/HTTP/
 ```
 
 Individual tests can be run by including the relative path to the test file.
 
 ```console
-> ./phpunit tests/system/HTTP/RequestTest.php
+./phpunit tests/system/HTTP/RequestTest.php
 ```
 
 You can run the tests without running the live database and the live cache tests.
 
 ```console
-> ./phpunit --exclude-group DatabaseLive,CacheLive
+./phpunit --exclude-group DatabaseLive,CacheLive
 ```
 
 ## Generating Code Coverage
@@ -99,7 +114,7 @@ To generate coverage information, including HTML reports you can view in your br
 you can use the following command:
 
 ```console
-> ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
+./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
 ```
 
 This runs all of the tests again collecting information about how many lines,

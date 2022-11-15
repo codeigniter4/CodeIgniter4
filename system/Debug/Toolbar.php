@@ -21,6 +21,7 @@ use CodeIgniter\HTTP\DownloadResponse;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\I18n\Time;
 use Config\Services;
 use Config\Toolbar as ToolbarConfig;
 use Kint\Kint;
@@ -375,7 +376,7 @@ class Toolbar
             helper('filesystem');
 
             // Updated to microtime() so we can get history
-            $time = sprintf('%.6f', microtime(true));
+            $time = sprintf('%.6f', Time::now()->format('U.u'));
 
             if (! is_dir(WRITEPATH . 'debugbar')) {
                 mkdir(WRITEPATH . 'debugbar', 0777);
