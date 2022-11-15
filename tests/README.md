@@ -28,8 +28,9 @@ If running under macOS or Linux, you can create a symbolic link to make running 
 ln -s ./vendor/bin/phpunit ./phpunit
 ```
 
-You also need to install [XDebug](https://xdebug.org/docs/install) in order
-for code coverage to be calculated successfully. After installing `XDebug`, you must add `xdebug.mode=coverage` in the **php.ini** file to enable code coverage.
+You also need to install [Xdebug](https://xdebug.org/docs/install) in order
+for code coverage to be calculated successfully. After installing `Xdebug`, you must
+add `xdebug.mode=coverage` in the **php.ini** file to enable code coverage.
 
 ## Setting Up
 
