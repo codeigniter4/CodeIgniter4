@@ -57,9 +57,7 @@ More details on a test database setup are in the
 [Testing Your Database](https://codeigniter4.github.io/CodeIgniter4/testing/database.html) section of the documentation.
 
 If you want to run the tests without using live database you can
-exclude `@DatabaseLive` group. Or make a copy of **phpunit.dist.xml** -
-call it **phpunit.xml** - and comment out the `<testsuite>` named `Database`. This will make
-the tests run quite a bit faster.
+exclude `@DatabaseLive` group. This will make the tests run quite a bit faster.
 
 ## Groups
 
