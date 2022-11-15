@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Database;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
 
@@ -47,6 +48,9 @@ final class MigrateStatusTest extends CIUnitTestCase
         );
         file_put_contents($this->migrationFileTo, $contents);
 
+        putenv('NO_COLOR=1');
+        CLI::init();
+
         CITestStreamFilter::$buffer = '';
 
         $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
@@ -64,6 +68,9 @@ final class MigrateStatusTest extends CIUnitTestCase
             @unlink($this->migrationFileTo);
         }
 
+        putenv('NO_COLOR');
+        CLI::init();
+
         stream_filter_remove($this->streamFilter);
     }
 
@@ -74,7 +81,7 @@ final class MigrateStatusTest extends CIUnitTestCase
 
         command('migrate:status');
 
-        $result   = str_replace(["\033[0;33m", "\033[0m"], '', CITestStreamFilter::$buffer);
+        $result   = str_replace(PHP_EOL, "\n", CITestStreamFilter::$buffer);
         $result   = preg_replace('/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/', 'YYYY-MM-DD HH:MM:SS', $result);
         $expected = <<<'EOL'
             +---------------+-------------------+--------------------+-------+---------------------+-------+
@@ -97,7 +104,7 @@ final class MigrateStatusTest extends CIUnitTestCase
 
         command('migrate:status');
 
-        $result   = str_replace(["\033[0;33m", "\033[0m"], '', CITestStreamFilter::$buffer);
+        $result   = str_replace(PHP_EOL, "\n", CITestStreamFilter::$buffer);
         $result   = preg_replace('/\d{4}-\d\d-\d\d \d\d:\d\d:\d\d/', 'YYYY-MM-DD HH:MM:SS', $result);
         $expected = <<<'EOL'
             +---------------+-------------------+--------------------+-------+---------------------+-------+
