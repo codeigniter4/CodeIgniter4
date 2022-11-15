@@ -19,13 +19,13 @@ writing we are running version 9.x. Support for this has been built into the
 via [Composer](https://getcomposer.org/) if you don't already have it installed globally.
 
 ```console
-> composer install
+composer install
 ```
 
 If running under macOS or Linux, you can create a symbolic link to make running tests a touch nicer.
 
 ```console
-> ln -s ./vendor/bin/phpunit ./phpunit
+ln -s ./vendor/bin/phpunit ./phpunit
 ```
 
 You also need to install [XDebug](https://xdebug.org/docs/install) in order
@@ -81,32 +81,32 @@ The available groups to use are:
 The entire test suite can be run by simply typing one command-line command from the main directory.
 
 ```console
-> ./phpunit
+./phpunit
 ```
 
 If you are using Windows, use the following command.
 
 ```console
-> vendor\bin\phpunit
+vendor\bin\phpunit
 ```
 
 You can limit tests to those within a single test directory by specifying the
 directory name after phpunit. All core tests are stored under **tests/system**.
 
 ```console
-> ./phpunit tests/system/HTTP/
+./phpunit tests/system/HTTP/
 ```
 
 Individual tests can be run by including the relative path to the test file.
 
 ```console
-> ./phpunit tests/system/HTTP/RequestTest.php
+./phpunit tests/system/HTTP/RequestTest.php
 ```
 
 You can run the tests without running the live database and the live cache tests.
 
 ```console
-> ./phpunit --exclude-group DatabaseLive,CacheLive
+./phpunit --exclude-group DatabaseLive,CacheLive
 ```
 
 ## Generating Code Coverage
@@ -115,7 +115,7 @@ To generate coverage information, including HTML reports you can view in your br
 you can use the following command:
 
 ```console
-> ./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
+./phpunit --colors --coverage-text=tests/coverage.txt --coverage-html=tests/coverage/ -d memory_limit=1024m
 ```
 
 This runs all of the tests again collecting information about how many lines,
