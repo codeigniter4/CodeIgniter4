@@ -60,6 +60,22 @@ exclude `@DatabaseLive` group. Or make a copy of **phpunit.dist.xml** -
 call it **phpunit.xml** - and comment out the `<testsuite>` named `Database`. This will make
 the tests run quite a bit faster.
 
+## Groups
+
+Each test class that we are running should belong to at least one
+[@group](https://phpunit.readthedocs.io/en/9.5/annotations.html#group) that is written at class-level
+doc block.
+
+The available groups to use are:
+
+| Group           | Purpose                                                               |
+| --------------- | --------------------------------------------------------------------- |
+| AutoReview      | Used for tests that perform automatic code reviews                    |
+| CacheLive       | Used for cache tests that need external services (redis, memcached)   |
+| DatabaseLive    | Used for database tests that need to run on actual database drivers   |
+| SeparateProcess | Used for tests that need to run on separate PHP processes             |
+| Others          | Used as a "catch-all" group for tests not falling in the above groups |
+
 ## Running the tests
 
 The entire test suite can be run by simply typing one command-line command from the main directory.
