@@ -160,6 +160,8 @@ parameters:
     Controller:
       - HTTP
       - Validation
+    Cookie:
+      - I18n
     Database:
       - Entity
       - Events

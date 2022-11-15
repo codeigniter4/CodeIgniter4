@@ -13,6 +13,7 @@ namespace CodeIgniter\Cookie;
 
 use ArrayAccess;
 use CodeIgniter\Cookie\Exceptions\CookieException;
+use CodeIgniter\I18n\Time;
 use Config\Cookie as CookieConfig;
 use DateTimeInterface;
 use InvalidArgumentException;
@@ -206,7 +207,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
 
         // If both `Expires` and `Max-Age` are set, `Max-Age` has precedence.
         if (isset($options['max-age']) && is_numeric($options['max-age'])) {
-            $options['expires'] = time() + (int) $options['max-age'];
+            $options['expires'] = Time::now()->getTimestamp() + (int) $options['max-age'];
             unset($options['max-age']);
         }
 
@@ -314,7 +315,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function isExpired(): bool
     {
-        return $this->expires === 0 || $this->expires < time();
+        return $this->expires === 0 || $this->expires < Time::now()->getTimestamp();
     }
 
     /**
@@ -322,7 +323,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     public function getMaxAge(): int
     {
-        $maxAge = $this->expires - time();
+        $maxAge = $this->expires - Time::now()->getTimestamp();
 
         return $maxAge >= 0 ? $maxAge : 0;
     }
@@ -466,7 +467,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     {
         $cookie = clone $this;
 
-        $cookie->expires = time() + 5 * YEAR;
+        $cookie->expires = Time::now()->getTimestamp() + 5 * YEAR;
 
         return $cookie;
     }
