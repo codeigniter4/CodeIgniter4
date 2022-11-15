@@ -185,7 +185,7 @@ class Database extends BaseCollector
                 'sql'        => $query['query']->debugToolbarDisplay(),
                 'trace'      => $query['trace'],
                 'trace-file' => $firstNonSystemLine,
-                'qid'        => md5($query['query'] . Time::now()->format('u')),
+                'qid'        => md5($query['query'] . Time::now()->format('0.u00 U')),
             ];
         }, static::$queries);
 
