@@ -44,6 +44,9 @@ final class CellGeneratorTest extends CIUnitTestCase
         return file_get_contents($filepath) ?: '';
     }
 
+    /**
+     * @group Others
+     */
     public function testGenerateCell()
     {
         command('make:cell RecentCell');
@@ -60,6 +63,9 @@ final class CellGeneratorTest extends CIUnitTestCase
         $this->assertFileExists(APPPATH . 'Cells/recent_cell.php');
     }
 
+    /**
+     * @group Others
+     */
     public function testGenerateCellSimpleName()
     {
         command('make:cell Another');
