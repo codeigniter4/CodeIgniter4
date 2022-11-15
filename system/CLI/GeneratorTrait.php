@@ -86,11 +86,57 @@ trait GeneratorTrait
 
     /**
      * Execute the command.
+     *
+     * @deprecated use generateClass() instead
      */
     protected function execute(array $params): void
     {
+        $this->generateClass($params);
+    }
+
+    /**
+     * Generates a class file from an existing template.
+     */
+    protected function generateClass(array $params)
+    {
         $this->params = $params;
 
+        // Get the fully qualified class name from the input.
+        $class = $this->qualifyClassName();
+
+        // Get the file path from class name.
+        $target = $this->buildPath($class);
+
+        // Check if path is empty.
+        if (empty($target)) {
+            return;
+        }
+
+        $this->generateFile($target, $this->buildContent($class));
+    }
+
+    /**
+     * Generate a view file from an existing template.
+     */
+    protected function generateView(string $view, array $params)
+    {
+        $this->params = $params;
+
+        $target = $this->buildPath($view);
+
+        // Check if path is empty.
+        if (empty($target)) {
+            return;
+        }
+
+        $this->generateFile($target, $this->buildContent($view));
+    }
+
+    /**
+     * Handles writing the file to disk, and all of the safety checks around that.
+     */
+    private function generateFile(string $target, string $content): void
+    {
         if ($this->getOption('namespace') === 'CodeIgniter') {
             // @codeCoverageIgnoreStart
             CLI::write(lang('CLI.generator.usingCINamespace'), 'yellow');
@@ -108,30 +154,19 @@ trait GeneratorTrait
             // @codeCoverageIgnoreEnd
         }
 
-        // Get the fully qualified class name from the input.
-        $class = $this->qualifyClassName();
-
-        // Get the file path from class name.
-        $path = $this->buildPath($class);
-
-        // Check if path is empty.
-        if (empty($path)) {
-            return;
-        }
-
-        $isFile = is_file($path);
+        $isFile = is_file($target);
 
         // Overwriting files unknowingly is a serious annoyance, So we'll check if
         // we are duplicating things, If 'force' option is not supplied, we bail.
         if (! $this->getOption('force') && $isFile) {
-            CLI::error(lang('CLI.generator.fileExist', [clean_path($path)]), 'light_gray', 'red');
+            CLI::error(lang('CLI.generator.fileExist', [clean_path($target)]), 'light_gray', 'red');
             CLI::newLine();
 
             return;
         }
 
         // Check if the directory to save the file is existing.
-        $dir = dirname($path);
+        $dir = dirname($target);
 
         if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
@@ -141,9 +176,9 @@ trait GeneratorTrait
 
         // Build the class based on the details we have, We'll be getting our file
         // contents from the template, and then we'll do the necessary replacements.
-        if (! write_file($path, $this->buildContent($class))) {
+        if (! write_file($target, $content)) {
             // @codeCoverageIgnoreStart
-            CLI::error(lang('CLI.generator.fileError', [clean_path($path)]), 'light_gray', 'red');
+            CLI::error(lang('CLI.generator.fileError', [clean_path($target)]), 'light_gray', 'red');
             CLI::newLine();
 
             return;
@@ -151,13 +186,13 @@ trait GeneratorTrait
         }
 
         if ($this->getOption('force') && $isFile) {
-            CLI::write(lang('CLI.generator.fileOverwrite', [clean_path($path)]), 'yellow');
+            CLI::write(lang('CLI.generator.fileOverwrite', [clean_path($target)]), 'yellow');
             CLI::newLine();
 
             return;
         }
 
-        CLI::write(lang('CLI.generator.fileCreate', [clean_path($path)]), 'green');
+        CLI::write(lang('CLI.generator.fileCreate', [clean_path($target)]), 'green');
         CLI::newLine();
     }
 
