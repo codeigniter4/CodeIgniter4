@@ -397,7 +397,7 @@ final class UpdateTest extends CIUnitTestCase
             ->updateFields($updateFields)
             ->onConstraint(['email', new RawSql("{$esc}db_user{$esc}.{$esc}country{$esc} = {$esc}_update{$esc}.{$esc}country{$esc}")])
             ->setData($data, null, '_update')
-            ->updateBatch($data);
+            ->updateBatch();
 
         $result = $this->db->table('user')->get()->getResultArray();
 
