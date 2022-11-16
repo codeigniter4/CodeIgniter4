@@ -170,6 +170,8 @@ parameters:
       - Events
     Entity:
       - I18n
+    Files:
+      - I18n
     Filters:
       - HTTP
     Honeypot:
@@ -178,10 +180,12 @@ parameters:
     HTTP:
       - Cookie
       - Files
+      - I18n
       - Security
       - URI
     Images:
       - Files
+      - I18n
     Model:
       - Database
       - I18n
@@ -200,6 +204,7 @@ parameters:
       - HTTP
     Security:
       - Cookie
+      - I18n
       - Session
       - HTTP
     Session:
@@ -209,6 +214,7 @@ parameters:
       - I18n
     Throttle:
       - Cache
+      - I18n
     Validation:
       - HTTP
     View:
