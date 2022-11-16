@@ -148,8 +148,9 @@ final class DeleteModelTest extends LiveModelTestCase
     }
 
     /**
-     * If where condition is set, even if the value is empty (0, NULL, etc.),
-     * Exception should not be thrown because condition is explicitly set.
+     * Given an explicit empty value in the WHERE condition
+     * When executing a soft delete
+     * Then an exception should not be thrown
      *
      * @dataProvider emptyPkValues
      *
