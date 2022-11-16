@@ -67,12 +67,8 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $expected = 'Data of Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
 
-        $expected = <<<'EOL'
-            +----+----------------+--------------------+-------+---------------+------------+-------+
-            | id | version        | class              | group | namespace     | time       | batch |
-            +----+----------------+--------------------+-------+---------------+------------+-------+
-            EOL;
-        $this->assertStringContainsString($expected, $result);
+        $expectedPattern = '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/';
+        $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 
     public function testDbTableShow(): void
