@@ -21,8 +21,7 @@ $builder->updateBatch($data, ['title', 'author']);
 $builder->setData($data)->onConstraint('title, author')->updateBatch();
 
 // OR
-$builder->setData($data)
-    ->setAlias('u')
+$builder->setData($data, null, 'u')
     ->onConstraint(['`mytable`.`title`' => '`u`.`title`', 'author' => new RawSql('`u`.`author`')])
     ->updateBatch();
 

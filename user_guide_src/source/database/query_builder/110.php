@@ -7,7 +7,7 @@ $data = [
     'country' => 'Afghanistan',
 ];
 
-$builder->updateFields('name, country')->setAlias('_upsert')->upsert($data);
+$builder->updateFields('name, country')->setData($data, null, '_upsert')->upsert($data);
 /* SQLSRV produces:
     MERGE INTO "test"."dbo"."db_user"
     USING (
