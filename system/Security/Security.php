@@ -15,6 +15,7 @@ use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Session;
 use Config\App;
@@ -566,7 +567,7 @@ class Security implements SecurityInterface
             $this->rawCookieName,
             $this->hash,
             [
-                'expires' => $this->expires === 0 ? 0 : time() + $this->expires,
+                'expires' => $this->expires === 0 ? 0 : Time::now()->getTimestamp() + $this->expires,
             ]
         );
 
