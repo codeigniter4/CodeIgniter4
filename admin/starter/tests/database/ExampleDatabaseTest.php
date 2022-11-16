@@ -31,6 +31,7 @@ final class ExampleDatabaseTest extends CIUnitTestCase
         $this->setPrivateProperty($model, 'useSoftDeletes', true);
         $this->setPrivateProperty($model, 'tempUseSoftDeletes', true);
 
+        /** @var stdClass $object */
         $object = $model->first();
         $model->delete($object->id);
 
