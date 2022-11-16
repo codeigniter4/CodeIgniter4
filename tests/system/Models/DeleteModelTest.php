@@ -148,8 +148,8 @@ final class DeleteModelTest extends LiveModelTestCase
     }
 
     /**
-     * If where condition is set, beyond the value was empty (0, '', NULL, etc.),
-     * Exception should not be thrown because condition was explicitly set
+     * If where condition is set, even if the value is empty (0, NULL, etc.),
+     * Exception should not be thrown because condition is explicitly set.
      *
      * @dataProvider emptyPkValues
      *
@@ -203,7 +203,6 @@ final class DeleteModelTest extends LiveModelTestCase
             [0],
             [null],
             ['0'],
-            [''],
         ];
     }
 
