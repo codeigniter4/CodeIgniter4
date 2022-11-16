@@ -67,7 +67,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
         $expected = 'Data of Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
 
-        $expectedPattern = '/\|\hid\h+\|\hversion\h+\|\hclass\h+\|\hgroup\h+\|\hnamespace\h+\|\htime\h+\|\hbatch\h\|/';
+        $expectedPattern = '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/';
         $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 
