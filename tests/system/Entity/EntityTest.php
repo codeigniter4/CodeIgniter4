@@ -348,6 +348,11 @@ final class EntityTest extends CIUnitTestCase
 
         $this->assertIsBool($entity->fifth);
         $this->assertFalse($entity->fifth);
+
+        $entity->fifth = 'false';
+
+        $this->assertIsBool($entity->fifth);
+        $this->assertFalse($entity->fifth);
     }
 
     public function testCastCSV()

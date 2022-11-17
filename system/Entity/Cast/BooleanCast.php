@@ -23,4 +23,12 @@ class BooleanCast extends BaseCast
     {
         return (bool) $value;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function set($value, array $params = []): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
 }
