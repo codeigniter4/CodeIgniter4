@@ -910,12 +910,12 @@ abstract class BaseModel
             return false;
         }
 
-        // Must be called first so we don't
+        // Must be called first, so we don't
         // strip out updated_at values.
         $data = $this->doProtectFields($data);
 
         // doProtectFields() can further remove elements from
-        // $data so we need to check for empty dataset again
+        // $data, so we need to check for empty dataset again
         if (empty($data)) {
             throw DataException::forEmptyDataset('update');
         }
