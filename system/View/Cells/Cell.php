@@ -37,7 +37,7 @@ class Cell
     /**
      * Responsible for converting the view into HTML.
      * Expected to be overridden by the child class
-     * in many occassions, but not all.
+     * in many occasions, but not all.
      */
     public function render(): string
     {
@@ -77,7 +77,7 @@ class Cell
             $view = str_replace('_cell', '', $view);
         }
 
-        // Locate our view, prefering the directory of the class.
+        // Locate our view, preferring the directory of the class.
         if (! is_file($view)) {
             // Get the local pathname of the Cell
             $ref  = new ReflectionClass($this);
