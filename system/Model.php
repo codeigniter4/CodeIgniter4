@@ -386,6 +386,12 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
+        if ($builder->getCompiledQBWhere() === []) {
+            throw new DatabaseException(
+                'Updates are not allowed unless they contain a "where" or "like" clause.'
+            );
+        }
+
         return $builder->update();
     }
 
