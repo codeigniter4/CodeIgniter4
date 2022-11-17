@@ -31,14 +31,33 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         CITestStreamFilter::$buffer = '';
 
         $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
         $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
         $this->connection   = Database::connect();
 
-        parent::setUp();
+        $this->dropDatabase();
+    }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        stream_filter_remove($this->streamFilter);
+
+        $this->dropDatabase();
+    }
+
+    protected function getBuffer()
+    {
+        return CITestStreamFilter::$buffer;
+    }
+
+    private function dropDatabase(): void
+    {
         if ($this->connection instanceof SQLite3Connection) {
             $file = WRITEPATH . 'foobar.db';
             if (is_file($file)) {
@@ -51,18 +70,6 @@ final class CreateDatabaseTest extends CIUnitTestCase
                 Database::forge()->dropDatabase('foobar');
             }
         }
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-
-        parent::tearDown();
-    }
-
-    protected function getBuffer()
-    {
-        return CITestStreamFilter::$buffer;
     }
 
     public function testCreateDatabase()
