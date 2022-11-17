@@ -46,9 +46,6 @@ final class CellGeneratorTest extends CIUnitTestCase
         return file_get_contents($filepath) ?: '';
     }
 
-    /**
-     * @group Others
-     */
     public function testGenerateCell()
     {
         command('make:cell RecentCell');
@@ -65,9 +62,6 @@ final class CellGeneratorTest extends CIUnitTestCase
         $this->assertFileExists($file);
     }
 
-    /**
-     * @group Others
-     */
     public function testGenerateCellSimpleName()
     {
         command('make:cell Another');
@@ -82,19 +76,5 @@ final class CellGeneratorTest extends CIUnitTestCase
         $file = APPPATH . 'Cells/another_cell.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
         $this->assertFileExists($file);
-    }
-
-    private function cleanUp()
-    {
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
-        $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
-        $dir    = dirname($file);
-
-        if (is_file($file)) {
-            unlink($file);
-        }
-        if (is_dir($dir) && strpos($dir, 'Cells') !== false) {
-            rmdir($dir);
-        }
     }
 }
