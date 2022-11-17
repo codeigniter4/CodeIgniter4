@@ -98,6 +98,8 @@ At the most basic level, all you need to implement within the class are public p
         <?= $message; ?>
     </div>
 
+.. _generating-cell-via-command:
+
 Generating Cell via Command
 ===========================
 

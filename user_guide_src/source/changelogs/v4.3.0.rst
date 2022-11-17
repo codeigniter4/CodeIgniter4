@@ -169,6 +169,7 @@ Commands
 
 - The call handler for Spark commands from the ``CodeIgniter\CodeIgniter`` class has been extracted. This will reduce the cost of console calls.
 - Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
+- Added ``spark make:cell`` command to create a new Cell file and its view. See :ref:`generating-cell-via-command` for the details.
 - Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
 - Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 - Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
@@ -263,6 +264,7 @@ Message Changes
 ***************
 
 - Updated English language strings to be more consistent.
+- Added ``CLI.generator.className.cell`` and ``CLI.generator.viewName.cell``.
 
 Changes
 *******
