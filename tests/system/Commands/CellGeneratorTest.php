@@ -62,7 +62,7 @@ final class CellGeneratorTest extends CIUnitTestCase
         // Check the view was generated
         $file = APPPATH . 'Cells/recent_cell.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $this->assertFileExists(APPPATH . 'Cells/recent_cell.php');
+        $this->assertFileExists($file);
     }
 
     /**
@@ -81,7 +81,7 @@ final class CellGeneratorTest extends CIUnitTestCase
         // Check the view was generated
         $file = APPPATH . 'Cells/another_cell.php';
         $this->assertStringContainsString('File created: ', $this->getStreamFilterBuffer());
-        $this->assertFileExists(APPPATH . 'Cells/another_cell.php');
+        $this->assertFileExists($file);
     }
 
     private function cleanUp()
