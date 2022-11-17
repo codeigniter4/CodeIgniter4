@@ -87,13 +87,13 @@ At the most basic level, all you need to implement within the class are public p
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         public $type;
         public $message;
     }
 
-    // app/Cells/alert-message.php
+    // app/Cells/alert_message_cell.php
     <div class="alert alert-<?= $type; ?>">
         <?= $message; ?>
     </div>
@@ -196,7 +196,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
         }
     }
 
-    // app/Cells/recent-posts.php
+    // app/Cells/recent_posts.php
     <ul>
         <?php foreach ($posts as $post): ?>
             <li><?= $this->linkPost($post) ?></li>
