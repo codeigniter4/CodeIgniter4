@@ -55,7 +55,7 @@ class CellGenerator extends BaseCommand
      * @var array
      */
     protected $arguments = [
-        'name' => 'The entity class name.',
+        'name' => 'The cell class name.',
     ];
 
     /**
@@ -83,6 +83,7 @@ class CellGenerator extends BaseCommand
         $this->generateClass($params);
 
         // Generate the View
+        $this->classNameLang = 'CLI.generator.viewName.cell';
 
         // Form the view name
         $segments = explode('\\', $this->qualifyClassName());
