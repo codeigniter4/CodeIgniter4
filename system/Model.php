@@ -589,7 +589,7 @@ class Model extends BaseModel
         }
 
         // When $reset === false, the $tempUseSoftDeletes will be
-        // dependant on $useSoftDeletes value because we don't
+        // dependent on $useSoftDeletes value because we don't
         // want to add the same "where" condition for the second time
         $this->tempUseSoftDeletes = $reset
             ? $this->useSoftDeletes
