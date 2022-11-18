@@ -129,7 +129,7 @@ final class ComposerScripts
         }
 
         if (! @mkdir($targetDir, 0755, true)) {
-            echo sprintf('Cannot create the target directory: "%s"' . PHP_EOL, $targetDir);
+            echo sprintf('Cannot create the target directory: "%s"', $targetDir) . PHP_EOL;
 
             exit(1);
         }
