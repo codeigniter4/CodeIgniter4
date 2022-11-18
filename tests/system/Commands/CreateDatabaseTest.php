@@ -36,6 +36,18 @@ final class CreateDatabaseTest extends CIUnitTestCase
 
         parent::setUp();
 
+        $this->dropDatabase();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->dropDatabase();
+    }
+
+    private function dropDatabase(): void
+    {
         if ($this->connection instanceof SQLite3Connection) {
             $file = WRITEPATH . 'foobar.db';
             if (is_file($file)) {
