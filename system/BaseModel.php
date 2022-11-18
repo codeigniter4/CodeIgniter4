@@ -899,6 +899,10 @@ abstract class BaseModel
      */
     public function update($id = null, $data = null): bool
     {
+        if (is_bool($id)) {
+            throw new InvalidArgumentException('$id should not be boolean.');
+        }
+
         if (is_numeric($id) || is_string($id)) {
             $id = [$id];
         }
@@ -1037,6 +1041,10 @@ abstract class BaseModel
      */
     public function delete($id = null, bool $purge = false)
     {
+        if (is_bool($id)) {
+            throw new InvalidArgumentException('$id should not be boolean.');
+        }
+
         if ($id && (is_numeric($id) || is_string($id))) {
             $id = [$id];
         }

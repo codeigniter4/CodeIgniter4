@@ -15,6 +15,7 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use Generator;
+use InvalidArgumentException;
 use stdClass;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -386,12 +387,10 @@ final class UpdateModelTest extends LiveModelTestCase
      *
      * @param false|null $id
      */
-    public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id): void
+    public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
     {
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage(
-            'Updates are not allowed unless they contain a "where" or "like" clause.'
-        );
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
 
         // $useSoftDeletes = false
         $this->createModel(JobModel::class);
@@ -402,8 +401,16 @@ final class UpdateModelTest extends LiveModelTestCase
     public function provideInvalidIds(): Generator
     {
         yield from [
-            [null],
-            [false],
+            [
+                null,
+                DatabaseException::class,
+                'Updates are not allowed unless they contain a "where" or "like" clause.',
+            ],
+            [
+                false,
+                InvalidArgumentException::class,
+                '$id should not be boolean.',
+            ],
         ];
     }
 }
