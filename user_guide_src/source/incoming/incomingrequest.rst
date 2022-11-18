@@ -296,7 +296,7 @@ The methods provided by the parent classes that are available are:
                         `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:   $_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not
+        :returns:   ``$_REQUEST`` if no parameters supplied, otherwise the REQUEST value if found, or null if not
         :rtype: mixed|null
 
         The first parameter will contain the name of the REQUEST item you are looking for:
@@ -335,7 +335,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_GET if no parameters supplied, otherwise the GET value if found, or null if not
+        :returns:       ``$_GET`` if no parameters supplied, otherwise the GET value if found, or null if not
         :rtype: mixed|null
 
         This method is identical to ``getVar()``, only it fetches GET data.
@@ -347,7 +347,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :returns:       ``$_POST`` if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: mixed|null
 
             This method is identical to ``getVar()``, only it fetches POST data.
@@ -359,7 +359,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_POST and $_GET combined if no parameters specified (prefer POST value on conflict),
+        :returns:       ``$_POST`` and ``$_GET`` combined if no parameters specified (prefer POST value on conflict),
                         otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null
         :rtype: mixed|null
 
@@ -379,7 +379,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_GET and $_POST combined if no parameters specified (prefer GET value on conflict),
+        :returns:       ``$_GET`` and ``$_POST`` combined if no parameters specified (prefer GET value on conflict),
                         otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null
         :rtype: mixed|null
 
@@ -400,7 +400,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:        $_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
+        :returns:        ``$_COOKIE`` if no parameters supplied, otherwise the COOKIE value if found or null if not
         :rtype:    mixed
 
         This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data:
@@ -423,7 +423,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:        $_SERVER item value if found, null if not
+        :returns:        ``$_SERVER`` item value if found, null if not
         :rtype:    mixed
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
