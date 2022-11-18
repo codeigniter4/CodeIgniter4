@@ -93,8 +93,9 @@ is convenient, you will often need to use a more specific method, like:
 
 * ``$request->getGet()``
 * ``$request->getPost()``
-* ``$request->getServer()``
 * ``$request->getCookie()``
+* ``$request->getServer()``
+* ``$request->getEnv()``
 
 In addition, there are a few utility methods for retrieving information from either ``$_GET`` or ``$_POST``, while
 maintaining the ability to control the order you look for it:
