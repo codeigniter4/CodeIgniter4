@@ -43,7 +43,7 @@ You can check the HTTP method that this request represents with the ``method()``
 
 .. literalinclude:: incomingrequest/005.php
 
-By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
+By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc). You can get an
 uppercase version by wrapping the call in ``strtoupper()``::
 
     // Returns 'GET'
@@ -56,9 +56,9 @@ You can also check if the request was made through and HTTPS connection with the
 Retrieving Input
 ----------------
 
-You can retrieve input from $_SERVER, $_GET, $_POST, and $_ENV through the Request object.
+You can retrieve input from ``$_SERVER``, ``$_GET``, ``$_POST``, and ``$_ENV`` through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request. The main
-advantages to using these methods instead of accessing them directly ($_POST['something']), is that they
+advantages to using these methods instead of accessing them directly (``$_POST['something']``), is that they
 will return null if the item doesn't exist, and you can have the data filtered. This lets you conveniently
 use data without having to test whether an item exists first. In other words, normally you might do something
 like this:
@@ -69,7 +69,7 @@ With CodeIgniter's built-in methods you can simply do this:
 
 .. literalinclude:: incomingrequest/008.php
 
-The ``getVar()`` method will pull from $_REQUEST, so will return any data from $_GET, $POST, or $_COOKIE. While this
+The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE``. While this
 is convenient, you will often need to use a more specific method, like:
 
 * ``$request->getGet()``
@@ -77,15 +77,15 @@ is convenient, you will often need to use a more specific method, like:
 * ``$request->getServer()``
 * ``$request->getCookie()``
 
-In addition, there are a few utility methods for retrieving information from either $_GET or $_POST, while
+In addition, there are a few utility methods for retrieving information from either ``$_GET`` or ``$_POST``, while
 maintaining the ability to control the order you look for it:
 
-* ``$request->getPostGet()`` - checks $_POST first, then $_GET
-* ``$request->getGetPost()`` - checks $_GET first, then $_POST
+* ``$request->getPostGet()`` - checks ``$_POST`` first, then ``$_GET``
+* ``$request->getGetPost()`` - checks ``$_GET`` first, then ``$_POST``
 
 **Getting JSON data**
 
-You can grab the contents of php://input as a JSON stream with ``getJSON()``.
+You can grab the contents of ``php://input`` as a JSON stream with ``getJSON()``.
 
 .. note::  This has no way of checking if the incoming data is valid JSON or not, you should only use this
     method if you know that you're expecting JSON.
