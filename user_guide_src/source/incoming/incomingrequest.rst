@@ -113,7 +113,7 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
-If the incoming request has a ``CONTENT_TYPE`` header set to "application/json", you can also use ``getVar()`` to get
+If the incoming request has a ``CONTENT_TYPE`` header set to ``application/json``, you can also use ``getVar()`` to get
 the JSON stream. Using ``getVar()`` in this way will always return an object.
 
 Getting Specific Data from JSON
@@ -135,7 +135,7 @@ correct ``CONTENT_TYPE`` header.
 Retrieving Raw Data (PUT, PATCH, DELETE)
 ========================================
 
-Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``:
+Finally, you can grab the contents of ``php://input`` as a raw stream with ``getRawInput()``:
 
 .. literalinclude:: incomingrequest/012.php
 
