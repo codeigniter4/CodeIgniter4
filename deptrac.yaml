@@ -165,6 +165,7 @@ parameters:
     Database:
       - Entity
       - Events
+      - I18n
     Email:
       - I18n
       - Events
