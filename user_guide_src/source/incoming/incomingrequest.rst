@@ -43,7 +43,12 @@ You can check the HTTP method that this request represents with the ``method()``
 
 .. literalinclude:: incomingrequest/005.php
 
-By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc). You can get an
+By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc).
+
+.. note:: The functionality to convert the return value to lower case is deprecated.
+    It will be removed in the future version, and this method will be PSR-7 equivalent.
+
+You can get an
 uppercase version by wrapping the call in ``strtoupper()``::
 
     // Returns 'GET'
@@ -57,7 +62,12 @@ Retrieving Input
 ----------------
 
 You can retrieve input from ``$_SERVER``, ``$_GET``, ``$_POST``, and ``$_ENV`` through the Request object.
-The data is not automatically filtered and returns the raw input data as passed in the request. The main
+The data is not automatically filtered and returns the raw input data as passed in the request.
+
+.. note:: It is bad practice to use global variables. Basically, it should be avoided
+    and it is recommended to use methods of the Request object.
+
+The main
 advantages to using these methods instead of accessing them directly (``$_POST['something']``), is that they
 will return null if the item doesn't exist, and you can have the data filtered. This lets you conveniently
 use data without having to test whether an item exists first. In other words, normally you might do something
