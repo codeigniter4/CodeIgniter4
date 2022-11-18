@@ -116,8 +116,8 @@ The second and third parameters match up to the ``depth`` and ``options`` argume
 If the incoming request has a ``CONTENT_TYPE`` header set to "application/json", you can also use ``getVar()`` to get
 the JSON stream. Using ``getVar()`` in this way will always return an object.
 
-Get Specific Data from JSON
-===========================
+Getting Specific Data from JSON
+===============================
 
 You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
 data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
@@ -132,7 +132,7 @@ correct ``CONTENT_TYPE`` header.
 
 .. note:: See the documentation for :php:func:`dot_array_search()` in the ``Array`` helper for more information on "dot" notation.
 
-Retrieving Raw data (PUT, PATCH, DELETE)
+Retrieving Raw Data (PUT, PATCH, DELETE)
 ========================================
 
 Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``:
