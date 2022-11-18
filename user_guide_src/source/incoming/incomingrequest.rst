@@ -90,7 +90,6 @@ You can grab the contents of ``php://input`` as a JSON stream with ``getJSON()``
 .. note::  This has no way of checking if the incoming data is valid JSON or not, you should only use this
     method if you know that you're expecting JSON.
 
-
 .. literalinclude:: incomingrequest/009.php
 
 By default, this will return any objects in the JSON data as objects. If you want that converted to associative
@@ -107,14 +106,11 @@ the JSON stream. Using ``getVar()`` in this way will always return an object.
 You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
 data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
 
-
 .. literalinclude:: incomingrequest/010.php
-
 
 If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
 true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
 correct ``CONTENT_TYPE`` header.
-
 
 .. literalinclude:: incomingrequest/011.php
 
