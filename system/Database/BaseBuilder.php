@@ -1971,7 +1971,7 @@ class BaseBuilder
     /**
      * Set table alias for dataset sudo table.
      */
-    public function setAlias(string $alias): BaseBuilder
+    private function setAlias(string $alias): BaseBuilder
     {
         if ($alias !== '') {
             $this->db->addTableAlias($alias);
