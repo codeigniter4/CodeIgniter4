@@ -76,8 +76,7 @@ final class DeleteTest extends CIUnitTestCase
         ];
 
         $this->db->table('user')
-            ->setAlias('data')
-            ->setData($data)
+            ->setData($data, null, 'data')
             ->onConstraint(['id' => 'userid', 'name' => 'username'])
             ->deleteBatch();
 

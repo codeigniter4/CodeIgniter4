@@ -21,11 +21,7 @@ $data = [
     ],
 ];
 
-$builder->setAlias('del')->where('del.qty >', 1)->deleteBatch($data, 'order, line');
-
-// OR
-$builder
-    ->setData($data, true, 'del')
+$builder->setData($data, true, 'del')
     ->onConstraint('order, line')
     ->where('del.qty >', 1)
     ->deleteBatch();
