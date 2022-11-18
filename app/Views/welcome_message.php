@@ -209,7 +209,7 @@
                 <button onclick="toggleMenu();">&#9776;</button>
             </li>
             <li class="menu-item hidden"><a href="#">Home</a></li>
-            <li class="menu-item hidden"><a href="https://codeigniter4.github.io/userguide/" target="_blank">Docs</a>
+            <li class="menu-item hidden"><a href="https://www.codeigniter.com/user_guide/index.html" target="_blank">Docs</a>
             </li>
             <li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
             <li class="menu-item hidden"><a
