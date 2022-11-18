@@ -14,6 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\I18n\Time;
 use Config\Services;
 use Exception;
 use PHPUnit\Framework\Constraint\IsEqual;
@@ -339,7 +340,7 @@ class TestResponse extends TestCase
     public function assertCookieExpired(string $key, string $prefix = '')
     {
         $this->assertTrue($this->response->hasCookie($key, null, $prefix));
-        $this->assertGreaterThan(time(), $this->response->getCookie($key, $prefix)->getExpiresTimestamp());
+        $this->assertGreaterThan(Time::now()->getTimestamp(), $this->response->getCookie($key, $prefix)->getExpiresTimestamp());
     }
 
     // --------------------------------------------------------------------
