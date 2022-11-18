@@ -80,6 +80,9 @@ With CodeIgniter's built-in methods you can simply do this:
 
 .. literalinclude:: incomingrequest/008.php
 
+Getting Data
+============
+
 The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on PHP ini settings). While this
 is convenient, you will often need to use a more specific method, like:
 
