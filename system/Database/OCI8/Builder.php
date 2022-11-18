@@ -467,12 +467,12 @@ class Builder extends BaseBuilder
                 array_map(
                     static fn ($key, $value) => (
                         $value instanceof RawSql ?
-                    $value :
-                    (
-                        is_string($key) ?
-                    $table . '.' . $key . ' = ' . $alias . '.' . $value :
-                    $table . '.' . $value . ' = ' . $alias . '.' . $value
-                    )
+                        $value :
+                        (
+                            is_string($key) ?
+                            $table . '.' . $key . ' = ' . $alias . '.' . $value :
+                            $table . '.' . $value . ' = ' . $alias . '.' . $value
+                        )
                     ),
                     array_keys($constraints),
                     $constraints
