@@ -1,5 +1,6 @@
+#####################
 IncomingRequest Class
-*********************
+#####################
 
 The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
 It extends from, and has access to all the methods of the :doc:`Request </incoming/request>` and :doc:`Message </incoming/message>`
@@ -10,7 +11,7 @@ classes, in addition to the methods listed below.
     :depth: 2
 
 Accessing the Request
----------------------
+*********************
 
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property:
@@ -28,7 +29,7 @@ the controller, where you can save it as a class property:
 .. literalinclude:: incomingrequest/003.php
 
 Determining Request Type
-------------------------
+************************
 
 A request could be of several types, including an AJAX request or a request from the command line. This can
 be checked with the ``isAJAX()`` and ``isCLI()`` methods:
@@ -59,7 +60,7 @@ You can also check if the request was made through and HTTPS connection with the
 .. literalinclude:: incomingrequest/006.php
 
 Retrieving Input
-----------------
+****************
 
 You can retrieve input from ``$_SERVER``, ``$_GET``, ``$_POST``, and ``$_ENV`` through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request.
@@ -151,7 +152,7 @@ All of the methods mentioned above support the filter type passed in as the seco
 exception of ``getJSON()``.
 
 Retrieving Headers
-------------------
+******************
 
 You can get access to any header that was sent with the request with the ``headers()`` method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
@@ -177,7 +178,7 @@ If you need the entire header, with the name and values in a single string, simp
 .. literalinclude:: incomingrequest/019.php
 
 The Request URL
----------------
+***************
 
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->getUri()`` method. You can cast this object as a string to get a full URL for the current request:
@@ -195,7 +196,7 @@ functions use, so this is a helpful way to "spoof" an incoming request for testi
 .. literalinclude:: incomingrequest/022.php
 
 Uploaded Files
---------------
+**************
 
 Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns an array of
 ``CodeIgniter\HTTP\Files\UploadedFile`` instance. This helps to ease the pain of working with uploaded files,
@@ -217,7 +218,7 @@ multi-file upload, based on the filename given in the HTML file input:
 .. note:: The files here correspond to ``$_FILES``. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file` for more details.
 
 Content Negotiation
--------------------
+*******************
 
 You can easily negotiate content types with the request through the ``negotiate()`` method:
 
@@ -226,7 +227,7 @@ You can easily negotiate content types with the request through the ``negotiate(
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
 Class Reference
-===============
+***************
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
     :doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.
