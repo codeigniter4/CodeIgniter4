@@ -114,7 +114,7 @@ correct ``CONTENT_TYPE`` header.
 
 .. literalinclude:: incomingrequest/011.php
 
-.. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
+.. note:: See the documentation for :php:func:`dot_array_search()` in the ``Array`` helper for more information on "dot" notation.
 
 **Retrieving Raw data (PUT, PATCH, DELETE)**
 
