@@ -518,10 +518,12 @@ class CLI
 
     /**
      * if operating system === windows
+     *
+     * @deprecated v4.3 Use `is_windows()` instead
      */
     public static function isWindows(): bool
     {
-        return PHP_OS_FAMILY === 'Windows';
+        return is_windows();
     }
 
     /**
@@ -544,7 +546,7 @@ class CLI
     {
         // Unix systems, and Windows with VT100 Terminal support (i.e. Win10)
         // can handle CSI sequences. For lower than Win10 we just shove in 40 new lines.
-        static::isWindows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
+        is_windows() && ! static::streamSupports('sapi_windows_vt100_support', STDOUT)
             ? static::newLine(40)
             : static::fwrite(STDOUT, "\033[H\033[2J");
     }
@@ -691,7 +693,7 @@ class CLI
             return true;
         }
 
-        if (static::isWindows()) {
+        if (is_windows()) {
             // @codeCoverageIgnoreStart
             return static::streamSupports('sapi_windows_vt100_support', $resource)
                 || isset($_SERVER['ANSICON'])
@@ -736,7 +738,7 @@ class CLI
     public static function generateDimensions()
     {
         try {
-            if (static::isWindows()) {
+            if (is_windows()) {
                 // Shells such as `Cygwin` and `Git bash` returns incorrect values
                 // when executing `mode CON`, so we use `tput` instead
                 if (getenv('TERM') || (($shell = getenv('SHELL')) && preg_match('/(?:bash|zsh)(?:\.exe)?$/', $shell))) {
