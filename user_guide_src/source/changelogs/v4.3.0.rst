@@ -237,6 +237,7 @@ Helpers and Functions
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 - Added :php:func:`request()` and :php:func:`response()` functions.
 - Added :php:func:`decamelize()` function to convert camelCase to snake_case.
+- Added :php:func:`is_windows()` global function to detect Windows platforms.
 
 Error Handling
 ==============

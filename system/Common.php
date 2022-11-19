@@ -721,6 +721,16 @@ if (! function_exists('is_really_writable')) {
     }
 }
 
+if (! function_exists('is_windows')) {
+    /**
+     * Detect if platform is running in Windows.
+     */
+    function is_windows(): bool
+    {
+        return DIRECTORY_SEPARATOR === '\\';
+    }
+}
+
 if (! function_exists('lang')) {
     /**
      * A convenience method to translate a string or array of them and format

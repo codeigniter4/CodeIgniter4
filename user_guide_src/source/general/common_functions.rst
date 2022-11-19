@@ -281,6 +281,12 @@ Miscellaneous Functions
     :returns: true if you can write to the file, false otherwise.
     :rtype: bool
 
+.. php:function:: is_windows()
+
+    :rtype: bool
+
+    Detect if platform is running in Windows.
+
 .. php:function:: log_message($level, $message [, $context])
 
     :param   string   $level: The level of severity
