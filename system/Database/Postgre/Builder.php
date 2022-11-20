@@ -460,15 +460,10 @@ class Builder extends BaseBuilder
                 }
             }
 
-            // remove database prefix from alias in where
             $sql .= ' ' . str_replace(
                 'WHERE ',
                 'AND ',
-                str_replace(
-                    $this->db->DBPrefix . trim($alias, $this->db->escapeChar),
-                    trim($alias, $this->db->escapeChar),
-                    $this->compileWhereHaving('QBWhere')
-                )
+                $this->compileWhereHaving('QBWhere')
             );
 
             $this->QBOptions['sql'] = $sql;

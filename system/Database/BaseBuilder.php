@@ -2723,14 +2723,9 @@ class BaseBuilder
                 }
             }
 
-            // remove database prefix from alias in where
-            $sql .= ' ' . str_replace(
-                $this->db->DBPrefix . trim($alias, $this->db->escapeChar),
-                trim($alias, $this->db->escapeChar),
-                $this->compileWhereHaving('QBWhere')
-            );
+            $sql .= ' ' . $this->compileWhereHaving('QBWhere');
 
-            $this->QBOptions['sql'] = $sql;
+            $this->QBOptions['sql'] = trim($sql);
         }
 
         if (isset($this->QBOptions['fromQuery'])) {
