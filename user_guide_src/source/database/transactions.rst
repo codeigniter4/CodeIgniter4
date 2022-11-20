@@ -69,6 +69,10 @@ If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
 
+.. note:: Since v4.3.0, ``DBDebug`` is true by default. In previous versions,
+    it was false in production environment, and different database drivers might
+    throw different exception classes or did not throw exceptions.
+
 Disabling Transactions
 ======================
 
