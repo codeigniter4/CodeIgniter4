@@ -75,10 +75,16 @@ final class DeleteTest extends CIUnitTestCase
             ['userid' => 2, 'username' => 'Ahmadinejad', 'unused' => 'You can have fields you dont use'],
         ];
 
-        $this->db->table('user')
+        $builder = $this->db->table('user')
             ->setData($data, null, 'data')
-            ->onConstraint(['id' => 'userid', 'name' => 'username'])
-            ->deleteBatch();
+            ->onConstraint(['id' => 'userid', 'name' => 'username']);
+
+        // SQLite does not support where for batch deletes
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $builder->where('data.userid > 0');
+        }
+
+        $builder->deleteBatch();
 
         $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
 
