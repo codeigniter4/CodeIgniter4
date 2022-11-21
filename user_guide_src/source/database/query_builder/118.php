@@ -30,9 +30,9 @@ $builder->setData($data, true, 'del')
  * MySQL Produces:
  * DELETE `order_line` FROM `order_line`
  * INNER JOIN (
- * SELECT 48372 `order`, 3 `line`, 'Keyboard' `product`, 1 `qty` UNION ALL
- * SELECT 48372 `order`, 4 `line`, 'Mouse'    `product`, 1 `qty` UNION ALL
- * SELECT 48372 `order`, 5 `line`, 'Monitor'  `product`, 2 `qty`
+ * SELECT 3 `line`, 48372 `order`, 'Keyboard' `product`, 1 `qty` UNION ALL
+ * SELECT 4 `line`, 48372 `order`, 'Mouse'    `product`, 1 `qty` UNION ALL
+ * SELECT 5 `line`, 48372 `order`, 'Monitor'  `product`, 2 `qty`
  * ) `del`
  * ON `order_line`.`order` = `del`.`order` AND `order_line`.`line` = `del`.`line`
  * WHERE `del`.`qty` > 1
