@@ -2125,8 +2125,8 @@ class BaseBuilder
             }
 
             $this->QBOptions['setQueryAsData'] = $query;
-            $this->QBKeys                = $columns;
-            $this->QBSet                 = [];
+            $this->QBKeys                      = $columns;
+            $this->QBSet                       = [];
         }
 
         return $this;
@@ -2786,14 +2786,32 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|object|null $set         a dataset or select query
-     * @param array|RawSql|null $constraints
+     * @param array|BaseBuilder|object|RawSql|null $set         a dataset
+     * @param array|RawSql|null                    $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
     public function deleteBatch($set = null, $constraints = null, int $batchSize = 100)
     {
+        $this->setQueryAsData($set);
+
         $this->onConstraint($constraints);
+
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $sql = $this->_deleteBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
 
         if ($set !== null && $set !== []) {
             $this->setData($set, true);
@@ -2866,8 +2884,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = trim($sql);
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " UNION ALL\n",
