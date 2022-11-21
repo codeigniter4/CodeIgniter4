@@ -8,7 +8,7 @@ $query = $this->db->table('user2')
 $additionalUpdateField = ['updated_at' => new RawSql('CURRENT_TIMESTAMP')];
 
 $sql = $builder->table('user')
-    ->setData($query, null, 'u')
+    ->setQueryAsData($query, null, 'u')
     ->onConstraint('email')
     ->updateFields($additionalUpdateField, true)
     ->updateBatch();

@@ -169,7 +169,7 @@ class BaseBuilder
      *   tableIdentity?: string,
      *   updateFields?: array,
      *   constraints?: array,
-     *   setQuery?: string,
+     *   setQueryAsData?: string,
      *   sql?: string,
      *   alias?: string
      * }
@@ -1925,9 +1925,9 @@ class BaseBuilder
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        $this->setQuery($set);
+        $this->setQueryAsData($set);
 
-        if (isset($this->QBOptions['setQuery'])) {
+        if (isset($this->QBOptions['setQueryAsData'])) {
             $sql = $this->_upsertBatch($this->QBFrom[0], $this->QBKeys, []);
 
             if ($sql === '') {
@@ -1983,8 +1983,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['setQuery'])) {
-            $data = $this->QBOptions['setQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }
@@ -2092,7 +2092,7 @@ class BaseBuilder
      * @param string             $alias
      * @param array|string|null  $columns an array or comma delimited string of columns
      */
-    public function setQuery($query, $alias = null, $columns = null): BaseBuilder
+    public function setQueryAsData($query, $alias = null, $columns = null): BaseBuilder
     {
         if (is_string($query)) {
             throw new InvalidArgumentException('$query parameter must be BaseBuilder or RawSql class.');
@@ -2124,7 +2124,7 @@ class BaseBuilder
                 $columns[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
             }
 
-            $this->QBOptions['setQuery'] = $query;
+            $this->QBOptions['setQueryAsData'] = $query;
             $this->QBKeys                = $columns;
             $this->QBSet                 = [];
         }
@@ -2157,9 +2157,9 @@ class BaseBuilder
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        $this->setQuery($set);
+        $this->setQueryAsData($set);
 
-        if (isset($this->QBOptions['setQuery'])) {
+        if (isset($this->QBOptions['setQueryAsData'])) {
             $sql = $this->_insertBatch($this->QBFrom[0], $this->QBKeys, []);
 
             if ($sql === '') {
@@ -2205,8 +2205,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['setQuery'])) {
-            $data = $this->QBOptions['setQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
@@ -2527,11 +2527,11 @@ class BaseBuilder
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
-        $this->setQuery($set);
+        $this->setQueryAsData($set);
 
         $this->onConstraint($constraints);
 
-        if (isset($this->QBOptions['setQuery'])) {
+        if (isset($this->QBOptions['setQueryAsData'])) {
             $sql = $this->_updateBatch($this->QBFrom[0], $this->QBKeys, []);
 
             if ($sql === '') {
@@ -2630,8 +2630,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['setQuery'])) {
-            $data = $this->QBOptions['setQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " UNION ALL\n",
@@ -3265,7 +3265,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function resetQuery()
+    public function resetQueryAsData()
     {
         $this->resetSelect();
         $this->resetWrite();
@@ -3420,7 +3420,7 @@ class BaseBuilder
      */
     protected function cleanClone()
     {
-        return (clone $this)->from([], true)->resetQuery();
+        return (clone $this)->from([], true)->resetQueryAsData();
     }
 
     /**

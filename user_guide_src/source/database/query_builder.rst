@@ -1393,7 +1393,7 @@ Class Reference
 
         Specifies the ``FROM`` clause of a query using a subquery.
 
-    .. php:method:: setQuery($query[, $alias[, $columns = null]])
+    .. php:method:: setQueryAsData($query[, $alias[, $columns = null]])
 
         :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
         :param array|string|null $columns: Array or comma delimited string of columns in the query

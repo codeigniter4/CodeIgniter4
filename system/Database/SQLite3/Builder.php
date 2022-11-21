@@ -93,7 +93,7 @@ class Builder extends BaseBuilder
             return ''; // @codeCoverageIgnore
         }
 
-        if (count($constraints) > 1 || isset($this->QBOptions['setQuery']) || (current($constraints) instanceof RawSql)) {
+        if (count($constraints) > 1 || isset($this->QBOptions['setQueryAsData']) || (current($constraints) instanceof RawSql)) {
             throw new DatabaseException('You are trying to use a feature which requires SQLite version 3.33 or higher.');
         }
 
@@ -201,10 +201,10 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['setQuery'])) {
-            $hasWhere = stripos($this->QBOptions['setQuery'], 'WHERE') > 0;
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $hasWhere = stripos($this->QBOptions['setQueryAsData'], 'WHERE') > 0;
 
-            $data = $this->QBOptions['setQuery'] . ($hasWhere ? '' : "\nWHERE 1 = 1\n");
+            $data = $this->QBOptions['setQueryAsData'] . ($hasWhere ? '' : "\nWHERE 1 = 1\n");
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }
