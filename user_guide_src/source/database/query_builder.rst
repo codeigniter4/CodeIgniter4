@@ -1140,6 +1140,10 @@ This method may be especially useful when deleting data in a table with a compos
 
 .. note:: SQLite does not support the use of ``where()``.
 
+You can also delete from a query:
+
+.. literalinclude:: query_builder/119.php
+
 $builder->emptyTable()
 ----------------------
 

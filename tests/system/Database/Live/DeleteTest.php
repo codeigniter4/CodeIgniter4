@@ -12,6 +12,7 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -25,6 +26,11 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 final class DeleteTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+
+    /**
+     * @var Forge|mixed
+     */
+    public $forge;
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
@@ -145,7 +151,7 @@ final class DeleteTest extends CIUnitTestCase
         $this->seeInDatabase('user', ['name' => 'Ahmadinejad', 'email' => 'ahmadinejad@world.com']);
         $this->dontSeeInDatabase('user', ['name' => 'Chris Martin', 'email' => 'chris@world.com']);
 
-        $result = $this->db->table('user')->get()->getResultArray();
+        $this->db->table('user')->get()->getResultArray();
 
         $this->forge->dropTable('user2', true);
     }
