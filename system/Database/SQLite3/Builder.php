@@ -211,4 +211,68 @@ class Builder extends BaseBuilder
 
         return str_replace('{:_table_:}', $data, $sql);
     }
+
+    /**
+     * Generates a platform-specific batch update string from the supplied data
+     */
+    protected function _deleteBatch(string $table, array $keys, array $values): string
+    {
+        $sql = $this->QBOptions['sql'] ?? '';
+
+        // if this is the first iteration of batch then we need to build skeleton sql
+        if ($sql === '') {
+            $constraints = $this->QBOptions['constraints'] ?? [];
+
+            if ($constraints === []) {
+                if ($this->db->DBDebug) {
+                    throw new DatabaseException('You must specify a constraint to match on for batch deletes.'); // @codeCoverageIgnore
+                }
+
+                return ''; // @codeCoverageIgnore
+            }
+
+            $sql = 'DELETE FROM ' . $table . "\n";
+
+            if (current($constraints) instanceof RawSql && $this->db->DBDebug) {
+                throw new DatabaseException('You cannot use RawSql for constraint in SQLite.');
+                // @codeCoverageIgnore
+            }
+
+            if (is_string(current(array_keys($constraints)))) {
+                $concat1 = implode(' || ', array_keys($constraints));
+                $concat2 = implode(' || ', array_values($constraints));
+            } else {
+                $concat1 = implode(' || ', $constraints);
+                $concat2 = $concat1;
+            }
+
+            $sql .= "WHERE {$concat1} IN (SELECT {$concat2} FROM (\n{:_table_:}))";
+
+            // where is not supported
+            if ($this->QBWhere !== [] && $this->db->DBDebug) {
+                throw new DatabaseException('You cannot use WHERE with SQLite.');
+                // @codeCoverageIgnore
+            }
+
+            $this->QBOptions['sql'] = $sql;
+        }
+
+        if (isset($this->QBOptions['fromQuery'])) {
+            $data = $this->QBOptions['fromQuery'];
+        } else {
+            $data = implode(
+                " UNION ALL\n",
+                array_map(
+                    static fn ($value) => 'SELECT ' . implode(', ', array_map(
+                        static fn ($key, $index) => $index . ' ' . $key,
+                        $keys,
+                        $value
+                    )),
+                    $values
+                )
+            ) . "\n";
+        }
+
+        return str_replace('{:_table_:}', $data, $sql);
+    }
 }

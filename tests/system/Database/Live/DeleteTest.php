@@ -67,4 +67,27 @@ final class DeleteTest extends CIUnitTestCase
 
         $this->seeNumRecords(1, 'user', ['country' => 'US']);
     }
+
+    public function testDeleteBatch()
+    {
+        $data = [
+            ['userid' => 1, 'username' => 'Derek J', 'unused' => 'You can have fields you dont use'],
+            ['userid' => 2, 'username' => 'Ahmadinejad', 'unused' => 'You can have fields you dont use'],
+        ];
+
+        $builder = $this->db->table('user')
+            ->setData($data, null, 'data')
+            ->onConstraint(['id' => 'userid', 'name' => 'username']);
+
+        // SQLite does not support where for batch deletes
+        if ($this->db->DBDriver !== 'SQLite3') {
+            $builder->where('data.userid > 0');
+        }
+
+        $builder->deleteBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'name' => 'Derek Jones']);
+
+        $this->dontSeeInDatabase('user', ['email' => 'ahmadinejad@world.com', 'name' => 'Ahmadinejad']);
+    }
 }
