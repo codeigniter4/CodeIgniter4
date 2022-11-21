@@ -157,6 +157,14 @@ jobs:
         if: matrix.php-versions == env.COVERAGE_PHP_VERSION
         run: echo "TACHYCARDIA_MONITOR_GA=enabled" >> $GITHUB_ENV
 
+      - name: Cache PHPUnit's static analysis cache
+        uses: actions/cache@v3
+        with:
+          path: build/.phpunit.cache/code-coverage
+          key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
+          restore-keys: |
+            phpunit-code-coverage-
+
       - name: Compute coverage option
         uses: actions/github-script@v6
         id: phpunit-coverage-option
@@ -225,6 +233,14 @@ jobs:
 
       - name: Install dependencies
         run: composer update --ansi --no-interaction
+
+      - name: Cache PHPUnit's static analysis cache
+        uses: actions/cache@v3
+        with:
+          path: build/.phpunit.cache/code-coverage
+          key: phpunit-code-coverage-${{ hashFiles('**/phpunit.*') }}
+          restore-keys: |
+            phpunit-code-coverage-
 
       - name: Merge coverage files
         run: vendor/bin/phpcov merge --clover build/logs/clover.xml build/cov
