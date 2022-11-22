@@ -103,4 +103,92 @@ final class TransactionTest extends CIUnitTestCase
 
         $this->enableDBDebug();
     }
+
+    public function testTransStrictTrueAndDBDebugFalse()
+    {
+        $this->disableDBDebug();
+
+        $builder = $this->db->table('job');
+
+        // The first transaction group
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Discount!',
+        ];
+        $builder->insert($jobData);
+
+        // Duplicate entry '1' for key 'PRIMARY'
+        $jobData = [
+            'id'          => 1,
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+
+        // The second transaction group
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Comedian']);
+
+        $this->enableDBDebug();
+    }
+
+    public function testTransStrictFalseAndDBDebugFalse()
+    {
+        $this->disableDBDebug();
+
+        $builder = $this->db->table('job');
+
+        $this->db->transStrict(false);
+
+        // The first transaction group
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Discount!',
+        ];
+        $builder->insert($jobData);
+
+        // Duplicate entry '1' for key 'PRIMARY'
+        $jobData = [
+            'id'          => 1,
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+
+        // The second transaction group
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete();
+
+        $this->seeInDatabase('job', ['name' => 'Comedian']);
+
+        $this->enableDBDebug();
+    }
 }
