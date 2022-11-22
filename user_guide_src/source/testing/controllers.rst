@@ -54,7 +54,7 @@ for details.
 withConfig($config)
 -------------------
 
-Allows you to pass in a modified version of **Config\App.php** to test with different settings:
+Allows you to pass in a modified version of **app/Config/App.php** to test with different settings:
 
 .. literalinclude:: controllers/005.php
 

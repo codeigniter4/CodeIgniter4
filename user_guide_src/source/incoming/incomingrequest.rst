@@ -1,5 +1,6 @@
+#####################
 IncomingRequest Class
-*********************
+#####################
 
 The IncomingRequest class provides an object-oriented representation of an HTTP request from a client, like a browser.
 It extends from, and has access to all the methods of the :doc:`Request </incoming/request>` and :doc:`Message </incoming/message>`
@@ -10,7 +11,7 @@ classes, in addition to the methods listed below.
     :depth: 2
 
 Accessing the Request
----------------------
+*********************
 
 An instance of the request class already populated for you if the current class is a descendant of
 ``CodeIgniter\Controller`` and can be accessed as a class property:
@@ -28,7 +29,7 @@ the controller, where you can save it as a class property:
 .. literalinclude:: incomingrequest/003.php
 
 Determining Request Type
-------------------------
+************************
 
 A request could be of several types, including an AJAX request or a request from the command line. This can
 be checked with the ``isAJAX()`` and ``isCLI()`` methods:
@@ -43,7 +44,12 @@ You can check the HTTP method that this request represents with the ``method()``
 
 .. literalinclude:: incomingrequest/005.php
 
-By default, the method is returned as a lower-case string (i.e., 'get', 'post', etc). You can get an
+By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc).
+
+.. note:: The functionality to convert the return value to lower case is deprecated.
+    It will be removed in the future version, and this method will be PSR-7 equivalent.
+
+You can get an
 uppercase version by wrapping the call in ``strtoupper()``::
 
     // Returns 'GET'
@@ -54,11 +60,16 @@ You can also check if the request was made through and HTTPS connection with the
 .. literalinclude:: incomingrequest/006.php
 
 Retrieving Input
-----------------
+****************
 
-You can retrieve input from $_SERVER, $_GET, $_POST, and $_ENV through the Request object.
-The data is not automatically filtered and returns the raw input data as passed in the request. The main
-advantages to using these methods instead of accessing them directly ($_POST['something']), is that they
+You can retrieve input from ``$_SERVER``, ``$_GET``, ``$_POST``, and ``$_ENV`` through the Request object.
+The data is not automatically filtered and returns the raw input data as passed in the request.
+
+.. note:: It is bad practice to use global variables. Basically, it should be avoided
+    and it is recommended to use methods of the Request object.
+
+The main
+advantages to using these methods instead of accessing them directly (``$_POST['something']``), is that they
 will return null if the item doesn't exist, and you can have the data filtered. This lets you conveniently
 use data without having to test whether an item exists first. In other words, normally you might do something
 like this:
@@ -69,27 +80,36 @@ With CodeIgniter's built-in methods you can simply do this:
 
 .. literalinclude:: incomingrequest/008.php
 
-The ``getVar()`` method will pull from $_REQUEST, so will return any data from $_GET, $POST, or $_COOKIE. While this
+Getting Data
+============
+
+The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
+
+.. note:: If the incoming request has a ``CONTENT_TYPE`` header set to ``application/json``,
+    the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
+
+While this
 is convenient, you will often need to use a more specific method, like:
 
 * ``$request->getGet()``
 * ``$request->getPost()``
-* ``$request->getServer()``
 * ``$request->getCookie()``
+* ``$request->getServer()``
+* ``$request->getEnv()``
 
-In addition, there are a few utility methods for retrieving information from either $_GET or $_POST, while
+In addition, there are a few utility methods for retrieving information from either ``$_GET`` or ``$_POST``, while
 maintaining the ability to control the order you look for it:
 
-* ``$request->getPostGet()`` - checks $_POST first, then $_GET
-* ``$request->getGetPost()`` - checks $_GET first, then $_POST
+* ``$request->getPostGet()`` - checks ``$_POST`` first, then ``$_GET``
+* ``$request->getGetPost()`` - checks ``$_GET`` first, then ``$_POST``
 
-**Getting JSON data**
+Getting JSON Data
+=================
 
-You can grab the contents of php://input as a JSON stream with ``getJSON()``.
+You can grab the contents of ``php://input`` as a JSON stream with ``getJSON()``.
 
 .. note::  This has no way of checking if the incoming data is valid JSON or not, you should only use this
     method if you know that you're expecting JSON.
-
 
 .. literalinclude:: incomingrequest/009.php
 
@@ -99,30 +119,29 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
-If the incoming request has a ``CONTENT_TYPE`` header set to "application/json", you can also use ``getVar()`` to get
+If the incoming request has a ``CONTENT_TYPE`` header set to ``application/json``, you can also use ``getVar()`` to get
 the JSON stream. Using ``getVar()`` in this way will always return an object.
 
-**Get Specific Data from JSON**
+Getting Specific Data from JSON
+===============================
 
 You can get a specific piece of data from a JSON stream by passing a variable name into ``getVar()`` for the
 data that you want or you can use "dot" notation to dig into the JSON to get data that is not on the root level.
 
-
 .. literalinclude:: incomingrequest/010.php
-
 
 If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
 true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
 correct ``CONTENT_TYPE`` header.
 
-
 .. literalinclude:: incomingrequest/011.php
 
-.. note:: See the documentation for ``dot_array_search()`` in the ``Array`` helper for more information on "dot" notation.
+.. note:: See the documentation for :php:func:`dot_array_search()` in the ``Array`` helper for more information on "dot" notation.
 
-**Retrieving Raw data (PUT, PATCH, DELETE)**
+Retrieving Raw Data (PUT, PATCH, DELETE)
+========================================
 
-Finally, you can grab the contents of php://input as a raw stream with ``getRawInput()``:
+Finally, you can grab the contents of ``php://input`` as a raw stream with ``getRawInput()``:
 
 .. literalinclude:: incomingrequest/012.php
 
@@ -130,7 +149,8 @@ This will retrieve data and convert it to an array. Like this:
 
 .. literalinclude:: incomingrequest/013.php
 
-**Filtering Input Data**
+Filtering Input Data
+====================
 
 To maintain security of your application, you will want to filter all input as you access it. You can
 pass the type of filter to use as the second parameter of any of these methods. The native ``filter_var()``
@@ -145,7 +165,7 @@ All of the methods mentioned above support the filter type passed in as the seco
 exception of ``getJSON()``.
 
 Retrieving Headers
-------------------
+******************
 
 You can get access to any header that was sent with the request with the ``headers()`` method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
@@ -171,7 +191,7 @@ If you need the entire header, with the name and values in a single string, simp
 .. literalinclude:: incomingrequest/019.php
 
 The Request URL
----------------
+***************
 
 You can retrieve a :doc:`URI </libraries/uri>` object that represents the current URI for this request through the
 ``$request->getUri()`` method. You can cast this object as a string to get a full URL for the current request:
@@ -189,7 +209,7 @@ functions use, so this is a helpful way to "spoof" an incoming request for testi
 .. literalinclude:: incomingrequest/022.php
 
 Uploaded Files
---------------
+**************
 
 Information about all uploaded files can be retrieved through ``$request->getFiles()``, which returns an array of
 ``CodeIgniter\HTTP\Files\UploadedFile`` instance. This helps to ease the pain of working with uploaded files,
@@ -211,7 +231,7 @@ multi-file upload, based on the filename given in the HTML file input:
 .. note:: The files here correspond to ``$_FILES``. Even if a user just clicks submit button of a form and does not upload any file, the file will still exist. You can check that the file was actually uploaded by the ``isValid()`` method in UploadedFile. See :ref:`verify-a-file` for more details.
 
 Content Negotiation
--------------------
+*******************
 
 You can easily negotiate content types with the request through the ``negotiate()`` method:
 
@@ -220,7 +240,7 @@ You can easily negotiate content types with the request through the ``negotiate(
 See the :doc:`Content Negotiation </incoming/content_negotiation>` page for more details.
 
 Class Reference
-===============
+***************
 
 .. note:: In addition to the methods listed here, this class inherits the methods from the
     :doc:`Request Class </incoming/request>` and the :doc:`Message Class </incoming/message>`.
@@ -276,7 +296,7 @@ The methods provided by the parent classes that are available are:
                         `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:   $_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not
+        :returns:   ``$_REQUEST`` if no parameters supplied, otherwise the REQUEST value if found, or null if not
         :rtype: mixed|null
 
         The first parameter will contain the name of the REQUEST item you are looking for:
@@ -315,7 +335,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_GET if no parameters supplied, otherwise the GET value if found, or null if not
+        :returns:       ``$_GET`` if no parameters supplied, otherwise the GET value if found, or null if not
         :rtype: mixed|null
 
         This method is identical to ``getVar()``, only it fetches GET data.
@@ -327,7 +347,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_POST if no parameters supplied, otherwise the POST value if found, or null if not
+        :returns:       ``$_POST`` if no parameters supplied, otherwise the POST value if found, or null if not
         :rtype: mixed|null
 
             This method is identical to ``getVar()``, only it fetches POST data.
@@ -339,7 +359,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_POST and $_GET combined if no parameters specified (prefer POST value on conflict),
+        :returns:       ``$_POST`` and ``$_GET`` combined if no parameters specified (prefer POST value on conflict),
                         otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null
         :rtype: mixed|null
 
@@ -359,7 +379,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:       $_GET and $_POST combined if no parameters specified (prefer GET value on conflict),
+        :returns:       ``$_GET`` and ``$_POST`` combined if no parameters specified (prefer GET value on conflict),
                         otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null
         :rtype: mixed|null
 
@@ -380,7 +400,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:        $_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not
+        :returns:        ``$_COOKIE`` if no parameters supplied, otherwise the COOKIE value if found or null if not
         :rtype:    mixed
 
         This method is identical to ``getPost()`` and ``getGet()``, only it fetches cookie data:
@@ -403,7 +423,7 @@ The methods provided by the parent classes that are available are:
                         found `here <https://www.php.net/manual/en/filter.filters.php>`__.
         :param  int     $flags: Flags to apply. A list of flags can be found
                         `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns:        $_SERVER item value if found, null if not
+        :returns:        ``$_SERVER`` item value if found, null if not
         :rtype:    mixed
 
         This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()``
