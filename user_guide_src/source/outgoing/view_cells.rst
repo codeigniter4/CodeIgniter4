@@ -87,25 +87,29 @@ At the most basic level, all you need to implement within the class are public p
 
     use CodeIgniter\View\Cells\Cell;
 
-    class AlertMessage extends Cell
+    class AlertMessageCell extends Cell
     {
         public $type;
         public $message;
     }
 
-    // app/Cells/alert-message.php
+    // app/Cells/alert_message_cell.php
     <div class="alert alert-<?= $type; ?>">
         <?= $message; ?>
     </div>
 
+.. _generating-cell-via-command:
+
 Generating Cell via Command
 ===========================
 
-You can also create a controlled cell via a built in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the ``app/Cells`` directory. The view file will also be created in the ``app/Views/cells`` directory.
+.. versionadded:: 4.3.0
 
-```console
-php spark make:cell AlertMessage
-```
+You can also create a controlled cell via a built in command from the CLI. The command is ``php spark make:cell``. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the ``app/Cells`` directory. The view file will also be created in the ``app/Cells`` directory.
+
+::
+
+    > php spark make:cell AlertMessage
 
 Using a Different View
 ======================
@@ -194,7 +198,7 @@ Sometimes you need to perform additional logic for the view, but you don't want 
         }
     }
 
-    // app/Cells/recent-posts.php
+    // app/Cells/recent_posts.php
     <ul>
         <?php foreach ($posts as $post): ?>
             <li><?= $this->linkPost($post) ?></li>
