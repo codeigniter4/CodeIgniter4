@@ -120,7 +120,7 @@ E.g.::
 
 .. _upgrade-430-stream-filter:
 
-Capturing STDERR and STDOUT streams in tests
+Capturing STDERR and STDOUT streams in Tests
 ============================================
 
 The way error and output streams are captured has changed. Now instead of::
