@@ -96,7 +96,7 @@ rule and message array formats, as well as available rules:
 .. literalinclude:: controllers/004.php
 
 If you find it simpler to keep the rules in the configuration file, you can replace
-the ``$rules`` array with the name of the group as defined in ``Config\Validation.php``:
+the ``$rules`` array with the name of the group as defined in **app/Config/Validation.php**:
 
 .. literalinclude:: controllers/005.php
 
