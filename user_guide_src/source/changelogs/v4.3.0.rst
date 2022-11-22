@@ -61,15 +61,15 @@ The following methods of the :doc:`Time <../libraries/time>` class had bugs that
 Others
 ------
 
-- Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
-- The ``spark`` file has been changed due to a change in the processing of Spark commands.
-- ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
-- The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
-- ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
-- ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
+- **Helper:** Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
+- **CLI:** The ``spark`` file has been changed due to a change in the processing of Spark commands.
+- **Database:** ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- **Database:** The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
+- **Routing:** ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
+- **CLI:** ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
-- :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
-- ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
+- **Helper:** :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
+- **Database:** ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
 
 .. _v430-interface-changes:
 
@@ -92,10 +92,10 @@ OutgoingRequestInterface
 Others
 ------
 
-- Added missing ``getProtocolVersion()``, ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
-- Now ``ResponseInterface`` extends ``MessageInterface``.
-- Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
-- Added missing ``CodeIgniter\Database\ResultInterface::getNumRows()`` method.
+- **HTTP:** Added missing ``getProtocolVersion()``, ``getBody()``, ``hasHeader()`` and ``getHeaderLine()`` method in ``MessageInterface``.
+- **HTTP:** Now ``ResponseInterface`` extends ``MessageInterface``.
+- **HTTP:** Added missing ``ResponseInterface::getCSP()`` (and ``Response::getCSP()``), ``ResponseInterface::getReasonPhrase()`` and ``ResponseInterface::getCookieStore()`` methods.
+- **Database:** Added missing ``CodeIgniter\Database\ResultInterface::getNumRows()`` method.
 - See also `Validation Changes`_.
 
 Method Signature Changes
@@ -156,7 +156,7 @@ Database Forge
 Others
 ------
 
-- The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
+- **API:** The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
 - The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
     - ``Debug\Exceptions::__construct()``
     - ``Services::exceptions()``
@@ -224,9 +224,9 @@ Model
 Libraries
 =========
 
-- Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
-- Now **Encryption** can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
-- Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
+- **Publisher:** Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
+- **Encryption:** Now Encryption can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
+- **CURLRequest:** Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
 
 Helpers and Functions
 =====================
@@ -255,11 +255,11 @@ Multiple Domain Support
 Others
 ======
 
-- Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
-- Added new ``$routes->view()`` method to return the view directly. See :ref:`View Routes <view-routes>`.
-- View Cells are now first-class citizens and can be located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
-- Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
-- Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
+- **Routing:** Added ``$routes->useSupportedLocalesOnly(true)`` so that the Router returns 404 Not Found if the locale in the URL is not supported in ``Config\App::$supportedLocales``. See :ref:`Localization <localization-in-routes>`
+- **Routing:** Added new ``$routes->view()`` method to return the view directly. See :ref:`View Routes <view-routes>`.
+- **View:** View Cells are now first-class citizens and can be located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
+- **View:** Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
+- **Config:** Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 - **Debug:** Kint has been updated to 5.0.1.
 
 Message Changes
