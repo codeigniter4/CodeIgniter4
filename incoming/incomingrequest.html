@@ -282,15 +282,20 @@ classes, in addition to the methods listed below.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#accessing-the-request" id="id1">Accessing the Request</a></p></li>
 <li><p><a class="reference internal" href="#determining-request-type" id="id2">Determining Request Type</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-headers" id="id4">Retrieving Headers</a></p></li>
-<li><p><a class="reference internal" href="#the-request-url" id="id5">The Request URL</a></p></li>
-<li><p><a class="reference internal" href="#uploaded-files" id="id6">Uploaded Files</a></p></li>
-<li><p><a class="reference internal" href="#content-negotiation" id="id7">Content Negotiation</a></p>
+<li><p><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a></p>
 <ul>
-<li><p><a class="reference internal" href="#class-reference" id="id8">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#getting-data" id="id4">Getting Data</a></p></li>
+<li><p><a class="reference internal" href="#getting-json-data" id="id5">Getting JSON Data</a></p></li>
+<li><p><a class="reference internal" href="#getting-specific-data-from-json" id="id6">Getting Specific Data from JSON</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-raw-data-put-patch-delete" id="id7">Retrieving Raw Data (PUT, PATCH, DELETE)</a></p></li>
+<li><p><a class="reference internal" href="#filtering-input-data" id="id8">Filtering Input Data</a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#retrieving-headers" id="id9">Retrieving Headers</a></p></li>
+<li><p><a class="reference internal" href="#the-request-url" id="id10">The Request URL</a></p></li>
+<li><p><a class="reference internal" href="#uploaded-files" id="id11">Uploaded Files</a></p></li>
+<li><p><a class="reference internal" href="#content-negotiation" id="id12">Content Negotiation</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id13">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="accessing-the-request">
@@ -371,7 +376,13 @@ See the <a class="reference internal" href="../general/ajax.html"><span class="d
 <span class="nv">$method</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>By default, the method is returned as a lower-case string (i.e., ‘get’, ‘post’, etc). You can get an
+<p>By default, the method is returned as a lower-case string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'</span></code>, <code class="docutils literal notranslate"><span class="pre">'post'</span></code>, etc).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The functionality to convert the return value to lower case is deprecated.
+It will be removed in the future version, and this method will be PSR-7 equivalent.</p>
+</div>
+<p>You can get an
 uppercase version by wrapping the call in <code class="docutils literal notranslate"><span class="pre">strtoupper()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns &#39;GET&#39;</span>
 <span class="nv">$method</span> <span class="o">=</span> <span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">());</span>
@@ -388,9 +399,15 @@ uppercase version by wrapping the call in <code class="docutils literal notransl
 </section>
 <section id="retrieving-input">
 <h2><a class="toc-backref" href="#id3">Retrieving Input</a><a class="headerlink" href="#retrieving-input" title="Permalink to this headline"></a></h2>
-<p>You can retrieve input from $_SERVER, $_GET, $_POST, and $_ENV through the Request object.
-The data is not automatically filtered and returns the raw input data as passed in the request. The main
-advantages to using these methods instead of accessing them directly ($_POST[‘something’]), is that they
+<p>You can retrieve input from <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>, <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> through the Request object.
+The data is not automatically filtered and returns the raw input data as passed in the request.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is bad practice to use global variables. Basically, it should be avoided
+and it is recommended to use methods of the Request object.</p>
+</div>
+<p>The main
+advantages to using these methods instead of accessing them directly (<code class="docutils literal notranslate"><span class="pre">$_POST['something']</span></code>), is that they
 will return null if the item doesn’t exist, and you can have the data filtered. This lets you conveniently
 use data without having to test whether an item exists first. In other words, normally you might do something
 like this:</p>
@@ -405,22 +422,33 @@ like this:</p>
 <span class="nv">$something</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from $_REQUEST, so will return any data from $_GET, $POST, or $_COOKIE. While this
+<section id="getting-data">
+<h3><a class="toc-backref" href="#id4">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this headline"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$POST</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>,
+the <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method returns the JSON data instead of <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> data.</p>
+</div>
+<p>While this
 is convenient, you will often need to use a more specific method, like:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGet()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPost()</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getServer()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getCookie()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getServer()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getEnv()</span></code></p></li>
 </ul>
-<p>In addition, there are a few utility methods for retrieving information from either $_GET or $_POST, while
+<p>In addition, there are a few utility methods for retrieving information from either <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> or <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, while
 maintaining the ability to control the order you look for it:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPostGet()</span></code> - checks $_POST first, then $_GET</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGetPost()</span></code> - checks $_GET first, then $_POST</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getPostGet()</span></code> - checks <code class="docutils literal notranslate"><span class="pre">$_POST</span></code> first, then <code class="docutils literal notranslate"><span class="pre">$_GET</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$request-&gt;getGetPost()</span></code> - checks <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> first, then <code class="docutils literal notranslate"><span class="pre">$_POST</span></code></p></li>
 </ul>
-<p><strong>Getting JSON data</strong></p>
-<p>You can grab the contents of php://input as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
+</section>
+<section id="getting-json-data">
+<h3><a class="toc-backref" href="#id5">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Permalink to this headline"></a></h3>
+<p>You can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This has no way of checking if the incoming data is valid JSON or not, you should only use this
@@ -435,9 +463,11 @@ method if you know that you’re expecting JSON.</p>
 arrays, pass in <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter.</p>
 <p>The second and third parameters match up to the <code class="docutils literal notranslate"><span class="pre">depth</span></code> and <code class="docutils literal notranslate"><span class="pre">options</span></code> arguments of the
 <a class="reference external" href="https://www.php.net/manual/en/function.json-decode.php">json_decode</a> PHP function.</p>
-<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header set to “application/json”, you can also use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> to get
+<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>, you can also use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> to get
 the JSON stream. Using <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> in this way will always return an object.</p>
-<p><strong>Get Specific Data from JSON</strong></p>
+</section>
+<section id="getting-specific-data-from-json">
+<h3><a class="toc-backref" href="#id6">Getting Specific Data from JSON</a><a class="headerlink" href="#getting-specific-data-from-json" title="Permalink to this headline"></a></h3>
 <p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> for the
 data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -474,10 +504,12 @@ correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYP
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>See the documentation for <code class="docutils literal notranslate"><span class="pre">dot_array_search()</span></code> in the <code class="docutils literal notranslate"><span class="pre">Array</span></code> helper for more information on “dot” notation.</p>
+<p>See the documentation for <a class="reference internal" href="../helpers/array_helper.html#dot_array_search" title="dot_array_search"><code class="xref php php-func docutils literal notranslate"><span class="pre">dot_array_search()</span></code></a> in the <code class="docutils literal notranslate"><span class="pre">Array</span></code> helper for more information on “dot” notation.</p>
 </div>
-<p><strong>Retrieving Raw data (PUT, PATCH, DELETE)</strong></p>
-<p>Finally, you can grab the contents of php://input as a raw stream with <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>:</p>
+</section>
+<section id="retrieving-raw-data-put-patch-delete">
+<h3><a class="toc-backref" href="#id7">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Permalink to this headline"></a></h3>
+<p>Finally, you can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a raw stream with <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInput</span><span class="p">();</span>
@@ -497,7 +529,9 @@ correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYP
 <span class="cm"> */</span>
 </pre></div>
 </div>
-<p><strong>Filtering Input Data</strong></p>
+</section>
+<section id="filtering-input-data">
+<h3><a class="toc-backref" href="#id8">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Permalink to this headline"></a></h3>
 <p>To maintain security of your application, you will want to filter all input as you access it. You can
 pass the type of filter to use as the second parameter of any of these methods. The native <code class="docutils literal notranslate"><span class="pre">filter_var()</span></code>
 function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">valid
@@ -511,8 +545,9 @@ filter types</a>.</p>
 <p>All of the methods mentioned above support the filter type passed in as the second parameter, with the
 exception of <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 </section>
+</section>
 <section id="retrieving-headers">
-<h2><a class="toc-backref" href="#id4">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline"></a></h2>
 <p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">headers()</span></code> method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
@@ -563,7 +598,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 </div>
 </section>
 <section id="the-request-url">
-<h2><a class="toc-backref" href="#id5">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this headline"></a></h2>
 <p>You can retrieve a <a class="reference internal" href="../libraries/uri.html"><span class="doc">URI</span></a> object that represents the current URI for this request through the
 <code class="docutils literal notranslate"><span class="pre">$request-&gt;getUri()</span></code> method. You can cast this object as a string to get a full URL for the current request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -600,7 +635,9 @@ functions use, so this is a helpful way to “spoof” an incoming request for t
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testActiveLinkUsesCurrentUrl</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setPath</span><span class="p">(</span><span class="s1">&#39;users/list&#39;</span><span class="p">);</span>
+
         <span class="nv">$menu</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyMenu</span><span class="p">();</span>
+
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="s1">&#39;users/list&#39;</span><span class="p">,</span> <span class="nv">$menu</span><span class="o">-&gt;</span><span class="na">getActiveLink</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -608,7 +645,7 @@ functions use, so this is a helpful way to “spoof” an incoming request for t
 </div>
 </section>
 <section id="uploaded-files">
-<h2><a class="toc-backref" href="#id6">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline"></a></h2>
 <p>Information about all uploaded files can be retrieved through <code class="docutils literal notranslate"><span class="pre">$request-&gt;getFiles()</span></code>, which returns an array of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code> instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.</p>
@@ -637,7 +674,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </div>
 </section>
 <section id="content-negotiation">
-<h2><a class="toc-backref" href="#id7">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h2>
 <p>You can easily negotiate content types with the request through the <code class="docutils literal notranslate"><span class="pre">negotiate()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -649,8 +686,9 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </pre></div>
 </div>
 <p>See the <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a> page for more details.</p>
+</section>
 <section id="class-reference">
-<h3><a class="toc-backref" href="#id8">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id13">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
@@ -737,7 +775,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_REQUEST if no parameters supplied, otherwise the REQUEST value if found, or null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> if no parameters supplied, otherwise the REQUEST value if found, or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
@@ -797,7 +835,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_GET if no parameters supplied, otherwise the GET value if found, or null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_GET</span></code> if no parameters supplied, otherwise the GET value if found, or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed|null</span></code></span></p>
@@ -820,7 +858,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_POST if no parameters supplied, otherwise the POST value if found, or null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> if no parameters supplied, otherwise the POST value if found, or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><p>mixed|null</p>
@@ -844,7 +882,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_POST and $_GET combined if no parameters specified (prefer POST value on conflict),
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_POST</span></code> and <code class="docutils literal notranslate"><span class="pre">$_GET</span></code> combined if no parameters specified (prefer POST value on conflict),
 otherwise looks for POST value, if nothing found looks for GET value, if no value found returns null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
@@ -877,7 +915,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_GET and $_POST combined if no parameters specified (prefer GET value on conflict),
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_GET</span></code> and <code class="docutils literal notranslate"><span class="pre">$_POST</span></code> combined if no parameters specified (prefer GET value on conflict),
 otherwise looks for GET value, if nothing found looks for POST value, if no value found returns null</p>
 </dd>
 <dt class="field-odd">Return type</dt>
@@ -910,7 +948,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_COOKIE if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> if no parameters supplied, otherwise the COOKIE value if found or null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
@@ -951,7 +989,7 @@ found <a class="reference external" href="https://www.php.net/manual/en/filter.f
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_SERVER item value if found, null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
@@ -1036,7 +1074,6 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
 </dd></dl>
 
-</section>
 </section>
 </section>
 
