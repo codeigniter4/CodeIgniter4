@@ -62,14 +62,14 @@ Others
 ------
 
 - **Helper:** Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
+- **Helper:** :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
 - **CLI:** The ``spark`` file has been changed due to a change in the processing of Spark commands.
-- **Database:** ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
-- **Database:** The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
-- **Routing:** ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 - **CLI:** ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
   is a ``CITestStreamFilter::registration()`` method for this. See :ref:`upgrade-430-stream-filter` for details.
-- **Helper:** :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
+- **Database:** ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
+- **Database:** The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
 - **Database:** ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
+- **Routing:** ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 
 .. _v430-interface-changes:
 
