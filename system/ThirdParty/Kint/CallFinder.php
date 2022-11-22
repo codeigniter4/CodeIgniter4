@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,6 +27,10 @@
 
 namespace Kint;
 
+/**
+ * @psalm-type PhpTokenArray = array{int, string, int}
+ * @psalm-type PhpToken = string|PhpTokenArray
+ */
 class CallFinder
 {
     private static $ignore = [
@@ -88,6 +94,7 @@ class CallFinder
         T_XOR_EQUAL => true,
         T_POW => true,
         T_POW_EQUAL => true,
+        T_SPACESHIP => true,
         T_DOUBLE_ARROW => true,
         '!' => true,
         '%' => true,
@@ -128,7 +135,14 @@ class CallFinder
         T_STRING => true,
     ];
 
-    public static function getFunctionCalls($source, $line, $function)
+    /**
+     * @psalm-param callable-array|callable-string $function
+     *
+     * @param mixed $function
+     *
+     * @return array List of matching calls on the relevant line
+     */
+    public static function getFunctionCalls(string $source, int $line, $function): array
     {
         static $up = [
             '(' => true,
@@ -155,11 +169,8 @@ class CallFinder
             T_NS_SEPARATOR => true,
         ];
 
-        if (KINT_PHP70) {
-            self::$operator[T_SPACESHIP] = true;
-        }
-
         if (KINT_PHP74) {
+            self::$operator[T_FN] = true;
             self::$operator[T_COALESCE_EQUAL] = true;
         }
 
@@ -179,7 +190,9 @@ class CallFinder
         $tokens = \token_get_all($source);
         $cursor = 1;
         $function_calls = [];
+
         // Performance optimization preventing backwards loops
+        /** @psalm-var array<PhpToken|null> */
         $prev_tokens = [null, null, null];
 
         if (\is_array($function)) {
@@ -188,6 +201,9 @@ class CallFinder
             $function = \strtolower($function[1]);
         } else {
             $class = null;
+            /**
+             * @psalm-suppress RedundantFunctionCallGivenDocblockType
+             */
             $function = \strtolower($function);
         }
 
@@ -243,8 +259,8 @@ class CallFinder
                     continue;
                 }
 
-                /** @var array{int, string, int} $prev_tokens[0] */
                 // All self::$namespace tokens are T_ constants
+                /** @psalm-var PhpTokenArray $prev_tokens[0] */
                 $ns = \explode('\\', \strtolower($prev_tokens[0][1]));
 
                 if (\end($ns) !== $class) {
@@ -350,6 +366,7 @@ class CallFinder
             // Format the final output parameters
             foreach ($params as &$param) {
                 $name = self::tokensFormatted($param['short']);
+
                 $expression = false;
                 foreach ($name as $token) {
                     if (self::tokenIsOperator($token)) {
@@ -363,6 +380,12 @@ class CallFinder
                     'path' => self::tokensToString(self::tokensTrim($param['full'])),
                     'expression' => $expression,
                 ];
+            }
+
+            // Skip first-class callables
+            /** @psalm-var list<array{name: string, path: string, expression: bool}> $params */
+            if (KINT_PHP81 && 1 === \count($params) && '...' === \reset($params)['path']) {
+                continue;
             }
 
             // Get the modifiers
@@ -402,7 +425,10 @@ class CallFinder
         return $function_calls;
     }
 
-    private static function realTokenIndex(array $tokens, $index)
+    /**
+     * @psalm-param PhpToken[] $tokens
+     */
+    private static function realTokenIndex(array $tokens, int $index): ?int
     {
         ++$index;
 
@@ -422,23 +448,26 @@ class CallFinder
      * occasionally add "..." to short parameter versions. If we simply check
      * for `$token[0]` then "..." will incorrectly match the "." operator.
      *
-     * @param array|string $token The token to check
+     * @psalm-param PhpToken $token The token to check
      *
-     * @return bool
+     * @param mixed $token
      */
-    private static function tokenIsOperator($token)
+    private static function tokenIsOperator($token): bool
     {
         return '...' !== $token && isset(self::$operator[$token[0]]);
     }
 
-    private static function tokensToString(array $tokens)
+    /**
+     * @psalm-param PhpToken[] $tokens
+     */
+    private static function tokensToString(array $tokens): string
     {
         $out = '';
 
         foreach ($tokens as $token) {
             if (\is_string($token)) {
                 $out .= $token;
-            } elseif (\is_array($token)) {
+            } else {
                 $out .= $token[1];
             }
         }
@@ -446,7 +475,10 @@ class CallFinder
         return $out;
     }
 
-    private static function tokensTrim(array $tokens)
+    /**
+     * @psalm-param PhpToken[] $tokens
+     */
+    private static function tokensTrim(array $tokens): array
     {
         foreach ($tokens as $index => $token) {
             if (isset(self::$ignore[$token[0]])) {
@@ -469,15 +501,30 @@ class CallFinder
         return \array_reverse($tokens);
     }
 
-    private static function tokensFormatted(array $tokens)
+    /**
+     * @psalm-param PhpToken[] $tokens
+     *
+     * @psalm-return PhpToken[]
+     */
+    private static function tokensFormatted(array $tokens): array
     {
-        $space = false;
-        $attribute = false;
-
         $tokens = self::tokensTrim($tokens);
 
+        $space = false;
+        $attribute = false;
+        // Keep space between "strip" symbols for different behavior for matches or closures
+        // Normally we want to strip spaces between strip tokens: $x{...}[...]
+        // However with closures and matches we don't: function (...) {...}
+        $ignorestrip = false;
         $output = [];
         $last = null;
+
+        if (T_FUNCTION === $tokens[0][0] ||
+            (KINT_PHP74 && T_FN === $tokens[0][0]) ||
+            (KINT_PHP80 && T_MATCH === $tokens[0][0])
+        ) {
+            $ignorestrip = true;
+        }
 
         foreach ($tokens as $index => $token) {
             if (isset(self::$ignore[$token[0]])) {
@@ -485,16 +532,21 @@ class CallFinder
                     continue;
                 }
 
-                $next = $tokens[self::realTokenIndex($tokens, $index)];
+                $next = self::realTokenIndex($tokens, $index);
+                if (null === $next) {
+                    // This should be impossible, since we always call tokensTrim first
+                    break; // @codeCoverageIgnore
+                }
+                $next = $tokens[$next];
 
-                /** @var array|string $last */
+                /** @psalm-var PhpToken $last */
                 if ($attribute && ']' === $last[0]) {
                     $attribute = false;
-                } elseif (isset(self::$strip[$last[0]]) && !self::tokenIsOperator($next)) {
+                } elseif (!$ignorestrip && isset(self::$strip[$last[0]]) && !self::tokenIsOperator($next)) {
                     continue;
                 }
 
-                if (isset(self::$strip[$next[0]]) && $last && !self::tokenIsOperator($last)) {
+                if (!$ignorestrip && isset(self::$strip[$next[0]]) && $last && !self::tokenIsOperator($last)) {
                     continue;
                 }
 

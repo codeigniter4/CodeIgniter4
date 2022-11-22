@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -30,28 +32,27 @@ use Kint\Zval\TraceFrameValue;
 use Kint\Zval\TraceValue;
 use Kint\Zval\Value;
 
-class TracePlugin extends Plugin
+class TracePlugin extends AbstractPlugin
 {
     public static $blacklist = ['spl_autoload_call'];
     public static $path_blacklist = [];
 
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['array'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (!$o->value) {
             return;
         }
 
-        /** @var array[] $trace Psalm workaround */
         $trace = $this->parser->getCleanArray($var);
 
         if (\count($trace) !== \count($o->value->contents) || !Utils::isTrace($trace)) {
@@ -81,8 +82,7 @@ class TracePlugin extends Plugin
                 continue;
             }
 
-            if (isset($trace[$index]['file'])) {
-                $realfile = \realpath($trace[$index]['file']);
+            if (isset($trace[$index]['file']) && ($realfile = \realpath($trace[$index]['file']))) {
                 foreach ($path_blacklist as $path) {
                     if (0 === \strpos($realfile, $path)) {
                         continue 2;
@@ -102,7 +102,7 @@ class TracePlugin extends Plugin
         $o = $traceobj;
     }
 
-    protected static function normalizePaths(array $paths)
+    protected static function normalizePaths(array $paths): array
     {
         $normalized = [];
 

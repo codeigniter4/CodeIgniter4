@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -28,19 +30,19 @@ namespace Kint\Parser;
 use Kint\Zval\Representation\ColorRepresentation;
 use Kint\Zval\Value;
 
-class ColorPlugin extends Plugin
+class ColorPlugin extends AbstractPlugin
 {
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['string'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (\strlen($var) > 32) {
             return;

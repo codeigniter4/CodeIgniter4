@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -28,12 +30,12 @@ namespace Kint\Renderer\Rich;
 use Kint\Zval\TraceFrameValue;
 use Kint\Zval\Value;
 
-class TraceFramePlugin extends Plugin implements ValuePluginInterface
+class TraceFramePlugin extends AbstractPlugin implements ValuePluginInterface
 {
-    public function renderValue(Value $o)
+    public function renderValue(Value $o): ?string
     {
         if (!$o instanceof TraceFrameValue) {
-            return;
+            return null;
         }
 
         if (!empty($o->trace['file']) && !empty($o->trace['line'])) {

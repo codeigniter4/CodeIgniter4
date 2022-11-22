@@ -25,23 +25,20 @@ declare(strict_types=1);
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Zval;
+namespace Kint\Parser;
 
-class TraceValue extends Value
+use Kint\Zval\Value;
+
+interface PluginInterface
 {
-    public $hints = ['trace'];
+    public function setParser(Parser $p): void;
 
-    public function getType(): string
-    {
-        return 'Debug Backtrace';
-    }
+    public function getTypes(): array;
 
-    public function getSize(): ?string
-    {
-        if (!$this->size) {
-            return 'empty';
-        }
+    public function getTriggers(): int;
 
-        return parent::getSize();
-    }
+    /**
+     * @param mixed &$var
+     */
+    public function parse(&$var, Value &$o, int $trigger): void;
 }

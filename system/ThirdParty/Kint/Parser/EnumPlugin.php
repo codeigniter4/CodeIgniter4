@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -31,16 +33,16 @@ use Kint\Zval\Representation\Representation;
 use Kint\Zval\Value;
 use UnitEnum;
 
-class EnumPlugin extends Plugin
+class EnumPlugin extends AbstractPlugin
 {
     private static $cache = [];
 
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         if (!KINT_PHP81) {
             return Parser::TRIGGER_NONE;
@@ -49,7 +51,7 @@ class EnumPlugin extends Plugin
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (!$var instanceof UnitEnum) {
             return;

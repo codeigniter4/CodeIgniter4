@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -23,33 +25,33 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Parser;
+namespace Kint\Renderer;
 
 use Kint\Zval\Value;
 
-abstract class Plugin
+interface RendererInterface
 {
-    protected $parser;
+    public function __construct();
 
-    public function setParser(Parser $p)
-    {
-        $this->parser = $p;
-    }
+    public function render(Value $o): string;
 
-    /**
-     * An array of types (As returned by gettype) for all data this plugin can operate on.
-     *
-     * @return array List of types
-     */
-    public function getTypes()
-    {
-        return [];
-    }
+    public function renderNothing(): string;
 
-    public function getTriggers()
-    {
-        return Parser::TRIGGER_NONE;
-    }
+    public function setCallInfo(array $info): void;
 
-    abstract public function parse(&$var, Value &$o, $trigger);
+    public function getCallInfo(): array;
+
+    public function setStatics(array $statics): void;
+
+    public function getStatics(): array;
+
+    public function setShowTrace(bool $show_trace): void;
+
+    public function getShowTrace(): bool;
+
+    public function filterParserPlugins(array $plugins): array;
+
+    public function preRender(): string;
+
+    public function postRender(): string;
 }

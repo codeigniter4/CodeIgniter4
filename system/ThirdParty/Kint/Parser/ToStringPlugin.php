@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -29,24 +31,24 @@ use Kint\Zval\Representation\Representation;
 use Kint\Zval\Value;
 use ReflectionClass;
 
-class ToStringPlugin extends Plugin
+class ToStringPlugin extends AbstractPlugin
 {
     public static $blacklist = [
         'SimpleXMLElement',
         'SplFileObject',
     ];
 
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         $reflection = new ReflectionClass($var);
         if (!$reflection->hasMethod('__toString')) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -29,8 +31,5 @@ use Kint\Zval\Representation\Representation;
 
 interface TabPluginInterface extends PluginInterface
 {
-    /**
-     * @return null|string
-     */
-    public function renderTab(Representation $r);
+    public function renderTab(Representation $r): ?string;
 }

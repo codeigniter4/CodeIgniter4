@@ -25,23 +25,25 @@ declare(strict_types=1);
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Zval;
+namespace Kint;
 
-class TraceValue extends Value
+use Kint\Parser\Parser;
+use Kint\Renderer\RendererInterface;
+use Kint\Zval\Value;
+
+interface FacadeInterface
 {
-    public $hints = ['trace'];
+    public function __construct(Parser $p, RendererInterface $r);
 
-    public function getType(): string
-    {
-        return 'Debug Backtrace';
-    }
+    public function setStatesFromStatics(array $statics): void;
 
-    public function getSize(): ?string
-    {
-        if (!$this->size) {
-            return 'empty';
-        }
+    public function setStatesFromCallInfo(array $info): void;
 
-        return parent::getSize();
-    }
+    /**
+     * Renders a list of vars including the pre and post renders.
+     *
+     * @param array   $vars Data to dump
+     * @param Value[] $base The base value objects
+     */
+    public function dumpAll(array $vars, array $base): string;
 }
