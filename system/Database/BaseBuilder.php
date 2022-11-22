@@ -1936,6 +1936,12 @@ class BaseBuilder
      * Generates a platform-specific upsertBatch string from the supplied data
      *
      * @used-by batchExecute
+     *
+     * @param string   $table Protected table name
+     * @param string[] $keys  QBKeys
+     * @phpstan-param list<string> $keys QBKeys
+     * @param array<array<int|string>> $values QBSet
+     * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _upsertBatch(string $table, array $keys, array $values): string
     {
@@ -2089,6 +2095,12 @@ class BaseBuilder
      * Generates a platform-specific insert string from the supplied data.
      *
      * @used-by batchExecute
+     *
+     * @param string   $table Protected table name
+     * @param string[] $keys  QBKeys
+     * @phpstan-param list<string> $keys QBKeys
+     * @param array<array<int|string>> $values QBSet
+     * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
     {
@@ -2246,6 +2258,8 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific insert string from the supplied data
+     *
+     * @param string $table Protected table name
      */
     protected function _insert(string $table, array $keys, array $unescapedKeys): string
     {
@@ -2284,6 +2298,8 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific replace string from the supplied data
+     *
+     * @param string $table Protected table name
      */
     protected function _replace(string $table, array $keys, array $values): string
     {
@@ -2373,6 +2389,8 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific update string from the supplied data
+     *
+     * @param string $table Protected table name
      */
     protected function _update(string $table, array $values): string
     {
@@ -2432,7 +2450,8 @@ class BaseBuilder
      *
      * @used-by batchExecute
      *
-     * @param string[] $keys QBKeys
+     * @param string   $table Protected table name
+     * @param string[] $keys  QBKeys
      * @phpstan-param list<string> $keys QBKeys
      * @param array[] $values QBSet
      * @phpstan-param list<list<string|int>> $values QBSet
@@ -2590,6 +2609,8 @@ class BaseBuilder
      *
      * If the database does not support the truncate() command,
      * then this method maps to 'DELETE FROM table'
+     *
+     * @param string $table Protected table name
      */
     protected function _truncate(string $table): string
     {
@@ -2674,6 +2695,14 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific batch update string from the supplied data
+     *
+     * @used-by batchExecute
+     *
+     * @param string   $table Protected table name
+     * @param string[] $keys  QBKeys
+     * @phpstan-param list<string> $keys QBKeys
+     * @param array<array<int|string>> $values QBSet
+     * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _deleteBatch(string $table, array $keys, array $values): string
     {
@@ -2789,6 +2818,8 @@ class BaseBuilder
 
     /**
      * Generates a platform-specific delete string from the supplied data
+     *
+     * @param string $table Protected table name
      */
     protected function _delete(string $table): string
     {
