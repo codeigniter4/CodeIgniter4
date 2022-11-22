@@ -199,16 +199,20 @@ Multiple Domain Support
 
 - If you set ``Config\App::$allowedHostnames``, URL-related functions such as :php:func:`base_url()`, :php:func:`current_url()`, :php:func:`site_url()` will return the URL with the hostname set in ``Config\App::$allowedHostnames`` if the current URL matches.
 
-Others
-======
+Database
+========
 
-- Since void HTML elements (e.g. ``<input>``) in ``html_helper``, ``form_helper`` or common functions have been changed to be HTML5-compatible by default and you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
-- Since the launch of Spark Commands was extracted from ``CodeIgniter\CodeIgniter``, there may be problems running these commands if the ``Services::codeigniter()`` service has been overridden.
 - The return type of ``CodeIgniter\Database\Database::loadForge()`` has been changed to ``Forge``. Extending classes should likewise change the type.
 - The return type of ``CodeIgniter\Database\Database::loadUtils()`` has been changed to ``BaseUtils``. Extending classes should likewise change the type.
 - The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts types array, string, or ``RawSql``. Extending classes should likewise change types.
 - The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data. Extending classes should likewise change the type.
 - The third parameter ``$index`` of ``BaseBuilder::_updateBatch()`` has changed to ``$values``, and the parameter type has changed to ``array``. Extending classes should likewise change the type.
+
+Others
+======
+
+- **Helper:** Since void HTML elements (e.g. ``<input>``) in ``html_helper``, ``form_helper`` or common functions have been changed to be HTML5-compatible by default and you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
+- **CLI:** Since the launch of Spark Commands was extracted from ``CodeIgniter\CodeIgniter``, there may be problems running these commands if the ``Services::codeigniter()`` service has been overridden.
 
 Project Files
 *************
