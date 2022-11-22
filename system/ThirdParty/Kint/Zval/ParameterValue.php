@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -26,7 +28,6 @@
 namespace Kint\Zval;
 
 use Kint\Utils;
-use ReflectionException;
 use ReflectionParameter;
 
 class ParameterValue extends Value
@@ -40,23 +41,8 @@ class ParameterValue extends Value
     {
         parent::__construct();
 
-        if (KINT_PHP70) {
-            if ($type = $param->getType()) {
-                $this->type_hint = Utils::getTypeString($type);
-            }
-        } else {
-            if ($param->isArray()) {
-                $this->type_hint = 'array';
-            } else {
-                try {
-                    if ($this->type_hint = $param->getClass()) {
-                        $this->type_hint = $this->type_hint->name;
-                    }
-                } catch (ReflectionException $e) {
-                    \preg_match('/\\[\\s\\<\\w+?>\\s([\\w]+)/s', $param->__toString(), $matches);
-                    $this->type_hint = isset($matches[1]) ? $matches[1] : '';
-                }
-            }
+        if ($type = $param->getType()) {
+            $this->type_hint = Utils::getTypeString($type);
         }
 
         $this->reference = $param->isPassedByReference();
@@ -82,17 +68,17 @@ class ParameterValue extends Value
         }
     }
 
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type_hint;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return '$'.$this->name;
     }
 
-    public function getDefault()
+    public function getDefault(): ?string
     {
         return $this->default;
     }

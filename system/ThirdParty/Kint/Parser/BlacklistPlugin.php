@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -28,7 +30,7 @@ namespace Kint\Parser;
 use Kint\Zval\InstanceValue;
 use Kint\Zval\Value;
 
-class BlacklistPlugin extends Plugin
+class BlacklistPlugin extends AbstractPlugin
 {
     /**
      * List of classes and interfaces to blacklist.
@@ -44,21 +46,23 @@ class BlacklistPlugin extends Plugin
      */
     public static $shallow_blacklist = ['Psr\\Container\\ContainerInterface'];
 
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_BEGIN;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                return $this->blacklistValue($var, $o);
+                $this->blacklistValue($var, $o);
+
+                return;
             }
         }
 
@@ -68,12 +72,17 @@ class BlacklistPlugin extends Plugin
 
         foreach (self::$shallow_blacklist as $class) {
             if ($var instanceof $class) {
-                return $this->blacklistValue($var, $o);
+                $this->blacklistValue($var, $o);
+
+                return;
             }
         }
     }
 
-    protected function blacklistValue(&$var, Value &$o)
+    /**
+     * @param object &$var
+     */
+    protected function blacklistValue(&$var, Value &$o): void
     {
         $object = new InstanceValue();
         $object->transplant($o);

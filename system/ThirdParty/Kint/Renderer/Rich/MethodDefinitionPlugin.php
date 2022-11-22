@@ -25,32 +25,52 @@ declare(strict_types=1);
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Zval;
+namespace Kint\Renderer\Rich;
 
 use Kint\Kint;
+use Kint\Zval\Representation\MethodDefinitionRepresentation;
+use Kint\Zval\Representation\Representation;
 
-class StreamValue extends ResourceValue
+class MethodDefinitionPlugin extends AbstractPlugin implements TabPluginInterface
 {
-    public $stream_meta;
-
-    public function __construct(array $meta = null)
+    public function renderTab(Representation $r): ?string
     {
-        parent::__construct();
-        $this->stream_meta = $meta;
-    }
-
-    public function getValueShort(): ?string
-    {
-        if (empty($this->stream_meta['uri'])) {
+        if (!$r instanceof MethodDefinitionRepresentation) {
             return null;
         }
 
-        $uri = $this->stream_meta['uri'];
+        if (isset($r->contents)) {
+            $docstring = [];
+            foreach (\explode("\n", $r->contents) as $line) {
+                $docstring[] = \trim($line);
+            }
 
-        if (\stream_is_local($uri)) {
-            return Kint::shortenPath($uri);
+            $docstring = $this->renderer->escape(\implode("\n", $docstring));
         }
 
-        return $uri;
+        $addendum = [];
+        if (isset($r->class) && $r->inherited) {
+            $addendum[] = 'Inherited from '.$this->renderer->escape($r->class);
+        }
+
+        if (isset($r->file, $r->line)) {
+            $addendum[] = 'Defined in '.$this->renderer->escape(Kint::shortenPath($r->file)).':'.((int) $r->line);
+        }
+
+        if ($addendum) {
+            $addendum = '<small>'.\implode("\n", $addendum).'</small>';
+
+            if (isset($docstring)) {
+                $docstring .= "\n\n".$addendum;
+            } else {
+                $docstring = $addendum;
+            }
+        }
+
+        if (!isset($docstring)) {
+            return null;
+        }
+
+        return '<pre>'.$docstring.'</pre>';
     }
 }

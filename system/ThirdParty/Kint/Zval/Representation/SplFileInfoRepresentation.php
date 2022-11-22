@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -35,14 +37,14 @@ class SplFileInfoRepresentation extends Representation
     public $path;
     public $realpath = null;
     public $linktarget = null;
-    public $size;
+    public $size = null;
     public $is_dir = false;
     public $is_file = false;
     public $is_link = false;
     public $owner = null;
     public $group = null;
-    public $ctime;
-    public $mtime;
+    public $ctime = null;
+    public $mtime = null;
     public $typename = 'Unknown file';
     public $typeflag = '-';
     public $hints = ['fspath'];
@@ -150,28 +152,38 @@ class SplFileInfoRepresentation extends Representation
         }
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
-        return $this->typename.' ('.$this->getSize().')';
+        if ($size = $this->getSize()) {
+            return $this->typename.' ('.$size.')';
+        }
+
+        return $this->typename;
     }
 
-    public function getSize()
+    public function getSize(): ?string
     {
         if ($this->size) {
             $size = Utils::getHumanReadableBytes($this->size);
 
             return \round($size['value'], 2).$size['unit'];
         }
+
+        return null;
     }
 
-    public function getMTime()
+    public function getMTime(): ?string
     {
-        $year = \date('Y', $this->mtime);
+        if (null !== $this->mtime) {
+            $year = \date('Y', $this->mtime);
 
-        if ($year !== \date('Y')) {
-            return \date('M d Y', $this->mtime);
+            if ($year !== \date('Y')) {
+                return \date('M d Y', $this->mtime);
+            }
+
+            return \date('M d H:i', $this->mtime);
         }
 
-        return \date('M d H:i', $this->mtime);
+        return null;
     }
 }

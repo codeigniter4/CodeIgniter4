@@ -25,23 +25,9 @@ declare(strict_types=1);
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Zval;
+namespace Kint\Parser;
 
-class TraceValue extends Value
+interface ConstructablePluginInterface extends PluginInterface
 {
-    public $hints = ['trace'];
-
-    public function getType(): string
-    {
-        return 'Debug Backtrace';
-    }
-
-    public function getSize(): ?string
-    {
-        if (!$this->size) {
-            return 'empty';
-        }
-
-        return parent::getSize();
-    }
+    public function __construct();
 }

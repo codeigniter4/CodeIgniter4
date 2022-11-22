@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,51 +27,28 @@
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Renderer\RichRenderer;
-use Kint\Utils;
+use Kint\Zval\BlobValue;
+use Kint\Zval\SimpleXMLElementValue;
 use Kint\Zval\Value;
 
-class SimpleXMLElementPlugin extends Plugin implements ValuePluginInterface
+class SimpleXMLElementPlugin extends AbstractPlugin implements ValuePluginInterface
 {
-    public function renderValue(Value $o)
+    public function renderValue(Value $o): ?string
     {
-        $children = $this->renderer->renderChildren($o);
-
-        $header = '';
-
-        if (null !== ($s = $o->getModifiers())) {
-            $header .= '<var>'.$s.'</var> ';
+        if (!($o instanceof SimpleXMLElementValue)) {
+            return null;
         }
 
-        if (null !== ($s = $o->getName())) {
-            $header .= '<dfn>'.$this->renderer->escape($s).'</dfn> ';
-
-            if ($s = $o->getOperator()) {
-                $header .= $this->renderer->escape($s, 'ASCII').' ';
-            }
+        if (!$o->isStringValue() || !empty($o->getRepresentation('attributes')->contents)) {
+            return null;
         }
 
-        if (null !== ($s = $o->getType())) {
-            $s = $this->renderer->escape($s);
+        $b = new BlobValue();
+        $b->transplant($o);
+        $b->type = 'string';
 
-            if ($o->reference) {
-                $s = '&amp;'.$s;
-            }
-
-            $header .= '<var>'.$this->renderer->escape($s).'</var> ';
-        }
-
-        if (null !== ($s = $o->getSize())) {
-            $header .= '('.$this->renderer->escape($s).') ';
-        }
-
-        if (null !== ($s = $o->getValueShort())) {
-            if (RichRenderer::$strlen_max) {
-                $s = Utils::truncateString($s, RichRenderer::$strlen_max);
-            }
-            $header .= $this->renderer->escape($s);
-        }
-
+        $children = $this->renderer->renderChildren($b);
+        $header = $this->renderer->renderHeader($o);
         $header = $this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header);
 
         return '<dl>'.$header.$children.'</dl>';

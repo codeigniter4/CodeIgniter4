@@ -25,23 +25,14 @@ declare(strict_types=1);
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Kint\Zval;
+namespace Kint\Renderer\Text;
 
-class TraceValue extends Value
+use Kint\Renderer\TextRenderer;
+use Kint\Zval\Value;
+
+interface PluginInterface
 {
-    public $hints = ['trace'];
+    public function __construct(TextRenderer $r);
 
-    public function getType(): string
-    {
-        return 'Debug Backtrace';
-    }
-
-    public function getSize(): ?string
-    {
-        if (!$this->size) {
-            return 'empty';
-        }
-
-        return parent::getSize();
-    }
+    public function render(Value $o): ?string;
 }

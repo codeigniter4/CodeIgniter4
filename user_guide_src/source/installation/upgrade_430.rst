@@ -33,13 +33,14 @@ The following files received significant changes and
 Config Files
 ============
 
-If you are using the following Mock Config classes in testing, you need to update the corresponding Config files in **app/Config**:
+- **app/Config/Kint.php** has been updated for Kint 5.0. You need to replace ``Kint\Renderer\Renderer`` with ``Kint\Renderer\AbstractRenderer`` and replace ``Renderer::SORT_FULL`` with ``AbstractRenderer::SORT_FULL``.
+- If you are using the following Mock Config classes in testing, you need to update the corresponding Config files in **app/Config**:
 
-- ``MockAppConfig`` (``Config\App``)
-- ``MockCLIConfig`` (``Config\App``)
-- ``MockSecurityConfig`` (``Config\Security``)
+    - ``MockAppConfig`` (``Config\App``)
+    - ``MockCLIConfig`` (``Config\App``)
+    - ``MockSecurityConfig`` (``Config\Security``)
 
-Add **types** to the properties in these Config classes. You may need to fix the property values to match the property types.
+- Add **types** to the properties in these Config classes. You may need to fix the property values to match the property types.
 
 Breaking Changes
 ****************

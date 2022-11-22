@@ -260,6 +260,7 @@ Others
 - View Cells are now first-class citizens and can be located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
 - Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
 - Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
+- **Debug:** Kint has been updated to 5.0.1.
 
 Message Changes
 ***************

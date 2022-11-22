@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -26,37 +28,47 @@
 namespace Kint\Renderer;
 
 use Kint\Kint;
+use Kint\Parser;
+use Kint\Renderer\Text\PluginInterface;
 use Kint\Utils;
 use Kint\Zval\InstanceValue;
 use Kint\Zval\Value;
 
-class TextRenderer extends Renderer
+/**
+ * @psalm-import-type Encoding from \Kint\Zval\BlobValue
+ * @psalm-import-type PluginMap from AbstractRenderer
+ */
+class TextRenderer extends AbstractRenderer
 {
     /**
-     * TextRenderer plugins should be instances of Kint\Renderer\Text\Plugin.
+     * TextRenderer plugins should implement PluginInterface.
+     *
+     * @psalm-var PluginMap
      */
     public static $plugins = [
-        'array_limit' => 'Kint\\Renderer\\Text\\ArrayLimitPlugin',
-        'blacklist' => 'Kint\\Renderer\\Text\\BlacklistPlugin',
-        'depth_limit' => 'Kint\\Renderer\\Text\\DepthLimitPlugin',
-        'microtime' => 'Kint\\Renderer\\Text\\MicrotimePlugin',
-        'recursion' => 'Kint\\Renderer\\Text\\RecursionPlugin',
-        'trace' => 'Kint\\Renderer\\Text\\TracePlugin',
-        'enum' => 'Kint\\Renderer\\Text\\EnumPlugin',
+        'array_limit' => Text\ArrayLimitPlugin::class,
+        'blacklist' => Text\BlacklistPlugin::class,
+        'depth_limit' => Text\DepthLimitPlugin::class,
+        'enum' => Text\EnumPlugin::class,
+        'microtime' => Text\MicrotimePlugin::class,
+        'recursion' => Text\RecursionPlugin::class,
+        'trace' => Text\TracePlugin::class,
     ];
 
     /**
      * Parser plugins must be instanceof one of these or
      * it will be removed for performance reasons.
+     *
+     * @psalm-var class-string[]
      */
     public static $parser_plugin_whitelist = [
-        'Kint\\Parser\\ArrayLimitPlugin',
-        'Kint\\Parser\\ArrayObjectPlugin',
-        'Kint\\Parser\\BlacklistPlugin',
-        'Kint\\Parser\\MicrotimePlugin',
-        'Kint\\Parser\\StreamPlugin',
-        'Kint\\Parser\\TracePlugin',
-        'Kint\\Parser\\EnumPlugin',
+        Parser\ArrayLimitPlugin::class,
+        Parser\ArrayObjectPlugin::class,
+        Parser\BlacklistPlugin::class,
+        Parser\EnumPlugin::class,
+        Parser\MicrotimePlugin::class,
+        Parser\StreamPlugin::class,
+        Parser\TracePlugin::class,
     ];
 
     /**
@@ -107,7 +119,7 @@ class TextRenderer extends Renderer
         $this->indent_width = self::$default_indent;
     }
 
-    public function render(Value $o)
+    public function render(Value $o): string
     {
         if ($plugin = $this->getPlugin(self::$plugins, $o->hints)) {
             $output = $plugin->render($o);
@@ -128,7 +140,7 @@ class TextRenderer extends Renderer
         return $out;
     }
 
-    public function renderNothing()
+    public function renderNothing(): string
     {
         if (self::$decorations) {
             return $this->colorTitle(
@@ -139,7 +151,7 @@ class TextRenderer extends Renderer
         return $this->colorTitle('No argument').PHP_EOL;
     }
 
-    public function boxText($text, $width)
+    public function boxText(string $text, int $width): string
     {
         $out = '┌'.\str_repeat('─', $width - 2).'┐'.PHP_EOL;
 
@@ -155,7 +167,7 @@ class TextRenderer extends Renderer
         return $out;
     }
 
-    public function renderTitle(Value $o)
+    public function renderTitle(Value $o): string
     {
         $name = (string) $o->getName();
 
@@ -166,7 +178,7 @@ class TextRenderer extends Renderer
         return Utils::truncateString($name, $this->header_width);
     }
 
-    public function renderHeader(Value $o)
+    public function renderHeader(Value $o): string
     {
         $output = [];
 
@@ -189,7 +201,13 @@ class TextRenderer extends Renderer
                 $s = '&'.$s;
             }
 
-            $output[] = $this->colorType($this->escape($s));
+            $s = $this->colorType($this->escape($s));
+
+            if ($o instanceof InstanceValue && isset($o->spl_object_id)) {
+                $s .= '#'.((int) $o->spl_object_id);
+            }
+
+            $output[] = $s;
         }
 
         if (null !== ($s = $o->getSize())) {
@@ -206,7 +224,7 @@ class TextRenderer extends Renderer
         return \str_repeat(' ', $o->depth * $this->indent_width).\implode(' ', $output);
     }
 
-    public function renderChildren(Value $o)
+    public function renderChildren(Value $o): string
     {
         if ('array' === $o->type) {
             $output = ' [';
@@ -244,22 +262,22 @@ class TextRenderer extends Renderer
         return $output;
     }
 
-    public function colorValue($string)
+    public function colorValue(string $string): string
     {
         return $string;
     }
 
-    public function colorType($string)
+    public function colorType(string $string): string
     {
         return $string;
     }
 
-    public function colorTitle($string)
+    public function colorTitle(string $string): string
     {
         return $string;
     }
 
-    public function postRender()
+    public function postRender(): string
     {
         if (self::$decorations) {
             $output = \str_repeat('═', $this->header_width);
@@ -278,7 +296,7 @@ class TextRenderer extends Renderer
         return $this->colorTitle($output.$this->calledFrom().PHP_EOL);
     }
 
-    public function filterParserPlugins(array $plugins)
+    public function filterParserPlugins(array $plugins): array
     {
         $return = [];
 
@@ -294,17 +312,22 @@ class TextRenderer extends Renderer
         return $return;
     }
 
-    public function ideLink($file, $line)
+    public function ideLink(string $file, int $line): string
     {
         return $this->escape(Kint::shortenPath($file)).':'.$line;
     }
 
-    public function escape($string, $encoding = false)
+    /**
+     * @psalm-param Encoding $encoding
+     *
+     * @param mixed $encoding
+     */
+    public function escape(string $string, $encoding = false): string
     {
         return $string;
     }
 
-    protected function calledFrom()
+    protected function calledFrom(): string
     {
         $output = '';
 
@@ -315,7 +338,9 @@ class TextRenderer extends Renderer
             );
         }
 
-        if (isset($this->call_info['callee']['function']) && (
+        if (
+            isset($this->call_info['callee']['function']) &&
+            (
                 !empty($this->call_info['callee']['class']) ||
                 !\in_array(
                     $this->call_info['callee']['function'],
@@ -325,28 +350,30 @@ class TextRenderer extends Renderer
             )
         ) {
             $output .= ' [';
-            if (isset($this->call_info['callee']['class'])) {
-                $output .= $this->call_info['callee']['class'];
-            }
-            if (isset($this->call_info['callee']['type'])) {
-                $output .= $this->call_info['callee']['type'];
-            }
+            $output .= $this->call_info['callee']['class'] ?? '';
+            $output .= $this->call_info['callee']['type'] ?? '';
             $output .= $this->call_info['callee']['function'].'()]';
         }
 
         return $output;
     }
 
-    protected function getPlugin(array $plugins, array $hints)
+    /**
+     * @psalm-param PluginMap $plugins
+     * @psalm-param string[] $hints
+     */
+    protected function getPlugin(array $plugins, array $hints): ?PluginInterface
     {
         if ($plugins = $this->matchPlugins($plugins, $hints)) {
             $plugin = \end($plugins);
 
-            if (!isset($this->plugin_objs[$plugin])) {
+            if (!isset($this->plugin_objs[$plugin]) && \is_subclass_of($plugin, PluginInterface::class)) {
                 $this->plugin_objs[$plugin] = new $plugin($this);
             }
 
             return $this->plugin_objs[$plugin];
         }
+
+        return null;
     }
 }
