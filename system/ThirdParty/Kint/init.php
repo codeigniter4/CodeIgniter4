@@ -47,7 +47,9 @@ if (\version_compare(PHP_VERSION, '7.1') < 0) {
 \define('KINT_PHP83', \version_compare(PHP_VERSION, '8.3') >= 0);
 
 // Dynamic default settings
-Kint::$file_link_format = \ini_get('xdebug.file_link_format');
+if (false !== \ini_get('xdebug.file_link_format')) {
+    Kint::$file_link_format = \ini_get('xdebug.file_link_format');
+}
 if (isset($_SERVER['DOCUMENT_ROOT'])) {
     Kint::$app_root_dirs = [
         $_SERVER['DOCUMENT_ROOT'] => '<ROOT>',
