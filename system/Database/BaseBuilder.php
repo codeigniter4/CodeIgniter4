@@ -1940,7 +1940,7 @@ class BaseBuilder
      * @param string   $table Protected table name
      * @param string[] $keys  QBKeys
      * @phpstan-param list<string> $keys QBKeys
-     * @param array[] $values QBSet
+     * @param array<array<string|int>> $values QBSet
      * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _upsertBatch(string $table, array $keys, array $values): string
@@ -2099,7 +2099,7 @@ class BaseBuilder
      * @param string   $table Protected table name
      * @param string[] $keys  QBKeys
      * @phpstan-param list<string> $keys QBKeys
-     * @param array[] $values QBSet
+     * @param array<array<string|int>> $values QBSet
      * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _insertBatch(string $table, array $keys, array $values): string
@@ -2701,7 +2701,7 @@ class BaseBuilder
      * @param string   $table Protected table name
      * @param string[] $keys  QBKeys
      * @phpstan-param list<string> $keys QBKeys
-     * @param array[] $values QBSet
+     * @param array<array<string|int>> $values QBSet
      * @phpstan-param list<list<string|int>> $values QBSet
      */
     protected function _deleteBatch(string $table, array $keys, array $values): string
