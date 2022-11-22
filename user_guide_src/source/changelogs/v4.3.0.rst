@@ -192,7 +192,7 @@ Query Builder
 -------------
 
 - Added ``upsert()`` and ``upsertBatch()`` methods to QueryBuilder. See :ref:`upsert-data`.
-- Added ``deleteBatch()`` methods to QueryBuilder. See :ref:`delete-batch`.
+- Added ``deleteBatch()`` method to QueryBuilder. See :ref:`delete-batch`.
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
 
