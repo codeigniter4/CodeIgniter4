@@ -498,8 +498,8 @@ final class MiscUrlTest extends CIUnitTestCase
                 'This is my noreply@codeigniter.com test',
             ],
             'test03' => [
-                '<br />www.google.com',
-                '<br /><a href="http://www.google.com">www.google.com</a>',
+                '<br>www.google.com',
+                '<br><a href="http://www.google.com">www.google.com</a>',
             ],
             'test04' => [
                 'Download CodeIgniter at www.codeigniter.com. Period test.',
@@ -547,8 +547,8 @@ final class MiscUrlTest extends CIUnitTestCase
                 "This is my <script>var l=new Array();l[0] = '>';l[1] = 'a';l[2] = '/';l[3] = '<';l[4] = '|109';l[5] = '|111';l[6] = '|99';l[7] = '|46';l[8] = '|114';l[9] = '|101';l[10] = '|116';l[11] = '|105';l[12] = '|110';l[13] = '|103';l[14] = '|105';l[15] = '|101';l[16] = '|100';l[17] = '|111';l[18] = '|99';l[19] = '|64';l[20] = '|121';l[21] = '|108';l[22] = '|112';l[23] = '|101';l[24] = '|114';l[25] = '|111';l[26] = '|110';l[27] = '>';l[28] = '\"';l[29] = '|109';l[30] = '|111';l[31] = '|99';l[32] = '|46';l[33] = '|114';l[34] = '|101';l[35] = '|116';l[36] = '|105';l[37] = '|110';l[38] = '|103';l[39] = '|105';l[40] = '|101';l[41] = '|100';l[42] = '|111';l[43] = '|99';l[44] = '|64';l[45] = '|121';l[46] = '|108';l[47] = '|112';l[48] = '|101';l[49] = '|114';l[50] = '|111';l[51] = '|110';l[52] = ':';l[53] = 'o';l[54] = 't';l[55] = 'l';l[56] = 'i';l[57] = 'a';l[58] = 'm';l[59] = '\"';l[60] = '=';l[61] = 'f';l[62] = 'e';l[63] = 'r';l[64] = 'h';l[65] = ' ';l[66] = 'a';l[67] = '<';for (var i = l.length-1; i >= 0; i=i-1) {if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");else document.write(unescape(l[i]));}</script> test",
             ],
             'test03' => [
-                '<br />www.google.com',
-                '<br />www.google.com',
+                '<br>www.google.com',
+                '<br>www.google.com',
             ],
             'test04' => [
                 'Download CodeIgniter at www.codeigniter.com. Period test.',
@@ -596,8 +596,8 @@ final class MiscUrlTest extends CIUnitTestCase
                 "This is my <script>var l=new Array();l[0] = '>';l[1] = 'a';l[2] = '/';l[3] = '<';l[4] = '|109';l[5] = '|111';l[6] = '|99';l[7] = '|46';l[8] = '|114';l[9] = '|101';l[10] = '|116';l[11] = '|105';l[12] = '|110';l[13] = '|103';l[14] = '|105';l[15] = '|101';l[16] = '|100';l[17] = '|111';l[18] = '|99';l[19] = '|64';l[20] = '|121';l[21] = '|108';l[22] = '|112';l[23] = '|101';l[24] = '|114';l[25] = '|111';l[26] = '|110';l[27] = '>';l[28] = '\"';l[29] = '|109';l[30] = '|111';l[31] = '|99';l[32] = '|46';l[33] = '|114';l[34] = '|101';l[35] = '|116';l[36] = '|105';l[37] = '|110';l[38] = '|103';l[39] = '|105';l[40] = '|101';l[41] = '|100';l[42] = '|111';l[43] = '|99';l[44] = '|64';l[45] = '|121';l[46] = '|108';l[47] = '|112';l[48] = '|101';l[49] = '|114';l[50] = '|111';l[51] = '|110';l[52] = ':';l[53] = 'o';l[54] = 't';l[55] = 'l';l[56] = 'i';l[57] = 'a';l[58] = 'm';l[59] = '\"';l[60] = '=';l[61] = 'f';l[62] = 'e';l[63] = 'r';l[64] = 'h';l[65] = ' ';l[66] = 'a';l[67] = '<';for (var i = l.length-1; i >= 0; i=i-1) {if (l[i].substring(0, 1) === '|') document.write(\"&#\"+unescape(l[i].substring(1))+\";\");else document.write(unescape(l[i]));}</script> test",
             ],
             'test03' => [
-                '<br />www.google.com',
-                '<br /><a href="http://www.google.com">www.google.com</a>',
+                '<br>www.google.com',
+                '<br><a href="http://www.google.com">www.google.com</a>',
             ],
             'test04' => [
                 'Download CodeIgniter at www.codeigniter.com. Period test.',
@@ -645,8 +645,8 @@ final class MiscUrlTest extends CIUnitTestCase
                 'This is my noreply@codeigniter.com test',
             ],
             'test03' => [
-                '<br />www.google.com',
-                '<br /><a href="http://www.google.com" target="_blank">www.google.com</a>',
+                '<br>www.google.com',
+                '<br><a href="http://www.google.com" target="_blank">www.google.com</a>',
             ],
             'test04' => [
                 'Download CodeIgniter at www.codeigniter.com. Period test.',

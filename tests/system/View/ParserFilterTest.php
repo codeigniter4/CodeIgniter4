@@ -250,7 +250,7 @@ final class ParserFilterTest extends CIUnitTestCase
         $template = '{ value1|nl2br }';
 
         $parser->setData($data);
-        $this->assertSame("first<br />\nsecond", $parser->renderString($template));
+        $this->assertSame("first<br>\nsecond", $parser->renderString($template));
     }
 
     public function testNumberFormat()
