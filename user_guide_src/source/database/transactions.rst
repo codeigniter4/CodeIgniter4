@@ -46,7 +46,7 @@ methods and they will all be committed or rolled back based on the success
 or failure of any given query.
 
 .. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if an query error occurs, all the queries
+    When ``DBDebug`` is true, if a query error occurs, all the queries
     will be rolled backed, and an exception will be thrown.
     In previous versions, ``DBDebug`` was false in production environment,
     and different database drivers might throw different exception classes
@@ -66,7 +66,7 @@ Strict Mode can be disabled as follows:
 .. literalinclude:: transactions/002.php
 
 .. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if an query error occurs, all the queries
+    When ``DBDebug`` is true, if a query error occurs, all the queries
     will be rolled backed, and an exception will be thrown.
     In previous versions, ``DBDebug`` was false in production environment,
     and different database drivers might throw different exception classes
@@ -84,7 +84,7 @@ If the ``DBDebug`` is false, you can manage your own errors like this:
 .. literalinclude:: transactions/003.php
 
 .. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if an query error occurs, all the queries
+    When ``DBDebug`` is true, if a query error occurs, all the queries
     will be rolled backed, and an exception will be thrown.
     In previous versions, ``DBDebug`` was false in production environment,
     and different database drivers might throw different exception classes
