@@ -14,6 +14,7 @@ namespace CodeIgniter\Database\Live;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -27,6 +28,14 @@ final class TransactionTest extends CIUnitTestCase
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
+
+    protected function setUp(): void
+    {
+        // Reset connection instance.
+        $this->db = Database::connect($this->DBGroup, false);
+
+        parent::setUp();
+    }
 
     /**
      * Sets $DBDebug to false.
