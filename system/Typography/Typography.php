@@ -287,7 +287,8 @@ class Typography
         $str = str_replace("\n\n", "</p>\n\n<p>", $str);
 
         // Convert single spaces to <br> tags
-        $str = preg_replace("/([^\n])(\n)([^\n])/", '\\1<br>\\2\\3', $str);
+        $br  = '<br' . _solidus() . '>';
+        $str = preg_replace("/([^\n])(\n)([^\n])/", '\\1' . $br . '\\2\\3', $str);
 
         // Wrap the whole enchilada in enclosing paragraphs
         if ($str !== "\n") {
@@ -323,7 +324,8 @@ class Typography
         $newstr = '';
 
         for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i++) {
-            $newstr .= (($i % 2) === 0) ? nl2br($ex[$i], false) : $ex[$i];
+            $xhtml = ! (config('DocTypes')->html5 ?? false);
+            $newstr .= (($i % 2) === 0) ? nl2br($ex[$i], $xhtml) : $ex[$i];
 
             if ($ct - 1 !== $i) {
                 $newstr .= 'pre>';
