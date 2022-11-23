@@ -2,18 +2,31 @@
 Server Requirements
 ###################
 
-`PHP <https://www.php.net/>`_ version 7.4 or newer is required, with the
-`*intl* extension <https://www.php.net/manual/en/intl.requirements.php>`_ and `*mbstring* extension <https://www.php.net/manual/en/mbstring.requirements.php>`_
-installed.
+`PHP <https://www.php.net/>`_ version 7.4 or newer is required, with the following PHP extensions are enabled:
+
+  - `intl <https://www.php.net/manual/en/intl.requirements.php>`_
+  - `mbstring <https://www.php.net/manual/en/mbstring.requirements.php>`_
+  - `json <https://www.php.net/manual/en/json.requirements.php>`_
 
 The following PHP extensions should be enabled on your server:
 
-  - ``php-json``
-  - ``php-mysqlnd`` (if you use MySQL)
-  - ``php-xml``
+  - `mysqlnd <https://www.php.net/manual/en/mysqlnd.install.php>`_ (if you use MySQL)
+  - `curl <https://www.php.net/manual/en/curl.requirements.php>`_ (if you use :doc:`CURLRequest </libraries/curlrequest>`)
+  - `imagick <https://www.php.net/manual/en/imagick.requirements.php>`_ (if you use :doc:`Image </libraries/images>` class ImageMagickHandler)
+  - `gd <https://www.php.net/manual/en/image.requirements.php>`_ (if you use :doc:`Image </libraries/images>` class GDHandler)
+  - `simplexml <https://www.php.net/manual/en/simplexml.requirements.php>`_ (if you format XML)
 
-In order to use the :doc:`CURLRequest </libraries/curlrequest>`, you will need
-`libcurl <https://www.php.net/manual/en/curl.requirements.php>`_ installed.
+The following PHP extensions are required when you use a Cache server:
+
+  - `memcache <https://www.php.net/manual/en/memcache.requirements.php>`_ (if you use :doc:`Cache </libraries/caching>` class MemcachedHandler with Memcache)
+  - `memcached <https://www.php.net/manual/en/memcached.requirements.php>`_ (if you use :doc:`Cache </libraries/caching>` class MemcachedHandler with Memcached)
+  - `redis <https://github.com/phpredis/phpredis>`_ (if you use :doc:`Cache </libraries/caching>` class RedisHandler)
+
+The following PHP extensions are required when you use PHPUnit:
+
+   - `dom <https://www.php.net/manual/en/dom.requirements.php>`_ (if you use :doc:`TestResponse </testing/response>` class)
+   - `libxml <https://www.php.net/manual/en/libxml.requirements.php>`_ (if you use :doc:`TestResponse </testing/response>` class)
+   - `xdebug <https://xdebug.org/docs/install>`_ (if you use ``CIUnitTestCase::assertHeaderEmitted()``)
 
 A database is required for most web application programming.
 Currently supported databases are:
