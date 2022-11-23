@@ -45,6 +45,13 @@ You can run as many queries as you want between the ``transStart()``/``transComp
 methods and they will all be committed or rolled back based on the success
 or failure of any given query.
 
+.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
+    When ``DBDebug`` is true, if an query error occurs, all the queries
+    will be rolled backed, and an exception will be thrown.
+    In previous versions, ``DBDebug`` was false in production environment,
+    and different database drivers might throw different exception classes
+    or did not throw exceptions.
+
 Strict Mode
 ===========
 
@@ -58,6 +65,13 @@ Strict Mode can be disabled as follows:
 
 .. literalinclude:: transactions/002.php
 
+.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
+    When ``DBDebug`` is true, if an query error occurs, all the queries
+    will be rolled backed, and an exception will be thrown.
+    In previous versions, ``DBDebug`` was false in production environment,
+    and different database drivers might throw different exception classes
+    or did not throw exceptions.
+
 Managing Errors
 ===============
 
@@ -69,9 +83,12 @@ If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
 
-.. note:: Since v4.3.0, ``DBDebug`` is true by default. In previous versions,
-    it was false in production environment, and different database drivers might
-    throw different exception classes or did not throw exceptions.
+.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
+    When ``DBDebug`` is true, if an query error occurs, all the queries
+    will be rolled backed, and an exception will be thrown.
+    In previous versions, ``DBDebug`` was false in production environment,
+    and different database drivers might throw different exception classes
+    or did not throw exceptions.
 
 Disabling Transactions
 ======================
