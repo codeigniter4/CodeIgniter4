@@ -89,6 +89,8 @@ final class TransactionTest extends CIUnitTestCase
         ];
         $builder->insert($jobData);
 
+        $this->assertTrue($this->db->transStatus());
+
         // Duplicate entry '1' for key 'PRIMARY'
         $jobData = [
             'id'          => 1,
@@ -96,6 +98,8 @@ final class TransactionTest extends CIUnitTestCase
             'description' => 'Theres something in your teeth',
         ];
         $builder->insert($jobData);
+
+        $this->assertFalse($this->db->transStatus());
 
         $this->db->transComplete();
 
@@ -119,6 +123,8 @@ final class TransactionTest extends CIUnitTestCase
         ];
         $builder->insert($jobData);
 
+        $this->assertTrue($this->db->transStatus());
+
         // Duplicate entry '1' for key 'PRIMARY'
         $jobData = [
             'id'          => 1,
@@ -126,6 +132,8 @@ final class TransactionTest extends CIUnitTestCase
             'description' => 'Theres something in your teeth',
         ];
         $builder->insert($jobData);
+
+        $this->assertFalse($this->db->transStatus());
 
         $this->db->transComplete();
 
@@ -139,6 +147,8 @@ final class TransactionTest extends CIUnitTestCase
             'description' => 'Theres something in your teeth',
         ];
         $builder->insert($jobData);
+
+        $this->assertFalse($this->db->transStatus());
 
         $this->db->transComplete();
 
@@ -164,6 +174,8 @@ final class TransactionTest extends CIUnitTestCase
         ];
         $builder->insert($jobData);
 
+        $this->assertTrue($this->db->transStatus());
+
         // Duplicate entry '1' for key 'PRIMARY'
         $jobData = [
             'id'          => 1,
@@ -171,6 +183,8 @@ final class TransactionTest extends CIUnitTestCase
             'description' => 'Theres something in your teeth',
         ];
         $builder->insert($jobData);
+
+        $this->assertFalse($this->db->transStatus());
 
         $this->db->transComplete();
 
@@ -184,6 +198,8 @@ final class TransactionTest extends CIUnitTestCase
             'description' => 'Theres something in your teeth',
         ];
         $builder->insert($jobData);
+
+        $this->assertTrue($this->db->transStatus());
 
         $this->db->transComplete();
 
