@@ -275,19 +275,40 @@
              
   <section id="server-requirements">
 <h1>Server Requirements<a class="headerlink" href="#server-requirements" title="Permalink to this headline"></a></h1>
-<p><a class="reference external" href="https://www.php.net/">PHP</a> version 7.4 or newer is required, with the
-<a class="reference external" href="https://www.php.net/manual/en/intl.requirements.php">*intl* extension</a> and <a class="reference external" href="https://www.php.net/manual/en/mbstring.requirements.php">*mbstring* extension</a>
-installed.</p>
+<p><a class="reference external" href="https://www.php.net/">PHP</a> version 7.4 or newer is required, with the following PHP extensions are enabled:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.php.net/manual/en/intl.requirements.php">intl</a></p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/mbstring.requirements.php">mbstring</a></p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/json.requirements.php">json</a></p></li>
+</ul>
+</div></blockquote>
 <p>The following PHP extensions should be enabled on your server:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">php-json</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">php-mysqlnd</span></code> (if you use MySQL)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">php-xml</span></code></p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/mysqlnd.install.php">mysqlnd</a> (if you use MySQL)</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/curl.requirements.php">curl</a> (if you use <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest</span></a>)</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/imagick.requirements.php">imagick</a> (if you use <a class="reference internal" href="../libraries/images.html"><span class="doc">Image</span></a> class ImageMagickHandler)</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/image.requirements.php">gd</a> (if you use <a class="reference internal" href="../libraries/images.html"><span class="doc">Image</span></a> class GDHandler)</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/simplexml.requirements.php">simplexml</a> (if you format XML)</p></li>
 </ul>
 </div></blockquote>
-<p>In order to use the <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest</span></a>, you will need
-<a class="reference external" href="https://www.php.net/manual/en/curl.requirements.php">libcurl</a> installed.</p>
+<p>The following PHP extensions are required when you use a Cache server:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.php.net/manual/en/memcache.requirements.php">memcache</a> (if you use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Cache</span></a> class MemcachedHandler with Memcache)</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/memcached.requirements.php">memcached</a> (if you use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Cache</span></a> class MemcachedHandler with Memcached)</p></li>
+<li><p><a class="reference external" href="https://github.com/phpredis/phpredis">redis</a> (if you use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Cache</span></a> class RedisHandler)</p></li>
+</ul>
+</div></blockquote>
+<p>The following PHP extensions are required when you use PHPUnit:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://www.php.net/manual/en/dom.requirements.php">dom</a> (if you use <a class="reference internal" href="../testing/response.html"><span class="doc">TestResponse</span></a> class)</p></li>
+<li><p><a class="reference external" href="https://www.php.net/manual/en/libxml.requirements.php">libxml</a> (if you use <a class="reference internal" href="../testing/response.html"><span class="doc">TestResponse</span></a> class)</p></li>
+<li><p><a class="reference external" href="https://xdebug.org/docs/install">xdebug</a> (if you use <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase::assertHeaderEmitted()</span></code>)</p></li>
+</ul>
+</div></blockquote>
 <p>A database is required for most web application programming.
 Currently supported databases are:</p>
 <blockquote>
@@ -327,7 +348,7 @@ The list below shows the outstanding ones.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 22, 2022.
+      <span class="lastupdated">Last updated on Nov 24, 2022.
       </span></p>
   </div>
 
