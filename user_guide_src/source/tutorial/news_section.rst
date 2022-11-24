@@ -14,7 +14,7 @@ Create a Database to Work with
 ******************************
 
 The CodeIgniter installation assumes that you have set up an appropriate
-database, as outlined in the :doc:`requirements </intro/requirements>`.
+database, as outlined in the :doc:`requirements <../intro/requirements>`.
 In this tutorial, we provide SQL code for a MySQL database, and
 we also assume that you have a suitable client for issuing database
 commands (mysql, MySQL Workbench, or phpMyAdmin).
@@ -54,7 +54,7 @@ Connect to Your Database
 The local configuration file, ``.env``, that you created when you installed
 CodeIgniter, should have the database property settings uncommented and
 set appropriately for the database you want to use. Make sure you've configured
-your database properly as described :doc:`here <../database/configuration>`::
+your database properly as described in :doc:`../database/configuration`::
 
     database.default.hostname = localhost
     database.default.database = ci4tutorial
@@ -69,7 +69,7 @@ Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
-You can read more about it :doc:`here </models/model>`.
+You can read more about it in :doc:`../models/model`.
 
 Open up the **app/Models/** directory and create a new file called
 **NewsModel.php** and add the following code.
@@ -127,7 +127,7 @@ Next, there are two methods, one to view all news items, and one for a specific
 news item.
 
 Next, the :php:func:`model()` function is used to create the **NewsModel** instance.
-This is a helper function. You can read more about it :doc:`here </general/common_functions>`.
+This is a helper function. You can read more about it in :doc:`../general/common_functions`.
 You could also write ``$model = new NewsModel();``, if you don't use it.
 
 You can see that the ``$slug`` variable is passed to the model's

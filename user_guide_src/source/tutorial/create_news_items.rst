@@ -20,9 +20,9 @@ Open the **app/Config/Filters.php** file and update the ``$methods`` property li
 .. literalinclude:: create_news_items/001.php
 
 It configures the CSRF filter to be enabled for all **POST** requests.
-You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
+You can read more about the CSRF protection in :doc:`Security <../libraries/security>` library.
 
-.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable  Auto Routing (Legacy) <use-defined-routes-only>`
+.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
@@ -125,7 +125,7 @@ Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
 file contains the following. This makes sure CodeIgniter sees ``create()``
 as a method instead of a news item's slug. You can read more about different
-routing types :doc:`here </incoming/routing>`.
+routing types in :doc:`../incoming/routing`.
 
 .. literalinclude:: create_news_items/004.php
 

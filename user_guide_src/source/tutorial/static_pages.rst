@@ -69,7 +69,7 @@ includes the following code::
 
 .. note:: If you look closely in **header.php** template we are using an ``esc()``
     function. It's a global function provided by CodeIgniter to help prevent
-    XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
+    XSS attacks. You can read more about it in :doc:`../general/common_functions`.
 
 Adding Logic to the Controller
 ******************************
@@ -114,7 +114,7 @@ view.
 .. note:: Any files and directory names passed into the ``view()`` function MUST
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it
-    :doc:`here </outgoing/views>`.
+    :doc:`../outgoing/views`.
 
 Routing
 *******
@@ -145,8 +145,7 @@ request to the first matching rule. Each rule is a regular expression
 match, and calls the appropriate controller and method, possibly with
 arguments.
 
-More information about routing can be found in the URI Routing
-:doc:`documentation </incoming/routing>`.
+More information about routing can be found in the :doc:`../incoming/routing`.
 
 Here, the second rule in the ``$routes`` object matches GET request
 to the URI path ``/pages`` maps the ``index()`` method of the ``Pages`` class.

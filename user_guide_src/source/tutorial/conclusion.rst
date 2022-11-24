@@ -10,9 +10,9 @@ design patterns, which you can expand upon.
 Now that you've completed this tutorial, we recommend you check out the
 rest of the documentation. CodeIgniter is often praised because of its
 comprehensive documentation. Use this to your advantage and read the
-:doc:`Overview </concepts/index>` and :doc:`/general/index`
+:doc:`Overview <../concepts/index>` and :doc:`../general/index`
 sections thoroughly. You should read
-the :doc:`Library </libraries/index>` and :doc:`/helpers/index` references when needed.
+the :doc:`Library <../libraries/index>` and :doc:`../helpers/index` references when needed.
 
 Every intermediate PHP programmer should be able to get the hang of
 CodeIgniter within a few days.
