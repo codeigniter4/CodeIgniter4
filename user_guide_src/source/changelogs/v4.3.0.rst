@@ -32,7 +32,7 @@ Exceptions when Database Errors Occur
     - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']`` and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these settings, an exception is always thrown when a database error occurs.
     - Now ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true. Previously, it is thrown if ``CI_DEBUG`` is true.
     - The default value of ``BaseConnection::$DBDebug`` has been changed to ``true``.
-    - With these changes, ``DBDebug`` now means whether or not to throw an exception when an error occurs. Although unrelated to debugging, the name has not been changed.
+    - With these changes, ``DBDebug`` **now means whether or not to throw an exception when an error occurs**. Although unrelated to debugging, the name has not been changed.
     - Now when you delete without WHERE clause in ``Model``, ``DatabaseException`` is thrown even if ``CI_DEBUG`` is false. Previously, it is thrown if ``CI_DEBUG`` is true.
 
 HTTP Status Code and Exit Code when Exception Occurs
