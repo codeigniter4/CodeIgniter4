@@ -30,7 +30,7 @@ Using your database client, connect to your database and run the SQL command bel
         slug VARCHAR(128) NOT NULL,
         body TEXT NOT NULL,
         PRIMARY KEY (id),
-        KEY slug (slug)
+        UNIQUE slug (slug)
     );
 
 Also, add some seed records. For now, we'll just show you the SQL statements needed
