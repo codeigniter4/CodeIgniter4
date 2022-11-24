@@ -159,7 +159,7 @@ Running the App
 
 Ready to test? You cannot run the app using PHP's built-in server,
 since it will not properly process the ``.htaccess`` rules that are provided in
-``public``, and which eliminate the need to specify "index.php/"
+``public``, and which eliminate the need to specify "**index.php/**"
 as part of a URL. CodeIgniter has its own command that you can use though.
 
 From the command line, at the root of your project::
