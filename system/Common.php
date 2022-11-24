@@ -725,8 +725,18 @@ if (! function_exists('is_windows')) {
     /**
      * Detect if platform is running in Windows.
      */
-    function is_windows(): bool
+    function is_windows(?bool $mock = null): bool
     {
+        static $mocked;
+
+        if (func_num_args() === 1) {
+            $mocked = $mock;
+        }
+
+        if (isset($mocked)) {
+            return $mocked;
+        }
+
         return DIRECTORY_SEPARATOR === '\\';
     }
 }
