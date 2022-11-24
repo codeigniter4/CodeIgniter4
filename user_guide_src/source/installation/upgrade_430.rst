@@ -240,12 +240,14 @@ Config
     * The new property ``$helpers`` is added to autoload helpers.
 * app/Config/Database.php
     * ``$default['DBDebug']`` and ``$test['DBDebug']`` are changed to ``true`` by default.
+      See :ref:`exceptions-when-database-errors-occur`.
 * app/Config/DocTypes.php
     * The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
 * app/Config/Encryption.php
-    * The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3 Encryption compatibility.
+    * The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3 Encryption compatibility. See :ref:`encryption-compatible-with-ci3`.
 * app/Config/Exceptions.php
     * Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
+      See See :ref:`logging_deprecation_warnings` for details.
 * app/Config/Modules.php
     * The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery for better
       performance.
