@@ -233,7 +233,7 @@ Config
 
 * app/Config/App.php
     * The new property ``$allowedHostnames`` is added to set allowed hostnames in the site URL
-      other than the hostname in the ``$baseURL``.
+      other than the hostname in the ``$baseURL``. See :ref:`v430-multiple-domain-support`.
 * app/Config/Autoload.php
     * The new property ``$helpers`` is added to autoload helpers.
 * app/Config/Database.php

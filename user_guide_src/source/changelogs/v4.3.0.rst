@@ -247,6 +247,8 @@ Error Handling
 - To *temporarily* enable throwing of deprecations, set the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 - ``Config\Logger::$threshold`` is now, by default, environment-specific. For production environment, default threshold is still ``4`` but changed to ``9`` for other environments.
 
+.. _v430-multiple-domain-support:
+
 Multiple Domain Support
 =======================
 
