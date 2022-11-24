@@ -281,6 +281,19 @@ Miscellaneous Functions
     :returns: true if you can write to the file, false otherwise.
     :rtype: bool
 
+.. php:function:: is_windows([$mock = null])
+
+    :param bool|null $mock: If given and is a boolean then it will be used as the return value.
+    :rtype: bool
+
+    Detect if platform is running in Windows.
+
+    .. note:: The boolean value provided to $mock will persist in subsequent calls. To reset this
+        mock value, the user must pass an explicit ``null`` to the function call. This will
+        refresh the function to use auto-detection.
+
+    .. literalinclude:: common_functions/012.php
+
 .. php:function:: log_message($level, $message [, $context])
 
     :param   string   $level: The level of severity

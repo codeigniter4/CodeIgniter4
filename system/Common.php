@@ -691,7 +691,7 @@ if (! function_exists('is_really_writable')) {
     function is_really_writable(string $file): bool
     {
         // If we're on a Unix server we call is_writable
-        if (DIRECTORY_SEPARATOR === '/') {
+        if (! is_windows()) {
             return is_writable($file);
         }
 
@@ -718,6 +718,26 @@ if (! function_exists('is_really_writable')) {
         fclose($fp);
 
         return true;
+    }
+}
+
+if (! function_exists('is_windows')) {
+    /**
+     * Detect if platform is running in Windows.
+     */
+    function is_windows(?bool $mock = null): bool
+    {
+        static $mocked;
+
+        if (func_num_args() === 1) {
+            $mocked = $mock;
+        }
+
+        if (isset($mocked)) {
+            return $mocked;
+        }
+
+        return DIRECTORY_SEPARATOR === '\\';
     }
 }
 

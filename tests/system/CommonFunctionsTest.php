@@ -700,4 +700,25 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
         $this->resetServices();
     }
+
+    public function testIsWindows()
+    {
+        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
+    }
+
+    public function testIsWindowsUsingMock()
+    {
+        is_windows(true);
+        $this->assertTrue(is_windows());
+        $this->assertNotFalse(is_windows());
+
+        is_windows(false);
+        $this->assertFalse(is_windows());
+        $this->assertNotTrue(is_windows());
+
+        is_windows(null);
+        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
+    }
 }

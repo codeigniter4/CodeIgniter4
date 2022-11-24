@@ -112,12 +112,6 @@ final class CLITest extends CIUnitTestCase
         PhpStreamWrapper::restore();
     }
 
-    public function testIsWindows()
-    {
-        $this->assertSame(('\\' === DIRECTORY_SEPARATOR), CLI::isWindows());
-        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), CLI::isWindows());
-    }
-
     public function testNewLine()
     {
         $this->expectOutputString('');
