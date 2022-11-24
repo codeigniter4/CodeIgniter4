@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
+        "ext-curl": "*",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -23,7 +24,6 @@
         "predis/predis": "^1.1 || ^2.0"
     },
     "suggest": {
-        "ext-curl": "If you use CURLRequest class",
         "ext-imagick": "If you use Image class ImageMagickHandler",
         "ext-gd": "If you use Image class GDHandler",
         "ext-exif": "If you run Image class tests",
