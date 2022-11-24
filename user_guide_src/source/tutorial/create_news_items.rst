@@ -82,15 +82,20 @@ The code above adds a lot of functionality.
 
 First we load the :doc:`Form helper <../helpers/form_helper>` with the :php:func:`helper()` function.
 
+Next, we check if we deal with the **POST** request, and if not, that is **GET** request,
+the form is loaded and returned to display.
+
 Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
 
-After that, we check if we deal with the **POST** request and then
-the Controller-provided helper function :ref:`validateData() <controller-validatedata>` is used to validate ``$post`` data.
+After that, the Controller-provided helper function :ref:`validateData() <controller-validatedata>`
+is used to validate ``$post`` data.
 In this case, the title and body fields are required and in the specific length.
 CodeIgniter has a powerful validation library as demonstrated
 above. You can read more about the :doc:`Validation library <../libraries/validation>`.
 
-If the form was submitted **and** passed all the rules, the **NewsModel** is loaded and called. This
+If the validation fails, the form is loaded and returned to display.
+
+If the validation passed all the rules, the **NewsModel** is loaded and called. This
 takes care of passing the news item into the model.
 
 This contains a new function :php:func:`url_title()`. This function -
@@ -105,8 +110,6 @@ After this, a view is loaded and returned to display a success message. Create a
 This could be as simple as::
 
     <p>News item created successfully.</p>
-
-Continuing down, if the ``if`` conditions are false, the form is returned and displayed.
 
 Model Updating
 **************
