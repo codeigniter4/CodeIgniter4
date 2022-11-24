@@ -104,7 +104,7 @@ the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
-After this, a view is loaded and returned to display a success message. Create a view at
+After this, view files are loaded and returned to display a success message. Create a view at
 **app/Views/news/success.php** and write a success message.
 
 This could be as simple as::
