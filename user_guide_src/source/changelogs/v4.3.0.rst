@@ -48,6 +48,7 @@ Time
 ----
 
 The following methods of the :doc:`Time <../libraries/time>` class had bugs that changed the state of the current object. To fix these bugs, the Time class has been fixed:
+
     - ``add()``
     - ``modify()``
     - ``setDate()``
@@ -113,6 +114,7 @@ ValidationInterface
 
 - The third parameter ``$dbGroup`` for ``ValidationInterface::run()`` has been added.
 - The following methods are added to the interface:
+
     - ``ValidationInterface::setRule()``
     - ``ValidationInterface::getRules()``
     - ``ValidationInterface::getRuleGroup()``
@@ -148,8 +150,10 @@ Database Forge
 - The method signature of ``Forge::addPrimaryKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 - The method signature of ``Forge::addUniqueKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 - The following method has an additional ``$asQuery`` parameter. When set to ``true`` the method returns a stand alone SQL query.
+
     - ``CodeIgniter\Database\Forge::_processPrimaryKeys()``
 - In addition to the added ``$asQuery`` parameter above the following methods also now return an array.
+
     - ``CodeIgniter\Database\Forge::_processIndexes()``
     - ``CodeIgniter\Database\Forge::_processForeignKeys()``
 
@@ -158,6 +162,7 @@ Others
 
 - **API:** The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
 - The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
+
     - ``Debug\Exceptions::__construct()``
     - ``Services::exceptions()``
 
