@@ -67,7 +67,7 @@ includes the following code::
     </body>
     </html>
 
-.. note:: If you look closely in **header.php** template we are using an ``esc()``
+.. note:: If you look closely in **header.php** template we are using an :php:func:`esc()`
     function. It's a global function provided by CodeIgniter to help prevent
     XSS attacks. You can read more about it in :doc:`../general/common_functions`.
 
@@ -104,14 +104,14 @@ assigning the value to a variable, it is assigned to the title element
 in the ``$data`` array.
 
 The last thing that has to be done is loading the views in the order
-they should be displayed. The ``view()`` function built-in to
+they should be displayed. The :php:func:`view()` function built-in to
 CodeIgniter will be used to do this. The second parameter in the ``view()``
 function is used to pass values to the view. Each value in the ``$data`` array
 is assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
 
-.. note:: Any files and directory names passed into the ``view()`` function MUST
+.. note:: Any files and directory names passed into the :php:func:`view()` function MUST
     match the case of the actual directory and file itself or the system will
     throw errors on case-sensitive platforms. You can read more about it
     :doc:`../outgoing/views`.
