@@ -247,7 +247,8 @@ Config
 * app/Config/Exceptions.php
     * Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
 * app/Config/Modules.php
-    * The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery.
+    * The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery for better
+      performance.
 * app/Config/Routes.php
     * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework (``SYSTEMPATH . 'Config/Routes.php'``).
 * app/Config/Security.php
