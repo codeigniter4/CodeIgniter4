@@ -234,6 +234,8 @@ Config
 * app/Config/App.php
     * The new property ``$allowedHostnames`` is added to set allowed hostnames in the site URL
       other than the hostname in the ``$baseURL``. See :ref:`v430-multiple-domain-support`.
+    * The property ``$appTimezone`` has been changed to ``UTC`` to avoid being affected
+      by daylight saving time.
 * app/Config/Autoload.php
     * The new property ``$helpers`` is added to autoload helpers.
 * app/Config/Database.php
@@ -248,6 +250,8 @@ Config
     * The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery.
 * app/Config/Routes.php
     * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework (``SYSTEMPATH . 'Config/Routes.php'``).
+* app/Config/Security.php
+    * Changed the value of the property ``$redirect`` to ``false`` to prevent redirection when a CSRF check fails. This is to make it easier to recognize that it is a CSRF error.
 
 All Changes
 ===========

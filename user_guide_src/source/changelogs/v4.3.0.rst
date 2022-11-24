@@ -288,8 +288,6 @@ Changes
 
 - Config
     - All atomic type properties in ``Config`` classes have been typed.
-    - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
-    - The default ``Config\App::$appTimezone`` has been changed to ``UTC`` to avoid being affected by daylight saving time.
 - Changed the processing of Spark commands:
     - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
     - The ``CodeIgniter::isSparked()`` method has been removed.
