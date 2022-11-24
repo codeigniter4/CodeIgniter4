@@ -29,6 +29,9 @@ You can read more about the CSRF protection in :doc:`Security <../libraries/secu
 Create a Form
 *************
 
+View
+====
+
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
 with two fields, one for the title and one for the text. You'll derive
@@ -38,51 +41,59 @@ the slug from our title in the model. Create a new view at
     <h2><?= esc($title) ?></h2>
 
     <?= session()->getFlashdata('error') ?>
-    <?= service('validation')->listErrors() ?>
+    <?= validation_list_errors() ?>
 
     <form action="/news/create" method="post">
         <?= csrf_field() ?>
 
         <label for="title">Title</label>
-        <input type="input" name="title" /><br />
+        <input type="input" name="title" value="<?= set_value('title') ?>">
+        <br>
 
         <label for="body">Text</label>
-        <textarea name="body" cols="45" rows="4"></textarea><br />
+        <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
+        <br>
 
-        <input type="submit" name="submit" value="Create news item" />
+        <input type="submit" name="submit" value="Create news item">
     </form>
 
-There are probably only three things here that look unfamiliar.
+There are probably only four things here that look unfamiliar.
 
-The ``session()->getFlashdata('error')`` function is used to report
-errors related to CSRF protection.
+The ``session()->getFlashdata('error')`` is used to display the error related to CSRF protection to the user. However, by default, if a CSRF validation check fails, an exception will be thrown, so it does not work yet. See :ref:`csrf-redirection-on-failure` for more information.
 
-The ``service('validation')->listErrors()`` function is used to report
+The :php:func:`validation_list_errors()` function is used to report
 errors related to form validation.
 
-The ``csrf_field()`` function creates a hidden input with a CSRF token that helps protect against some common attacks.
+The :php:func:`csrf_field()` function creates a hidden input with a CSRF token that helps protect against some common attacks.
 
-Go back to your ``News`` controller. You're going to do two things here,
+The :php:func:`set_value()` function is used to show old input data when errors occur.
+
+Controller
+==========
+
+Go back to your **News** controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
 passed the validation rules.
-You'll use the :ref:`validation method in Controller <controller-validate>` to do this.
+You'll use the :ref:`validation method in Controller <controller-validatedata>` to do this.
 
 .. literalinclude:: create_news_items/002.php
 
-The code above adds a lot of functionality. First we load the NewsModel.
+The code above adds a lot of functionality.
+
+First we load the :doc:`Form helper <../helpers/form_helper>` with the :php:func:`helper()` function.
+
+Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
+
 After that, we check if we deal with the **POST** request and then
-the Controller-provided helper function is used to validate
-the user input data. In this case, the POST data, and the title and text fields are required.
-
+the Controller-provided helper function :ref:`validateData() <controller-validatedata>` is used to validate ``$post`` data.
+In this case, the title and body fields are required and in the specific length.
 CodeIgniter has a powerful validation library as demonstrated
-above. You can read :doc:`more about this library
-here <../libraries/validation>`.
+above. You can read more about the :doc:`Validation library <../libraries/validation>`.
 
-Continuing down, you can see a condition that checks whether the form
-validation ran successfully. If it did not, the form is displayed; if it
-was submitted **and** passed all the rules, the model is called. This
+If the form was submitted **and** passed all the rules, the **NewsModel** is loaded and called. This
 takes care of passing the news item into the model.
-This contains a new function ``url_title()``. This function -
+
+This contains a new function :php:func:`url_title()`. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
 the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
@@ -93,7 +104,9 @@ After this, a view is loaded to display a success message. Create a view at
 
 This could be as simple as::
 
-    News item created successfully.
+    <p>News item created successfully.</p>
+
+Continuing down, if the ``if`` conditions are false, the form is returned and displayed.
 
 Model Updating
 **************
