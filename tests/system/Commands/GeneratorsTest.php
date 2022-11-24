@@ -61,7 +61,7 @@ final class GeneratorsTest extends CIUnitTestCase
 
     public function testGenerateFileFailsOnUnwritableDirectory()
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if (is_windows()) {
             $this->markTestSkipped('chmod does not work as expected on Windows');
         }
 
