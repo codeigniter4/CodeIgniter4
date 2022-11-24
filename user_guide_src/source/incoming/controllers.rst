@@ -102,6 +102,8 @@ the ``$rules`` array with the name of the group as defined in **app/Config/Valid
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
 
+.. _controller-validatedata:
+
 $this->validateData()
 =====================
 
