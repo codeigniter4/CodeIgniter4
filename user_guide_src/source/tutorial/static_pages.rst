@@ -90,8 +90,12 @@ in the ``Pages`` controller created above:
 .. literalinclude:: static_pages/002.php
 
 Now, when the requested page does exist, it is loaded, including the header and
-footer, and displayed to the user. If the requested page doesn't exist, a "404
-Page not found" error is shown.
+footer, and returned to the user. If a controller returns a string, it is
+displayed to the user.
+
+.. note:: Controllers must return a string or a Response object.
+
+If the requested page doesn't exist, a "404 Page not found" error is shown.
 
 The first line in this method checks whether the page actually exists.
 PHP's native ``is_file()`` function is used to check whether the file
