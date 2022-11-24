@@ -228,12 +228,26 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
-* ``app/Config/DocTypes.php``
+Config
+------
+
+* app/Config/App.php
+    * The new property ``$allowedHostnames`` is added to set allowed hostnames in the site URL
+      other than the hostname in the ``$baseURL``.
+* app/Config/Autoload.php
+    * The new property ``$helpers`` is added to autoload helpers.
+* app/Config/Database.php
+    * ``$default['DBDebug']`` and ``$test['DBDebug']`` are changed to ``true`` by default.
+* app/Config/DocTypes.php
     * The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
-* ``app/Config/Exceptions.php``
+* app/Config/Encryption.php
+    * The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3 Encryption compatibility.
+* app/Config/Exceptions.php
     * Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
-* ``app/Config/Routes.php``
-    * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework.
+* app/Config/Modules.php
+    * The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery.
+* app/Config/Routes.php
+    * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework (``SYSTEMPATH . 'Config/Routes.php'``).
 
 All Changes
 ===========
