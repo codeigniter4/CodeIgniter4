@@ -74,7 +74,6 @@ The following methods of the :doc:`Time <../libraries/time>` class had bugs that
 Others
 ------
 
-- **Helper:** Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
 - **Helper:** :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
 - **CLI:** The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - **CLI:** ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
@@ -248,13 +247,28 @@ Libraries
 Helpers and Functions
 =====================
 
-- Creation of void HTML elements like ``<input>`` via ``form_helper``, ``html_helper`` or common functions can be configured to exclude or not the solidus character (``/``) before the right angle bracket (``>``) by setting the ``$html5`` property in **app/Config/DocTypes.php** to ``true``.
 - Now you can autoload helpers by **app/Config/Autoload.php**.
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 - Added :php:func:`request()` and :php:func:`response()` functions.
 - Added :php:func:`decamelize()` function to convert camelCase to snake_case.
 - Added :php:func:`is_windows()` global function to detect Windows platforms.
+
+HTML5 Compatibility
+===================
+
+Creation of void HTML elements like ``<input>`` can be configured to exclude or not the solidus character
+(``/``) before the right angle bracket (``>``) by setting the ``$html5`` property in
+**app/Config/DocTypes.php**. If you set it to ``true``, HTML5 compatible tags without ``/`` like ``<br>``
+will be output.
+
+The following items are affected:
+
+- Typography class: Creation of ``br`` tag
+- View Parser: The ``nl2br`` filter
+- Form helper
+- HTML helper
+- Common Functions
 
 Error Handling
 ==============

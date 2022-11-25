@@ -18,7 +18,7 @@
  * @var \CodeIgniter\View\Parser   $parser
  */
 ?>
-<style type="text/css">
+<style>
     <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . '/toolbar.css')) ?>
 </style>
 
@@ -264,7 +264,7 @@
         <?= $parser->setData($config)->render('_config.tpl') ?>
     </div>
 </div>
-<style type="text/css">
+<style>
 <?php foreach ($styles as $name => $style): ?>
 <?= sprintf(".%s { %s }\n", $name, $style) ?>
 <?php endforeach ?>

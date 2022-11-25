@@ -408,7 +408,7 @@ class Toolbar
                 . 'data-time="' . $time . '" '
                 . 'src="' . site_url() . '?debugbar"></script>'
                 . '<script ' . csp_script_nonce() . ' id="debugbar_dynamic_script"></script>'
-                . '<style type="text/css" ' . csp_style_nonce() . ' id="debugbar_dynamic_style"></style>'
+                . '<style ' . csp_style_nonce() . ' id="debugbar_dynamic_style"></style>'
                 . $kintScript
                 . PHP_EOL;
 
