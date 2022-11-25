@@ -87,13 +87,14 @@ The code above adds a lot of functionality.
 First we load the :doc:`Form helper <../helpers/form_helper>` with the :php:func:`helper()` function.
 Most helper functions require the helper to be loaded before use.
 
-Next, we check if we deal with the **POST** request with the Request object ``$this->request``.
+Next, we check if we deal with the **POST** request with the
+:doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
 It is set in the controller by the framework.
 If the HTTP method is not POST, that is it is GET,
 the form is loaded and returned to display.
 
 Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
-We also use the Request object ``$this->request``.
+We also use the :doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
 
 After that, the Controller-provided helper function :ref:`validateData() <controller-validatedata>`
 is used to validate ``$post`` data.
@@ -104,7 +105,9 @@ above. You can read more about the :doc:`Validation library <../libraries/valida
 If the validation fails, the form is loaded and returned to display.
 
 If the validation passed all the rules, the **NewsModel** is loaded and called. This
-takes care of passing the news item into the model.
+takes care of passing the news item into the model. The :ref:`model-save` method handles
+inserting or updating the record automatically, based on whether it finds an array key
+matching the primary key.
 
 This contains a new function :php:func:`url_title()`. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down

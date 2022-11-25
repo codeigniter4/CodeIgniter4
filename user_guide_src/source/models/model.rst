@@ -364,6 +364,8 @@ update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
 
+.. _model-save:
+
 save()
 ------
 
