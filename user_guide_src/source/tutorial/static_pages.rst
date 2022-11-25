@@ -93,7 +93,7 @@ Now, when the requested page does exist, it is loaded, including the header and
 footer, and returned to the user. If a controller returns a string, it is
 displayed to the user.
 
-.. note:: Controllers must return a string or a Response object.
+.. note:: Controllers must return a string or a :doc:`Response <../outgoing/response>` object.
 
 If the requested page doesn't exist, a "404 Page not found" error is shown.
 
