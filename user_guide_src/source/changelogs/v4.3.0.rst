@@ -227,6 +227,11 @@ Libraries
 - **Publisher:** Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
 - **Encryption:** Now Encryption can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
 - **CURLRequest:** Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
+- **Typography:** Creation of ``br`` tag can be configured to exclude or not the solidus character (``/``)
+  before the right angle bracket (``>``) by setting the ``$html5`` property in
+  **app/Config/DocTypes.php** to ``true``.
+- **View:** The ``nl2br`` filter in ``Parser`` outputs ``<br>`` tag by setting the ``$html5`` property in
+  **app/Config/DocTypes.php** to ``true``.
 
 Helpers and Functions
 =====================
