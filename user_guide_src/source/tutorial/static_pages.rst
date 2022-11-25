@@ -117,7 +117,7 @@ view.
 
 .. note:: Any files and directory names passed into the :php:func:`view()` function MUST
     match the case of the actual directory and file itself or the system will
-    throw errors on case-sensitive platforms. You can read more about it
+    throw errors on case-sensitive platforms. You can read more about it in
     :doc:`../outgoing/views`.
 
 Routing
