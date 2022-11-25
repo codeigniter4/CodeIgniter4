@@ -125,6 +125,8 @@ brings up additional information. Clicking the X on the right of the toolbar min
 to a small square with the CodeIgniter flame on it. If you click that the toolbar
 will show again.
 
+.. image:: ../images/debugbar.png
+
 Error Pages
 ===========
 
