@@ -59,14 +59,18 @@ the slug from our title in the model. Create a new view at
 
 There are probably only four things here that look unfamiliar.
 
-The ``session()->getFlashdata('error')`` is used to display the error related to CSRF protection to the user. However, by default, if a CSRF validation check fails, an exception will be thrown, so it does not work yet. See :ref:`csrf-redirection-on-failure` for more information.
+The :php:func:`session()` function is used to get the Session object,
+and ``session()->getFlashdata('error')`` is used to display the error related to CSRF protection
+to the user. However, by default, if a CSRF validation check fails, an exception will be thrown,
+so it does not work yet. See :ref:`csrf-redirection-on-failure` for more information.
 
-The :php:func:`validation_list_errors()` function is used to report
-errors related to form validation.
+The :php:func:`validation_list_errors()` function provided by the :doc:`../helpers/form_helper`
+is used to report errors related to form validation.
 
 The :php:func:`csrf_field()` function creates a hidden input with a CSRF token that helps protect against some common attacks.
 
-The :php:func:`set_value()` function is used to show old input data when errors occur.
+The :php:func:`set_value()` function provided by the :doc:`../helpers/form_helper` is used to show
+old input data when errors occur.
 
 Controller
 ==========
@@ -81,11 +85,15 @@ You'll use the :ref:`validation method in Controller <controller-validatedata>` 
 The code above adds a lot of functionality.
 
 First we load the :doc:`Form helper <../helpers/form_helper>` with the :php:func:`helper()` function.
+Most helper functions require the helper to be loaded before use.
 
-Next, we check if we deal with the **POST** request, and if not, that is **GET** request,
+Next, we check if we deal with the **POST** request with the Request object ``$this->request``.
+It is set in the controller by the framework.
+If the HTTP method is not POST, that is it is GET,
 the form is loaded and returned to display.
 
 Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
+We also use the Request object ``$this->request``.
 
 After that, the Controller-provided helper function :ref:`validateData() <controller-validatedata>`
 is used to validate ``$post`` data.
