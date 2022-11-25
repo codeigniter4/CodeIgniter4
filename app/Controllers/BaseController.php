@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -22,7 +24,7 @@ abstract class BaseController extends Controller
     /**
      * Instance of the main Request object.
      *
-     * @var RequestInterface
+     * @var CLIRequest|IncomingRequest
      */
     protected $request;
 
@@ -40,6 +42,8 @@ abstract class BaseController extends Controller
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
+        assert($request instanceof IncomingRequest || $request instanceof CLIRequest);
+
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
 
