@@ -20,7 +20,7 @@ Please note that GitHub is not for general support questions! If you are
 having trouble using a feature, you can:
 
 - Start a new thread on our [Forums](http://forum.codeigniter.com/)
-- Ask your questions on [Slack](https://codeigniterchat.slack.com/)
+- Ask your questions on [Slack](https://join.slack.com/t/codeigniterchat/shared_invite/zt-rl30zw00-obL1Hr1q1ATvkzVkFp8S0Q)
 
 If you are not sure whether you are using something correctly or if you
 have found a bug, again - please ask on the forums first.
