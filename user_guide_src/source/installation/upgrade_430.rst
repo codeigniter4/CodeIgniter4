@@ -48,7 +48,8 @@ Breaking Changes
 Database Exception Changes
 ==========================
 
-- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions.
+- The exception classes may be changed when database errors occur. If you catch the exceptions,
+  you must confirm that your code can catch the exceptions.
 - Now a few exceptions will be thrown even if ``CI_DEBUG`` is false.
 - See :ref:`exceptions-when-database-errors-occur` for details.
 
@@ -244,9 +245,11 @@ Config
     - ``$default['DBDebug']`` and ``$test['DBDebug']`` are changed to ``true`` by default.
       See :ref:`exceptions-when-database-errors-occur`.
 - app/Config/DocTypes.php
-    - The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
+    - The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML
+      elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
 - app/Config/Encryption.php
-    - The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3 Encryption compatibility. See :ref:`encryption-compatible-with-ci3`.
+    - The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3
+      Encryption compatibility. See :ref:`encryption-compatible-with-ci3`.
 - app/Config/Exceptions.php
     - Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
       See See :ref:`logging_deprecation_warnings` for details.
@@ -254,9 +257,11 @@ Config
     - The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery for better
       performance.
 - app/Config/Routes.php
-    - Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework (``SYSTEMPATH . 'Config/Routes.php'``).
+    - Due to the fact that the approach to running Spark Commands has changed, there is no longer a need
+      to load the internal routes of the framework (``SYSTEMPATH . 'Config/Routes.php'``).
 - app/Config/Security.php
-    - Changed the value of the property ``$redirect`` to ``false`` to prevent redirection when a CSRF check fails. This is to make it easier to recognize that it is a CSRF error.
+    - Changed the value of the property ``$redirect`` to ``false`` to prevent redirection when a CSRF
+      check fails. This is to make it easier to recognize that it is a CSRF error.
 
 All Changes
 ===========
