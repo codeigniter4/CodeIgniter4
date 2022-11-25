@@ -72,6 +72,8 @@ Strict Mode can be disabled as follows:
     and different database drivers might throw different exception classes
     or did not throw exceptions.
 
+.. _transactions-managing-errors:
+
 Managing Errors
 ===============
 
@@ -110,6 +112,8 @@ a valid result. To use test mode simply set the first parameter in the
 ``$this->db->transStart()`` method to true:
 
 .. literalinclude:: transactions/005.php
+
+.. _transactions-manual-transactions:
 
 Running Transactions Manually
 =============================
