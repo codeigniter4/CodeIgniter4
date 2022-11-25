@@ -186,10 +186,12 @@ The data returned has the following structure::
      * ]
      */
 
-Others
-======
+Database Exception Changes
+==========================
 
-- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions. See :ref:`exceptions-when-database-errors-occur` for details.
+- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions.
+- Now a few exceptions will be thrown even if ``CI_DEBUG`` is false.
+- See :ref:`exceptions-when-database-errors-occur` for details.
 
 Breaking Enhancements
 *********************
