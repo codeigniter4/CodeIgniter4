@@ -227,21 +227,31 @@ Libraries
 - **Publisher:** Added methods ``replace()``, ``addLineAfter()`` and ``addLineBefore()`` to modify files in Publisher. See :ref:`Publisher <publisher-modifying-files>` for details.
 - **Encryption:** Now Encryption can decrypt data encrypted with CI3's Encryption. See :ref:`encryption-compatible-with-ci3`.
 - **CURLRequest:** Added option version HTTP2 in :ref:`CURLRequest <curlrequest-version>`.
-- **Typography:** Creation of ``br`` tag can be configured to exclude or not the solidus character (``/``)
-  before the right angle bracket (``>``) by setting the ``$html5`` property in
-  **app/Config/DocTypes.php** to ``true``.
-- **View:** The ``nl2br`` filter in ``Parser`` outputs ``<br>`` tag by setting the ``$html5`` property in
-  **app/Config/DocTypes.php** to ``true``.
 
 Helpers and Functions
 =====================
 
-- Creation of void HTML elements like ``<input>`` via ``form_helper``, ``html_helper`` or common functions can be configured to exclude or not the solidus character (``/``) before the right angle bracket (``>``) by setting the ``$html5`` property in **app/Config/DocTypes.php** to ``true``.
 - Now you can autoload helpers by **app/Config/Autoload.php**.
 - Added new Form helper function :php:func:`validation_errors()`, :php:func:`validation_list_errors()` and :php:func:`validation_show_error()` to display Validation Errors.
 - You can set the locale to :php:func:`route_to()` if you pass a locale value as the last parameter.
 - Added :php:func:`request()` and :php:func:`response()` functions.
 - Added :php:func:`decamelize()` function to convert camelCase to snake_case.
+
+HTML5 Compatibility
+===================
+
+Creation of void HTML elements like ``<input>`` can be configured to exclude or not the solidus character
+(``/``) before the right angle bracket (``>``) by setting the ``$html5`` property in
+**app/Config/DocTypes.php**. If you set it to ``true``, HTML5 compatible tags without ``/`` like ``<br>``
+will be output.
+
+The following items are affected:
+
+- Typography class: Creation of ``br`` tag
+- View Parser: The ``nl2br`` filter
+- Form helper
+- HTML helper
+- Common Functions
 
 Error Handling
 ==============
