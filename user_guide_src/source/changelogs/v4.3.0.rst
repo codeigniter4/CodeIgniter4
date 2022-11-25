@@ -61,7 +61,6 @@ The following methods of the :doc:`Time <../libraries/time>` class had bugs that
 Others
 ------
 
-- **Helper:** Now ``form_helper``, ``html_helper`` and common functions that render HTML elements have been changed to make void HTML elements (e.g. ``<input>``) compatible with HTML5 by default.
 - **Helper:** :php:func:`script_tag()` and :php:func:`safe_mailto()` no longer output ``type="text/javascript"`` in ``<script>`` tag.
 - **CLI:** The ``spark`` file has been changed due to a change in the processing of Spark commands.
 - **CLI:** ``CITestStreamFilter::$buffer = ''`` no longer causes the filter to be registered to listen for streams. Now there
