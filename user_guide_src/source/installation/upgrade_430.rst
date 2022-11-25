@@ -45,6 +45,13 @@ Config Files
 Breaking Changes
 ****************
 
+Database Exception Changes
+==========================
+
+- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions.
+- Now a few exceptions will be thrown even if ``CI_DEBUG`` is false.
+- See :ref:`exceptions-when-database-errors-occur` for details.
+
 HTTP Status Code and Exit Code of Uncaught Exceptions
 =====================================================
 
@@ -185,13 +192,6 @@ The data returned has the following structure::
      *        ]
      * ]
      */
-
-Database Exception Changes
-==========================
-
-- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions.
-- Now a few exceptions will be thrown even if ``CI_DEBUG`` is false.
-- See :ref:`exceptions-when-database-errors-occur` for details.
 
 Breaking Enhancements
 *********************
