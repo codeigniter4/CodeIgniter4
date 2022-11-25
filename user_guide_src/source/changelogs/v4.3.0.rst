@@ -27,6 +27,18 @@ Exceptions when Database Errors Occur
 
 - The exceptions thrown by the database connection classes have been changed to ``CodeIgniter\Database\Exceptions\DatabaseException``. Previously, different database drivers threw different exception classes, but these have been unified into ``DatabaseException``.
 - The exceptions thrown by the ``execute()`` method of Prepared Queries have been changed to ``DatabaseException``. Previously, different database drivers might throw different exception classes or did not throw exceptions, but these have been unified into ``DatabaseException``.
+- ``DBDebug`` and ``CI_DEBUG``
+
+    - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']``
+      and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these
+      settings, an exception is always thrown when a database error occurs.
+    - Now ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true.
+      Previously, it is thrown if ``CI_DEBUG`` is true.
+    - The default value of ``BaseConnection::$DBDebug`` has been changed to ``true``.
+    - With these changes, ``DBDebug`` **now means whether or not to throw an exception when an error occurs**.
+      Although unrelated to debugging, the name has not been changed.
+    - Now when you delete without WHERE clause in ``Model``, ``DatabaseException`` is thrown even if
+      ``CI_DEBUG`` is false. Previously, it is thrown if ``CI_DEBUG`` is true.
 
 HTTP Status Code and Exit Code when Exception Occurs
 ----------------------------------------------------
@@ -48,6 +60,7 @@ Time
 ----
 
 The following methods of the :doc:`Time <../libraries/time>` class had bugs that changed the state of the current object. To fix these bugs, the Time class has been fixed:
+
     - ``add()``
     - ``modify()``
     - ``setDate()``
@@ -113,6 +126,7 @@ ValidationInterface
 
 - The third parameter ``$dbGroup`` for ``ValidationInterface::run()`` has been added.
 - The following methods are added to the interface:
+
     - ``ValidationInterface::setRule()``
     - ``ValidationInterface::getRules()``
     - ``ValidationInterface::getRuleGroup()``
@@ -148,8 +162,10 @@ Database Forge
 - The method signature of ``Forge::addPrimaryKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 - The method signature of ``Forge::addUniqueKey()`` has changed. An additional optional parameter ``$keyName`` has been added.
 - The following method has an additional ``$asQuery`` parameter. When set to ``true`` the method returns a stand alone SQL query.
+
     - ``CodeIgniter\Database\Forge::_processPrimaryKeys()``
 - In addition to the added ``$asQuery`` parameter above the following methods also now return an array.
+
     - ``CodeIgniter\Database\Forge::_processIndexes()``
     - ``CodeIgniter\Database\Forge::_processForeignKeys()``
 
@@ -158,6 +174,7 @@ Others
 
 - **API:** The return type of ``API\ResponseTrait::failServerError()`` has been changed to ``ResponseInterface``.
 - The following methods have been changed to accept ``ResponseInterface`` as a parameter instead of ``Response``.
+
     - ``Debug\Exceptions::__construct()``
     - ``Services::exceptions()``
 
@@ -247,6 +264,8 @@ Error Handling
 - To *temporarily* enable throwing of deprecations, set the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.
 - ``Config\Logger::$threshold`` is now, by default, environment-specific. For production environment, default threshold is still ``4`` but changed to ``9`` for other environments.
 
+.. _v430-multiple-domain-support:
+
 Multiple Domain Support
 =======================
 
@@ -274,14 +293,6 @@ Changes
 
 - Config
     - All atomic type properties in ``Config`` classes have been typed.
-    - Changed the default setting to not redirect when a CSRF check fails so that it is easy to see that it is a CSRF error.
-    - The default ``Config\App::$appTimezone`` has been changed to ``UTC`` to avoid being affected by daylight saving time.
-- DBDebug and CI_DEBUG
-    - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']`` and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these settings, an exception is always thrown when a database error occurs.
-    - Now ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true. Previously, it is thrown if ``CI_DEBUG`` is true.
-    - The default value of ``BaseConnection::$DBDebug`` has been changed to ``true``.
-    - With these changes, ``DBDebug`` now means whether or not to throw an exception when an error occurs. Although unrelated to debugging, the name has not been changed.
-    - Now when you delete without WHERE clause in ``Model``, ``DatabaseException`` is thrown even if ``CI_DEBUG`` is false. Previously, it is thrown if ``CI_DEBUG`` is true.
 - Changed the processing of Spark commands:
     - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
     - The ``CodeIgniter::isSparked()`` method has been removed.

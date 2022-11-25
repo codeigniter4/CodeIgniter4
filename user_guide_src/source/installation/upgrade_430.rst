@@ -21,7 +21,7 @@ spark
 The following files received significant changes and
 **you must merge the updated versions** with your application:
 
-* ``spark``
+- ``spark``
 
 .. important:: If you do not update this file, Spark commands will not work at all after running ``composer update``.
 
@@ -44,6 +44,14 @@ Config Files
 
 Breaking Changes
 ****************
+
+Database Exception Changes
+==========================
+
+- The exception classes may be changed when database errors occur. If you catch the exceptions,
+  you must confirm that your code can catch the exceptions.
+- Now a few exceptions will be thrown even if ``CI_DEBUG`` is false.
+- See :ref:`exceptions-when-database-errors-occur` for details.
 
 HTTP Status Code and Exit Code of Uncaught Exceptions
 =====================================================
@@ -186,11 +194,6 @@ The data returned has the following structure::
      * ]
      */
 
-Others
-======
-
-- The exception classes may be changed when database errors occur. If you catch the exceptions, you must confirm that your code can catch the exceptions. See :ref:`exceptions-when-database-errors-occur` for details.
-
 Breaking Enhancements
 *********************
 
@@ -228,12 +231,37 @@ Content Changes
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
 
-* ``app/Config/DocTypes.php``
-    * The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
-* ``app/Config/Exceptions.php``
-    * Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
-* ``app/Config/Routes.php``
-    * Due to the fact that the approach to running Spark Commands has changed, there is no longer a need to load the internal routes of the framework.
+Config
+------
+
+- app/Config/App.php
+    - The new property ``$allowedHostnames`` is added to set allowed hostnames in the site URL
+      other than the hostname in the ``$baseURL``. See :ref:`v430-multiple-domain-support`.
+    - The property ``$appTimezone`` has been changed to ``UTC`` to avoid being affected
+      by daylight saving time.
+- app/Config/Autoload.php
+    - The new property ``$helpers`` is added to autoload helpers.
+- app/Config/Database.php
+    - ``$default['DBDebug']`` and ``$test['DBDebug']`` are changed to ``true`` by default.
+      See :ref:`exceptions-when-database-errors-occur`.
+- app/Config/DocTypes.php
+    - The property ``$html5`` to determine whether to remove the solidus (``/``) character for void HTML
+      elements (e.g. ``<input>``) is added, and set to ``true`` by default for HTML5 compatibility.
+- app/Config/Encryption.php
+    - The new property ``$rawData``,  ``$encryptKeyInfo``, and ``$authKeyInfo`` are added for for CI3
+      Encryption compatibility. See :ref:`encryption-compatible-with-ci3`.
+- app/Config/Exceptions.php
+    - Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
+      See See :ref:`logging_deprecation_warnings` for details.
+- app/Config/Modules.php
+    - The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery for better
+      performance.
+- app/Config/Routes.php
+    - Due to the fact that the approach to running Spark Commands has changed, there is no longer a need
+      to load the internal routes of the framework (``SYSTEMPATH . 'Config/Routes.php'``).
+- app/Config/Security.php
+    - Changed the value of the property ``$redirect`` to ``false`` to prevent redirection when a CSRF
+      check fails. This is to make it easier to recognize that it is a CSRF error.
 
 All Changes
 ===========
@@ -241,7 +269,7 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-* app/Config/DocTypes.php
-* app/Config/Exceptions.php
-* app/Config/Routes.php
-* spark
+- app/Config/DocTypes.php
+- app/Config/Exceptions.php
+- app/Config/Routes.php
+- spark
