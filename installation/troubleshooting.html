@@ -300,9 +300,9 @@ welcome page:</p>
 <section id="i-have-to-include-index-php-in-my-url">
 <h2><a class="toc-backref" href="#id2">I have to include index.php in my URL</a><a class="headerlink" href="#i-have-to-include-index-php-in-my-url" title="Permalink to this headline"></a></h2>
 <p>If a URL like <code class="docutils literal notranslate"><span class="pre">/mypage/find/apple</span></code> doesn’t work, but the similar
-URL <code class="docutils literal notranslate"><span class="pre">/index.php/mypage/find/apple</span></code> does, that sounds like your <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> rules
+URL <code class="docutils literal notranslate"><span class="pre">/index.php/mypage/find/apple</span></code> does, that sounds like your <strong>.htaccess</strong> rules
 (for Apache) are not set up properly, or the <code class="docutils literal notranslate"><span class="pre">mod_rewrite</span></code> extension
-in Apache’s <code class="docutils literal notranslate"><span class="pre">httpd.conf</span></code> is commented out.</p>
+in Apache’s <strong>httpd.conf</strong> is commented out.</p>
 </section>
 <section id="only-the-default-page-loads">
 <h2><a class="toc-backref" href="#id3">Only the default page loads</a><a class="headerlink" href="#only-the-default-page-loads" title="Permalink to this headline"></a></h2>
@@ -312,7 +312,7 @@ REQUEST_URI variable needed to serve search-engine friendly URLs. As a
 first step, open your <strong>app/Config/App.php</strong> file and look for
 the URI Protocol information. It will recommend that you try a couple of
 alternate settings. If it still doesn’t work after you’ve tried this
-you’ll need to force CodeIgniter to add a question mark to your URLs. To
+you’ll need to force CodeIgniter to add a question mark (<code class="docutils literal notranslate"><span class="pre">?</span></code>) to your URLs. To
 do this open your <strong>app/Config/App.php</strong> file and change this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -342,6 +342,7 @@ do this open your <strong>app/Config/App.php</strong> file and change this:</p>
     <span class="c1">// ...</span>
 
     <span class="k">public</span> <span class="nv">$indexPage</span> <span class="o">=</span> <span class="s1">&#39;index.php?&#39;</span><span class="p">;</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -357,7 +358,7 @@ do this open your <strong>app/Config/App.php</strong> file and change this:</p>
 <section id="the-tutorial-gives-404-errors-everywhere">
 <h2><a class="toc-backref" href="#id5">The tutorial gives 404 errors everywhere :(</a><a class="headerlink" href="#the-tutorial-gives-404-errors-everywhere" title="Permalink to this headline"></a></h2>
 <p>You can’t follow the tutorial using PHP’s built-in web server.
-It doesn’t process the <cite>.htaccess</cite> file needed to route
+It doesn’t process the <strong>.htaccess</strong> file needed to route
 requests properly.</p>
 <p>The solution: use Apache to serve your site, or else the built-in
 CodeIgniter equivalent, <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">serve</span></code> from your project root.</p>
@@ -377,8 +378,8 @@ After that, reload the page. You will see the error and the back trace.</p>
 <section id="codeigniter-error-logs">
 <h2><a class="toc-backref" href="#id7">CodeIgniter Error Logs</a><a class="headerlink" href="#codeigniter-error-logs" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter logs error messages, according to the settings in <strong>app/Config/Logger.php</strong>.</p>
-<p>You can adjust the error threshold to see more or fewer messages.</p>
-<p>The default configuration has daily log files stored in <cite>writable/logs</cite>.
+<p>You can adjust the error threshold to see more or fewer messages. See <a class="reference internal" href="../general/logging.html#logging-configuration"><span class="std std-ref">Logging</span></a> for details.</p>
+<p>The default configuration has daily log files stored in <strong>writable/logs</strong>.
 It would be a good idea to check them if things aren’t working the way you expect!</p>
 </section>
 </section>
@@ -395,7 +396,7 @@ It would be a good idea to check them if things aren’t working the way you exp
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 25, 2022.
+      <span class="lastupdated">Last updated on Nov 26, 2022.
       </span></p>
   </div>
 

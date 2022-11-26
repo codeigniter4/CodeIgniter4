@@ -277,16 +277,19 @@
 <h1>Logging Information<a class="headerlink" href="#logging-information" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#configuration" id="id1">Configuration</a></p>
+<li><p><a class="reference internal" href="#log-levels" id="id1">Log Levels</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id2">Configuration</a></p>
 <ul>
-<li><p><a class="reference internal" href="#using-multiple-log-handlers" id="id2">Using Multiple Log Handlers</a></p></li>
+<li><p><a class="reference internal" href="#using-multiple-log-handlers" id="id3">Using Multiple Log Handlers</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#modifying-the-message-with-context" id="id3">Modifying the Message With Context</a></p></li>
-<li><p><a class="reference internal" href="#using-third-party-loggers" id="id4">Using Third-Party Loggers</a></p></li>
+<li><p><a class="reference internal" href="#modifying-the-message-with-context" id="id4">Modifying the Message With Context</a></p></li>
+<li><p><a class="reference internal" href="#using-third-party-loggers" id="id5">Using Third-Party Loggers</a></p></li>
 </ul>
 </div>
-<p>You can log information to the local log files by using the <code class="docutils literal notranslate"><span class="pre">log_message()</span></code> method. You must supply
+<section id="log-levels">
+<h2><a class="toc-backref" href="#id1">Log Levels</a><a class="headerlink" href="#log-levels" title="Permalink to this headline"></a></h2>
+<p>You can log information to the local log files by using the <a class="reference internal" href="common_functions.html#log_message" title="log_message"><code class="xref php php-func docutils literal notranslate"><span class="pre">log_message()</span></code></a> method. You must supply
 the “level” of the error in the first parameter, indicating what type of message it is (debug, error, etc).
 The second parameter is the message itself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -338,8 +341,9 @@ poor use of an API, or other undesirable things that are not necessarily wrong.<
 <p>The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
 the information. For many of the more critical event levels, the logging happens automatically by the
 Error Handler, described above.</p>
+</section>
 <section id="configuration">
-<h2><a class="toc-backref" href="#id1">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<span id="logging-configuration"></span><h2><a class="toc-backref" href="#id2">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
 <p>You can modify which levels are actually logged, as well as assign different Loggers to handle different levels, within
 the <strong>app/Config/Logger.php</strong> configuration file.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">threshold</span></code> value of the config file determines which levels are logged across your application. If any levels
@@ -381,7 +385,7 @@ to the threshold value:</p>
 </pre></div>
 </div>
 <section id="using-multiple-log-handlers">
-<h3><a class="toc-backref" href="#id2">Using Multiple Log Handlers</a><a class="headerlink" href="#using-multiple-log-handlers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id3">Using Multiple Log Handlers</a><a class="headerlink" href="#using-multiple-log-handlers" title="Permalink to this headline"></a></h3>
 <p>The logging system can support multiple methods of handling logging running at the same time. Each handler can
 be set to handle specific levels and ignore the rest. Currently, three handlers come with a default install:</p>
 <ul class="simple">
@@ -420,7 +424,7 @@ Each handler’s section will have one property in common: <code class="docutils
 </section>
 </section>
 <section id="modifying-the-message-with-context">
-<h2><a class="toc-backref" href="#id3">Modifying the Message With Context</a><a class="headerlink" href="#modifying-the-message-with-context" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Modifying the Message With Context</a><a class="headerlink" href="#modifying-the-message-with-context" title="Permalink to this headline"></a></h2>
 <p>You will often want to modify the details of your message based on the context of the event being logged.
 You might need to log a user id, an IP address, the current POST variables, etc. You can do this by use
 placeholders in your message. Each placeholder must be wrapped in curly braces. In the third parameter,
@@ -486,7 +490,7 @@ file name and line number. You must still provide the exception placeholder in t
 </table>
 </section>
 <section id="using-third-party-loggers">
-<h2><a class="toc-backref" href="#id4">Using Third-Party Loggers</a><a class="headerlink" href="#using-third-party-loggers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Using Third-Party Loggers</a><a class="headerlink" href="#using-third-party-loggers" title="Permalink to this headline"></a></h2>
 <p>You can use any other logger that you might like as long as it extends from either
 <code class="docutils literal notranslate"><span class="pre">Psr\Log\LoggerInterface</span></code> and is <a class="reference external" href="https://www.php-fig.org/psr/psr-3/">PSR-3</a> compatible. This means
 that you can easily drop in use for any PSR-3 compatible logger, or create your own.</p>
@@ -494,7 +498,7 @@ that you can easily drop in use for any PSR-3 compatible logger, or create your 
 the <strong>app/Config/Autoload.php</strong> configuration file, or through another autoloader,
 like Composer. Next, you should modify <strong>app/Config/Services.php</strong> to point the <code class="docutils literal notranslate"><span class="pre">logger</span></code>
 alias to your new class name.</p>
-<p>Now, any call that is done through the <code class="docutils literal notranslate"><span class="pre">log_message()</span></code> function will use your library instead.</p>
+<p>Now, any call that is done through the <a class="reference internal" href="common_functions.html#log_message" title="log_message"><code class="xref php php-func docutils literal notranslate"><span class="pre">log_message()</span></code></a> function will use your library instead.</p>
 </section>
 </section>
 
@@ -510,7 +514,7 @@ alias to your new class name.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 25, 2022.
+      <span class="lastupdated">Last updated on Nov 26, 2022.
       </span></p>
   </div>
 
