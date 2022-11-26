@@ -88,7 +88,7 @@ CodeIgniter Error Logs
 
 CodeIgniter logs error messages, according to the settings in **app/Config/Logger.php**.
 
-You can adjust the error threshold to see more or fewer messages.
+You can adjust the error threshold to see more or fewer messages. See :ref:`Logging <logging-configuration>` for details.
 
 The default configuration has daily log files stored in `writable/logs`.
 It would be a good idea to check them if things aren't working the way you expect!
