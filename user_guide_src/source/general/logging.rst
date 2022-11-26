@@ -6,7 +6,10 @@ Logging Information
     :local:
     :depth: 2
 
-You can log information to the local log files by using the ``log_message()`` method. You must supply
+Log Levels
+==========
+
+You can log information to the local log files by using the :php:func:`log_message()` method. You must supply
 the "level" of the error in the first parameter, indicating what type of message it is (debug, error, etc).
 The second parameter is the message itself:
 
@@ -31,6 +34,8 @@ emergency   The system is unusable.
 The logging system does not provide ways to alert sysadmins or webmasters about these events, they solely log
 the information. For many of the more critical event levels, the logging happens automatically by the
 Error Handler, described above.
+
+.. _logging-configuration:
 
 Configuration
 =============
@@ -125,4 +130,4 @@ the **app/Config/Autoload.php** configuration file, or through another autoloade
 like Composer. Next, you should modify **app/Config/Services.php** to point the ``logger``
 alias to your new class name.
 
-Now, any call that is done through the ``log_message()`` function will use your library instead.
+Now, any call that is done through the :php:func:`log_message()` function will use your library instead.
