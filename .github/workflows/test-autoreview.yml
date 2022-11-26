@@ -20,33 +20,9 @@ concurrency:
 
 jobs:
   auto-review-tests:
-    name: Automatic Code Review
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-          coverage: none
-
-      - name: Get composer cache directory
-        run: echo "COMPOSER_CACHE_FILES_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.COMPOSER_CACHE_FILES_DIR }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer update --ansi
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-
-      - name: Run AutoReview Tests
-        run: vendor/bin/phpunit --color=always --group=AutoReview --no-coverage
+    uses: ./.github/workflows/reusable-serviceless-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
+    with:
+      job-name: Automatic Code Review [PHP 8.1]
+      php-version: '8.1'
+      job-id: auto-review-tests
+      group-name: AutoReview
