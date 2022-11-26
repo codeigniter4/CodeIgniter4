@@ -130,4 +130,4 @@ the **app/Config/Autoload.php** configuration file, or through another autoloade
 like Composer. Next, you should modify **app/Config/Services.php** to point the ``logger``
 alias to your new class name.
 
-Now, any call that is done through the ``log_message()`` function will use your library instead.
+Now, any call that is done through the :php:func:`log_message()` function will use your library instead.
