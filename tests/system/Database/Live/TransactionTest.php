@@ -58,6 +58,7 @@ final class TransactionTest extends CIUnitTestCase
     public function testTransStartDBDebugTrue()
     {
         $builder = $this->db->table('job');
+        $e       = null;
 
         try {
             $this->db->transStart();
@@ -81,6 +82,7 @@ final class TransactionTest extends CIUnitTestCase
             // Do nothing.
         }
 
+        $this->assertInstanceOf(DatabaseException::class, $e);
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
