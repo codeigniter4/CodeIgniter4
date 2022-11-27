@@ -61,7 +61,7 @@ Strict Mode can be disabled as follows:
 Managing Errors
 ===============
 
-If you have error reporting enabled in your Config/Database.php file
+If you have error reporting enabled in your **app/Config/Database.php** file
 you'll see a standard error message if the commit was unsuccessful. If
 debugging is turned off, you can manage your own errors like this:
 
