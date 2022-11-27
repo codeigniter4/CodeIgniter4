@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Database\Live;
 
-use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use Exception;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -78,11 +78,28 @@ final class TransactionTest extends CIUnitTestCase
             $builder->insert($jobData);
 
             $this->db->transComplete();
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             // Do nothing.
+
+            // MySQLi
+            // mysqli_sql_exception: Duplicate entry '1' for key 'PRIMARY'
+
+            // SQLite3
+            // ErrorException: SQLite3::exec(): UNIQUE constraint failed: db_job.id
+
+            // Postgres
+            // ErrorException: pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint "pk_db_job"
+            //   DETAIL:  Key (id)=(1) already exists.
+
+            // SQLSRV
+            // Exception: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Cannot insert explicit
+            //   value for identity column in table 'db_job' when IDENTITY_INSERT is set to OFF.
+
+            // OCI8
+            // ErrorException: oci_execute(): ORA-00001: unique constraint (ORACLE.pk_db_job) violated
         }
 
-        $this->assertInstanceOf(DatabaseException::class, $e);
+        $this->assertInstanceOf(Exception::class, $e);
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
