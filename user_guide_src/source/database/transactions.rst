@@ -36,13 +36,13 @@ Running Transactions
 ====================
 
 To run your queries using transactions you will use the
-``$this->db->transStart()`` and ``$this->db->transComplete()`` functions as
+``$this->db->transStart()`` and ``$this->db->transComplete()`` methods as
 follows:
 
 .. literalinclude:: transactions/001.php
 
-You can run as many queries as you want between the start/complete
-functions and they will all be committed or rolled back based on the success
+You can run as many queries as you want between the ``transStart()``/``transComplete()``
+methods and they will all be committed or rolled back based on the success
 or failure of any given query.
 
 Strict Mode
@@ -84,7 +84,7 @@ Test Mode
 You can optionally put the transaction system into "test mode", which
 will cause your queries to be rolled back -- even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-``$this->db->transStart()`` function to true:
+``$this->db->transStart()`` method to true:
 
 .. literalinclude:: transactions/005.php
 
