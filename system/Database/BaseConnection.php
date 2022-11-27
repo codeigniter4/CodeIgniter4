@@ -29,7 +29,7 @@ use Throwable;
  * @property string     $DBDriver
  * @property string     $DBPrefix
  * @property string     $DSN
- * @property mixed      $encrypt
+ * @property array|bool $encrypt
  * @property array      $failover
  * @property string     $hostname
  * @property Query      $lastQuery
@@ -321,6 +321,11 @@ abstract class BaseConnection implements ConnectionInterface
     protected $transFailure = false;
 
     /**
+     * Whether to throw exceptions during transaction
+     */
+    protected bool $transException = false;
+
+    /**
      * Array of table aliases.
      *
      * @var array
@@ -610,7 +615,15 @@ abstract class BaseConnection implements ConnectionInterface
                 $this->transStatus = false;
             }
 
-            if ($this->DBDebug) {
+            if (
+                $this->DBDebug
+                && (
+                    // Not in transactions
+                    $this->transDepth === 0
+                    // In transactions, do not throw exception by default.
+                    || $this->transException
+                )
+            ) {
                 // We call this function in order to roll-back queries
                 // if transactions are enabled. If we don't call this here
                 // the error message will trigger an exit, causing the
@@ -719,6 +732,18 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         return $this->transBegin($testMode);
+    }
+
+    /**
+     * If set to true, exceptions are thrown during transactions.
+     *
+     * @return $this
+     */
+    public function transException(bool $transExcetion)
+    {
+        $this->transException = $transExcetion;
+
+        return $this;
     }
 
     /**

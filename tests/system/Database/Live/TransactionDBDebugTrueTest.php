@@ -21,8 +21,10 @@ use Tests\Support\Database\Seeds\CITestSeeder;
  * @group DatabaseLive
  *
  * @internal
+ *
+ * @no-final
  */
-final class TransactionTest extends CIUnitTestCase
+class TransactionDBDebugTrueTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
@@ -55,13 +57,38 @@ final class TransactionTest extends CIUnitTestCase
         $this->setPrivateProperty($this->db, 'DBDebug', true);
     }
 
-    public function testTransStartDBDebugTrue()
+    public function testTransStart()
+    {
+        $builder = $this->db->table('job');
+
+        $this->db->transStart();
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Discount!',
+        ];
+        $builder->insert($jobData);
+
+        // Duplicate entry '1' for key 'PRIMARY'
+        $jobData = [
+            'id'          => 1,
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->db->transComplete();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
+    }
+
+    public function testTransStartTransException()
     {
         $builder = $this->db->table('job');
         $e       = null;
 
         try {
-            $this->db->transStart();
+            $this->db->transException(true)->transStart();
 
             $jobData = [
                 'name'        => 'Grocery Sales',
@@ -86,43 +113,8 @@ final class TransactionTest extends CIUnitTestCase
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
-    public function testTransStartDBDebugFalse()
+    public function testTransStrictTrue()
     {
-        $this->disableDBDebug();
-
-        $builder = $this->db->table('job');
-
-        $this->db->transStart();
-
-        $jobData = [
-            'name'        => 'Grocery Sales',
-            'description' => 'Discount!',
-        ];
-        $builder->insert($jobData);
-
-        $this->assertTrue($this->db->transStatus());
-
-        // Duplicate entry '1' for key 'PRIMARY'
-        $jobData = [
-            'id'          => 1,
-            'name'        => 'Comedian',
-            'description' => 'Theres something in your teeth',
-        ];
-        $builder->insert($jobData);
-
-        $this->assertFalse($this->db->transStatus());
-
-        $this->db->transComplete();
-
-        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
-
-        $this->enableDBDebug();
-    }
-
-    public function testTransStrictTrueAndDBDebugFalse()
-    {
-        $this->disableDBDebug();
-
         $builder = $this->db->table('job');
 
         // The first transaction group
@@ -164,14 +156,10 @@ final class TransactionTest extends CIUnitTestCase
         $this->db->transComplete();
 
         $this->dontSeeInDatabase('job', ['name' => 'Comedian']);
-
-        $this->enableDBDebug();
     }
 
-    public function testTransStrictFalseAndDBDebugFalse()
+    public function testTransStrictFalse()
     {
-        $this->disableDBDebug();
-
         $builder = $this->db->table('job');
 
         $this->db->transStrict(false);
@@ -215,7 +203,5 @@ final class TransactionTest extends CIUnitTestCase
         $this->db->transComplete();
 
         $this->seeInDatabase('job', ['name' => 'Comedian']);
-
-        $this->enableDBDebug();
     }
 }
