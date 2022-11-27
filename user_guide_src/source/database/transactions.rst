@@ -66,7 +66,7 @@ Strict Mode can be disabled as follows:
 
 .. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
     When ``DBDebug`` is true, if a query error occurs, all the queries
-    will be rolled backed, and an exception will be thrown.
+    will be rolled backed, and a ``DatabaseException`` will be thrown.
     In previous versions, ``DBDebug`` was false only in production environment,
     and different database drivers might throw different exception classes.
 
@@ -85,7 +85,7 @@ If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
     When ``DBDebug`` is true, if a query error occurs, all the queries
-    will be rolled backed, and an exception will be thrown.
+    will be rolled backed, and a ``DatabaseException`` will be thrown.
     In previous versions, ``DBDebug`` was false only in production environment,
     and different database drivers might throw different exception classes.
 
