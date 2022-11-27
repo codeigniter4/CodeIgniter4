@@ -32,6 +32,12 @@ contrast, we've implemented a smart transaction system that does all
 this for you automatically (you can also manage your transactions
 manually if you choose to, but there's really no benefit).
 
+.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
+    When ``DBDebug`` is true, if a query error occurs, all the queries
+    will be rolled backed, and a ``DatabaseException`` will be thrown.
+    In previous versions, ``DBDebug`` was false only in production environment,
+    and different database drivers might throw different exception classes.
+
 Running Transactions
 ====================
 
@@ -39,17 +45,13 @@ To run your queries using transactions you will use the
 ``$this->db->transStart()`` and ``$this->db->transComplete()`` methods as
 follows:
 
+.. literalinclude:: transactions/008.php
+
 .. literalinclude:: transactions/001.php
 
 You can run as many queries as you want between the ``transStart()``/``transComplete()``
 methods and they will all be committed or rolled back based on the success
 or failure of any given query.
-
-.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if a query error occurs, all the queries
-    will be rolled backed, and an exception will be thrown.
-    In previous versions, ``DBDebug`` was false only in production environment,
-    and different database drivers might throw different exception classes.
 
 Strict Mode
 ===========
