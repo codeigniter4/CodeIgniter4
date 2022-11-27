@@ -50,7 +50,7 @@ Strict Mode
 
 By default, CodeIgniter runs all transactions in Strict Mode. When strict
 mode is enabled, if you are running multiple groups of transactions, if
-one group fails all groups will be rolled back. If strict mode is
+one group fails all subsequent groups will be rolled back. If strict mode is
 disabled, each group is treated independently, meaning a failure of one
 group will not affect any others.
 
