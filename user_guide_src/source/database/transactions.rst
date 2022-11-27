@@ -32,11 +32,9 @@ contrast, we've implemented a smart transaction system that does all
 this for you automatically (you can also manage your transactions
 manually if you choose to, but there's really no benefit).
 
-.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if a query error occurs, all the queries
-    will be rolled backed, and a ``DatabaseException`` will be thrown.
-    In previous versions, ``DBDebug`` was false only in production environment,
-    and different database drivers might throw different exception classes.
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
 
 Running Transactions
 ====================
@@ -44,8 +42,6 @@ Running Transactions
 To run your queries using transactions you will use the
 ``$this->db->transStart()`` and ``$this->db->transComplete()`` methods as
 follows:
-
-.. literalinclude:: transactions/008.php
 
 .. literalinclude:: transactions/001.php
 
@@ -66,12 +62,6 @@ Strict Mode can be disabled as follows:
 
 .. literalinclude:: transactions/002.php
 
-.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if a query error occurs, all the queries
-    will be rolled backed, and a ``DatabaseException`` will be thrown.
-    In previous versions, ``DBDebug`` was false only in production environment,
-    and different database drivers might throw different exception classes.
-
 .. _transactions-managing-errors:
 
 Managing Errors
@@ -84,12 +74,6 @@ will be thrown. So you'll see a standard error page.
 If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
-
-.. note:: Since v4.3.0, ``DBDebug`` is true by default in all environments.
-    When ``DBDebug`` is true, if a query error occurs, all the queries
-    will be rolled backed, and a ``DatabaseException`` will be thrown.
-    In previous versions, ``DBDebug`` was false only in production environment,
-    and different database drivers might throw different exception classes.
 
 Disabling Transactions
 ======================

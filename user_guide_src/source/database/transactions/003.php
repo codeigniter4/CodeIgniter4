@@ -1,7 +1,5 @@
 <?php
 
-// DBDebug in the Database Config must be false.
-
 $this->db->transStart();
 $this->db->query('AN SQL QUERY...');
 $this->db->query('ANOTHER QUERY...');
