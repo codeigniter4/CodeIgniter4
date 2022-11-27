@@ -79,6 +79,7 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
 
         $this->db->transComplete();
 
+        $this->assertFalse($this->db->transStatus());
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 
@@ -203,5 +204,32 @@ class TransactionDBDebugTrueTest extends CIUnitTestCase
         $this->db->transComplete();
 
         $this->seeInDatabase('job', ['name' => 'Comedian']);
+    }
+
+    public function testTransBegin()
+    {
+        $builder = $this->db->table('job');
+
+        $this->db->transBegin();
+
+        $jobData = [
+            'name'        => 'Grocery Sales',
+            'description' => 'Discount!',
+        ];
+        $builder->insert($jobData);
+
+        // Duplicate entry '1' for key 'PRIMARY'
+        $jobData = [
+            'id'          => 1,
+            'name'        => 'Comedian',
+            'description' => 'Theres something in your teeth',
+        ];
+        $builder->insert($jobData);
+
+        $this->assertFalse($this->db->transStatus());
+
+        $this->db->transRollback();
+
+        $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 }
