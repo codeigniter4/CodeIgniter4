@@ -101,7 +101,7 @@ class Header
      * Appends a value to the list of values for this header. If the
      * header is a single value string, it will be converted to an array.
      *
-     * @param array<array<string>|string>|string|null $value
+     * @param array<string, string>|string|null $value
      *
      * @return $this
      */
@@ -126,7 +126,7 @@ class Header
      * Prepends a value to the list of values for this header. If the
      * header is a single value string, it will be converted to an array.
      *
-     * @param array<array<string>|string>|string|null $value
+     * @param array<string, string>|string|null $value
      *
      * @return $this
      */
