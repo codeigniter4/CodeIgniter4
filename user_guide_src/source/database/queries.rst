@@ -191,7 +191,7 @@ that query multiple times with new sets of data. This eliminates the possibility
 passed to the database in a different format than the query itself. When you need to run the same query multiple times
 it can be quite a bit faster, too. However, to use it for every query can have major performance hits, since you're calling
 out to the database twice as often. Since the Query Builder and Database connections already handle escaping the data
-for you, the safety aspect is already taken care of for you. There will be times, though, when you need to ability
+for you, the safety aspect is already taken care of for you. There will be times, though, when you need the ability
 to optimize the query by running a prepared statement, or prepared query.
 
 Preparing the Query
