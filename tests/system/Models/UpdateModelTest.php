@@ -409,7 +409,7 @@ final class UpdateModelTest extends LiveModelTestCase
             [
                 false,
                 InvalidArgumentException::class,
-                '$id should not be boolean.',
+                'update(): argument #1 ($id) should not be boolean.',
             ],
         ];
     }
