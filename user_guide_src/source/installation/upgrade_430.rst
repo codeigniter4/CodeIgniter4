@@ -51,6 +51,9 @@ Database Exception Changes
 - The exception classes may be changed when database errors occur. If you catch the exceptions,
   you must confirm that your code can catch the exceptions.
 - Now a few exceptions will be thrown even if ``CI_DEBUG`` is false.
+- During transactions, exceptions are not thrown by default even if ``DBDebug`` is true. If you want
+  exceptions to be thrown, you need to call ``transException(true)``.
+  See :ref:`transactions-throwing-exceptions`.
 - See :ref:`exceptions-when-database-errors-occur` for details.
 
 HTTP Status Code and Exit Code of Uncaught Exceptions

@@ -75,6 +75,25 @@ If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
 
+.. _transactions-throwing-exceptions:
+
+Throwing Exceptions
+===================
+
+.. versionadded:: 4.3.0
+
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
+
+If you want an exception to be thrown when a query error occurs, you can use
+``$this->db->transException(true)``:
+
+.. literalinclude:: transactions/008.php
+
+If a query error occurs, all the queries will be rolled backed, and a
+``DatabaseException`` will be thrown.
+
 Disabling Transactions
 ======================
 
