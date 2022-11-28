@@ -93,7 +93,8 @@ a valid result. To use test mode simply set the first parameter in the
 Running Transactions Manually
 =============================
 
-If you would like to run transactions manually you can do so as follows:
+When you have ``DBDebug`` false in your **app/Config/Database.php** file, and
+if you would like to run transactions manually you can do so as follows:
 
 .. literalinclude:: transactions/006.php
 
