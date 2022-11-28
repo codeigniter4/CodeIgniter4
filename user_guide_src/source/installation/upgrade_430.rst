@@ -262,6 +262,8 @@ Config
 - app/Config/Security.php
     - Changed the value of the property ``$redirect`` to ``false`` to prevent redirection when a CSRF
       check fails. This is to make it easier to recognize that it is a CSRF error.
+- app/Config/Validation.php
+    - The default Validation Rules have been changed to Strict Rules for better security. See :ref:`validation-traditional-and-strict-rules`.
 
 All Changes
 ===========

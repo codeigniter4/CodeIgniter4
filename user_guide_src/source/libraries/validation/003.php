@@ -5,10 +5,10 @@ namespace Config;
 class Validation
 {
     public $ruleSets = [
-        \CodeIgniter\Validation\StrictRules\CreditCardRules::class,
-        \CodeIgniter\Validation\StrictRules\FileRules::class,
-        \CodeIgniter\Validation\StrictRules\FormatRules::class,
-        \CodeIgniter\Validation\StrictRules\Rules::class,
+        \CodeIgniter\Validation\CreditCardRules::class,
+        \CodeIgniter\Validation\FileRules::class,
+        \CodeIgniter\Validation\FormatRules::class,
+        \CodeIgniter\Validation\Rules::class,
     ];
 
     // ...

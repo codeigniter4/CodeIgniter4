@@ -201,9 +201,16 @@ Config for Validation
 Traditional and Strict Rules
 ============================
 
-CI4 has two kinds of Validation rule classes.
-The default rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
+CodeIgniter 4 has two kinds of Validation rule classes.
+The traditional rule classes (**Traditional Rules**) have the namespace ``CodeIgniter\Validation``,
 and the new classes (**Strict Rules**) have ``CodeIgniter\Validation\StrictRules``, which provide strict validation.
+
+.. note:: Since v4.3.0, **Strict Rules** are used by default for better security.
+
+Traditional Rules
+-----------------
+
+.. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
 
 The **Traditional Rules** implicitly assume that string values are validated,
 and the input value may be converted implicitly to a string value.
@@ -213,14 +220,17 @@ However, for example, if you use JSON input data, it may be a type of bool/null/
 When you validate the boolean ``true``, it is converted to string ``'1'`` with the Traditional rule classes.
 If you validate it with the ``integer`` rule, ``'1'`` passes the validation.
 
+Strict Rules
+------------
+
+.. versionadded:: 4.2.0
+
 The **Strict Rules** don't use implicit type conversion.
 
-.. warning:: When validating data that contains non-string values, such as JSON data, it is recommended to use **Strict Rules**.
+Using Traditional Rules
+-----------------------
 
-Using Strict Rules
-------------------
-
-If you want to use these rules, you need to change the rule classes in **app/Config/Validation.php**:
+If you want to use traditional rules, you need to change the rule classes in **app/Config/Validation.php**:
 
 .. literalinclude:: validation/003.php
 
