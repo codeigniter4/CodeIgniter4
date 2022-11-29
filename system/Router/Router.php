@@ -23,13 +23,6 @@ use CodeIgniter\Router\Exceptions\RouterException;
 class Router implements RouterInterface
 {
     /**
-     * A RouteCollection instance.
-     *
-     * @var RouteCollectionInterface
-     */
-    protected $collection;
-
-    /**
      * Sub-directory that contains the requested controller class.
      * Primarily used by 'autoRoute'.
      *
@@ -117,11 +110,13 @@ class Router implements RouterInterface
 
     /**
      * Stores a reference to the RouteCollection object.
+     *
+     * @param RouteCollectionInterface $collection A RouteCollection instance.
      */
-    public function __construct(RouteCollectionInterface $routes, ?Request $request = null)
-    {
-        $this->collection = $routes;
-
+    public function __construct(
+        protected RouteCollectionInterface $collection,
+        ?Request $request = null
+    ) {
         // These are only for auto-routing
         $this->controller = $this->collection->getDefaultController();
         $this->method     = $this->collection->getDefaultMethod();

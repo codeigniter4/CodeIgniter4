@@ -64,13 +64,6 @@ class CodeIgniter
     protected $totalTime;
 
     /**
-     * Main application configuration
-     *
-     * @var App
-     */
-    protected $config;
-
-    /**
      * Timer instance.
      *
      * @var Timer
@@ -165,12 +158,12 @@ class CodeIgniter
     protected bool $returnResponse = false;
 
     /**
-     * Constructor.
+     * @param App $config Main application configuration
      */
-    public function __construct(App $config)
-    {
+    public function __construct(
+        protected App $config
+    ) {
         $this->startTime = microtime(true);
-        $this->config    = $config;
     }
 
     /**

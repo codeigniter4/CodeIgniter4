@@ -22,13 +22,6 @@ use InvalidArgumentException;
 class CURLRequest extends OutgoingRequest
 {
     /**
-     * The response object associated with this request
-     *
-     * @var ResponseInterface|null
-     */
-    protected $response;
-
-    /**
      * The URI associated with this request
      *
      * @var URI
@@ -78,11 +71,6 @@ class CURLRequest extends OutgoingRequest
     protected $delay = 0.0;
 
     /**
-     * The default options from the constructor. Applied to all requests.
-     */
-    private array $defaultOptions;
-
-    /**
      * Whether share options between requests or not.
      *
      * If true, all the options won't be reset between requests.
@@ -96,25 +84,29 @@ class CURLRequest extends OutgoingRequest
      *  - baseURI
      *  - timeout
      *  - any other request options to use as defaults.
+     *
+     * @param ResponseInterface|null $response       The response object associated with this request
+     * @param array                  $defaultOptions The default options from the constructor. Applied to all requests.
      */
-    public function __construct(App $config, URI $uri, ?ResponseInterface $response = null, array $options = [])
-    {
+    public function __construct(
+        App $config,
+        URI $uri,
+        protected ?ResponseInterface $response = null,
+        private array $defaultOptions = []
+    ) {
         if (! function_exists('curl_version')) {
             throw HTTPException::forMissingCurl(); // @codeCoverageIgnore
         }
 
         parent::__construct('GET', $uri);
-
-        $this->response       = $response;
-        $this->baseURI        = $uri->useRawQueryString();
-        $this->defaultOptions = $options;
+        $this->baseURI = $uri->useRawQueryString();
 
         /** @var ConfigCURLRequest|null $configCURLRequest */
         $configCURLRequest  = config('CURLRequest');
         $this->shareOptions = $configCURLRequest->shareOptions ?? true;
 
         $this->config = $this->defaultConfig;
-        $this->parseOptions($options);
+        $this->parseOptions($defaultOptions);
     }
 
     /**

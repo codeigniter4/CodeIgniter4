@@ -23,21 +23,13 @@ use Config\Honeypot as HoneypotConfig;
 class Honeypot
 {
     /**
-     * Our configuration.
-     *
-     * @var HoneypotConfig
-     */
-    protected $config;
-
-    /**
-     * Constructor.
+     * @param HoneypotConfig $config Our configuration.
      *
      * @throws HoneypotException
      */
-    public function __construct(HoneypotConfig $config)
-    {
-        $this->config = $config;
-
+    public function __construct(
+        protected HoneypotConfig $config
+    ) {
         if (! $this->config->hidden) {
             throw HoneypotException::forNoHiddenValue();
         }

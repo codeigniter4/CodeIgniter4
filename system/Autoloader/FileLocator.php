@@ -18,15 +18,11 @@ namespace CodeIgniter\Autoloader;
 class FileLocator
 {
     /**
-     * The Autoloader to use.
-     *
-     * @var Autoloader
+     * @param Autoloader $autoloader The Autoloader to use.
      */
-    protected $autoloader;
-
-    public function __construct(Autoloader $autoloader)
-    {
-        $this->autoloader = $autoloader;
+    public function __construct(
+        protected Autoloader $autoloader
+    ) {
     }
 
     /**

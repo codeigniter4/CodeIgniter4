@@ -119,15 +119,6 @@ class IncomingRequest extends Request
     protected $validLocales = [];
 
     /**
-     * Configuration settings.
-     *
-     * @var App
-     *
-     * @deprecated Will be protected.
-     */
-    public $config;
-
-    /**
      * Holds the old data from a redirect.
      *
      * @var array
@@ -142,13 +133,15 @@ class IncomingRequest extends Request
     protected $userAgent;
 
     /**
-     * Constructor
-     *
      * @param App         $config
      * @param string|null $body
      */
-    public function __construct($config, ?URI $uri = null, $body = 'php://input', ?UserAgent $userAgent = null)
-    {
+    public function __construct(
+        public $config,
+        ?URI $uri = null,
+        $body = 'php://input',
+        ?UserAgent $userAgent = null
+    ) {
         if (empty($uri) || empty($userAgent)) {
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
         }
@@ -157,8 +150,6 @@ class IncomingRequest extends Request
         if ($body === 'php://input') {
             $body = file_get_contents('php://input');
         }
-
-        $this->config       = $config;
         $this->uri          = $uri;
         $this->body         = ! empty($body) ? $body : null;
         $this->userAgent    = $userAgent;

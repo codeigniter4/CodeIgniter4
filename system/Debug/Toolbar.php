@@ -34,23 +34,18 @@ use Kint\Kint;
 class Toolbar
 {
     /**
-     * Toolbar configuration settings.
-     *
-     * @var ToolbarConfig
-     */
-    protected $config;
-
-    /**
      * Collectors to be used and displayed.
      *
      * @var BaseCollector[]
      */
     protected $collectors = [];
 
-    public function __construct(ToolbarConfig $config)
-    {
-        $this->config = $config;
-
+    /**
+     * @param ToolbarConfig $config Toolbar configuration settings.
+     */
+    public function __construct(
+        protected ToolbarConfig $config
+    ) {
         foreach ($config->collectors as $collector) {
             if (! class_exists($collector)) {
                 log_message(

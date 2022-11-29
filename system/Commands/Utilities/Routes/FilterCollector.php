@@ -22,15 +22,12 @@ use CodeIgniter\Router\Router;
 final class FilterCollector
 {
     /**
-     * Whether to reset Defined Routes.
-     *
-     * If set to true, route filters are not found.
+     * @param bool $resetRoutes Whether to reset Defined Routes.
+     *                          If set to true, route filters are not found.
      */
-    private bool $resetRoutes;
-
-    public function __construct(bool $resetRoutes = false)
-    {
-        $this->resetRoutes = $resetRoutes;
+    public function __construct(
+        private bool $resetRoutes = false
+    ) {
     }
 
     /**

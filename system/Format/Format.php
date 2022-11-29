@@ -20,18 +20,11 @@ use Config\Format as FormatConfig;
 class Format
 {
     /**
-     * Configuration instance
-     *
-     * @var FormatConfig
+     * @param FormatConfig $config Configuration instance
      */
-    protected $config;
-
-    /**
-     * Constructor.
-     */
-    public function __construct(FormatConfig $config)
-    {
-        $this->config = $config;
+    public function __construct(
+        protected FormatConfig $config
+    ) {
     }
 
     /**

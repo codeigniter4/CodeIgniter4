@@ -86,16 +86,11 @@ class Query implements QueryInterface, Stringable
     protected $errorString;
 
     /**
-     * Pointer to database connection.
-     * Mainly for escaping features.
-     *
-     * @var ConnectionInterface
+     * @param ConnectionInterface $db Pointer to database connection. Mainly for escaping features.
      */
-    public $db;
-
-    public function __construct(ConnectionInterface $db)
-    {
-        $this->db = $db;
+    public function __construct(
+        public ConnectionInterface $db
+    ) {
     }
 
     /**

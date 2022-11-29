@@ -42,20 +42,6 @@ class Pager implements PagerInterface
     protected $segment = [];
 
     /**
-     * Our configuration instance.
-     *
-     * @var PagerConfig
-     */
-    protected $config;
-
-    /**
-     * The view engine to render the links with.
-     *
-     * @var RendererInterface
-     */
-    protected $view;
-
-    /**
      * List of only permitted queries
      *
      * @var array
@@ -63,12 +49,13 @@ class Pager implements PagerInterface
     protected $only = [];
 
     /**
-     * Constructor.
+     * @param PagerConfig       $config Our configuration instance.
+     * @param RendererInterface $view   The view engine to render the links with.
      */
-    public function __construct(PagerConfig $config, RendererInterface $view)
-    {
-        $this->config = $config;
-        $this->view   = $view;
+    public function __construct(
+        protected PagerConfig $config,
+        protected RendererInterface $view
+    ) {
     }
 
     /**

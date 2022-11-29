@@ -47,18 +47,11 @@ use ReflectionMethod;
 class Cell
 {
     /**
-     * Instance of the current Cache Instance
-     *
-     * @var CacheInterface
+     * @param CacheInterface $cache Instance of the current Cache Instance
      */
-    protected $cache;
-
-    /**
-     * Cell constructor.
-     */
-    public function __construct(CacheInterface $cache)
-    {
-        $this->cache = $cache;
+    public function __construct(
+        protected CacheInterface $cache
+    ) {
     }
 
     /**

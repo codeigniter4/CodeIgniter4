@@ -28,13 +28,6 @@ use RuntimeException;
 class UploadedFile extends File implements UploadedFileInterface
 {
     /**
-     * The path to the temporary file.
-     *
-     * @var string
-     */
-    protected $path;
-
-    /**
      * The original filename as provided by the client.
      *
      * @var string
@@ -42,26 +35,11 @@ class UploadedFile extends File implements UploadedFileInterface
     protected $originalName;
 
     /**
-     * The filename given to a file during a move.
-     *
-     * @var string
-     */
-    protected $name;
-
-    /**
      * The type of file as provided by PHP
      *
      * @var string
      */
     protected $originalMimeType;
-
-    /**
-     * The error constant of the upload
-     * (one of PHP's UPLOADERRXXX constants)
-     *
-     * @var int
-     */
-    protected $error;
 
     /**
      * Whether the file has been moved already or not.
@@ -73,20 +51,22 @@ class UploadedFile extends File implements UploadedFileInterface
     /**
      * Accepts the file information as would be filled in from the $_FILES array.
      *
-     * @param string $path         The temporary location of the uploaded file.
-     * @param string $originalName The client-provided filename.
-     * @param string $mimeType     The type of file as provided by PHP
-     * @param int    $size         The size of the file, in bytes
-     * @param int    $error        The error constant of the upload (one of PHP's UPLOADERRXXX constants)
+     * @param string      $path     The temporary location of the uploaded file.
+     * @param string      $name     The client-provided filename.
+     * @param string|null $mimeType The type of file as provided by PHP
+     * @param int|null    $size     The size of the file, in bytes
+     * @param int|null    $error    The error constant of the upload (one of PHP's UPLOADERRXXX constants)
      */
-    public function __construct(string $path, string $originalName, ?string $mimeType = null, ?int $size = null, ?int $error = null)
-    {
-        $this->path             = $path;
-        $this->name             = $originalName;
-        $this->originalName     = $originalName;
-        $this->originalMimeType = $mimeType;
+    public function __construct(
+        protected string $path,
+        protected string $name,
+        ?string $mimeType = null,
+        ?int $size = null,
+        protected ?int $error = null
+    ) {
+        $this->originalName     = $name;
         $this->size             = $size;
-        $this->error            = $error;
+        $this->originalMimeType = $mimeType;
 
         parent::__construct($path, false);
     }

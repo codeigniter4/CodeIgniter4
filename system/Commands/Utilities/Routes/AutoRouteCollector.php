@@ -17,21 +17,13 @@ namespace CodeIgniter\Commands\Utilities\Routes;
 final class AutoRouteCollector
 {
     /**
-     * @var string namespace to search
-     */
-    private string $namespace;
-
-    private string $defaultController;
-    private string $defaultMethod;
-
-    /**
      * @param string $namespace namespace to search
      */
-    public function __construct(string $namespace, string $defaultController, string $defaultMethod)
-    {
-        $this->namespace         = $namespace;
-        $this->defaultController = $defaultController;
-        $this->defaultMethod     = $defaultMethod;
+    public function __construct(
+        private string $namespace,
+        private string $defaultController,
+        private string $defaultMethod
+    ) {
     }
 
     /**

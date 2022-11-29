@@ -55,29 +55,17 @@ class Exceptions
     protected $config;
 
     /**
-     * The request.
-     *
-     * @var CLIRequest|IncomingRequest
-     */
-    protected $request;
-
-    /**
-     * The outgoing response.
-     *
-     * @var ResponseInterface
-     */
-    protected $response;
-
-    /**
      * @param CLIRequest|IncomingRequest $request
+     * @param ResponseInterface          $response The outgoing response.
      */
-    public function __construct(ExceptionsConfig $config, $request, ResponseInterface $response)
-    {
+    public function __construct(
+        ExceptionsConfig $config,
+        protected $request,
+        protected ResponseInterface $response
+    ) {
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
         $this->config   = $config;
-        $this->request  = $request;
-        $this->response = $response;
 
         // workaround for upgraded users
         if (! isset($this->config->sensitiveDataInTrace)) {

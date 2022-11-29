@@ -104,21 +104,15 @@ class Logger implements LoggerInterface
     public $logCache;
 
     /**
-     * Should we cache our logged items?
-     *
-     * @var bool
-     */
-    protected $cacheLogs = false;
-
-    /**
-     * Constructor.
-     *
      * @param \Config\Logger $config
+     * @param bool           $cacheLogs Should we cache our logged items?
      *
      * @throws RuntimeException
      */
-    public function __construct($config, bool $debug = CI_DEBUG)
-    {
+    public function __construct(
+        $config,
+        protected bool $cacheLogs = CI_DEBUG
+    ) {
         $this->loggableLevels = is_array($config->threshold) ? $config->threshold : range(1, (int) $config->threshold);
 
         // Now convert loggable levels to strings.
@@ -143,8 +137,6 @@ class Logger implements LoggerInterface
         // Save the handler configuration for later.
         // Instances will be created on demand.
         $this->handlerConfig = $config->handlers;
-
-        $this->cacheLogs = $debug;
         if ($this->cacheLogs) {
             $this->logCache = [];
         }

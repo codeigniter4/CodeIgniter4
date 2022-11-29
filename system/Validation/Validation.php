@@ -78,24 +78,16 @@ class Validation implements ValidationInterface
     protected $config;
 
     /**
-     * The view renderer used to render validation messages.
-     *
-     * @var RendererInterface
+     * @param ValidationConfig  $config
+     * @param RendererInterface $view   The view renderer used to render validation messages.
      */
-    protected $view;
-
-    /**
-     * Validation constructor.
-     *
-     * @param ValidationConfig $config
-     */
-    public function __construct($config, RendererInterface $view)
-    {
+    public function __construct(
+        $config,
+        protected RendererInterface $view
+    ) {
         $this->ruleSetFiles = $config->ruleSets;
 
         $this->config = $config;
-
-        $this->view = $view;
     }
 
     /**

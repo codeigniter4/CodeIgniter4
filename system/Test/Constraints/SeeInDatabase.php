@@ -25,24 +25,12 @@ class SeeInDatabase extends Constraint
     protected $show = 3;
 
     /**
-     * @var ConnectionInterface
+     * @param array $data Data used to compare results against.
      */
-    protected $db;
-
-    /**
-     * Data used to compare results against.
-     *
-     * @var array
-     */
-    protected $data;
-
-    /**
-     * SeeInDatabase constructor.
-     */
-    public function __construct(ConnectionInterface $db, array $data)
-    {
-        $this->db   = $db;
-        $this->data = $data;
+    public function __construct(
+        protected ConnectionInterface $db,
+        protected array $data
+    ) {
     }
 
     /**

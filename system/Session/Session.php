@@ -16,6 +16,7 @@ use CodeIgniter\I18n\Time;
 use Config\App;
 use Config\Cookie as CookieConfig;
 use Config\Services;
+use Exception;
 use Psr\Log\LoggerAwareTrait;
 use SessionHandlerInterface;
 
@@ -30,13 +31,6 @@ use SessionHandlerInterface;
 class Session implements SessionInterface
 {
     use LoggerAwareTrait;
-
-    /**
-     * Instance of the driver to use.
-     *
-     * @var SessionHandlerInterface
-     */
-    protected $driver;
 
     /**
      * The storage driver to use: files, database, redis, memcached
@@ -159,11 +153,15 @@ class Session implements SessionInterface
      * Constructor.
      *
      * Extract configuration settings and save them here.
+     *
+     * @param SessionHandlerInterface $driver Instance of the driver to use.
+     *
+     * @throws Exception
      */
-    public function __construct(SessionHandlerInterface $driver, App $config)
-    {
-        $this->driver = $driver;
-
+    public function __construct(
+        protected SessionHandlerInterface $driver,
+        App $config
+    ) {
         $this->sessionDriverName        = $config->sessionDriver;
         $this->sessionCookieName        = $config->sessionCookieName ?? $this->sessionCookieName;
         $this->sessionExpiration        = $config->sessionExpiration ?? $this->sessionExpiration;

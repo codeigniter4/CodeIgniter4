@@ -201,20 +201,6 @@ class RouteCollection implements RouteCollectionInterface
     protected $didDiscover = false;
 
     /**
-     * Handle to the file locator to use.
-     *
-     * @var FileLocator
-     */
-    protected $fileLocator;
-
-    /**
-     * Handle to the modules config.
-     *
-     * @var Modules
-     */
-    protected $moduleConfig;
-
-    /**
      * Flag for sorting routes by priority.
      *
      * @var bool
@@ -239,13 +225,13 @@ class RouteCollection implements RouteCollectionInterface
     protected bool $useSupportedLocalesOnly = false;
 
     /**
-     * Constructor
+     * @param FileLocator $fileLocator  Handle to the file locator to use.
+     * @param Modules     $moduleConfig Handle to the modules config.
      */
-    public function __construct(FileLocator $locator, Modules $moduleConfig)
-    {
-        $this->fileLocator  = $locator;
-        $this->moduleConfig = $moduleConfig;
-
+    public function __construct(
+        protected FileLocator $fileLocator,
+        protected Modules $moduleConfig
+    ) {
         $this->httpHost = Services::request()->getServer('HTTP_HOST');
     }
 

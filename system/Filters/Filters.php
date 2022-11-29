@@ -24,13 +24,6 @@ use Config\Services;
 class Filters
 {
     /**
-     * The original config file
-     *
-     * @var FiltersConfig
-     */
-    protected $config;
-
-    /**
      * The active IncomingRequest or CLIRequest
      *
      * @var RequestInterface
@@ -96,13 +89,14 @@ class Filters
     protected $argumentsClass = [];
 
     /**
-     * Constructor.
-     *
-     * @param FiltersConfig $config
+     * @param FiltersConfig $config The original config file
      */
-    public function __construct($config, RequestInterface $request, ResponseInterface $response, ?Modules $modules = null)
-    {
-        $this->config  = $config;
+    public function __construct(
+        protected $config,
+        RequestInterface $request,
+        ResponseInterface $response,
+        ?Modules $modules = null
+    ) {
         $this->request = &$request;
         $this->setResponse($response);
 

@@ -21,19 +21,9 @@ use Config\Mimes;
 class DownloadResponse extends Response
 {
     /**
-     * Download file name
-     */
-    private string $filename;
-
-    /**
      * Download for file
      */
     private ?File $file = null;
-
-    /**
-     * mime set flag
-     */
-    private bool $setMime;
 
     /**
      * Download for binary
@@ -60,14 +50,14 @@ class DownloadResponse extends Response
     protected $statusCode = 200;
 
     /**
-     * Constructor.
+     * @param string $filename Download file name
+     * @param bool   $setMime  mime set flag
      */
-    public function __construct(string $filename, bool $setMime)
-    {
+    public function __construct(
+        private string $filename,
+        private bool $setMime
+    ) {
         parent::__construct(config('App'));
-
-        $this->filename = $filename;
-        $this->setMime  = $setMime;
 
         // Make sure the content type is either specified or detected
         $this->removeHeader('Content-Type');

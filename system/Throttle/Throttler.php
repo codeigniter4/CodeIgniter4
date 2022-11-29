@@ -29,13 +29,6 @@ use CodeIgniter\I18n\Time;
 class Throttler implements ThrottlerInterface
 {
     /**
-     * Container for throttle counters.
-     *
-     * @var CacheInterface
-     */
-    protected $cache;
-
-    /**
      * The number of seconds until the next token is available.
      *
      * @var int
@@ -58,11 +51,11 @@ class Throttler implements ThrottlerInterface
     protected $testTime;
 
     /**
-     * Constructor.
+     * @param CacheInterface $cache Container for throttle counters.
      */
-    public function __construct(CacheInterface $cache)
-    {
-        $this->cache = $cache;
+    public function __construct(
+        protected CacheInterface $cache
+    ) {
     }
 
     /**

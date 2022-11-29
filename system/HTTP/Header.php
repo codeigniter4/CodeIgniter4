@@ -21,13 +21,6 @@ use Stringable;
 class Header implements Stringable
 {
     /**
-     * The name of the header.
-     *
-     * @var string
-     */
-    protected $name;
-
-    /**
      * The value of the header. May have more than one
      * value. If so, will be an array of strings.
      *
@@ -38,11 +31,13 @@ class Header implements Stringable
     /**
      * Header constructor. name is mandatory, if a value is provided, it will be set.
      *
+     * @param string                                  $name  The name of the header.
      * @param array<array<string>|string>|string|null $value
      */
-    public function __construct(string $name, $value = null)
-    {
-        $this->name = $name;
+    public function __construct(
+        protected string $name,
+        $value = null
+    ) {
         $this->setValue($value);
     }
 

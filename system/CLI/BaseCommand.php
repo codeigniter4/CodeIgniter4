@@ -73,24 +73,13 @@ abstract class BaseCommand
     protected $arguments = [];
 
     /**
-     * The Logger to use for a command
-     *
-     * @var LoggerInterface
+     * @param LoggerInterface $logger   The Logger to use for a command
+     * @param Commands        $commands Instance of Commands, so commands can call other commands.
      */
-    protected $logger;
-
-    /**
-     * Instance of Commands so
-     * commands can call other commands.
-     *
-     * @var Commands
-     */
-    protected $commands;
-
-    public function __construct(LoggerInterface $logger, Commands $commands)
-    {
-        $this->logger   = $logger;
-        $this->commands = $commands;
+    public function __construct(
+        protected LoggerInterface $logger,
+        protected Commands $commands
+    ) {
     }
 
     /**

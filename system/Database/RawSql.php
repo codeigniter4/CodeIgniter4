@@ -16,13 +16,11 @@ use Stringable;
 class RawSql implements Stringable
 {
     /**
-     * @var string Raw SQL string
+     * @param string $string Raw SQL string
      */
-    private string $string;
-
-    public function __construct(string $sqlString)
-    {
-        $this->string = $sqlString;
+    public function __construct(
+        private string $string
+    ) {
     }
 
     public function __toString(): string

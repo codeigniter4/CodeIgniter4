@@ -19,59 +19,27 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 final class AutoRouter implements AutoRouterInterface
 {
     /**
-     * List of controllers registered for the CLI verb that should not be accessed in the web.
-     *
-     * @var class-string[]
-     */
-    private array $protectedControllers;
-
-    /**
      * Sub-directory that contains the requested controller class.
      * Primarily used by 'autoRoute'.
      */
     private ?string $directory = null;
 
     /**
-     * The name of the controller class.
+     * @param class-string[] $protectedControllers List of controllers registered for the CLI verb that should not be accessed in the web.
+     * @param string         $defaultNamespace     Default namespace for controllers.
+     * @param string         $controller           The name of the controller class.
+     * @param string         $method               The name of the method to use.
+     * @param bool           $translateURIDashes   Whether dashes in URI's should be converted to underscores when determining method names.
+     * @param string         $httpVerb             HTTP verb for the request.
      */
-    private string $controller;
-
-    /**
-     * The name of the method to use.
-     */
-    private string $method;
-
-    /**
-     * Whether dashes in URI's should be converted
-     * to underscores when determining method names.
-     */
-    private bool $translateURIDashes;
-
-    /**
-     * HTTP verb for the request.
-     */
-    private string $httpVerb;
-
-    /**
-     * Default namespace for controllers.
-     */
-    private string $defaultNamespace;
-
     public function __construct(
-        array $protectedControllers,
-        string $defaultNamespace,
-        string $defaultController,
-        string $defaultMethod,
-        bool $translateURIDashes,
-        string $httpVerb
+        private array $protectedControllers,
+        private string $defaultNamespace,
+        private string $controller,
+        private string $method,
+        private bool $translateURIDashes,
+        private string $httpVerb
     ) {
-        $this->protectedControllers = $protectedControllers;
-        $this->defaultNamespace     = $defaultNamespace;
-        $this->translateURIDashes   = $translateURIDashes;
-        $this->httpVerb             = $httpVerb;
-
-        $this->controller = $defaultController;
-        $this->method     = $defaultMethod;
     }
 
     /**

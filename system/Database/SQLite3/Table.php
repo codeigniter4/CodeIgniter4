@@ -62,26 +62,13 @@ class Table
     protected $prefixedTableName;
 
     /**
-     * Database connection.
-     *
-     * @var Connection
+     * @param Connection $db    Database connection.
+     * @param Forge      $forge Handle to our forge.
      */
-    protected $db;
-
-    /**
-     * Handle to our forge.
-     *
-     * @var Forge
-     */
-    protected $forge;
-
-    /**
-     * Table constructor.
-     */
-    public function __construct(Connection $db, Forge $forge)
-    {
-        $this->db    = $db;
-        $this->forge = $forge;
+    public function __construct(
+        protected Connection $db,
+        protected Forge $forge
+    ) {
     }
 
     /**

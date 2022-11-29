@@ -31,13 +31,6 @@ class Language
     protected $language = [];
 
     /**
-     * The current language/locale to work with.
-     *
-     * @var string
-     */
-    protected $locale;
-
-    /**
      * Boolean value whether the intl
      * libraries exist on the system.
      *
@@ -53,10 +46,12 @@ class Language
      */
     protected $loadedFiles = [];
 
-    public function __construct(string $locale)
-    {
-        $this->locale = $locale;
-
+    /**
+     * @param string $locale The current language/locale to work with.
+     */
+    public function __construct(
+        protected string $locale
+    ) {
         if (class_exists(MessageFormatter::class)) {
             $this->intlSupport = true;
         }

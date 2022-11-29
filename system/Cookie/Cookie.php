@@ -52,11 +52,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface, Stringable
     protected $name;
 
     /**
-     * @var string
-     */
-    protected $value;
-
-    /**
      * @var int
      */
     protected $expires;
@@ -199,7 +194,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface, Stringable
      *
      * @throws CookieException
      */
-    final public function __construct(string $name, string $value = '', array $options = [])
+    final public function __construct(string $name, protected string $value = '', array $options = [])
     {
         $options += self::$defaults;
 
@@ -229,7 +224,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface, Stringable
 
         $this->prefix   = $prefix;
         $this->name     = $name;
-        $this->value    = $value;
         $this->expires  = static::convertExpiresTimestamp($options['expires']);
         $this->path     = $path;
         $this->domain   = $domain;

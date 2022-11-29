@@ -20,16 +20,10 @@ use ReflectionMethod;
 final class ControllerMethodReader
 {
     /**
-     * @var string the default namespace
-     */
-    private string $namespace;
-
-    /**
      * @param string $namespace the default namespace
      */
-    public function __construct(string $namespace)
+    public function __construct(private string $namespace)
     {
-        $this->namespace = $namespace;
     }
 
     /**

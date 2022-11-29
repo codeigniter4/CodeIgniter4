@@ -86,11 +86,6 @@ class View implements RendererInterface
     protected $performanceData = [];
 
     /**
-     * @var ViewConfig
-     */
-    protected $config;
-
-    /**
      * Whether data should be saved between renders.
      *
      * @var bool
@@ -137,9 +132,13 @@ class View implements RendererInterface
      */
     protected $sectionStack = [];
 
-    public function __construct(ViewConfig $config, ?string $viewPath = null, ?FileLocator $loader = null, ?bool $debug = null, ?LoggerInterface $logger = null)
-    {
-        $this->config   = $config;
+    public function __construct(
+        protected ViewConfig $config,
+        ?string $viewPath = null,
+        ?FileLocator $loader = null,
+        ?bool $debug = null,
+        ?LoggerInterface $logger = null
+    ) {
         $this->viewPath = rtrim($viewPath, '\\/ ') . DIRECTORY_SEPARATOR;
         $this->loader   = $loader ?? Services::locator();
         $this->logger   = $logger ?? Services::logger();
