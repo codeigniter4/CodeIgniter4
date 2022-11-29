@@ -194,8 +194,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface, Stringable
      *
      * @throws CookieException
      */
-    final public function __construct(string $name, protected string $value = '', array $options = [])
-    {
+    final public function __construct(
+        string $name,
+        protected string $value = '',
+        array $options = []
+    ) {
         $options += self::$defaults;
 
         $options['expires'] = static::convertExpiresTimestamp($options['expires']);

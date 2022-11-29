@@ -22,8 +22,10 @@ final class ControllerMethodReader
     /**
      * @param string $namespace the default namespace
      */
-    public function __construct(private string $namespace, private array $httpMethods)
-    {
+    public function __construct(
+        private string $namespace,
+        private array $httpMethods
+    ) {
     }
 
     /**
