@@ -41,6 +41,10 @@ use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php73\Rector\FuncCall\StringifyStrNeedlesRector;
+use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
+use Rector\Php80\Rector\FuncCall\TokenGetAllToObjectRector;
+use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
+use Rector\Php80\Rector\FunctionLike\UnionTypesRector;
 use Rector\PHPUnit\Rector\MethodCall\GetMockBuilderGetMockToCreateMockRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
@@ -55,7 +59,7 @@ use Utils\Rector\UnderscoreToCamelCaseVariableNameRector;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::DEAD_CODE,
-        LevelSetList::UP_TO_PHP_74,
+        LevelSetList::UP_TO_PHP_80,
         PHPUnitSetList::PHPUNIT_SPECIFIC_METHOD,
         PHPUnitSetList::PHPUNIT_80,
         PHPUnitSetList::REMOVE_MOCKS,
@@ -125,6 +129,14 @@ return static function (RectorConfig $rectorConfig): void {
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
+
+        // This rule breaks code due to a bug.
+        TokenGetAllToObjectRector::class,
+
+        // PHP 8.0 features but cause breaking changes
+        UnionTypesRector::class,
+        ClassPropertyAssignToConstructorPromotionRector::class,
+        MixedTypeRector::class,
     ]);
 
     // auto import fully qualified class names
