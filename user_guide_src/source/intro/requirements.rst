@@ -2,7 +2,7 @@
 Server Requirements
 ###################
 
-`PHP <https://www.php.net/>`_ version 7.4 or newer is required, with the following PHP extensions are enabled:
+`PHP <https://www.php.net/>`_ version 8.0 or newer is required, with the following PHP extensions are enabled:
 
   - `intl <https://www.php.net/manual/en/intl.requirements.php>`_
   - `mbstring <https://www.php.net/manual/en/mbstring.requirements.php>`_
