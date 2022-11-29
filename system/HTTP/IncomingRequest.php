@@ -66,7 +66,7 @@ class IncomingRequest extends Request
      *
      * @deprecated Will be protected. Use getUri() instead.
      *
-     * @var URI
+     * @var URI|null
      */
     public $uri;
 
