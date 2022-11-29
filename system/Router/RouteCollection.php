@@ -1058,8 +1058,8 @@ class RouteCollection implements RouteCollectionInterface
         // Add the default namespace if needed.
         $namespace = trim($this->defaultNamespace, '\\') . '\\';
         if (
-            substr($search, 0, 1) !== '\\'
-            && substr($search, 0, strlen($namespace)) !== $namespace
+            ! str_starts_with($search, '\\')
+            && ! str_starts_with($search, $namespace)
         ) {
             $search = $namespace . $search;
         }
@@ -1083,7 +1083,7 @@ class RouteCollection implements RouteCollectionInterface
 
                 // If there's any chance of a match, then it will
                 // be with $search at the beginning of the $to string.
-                if (strpos($to, $search) !== 0) {
+                if (! str_starts_with($to, $search)) {
                     continue;
                 }
 
@@ -1211,7 +1211,7 @@ class RouteCollection implements RouteCollectionInterface
         preg_match_all('/\(([^)]+)\)/', $from, $matches);
 
         if (empty($matches[0])) {
-            if (strpos($from, '{locale}') !== false) {
+            if (str_contains($from, '{locale}')) {
                 $locale = $params[0] ?? null;
             }
 
@@ -1249,7 +1249,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     private function replaceLocale(string $route, ?string $locale = null): string
     {
-        if (strpos($route, '{locale}') === false) {
+        if (! str_contains($route, '{locale}')) {
             return $route;
         }
 
@@ -1352,7 +1352,7 @@ class RouteCollection implements RouteCollectionInterface
         // If is redirect, No processing
         if (! isset($options['redirect']) && is_string($to)) {
             // If no namespace found, add the default namespace
-            if (strpos($to, '\\') === false || strpos($to, '\\') > 0) {
+            if (! str_contains($to, '\\') || strpos($to, '\\') > 0) {
                 $namespace = $options['namespace'] ?? $this->defaultNamespace;
                 $to        = trim($namespace, '\\') . '\\' . $to;
             }
@@ -1473,7 +1473,7 @@ class RouteCollection implements RouteCollectionInterface
         // on the URL else parse_url will mis-interpret
         // 'host' as the 'path'.
         $url = $this->httpHost;
-        if (strpos($url, 'http') !== 0) {
+        if (! str_starts_with($url, 'http')) {
             $url = 'http://' . $url;
         }
 

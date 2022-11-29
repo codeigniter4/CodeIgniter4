@@ -69,7 +69,7 @@ class Builder extends BaseBuilder
         $from = [];
 
         foreach ($this->QBFrom as $value) {
-            $from[] = strpos($value, '(SELECT') === 0 ? $value : $this->getFullName($value);
+            $from[] = str_starts_with($value, '(SELECT') ? $value : $this->getFullName($value);
         }
 
         return implode(', ', $from);
@@ -280,7 +280,7 @@ class Builder extends BaseBuilder
     {
         $alias = '';
 
-        if (strpos($table, ' ') !== false) {
+        if (str_contains($table, ' ')) {
             $alias = explode(' ', $table);
             $table = array_shift($alias);
             $alias = ' ' . implode(' ', $alias);
@@ -439,7 +439,7 @@ class Builder extends BaseBuilder
             throw DataException::forEmptyInputGiven('Select');
         }
 
-        if (strpos($select, ',') !== false) {
+        if (str_contains($select, ',')) {
             throw DataException::forInvalidArgument('Column name not separated by comma');
         }
 

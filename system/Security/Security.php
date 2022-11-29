@@ -297,7 +297,7 @@ class Security implements SecurityInterface
         try {
             $token = ($postedToken !== null && $this->tokenRandomize)
                 ? $this->derandomize($postedToken) : $postedToken;
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             $token = null;
         }
 

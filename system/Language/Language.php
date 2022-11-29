@@ -90,7 +90,7 @@ class Language
     public function getLine(string $line, array $args = [])
     {
         // if no file is given, just parse the line
-        if (strpos($line, '.') === false) {
+        if (! str_contains($line, '.')) {
             return $this->formatMessage($line, $args);
         }
 

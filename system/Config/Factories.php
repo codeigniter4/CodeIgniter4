@@ -165,7 +165,7 @@ class Factories
         $locator = Services::locator();
 
         // Check if the class was namespaced
-        if (strpos($name, '\\') !== false) {
+        if (str_contains($name, '\\')) {
             if (! $file = $locator->locateFile($name, $options['path'])) {
                 return null;
             }
@@ -204,10 +204,10 @@ class Factories
 
         // Special case for Config since its App namespace is actually \Config
         if ($options['component'] === 'config') {
-            return strpos($name, 'Config') === 0;
+            return str_starts_with($name, 'Config');
         }
 
-        return strpos($name, APP_NAMESPACE) === 0;
+        return str_starts_with($name, APP_NAMESPACE);
     }
 
     /**
@@ -313,7 +313,7 @@ class Factories
         $component = strtolower($component);
         self::getOptions($component);
 
-        $class    = get_class($instance);
+        $class    = $instance::class;
         $basename = self::getBasename($name);
 
         self::$instances[$component][$class]    = $instance;

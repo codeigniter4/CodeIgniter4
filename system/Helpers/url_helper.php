@@ -40,7 +40,7 @@ if (! function_exists('_get_uri')) {
         }
 
         // If a full URI was passed then convert it
-        if (strpos($relativePath, '://') !== false) {
+        if (str_contains($relativePath, '://')) {
             $full         = new URI($relativePath);
             $relativePath = URI::createURIString(
                 null,
@@ -56,12 +56,7 @@ if (! function_exists('_get_uri')) {
         // Build the full URL based on $config and $relativePath
         $request = Services::request();
 
-        if ($request instanceof CLIRequest) {
-            /** @var App $config */
-            $url = rtrim($config->baseURL, '/ ') . '/';
-        } else {
-            $url = $request->getUri()->getBaseURL();
-        }
+        $url = $request instanceof CLIRequest ? rtrim($config->baseURL, '/ ') . '/' : $request->getUri()->getBaseURL();
 
         // Check for an index page
         if ($config->indexPage !== '') {

@@ -141,7 +141,7 @@ class ChromeLoggerHandler extends BaseHandler
         // @todo Modify formatting of objects once we can view them in browser.
         $objectArray = (array) $object;
 
-        $objectArray['___class_name'] = get_class($object);
+        $objectArray['___class_name'] = $object::class;
 
         return $objectArray;
     }

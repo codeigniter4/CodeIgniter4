@@ -11,12 +11,14 @@
 
 namespace CodeIgniter\HTTP;
 
+use Stringable;
+
 /**
  * Class Header
  *
  * Represents a single HTTP header.
  */
-class Header
+class Header implements Stringable
 {
     /**
      * The name of the header.

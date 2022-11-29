@@ -90,7 +90,7 @@ class CellGenerator extends BaseCommand
 
         $view = array_pop($segments);
         $view = str_replace('Cell', '', decamelize($view));
-        if (strpos($view, '_cell') === false) {
+        if (! str_contains($view, '_cell')) {
             $view .= '_cell';
         }
         $segments[] = $view;

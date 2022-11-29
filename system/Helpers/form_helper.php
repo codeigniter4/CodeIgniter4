@@ -30,9 +30,9 @@ if (! function_exists('form_open')) {
         if (! $action) {
             $action = current_url(true);
         } // If an action is not a full URL then turn it into one
-        elseif (strpos($action, '://') === false) {
+        elseif (! str_contains($action, '://')) {
             // If an action has {locale}
-            if (strpos($action, '{locale}') !== false) {
+            if (str_contains($action, '{locale}')) {
                 $action = str_replace('{locale}', Services::request()->getLocale(), $action);
             }
 
@@ -59,7 +59,7 @@ if (! function_exists('form_open')) {
         // Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
         $before = Services::filters()->getFilters()['before'];
 
-        if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && strpos($action, base_url()) !== false && ! stripos($form, 'method="get"')) {
+        if ((in_array('csrf', $before, true) || array_key_exists('csrf', $before)) && str_contains($action, base_url()) && ! stripos($form, 'method="get"')) {
             $form .= csrf_field($csrfId ?? null);
         }
 

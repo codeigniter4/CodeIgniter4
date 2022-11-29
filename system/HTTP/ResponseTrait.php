@@ -511,7 +511,7 @@ trait ResponseTrait
         }
 
         // IIS environment likely? Use 'refresh' for better compatibility
-        if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) {
+        if ($method === 'auto' && isset($_SERVER['SERVER_SOFTWARE']) && str_contains($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS')) {
             $method = 'refresh';
         }
 
@@ -521,15 +521,10 @@ trait ResponseTrait
             $code = ($_SERVER['REQUEST_METHOD'] !== 'GET') ? 303 : ($code === 302 ? 307 : $code);
         }
 
-        switch ($method) {
-            case 'refresh':
-                $this->setHeader('Refresh', '0;url=' . $uri);
-                break;
-
-            default:
-                $this->setHeader('Location', $uri);
-                break;
-        }
+        match ($method) {
+            'refresh' => $this->setHeader('Refresh', '0;url=' . $uri),
+            default   => $this->setHeader('Location', $uri),
+        };
 
         $this->setStatusCode($code);
 

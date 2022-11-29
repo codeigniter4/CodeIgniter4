@@ -581,7 +581,7 @@ abstract class BaseModel
      */
     public function findColumn(string $columnName)
     {
-        if (strpos($columnName, ',') !== false) {
+        if (str_contains($columnName, ',')) {
             throw DataException::forFindColumnHaveMultipleColumns();
         }
 

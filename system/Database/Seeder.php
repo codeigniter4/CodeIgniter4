@@ -124,7 +124,7 @@ class Seeder
             throw new InvalidArgumentException('No seeder was specified.');
         }
 
-        if (strpos($class, '\\') === false) {
+        if (! str_contains($class, '\\')) {
             $path = $this->seedPath . str_replace('.php', '', $class) . '.php';
 
             if (! is_file($path)) {

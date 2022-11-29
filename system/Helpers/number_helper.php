@@ -25,7 +25,7 @@ if (! function_exists('number_to_size')) {
         // Strip any formatting & ensure numeric input
         try {
             $num = 0 + str_replace(',', '', $num);
-        } catch (ErrorException $ee) {
+        } catch (ErrorException) {
             return false;
         }
 
@@ -76,7 +76,7 @@ if (! function_exists('number_to_amount')) {
         // Strip any formatting & ensure numeric input
         try {
             $num = 0 + str_replace(',', '', $num);
-        } catch (ErrorException $ee) {
+        } catch (ErrorException) {
             return false;
         }
 

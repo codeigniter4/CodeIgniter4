@@ -19,6 +19,7 @@ use DateTimeInterface;
 use InvalidArgumentException;
 use LogicException;
 use ReturnTypeWillChange;
+use Stringable;
 
 /**
  * A `Cookie` class represents an immutable HTTP cookie value object.
@@ -38,7 +39,7 @@ use ReturnTypeWillChange;
  * $cookie2->getName(); // prod_cookie
  * ```
  */
-class Cookie implements ArrayAccess, CloneableCookieInterface
+class Cookie implements ArrayAccess, CloneableCookieInterface, Stringable
 {
     /**
      * @var string
@@ -156,7 +157,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     // =========================================================================
     // CONSTRUCTORS
     // =========================================================================
-
     /**
      * Create a new Cookie instance from a `Set-Cookie` header.
      *
@@ -177,7 +177,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
         unset($part);
 
         foreach ($parts as $part) {
-            if (strpos($part, '=') !== false) {
+            if (str_contains($part, '=')) {
                 [$attr, $val] = explode('=', $part);
             } else {
                 $attr = $part;
@@ -242,7 +242,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     // =========================================================================
     // GETTERS
     // =========================================================================
-
     /**
      * {@inheritDoc}
      */
@@ -395,7 +394,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     // =========================================================================
     // CLONING
     // =========================================================================
-
     /**
      * {@inheritDoc}
      */
@@ -560,7 +558,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     // =========================================================================
     // ARRAY ACCESS FOR BC
     // =========================================================================
-
     /**
      * Whether an offset exists.
      *
@@ -618,7 +615,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     // =========================================================================
     // CONVERTERS
     // =========================================================================
-
     /**
      * {@inheritDoc}
      */
@@ -630,7 +626,7 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     /**
      * {@inheritDoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         $cookieHeader = [];
 
@@ -720,7 +716,6 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
     // =========================================================================
     // VALIDATION
     // =========================================================================
-
     /**
      * Validates the cookie name per RFC 2616.
      *
@@ -747,11 +742,11 @@ class Cookie implements ArrayAccess, CloneableCookieInterface
      */
     protected function validatePrefix(string $prefix, bool $secure, string $path, string $domain): void
     {
-        if (strpos($prefix, '__Secure-') === 0 && ! $secure) {
+        if (str_starts_with($prefix, '__Secure-') && ! $secure) {
             throw CookieException::forInvalidSecurePrefix();
         }
 
-        if (strpos($prefix, '__Host-') === 0 && (! $secure || $domain !== '' || $path !== '/')) {
+        if (str_starts_with($prefix, '__Host-') && (! $secure || $domain !== '' || $path !== '/')) {
             throw CookieException::forInvalidHostPrefix();
         }
     }

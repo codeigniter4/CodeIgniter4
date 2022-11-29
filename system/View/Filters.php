@@ -223,19 +223,12 @@ class Filters
             $precision = (int) $precision;
         }
 
-        switch ($type) {
-            case 'common':
-                return round((float) $value, $precision);
-
-            case 'ceil':
-                return ceil((float) $value);
-
-            case 'floor':
-                return floor((float) $value);
-        }
-
-        // Still here, just return the value.
-        return $value;
+        return match ($type) {
+            'common' => round((float) $value, $precision),
+            'ceil'   => ceil((float) $value),
+            'floor'  => floor((float) $value),
+            default  => $value,
+        };
     }
 
     /**

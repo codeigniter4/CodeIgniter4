@@ -156,7 +156,7 @@ class Entity implements JsonSerializable
     {
         $this->_cast = $cast;
 
-        $keys = array_filter(array_keys($this->attributes), static fn ($key) => strpos($key, '_') !== 0);
+        $keys = array_filter(array_keys($this->attributes), static fn ($key) => ! str_starts_with($key, '_'));
 
         if (is_array($this->datamap)) {
             $keys = array_unique(
@@ -345,7 +345,7 @@ class Entity implements JsonSerializable
 
         $isNullable = false;
 
-        if (strpos($type, '?') === 0) {
+        if (str_starts_with($type, '?')) {
             $isNullable = true;
 
             if ($value === null) {

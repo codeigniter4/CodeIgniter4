@@ -11,7 +11,9 @@
 
 namespace CodeIgniter\Database;
 
-class RawSql
+use Stringable;
+
+class RawSql implements Stringable
 {
     /**
      * @var string Raw SQL string

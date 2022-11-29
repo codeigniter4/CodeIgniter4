@@ -45,7 +45,7 @@ class Database
             throw new InvalidArgumentException('You must supply the parameter: alias.');
         }
 
-        if (! empty($params['DSN']) && strpos($params['DSN'], '://') !== false) {
+        if (! empty($params['DSN']) && str_contains($params['DSN'], '://')) {
             $params = $this->parseDSN($params);
         }
 
@@ -131,7 +131,7 @@ class Database
     {
         $class = $driver . '\\' . $class;
 
-        if (strpos($driver, '\\') === false) {
+        if (! str_contains($driver, '\\')) {
             $class = "CodeIgniter\\Database\\{$class}";
         }
 

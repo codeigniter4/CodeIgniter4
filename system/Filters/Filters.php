@@ -166,7 +166,7 @@ class Filters
             $class = new $className();
 
             if (! $class instanceof FilterInterface) {
-                throw FilterException::forIncorrectInterface(get_class($class));
+                throw FilterException::forIncorrectInterface($class::class);
             }
 
             if ($position === 'before') {
@@ -323,7 +323,7 @@ class Filters
     public function enableFilter(string $name, string $when = 'before')
     {
         // Get parameters and clean name
-        if (strpos($name, ':') !== false) {
+        if (str_contains($name, ':')) {
             [$name, $params] = explode(':', $name);
 
             $params = explode(',', $params);

@@ -60,7 +60,7 @@ class Files extends BaseCollector
         foreach ($rawFiles as $file) {
             $path = clean_path($file);
 
-            if (strpos($path, 'SYSTEMPATH') !== false) {
+            if (str_contains($path, 'SYSTEMPATH')) {
                 $coreFiles[] = [
                     'name' => basename($file),
                     'path' => $path,

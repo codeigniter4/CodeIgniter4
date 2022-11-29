@@ -73,7 +73,7 @@ final class ExceptionsTest extends CIUnitTestCase
         try {
             strlen($maybeNull);
             $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
-        } catch (ErrorException $e) {
+        } catch (ErrorException) {
             $this->fail('The catch block should not be reached.');
         } finally {
             restore_error_handler();

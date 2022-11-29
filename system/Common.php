@@ -91,25 +91,14 @@ if (! function_exists('clean_path')) {
         // Resolve relative paths
         $path = realpath($path) ?: $path;
 
-        switch (true) {
-            case strpos($path, APPPATH) === 0:
-                return 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH));
-
-            case strpos($path, SYSTEMPATH) === 0:
-                return 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH));
-
-            case strpos($path, FCPATH) === 0:
-                return 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH));
-
-            case defined('VENDORPATH') && strpos($path, VENDORPATH) === 0:
-                return 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH));
-
-            case strpos($path, ROOTPATH) === 0:
-                return 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH));
-
-            default:
-                return $path;
-        }
+        return match (true) {
+            str_starts_with($path, APPPATH)                             => 'APPPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(APPPATH)),
+            str_starts_with($path, SYSTEMPATH)                          => 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(SYSTEMPATH)),
+            str_starts_with($path, FCPATH)                              => 'FCPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(FCPATH)),
+            defined('VENDORPATH') && str_starts_with($path, VENDORPATH) => 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(VENDORPATH)),
+            str_starts_with($path, ROOTPATH)                            => 'ROOTPATH' . DIRECTORY_SEPARATOR . substr($path, strlen(ROOTPATH)),
+            default                                                     => $path,
+        };
     }
 }
 
@@ -372,22 +361,13 @@ if (! function_exists('env')) {
             return $default;
         }
 
-        // Handle any boolean values
-        switch (strtolower($value)) {
-            case 'true':
-                return true;
-
-            case 'false':
-                return false;
-
-            case 'empty':
-                return '';
-
-            case 'null':
-                return null;
-        }
-
-        return $value;
+        return match (strtolower($value)) {
+            'true'  => true,
+            'false' => false,
+            'empty' => '',
+            'null'  => null,
+            default => $value,
+        };
     }
 }
 
@@ -492,9 +472,9 @@ if (! function_exists('force_https')) {
 
         $baseURL = config('App')->baseURL;
 
-        if (strpos($baseURL, 'https://') === 0) {
+        if (str_starts_with($baseURL, 'https://')) {
             $authority = substr($baseURL, strlen('https://'));
-        } elseif (strpos($baseURL, 'http://') === 0) {
+        } elseif (str_starts_with($baseURL, 'http://')) {
             $authority = substr($baseURL, strlen('http://'));
         } else {
             $authority = $baseURL;
@@ -597,7 +577,7 @@ if (! function_exists('helper')) {
             $appHelper     = null;
             $localIncludes = [];
 
-            if (strpos($filename, '_helper') === false) {
+            if (! str_contains($filename, '_helper')) {
                 $filename .= '_helper';
             }
 
@@ -608,7 +588,7 @@ if (! function_exists('helper')) {
 
             // If the file is namespaced, we'll just grab that
             // file and not search for any others
-            if (strpos($filename, '\\') !== false) {
+            if (str_contains($filename, '\\')) {
                 $path = $loader->locateFile($filename, 'Helpers');
 
                 if (empty($path)) {
@@ -622,9 +602,9 @@ if (! function_exists('helper')) {
                 $paths = $loader->search('Helpers/' . $filename);
 
                 foreach ($paths as $path) {
-                    if (strpos($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
+                    if (str_starts_with($path, APPPATH . 'Helpers' . DIRECTORY_SEPARATOR)) {
                         $appHelper = $path;
-                    } elseif (strpos($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR) === 0) {
+                    } elseif (str_starts_with($path, SYSTEMPATH . 'Helpers' . DIRECTORY_SEPARATOR)) {
                         $systemHelper = $path;
                     } else {
                         $localIncludes[] = $path;
@@ -1211,7 +1191,7 @@ if (! function_exists('class_basename')) {
      */
     function class_basename($class)
     {
-        $class = is_object($class) ? get_class($class) : $class;
+        $class = is_object($class) ? $class::class : $class;
 
         return basename(str_replace('\\', '/', $class));
     }
@@ -1230,7 +1210,7 @@ if (! function_exists('class_uses_recursive')) {
     function class_uses_recursive($class)
     {
         if (is_object($class)) {
-            $class = get_class($class);
+            $class = $class::class;
         }
 
         $results = [];

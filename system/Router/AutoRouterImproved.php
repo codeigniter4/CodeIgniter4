@@ -177,7 +177,7 @@ final class AutoRouterImproved implements AutoRouterInterface
         // Check parameters
         try {
             $this->checkParameters($uri);
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             throw PageNotFoundException::forControllerNotFound($this->controller, $this->method);
         }
 
@@ -228,7 +228,7 @@ final class AutoRouterImproved implements AutoRouterInterface
                 'AutoRouterImproved does not support `_remap()` method.'
                 . ' Controller:' . $this->controller
             );
-        } catch (ReflectionException $e) {
+        } catch (ReflectionException) {
             // Do nothing.
         }
     }

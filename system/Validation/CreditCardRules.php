@@ -214,7 +214,7 @@ class CreditCardRules
         $validPrefix = false;
 
         foreach ($prefixes as $prefix) {
-            if (strpos($ccNumber, $prefix) === 0) {
+            if (str_starts_with($ccNumber, $prefix)) {
                 $validPrefix = true;
                 break;
             }

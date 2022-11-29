@@ -275,7 +275,7 @@ class Autoloader
      */
     protected function loadInNamespace(string $class)
     {
-        if (strpos($class, '\\') === false) {
+        if (! str_contains($class, '\\')) {
             return false;
         }
 
@@ -283,7 +283,7 @@ class Autoloader
             foreach ($directories as $directory) {
                 $directory = rtrim($directory, '\\/');
 
-                if (strpos($class, $namespace) === 0) {
+                if (str_starts_with($class, $namespace)) {
                     $filePath = $directory . str_replace('\\', DIRECTORY_SEPARATOR, substr($class, strlen($namespace))) . '.php';
                     $filename = $this->includeFile($filePath);
 
@@ -400,7 +400,7 @@ class Autoloader
 
             foreach ($srcPaths as $path) {
                 foreach ($installPaths as $installPath) {
-                    if ($installPath === substr($path, 0, strlen($installPath))) {
+                    if (str_starts_with($path, $installPath)) {
                         $add = true;
                         break 2;
                     }

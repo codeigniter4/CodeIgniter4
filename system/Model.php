@@ -130,10 +130,8 @@ class Model extends BaseModel
 
     /**
      * Primary Key value when inserting and useAutoIncrement is false.
-     *
-     * @var int|string|null
      */
-    private $tempPrimaryKeyValue;
+    private int|string|null $tempPrimaryKeyValue = null;
 
     /**
      * Builder method names that should not be used in the Model.
@@ -503,7 +501,7 @@ class Model extends BaseModel
             return [];
         }
 
-        return [get_class($this->db) => $error['message']];
+        return [$this->db::class => $error['message']];
     }
 
     /**

@@ -68,7 +68,7 @@ class Connection extends BaseConnection
         }
 
         try {
-            if ($this->database !== ':memory:' && strpos($this->database, DIRECTORY_SEPARATOR) === false) {
+            if ($this->database !== ':memory:' && ! str_contains($this->database, DIRECTORY_SEPARATOR)) {
                 $this->database = WRITEPATH . $this->database;
             }
 

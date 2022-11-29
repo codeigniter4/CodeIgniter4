@@ -13,6 +13,7 @@ namespace CodeIgniter\View\Cells;
 
 use CodeIgniter\Traits\PropertiesTrait;
 use ReflectionClass;
+use Stringable;
 
 /**
  * Class Cell
@@ -23,7 +24,7 @@ use ReflectionClass;
  *
  * @function mount()
  */
-class Cell
+class Cell implements Stringable
 {
     use PropertiesTrait;
 
@@ -96,7 +97,7 @@ class Cell
     /**
      * Provides capability to render on string casting.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }

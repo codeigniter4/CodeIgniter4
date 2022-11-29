@@ -72,10 +72,10 @@ class BaseConfig
             $this->initEnvValue($this->{$property}, $property, $prefix, $shortPrefix);
 
             if ($this instanceof Encryption && $property === 'key') {
-                if (strpos($this->{$property}, 'hex2bin:') === 0) {
+                if (str_starts_with($this->{$property}, 'hex2bin:')) {
                     // Handle hex2bin prefix
                     $this->{$property} = hex2bin(substr($this->{$property}, 8));
-                } elseif (strpos($this->{$property}, 'base64:') === 0) {
+                } elseif (str_starts_with($this->{$property}, 'base64:')) {
                     // Handle base64 prefix
                     $this->{$property} = base64_decode(substr($this->{$property}, 7), true);
                 }

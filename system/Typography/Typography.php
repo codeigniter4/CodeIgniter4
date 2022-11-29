@@ -78,7 +78,7 @@ class Typography
         }
 
         // Standardize Newlines to make matching easier
-        if (strpos($str, "\r") !== false) {
+        if (str_contains($str, "\r")) {
             $str = str_replace(["\r\n", "\r"], "\n", $str);
         }
 
@@ -90,7 +90,7 @@ class Typography
 
         // HTML comment tags don't conform to patterns of normal tags, so pull them out separately, only if needed
         $htmlComments = [];
-        if (strpos($str, '<!--') !== false && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches)) {
+        if (str_contains($str, '<!--') && preg_match_all('#(<!\-\-.*?\-\->)#s', $str, $matches)) {
             for ($i = 0, $total = count($matches[0]); $i < $total; $i++) {
                 $htmlComments[] = $matches[0][$i];
                 $str            = str_replace($matches[0][$i], '{@HC' . $i . '}', $str);
@@ -99,7 +99,7 @@ class Typography
 
         // match and yank <pre> tags if they exist.  It's cheaper to do this separately since most content will
         // not contain <pre> tags, and it keeps the PCRE patterns below simpler and faster
-        if (strpos($str, '<pre') !== false) {
+        if (str_contains($str, '<pre')) {
             $str = preg_replace_callback('#<pre.*?>.*?</pre>#si', [$this, 'protectCharacters'], $str);
         }
 
@@ -279,7 +279,7 @@ class Typography
      */
     protected function formatNewLines(string $str): string
     {
-        if ($str === '' || (strpos($str, "\n") === false && ! in_array($this->lastBlockElement, $this->innerBlockRequired, true))) {
+        if ($str === '' || (! str_contains($str, "\n") && ! in_array($this->lastBlockElement, $this->innerBlockRequired, true))) {
             return $str;
         }
 

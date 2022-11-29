@@ -108,7 +108,7 @@ if (! function_exists('img')) {
         $img = '<img';
 
         // Check for a relative URI
-        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && strpos($src['src'], 'data:') !== 0) {
+        if (! preg_match('#^([a-z]+:)?//#i', $src['src']) && ! str_starts_with($src['src'], 'data:')) {
             if ($indexPage === true) {
                 $img .= ' src="' . site_url($src['src']) . '"';
             } else {

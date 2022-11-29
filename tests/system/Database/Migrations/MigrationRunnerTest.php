@@ -22,6 +22,8 @@ use Config\Database;
 use Config\Migrations;
 use Config\Services;
 use org\bovigo\vfs\vfsStream;
+use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration;
+use Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration;
 
 /**
  * @group DatabaseLive
@@ -239,7 +241,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
             'version'   => '2018-01-24-102301',
             'name'      => 'Some_migration',
             'path'      => realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php'),
-            'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
+            'class'     => Migration_some_migration::class,
             'namespace' => 'Tests\Support\MigrationTestMigrations',
         ];
         $mig1->uid = $runner->getObjectUid($mig1);
@@ -248,7 +250,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
             'version'   => '2018-01-24-102302',
             'name'      => 'Another_migration',
             'path'      => realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php'),
-            'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
+            'class'     => Migration_another_migration::class,
             'namespace' => 'Tests\Support\MigrationTestMigrations',
             'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
         ];

@@ -61,7 +61,7 @@ final class ControllerMethodReader
             $methodName = $method->getName();
 
             foreach ($this->httpMethods as $httpVerb) {
-                if (strpos($methodName, $httpVerb) === 0) {
+                if (str_starts_with($methodName, $httpVerb)) {
                     // Remove HTTP verb prefix.
                     $methodInUri = lcfirst(substr($methodName, strlen($httpVerb)));
 

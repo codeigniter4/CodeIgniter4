@@ -139,7 +139,7 @@ class Validation implements ValidationInterface
                 $rules = $this->splitRules($rules);
             }
 
-            if (strpos($field, '*') !== false) {
+            if (str_contains($field, '*')) {
                 $values = array_filter(array_flatten_with_dots($data), static fn ($key) => preg_match(
                     '/^'
                     . str_replace(['\.\*', '\*\.'], ['\..+', '.+\.'], preg_quote($field, '/'))
@@ -159,7 +159,7 @@ class Validation implements ValidationInterface
                 continue;
             }
 
-            if (strpos($field, '*') !== false) {
+            if (str_contains($field, '*')) {
                 // Process multiple fields
                 foreach ($values as $dotField => $value) {
                     $this->processRules($dotField, $setup['label'] ?? $field, $value, $rules, $data, $field);
@@ -214,7 +214,7 @@ class Validation implements ValidationInterface
             $flattenedData = array_flatten_with_dots($data);
             $ifExistField  = $field;
 
-            if (strpos($field, '.*') !== false) {
+            if (str_contains($field, '.*')) {
                 // We'll change the dot notation into a PCRE pattern that can be used later
                 $ifExistField   = str_replace('\.\*', '\.(?:[^\.]+)', preg_quote($field, '/'));
                 $dataIsExisting = false;
@@ -381,14 +381,14 @@ class Validation implements ValidationInterface
     public function withRequest(RequestInterface $request): ValidationInterface
     {
         /** @var IncomingRequest $request */
-        if (strpos($request->getHeaderLine('Content-Type'), 'application/json') !== false) {
+        if (str_contains($request->getHeaderLine('Content-Type'), 'application/json')) {
             $this->data = $request->getJSON(true);
 
             return $this;
         }
 
         if (in_array(strtolower($request->getMethod()), ['put', 'patch', 'delete'], true)
-            && strpos($request->getHeaderLine('Content-Type'), 'multipart/form-data') === false
+            && ! str_contains($request->getHeaderLine('Content-Type'), 'multipart/form-data')
         ) {
             $this->data = $request->getRawInput();
         } else {
@@ -773,7 +773,7 @@ class Validation implements ValidationInterface
      */
     protected function splitRules(string $rules): array
     {
-        if (strpos($rules, '|') === false) {
+        if (! str_contains($rules, '|')) {
             return [$rules];
         }
 

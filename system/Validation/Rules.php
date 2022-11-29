@@ -26,7 +26,7 @@ class Rules
      */
     public function differs(?string $str, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return $str !== dot_array_search($field, $data);
         }
 
@@ -165,7 +165,7 @@ class Rules
      */
     public function matches(?string $str, string $field, array $data): bool
     {
-        if (strpos($field, '.') !== false) {
+        if (str_contains($field, '.')) {
             return $str === dot_array_search($field, $data);
         }
 
@@ -262,7 +262,7 @@ class Rules
         $requiredFields = [];
 
         foreach ($fields as $field) {
-            if ((array_key_exists($field, $data) && ! empty($data[$field])) || (strpos($field, '.') !== false && ! empty(dot_array_search($field, $data)))) {
+            if ((array_key_exists($field, $data) && ! empty($data[$field])) || (str_contains($field, '.') && ! empty(dot_array_search($field, $data)))) {
                 $requiredFields[] = $field;
             }
         }
@@ -301,10 +301,10 @@ class Rules
         // Still here? Then we fail this test if
         // any of the fields are not present in $data
         foreach ($otherFields as $otherField) {
-            if ((strpos($otherField, '.') === false) && (! array_key_exists($otherField, $data) || empty($data[$otherField]))) {
+            if ((! str_contains($otherField, '.')) && (! array_key_exists($otherField, $data) || empty($data[$otherField]))) {
                 return false;
             }
-            if (strpos($otherField, '.') !== false) {
+            if (str_contains($otherField, '.')) {
                 if ($field === null) {
                     throw new InvalidArgumentException('You must supply the parameters: field.');
                 }

@@ -579,7 +579,7 @@ class CLI
         $newText = '';
 
         // Detect if color method was already in use with this text
-        if (strpos($text, "\033[0m") !== false) {
+        if (str_contains($text, "\033[0m")) {
             $pattern = '/\\033\\[0;.+?\\033\\[0m/u';
 
             preg_match_all($pattern, $text, $matches);

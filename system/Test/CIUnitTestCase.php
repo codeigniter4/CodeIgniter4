@@ -476,7 +476,7 @@ abstract class CIUnitTestCase extends TestCase
             $difference = abs($expected - $actual);
 
             $this->assertLessThanOrEqual($tolerance, $difference, $message);
-        } catch (Exception $e) {
+        } catch (Exception) {
             return false;
         }
     }
@@ -514,7 +514,7 @@ abstract class CIUnitTestCase extends TestCase
         foreach (xdebug_get_headers() as $emittedHeader) {
             $found = $ignoreCase
                 ? (stripos($emittedHeader, $header) === 0)
-                : (strpos($emittedHeader, $header) === 0);
+                : (str_starts_with($emittedHeader, $header));
 
             if ($found) {
                 return $emittedHeader;

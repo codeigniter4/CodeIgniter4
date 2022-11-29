@@ -301,7 +301,7 @@ class Fabricator
             $this->faker->getFormatter($field);
 
             return $field;
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             // No match, keep going
         }
 

@@ -125,7 +125,7 @@ class Exceptions
         if (! is_cli()) {
             try {
                 $this->response->setStatusCode($statusCode);
-            } catch (HTTPException $e) {
+            } catch (HTTPException) {
                 // Workaround for invalid HTTP status code.
                 $statusCode = 500;
                 $this->response->setStatusCode($statusCode);
@@ -135,7 +135,7 @@ class Exceptions
                 header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
             }
 
-            if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false) {
+            if (! str_contains($this->request->getHeaderLine('accept'), 'text/html')) {
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
 
                 exit($exitCode);
@@ -186,7 +186,7 @@ class Exceptions
     private function isFakerDeprecationError(string $message, ?string $file = null, ?int $line = null)
     {
         if (
-            strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
+            str_contains($file, VENDORPATH . 'fakerphp/faker/')
             && $message === 'Use of "static" in callables is deprecated'
         ) {
             log_message(
@@ -311,8 +311,8 @@ class Exceptions
         }
 
         return [
-            'title'   => get_class($exception),
-            'type'    => get_class($exception),
+            'title'   => $exception::class,
+            'type'    => $exception::class,
             'code'    => $statusCode,
             'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
@@ -332,7 +332,7 @@ class Exceptions
             $explode = explode('/', $keyToMask);
             $index   = end($explode);
 
-            if (strpos(strrev($path . '/' . $index), strrev($keyToMask)) === 0) {
+            if (str_starts_with(strrev($path . '/' . $index), strrev($keyToMask))) {
                 if (is_array($trace) && array_key_exists($index, $trace)) {
                     $trace[$index] = '******************';
                 } elseif (is_object($trace) && property_exists($trace, $index) && isset($trace->{$index})) {
@@ -413,25 +413,13 @@ class Exceptions
      */
     public static function cleanPath(string $file): string
     {
-        switch (true) {
-            case strpos($file, APPPATH) === 0:
-                $file = 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH));
-                break;
-
-            case strpos($file, SYSTEMPATH) === 0:
-                $file = 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(SYSTEMPATH));
-                break;
-
-            case strpos($file, FCPATH) === 0:
-                $file = 'FCPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(FCPATH));
-                break;
-
-            case defined('VENDORPATH') && strpos($file, VENDORPATH) === 0:
-                $file = 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(VENDORPATH));
-                break;
-        }
-
-        return $file;
+        return match (true) {
+            str_starts_with($file, APPPATH)                             => 'APPPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(APPPATH)),
+            str_starts_with($file, SYSTEMPATH)                          => 'SYSTEMPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(SYSTEMPATH)),
+            str_starts_with($file, FCPATH)                              => 'FCPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(FCPATH)),
+            defined('VENDORPATH') && str_starts_with($file, VENDORPATH) => 'VENDORPATH' . DIRECTORY_SEPARATOR . substr($file, strlen(VENDORPATH)),
+            default                                                     => $file,
+        };
     }
 
     /**
@@ -473,7 +461,7 @@ class Exceptions
 
         try {
             $source = file_get_contents($file);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return false;
         }
 
@@ -538,26 +526,13 @@ class Exceptions
             $idx = $index;
             $idx = str_pad((string) ++$idx, 2, ' ', STR_PAD_LEFT);
 
-            $args = implode(', ', array_map(static function ($value): string {
-                switch (true) {
-                    case is_object($value):
-                        return sprintf('Object(%s)', get_class($value));
-
-                    case is_array($value):
-                        return $value !== [] ? '[...]' : '[]';
-
-                    case $value === null:
-                        return 'null';
-
-                    case is_resource($value):
-                        return sprintf('resource (%s)', get_resource_type($value));
-
-                    case is_string($value):
-                        return var_export(clean_path($value), true);
-
-                    default:
-                        return var_export($value, true);
-                }
+            $args = implode(', ', array_map(static fn ($value): string => match (true) {
+                is_object($value)   => sprintf('Object(%s)', $value::class),
+                is_array($value)    => $value !== [] ? '[...]' : '[]',
+                $value === null     => 'null',
+                is_resource($value) => sprintf('resource (%s)', get_resource_type($value)),
+                is_string($value)   => var_export(clean_path($value), true),
+                default             => var_export($value, true),
             }, $frame['args']));
 
             $backtraces[] = sprintf(

@@ -149,7 +149,7 @@ final class AutoRouter implements AutoRouterInterface
 
         // Ensure the controller stores the fully-qualified class name
         // We have to check for a length over 1, since by default it will be '\'
-        if (strpos($this->controller, '\\') === false && strlen($this->defaultNamespace) > 1) {
+        if (! str_contains($this->controller, '\\') && strlen($this->defaultNamespace) > 1) {
             $this->controller = '\\' . ltrim(
                 str_replace(
                     '/',

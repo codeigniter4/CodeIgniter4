@@ -60,7 +60,7 @@ final class DeleteTest extends CIUnitTestCase
         try {
             $this->db->table('user')->delete(['country' => 'US'], 1);
         } catch (DatabaseException $e) {
-            if (strpos($e->getMessage(), 'does not allow LIMITs on DELETE queries.') !== false) {
+            if (str_contains($e->getMessage(), 'does not allow LIMITs on DELETE queries.')) {
                 return;
             }
         }

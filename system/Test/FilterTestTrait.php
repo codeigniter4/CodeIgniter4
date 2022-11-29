@@ -127,7 +127,7 @@ trait FilterTestTrait
 
         if (is_string($filter)) {
             // Check for an alias (no namespace)
-            if (strpos($filter, '\\') === false) {
+            if (! str_contains($filter, '\\')) {
                 if (! isset($this->filtersConfig->aliases[$filter])) {
                     throw new RuntimeException("No filter found with alias '{$filter}'");
                 }
@@ -140,7 +140,7 @@ trait FilterTestTrait
         }
 
         if (! $filter instanceof FilterInterface) {
-            throw FilterException::forIncorrectInterface(get_class($filter));
+            throw FilterException::forIncorrectInterface($filter::class);
         }
 
         $request = clone $this->request;
