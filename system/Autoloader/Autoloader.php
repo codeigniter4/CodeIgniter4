@@ -344,11 +344,7 @@ class Autoloader
             );
         }
         if ($result === false) {
-            if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
-                $message = preg_last_error_msg();
-            } else {
-                $message = 'Regex error. error code: ' . preg_last_error();
-            }
+            $message = preg_last_error_msg();
 
             throw new RuntimeException($message . '. filename: "' . $filename . '"');
         }
