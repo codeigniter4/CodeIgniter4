@@ -1042,7 +1042,7 @@ abstract class BaseModel
     public function delete($id = null, bool $purge = false)
     {
         if (is_bool($id)) {
-            throw new InvalidArgumentException('$id should not be boolean.');
+            throw new InvalidArgumentException('delete(): argument #1 ($id) should not be boolean.');
         }
 
         if ($id && (is_numeric($id) || is_string($id))) {
