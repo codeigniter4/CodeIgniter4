@@ -55,7 +55,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
@@ -85,7 +84,6 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
-          - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
@@ -99,7 +97,7 @@ jobs:
         mysql-version:
           - '5.7'
         include:
-          - php-version: '7.4'
+          - php-version: '8.0'
             db-platform: MySQLi
             mysql-version: '8.0'
           - php-version: '8.3'
@@ -127,7 +125,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
@@ -156,7 +153,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
