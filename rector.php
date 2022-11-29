@@ -130,13 +130,23 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
 
-        // This rule breaks code due to a bug.
+        // This rule breaks code due to a bug in rector.
         TokenGetAllToObjectRector::class,
 
         // PHP 8.0 features but cause breaking changes
         UnionTypesRector::class,
-        ClassPropertyAssignToConstructorPromotionRector::class,
         MixedTypeRector::class,
+
+        // Due to CI4 loose type hinting, skip some classes for now.
+        ClassPropertyAssignToConstructorPromotionRector::class => [
+            __DIR__ . '/system/Database/BaseBuilder.php',
+            __DIR__ . '/system/Database/BasePreparedQuery.php',
+            __DIR__ . '/system/Database/BaseResult.php',
+            __DIR__ . '/system/Database/BaseUtils.php',
+            __DIR__ . '/system/Database/Forge.php',
+            __DIR__ . '/system/HTTP/Files/UploadedFile.php',
+            __DIR__ . '/system/HTTP/OutgoingRequest.php',
+        ],
     ]);
 
     // auto import fully qualified class names
