@@ -100,7 +100,7 @@ Using a Helper
 Once you've loaded the Helper File containing the function you intend to
 use, you'll call it the way you would a standard PHP function.
 
-For example, to create a link using the ``anchor()`` function in one of
+For example, to create a link using the :php:func:`anchor()` function in one of
 your view files you would do this:
 
 .. literalinclude:: helpers/005.php
