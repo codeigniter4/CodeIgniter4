@@ -79,7 +79,7 @@ modify this by passing the duration (in seconds) as the first parameter:
 
 .. _controller-validate:
 
-Validating data
+Validating Data
 ***************
 
 $this->validate()
