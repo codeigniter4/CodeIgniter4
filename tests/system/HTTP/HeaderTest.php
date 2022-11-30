@@ -80,6 +80,20 @@ final class HeaderTest extends CIUnitTestCase
         $this->assertSame($value, $header->getValue());
     }
 
+    public function testHeaderStoresArrayKeyValue()
+    {
+        $name  = 'foo';
+        $value = [
+            'key' => 'val',
+        ];
+
+        $header = new Header($name, $value);
+
+        $this->assertSame($name, $header->getName());
+        $this->assertSame($value, $header->getValue());
+        $this->assertSame('key=val', $header->getValueLine());
+    }
+
     public function testHeaderSetters()
     {
         $name  = 'foo';
