@@ -312,7 +312,7 @@ manually if you choose to, but there’s really no benefit).</p>
 <section id="running-transactions">
 <h2><a class="toc-backref" href="#id2">Running Transactions</a><a class="headerlink" href="#running-transactions" title="Permalink to this headline"></a></h2>
 <p>To run your queries using transactions you will use the
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transComplete()</span></code> functions as
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> and <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transComplete()</span></code> methods as
 follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -323,15 +323,15 @@ follows:</p>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>You can run as many queries as you want between the start/complete
-functions and they will all be committed or rolled back based on the success
+<p>You can run as many queries as you want between the <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code>
+methods and they will all be committed or rolled back based on the success
 or failure of any given query.</p>
 </section>
 <section id="strict-mode">
 <h2><a class="toc-backref" href="#id3">Strict Mode</a><a class="headerlink" href="#strict-mode" title="Permalink to this headline"></a></h2>
 <p>By default, CodeIgniter runs all transactions in Strict Mode. When strict
 mode is enabled, if you are running multiple groups of transactions, if
-one group fails all groups will be rolled back. If strict mode is
+one group fails all subsequent groups will be rolled back. If strict mode is
 disabled, each group is treated independently, meaning a failure of one
 group will not affect any others.</p>
 <p>Strict Mode can be disabled as follows:</p>
@@ -343,9 +343,10 @@ group will not affect any others.</p>
 </section>
 <section id="managing-errors">
 <h2><a class="toc-backref" href="#id4">Managing Errors</a><a class="headerlink" href="#managing-errors" title="Permalink to this headline"></a></h2>
-<p>If you have error reporting enabled in your Config/Database.php file
-you’ll see a standard error message if the commit was unsuccessful. If
-debugging is turned off, you can manage your own errors like this:</p>
+<p>When you have <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> true in your <strong>app/Config/Database.php</strong> file,
+if a query error occurs, all the queries will be rolled backed, and an exception
+will be thrown. So you’ll see a standard error page.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is false, you can manage your own errors like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
@@ -379,7 +380,7 @@ as they are when running queries without transactions.</p>
 <p>You can optionally put the transaction system into “test mode”, which
 will cause your queries to be rolled back – even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> function to true:</p>
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transStart()</span></code> method to true:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Query will be rolled back</span>
@@ -390,7 +391,8 @@ a valid result. To use test mode simply set the first parameter in the
 </section>
 <section id="running-transactions-manually">
 <h2><a class="toc-backref" href="#id7">Running Transactions Manually</a><a class="headerlink" href="#running-transactions-manually" title="Permalink to this headline"></a></h2>
-<p>If you would like to run transactions manually you can do so as follows:</p>
+<p>When you have <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> false in your <strong>app/Config/Database.php</strong> file, and
+if you would like to run transactions manually you can do so as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transBegin</span><span class="p">();</span>
@@ -453,7 +455,7 @@ commits/rollbacks.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Nov 28, 2022.
+      <span class="lastupdated">Last updated on Nov 29, 2022.
       </span></p>
   </div>
 
