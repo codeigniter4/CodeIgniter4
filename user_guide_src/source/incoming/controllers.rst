@@ -53,6 +53,8 @@ Logger Object
 An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
 
+.. _controllers-helpers:
+
 Helpers
 =======
 

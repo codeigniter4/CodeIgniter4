@@ -32,6 +32,8 @@ global **system/Helpers** directory.
 Loading a Helper
 ================
 
+.. note:: The URL helper is always loaded so you do not need to load it yourself.
+
 Loading a helper file is quite simple using the following method:
 
 .. literalinclude:: helpers/001.php
@@ -44,22 +46,31 @@ For example, to load the **Cookie Helper** file, which is named
 
 .. literalinclude:: helpers/002.php
 
+.. note:: The Helper loading method above does not return a value, so
+    don't try to assign it to a variable. Just use it as shown.
+
+Loading Multiple Helpers
+------------------------
+
 If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded:
 
 .. literalinclude:: helpers/003.php
 
+Loading in a Controller
+-----------------------
+
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
-long as you load it before you use it. You can load your helpers in your
+long as you load it before you use it.
+
+You can load your helpers in your
 controller constructor so that they become available automatically in
 any function, or you can load a helper in a specific function that needs
 it.
 
-.. note:: The Helper loading method above does not return a value, so
-    don't try to assign it to a variable. Just use it as shown.
-
-.. note:: The URL helper is always loaded so you do not need to load it yourself.
+However if you want to load in your controller constructor, you can use the ``$helpers``
+property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 
 Loading from Non-standard Locations
 -----------------------------------
