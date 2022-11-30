@@ -35,20 +35,25 @@ Included Properties
 
 The CodeIgniter's Controller provides these properties.
 
-**Request Object**
+Request Object
+==============
 
 The application's main :doc:`Request Instance </incoming/incomingrequest>` is always available
 as a class property, ``$this->request``.
 
-**Response Object**
+Response Object
+===============
 
 The application's main :doc:`Response Instance </outgoing/response>` is always available
 as a class property, ``$this->response``.
 
-**Logger Object**
+Logger Object
+=============
 
 An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
+
+.. _controllers-helpers:
 
 Helpers
 =======
