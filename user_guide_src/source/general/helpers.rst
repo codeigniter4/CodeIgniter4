@@ -66,7 +66,7 @@ long as you load it before you use it.
 
 You can load your helpers in your
 controller constructor so that they become available automatically in
-any function, or you can load a helper in a specific function that needs
+any method, or you can load a helper in a specific method that needs
 it.
 
 However if you want to load in your controller constructor, you can use the ``$helpers``
@@ -130,7 +130,7 @@ functions:
 
 .. literalinclude:: helpers/006.php
 
-The ``helper()`` method will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
+The ``helper()`` function will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers
 to be loaded, as well as any helpers you've created specifically for this application. The load order
 is as follows:
