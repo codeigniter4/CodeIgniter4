@@ -286,6 +286,15 @@ data to be validated:
 
 .. literalinclude:: validation/008.php
 
+.. note:: This method gets JSON data from
+    :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
+    when the request is a JSON request (``Content-Type: application/json``),
+    or gets Raw data from
+    :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
+    when the request is a PUT, PATCH, DELETE request and
+    is not HTML form post (``Content-Type: multipart/form-data``),
+    or gets data from :ref:`$request->getVar() <incomingrequest-getting-data>`.
+
 Working with Validation
 ***********************
 

@@ -80,6 +80,8 @@ With CodeIgniter's built-in methods you can simply do this:
 
 .. literalinclude:: incomingrequest/008.php
 
+.. _incomingrequest-getting-data:
+
 Getting Data
 ============
 
@@ -102,6 +104,8 @@ maintaining the ability to control the order you look for it:
 
 * ``$request->getPostGet()`` - checks ``$_POST`` first, then ``$_GET``
 * ``$request->getGetPost()`` - checks ``$_GET`` first, then ``$_POST``
+
+.. _incomingrequest-getting-json-data:
 
 Getting JSON Data
 =================
@@ -137,6 +141,8 @@ correct ``Content-Type`` header.
 .. literalinclude:: incomingrequest/011.php
 
 .. note:: See the documentation for :php:func:`dot_array_search()` in the ``Array`` helper for more information on "dot" notation.
+
+.. _incomingrequest-retrieving-raw-data:
 
 Retrieving Raw Data (PUT, PATCH, DELETE)
 ========================================
