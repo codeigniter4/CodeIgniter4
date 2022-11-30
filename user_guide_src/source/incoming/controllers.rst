@@ -90,6 +90,15 @@ The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
 if the items are not valid. Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
+
+.. warning::
+    The ``validate()`` method uses :ref:`Validation::withRequest() <validation-withrequest>` method.
+    It validates data from :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
+    or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
+    or :ref:`$request->getVar() <incomingrequest-getting-data>`.
+    Which data is used depends on the request. Remember that an attacker is free to send any request to
+    the server.
+
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
 
