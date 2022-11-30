@@ -84,9 +84,9 @@ sub-directory named **Helpers**. An example will help understand this.
 
 For this example, assume that we have grouped together all of our Blog-related
 code into its own namespace, ``Example\Blog``. The files exist on our server at
-**/Modules/Blog/**. So, we would put our Helper files for the blog module in
-**/Modules/Blog/Helpers/**. A **blog_helper** file would be at
-**/Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
+**Modules/Blog/**. So, we would put our Helper files for the blog module in
+**Modules/Blog/Helpers/**. A **blog_helper** file would be at
+**Modules/Blog/Helpers/blog_helper.php**. Within our controller we could
 use the following command to load the helper for us:
 
 .. literalinclude:: helpers/004.php
