@@ -423,11 +423,11 @@ like this:</p>
 </pre></div>
 </div>
 <section id="getting-data">
-<h3><a class="toc-backref" href="#id4">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this headline"></a></h3>
+<span id="incomingrequest-getting-data"></span><h3><a class="toc-backref" href="#id4">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$POST</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>,
+<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>,
 the <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method returns the JSON data instead of <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code> data.</p>
 </div>
 <p>While this
@@ -447,7 +447,7 @@ maintaining the ability to control the order you look for it:</p>
 </ul>
 </section>
 <section id="getting-json-data">
-<h3><a class="toc-backref" href="#id5">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Permalink to this headline"></a></h3>
+<span id="incomingrequest-getting-json-data"></span><h3><a class="toc-backref" href="#id5">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Permalink to this headline"></a></h3>
 <p>You can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -463,7 +463,7 @@ method if you know that you’re expecting JSON.</p>
 arrays, pass in <code class="docutils literal notranslate"><span class="pre">true</span></code> as the first parameter.</p>
 <p>The second and third parameters match up to the <code class="docutils literal notranslate"><span class="pre">depth</span></code> and <code class="docutils literal notranslate"><span class="pre">options</span></code> arguments of the
 <a class="reference external" href="https://www.php.net/manual/en/function.json-decode.php">json_decode</a> PHP function.</p>
-<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>, you can also use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> to get
+<p>If the incoming request has a <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header set to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>, you can also use <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> to get
 the JSON stream. Using <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> in this way will always return an object.</p>
 </section>
 <section id="getting-specific-data-from-json">
@@ -491,7 +491,7 @@ data that you want or you can use “dot” notation to dig into the JSON to get
 </div>
 <p>If you want the result to be an associative array instead of an object, you can use <code class="docutils literal notranslate"><span class="pre">getJsonVar()</span></code> instead and pass
 true in the second parameter. This function can also be used if you can’t guarantee that the incoming request will have the
-correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYPE</span></code> header.</p>
+correct <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// With the same request as above</span>
@@ -508,7 +508,7 @@ correct <code class="docutils literal notranslate"><span class="pre">CONTENT_TYP
 </div>
 </section>
 <section id="retrieving-raw-data-put-patch-delete">
-<h3><a class="toc-backref" href="#id7">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Permalink to this headline"></a></h3>
+<span id="incomingrequest-retrieving-raw-data"></span><h3><a class="toc-backref" href="#id7">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Permalink to this headline"></a></h3>
 <p>Finally, you can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a raw stream with <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
