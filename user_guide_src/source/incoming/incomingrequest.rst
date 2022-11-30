@@ -85,7 +85,7 @@ Getting Data
 
 The ``getVar()`` method will pull from ``$_REQUEST``, so will return any data from ``$_GET``, ``$POST``, or ``$_COOKIE`` (depending on php.ini `request-order <https://www.php.net/manual/en/ini.core.php#ini.request-order>`_).
 
-.. note:: If the incoming request has a ``CONTENT_TYPE`` header set to ``application/json``,
+.. note:: If the incoming request has a ``Content-Type`` header set to ``application/json``,
     the ``getVar()`` method returns the JSON data instead of ``$_REQUEST`` data.
 
 While this
@@ -119,7 +119,7 @@ arrays, pass in ``true`` as the first parameter.
 The second and third parameters match up to the ``depth`` and ``options`` arguments of the
 `json_decode <https://www.php.net/manual/en/function.json-decode.php>`_ PHP function.
 
-If the incoming request has a ``CONTENT_TYPE`` header set to ``application/json``, you can also use ``getVar()`` to get
+If the incoming request has a ``Content-Type`` header set to ``application/json``, you can also use ``getVar()`` to get
 the JSON stream. Using ``getVar()`` in this way will always return an object.
 
 Getting Specific Data from JSON
@@ -132,7 +132,7 @@ data that you want or you can use "dot" notation to dig into the JSON to get dat
 
 If you want the result to be an associative array instead of an object, you can use ``getJsonVar()`` instead and pass
 true in the second parameter. This function can also be used if you can't guarantee that the incoming request will have the
-correct ``CONTENT_TYPE`` header.
+correct ``Content-Type`` header.
 
 .. literalinclude:: incomingrequest/011.php
 
