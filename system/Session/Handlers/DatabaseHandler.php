@@ -276,7 +276,11 @@ class DatabaseHandler extends BaseHandler
         $separator = ' ';
         $interval  = implode($separator, ['', "{$max_lifetime} second", '']);
 
-        return $this->db->table($this->table)->where('timestamp <', "now() - INTERVAL {$interval}", false)->delete() ? 1 : $this->fail();
+        return $this->db->table($this->table)->where(
+            'timestamp <',
+            "now() - INTERVAL {$interval}",
+            false
+        )->delete() ? 1 : $this->fail();
     }
 
     /**
