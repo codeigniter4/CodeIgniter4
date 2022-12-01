@@ -358,8 +358,8 @@ same way:
     unusable during the same request after you destroy the session.
 
 You may also use the ``stop()`` method to completely kill the session
-by removing the old session_id, destroying all data, and destroying
-the cookie that contained the session id:
+by removing the old session ID, destroying all data, and destroying
+the cookie that contained the session ID:
 
 .. literalinclude:: sessions/038.php
 
