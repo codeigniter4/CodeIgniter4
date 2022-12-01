@@ -69,4 +69,4 @@ many will be simple comments or formatting that have no effect on the runtime:
 * app/Config/Toolbar.php
 * app/Views/welcome_message.php
 * composer.json
-
+* phpunit.xml.dist
