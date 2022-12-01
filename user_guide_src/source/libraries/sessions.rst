@@ -504,9 +504,9 @@ permissions will probably break your application.
 Instead, you should do something like this, depending on your environment
 ::
 
-    mkdir /<path to your application directory>/writable/sessions/
-    chmod 0700 /<path to your application directory>/writable/sessions/
-    chown www-data /<path to your application directory>/writable/sessions/
+    > mkdir /<path to your application directory>/writable/sessions/
+    > chmod 0700 /<path to your application directory>/writable/sessions/
+    > chown www-data /<path to your application directory>/writable/sessions/
 
 Bonus Tip
 ---------
