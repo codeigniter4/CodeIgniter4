@@ -34,8 +34,8 @@ The config value format has been changed. Now you must set your proxy IP address
 Session Handler Key Changes
 ===========================
 
-The key of the session data record for :ref:`sessoins-databasehandler-driver`,
-:ref:`sessoins-memcachedhandler-driver` and :ref:`sessoins-redishandler-driver`
+The key of the session data record for :ref:`sessions-databasehandler-driver`,
+:ref:`sessions-memcachedhandler-driver` and :ref:`sessions-redishandler-driver`
 has changed. Therefore, any existing session data will be invalidated after
 the upgrade if you are using these session handlers.
 

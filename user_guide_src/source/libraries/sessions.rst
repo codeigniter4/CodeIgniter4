@@ -527,7 +527,7 @@ In addition, if performance is your only concern, you may want to look
 into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
 (warning: external resource), which can make your sessions blazing fast.
 
-.. _sessoins-databasehandler-driver:
+.. _sessions-databasehandler-driver:
 
 DatabaseHandler Driver
 ======================
@@ -610,7 +610,7 @@ when it generates the code.
     done processing session data if you're having performance
     issues.
 
-.. _sessoins-redishandler-driver:
+.. _sessions-redishandler-driver:
 
 RedisHandler Driver
 ===================
@@ -648,7 +648,7 @@ sufficient:
 
 .. literalinclude:: sessions/041.php
 
-.. _sessoins-memcachedhandler-driver:
+.. _sessions-memcachedhandler-driver:
 
 MemcachedHandler Driver
 =======================
