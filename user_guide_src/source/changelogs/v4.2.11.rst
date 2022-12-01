@@ -13,11 +13,15 @@ SECURITY
 ********
 
 - *Attackers may spoof IP address when using proxy* was fixed. See the `Security advisory GHSA-ghw3-5qvm-3mqc <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-ghw3-5qvm-3mqc>`_ for more information.
+- *Potential Session Handlers Vulnerability* was fixed. See the `Security advisory GHSA-6cq5-8cj7-g558 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-6cq5-8cj7-g558>`_ for more information.
 
 BREAKING
 ********
 
 - The ``Config\App::$proxyIPs`` value format has been changed. See :ref:`Upgrading Guide <upgrade-4211-proxyips>`.
+- The key of the session data record for :ref:`sessoins-databasehandler-driver`,
+  :ref:`sessoins-memcachedhandler-driver` and :ref:`sessoins-redishandler-driver`
+  has changed. See :ref:`Upgrading Guide <upgrade-4211-session-key>`.
 
 Bugs Fixed
 **********

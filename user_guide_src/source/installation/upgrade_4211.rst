@@ -29,6 +29,29 @@ The config value format has been changed. Now you must set your proxy IP address
 
 ``ConfigException`` will be thrown for old format config value.
 
+.. _upgrade-4211-session-key:
+
+Session Handler Key Changes
+===========================
+
+The key of the session data record for :ref:`sessoins-databasehandler-driver`,
+:ref:`sessoins-memcachedhandler-driver` and :ref:`sessoins-redishandler-driver`
+has changed. Therefore, any existing session data will be invalidated after
+the upgrade if you are using these session handlers.
+
+- When using ``DatabaseHandler``, the ``id`` column value in the session table
+  now contains the session cookie name (``Config\App::$sessionCookieName``).
+- When using ``MemcachedHandler`` or ``RedisHandler``, the key value contains
+  the session cookie name (``Config\App::$sessionCookieName``).
+
+There is maximum length for the ``id`` column and Memcached key (250 bytes).
+If the following values exceed those maximum length, the session will not work properly.
+
+- the session cookie name, delimiter, and session id (32 characters by default)
+  when using ``DatabaseHandler``
+- the prefix (``ci_session``), session cookie name, delimiters, and session id
+  when using  ``MemcachedHandler``
+
 Project Files
 *************
 
@@ -46,3 +69,4 @@ many will be simple comments or formatting that have no effect on the runtime:
 * app/Config/Toolbar.php
 * app/Views/welcome_message.php
 * composer.json
+
