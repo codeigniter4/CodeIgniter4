@@ -35,12 +35,11 @@ concurrency:
 
 jobs:
   build:
-    name: PHP ${{ matrix.php-versions }} Analyze code (Rector) on ${{ matrix.paths }}
+    name: Analyze code (Rector)
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.0', '8.1']
         paths:
           - app
           - system
@@ -53,7 +52,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: '8.1'
           extensions: intl
 
       - name: Use latest Composer

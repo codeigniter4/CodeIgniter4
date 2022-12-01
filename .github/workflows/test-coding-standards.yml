@@ -18,15 +18,8 @@ concurrency:
 
 jobs:
   lint:
-    name: PHP ${{ matrix.php-version }} Lint with PHP CS Fixer
+    name: Lint with PHP CS Fixer
     runs-on: ubuntu-22.04
-
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version:
-          - '8.0'
-          - '8.1'
 
     steps:
       - name: Checkout
@@ -35,7 +28,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: '8.1'
           extensions: tokenizer
           coverage: none
 
