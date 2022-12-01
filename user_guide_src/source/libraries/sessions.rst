@@ -399,6 +399,9 @@ Preference                     Default            Options                     De
                                                   RedisHandler::class
                                                   ArrayHandler::class
 **sessionCookieName**          ci_session         [A-Za-z\_-] characters only The name used for the session cookie.
+                                                                              The value will be included in the key of the
+                                                                              Database/Memcached/Redis session records. So, set the value
+                                                                              so that it does not exceed the maximum length of the key.
 **sessionExpiration**          7200 (2 hours)     Time in seconds (integer)   The number of seconds you would like the session to last.
                                                                               If you would like a non-expiring session (until browser is
                                                                               closed) set the value to zero: 0
@@ -524,6 +527,8 @@ In addition, if performance is your only concern, you may want to look
 into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
 (warning: external resource), which can make your sessions blazing fast.
 
+.. _sessoins-databasehandler-driver:
+
 DatabaseHandler Driver
 ======================
 
@@ -567,6 +572,10 @@ For PostgreSQL::
 
     CREATE INDEX "ci_sessions_timestamp" ON "ci_sessions" ("timestamp");
 
+.. note:: The ``id`` value contains the session cookie name (``Config\App::$sessionCookieName``)
+    and the session ID and a delimiter. It should be increased as needed, for example,
+    when using long session IDs.
+
 You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
 setting**. The examples below work both on MySQL and PostgreSQL::
 
@@ -600,6 +609,8 @@ when it generates the code.
     support such cases. Use ``session_write_close()`` after you've
     done processing session data if you're having performance
     issues.
+
+.. _sessoins-redishandler-driver:
 
 RedisHandler Driver
 ===================
@@ -636,6 +647,8 @@ For the most common case however, a simple ``host:port`` pair should be
 sufficient:
 
 .. literalinclude:: sessions/041.php
+
+.. _sessoins-memcachedhandler-driver:
 
 MemcachedHandler Driver
 =======================
