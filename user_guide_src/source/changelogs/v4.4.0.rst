@@ -1,0 +1,77 @@
+Version 4.4.0
+#############
+
+Release Date: Unreleased
+
+**4.4.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+Highlights
+**********
+
+- Update minimal PHP requirement to 8.0.
+- TBD
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+Interface Changes
+=================
+
+Method Signature Changes
+========================
+
+Enhancements
+************
+
+Commands
+========
+
+Testing
+=======
+
+Database
+========
+
+Query Builder
+-------------
+
+Forge
+-----
+
+Others
+------
+
+Model
+=====
+
+Libraries
+=========
+
+Helpers and Functions
+=====================
+
+Others
+======
+
+Message Changes
+***************
+
+Changes
+*******
+
+- Update minimal PHP requirement to 8.0.
+
+Deprecations
+************
+
+Bugs Fixed
+**********
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
