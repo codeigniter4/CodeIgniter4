@@ -72,12 +72,13 @@ Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and
 Pros
 ----
 
-Simple installation; easy to update
+Simple installation; easy to update.
 
 Cons
 ----
 
-You still need to check for ``app/Config`` changes after updating
+You still need to check for file changes in the **project space**
+(root, app, public, writable) after updating.
 
 Structure
 ---------
@@ -155,12 +156,13 @@ Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and
 Pros
 ----
 
-Relatively simple installation; easy to update
+Relatively simple installation; easy to update.
 
 Cons
 ----
 
-You still need to check for ``app/Config`` changes after updating
+You still need to check for file changes in the **project space**
+(root, app, public, writable) after updating.
 
 Structure
 ---------
