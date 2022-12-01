@@ -12,6 +12,7 @@ Release Date: Unreleased
 Highlights
 **********
 
+- Update minimal PHP requirement to 8.0.
 - TBD
 
 BREAKING
