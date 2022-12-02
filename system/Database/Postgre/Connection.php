@@ -188,6 +188,7 @@ class Connection extends BaseConnection
             $this->initialize();
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
             if ($str instanceof RawSql) {
                 return $str->__toString();
@@ -200,6 +201,7 @@ class Connection extends BaseConnection
             return $str ? 'TRUE' : 'FALSE';
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         return parent::escape($str);
     }
 
