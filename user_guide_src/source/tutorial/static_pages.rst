@@ -67,9 +67,9 @@ includes the following code::
     </body>
     </html>
 
-.. note:: If you look closely in **header.php** template we are using an ``esc()``
+.. note:: If you look closely in **header.php** template we are using an :php:func:`esc()`
     function. It's a global function provided by CodeIgniter to help prevent
-    XSS attacks. You can read more about it :doc:`here </general/common_functions>`.
+    XSS attacks. You can read more about it in :doc:`../general/common_functions`.
 
 Adding Logic to the Controller
 ******************************
@@ -90,8 +90,12 @@ in the ``Pages`` controller created above:
 .. literalinclude:: static_pages/002.php
 
 Now, when the requested page does exist, it is loaded, including the header and
-footer, and displayed to the user. If the requested page doesn't exist, a "404
-Page not found" error is shown.
+footer, and returned to the user. If a controller returns a string, it is
+displayed to the user.
+
+.. note:: Controllers must return a string or a :doc:`Response <../outgoing/response>` object.
+
+If the requested page doesn't exist, a "404 Page not found" error is shown.
 
 The first line in this method checks whether the page actually exists.
 PHP's native ``is_file()`` function is used to check whether the file
@@ -104,17 +108,17 @@ assigning the value to a variable, it is assigned to the title element
 in the ``$data`` array.
 
 The last thing that has to be done is loading the views in the order
-they should be displayed. The ``view()`` function built-in to
+they should be displayed. The :php:func:`view()` function built-in to
 CodeIgniter will be used to do this. The second parameter in the ``view()``
 function is used to pass values to the view. Each value in the ``$data`` array
 is assigned to a variable with the name of its key. So the value of
 ``$data['title']`` in the controller is equivalent to ``$title`` in the
 view.
 
-.. note:: Any files and directory names passed into the ``view()`` function MUST
+.. note:: Any files and directory names passed into the :php:func:`view()` function MUST
     match the case of the actual directory and file itself or the system will
-    throw errors on case-sensitive platforms. You can read more about it
-    :doc:`here </outgoing/views>`.
+    throw errors on case-sensitive platforms. You can read more about it in
+    :doc:`../outgoing/views`.
 
 Routing
 *******
@@ -145,8 +149,7 @@ request to the first matching rule. Each rule is a regular expression
 match, and calls the appropriate controller and method, possibly with
 arguments.
 
-More information about routing can be found in the URI Routing
-:doc:`documentation </incoming/routing>`.
+More information about routing can be found in the :doc:`../incoming/routing`.
 
 Here, the second rule in the ``$routes`` object matches GET request
 to the URI path ``/pages`` maps the ``index()`` method of the ``Pages`` class.
@@ -160,7 +163,7 @@ Running the App
 
 Ready to test? You cannot run the app using PHP's built-in server,
 since it will not properly process the ``.htaccess`` rules that are provided in
-``public``, and which eliminate the need to specify "index.php/"
+``public``, and which eliminate the need to specify "**index.php/**"
 as part of a URL. CodeIgniter has its own command that you can use though.
 
 From the command line, at the root of your project::

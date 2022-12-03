@@ -20,14 +20,17 @@ Open the **app/Config/Filters.php** file and update the ``$methods`` property li
 .. literalinclude:: create_news_items/001.php
 
 It configures the CSRF filter to be enabled for all **POST** requests.
-You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
+You can read more about the CSRF protection in :doc:`Security <../libraries/security>` library.
 
-.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable  Auto Routing (Legacy) <use-defined-routes-only>`
+.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
     because :ref:`auto-routing` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 Create a Form
 *************
+
+View
+====
 
 To input data into the database, you need to create a form where you can
 input the information to be stored. This means you'll be needing a form
@@ -38,62 +41,86 @@ the slug from our title in the model. Create a new view at
     <h2><?= esc($title) ?></h2>
 
     <?= session()->getFlashdata('error') ?>
-    <?= service('validation')->listErrors() ?>
+    <?= validation_list_errors() ?>
 
     <form action="/news/create" method="post">
         <?= csrf_field() ?>
 
         <label for="title">Title</label>
-        <input type="input" name="title" /><br />
+        <input type="input" name="title" value="<?= set_value('title') ?>">
+        <br>
 
         <label for="body">Text</label>
-        <textarea name="body" cols="45" rows="4"></textarea><br />
+        <textarea name="body" cols="45" rows="4"><?= set_value('body') ?></textarea>
+        <br>
 
-        <input type="submit" name="submit" value="Create news item" />
+        <input type="submit" name="submit" value="Create news item">
     </form>
 
-There are probably only three things here that look unfamiliar.
+There are probably only four things here that look unfamiliar.
 
-The ``session()->getFlashdata('error')`` function is used to report
-errors related to CSRF protection.
+The :php:func:`session()` function is used to get the Session object,
+and ``session()->getFlashdata('error')`` is used to display the error related to CSRF protection
+to the user. However, by default, if a CSRF validation check fails, an exception will be thrown,
+so it does not work yet. See :ref:`csrf-redirection-on-failure` for more information.
 
-The ``service('validation')->listErrors()`` function is used to report
-errors related to form validation.
+The :php:func:`validation_list_errors()` function provided by the :doc:`../helpers/form_helper`
+is used to report errors related to form validation.
 
-The ``csrf_field()`` function creates a hidden input with a CSRF token that helps protect against some common attacks.
+The :php:func:`csrf_field()` function creates a hidden input with a CSRF token that helps protect against some common attacks.
 
-Go back to your ``News`` controller. You're going to do two things here,
+The :php:func:`set_value()` function provided by the :doc:`../helpers/form_helper` is used to show
+old input data when errors occur.
+
+Controller
+==========
+
+Go back to your **News** controller. You're going to do two things here,
 check whether the form was submitted and whether the submitted data
 passed the validation rules.
-You'll use the :ref:`validation method in Controller <controller-validate>` to do this.
+You'll use the :ref:`validation method in Controller <controller-validatedata>` to do this.
 
 .. literalinclude:: create_news_items/002.php
 
-The code above adds a lot of functionality. First we load the NewsModel.
-After that, we check if we deal with the **POST** request and then
-the Controller-provided helper function is used to validate
-the user input data. In this case, the POST data, and the title and text fields are required.
+The code above adds a lot of functionality.
 
+First we load the :doc:`Form helper <../helpers/form_helper>` with the :php:func:`helper()` function.
+Most helper functions require the helper to be loaded before use.
+
+Next, we check if we deal with the **POST** request with the
+:doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
+It is set in the controller by the framework.
+If the HTTP method is not POST, that is it is GET,
+the form is loaded and returned to display.
+
+Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
+We also use the :doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
+
+After that, the Controller-provided helper function :ref:`validateData() <controller-validatedata>`
+is used to validate ``$post`` data.
+In this case, the title and body fields are required and in the specific length.
 CodeIgniter has a powerful validation library as demonstrated
-above. You can read :doc:`more about this library
-here <../libraries/validation>`.
+above. You can read more about the :doc:`Validation library <../libraries/validation>`.
 
-Continuing down, you can see a condition that checks whether the form
-validation ran successfully. If it did not, the form is displayed; if it
-was submitted **and** passed all the rules, the model is called. This
-takes care of passing the news item into the model.
-This contains a new function ``url_title()``. This function -
+If the validation fails, the form is loaded and returned to display.
+
+If the validation passed all the rules, the **NewsModel** is loaded and called. This
+takes care of passing the news item into the model. The :ref:`model-save` method handles
+inserting or updating the record automatically, based on whether it finds an array key
+matching the primary key.
+
+This contains a new function :php:func:`url_title()`. This function -
 provided by the :doc:`URL helper <../helpers/url_helper>` - strips down
 the string you pass it, replacing all spaces by dashes (``-``) and makes
 sure everything is in lowercase characters. This leaves you with a nice
 slug, perfect for creating URIs.
 
-After this, a view is loaded to display a success message. Create a view at
+After this, view files are loaded and returned to display a success message. Create a view at
 **app/Views/news/success.php** and write a success message.
 
 This could be as simple as::
 
-    News item created successfully.
+    <p>News item created successfully.</p>
 
 Model Updating
 **************
@@ -125,7 +152,7 @@ Before you can start adding news items into your CodeIgniter application
 you have to add an extra rule to **app/Config/Routes.php** file. Make sure your
 file contains the following. This makes sure CodeIgniter sees ``create()``
 as a method instead of a news item's slug. You can read more about different
-routing types :doc:`here </incoming/routing>`.
+routing types in :doc:`../incoming/routing`.
 
 .. literalinclude:: create_news_items/004.php
 

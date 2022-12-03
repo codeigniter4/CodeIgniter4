@@ -109,6 +109,8 @@ may alter this behavior by editing the following config parameter value in
 .. note:: Since v4.2.3, you can regenerate CSRF token manually with the
     ``Security::generateHash()`` method.
 
+.. _csrf-redirection-on-failure:
+
 Redirection on Failure
 ----------------------
 
