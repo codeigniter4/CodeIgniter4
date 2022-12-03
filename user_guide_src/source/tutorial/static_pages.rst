@@ -89,6 +89,9 @@ in the ``Pages`` controller created above:
 
 .. literalinclude:: static_pages/002.php
 
+And add ``use CodeIgniter\Exceptions\PageNotFoundException;`` after the ``namespace`` line
+to import the ``PageNotFoundException`` class.
+
 Now, when the requested page does exist, it is loaded, including the header and
 footer, and returned to the user. If a controller returns a string, it is
 displayed to the user.
