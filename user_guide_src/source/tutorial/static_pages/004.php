@@ -1,4 +1,6 @@
 <?php
 
-$routes->get('pages', 'Pages::index');
-$routes->get('(:any)', 'Pages::view/$1');
+use App\Controllers\Pages;
+
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:any)', [Pages::class, 'view']);

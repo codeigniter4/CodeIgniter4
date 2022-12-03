@@ -147,7 +147,7 @@ Add the following lines, **after** the route directive for '/'.
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
-(left-side) mapped to a controller and method name separated by slashes
+(left-side) mapped to a controller and method name
 (right-side). When a request comes in, CodeIgniter looks for the first
 match, and calls the appropriate controller and method, possibly with
 arguments.
