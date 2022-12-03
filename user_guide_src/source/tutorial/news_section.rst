@@ -166,7 +166,7 @@ add some code to the controller and create a new view. Go back to the
 
 .. literalinclude:: news_section/006.php
 
-Don't forget add ``use CodeIgniter\Exceptions\PageNotFoundException;`` to import
+Don't forget to add ``use CodeIgniter\Exceptions\PageNotFoundException;`` to import
 the ``PageNotFoundException`` class.
 
 Instead of calling the ``getNews()`` method without a parameter, the
