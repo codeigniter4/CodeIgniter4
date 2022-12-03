@@ -1,7 +1,7 @@
 <?php
 
-$union   = $db->table('users')->select('id', 'name');
-$builder = $db->table('users')->select('id', 'name');
+$union   = $db->table('users')->select('id, name');
+$builder = $db->table('users')->select('id, name');
 
 $builder->union($union)->limit(10)->get();
 /*

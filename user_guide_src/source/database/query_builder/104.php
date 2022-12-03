@@ -1,7 +1,7 @@
 <?php
 
-$union   = $db->table('users')->select('id', 'name')->orderBy('id', 'DESC')->limit(5);
-$builder = $db->table('users')->select('id', 'name')->orderBy('id', 'ASC')->limit(5)->union($union);
+$union   = $db->table('users')->select('id, name')->orderBy('id', 'DESC')->limit(5);
+$builder = $db->table('users')->select('id, name')->orderBy('id', 'ASC')->limit(5)->union($union);
 
 $db->newQuery()->fromSubquery($builder, 'q')->orderBy('id', 'DESC')->get();
 /*
