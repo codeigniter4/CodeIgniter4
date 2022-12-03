@@ -6,6 +6,9 @@ Database Configuration
     :local:
     :depth: 2
 
+.. note::
+    See :ref:`requirements-supported-databases` for currently supported database drivers.
+
 ***********
 Config File
 ***********

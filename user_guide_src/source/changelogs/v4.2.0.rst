@@ -118,6 +118,7 @@ Commands
 Others
 ======
 
+- Added ``$this->validateData()`` in Controller. See :ref:`controller-validatedata`.
 - Content Security Policy (CSP) enhancements
     - Added the configs ``$scriptNonceTag`` and ``$styleNonceTag`` in  ``Config\ContentSecurityPolicy`` to customize the CSP placeholders (``{csp-script-nonce}`` and ``{csp-style-nonce}``)
     - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement

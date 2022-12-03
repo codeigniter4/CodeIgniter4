@@ -14,7 +14,7 @@ Create a Database to Work with
 ******************************
 
 The CodeIgniter installation assumes that you have set up an appropriate
-database, as outlined in the :doc:`requirements <../intro/requirements>`.
+database, as outlined in the :ref:`requirements <requirements-supported-databases>`.
 In this tutorial, we provide SQL code for a MySQL database, and
 we also assume that you have a suitable client for issuing database
 commands (mysql, MySQL Workbench, or phpMyAdmin).
