@@ -2,11 +2,23 @@
 Server Requirements
 ###################
 
+.. contents::
+    :local:
+    :depth: 2
+
+***************************
+PHP and Required Extensions
+***************************
+
 `PHP <https://www.php.net/>`_ version 7.4 or newer is required, with the following PHP extensions are enabled:
 
   - `intl <https://www.php.net/manual/en/intl.requirements.php>`_
   - `mbstring <https://www.php.net/manual/en/mbstring.requirements.php>`_
   - `json <https://www.php.net/manual/en/json.requirements.php>`_
+
+***********************
+Optional PHP Extensions
+***********************
 
 The following PHP extensions should be enabled on your server:
 
@@ -27,6 +39,12 @@ The following PHP extensions are required when you use PHPUnit:
    - `dom <https://www.php.net/manual/en/dom.requirements.php>`_ (if you use :doc:`TestResponse </testing/response>` class)
    - `libxml <https://www.php.net/manual/en/libxml.requirements.php>`_ (if you use :doc:`TestResponse </testing/response>` class)
    - `xdebug <https://xdebug.org/docs/install>`_ (if you use ``CIUnitTestCase::assertHeaderEmitted()``)
+
+.. _requirements-supported-databases:
+
+*******************
+Supported Databases
+*******************
 
 A database is required for most web application programming.
 Currently supported databases are:
