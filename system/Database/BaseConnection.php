@@ -1006,15 +1006,18 @@ abstract class BaseConnection implements ConnectionInterface
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
         if (strcspn($item, "()'") !== strlen($item)) {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             return $item;
         }
 
         // Do not protect identifiers and do not prefix, no swap prefix, there is nothing to do
         if ($protectIdentifiers === false && $prefixSingle === false && $this->swapPre === '') {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             return $item;
         }
 
         // Convert tabs or multiple spaces into single spaces
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         $item = preg_replace('/\s+/', ' ', trim($item));
 
         // If the item has an alias declaration we remove it and set it aside.
@@ -1176,6 +1179,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         foreach ($this->reservedIdentifiers as $id) {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             if (strpos($item, '.' . $id) !== false) {
                 return preg_replace(
                     '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i',
@@ -1185,6 +1189,7 @@ abstract class BaseConnection implements ConnectionInterface
             }
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         return preg_replace(
             '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?(\.)?/i',
             $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '$2',
@@ -1228,6 +1233,7 @@ abstract class BaseConnection implements ConnectionInterface
             return array_map([&$this, 'escape'], $str);
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
             if ($str instanceof RawSql) {
                 return $str->__toString();

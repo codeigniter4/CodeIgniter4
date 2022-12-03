@@ -23,6 +23,8 @@ use IteratorAggregate;
  *
  * Representation for a group of files, with utilities for locating,
  * filtering, and ordering them.
+ *
+ * @template-implements IteratorAggregate<int, File>
  */
 class FileCollection implements Countable, IteratorAggregate
 {
