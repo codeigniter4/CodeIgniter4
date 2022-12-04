@@ -141,7 +141,7 @@ Explanation of Values:
                 * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
 **compress**    Whether or not to use client compression (``MySQLi`` only).
 **strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
-                while developing an application.
+                while developing an application (``MySQLi`` only).
 **port**        The database port number.
 **foreignKeys** true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
 
