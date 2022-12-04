@@ -89,6 +89,9 @@ in the ``Pages`` controller created above:
 
 .. literalinclude:: static_pages/002.php
 
+And add ``use CodeIgniter\Exceptions\PageNotFoundException;`` after the ``namespace`` line
+to import the ``PageNotFoundException`` class.
+
 Now, when the requested page does exist, it is loaded, including the header and
 footer, and returned to the user. If a controller returns a string, it is
 displayed to the user.
@@ -144,7 +147,7 @@ Add the following lines, **after** the route directive for '/'.
 
 CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
-(left-side) mapped to a controller and method name separated by slashes
+(left-side) mapped to a controller and method name
 (right-side). When a request comes in, CodeIgniter looks for the first
 match, and calls the appropriate controller and method, possibly with
 arguments.

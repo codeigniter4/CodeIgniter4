@@ -143,7 +143,7 @@ the views. Modify the ``index()`` method to look like this:
 The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the ``$data['title']``
 element and all data is passed to the views. You now need to create a
-view to render the news items. Create **app/Views/news/overview.php**
+view to render the news items. Create **app/Views/news/index.php**
 and add the next piece of code.
 
 .. literalinclude:: news_section/005.php
@@ -165,6 +165,9 @@ add some code to the controller and create a new view. Go back to the
 ``News`` controller and update the ``view()`` method with the following:
 
 .. literalinclude:: news_section/006.php
+
+Don't forget to add ``use CodeIgniter\Exceptions\PageNotFoundException;`` to import
+the ``PageNotFoundException`` class.
 
 Instead of calling the ``getNews()`` method without a parameter, the
 ``$slug`` variable is passed, so it will return the specific news item.
