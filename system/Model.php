@@ -131,7 +131,7 @@ class Model extends BaseModel
     /**
      * Primary Key value when inserting and useAutoIncrement is false.
      *
-     * @var mixed|null
+     * @var int|string|null
      */
     private $tempPrimaryKeyValue;
 

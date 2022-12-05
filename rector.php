@@ -46,6 +46,7 @@ use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\RemoveVarTagFromClassConstantRector;
@@ -118,6 +119,13 @@ return static function (RectorConfig $rectorConfig): void {
         // @TODO remove if https://github.com/rectorphp/rector-phpunit/issues/86 is fixed
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
+        ],
+
+        TypedPropertyFromAssignsRector::class => [
+            __DIR__ . '/system/Model.php',
+            __DIR__ . '/tests/system/API/ResponseTraitTest.php',
+            __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
+            __DIR__ . '/tests/system/Filters/HoneypotTest.php',
         ],
     ]);
 
