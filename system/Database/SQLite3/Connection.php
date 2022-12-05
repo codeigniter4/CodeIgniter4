@@ -63,7 +63,7 @@ class Connection extends BaseConnection
         }
 
         if (is_int($this->busyTimeout)) {
-            $this->simpleQuery('PRAGMA busy_timeout=' . $this->busyTimeout);
+            $this->connID->busyTimeout($this->busyTimeout);
         }
     }
 
