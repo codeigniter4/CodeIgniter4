@@ -21,6 +21,9 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class ControllerGeneratorTest extends CIUnitTestCase
 {
+    /**
+     * @var bool|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

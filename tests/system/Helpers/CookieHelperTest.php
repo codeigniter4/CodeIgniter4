@@ -32,7 +32,7 @@ use Config\Services;
 final class CookieHelperTest extends CIUnitTestCase
 {
     private IncomingRequest $request;
-    private $name;
+    private string $name;
     private string $value;
     private int $expire;
     private Response $response;

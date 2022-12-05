@@ -16,6 +16,7 @@ use CodeIgniter\Database\SQLite3\Connection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
+use MySQLi;
 
 /**
  * @group DatabaseLive
@@ -26,8 +27,19 @@ final class ConnectTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    /**
+     * @var mixed|class-string<MySQLi>[]
+     */
     private $group1;
+
+    /**
+     * @var mixed|string[]
+     */
     private $group2;
+
+    /**
+     * @var mixed|string[]
+     */
     private $tests;
 
     protected function setUp(): void

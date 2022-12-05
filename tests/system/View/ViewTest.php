@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\View\Exceptions\ViewException;
@@ -24,9 +25,14 @@ use RuntimeException;
  */
 final class ViewTest extends CIUnitTestCase
 {
-    private $loader;
+    private FileLocator $loader;
+
+    /**
+     * @var string
+     */
     private $viewsDir;
-    private $config;
+
+    private \Config\View $config;
 
     protected function setUp(): void
     {

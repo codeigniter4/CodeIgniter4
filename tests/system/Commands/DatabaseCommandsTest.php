@@ -21,6 +21,9 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class DatabaseCommandsTest extends CIUnitTestCase
 {
+    /**
+     * @var bool|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

@@ -22,6 +22,7 @@ use CodeIgniter\Filters\fixtures\Multiple1;
 use CodeIgniter\Filters\fixtures\Multiple2;
 use CodeIgniter\Filters\fixtures\Role;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ConfigFromArrayTrait;
@@ -48,7 +49,7 @@ final class FiltersTest extends CIUnitTestCase
 {
     use ConfigFromArrayTrait;
 
-    private $response;
+    private Response $response;
 
     protected function setUp(): void
     {

@@ -41,7 +41,7 @@ final class ControllerTest extends CIUnitTestCase
     private App $config;
 
     /**
-     * @var Controller
+     * @var Controller|object|null
      */
     private $controller;
 

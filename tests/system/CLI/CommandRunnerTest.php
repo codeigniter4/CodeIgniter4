@@ -24,7 +24,7 @@ use Config\Services;
 final class CommandRunnerTest extends CIUnitTestCase
 {
     /**
-     * @var resource
+     * @var bool|resource
      */
     private $streamFilter;
 

@@ -13,7 +13,6 @@ namespace CodeIgniter\Test;
 
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\HTTP\ResponseInterface;
 use Config\App;
 use Config\Services;
 use PHPUnit\Framework\AssertionFailedError;
@@ -28,7 +27,7 @@ final class TestResponseTest extends CIUnitTestCase
     private ?TestResponse $testResponse = null;
 
     /**
-     * @var ResponseInterface
+     * @var mixed|Response|null
      */
     private $response;
 

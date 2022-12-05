@@ -21,7 +21,7 @@ use DOMDocument;
  */
 final class XMLFormatterTest extends CIUnitTestCase
 {
-    private $xmlFormatter;
+    private XMLFormatter $xmlFormatter;
 
     protected function setUp(): void
     {

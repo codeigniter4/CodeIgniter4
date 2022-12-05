@@ -21,8 +21,12 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class ClearDebugbarTest extends CIUnitTestCase
 {
+    /**
+     * @var bool|resource
+     */
     private $streamFilter;
-    private $time;
+
+    private int $time;
 
     protected function setUp(): void
     {

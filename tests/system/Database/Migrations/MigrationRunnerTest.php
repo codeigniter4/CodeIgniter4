@@ -22,6 +22,7 @@ use Config\Database;
 use Config\Migrations;
 use Config\Services;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @group DatabaseLive
@@ -39,8 +40,8 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     // Use specific migration files for this test case.
     protected $namespace = 'Tests\Support\MigrationTestMigrations';
-    private $root;
-    private $config;
+    private vfsStreamDirectory $root;
+    private Migrations $config;
 
     protected function setUp(): void
     {

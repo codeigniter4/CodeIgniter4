@@ -27,6 +27,10 @@ use CodeIgniter\Test\Mock\MockCodeIgniter;
 final class ConsoleTest extends CIUnitTestCase
 {
     private DotEnv $env;
+
+    /**
+     * @var bool|resource
+     */
     private $stream_filter;
 
     protected function setUp(): void

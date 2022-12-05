@@ -25,6 +25,10 @@ final class HistoryTest extends CIUnitTestCase
     private const STEP = 0.000001;
 
     private float $time;
+
+    /**
+     * @var bool|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

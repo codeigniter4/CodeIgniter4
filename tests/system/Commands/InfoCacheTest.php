@@ -23,6 +23,9 @@ use Config\Services;
  */
 final class InfoCacheTest extends CIUnitTestCase
 {
+    /**
+     * @var bool|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

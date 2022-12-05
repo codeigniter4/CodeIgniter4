@@ -30,8 +30,8 @@ use Config\Services;
  */
 final class PagerTest extends CIUnitTestCase
 {
-    private ?Pager $pager = null;
-    private $config;
+    private ?Pager $pager        = null;
+    private ?PagerConfig $config = null;
 
     protected function setUp(): void
     {
