@@ -225,6 +225,7 @@ Forge
 Others
 ------
 
+- SQLite3 has a new Config property ``$busyTimeout`` to set timeout when a table is locked.
 - ``BaseConnection::escape()`` now excludes the ``RawSql`` data type. This allows passing SQL strings into data.
 - Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
 - SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
