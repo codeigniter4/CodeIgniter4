@@ -45,12 +45,25 @@ class Connection extends BaseConnection
      */
     protected $foreignKeys = false;
 
+    /**
+     * The milliseconds to sleep
+     *
+     * @var int|null milliseconds
+     *
+     * @see https://www.php.net/manual/en/sqlite3.busytimeout
+     */
+    protected $busyTimeout;
+
     public function initialize()
     {
         parent::initialize();
 
         if ($this->foreignKeys) {
             $this->enableForeignKeyChecks();
+        }
+
+        if (is_int($this->busyTimeout)) {
+            $this->simpleQuery('PRAGMA busy_timeout=' . $this->busyTimeout);
         }
     }
 

@@ -150,6 +150,7 @@ Explanation of Values:
                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
                     See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
                     To enforce Foreign Key constraint, set this config item to true.
+**busyTimeout** milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
 =============== ===========================================================================================================
 
 .. note:: Depending on what database platform you are using (MySQL, PostgreSQL,
