@@ -442,6 +442,104 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertSame($expected, $request->getRawInput());
     }
 
+    public function provideRawInputVarChecks()
+    {
+        return [
+            [
+                'username=admin001&role=administrator&usepass=0',
+                'username',
+                'admin001',
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
+                ['role', 'usepass'],
+                [
+                    'role'    => 'administrator',
+                    'usepass' => '0',
+                ],
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
+                'not_exists',
+                null,
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
+                null,
+                [
+                    'username' => 'admin001',
+                    'role'     => 'administrator',
+                    'usepass'  => '0',
+                ],
+                null,
+                null,
+            ],
+            [
+                '',
+                null,
+                [],
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two',
+                ['username', 'foo'],
+                [
+                    'username' => 'admin001',
+                    'foo'      => ['one', 'two'],
+                ],
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two',
+                'foo.0',
+                'one',
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two&bar[baz]=hello',
+                'bar.baz',
+                'hello',
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two&bar[baz]=hello6.5world',
+                'bar.baz',
+                '6.5',
+                FILTER_SANITIZE_NUMBER_FLOAT,
+                FILTER_FLAG_ALLOW_FRACTION,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideRawInputVarChecks
+     *
+     * @param string $rawstring
+     * @param mixed  $var
+     * @param mixed  $expected
+     * @param mixed  $filter
+     * @param mixed  $flag
+     */
+    public function testCanGrabGetRawInputVar($rawstring, $var, $expected, $filter, $flag)
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+
+        $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
+    }
+
     public function testIsCLI()
     {
         $this->assertFalse($this->request->isCLI());
