@@ -121,14 +121,17 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
 
-        // union mixed bug @see https://github.com/rectorphp/rector/issues/7640
         TypedPropertyFromAssignsRector::class => [
+            // union mixed bug @see https://github.com/rectorphp/rector/issues/7640
             __DIR__ . '/system/Model.php',
             __DIR__ . '/tests/system/API/ResponseTraitTest.php',
             __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
             __DIR__ . '/tests/system/Filters/HoneypotTest.php',
             __DIR__ . '/tests/system/Test/TestResponseTest.php',
             __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
+
+            // new class extends Controller marked as object
+            __DIR__ . '/tests/system/ControllerTest.php',
         ],
     ]);
 
