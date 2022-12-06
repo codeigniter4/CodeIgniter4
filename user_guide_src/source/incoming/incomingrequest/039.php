@@ -2,12 +2,10 @@
 
 // When the request body is 'foo=one&bar=two&baz[]=10&baz[]=20'
 var_dump($request->getRawInputVar('bar'));
-
 // Outputs: two
 
 // foo=one&bar=two&baz[]=10&baz[]=20
 var_dump($request->getRawInputVar(['foo', 'bar']));
-
 /*
  * Outputs:
  * [
@@ -18,7 +16,6 @@ var_dump($request->getRawInputVar(['foo', 'bar']));
 
 // foo=one&bar=two&baz[]=10&baz[]=20
 var_dump($request->getRawInputVar('baz'));
-
 /*
  * Outputs:
  * [
@@ -29,5 +26,4 @@ var_dump($request->getRawInputVar('baz'));
 
 // foo=one&bar=two&baz[]=10&baz[]=20
 var_dump($request->getRawInputVar('baz.0'));
-
 // Outputs: 10
