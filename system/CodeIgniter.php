@@ -185,11 +185,6 @@ class CodeIgniter
         // Setup Exception Handling
         Services::exceptions()->initialize();
 
-        // Run this check for manual installations
-        if (! is_file(COMPOSER_PATH)) {
-            $this->resolvePlatformExtensions(); // @codeCoverageIgnore
-        }
-
         // Set default locale on the server
         Locale::setDefault($this->config->defaultLocale ?? 'en');
 
@@ -205,6 +200,8 @@ class CodeIgniter
      * @throws FrameworkException
      *
      * @codeCoverageIgnore
+     *
+     * @deprecated v4.3
      */
     protected function resolvePlatformExtensions()
     {
