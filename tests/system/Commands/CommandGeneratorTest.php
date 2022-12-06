@@ -22,7 +22,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 final class CommandGeneratorTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 
