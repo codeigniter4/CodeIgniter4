@@ -29,7 +29,7 @@ final class ConsoleTest extends CIUnitTestCase
     private DotEnv $env;
 
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $stream_filter;
 
