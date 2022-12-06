@@ -37,7 +37,7 @@ final class HoneypotTest extends CIUnitTestCase
     private $request;
 
     /**
-     * @var mixed|Response|null
+     * @var Response|null
      */
     private $response;
 
