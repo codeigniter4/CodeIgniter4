@@ -26,12 +26,7 @@ use RuntimeException;
 final class ViewTest extends CIUnitTestCase
 {
     private FileLocator $loader;
-
-    /**
-     * @var string
-     */
-    private $viewsDir;
-
+    private string $viewsDir;
     private \Config\View $config;
 
     protected function setUp(): void

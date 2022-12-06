@@ -27,12 +27,7 @@ use Tests\Support\View\WorldDecorator;
 final class DecoratorsTest extends CIUnitTestCase
 {
     private FileLocator $loader;
-
-    /**
-     * @var string
-     */
-    private $viewsDir;
-
+    private string $viewsDir;
     private $config;
 
     protected function setUp(): void

@@ -24,12 +24,7 @@ use Config\View;
 final class ParserFilterTest extends CIUnitTestCase
 {
     private FileLocator $loader;
-
-    /**
-     * @var string
-     */
-    private $viewsDir;
-
+    private string $viewsDir;
     private View $config;
 
     protected function setUp(): void
