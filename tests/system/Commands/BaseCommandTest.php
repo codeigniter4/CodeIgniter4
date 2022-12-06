@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Services;
 use Tests\Support\Commands\AppInfo;
@@ -22,7 +23,7 @@ use Tests\Support\Commands\AppInfo;
  */
 final class BaseCommandTest extends CIUnitTestCase
 {
-    private $logger;
+    private Logger $logger;
 
     protected function setUp(): void
     {

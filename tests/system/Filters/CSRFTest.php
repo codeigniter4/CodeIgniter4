@@ -12,6 +12,9 @@
 namespace CodeIgniter\Filters;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
@@ -23,9 +26,14 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class CSRFTest extends CIUnitTestCase
 {
-    private $config;
+    private \Config\Filters $config;
+
+    /**
+     * @var CLIRequest|IncomingRequest|null
+     */
     private $request;
-    private $response;
+
+    private ?Response $response = null;
 
     protected function setUp(): void
     {

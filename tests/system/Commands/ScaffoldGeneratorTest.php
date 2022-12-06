@@ -24,6 +24,9 @@ use Config\Services;
  */
 final class ScaffoldGeneratorTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

@@ -22,6 +22,9 @@ use Config\Services;
  */
 final class RoutesTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

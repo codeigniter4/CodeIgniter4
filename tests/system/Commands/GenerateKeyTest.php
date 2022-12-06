@@ -21,7 +21,11 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class GenerateKeyTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
+
     private string $envPath;
     private string $backupEnvPath;
 

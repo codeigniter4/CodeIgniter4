@@ -21,7 +21,11 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class EnvironmentCommandTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
+
     private string $envPath       = ROOTPATH . '.env';
     private string $backupEnvPath = ROOTPATH . '.env.backup';
 

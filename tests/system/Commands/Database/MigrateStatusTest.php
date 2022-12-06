@@ -22,7 +22,11 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class MigrateStatusTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
+
     private string $migrationFileFrom = SUPPORTPATH . 'MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php';
     private string $migrationFileTo   = APPPATH . 'Database/Migrations/2018-01-24-102301_Some_migration.php';
 

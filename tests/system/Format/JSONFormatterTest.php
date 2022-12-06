@@ -21,7 +21,7 @@ use RuntimeException;
  */
 final class JSONFormatterTest extends CIUnitTestCase
 {
-    private $jsonFormatter;
+    private JSONFormatter $jsonFormatter;
 
     protected function setUp(): void
     {

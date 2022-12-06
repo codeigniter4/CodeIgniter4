@@ -29,8 +29,16 @@ use stdClass;
  */
 final class ResponseTraitTest extends CIUnitTestCase
 {
+    /**
+     * @var MockIncomingRequest|null
+     */
     private $request;
+
+    /**
+     * @var MockResponse|null
+     */
     private $response;
+
     private ?FormatterInterface $formatter = null;
 
     protected function setUp(): void

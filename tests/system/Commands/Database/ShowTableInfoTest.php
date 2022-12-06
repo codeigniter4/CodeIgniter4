@@ -27,7 +27,11 @@ final class ShowTableInfoTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
+
     protected $migrateOnce = true;
 
     protected function setUp(): void
