@@ -25,7 +25,7 @@ use Config\App;
 final class TestCaseTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource|null
+     * @var false|resource|null
      */
     private $stream_filter;
 

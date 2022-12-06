@@ -23,7 +23,7 @@ use Config\Services;
 final class RoutesTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 

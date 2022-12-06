@@ -28,7 +28,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 

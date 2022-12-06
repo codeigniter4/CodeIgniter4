@@ -23,7 +23,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 final class MigrateStatusTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 

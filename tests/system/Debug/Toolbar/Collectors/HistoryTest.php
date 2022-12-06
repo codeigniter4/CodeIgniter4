@@ -27,7 +27,7 @@ final class HistoryTest extends CIUnitTestCase
     private float $time;
 
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 

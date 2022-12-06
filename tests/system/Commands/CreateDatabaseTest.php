@@ -27,7 +27,7 @@ use Config\Database;
 final class CreateDatabaseTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 

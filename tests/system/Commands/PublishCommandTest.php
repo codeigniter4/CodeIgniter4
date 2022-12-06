@@ -23,7 +23,7 @@ use Tests\Support\Publishers\TestPublisher;
 final class PublishCommandTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 

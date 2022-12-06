@@ -22,7 +22,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
 final class HelpCommandTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 
