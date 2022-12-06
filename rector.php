@@ -128,6 +128,7 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Honeypot/HoneypotTest.php',
             __DIR__ . '/tests/system/Filters/HoneypotTest.php',
             __DIR__ . '/tests/system/Test/TestResponseTest.php',
+            __DIR__ . '/tests/system/Database/Live/ConnectTest.php',
         ],
     ]);
 
