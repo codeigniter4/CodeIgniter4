@@ -24,7 +24,7 @@ use Config\Services;
 final class ClearCacheTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 
