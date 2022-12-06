@@ -26,7 +26,7 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Comparison operation \"\\>\" between int\\<1, max\\> and \\(array\\|float\\|int\\) results in an error\\.$#"
+			message: "#^Comparison operation \"\\>\" between int and \\(array\\|float\\|int\\) results in an error\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php
 

@@ -12,6 +12,7 @@
 namespace CodeIgniter\Test;
 
 use CodeIgniter\Exceptions\FrameworkException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 use Faker\Factory;
 use Faker\Generator;
@@ -503,7 +504,7 @@ class Fabricator
                 break;
 
             default:
-                $datetime = time();
+                $datetime = Time::now()->getTimestamp();
         }
 
         // Determine which fields we will need

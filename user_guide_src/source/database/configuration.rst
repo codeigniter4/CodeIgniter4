@@ -113,12 +113,12 @@ Explanation of Values:
 =============== ===========================================================================================================
 **dsn**         The DSN connect string (an all-in-one configuration sequence).
 **hostname**    The hostname of your database server. Often this is 'localhost'.
-**username**    The username used to connect to the database.
-**password**    The password used to connect to the database.
+**username**    The username used to connect to the database. (``SQLite3`` does not use this.)
+**password**    The password used to connect to the database. (``SQLite3`` does not use this.)
 **database**    The name of the database you want to connect to.
 
                 .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
-**DBDriver**    The database type. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name
+**DBDriver**    The database driver name. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
@@ -129,10 +129,10 @@ Explanation of Values:
 **swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                 applications where you might run manually written queries, and need the prefix to still be
                 customizable by the end user.
-**schema**      The database schema, default value varies by driver. Used by ``Postgres`` and ``SQLSRV`` drivers.
+**schema**      The database schema, default value varies by driver. (Used by ``Postgres`` and ``SQLSRV``.)
 **encrypt**     Whether or not to use an encrypted connection.
-                ``SQLSRV`` drivers accept true/false
-                ``MySQLi`` drivers accept an array with the following options:
+                ``SQLSRV`` driver accepts true/false
+                ``MySQLi`` driver accepts an array with the following options:
                 * ``ssl_key``    - Path to the private key file
                 * ``ssl_cert``   - Path to the public key certificate file
                 * ``ssl_ca``     - Path to the certificate authority file
@@ -141,10 +141,8 @@ Explanation of Values:
                 * ``ssl_verify`` - true/false; Whether to verify the server certificate or not (``MySQLi`` only)
 **compress**    Whether or not to use client compression (``MySQLi`` only).
 **strictOn**    true/false (boolean) - Whether to force "Strict Mode" connections, good for ensuring strict SQL
-                while developing an application.
-**port**        The database port number. To use this value you have to add a line to the database config array.
-
-                .. literalinclude:: configuration/009.php
+                while developing an application (``MySQLi`` only).
+**port**        The database port number.
 **foreignKeys** true/false (boolean) - Whether or not to enable Foreign Key constraint (``SQLite3`` only).
 
                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
@@ -152,8 +150,7 @@ Explanation of Values:
                     To enforce Foreign Key constraint, set this config item to true.
 =============== ===========================================================================================================
 
-.. note:: Depending on what database platform you are using (MySQL, PostgreSQL,
-    etc.) not all values will be needed. For example, when using SQLite you
+.. note:: Depending on what database driver you are using (``MySQLi``, ``Postgres``,
+    etc.) not all values will be needed. For example, when using ``SQLite3`` you
     will not need to supply a username or password, and the database name
-    will be the path to your database file. The information above assumes
-    you are using MySQL.
+    will be the path to your database file.
