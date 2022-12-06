@@ -36,10 +36,7 @@ final class HoneypotTest extends CIUnitTestCase
      */
     private $request;
 
-    /**
-     * @var Response
-     */
-    private $response;
+    private Response $response;
 
     protected function setUp(): void
     {
