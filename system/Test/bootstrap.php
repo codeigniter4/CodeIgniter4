@@ -49,6 +49,14 @@ defined('SUPPORTPATH')   || define('SUPPORTPATH', realpath(TESTPATH . '_support/
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', realpath(HOMEPATH . 'vendor/autoload.php'));
 defined('VENDORPATH')    || define('VENDORPATH', realpath(HOMEPATH . 'vendor') . DIRECTORY_SEPARATOR);
 
+/*
+ * ---------------------------------------------------------------
+ * CHECK PLATFORM REQUIREMENTS
+ * ---------------------------------------------------------------
+ */
+
+require SYSTEMPATH . 'platform_check.php';
+
 // Load Common.php from App then System
 if (is_file(APPPATH . 'Common.php')) {
     require_once APPPATH . 'Common.php';
