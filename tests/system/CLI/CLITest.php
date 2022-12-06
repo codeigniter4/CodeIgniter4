@@ -24,7 +24,7 @@ use RuntimeException;
 final class CLITest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $stream_filter;
 
