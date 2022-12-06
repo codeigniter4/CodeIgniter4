@@ -26,7 +26,7 @@ use Tests\Support\Commands\ParamsReveal;
 final class CommandTest extends CIUnitTestCase
 {
     /**
-     * @var bool|resource
+     * @var false|resource
      */
     private $streamFilter;
 
