@@ -42,8 +42,6 @@ abstract class BaseResource extends Controller
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        assert($request instanceof IncomingRequest || $request instanceof CLIRequest);
-
         parent::initController($request, $response, $logger);
 
         $this->setModel($this->modelName);
