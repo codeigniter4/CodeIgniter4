@@ -35,7 +35,7 @@ final class ResponseTraitTest extends CIUnitTestCase
     private $request;
 
     /**
-     * @var mixed|MockResponse|null
+     * @var MockResponse|null
      */
     private $response;
 
