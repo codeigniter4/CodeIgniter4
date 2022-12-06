@@ -30,7 +30,7 @@ use stdClass;
 final class ResponseTraitTest extends CIUnitTestCase
 {
     /**
-     * @var mixed|MockIncomingRequest|null
+     * @var MockIncomingRequest|null
      */
     private $request;
 
