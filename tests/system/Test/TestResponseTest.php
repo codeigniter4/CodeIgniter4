@@ -27,7 +27,7 @@ final class TestResponseTest extends CIUnitTestCase
     private ?TestResponse $testResponse = null;
 
     /**
-     * @var mixed|Response|null
+     * @var Response
      */
     private $response;
 
