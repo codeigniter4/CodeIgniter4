@@ -11,6 +11,8 @@
 
 namespace CodeIgniter\Commands;
 
+use CodeIgniter\CLI\Commands;
+use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
@@ -25,8 +27,8 @@ final class CommandTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    private $logger;
-    private $commands;
+    private Logger $logger;
+    private Commands $commands;
 
     protected function setUp(): void
     {

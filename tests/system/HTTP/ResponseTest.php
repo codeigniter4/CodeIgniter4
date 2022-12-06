@@ -28,7 +28,7 @@ use DateTimeZone;
  */
 final class ResponseTest extends CIUnitTestCase
 {
-    private $server;
+    private array $server;
 
     protected function setUp(): void
     {

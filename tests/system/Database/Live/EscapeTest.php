@@ -25,7 +25,7 @@ final class EscapeTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
-    private $char;
+    private string $char;
 
     protected function setUp(): void
     {

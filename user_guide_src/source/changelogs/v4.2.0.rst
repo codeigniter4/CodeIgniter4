@@ -93,7 +93,7 @@ Database
     - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
     - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>`, :ref:`join() <query-builder-join-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
     - ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
-- SQLite3 has a new Config property ``$foreignKeys`` that enables foreign key constraints.
+- SQLite3 has a new Config item ``foreignKeys`` that enables foreign key constraints.
 
 Helpers and Functions
 =====================

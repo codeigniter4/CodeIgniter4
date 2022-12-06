@@ -23,7 +23,7 @@ final class ClearDebugbarTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    private $time;
+    private int $time;
 
     protected function setUp(): void
     {

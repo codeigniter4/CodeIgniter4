@@ -23,7 +23,7 @@ final class ClearLogsTest extends CIUnitTestCase
 {
     use StreamFilterTrait;
 
-    private $date;
+    private string $date;
 
     protected function setUp(): void
     {

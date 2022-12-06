@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\View;
@@ -22,9 +23,9 @@ use Config\View;
  */
 final class ParserFilterTest extends CIUnitTestCase
 {
-    private $loader;
-    private $viewsDir;
-    private $config;
+    private FileLocator $loader;
+    private string $viewsDir;
+    private View $config;
 
     protected function setUp(): void
     {

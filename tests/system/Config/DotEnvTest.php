@@ -26,7 +26,7 @@ final class DotEnvTest extends CIUnitTestCase
 {
     private ?vfsStreamDirectory $root;
     private string $path;
-    private $fixturesFolder;
+    private string $fixturesFolder;
 
     protected function setUp(): void
     {

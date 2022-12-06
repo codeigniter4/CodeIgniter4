@@ -47,6 +47,7 @@ use Rector\Privatization\Rector\Property\PrivatizeFinalClassPropertyRector;
 use Rector\PSR4\Rector\FileWithoutNamespace\NormalizeNamespaceByPSR4ComposerAutoloadRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 use Utils\Rector\PassStrictParameterToFunctionParameterRector;
 use Utils\Rector\RemoveErrorSuppressInTryCatchStmtsRector;
 use Utils\Rector\RemoveVarTagFromClassConstantRector;
@@ -125,6 +126,9 @@ return static function (RectorConfig $rectorConfig): void {
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
+
+        // buggy on union mixed type, new class extends SomeClass marked as object in union, and false replaced with bool in Union
+        TypedPropertyFromAssignsRector::class,
     ]);
 
     // auto import fully qualified class names

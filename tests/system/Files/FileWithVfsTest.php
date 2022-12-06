@@ -13,6 +13,7 @@ namespace CodeIgniter\Files;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @internal
@@ -22,9 +23,9 @@ use org\bovigo\vfs\vfsStream;
 final class FileWithVfsTest extends CIUnitTestCase
 {
     // For VFS stuff
-    private $root;
-    private $path;
-    private $start;
+    private ?vfsStreamDirectory $root = null;
+    private string $path;
+    private string $start;
     private File $file;
 
     protected function setUp(): void
