@@ -419,6 +419,9 @@ class Router implements RouterInterface
 
             // Does the RegEx match?
             if (preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
+                $matchedPlaceholders = $matches;
+                unset($matchedPlaceholders[0]);
+
                 // Is this route supposed to redirect to another?
                 if ($this->collection->isRedirect($routeKey)) {
                     // replacing matched route groups with references: post/([0-9]+) -> post/$1
@@ -483,12 +486,24 @@ class Router implements RouterInterface
                     }
 
                     // Using back-references
-                    $handler = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
+                    $handlerWithParams = preg_replace('#^' . $routeKey . '$#u', $handler, $uri);
                 }
 
-                $this->setRequest(explode('/', $handler));
+                // Adjust segments. `(:any)` catches multiple URI segments.
+                $handlerArray = explode('/', $handler, 2);
+                $segments[]   = $handlerArray[0]; // Controller and method
+                // Has back-references?
+                if (isset($handlerArray[1])) {
+                    $params = explode('/', $handlerArray[1]);
 
-                $this->setMatchedRoute($matchedKey, $handler);
+                    foreach ($params as $param) {
+                        $i          = ltrim($param, '$');
+                        $segments[] = $matchedPlaceholders[$i];
+                    }
+                }
+                $this->setRequest($segments);
+
+                $this->setMatchedRoute($matchedKey, $handlerWithParams ?? $handler);
 
                 return true;
             }
