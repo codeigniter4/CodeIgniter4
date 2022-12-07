@@ -406,7 +406,7 @@ final class RouterTest extends CIUnitTestCase
         $this->assertTrue($router->hasLocale());
         $this->assertSame('fr', $router->getLocale());
 
-        $router->handle('test/123/lang/bg');
+        $router->handle('test/123/456/lang/bg');
 
         $this->assertTrue($router->hasLocale());
         $this->assertSame('bg', $router->getLocale());
