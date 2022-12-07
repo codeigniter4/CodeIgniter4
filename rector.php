@@ -29,6 +29,7 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -129,6 +130,11 @@ return static function (RectorConfig $rectorConfig): void {
 
         // buggy on union mixed type, new class extends SomeClass marked as object in union, and false replaced with bool in Union
         TypedPropertyFromAssignsRector::class,
+
+        // rector mistakenly removes `@return true`
+        RemoveUselessReturnTagRector::class => [
+            __DIR__ . '/system/Debug/Exceptions.php',
+        ],
     ]);
 
     // auto import fully qualified class names
