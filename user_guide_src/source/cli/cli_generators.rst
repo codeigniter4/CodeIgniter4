@@ -269,12 +269,12 @@ Running this in your terminal::
 
     > php spark make:scaffold user
 
-will create the following classes:
+will create the following files:
 
-(1) ``App\Controllers\User``;
-(2) ``App\Models\User``;
-(3) ``App\Database\Migrations\<some date here>_User``; and
-(4) ``App\Database\Seeds\User``.
+(1) **app/Controllers/User.php**
+(2) **app/Models/User.php**
+(3) **app/Database/Migrations/<some date here>_User.php** and
+(4) **app/Database/Seeds/User.php**
 
 To include an ``Entity`` class in the scaffolded files, just include the ``--return entity`` to the command
 and it will be passed to the model generator.
