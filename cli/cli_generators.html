@@ -299,7 +299,7 @@ etc. You can also scaffold a complete set of files with just one command.</p>
 </div>
 <section id="introduction">
 <h2><a class="toc-backref" href="#id25">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
-<p>All built-in generators reside under the <code class="docutils literal notranslate"><span class="pre">Generators</span></code> namespace when listed using <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">list</span></code>.
+<p>All built-in generators reside under the <code class="docutils literal notranslate"><span class="pre">Generators</span></code> group when listed using <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">list</span></code>.
 To view the full description and usage information on a particular generator, use the command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">generator_command</span><span class="o">&gt;</span>
 </pre></div>
@@ -317,7 +317,7 @@ a namespace of <code class="docutils literal notranslate"><span class="pre">App\
 <p class="admonition-title">Note</p>
 <p>Working on modules? Code generation will set the root namespace to a default of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.
 Should you need to have the generated code elsewhere in your module namespace, make sure to set
-the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option in your command, e.g., <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:model</span> <span class="pre">blog</span> <span class="pre">--namespace</span> <span class="pre">Acme\Blog</span></code>.</p>
+the <code class="docutils literal notranslate"><span class="pre">--namespace</span></code> option in your command, e.g., <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:model</span> <span class="pre">blog</span> <span class="pre">--namespace</span> <span class="pre">Acme\\Blog</span></code>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -586,12 +586,12 @@ generator command are recognized by the scaffold command.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">scaffold</span> <span class="nx">user</span>
 </pre></div>
 </div>
-<p>will create the following classes:</p>
+<p>will create the following files:</p>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">App\Controllers\User</span></code>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">App\Models\User</span></code>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">App\Database\Migrations\&lt;some</span> <span class="pre">date</span> <span class="pre">here&gt;_User</span></code>; and</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">App\Database\Seeds\User</span></code>.</p></li>
+<li><p><strong>app/Controllers/User.php</strong></p></li>
+<li><p><strong>app/Models/User.php</strong></p></li>
+<li><p><strong>app/Database/Migrations/&lt;some date here&gt;_User.php</strong> and</p></li>
+<li><p><strong>app/Database/Seeds/User.php</strong></p></li>
 </ol>
 <p>To include an <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class in the scaffolded files, just include the <code class="docutils literal notranslate"><span class="pre">--return</span> <span class="pre">entity</span></code> to the command
 and it will be passed to the model generator.</p>
@@ -615,7 +615,7 @@ generation.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 06, 2022.
+      <span class="lastupdated">Last updated on Dec 07, 2022.
       </span></p>
   </div>
 
