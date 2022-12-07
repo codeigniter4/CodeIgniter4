@@ -204,6 +204,31 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
+    public function testClosureRule(): void
+    {
+        $this->validation->setRules(
+            [
+                'foo' => ['required', static fn ($value) => $value === 'abc'],
+            ],
+            [
+                // Errors
+                'foo' => [
+                    // Specify the array key for the closure rule.
+                    1 => 'The value is not "abc"',
+                ],
+            ],
+        );
+
+        $data   = ['foo' => 'xyz'];
+        $return = $this->validation->run($data);
+
+        $this->assertFalse($return);
+        $this->assertSame(
+            ['foo' => 'The value is not "abc"'],
+            $this->validation->getErrors()
+        );
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
      *
