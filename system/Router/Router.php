@@ -462,10 +462,7 @@ class Router implements RouterInterface
                 if (! is_string($handler) && is_callable($handler)) {
                     $this->controller = $handler;
 
-                    // Remove the original string from the matches array
-                    array_shift($matches);
-
-                    $this->params = $matches;
+                    $this->params = $matchedPlaceholders;
 
                     $this->setMatchedRoute($matchedKey, $handler);
 
