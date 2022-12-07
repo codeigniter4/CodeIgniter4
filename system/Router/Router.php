@@ -55,7 +55,8 @@ class Router implements RouterInterface
      * An array of binds that were collected
      * so they can be sent to closure routes.
      *
-     * @var array
+     * @var array<int, string>
+     * @phpstan-var list<string>
      */
     protected $params = [];
 
@@ -155,6 +156,8 @@ class Router implements RouterInterface
     }
 
     /**
+     * @param string|null $uri The URI path (route)
+     *
      * @return Closure|string Controller classname or Closure
      *
      * @throws PageNotFoundException
