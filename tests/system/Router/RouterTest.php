@@ -49,7 +49,7 @@ final class RouterTest extends CIUnitTestCase
             'books/(:num)/(:alpha)/(:num)'                    => 'Blog::show/$3/$1',
             'closure/(:num)/(:alpha)'                         => static fn ($num, $str) => $num . '-' . $str,
             '{locale}/pages'                                  => 'App\Pages::list_all',
-            'test/(:any)/lang/{locale}'                       => 'App\Pages::list_all',
+            'test/(:any)/lang/{locale}'                       => 'App\Pages::list_all/$1',
             'admin/admins'                                    => 'App\Admin\Admins::list_all',
             'admin/admins/edit/(:any)'                        => 'App/Admin/Admins::edit_show/$1',
             '/some/slash'                                     => 'App\Slash::index',
@@ -409,6 +409,19 @@ final class RouterTest extends CIUnitTestCase
         $router->handle('test/123/456/lang/bg');
 
         $this->assertTrue($router->hasLocale());
+        $this->assertSame('bg', $router->getLocale());
+    }
+
+    /**
+     * @see https://github.com/codeigniter4/CodeIgniter4/issues/6947
+     */
+    public function testRouteParamAny()
+    {
+        $router = new Router($this->collection, $this->request);
+
+        $router->handle('test/123/456/lang/bg');
+
+        $this->assertSame(['123/456'], $router->params());
         $this->assertSame('bg', $router->getLocale());
     }
 
