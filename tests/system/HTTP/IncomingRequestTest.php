@@ -295,8 +295,13 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testCanGetAVariableFromJson()
     {
         $jsonObj = [
-            'foo' => 'bar',
-            'baz' => ['fizz' => 'buzz'],
+            'foo'   => 'bar',
+            'baz'   => ['fizz' => 'buzz'],
+            'int'   => 123,
+            'float' => 3.14,
+            'true'  => true,
+            'false' => false,
+            'null'  => null,
         ];
         $json = json_encode($jsonObj);
 
@@ -312,14 +317,24 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertIsObject($jsonVar);
         $this->assertSame('buzz', $jsonVar->fizz);
         $this->assertSame('buzz', $request->getJsonVar('baz.fizz'));
+        $this->assertSame(123, $request->getJsonVar('int'));
+        $this->assertSame(3.14, $request->getJsonVar('float'));
+        $this->assertTrue($request->getJsonVar('true'));
+        $this->assertFalse($request->getJsonVar('false'));
+        $this->assertNull($request->getJsonVar('null'));
     }
 
     public function testGetJsonVarAsArray()
     {
         $jsonObj = [
             'baz' => [
-                'fizz' => 'buzz',
-                'foo'  => 'bar',
+                'fizz'  => 'buzz',
+                'foo'   => 'bar',
+                'int'   => 123,
+                'float' => 3.14,
+                'true'  => true,
+                'false' => false,
+                'null'  => null,
             ],
         ];
         $json = json_encode($jsonObj);
@@ -333,6 +348,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertIsArray($jsonVar);
         $this->assertSame('buzz', $jsonVar['fizz']);
         $this->assertSame('bar', $jsonVar['foo']);
+        $this->assertSame(123, $jsonVar['int']);
+        $this->assertSame(3.14, $jsonVar['float']);
+        $this->assertTrue($jsonVar['true']);
+        $this->assertFalse($jsonVar['false']);
+        $this->assertNull($jsonVar['null']);
     }
 
     public function testGetJsonVarCanFilter()
@@ -345,6 +365,59 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
         $this->assertFalse($request->getJsonVar('foo', false, FILTER_VALIDATE_INT));
+    }
+
+    public function testGetJsonVarCanFilterArray()
+    {
+        $json = json_encode([
+            'string'      => 'hello123world',
+            'int'         => 123,
+            'float'       => 3.14,
+            'stringFloat' => 'hello3.14world',
+            'array'       => [
+                'string' => 'hello123world',
+                'int'    => 123,
+            ],
+        ]);
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $expected = [
+            'string'      => '123',
+            'int'         => 123,
+            'float'       => 3.14,
+            'stringFloat' => '3.14',
+            'array'       => [
+                'string' => '123',
+                'int'    => 123,
+            ],
+        ];
+
+        $this->assertSame(
+            $expected,
+            $request->getJsonVar(null, true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+        );
+
+        $this->assertSame(
+            $expected['array'],
+            $request->getJsonVar('array', true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+        );
+
+        $this->assertSame(
+            ['array' => $expected['array'], 'float' => $expected['float']],
+            $request->getJsonVar(['array', 'float'], true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+        );
+
+        $result = $request->getJsonVar(['array', 'float'], false, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $this->assertIsObject($result['array']);
+        $this->assertSame(
+            ['array' => $expected['array'], 'float' => $expected['float']],
+            ['array' => json_decode(json_encode($result['array']), true), 'float' => $result['float']],
+        );
     }
 
     public function testGetVarWorksWithJson()

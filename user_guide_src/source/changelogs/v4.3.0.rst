@@ -185,6 +185,8 @@ Others
     - ``Debug\Exceptions::__construct()``
     - ``Services::exceptions()``
 
+- **Request:** The ``$index`` parameter of ``IncomingRequest::getJsonVar()`` now accepts an ``array``, ``string`` or ``null`` value.
+
 Enhancements
 ************
 
@@ -342,3 +344,5 @@ Bugs Fixed
 **********
 
 - Fixed a bug when all types of ``Prepared Queries`` were returning a ``Result`` object instead of a bool value for write-type queries.
+- Fixed a bug when not always all variables in a JSON request were filtered if filters were applied with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
+- Fixed a bug when variable type may be changed when using a specified index with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
