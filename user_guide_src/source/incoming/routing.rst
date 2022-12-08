@@ -209,7 +209,7 @@ redirect them back to the same page after they log in, you may find this example
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
 
-.. important:: Note: You can also mix and match placeholders with regular expressions.
+.. note:: You can also mix and match placeholders with regular expressions.
 
 Closures
 ========
