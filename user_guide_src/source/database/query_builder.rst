@@ -1400,8 +1400,8 @@ Class Reference
     .. php:method:: setQueryAsData($query[, $alias[, $columns = null]])
 
         :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
-        :param array|string|null $columns: Array or comma delimited string of columns in the query
         :param string|null $alias: Alias for query
+        :param array|string|null $columns: Array or comma delimited string of columns in the query
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
