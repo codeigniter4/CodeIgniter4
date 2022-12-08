@@ -623,9 +623,9 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param mixed     $key    Field name, or an array of field/value pairs
-     * @param mixed     $value  Field value, if $key is a single field
-     * @param bool|null $escape Whether to escape values
+     * @param array|object|string               $key    Field name, or an array of field/value pairs
+     * @param bool|float|int|object|string|null $value  Field value, if $key is a single field
+     * @param bool|null                         $escape Whether to escape values
      *
      * @return $this
      */
