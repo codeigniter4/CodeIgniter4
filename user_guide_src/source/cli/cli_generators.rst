@@ -13,7 +13,7 @@ etc. You can also scaffold a complete set of files with just one command.
 Introduction
 ************
 
-All built-in generators reside under the ``Generators`` namespace when listed using ``php spark list``.
+All built-in generators reside under the ``Generators`` group when listed using ``php spark list``.
 To view the full description and usage information on a particular generator, use the command::
 
     > php spark help <generator_command>
@@ -28,7 +28,7 @@ where ``<generator_command>`` will be replaced with the command to check.
 
 .. note:: Working on modules? Code generation will set the root namespace to a default of ``APP_NAMESPACE``.
     Should you need to have the generated code elsewhere in your module namespace, make sure to set
-    the ``--namespace`` option in your command, e.g., ``php spark make:model blog --namespace Acme\Blog``.
+    the ``--namespace`` option in your command, e.g., ``php spark make:model blog --namespace Acme\\Blog``.
 
 .. warning:: Make sure when setting the ``--namespace`` option that the supplied namespace is a valid
     namespace defined in your ``$psr4`` array in ``Config\Autoload`` or defined in your composer autoload
@@ -292,12 +292,12 @@ Running this in your terminal::
 
     > php spark make:scaffold user
 
-will create the following classes:
+will create the following files:
 
-(1) ``App\Controllers\User``;
-(2) ``App\Models\User``;
-(3) ``App\Database\Migrations\<some date here>_User``; and
-(4) ``App\Database\Seeds\User``.
+(1) **app/Controllers/User.php**
+(2) **app/Models/User.php**
+(3) **app/Database/Migrations/<some date here>_User.php** and
+(4) **app/Database/Seeds/User.php**
 
 To include an ``Entity`` class in the scaffolded files, just include the ``--return entity`` to the command
 and it will be passed to the model generator.

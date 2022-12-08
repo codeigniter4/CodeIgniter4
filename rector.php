@@ -105,15 +105,6 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/system/Session/Handlers',
         ],
 
-        StringClassNameToClassConstantRector::class => [
-            // may cause load view files directly when detecting namespaced string
-            // due to internal PHPStan issue
-            __DIR__ . '/app/Config/Pager.php',
-            __DIR__ . '/app/Config/Validation.php',
-            __DIR__ . '/tests/system/Validation/StrictRules/ValidationTest.php',
-            __DIR__ . '/tests/system/Validation/ValidationTest.php',
-        ],
-
         // sometime too detail
         CountOnNullRector::class,
 
