@@ -137,6 +137,9 @@ Controller should take into account the maximum parameters:
 
 .. literalinclude:: routing/011.php
 
+.. important:: Do not put any placeholder after ``(:any)``. Because the number of
+    parameters passed to the controller method may change.
+
 If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above:
 
