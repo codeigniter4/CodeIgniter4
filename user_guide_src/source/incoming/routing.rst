@@ -195,7 +195,7 @@ is allowed, as are back-references.
 
     .. literalinclude:: routing/018.php
 
-In the above example, a URI similar to **products/shirts/123** would instead call the ``show`` method
+In the above example, a URI similar to **products/shirts/123** would instead call the ``show()`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
 
 With regular expressions, you can also catch a segment containing a forward slash (``/``), which would usually
