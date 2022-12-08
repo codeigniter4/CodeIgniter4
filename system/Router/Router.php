@@ -419,8 +419,8 @@ class Router implements RouterInterface
 
             // Does the RegEx match?
             if (preg_match('#^' . $routeKey . '$#u', $uri, $matches)) {
-                $matchedPlaceholders = $matches;
-                unset($matchedPlaceholders[0]);
+                $placeholderValues = $matches;
+                unset($placeholderValues[0]);
 
                 // Is this route supposed to redirect to another?
                 if ($this->collection->isRedirect($routeKey)) {
@@ -462,7 +462,7 @@ class Router implements RouterInterface
                 if (! is_string($handler) && is_callable($handler)) {
                     $this->controller = $handler;
 
-                    $this->params = $matchedPlaceholders;
+                    $this->params = $placeholderValues;
 
                     $this->setMatchedRoute($matchedKey, $handler);
 
@@ -495,7 +495,7 @@ class Router implements RouterInterface
 
                     foreach ($params as $param) {
                         $i          = ltrim($param, '$');
-                        $segments[] = $matchedPlaceholders[$i];
+                        $segments[] = $placeholderValues[$i];
                     }
                 }
                 $this->setRequest($segments);
