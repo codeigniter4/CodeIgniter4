@@ -210,6 +210,8 @@ Database
 - The second parameter ``$index`` of ``BaseBuilder::updateBatch()`` has changed to ``$constraints``. It now accepts types array, string, or ``RawSql``. Extending classes should likewise change types.
 - The ``$set`` parameter of ``BaseBuilder::insertBatch()`` and ``BaseBuilder::updateBatch()`` now accepts an object of a single row of data. Extending classes should likewise change the type.
 - The third parameter ``$index`` of ``BaseBuilder::_updateBatch()`` has changed to ``$values``, and the parameter type has changed to ``array``. Extending classes should likewise change the type.
+- The ``Model::update()`` method now raises a ``DatabaseException`` if it generates an SQL
+  statement without a WHERE clause. If you need to update all records in a table, use Query Builder instead. E.g., ``$model->builder()->update($data)``.
 
 Others
 ======
