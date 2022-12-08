@@ -82,6 +82,7 @@ Others
 - **Database:** The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
 - **Database:** ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
 - **Routing:** ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
+- **Routing:** When the placeholder ``(:any)`` matches a multiple URI segment string like ``abc/def``, now the controller takes ``abc/def`` as a parameter. Previously, it takes only ``abc`` as a parameter and ``def`` as the next parameter due to a bug. See :ref:`upgrade-430-route-placeholder-any`.
 
 .. _v430-interface-changes:
 

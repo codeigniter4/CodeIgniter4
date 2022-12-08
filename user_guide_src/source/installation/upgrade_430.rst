@@ -194,6 +194,17 @@ The data returned has the following structure::
      * ]
      */
 
+.. _upgrade-430-route-placeholder-any:
+
+Route placeholder (:any)
+=========================
+
+When the placeholder ``(:any)`` matches a multiple URI segment string like ``abc/def``, now the controller takes ``abc/def`` as a parameter. Previously, it takes only ``abc`` as a parameter and ``def`` as the next parameter due to a bug.
+
+.. literalinclude:: upgrade_430/001.php
+
+If your code depends on this bug, please fix it.
+
 Breaking Enhancements
 *********************
 
