@@ -148,8 +148,8 @@ arguments.
 More information about routing can be found in the URI Routing
 :doc:`documentation </incoming/routing>`.
 
-Here, the second rule in the ``$routes`` object matches GET request
-to the URI path ``/pages`` maps the ``index()`` method of the ``Pages`` class.
+Here, the second rule in the ``$routes`` object matches a GET request
+to the URI path ``/pages``, and it maps to the ``index()`` method of the ``Pages`` class.
 
 The third rule in the ``$routes`` object matches a GET request to a URI segment
 using the placeholder ``(:segment)``, and passes the parameter to the
