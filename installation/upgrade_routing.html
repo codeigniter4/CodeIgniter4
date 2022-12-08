@@ -309,11 +309,12 @@
 <h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
 <li><p>If you use the Auto Routing in the same way as CI3, you need to enable <a class="reference internal" href="../incoming/routing.html#auto-routing"><span class="std std-ref">Auto Routing (Legacy)</span></a>.</p></li>
+<li><p>The placeholder <code class="docutils literal notranslate"><span class="pre">(:any)</span></code> in CI3 will be <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> in CI4.</p></li>
 <li><p>You have to change the syntax of each routing line and append it in <strong>app/Config/Routes.php</strong>. For example:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$route['journals']</span> <span class="pre">=</span> <span class="pre">'blogs';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('journals',</span> <span class="pre">'Blogs::index');</span></code>. This would map to the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method in the <code class="docutils literal notranslate"><span class="pre">Blogs</span></code> controller.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">$route['product/(:any)']</span> <span class="pre">=</span> <span class="pre">'catalog/product_lookup';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('product/(:any)',</span> <span class="pre">'Catalog::productLookup');</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$route['product/(:any)']</span> <span class="pre">=</span> <span class="pre">'catalog/product_lookup';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('product/(:segment)',</span> <span class="pre">'Catalog::productLookup');</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">$route['login/(.+)']</span> <span class="pre">=</span> <span class="pre">'auth/login/$1';</span></code> to <code class="docutils literal notranslate"><span class="pre">$routes-&gt;add('login/(.+)',</span> <span class="pre">'Auth::login/$1');</span></code></p></li>
 </ul>
 </div></blockquote>
@@ -328,15 +329,17 @@
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
 
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/index&#39;</span><span class="p">;</span>
+<span class="c1">// ...</span>
+
+<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/index&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="s1">&#39;posts/index&#39;</span><span class="p">;</span>
 <span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;teams/create&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;teams/create&#39;</span><span class="p">;</span>
 <span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;teams/update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;teams/update&#39;</span><span class="p">;</span>
 
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/create&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/create&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/update&#39;</span><span class="p">;</span>
+<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/create&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">&#39;posts/create&#39;</span><span class="p">;</span>
+<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/update&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">&#39;posts/update&#39;</span><span class="p">;</span>
 <span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;drivers/create&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;drivers/create&#39;</span><span class="p">;</span>
 <span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;drivers/update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;drivers/update&#39;</span><span class="p">;</span>
-<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/(:any)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;posts/view/$1&#39;</span><span class="p">;</span>
+<span class="nv">$route</span><span class="p">[</span><span class="s1">&#39;posts/(:any)&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="s1">&#39;posts/view/$1&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
 </section>
@@ -347,14 +350,13 @@
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
-<span class="c1">// Create a new instance of our RouteCollection class.</span>
-<span class="nv">$routes</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">routes</span><span class="p">();</span>
+<span class="c1">// ...</span>
 
-<span class="c1">// Load the system&#39;s routing file first, so that the app and ENVIRONMENT</span>
-<span class="c1">// can override as needed.</span>
-<span class="k">if</span> <span class="p">(</span><span class="nb">file_exists</span><span class="p">(</span><span class="nx">SYSTEMPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/Routes.php&#39;</span><span class="p">))</span> <span class="p">{</span>
-    <span class="k">require</span> <span class="nx">SYSTEMPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/Routes.php&#39;</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="cm">/*</span>
+<span class="cm"> * --------------------------------------------------------------------</span>
+<span class="cm"> * Route Definitions</span>
+<span class="cm"> * --------------------------------------------------------------------</span>
+<span class="cm"> */</span>
 
 <span class="c1">// ...</span>
 
@@ -366,7 +368,9 @@
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::update&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/create&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::create&#39;</span><span class="p">);</span>
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;drivers/update&#39;</span><span class="p">,</span> <span class="s1">&#39;Drivers::update&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::view/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;posts/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Posts::view/$1&#39;</span><span class="p">);</span>
+
+<span class="c1">// ...</span>
 </pre></div>
 </div>
 </section>
@@ -385,7 +389,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 07, 2022.
+      <span class="lastupdated">Last updated on Dec 08, 2022.
       </span></p>
   </div>
 
