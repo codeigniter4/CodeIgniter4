@@ -1917,7 +1917,7 @@ class BaseBuilder
     /**
      * Compiles batch upsert strings and runs the queries
      *
-     * @param array|BaseBuilder|object|RawSql|null $set a dataset
+     * @param array|object|null $set a dataset
      *
      * @return false|int|string[] Number of affected rows or FALSE on failure, SQL array when testMode
      *
@@ -1925,8 +1925,6 @@ class BaseBuilder
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        $this->setQueryAsData($set);
-
         if (isset($this->QBOptions['setQueryAsData'])) {
             $sql = $this->_upsertBatch($this->QBFrom[0], $this->QBKeys, []);
 
@@ -2151,14 +2149,12 @@ class BaseBuilder
     /**
      * Compiles batch insert strings and runs the queries
      *
-     * @param array|BaseBuilder|object|RawSql|null $set a dataset
+     * @param array|object|null $set a dataset
      *
      * @return false|int|string[] Number of rows inserted or FALSE on failure, SQL array when testMode
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
-        $this->setQueryAsData($set);
-
         if (isset($this->QBOptions['setQueryAsData'])) {
             $sql = $this->_insertBatch($this->QBFrom[0], $this->QBKeys, []);
 
@@ -2520,15 +2516,13 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|BaseBuilder|object|RawSql|null $set         a dataset or select query
-     * @param array|RawSql|string|null             $constraints
+     * @param array|object|null        $set         a dataset
+     * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
-        $this->setQueryAsData($set);
-
         $this->onConstraint($constraints);
 
         if (isset($this->QBOptions['setQueryAsData'])) {
@@ -2786,15 +2780,13 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|BaseBuilder|object|RawSql|null $set         a dataset
-     * @param array|RawSql|null                    $constraints
+     * @param array|object|null $set         a dataset
+     * @param array|RawSql|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      */
     public function deleteBatch($set = null, $constraints = null, int $batchSize = 100)
     {
-        $this->setQueryAsData($set);
-
         $this->onConstraint($constraints);
 
         if (isset($this->QBOptions['setQueryAsData'])) {
