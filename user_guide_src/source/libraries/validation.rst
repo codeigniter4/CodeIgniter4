@@ -579,14 +579,25 @@ right after the name of the field the error should belong to::
 Creating Custom Rules
 *********************
 
+Using Rule Classes
+==================
+
 Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
-autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit **Config/Validation.php** and
+autoloader can find it. These files are called RuleSets.
+
+Adding a RuleSet
+----------------
+
+To add a new RuleSet, edit **Config/Validation.php** and
 add the new file to the ``$ruleSets`` array:
 
 .. literalinclude:: validation/033.php
 
 You can add it as either a simple string with the fully qualified class name, or using the ``::class`` suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.
+
+Creating a Rule Class
+---------------------
 
 Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
 a boolean true or false value signifying true if it passed the test or false if it did not:
@@ -599,12 +610,15 @@ second parameter:
 
 .. literalinclude:: validation/035.php
 
+Using a Custom Rule
+-------------------
+
 Your new custom rule could now be used just like any other rule:
 
 .. literalinclude:: validation/036.php
 
 Allowing Parameters
-===================
+-------------------
 
 If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
 the parameter string, and an array with all of the data that was submitted the form. The ``$data`` array is especially handy
@@ -613,6 +627,23 @@ for rules like ``required_with`` that needs to check the value of another submit
 .. literalinclude:: validation/037.php
 
 Custom errors can be returned as the fourth parameter, just as described above.
+
+.. _validation-using-closure-rule:
+
+Using Closure Rule
+==================
+
+.. versionadded:: 4.3.0
+
+If you only need the functionality of a custom rule once throughout your application,
+you may use a closure instead of a rule class.
+
+You need to use an array for validation rules:
+
+.. literalinclude:: validation/040.php
+
+When you specify the error message, set the array key for the closure rule.
+In the above code, the ``required`` rule has the key ``0``, and the closure has ``1``.
 
 Available Rules
 ***************
