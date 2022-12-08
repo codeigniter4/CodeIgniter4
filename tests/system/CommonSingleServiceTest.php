@@ -37,7 +37,6 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service2 = single_service($service);
 
         assert($service1 !== null);
-        assert($service1 !== null);
 
         $this->assertInstanceOf(get_class($service1), $service2);
         $this->assertNotSame($service1, $service2);
@@ -67,7 +66,6 @@ final class CommonSingleServiceTest extends CIUnitTestCase
         $service1 = single_service($service, ...$params);
         $service2 = single_service($service, ...$params);
 
-        assert($service1 !== null);
         assert($service1 !== null);
 
         $this->assertInstanceOf(get_class($service1), $service2);
