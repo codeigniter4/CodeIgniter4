@@ -2084,13 +2084,12 @@ class BaseBuilder
     }
 
     /**
-     * Sets data source as a query for insert/update/upsert
+     * Sets data source as a query for insertBatch()/updateBatch()/upsertBatch()/deleteBatch()
      *
      * @param BaseBuilder|RawSql $query
-     * @param string             $alias
      * @param array|string|null  $columns an array or comma delimited string of columns
      */
-    public function setQueryAsData($query, $alias = null, $columns = null): BaseBuilder
+    public function setQueryAsData($query, ?string $alias = null, $columns = null): BaseBuilder
     {
         if (is_string($query)) {
             throw new InvalidArgumentException('$query parameter must be BaseBuilder or RawSql class.');
