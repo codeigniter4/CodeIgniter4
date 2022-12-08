@@ -884,6 +884,8 @@ You can also insert from a query:
 
 .. literalinclude:: query_builder/117.php
 
+.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+
 .. note:: It is required to alias the columns of the select query to match those of the target table. 
 
 .. _upsert-data:
@@ -949,6 +951,8 @@ The first parameter is an associative array of values.
 You can also upsert from a query:
 
 .. literalinclude:: query_builder/115.php
+
+.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
@@ -1092,6 +1096,8 @@ You can also update from a query:
 
 .. literalinclude:: query_builder/116.php
 
+.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->getCompiledUpdate()
@@ -1143,6 +1149,8 @@ This method may be especially useful when deleting data in a table with a compos
 You can also delete from a query:
 
 .. literalinclude:: query_builder/119.php
+
+.. note:: ``$deleteBatch()`` can be used since v4.3.0.
 
 $builder->emptyTable()
 ----------------------
