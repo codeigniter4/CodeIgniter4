@@ -32,12 +32,41 @@ If you expect a GET request, you use the ``get()`` method:
 .. literalinclude:: routing/001.php
 
 A route takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
-along with any parameters that should be passed to the controller. The controller and method should
+along with any parameters that should be passed to the controller.
+
+The controller and method should
 be listed in the same way that you would use a static method, by separating the class
-and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
+and its method with a double-colon, like ``Users::list``.
+
+If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes:
 
 .. literalinclude:: routing/002.php
+
+Examples
+========
+
+Here are a few basic routing examples.
+
+A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
+and the default method, which is usually ``index()``:
+
+.. literalinclude:: routing/006.php
+
+A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
+The ID will be set to ``34``:
+
+.. literalinclude:: routing/007.php
+
+A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookup()`` method:
+
+.. literalinclude:: routing/008.php
+
+A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookupByID()`` method passing in the match as a variable to the method:
+
+.. literalinclude:: routing/009.php
 
 HTTP verbs
 ==========
@@ -98,31 +127,6 @@ Placeholders Description
 
 .. note:: ``{locale}`` cannot be used as a placeholder or other part of the route, as it is reserved for use
     in :doc:`localization </outgoing/localization>`.
-
-Examples
-========
-
-Here are a few basic routing examples.
-
-A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
-and the default method, which is usually ``index()``:
-
-.. literalinclude:: routing/006.php
-
-A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
-The ID will be set to ``34``:
-
-.. literalinclude:: routing/007.php
-
-A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookup()`` method:
-
-.. literalinclude:: routing/008.php
-
-A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookupByID()`` method passing in the match as a variable to the method:
-
-.. literalinclude:: routing/009.php
 
 Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route:
 
