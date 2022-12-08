@@ -280,10 +280,10 @@
 <li><p><a class="reference internal" href="#what-is-uri-routing" id="id10">What is URI Routing?</a></p></li>
 <li><p><a class="reference internal" href="#setting-routing-rules" id="id11">Setting Routing Rules</a></p>
 <ul>
-<li><p><a class="reference internal" href="#http-verbs" id="id12">HTTP verbs</a></p></li>
-<li><p><a class="reference internal" href="#controller-s-namespace" id="id13">Controller’s Namespace</a></p></li>
-<li><p><a class="reference internal" href="#placeholders" id="id14">Placeholders</a></p></li>
-<li><p><a class="reference internal" href="#examples" id="id15">Examples</a></p></li>
+<li><p><a class="reference internal" href="#examples" id="id12">Examples</a></p></li>
+<li><p><a class="reference internal" href="#http-verbs" id="id13">HTTP verbs</a></p></li>
+<li><p><a class="reference internal" href="#controller-s-namespace" id="id14">Controller’s Namespace</a></p></li>
+<li><p><a class="reference internal" href="#placeholders" id="id15">Placeholders</a></p></li>
 <li><p><a class="reference internal" href="#array-callable-syntax" id="id16">Array Callable Syntax</a></p></li>
 <li><p><a class="reference internal" href="#custom-placeholders" id="id17">Custom Placeholders</a></p></li>
 <li><p><a class="reference internal" href="#regular-expressions" id="id18">Regular Expressions</a></p></li>
@@ -355,9 +355,11 @@ If you expect a GET request, you use the <code class="docutils literal notransla
 </pre></div>
 </div>
 <p>A route takes the URI path (<code class="docutils literal notranslate"><span class="pre">/</span></code>) on the left, and maps it to the controller and method (<code class="docutils literal notranslate"><span class="pre">Home::index</span></code>) on the right,
-along with any parameters that should be passed to the controller. The controller and method should
+along with any parameters that should be passed to the controller.</p>
+<p>The controller and method should
 be listed in the same way that you would use a static method, by separating the class
-and its method with a double-colon, like <code class="docutils literal notranslate"><span class="pre">Users::list</span></code>. If that method requires parameters to be
+and its method with a double-colon, like <code class="docutils literal notranslate"><span class="pre">Users::list</span></code>.</p>
+<p>If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -368,8 +370,40 @@ passed to it, then they would be listed after the method name, separated by forw
 <span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;users/1/23&#39;</span><span class="p">,</span> <span class="s1">&#39;Users::list/1/23&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<section id="examples">
+<h3><a class="toc-backref" href="#id12">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
+<p>Here are a few basic routing examples.</p>
+<p>A URL containing the word <strong>journals</strong> in the first segment will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class,
+and the default method, which is usually <code class="docutils literal notranslate"><span class="pre">index()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;journals&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A URL containing the segments <strong>blog/joe</strong> will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class and the <code class="docutils literal notranslate"><span class="pre">users()</span></code> method.
+The ID will be set to <code class="docutils literal notranslate"><span class="pre">34</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog/joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs::users/34&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A URL with <strong>product</strong> as the first segment, and anything in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
+and the <code class="docutils literal notranslate"><span class="pre">productLookup()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A URL with <strong>product</strong> as the first segment, and a number in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
+and the <code class="docutils literal notranslate"><span class="pre">productLookupByID()</span></code> method passing in the match as a variable to the method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookupByID/$1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
 <section id="http-verbs">
-<h3><a class="toc-backref" href="#id12">HTTP verbs</a><a class="headerlink" href="#http-verbs" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id13">HTTP verbs</a><a class="headerlink" href="#http-verbs" title="Permalink to this headline"></a></h3>
 <p>You can use any standard HTTP verb (GET, POST, PUT, DELETE, OPTIONS, etc):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -386,7 +420,7 @@ passed to it, then they would be listed after the method name, separated by forw
 </div>
 </section>
 <section id="controller-s-namespace">
-<h3><a class="toc-backref" href="#id13">Controller’s Namespace</a><a class="headerlink" href="#controller-s-namespace" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id14">Controller’s Namespace</a><a class="headerlink" href="#controller-s-namespace" title="Permalink to this headline"></a></h3>
 <p>If a controller name is stated without beginning with <code class="docutils literal notranslate"><span class="pre">\</span></code>, the <a class="reference internal" href="#routing-default-namespace"><span class="std std-ref">Default Namespace</span></a> will be prepended:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -411,7 +445,7 @@ passed to it, then they would be listed after the method name, separated by forw
 <p>See <a class="reference internal" href="#assigning-namespace"><span class="std std-ref">Assigning Namespace</span></a> for details.</p>
 </section>
 <section id="placeholders">
-<h3><a class="toc-backref" href="#id14">Placeholders</a><a class="headerlink" href="#placeholders" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Placeholders</a><a class="headerlink" href="#placeholders" title="Permalink to this headline"></a></h3>
 <p>A typical route might look something like this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -462,38 +496,6 @@ used for readability.</p>
 <p><code class="docutils literal notranslate"><span class="pre">{locale}</span></code> cannot be used as a placeholder or other part of the route, as it is reserved for use
 in <a class="reference internal" href="../outgoing/localization.html"><span class="doc">localization</span></a>.</p>
 </div>
-</section>
-<section id="examples">
-<h3><a class="toc-backref" href="#id15">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline"></a></h3>
-<p>Here are a few basic routing examples.</p>
-<p>A URL containing the word <strong>journals</strong> in the first segment will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class,
-and the default method, which is usually <code class="docutils literal notranslate"><span class="pre">index()</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;journals&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>A URL containing the segments <strong>blog/joe</strong> will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Blogs</span></code> class and the <code class="docutils literal notranslate"><span class="pre">users()</span></code> method.
-The ID will be set to <code class="docutils literal notranslate"><span class="pre">34</span></code>:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog/joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Blogs::users/34&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>A URL with <strong>product</strong> as the first segment, and anything in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
-and the <code class="docutils literal notranslate"><span class="pre">productLookup()</span></code> method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookup&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>A URL with <strong>product</strong> as the first segment, and a number in the second will be mapped to the <code class="docutils literal notranslate"><span class="pre">\App\Controllers\Catalog</span></code> class
-and the <code class="docutils literal notranslate"><span class="pre">productLookupByID()</span></code> method passing in the match as a variable to the method:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;product/(:num)&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog::productLookupByID/$1&#39;</span><span class="p">);</span>
-</pre></div>
-</div>
 <p>Note that a single <code class="docutils literal notranslate"><span class="pre">(:any)</span></code> will match multiple segments in the URL if present. For example the route:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -516,6 +518,11 @@ Controller should take into account the maximum parameters:</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Do not put any placeholder after <code class="docutils literal notranslate"><span class="pre">(:any)</span></code>. Because the number of
+parameters passed to the controller method may change.</p>
 </div>
 <p>If matching multiple segments is not the intended behavior, <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code> should be used when defining the
 routes. With the examples URLs from above:</p>
@@ -586,7 +593,7 @@ A typical RegEx route might look something like this:</p>
 </pre></div>
 </div>
 </div>
-<p>In the above example, a URI similar to <strong>products/shirts/123</strong> would instead call the <code class="docutils literal notranslate"><span class="pre">show</span></code> method
+<p>In the above example, a URI similar to <strong>products/shirts/123</strong> would instead call the <code class="docutils literal notranslate"><span class="pre">show()</span></code> method
 of the <code class="docutils literal notranslate"><span class="pre">Products</span></code> controller class, with the original first and second segment passed as arguments to it.</p>
 <p>With regular expressions, you can also catch a segment containing a forward slash (<code class="docutils literal notranslate"><span class="pre">/</span></code>), which would usually
 represent the delimiter between multiple segments.</p>
@@ -599,9 +606,9 @@ redirect them back to the same page after they log in, you may find this example
 </div>
 <p>For those of you who don’t know regular expressions and want to learn more about them,
 <a class="reference external" href="https://www.regular-expressions.info/">regular-expressions.info</a> might be a good starting point.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Note: You can also mix and match wildcards with regular expressions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also mix and match placeholders with regular expressions.</p>
 </div>
 </section>
 <section id="closures">
