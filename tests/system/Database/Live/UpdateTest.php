@@ -587,8 +587,9 @@ final class UpdateTest extends CIUnitTestCase
             ->where('country', 'France');
 
         $affectedRows = $this->db->table('user')
+            ->setQueryAsData($subQuery)
             ->updateFields($updateFields, true)
-            ->updateBatch($subQuery, 'email');
+            ->updateBatch(null, 'email');
 
         $this->assertSame(2, (int) $affectedRows);
 

@@ -218,7 +218,7 @@ final class InsertTest extends CIUnitTestCase
             ->join('user', 'user.email = user2.email', 'left')
             ->where('user.email IS NULL');
 
-        $this->db->table('user')->insertBatch($subQuery);
+        $this->db->table('user')->setQueryAsData($subQuery)->insertBatch();
 
         $this->seeInDatabase('user', ['name' => 'New User user2']);
         $this->seeInDatabase('user', ['name' => 'New User2 user2']);

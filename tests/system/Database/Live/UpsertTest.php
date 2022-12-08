@@ -719,7 +719,11 @@ final class UpsertTest extends CIUnitTestCase
 
         $subQuery = $this->db->table('user2')->select('email, name, country');
 
-        $this->db->table('user')->updateFields($updateFields, true)->onConstraint('email')->upsertBatch($subQuery);
+        $this->db->table('user')
+            ->setQueryAsData($subQuery)
+            ->updateFields($updateFields, true)
+            ->onConstraint('email')
+            ->upsertBatch();
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones user2', 'email' => 'derek@world.com']);
         $this->seeInDatabase('user', ['name' => 'New User user2', 'email' => 'newuser@example.com']);
