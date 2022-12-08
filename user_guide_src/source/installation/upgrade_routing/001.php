@@ -21,4 +21,4 @@ $routes->add('posts/create', 'Posts::create');
 $routes->add('posts/update', 'Posts::update');
 $routes->add('drivers/create', 'Drivers::create');
 $routes->add('drivers/update', 'Drivers::update');
-$routes->add('posts/(:any)', 'Posts::view/$1');
+$routes->add('posts/(:segment)', 'Posts::view/$1');
