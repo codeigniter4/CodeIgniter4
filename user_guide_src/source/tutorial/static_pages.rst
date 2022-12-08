@@ -151,8 +151,8 @@ More information about routing can be found in the URI Routing
 Here, the second rule in the ``$routes`` object matches GET request
 to the URI path ``/pages`` maps the ``index()`` method of the ``Pages`` class.
 
-The third rule in the ``$routes`` object matches GET request to **any** URI path
-using the wildcard string ``(:any)``, and passes the parameter to the
+The third rule in the ``$routes`` object matches a GET request to a URI segment
+using the placeholder ``(:segment)``, and passes the parameter to the
 ``view()`` method of the ``Pages`` class.
 
 Running the App
