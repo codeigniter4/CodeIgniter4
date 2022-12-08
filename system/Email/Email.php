@@ -392,7 +392,7 @@ class Email
     protected static $func_overload;
 
     /**
-     * @param array|null $config
+     * @param array|\Config\Email|null $config
      */
     public function __construct($config = null)
     {
@@ -405,7 +405,7 @@ class Email
     /**
      * Initialize preferences
      *
-     * @param array|\Config\Email $config
+     * @param array|\Config\Email|null $config
      *
      * @return Email
      */
