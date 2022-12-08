@@ -211,7 +211,7 @@ Query Builder
 - Added ``deleteBatch()`` method to QueryBuilder. See :ref:`delete-batch`.
 - Added ``when()`` and ``whenNot()`` methods to conditionally add clauses to the query. See :ref:`BaseBuilder::when() <db-builder-when>` for details.
 - Improved the SQL structure for ``Builder::updateBatch()``. See :ref:`update-batch` for the details.
-- Added ``BaseBuilder::setQueryAsData()`` which allows insert, update, upsert, delete from a query. See :ref:`insert-batch-data`.
+- Added ``BaseBuilder::setQueryAsData()`` which allows ``insertBatch()``, ``updateBatch()``, ``upsertBatch()``, ``deleteBatch()`` from a query. See :ref:`insert-batch-data`.
 
 Forge
 -----
