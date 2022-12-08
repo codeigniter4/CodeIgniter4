@@ -4,7 +4,9 @@ namespace Config;
 
 class Validation
 {
-    public $ruleSets = [
+    // ...
+
+    public array $ruleSets = [
         \CodeIgniter\Validation\CreditCardRules::class,
         \CodeIgniter\Validation\FileRules::class,
         \CodeIgniter\Validation\FormatRules::class,
