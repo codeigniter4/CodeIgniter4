@@ -362,7 +362,7 @@ available from the command line:
     See the :doc:`../cli/cli_commands` page for detailed information.
 
 .. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
-    anyone could access the command with the help of auto-routing via HTTP.
+    anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
 
 Global Options
 ==============
