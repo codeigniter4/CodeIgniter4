@@ -41,7 +41,7 @@ works exactly like a normal route definition:
 
 For more information, see the :ref:`Routes <command-line-only-routes>` page.
 
-.. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
+.. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 Run via CLI

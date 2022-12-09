@@ -361,7 +361,7 @@ available from the command line:
 .. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
     See the :doc:`../cli/cli_commands` page for detailed information.
 
-.. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
+.. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 Global Options
@@ -668,7 +668,7 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 .. note:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
-.. _auto-routing:
+.. _auto-routing-legacy:
 
 Auto Routing (Legacy)
 *********************

@@ -23,7 +23,7 @@ It configures the CSRF filter to be enabled for all **POST** requests.
 You can read more about the CSRF protection in :doc:`Security </libraries/security>` library.
 
 .. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable  Auto Routing (Legacy) <use-defined-routes-only>`
-    because :ref:`auto-routing` permits any HTTP method to access a controller.
+    because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 Create a Form
