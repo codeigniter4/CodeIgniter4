@@ -610,25 +610,49 @@ This is best used during cronjobs, data exports, or other large tasks.
 Working with Query Builder
 **************************
 
-You can get access to a shared instance of the Query Builder for that model's database connection any time you
-need it:
+Getting Query Builder for the Model's Table
+===========================================
+
+CodeIgniter Model has one instance of the Query Builder for that model's database connection.
+You can get access to the **shared** instance of the Query Builder any time you need it:
 
 .. literalinclude:: model/043.php
 
-This builder is already set up with the model's ``$table``. If you need access to another table
-you can pass it in as a parameter, but be aware that this will not return a shared instance:
+This builder is already set up with the model's ``$table``.
+
+.. note:: Once you get the Query Builder instance, you can call methods of the
+    :doc:`Query Builder <../database/query_builder>`.
+    However, since Query Builder is not a Model, you cannot call methods of the Model.
+
+Getting Query Builder for Another Table
+=======================================
+
+If you need access to another table, you can get another instance of the Query Builder.
+Pass the table name in as a parameter, but be aware that this will **not** return
+a shared instance:
 
 .. literalinclude:: model/044.php
+
+Mixing Methods of Query Builder and Model
+=========================================
 
 You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
 very elegant use:
 
 .. literalinclude:: model/045.php
 
+In this case, it operates on the shared instance of the Query Builder held by the model.
+
 .. important:: The Model does not provide a perfect interface to the Query Builder.
     The Model and the Query Builder are separate classes with different purposes.
     They should not be expected to return the same data.
-    For example, if you need to get the compiledInsert you should do so directly on the builder instance.
+
+If the Query Builder returns a result, it is returned as is.
+In that case, the result may be different from the one returned by the model's method
+and may not be what was expected. The model's event is not be triggered.
+
+To prevent unexpected behavior, do not use Query Builder methods that return results
+and specify the model's method at the end of the method chaining.
 
 .. note:: You can also access the model's database connection seamlessly:
 
