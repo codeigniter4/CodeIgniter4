@@ -287,7 +287,7 @@ Returns null or an indexed array of column values:
 
 .. literalinclude:: model/008.php
 
-``$column_name`` should be a name of single column else you will get the DataException.
+``$column_name`` should be a name of single column else you will get the ``DataException``.
 
 findAll()
 ---------
@@ -315,7 +315,7 @@ Returns the first row in the result set. This is best used in combination with t
 withDeleted()
 -------------
 
-If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where 'deleted_at IS NOT NULL'.
+If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where ``deleted_at IS NOT NULL``.
 To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 
 .. literalinclude:: model/013.php
