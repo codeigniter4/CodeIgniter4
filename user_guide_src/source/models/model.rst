@@ -124,6 +124,8 @@ qualified name of a class** that can be used with the Result object's ``getCusto
 method. Using the special ``::class`` constant of the class will allow most IDEs to
 auto-complete the name and allow functions like refactoring to better understand your code.
 
+.. _model-use-soft-deletes:
+
 $useSoftDeletes
 ---------------
 
@@ -154,7 +156,7 @@ $useTimestamps
 
 This boolean value determines whether the current date is automatically added to all inserts
 and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
-requires that the table have columns named **created_at** and **updated_at** in the appropriate
+requires that the table have columns named **created_at**, **updated_at** and **deleted_at** in the appropriate
 data type.
 
 $dateFormat
@@ -177,7 +179,10 @@ $updatedField
 Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
+$deletedField
+-------------
 
+Specifies which database field should use for soft deletions. See :ref:`model-use-soft-deletes`.
 
 $validationRules
 ----------------
