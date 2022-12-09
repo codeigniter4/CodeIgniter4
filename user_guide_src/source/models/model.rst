@@ -151,8 +151,11 @@ potential mass assignment vulnerabilities.
 
 .. note:: The ``$primaryKey`` field should never be an allowed field.
 
+Dates
+-----
+
 $useTimestamps
---------------
+^^^^^^^^^^^^^^
 
 This boolean value determines whether the current date is automatically added to all inserts
 and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
@@ -160,7 +163,7 @@ requires that the table have columns named **created_at**, **updated_at** and **
 data type.
 
 $dateFormat
------------
+^^^^^^^^^^^
 
 This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
@@ -168,37 +171,40 @@ valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). U
 useTimestamps with an invalid or missing dateFormat will cause an exception.
 
 $createdField
--------------
+^^^^^^^^^^^^^
 
 Specifies which database field to use for data record create timestamp.
 Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled).
 
 $updatedField
--------------
+^^^^^^^^^^^^^
 
 Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
 $deletedField
--------------
+^^^^^^^^^^^^^
 
 Specifies which database field should use for soft deletions. See :ref:`model-use-soft-deletes`.
 
+Validation
+----------
+
 $validationRules
-----------------
+^^^^^^^^^^^^^^^^
 
 Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.
 
 $validationMessages
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Contains an array of custom error messages that should be used during validation, as
 described in :ref:`validation-custom-errors`. Described in more detail below.
 
 $skipValidation
----------------
+^^^^^^^^^^^^^^^
 
 Whether validation should be skipped during all **inserts** and **updates**. The default
 value is ``false``, meaning that data will always attempt to be validated. This is
@@ -208,7 +214,7 @@ this model will never validate.
 .. _clean-validation-rules:
 
 $cleanValidationRules
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 Whether validation rules should be removed that do not exist in the passed data.
 This is used in **updates**.
@@ -220,23 +226,30 @@ You can also change the value by the ``cleanRules()`` method.
 
 .. note:: Prior to v4.2.7, ``$cleanValidationRules`` did not work due to a bug.
 
+Callbacks
+---------
+
 $allowCallbacks
----------------
+^^^^^^^^^^^^^^^
 
 Whether the callbacks defined below should be used.
 
 $beforeInsert
--------------
+^^^^^^^^^^^^^
 $afterInsert
-------------
+^^^^^^^^^^^^
 $beforeUpdate
--------------
+^^^^^^^^^^^^^
 $afterUpdate
-------------
+^^^^^^^^^^^^
+$beforeFind
+^^^^^^^^^^^
 $afterFind
-----------
+^^^^^^^^^^
+$beforeDelete
+^^^^^^^^^^^^^
 $afterDelete
-------------
+^^^^^^^^^^^^
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
