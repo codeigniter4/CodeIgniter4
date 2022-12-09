@@ -53,6 +53,9 @@ that extends ``CodeIgniter\Model``:
 This empty class provides convenient access to the database connection, the Query Builder,
 and a number of additional convenience methods.
 
+initialize()
+============
+
 Should you need additional setup in your model you may extend the ``initialize()`` method
 which will be run immediately after the Model's constructor. This allows you to perform
 extra steps without repeating the constructor parameters, for example extending other models:
