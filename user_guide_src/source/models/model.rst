@@ -277,8 +277,8 @@ of just one:
 
 .. literalinclude:: model/007.php
 
-If no parameters are passed in, will return all rows in that model's table, effectively acting
-like ``findAll()``, though less explicit.
+.. note:: If no parameters are passed in, ``find()`` will return all rows in that model's table,
+    effectively acting like ``findAll()``, though less explicit.
 
 findColumn()
 ------------
