@@ -254,7 +254,7 @@ $afterDelete
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
-Working With Data
+Working with Data
 *****************
 
 Finding Data
@@ -571,7 +571,7 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 
 .. literalinclude:: model/042.php
 
-Working With Query Builder
+Working with Query Builder
 ==========================
 
 You can get access to a shared instance of the Query Builder for that model's database connection any time you
