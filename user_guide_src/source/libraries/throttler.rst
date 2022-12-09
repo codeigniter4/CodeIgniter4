@@ -73,8 +73,8 @@ Next, we assign it to all POST requests made on the site:
 
 .. literalinclude:: throttler/004.php
 
-.. Warning:: If you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
-    because auto-routing permits any HTTP method to access a controller.
+.. Warning:: If you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
+    because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 And that's all there is to it. Now all POST requests made on the site will have to be rate limited.

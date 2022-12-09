@@ -386,8 +386,8 @@ The value for the filter can be a string or an array of strings:
 See :doc:`Controller filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
-    (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
-    When auto-routing is enabled, it may be possible that a controller can be accessed
+    (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
+    When :ref:`auto-routing-legacy` is enabled, it may be possible that a controller can be accessed
     via a different URL than the configured route,
     in which case the filter you specified to the route will not be applied.
     See :ref:`use-defined-routes-only` to disable auto-routing.
