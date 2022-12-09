@@ -712,7 +712,7 @@ Consider this URI::
 In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php**
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
-See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
 Configuration Options (Legacy)
 ==============================
@@ -732,7 +732,7 @@ The default controller is also used when no matching route has been found, and t
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
 Default Method (Legacy)
 -----------------------
