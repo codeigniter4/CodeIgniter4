@@ -72,12 +72,16 @@ class FileLocator
 
         foreach (array_keys($namespaces) as $namespace) {
             if (substr($file, 0, strlen($namespace)) === $namespace) {
+                $fileWithoutNamespace = substr($file, strlen($namespace));
+                // Check if this is really another sub-namespace,
+                // or just a namespace with a very similar name.
+                if ($fileWithoutNamespace[0] !== '\\') {
+                    continue;
+                }
                 // There may be sub-namespaces of the same vendor,
                 // so overwrite them with namespaces found later.
-                $paths = $namespaces[$namespace];
-
-                $fileWithoutNamespace = substr($file, strlen($namespace));
-                $filename             = ltrim(str_replace('\\', '/', $fileWithoutNamespace), '/');
+                $paths    = $namespaces[$namespace];
+                $filename = ltrim(str_replace('\\', '/', $fileWithoutNamespace), '/');
             }
         }
 
