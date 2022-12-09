@@ -331,8 +331,9 @@ class Services extends BaseService
             return static::getSharedInstance('image', $handler, $config);
         }
 
-        /** @var Images $config */
         $config ??= config('Images');
+        assert($config instanceof Images);
+
         $handler = $handler ?: $config->defaultHandler;
         $class   = $config->handlers[$handler];
 
@@ -639,8 +640,9 @@ class Services extends BaseService
             return static::getSharedInstance('session', $config);
         }
 
-        /** @var App $config */
         $config ??= config('App');
+        assert($config instanceof App);
+
         $logger = AppServices::logger();
 
         $driverName = $config->sessionDriver;
