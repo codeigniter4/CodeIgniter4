@@ -138,11 +138,11 @@ class URI
     /**
      * Builds a representation of the string from the component parts.
      *
-     * @param string $scheme
-     * @param string $authority
-     * @param string $path
-     * @param string $query
-     * @param string $fragment
+     * @param string|null $scheme    URI scheme. E.g., http, ftp
+     * @param string      $authority
+     * @param string      $path
+     * @param string      $query
+     * @param string      $fragment
      */
     public static function createURIString(?string $scheme = null, ?string $authority = null, ?string $path = null, ?string $query = null, ?string $fragment = null): string
     {

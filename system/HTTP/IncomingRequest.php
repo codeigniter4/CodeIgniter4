@@ -18,6 +18,7 @@ use Config\App;
 use Config\Services;
 use InvalidArgumentException;
 use Locale;
+use stdClass;
 
 /**
  * Class IncomingRequest
@@ -478,7 +479,7 @@ class IncomingRequest extends Request
      * @param int|null          $filter Filter constant
      * @param mixed             $flags
      *
-     * @return mixed
+     * @return array|bool|float|int|stdClass|string|null
      */
     public function getVar($index = null, $filter = null, $flags = null)
     {
@@ -516,7 +517,7 @@ class IncomingRequest extends Request
      *
      * @see http://php.net/manual/en/function.json-decode.php
      *
-     * @return mixed
+     * @return array|bool|float|int|stdClass|null
      */
     public function getJSON(bool $assoc = false, int $depth = 512, int $options = 0)
     {
@@ -531,7 +532,7 @@ class IncomingRequest extends Request
      * @param int|null       $filter Filter Constant
      * @param array|int|null $flags  Option
      *
-     * @return mixed
+     * @return array|bool|float|int|stdClass|string|null
      */
     public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)
     {
@@ -565,7 +566,7 @@ class IncomingRequest extends Request
      * A convenience method that grabs the raw input stream(send method in PUT, PATCH, DELETE) and decodes
      * the String into an array.
      *
-     * @return mixed
+     * @return array
      */
     public function getRawInput()
     {

@@ -23,7 +23,7 @@ use Config\Services;
  * large performance boost and helps keep code clean of lengthy
  * instantiation checks.
  *
- * @method static BaseConfig config(...$arguments)
+ * @method static BaseConfig|null config(...$arguments)
  */
 class Factories
 {

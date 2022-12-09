@@ -63,6 +63,7 @@ if (! function_exists('cache')) {
      *    $foo = cache('bar');
      *
      * @return CacheInterface|mixed
+     * @phpstan-return ($key is null ? CacheInterface : mixed)
      */
     function cache(?string $key = null)
     {
@@ -196,7 +197,7 @@ if (! function_exists('config')) {
     /**
      * More simple way of getting config instances from Factories
      *
-     * @return mixed
+     * @return object|null
      */
     function config(string $name, bool $getShared = true)
     {
@@ -376,7 +377,7 @@ if (! function_exists('env')) {
      *
      * @param string|null $default
      *
-     * @return mixed
+     * @return bool|string|null
      */
     function env(string $key, $default = null)
     {
@@ -952,7 +953,7 @@ if (! function_exists('service')) {
      *
      * @param mixed ...$params
      *
-     * @return mixed
+     * @return object
      */
     function service(string $name, ...$params)
     {
@@ -966,7 +967,7 @@ if (! function_exists('single_service')) {
      *
      * @param mixed ...$params
      *
-     * @return mixed
+     * @return object|null
      */
     function single_service(string $name, ...$params)
     {
@@ -1076,7 +1077,7 @@ if (! function_exists('timer')) {
      * If no parameter is passed, it will return the timer instance,
      * otherwise will start or stop the timer intelligently.
      *
-     * @return mixed|Timer
+     * @return Timer
      */
     function timer(?string $name = null)
     {

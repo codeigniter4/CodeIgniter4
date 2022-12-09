@@ -66,7 +66,7 @@ trait ResponseTrait
     /**
      * How to format the response data.
      * Either 'json' or 'xml'. If blank will be
-     * determine through content negotiation.
+     * determined through content negotiation.
      *
      * @var string
      */
