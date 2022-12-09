@@ -369,8 +369,8 @@ for such requests if you don’t need CSRF protection for them.</p>
 <p>Protecting <strong>GET</strong> method needs only when you use <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> auto-generation of CSRF field.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>
-because auto-routing permits any HTTP method to access a controller.
+<p>In general, if you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="../incoming/routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a>
+because <a class="reference internal" href="../incoming/routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller.
 Accessing the controller with a method you don’t expect could bypass the filter.</p>
 </div>
 </section>

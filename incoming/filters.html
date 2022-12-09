@@ -397,7 +397,7 @@ This file contains four properties that allow you to configure exactly when the 
 <p class="admonition-title">Warning</p>
 <p>It is recommended that you should always add <code class="docutils literal notranslate"><span class="pre">*</span></code> at the end of a URI in the filter settings.
 Because a controller method might be accessible by different URLs than you think.
-For example, when auto-routing is enabled, if you have <code class="docutils literal notranslate"><span class="pre">Blog::index</span></code>,
+For example, when <a class="reference internal" href="routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> is enabled, if you have <code class="docutils literal notranslate"><span class="pre">Blog::index</span></code>,
 it can be accessible with <code class="docutils literal notranslate"><span class="pre">blog</span></code>, <code class="docutils literal notranslate"><span class="pre">blog/index</span></code>, and <code class="docutils literal notranslate"><span class="pre">blog/index/1</span></code>, etc.</p>
 </div>
 <section id="aliases">
@@ -542,8 +542,8 @@ specify the method name in lowercase. It’s value would be an array of filters 
 all requests that were run from the command line.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">disable auto-routing</span></a>
-because auto-routing permits any HTTP method to access a controller.
+<p>If you use <code class="docutils literal notranslate"><span class="pre">$methods</span></code> filters, you should <a class="reference internal" href="routing.html#use-defined-routes-only"><span class="std std-ref">disable Auto Routing (Legacy)</span></a>
+because <a class="reference internal" href="routing.html#auto-routing-legacy"><span class="std std-ref">Auto Routing (Legacy)</span></a> permits any HTTP method to access a controller.
 Accessing the controller with a method you don’t expect could bypass the filter.</p>
 </div>
 </section>
