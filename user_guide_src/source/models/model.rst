@@ -220,6 +220,11 @@ You can also change the value by the ``cleanRules()`` method.
 
 .. note:: Prior to v4.2.7, ``$cleanValidationRules`` did not work due to a bug.
 
+$allowCallbacks
+---------------
+
+Whether the callbacks defined below should be used.
+
 $beforeInsert
 -------------
 $afterInsert
@@ -235,11 +240,6 @@ $afterDelete
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
-
-$allowCallbacks
----------------
-
-Whether the callbacks defined above should be used.
 
 Working With Data
 *****************
