@@ -448,7 +448,7 @@ section of the configuration file.</p>
 specified should be handled by the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method inside the <code class="docutils literal notranslate"><span class="pre">Home</span></code> controller.</p>
 <p>Add the following lines, <strong>after</strong> the route directive for ‘/’.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:any)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>CodeIgniter reads its routing rules from top to bottom and routes the
@@ -459,10 +459,10 @@ match, and calls the appropriate controller and method, possibly with
 arguments.</p>
 <p>More information about routing can be found in the URI Routing
 <a class="reference internal" href="../incoming/routing.html"><span class="doc">documentation</span></a>.</p>
-<p>Here, the second rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches GET request
-to the URI path <code class="docutils literal notranslate"><span class="pre">/pages</span></code> maps the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
-<p>The third rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches GET request to <strong>any</strong> URI path
-using the wildcard string <code class="docutils literal notranslate"><span class="pre">(:any)</span></code>, and passes the parameter to the
+<p>Here, the second rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches a GET request
+to the URI path <code class="docutils literal notranslate"><span class="pre">/pages</span></code>, and it maps to the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
+<p>The third rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches a GET request to a URI segment
+using the placeholder <code class="docutils literal notranslate"><span class="pre">(:segment)</span></code>, and passes the parameter to the
 <code class="docutils literal notranslate"><span class="pre">view()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
 </section>
 <section id="running-the-app">
@@ -532,7 +532,7 @@ asked for it.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 08, 2022.
+      <span class="lastupdated">Last updated on Dec 09, 2022.
       </span></p>
   </div>
 
