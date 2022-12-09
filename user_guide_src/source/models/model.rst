@@ -571,33 +571,6 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 
 .. literalinclude:: model/042.php
 
-Working with Query Builder
-==========================
-
-You can get access to a shared instance of the Query Builder for that model's database connection any time you
-need it:
-
-.. literalinclude:: model/043.php
-
-This builder is already set up with the model's ``$table``. If you need access to another table
-you can pass it in as a parameter, but be aware that this will not return a shared instance:
-
-.. literalinclude:: model/044.php
-
-You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
-very elegant use:
-
-.. literalinclude:: model/045.php
-
-.. important:: The Model does not provide a perfect interface to the Query Builder.
-    The Model and the Query Builder are separate classes with different purposes.
-    They should not be expected to return the same data.
-    For example, if you need to get the compiledInsert you should do so directly on the builder instance.
-
-.. note:: You can also access the model's database connection seamlessly:
-
-    .. literalinclude:: model/046.php
-
 Runtime Return Type Changes
 ===========================
 
@@ -633,6 +606,33 @@ parameter is a Closure that will be called for each row of data.
 This is best used during cronjobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
+
+Working with Query Builder
+**************************
+
+You can get access to a shared instance of the Query Builder for that model's database connection any time you
+need it:
+
+.. literalinclude:: model/043.php
+
+This builder is already set up with the model's ``$table``. If you need access to another table
+you can pass it in as a parameter, but be aware that this will not return a shared instance:
+
+.. literalinclude:: model/044.php
+
+You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
+very elegant use:
+
+.. literalinclude:: model/045.php
+
+.. important:: The Model does not provide a perfect interface to the Query Builder.
+    The Model and the Query Builder are separate classes with different purposes.
+    They should not be expected to return the same data.
+    For example, if you need to get the compiledInsert you should do so directly on the builder instance.
+
+.. note:: You can also access the model's database connection seamlessly:
+
+    .. literalinclude:: model/046.php
 
 Model Events
 ************
