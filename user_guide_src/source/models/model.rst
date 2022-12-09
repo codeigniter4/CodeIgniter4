@@ -53,7 +53,10 @@ that extends ``CodeIgniter\Model``:
 This empty class provides convenient access to the database connection, the Query Builder,
 and a number of additional convenience methods.
 
-Should you need additional setup in your model you may extend the ``initialize()`` function
+initialize()
+============
+
+Should you need additional setup in your model you may extend the ``initialize()`` method
 which will be run immediately after the Model's constructor. This allows you to perform
 extra steps without repeating the constructor parameters, for example extending other models:
 
@@ -76,7 +79,7 @@ configuration file.
 Configuring Your Model
 ======================
 
-The model class has a few configuration options that can be set to allow the class' methods
+The model class has some configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
 what table to use and how we can find the required records:
 
@@ -121,6 +124,8 @@ qualified name of a class** that can be used with the Result object's ``getCusto
 method. Using the special ``::class`` constant of the class will allow most IDEs to
 auto-complete the name and allow functions like refactoring to better understand your code.
 
+.. _model-use-soft-deletes:
+
 $useSoftDeletes
 ---------------
 
@@ -146,49 +151,60 @@ potential mass assignment vulnerabilities.
 
 .. note:: The ``$primaryKey`` field should never be an allowed field.
 
+Dates
+-----
+
 $useTimestamps
---------------
+^^^^^^^^^^^^^^
 
 This boolean value determines whether the current date is automatically added to all inserts
 and updates. If true, will set the current time in the format specified by ``$dateFormat``. This
-requires that the table have columns named **created_at** and **updated_at** in the appropriate
+requires that the table have columns named **created_at**, **updated_at** and **deleted_at** in the appropriate
 data type.
 
+$dateFormat
+^^^^^^^^^^^
+
+This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
+date value gets inserted into the database. By default, this creates DATETIME values, but
+valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
+**useTimestamps** with an invalid or missing **dateFormat** will cause an exception.
+
 $createdField
--------------
+^^^^^^^^^^^^^
 
 Specifies which database field to use for data record create timestamp.
 Leave it empty to avoid updating it (even if ``$useTimestamps`` is enabled).
 
 $updatedField
--------------
+^^^^^^^^^^^^^
 
 Specifies which database field should use for keep data record update timestamp.
 Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 
-$dateFormat
------------
+$deletedField
+^^^^^^^^^^^^^
 
-This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
-date value gets inserted into the database. By default, this creates DATETIME values, but
-valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
-useTimestamps with an invalid or missing dateFormat will cause an exception.
+Specifies which database field to use for soft deletions. See :ref:`model-use-soft-deletes`.
+
+Validation
+----------
 
 $validationRules
-----------------
+^^^^^^^^^^^^^^^^
 
 Contains either an array of validation rules as described in :ref:`validation-array`
 or a string containing the name of a validation group, as described in the same section.
 Described in more detail below.
 
 $validationMessages
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Contains an array of custom error messages that should be used during validation, as
 described in :ref:`validation-custom-errors`. Described in more detail below.
 
 $skipValidation
----------------
+^^^^^^^^^^^^^^^
 
 Whether validation should be skipped during all **inserts** and **updates**. The default
 value is ``false``, meaning that data will always attempt to be validated. This is
@@ -198,7 +214,7 @@ this model will never validate.
 .. _clean-validation-rules:
 
 $cleanValidationRules
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 
 Whether validation rules should be removed that do not exist in the passed data.
 This is used in **updates**.
@@ -210,28 +226,35 @@ You can also change the value by the ``cleanRules()`` method.
 
 .. note:: Prior to v4.2.7, ``$cleanValidationRules`` did not work due to a bug.
 
+Callbacks
+---------
+
+$allowCallbacks
+^^^^^^^^^^^^^^^
+
+Whether the callbacks defined below should be used.
+
 $beforeInsert
--------------
+^^^^^^^^^^^^^
 $afterInsert
-------------
+^^^^^^^^^^^^
 $beforeUpdate
--------------
+^^^^^^^^^^^^^
 $afterUpdate
-------------
+^^^^^^^^^^^^
+$beforeFind
+^^^^^^^^^^^
 $afterFind
-----------
+^^^^^^^^^^
+$beforeDelete
+^^^^^^^^^^^^^
 $afterDelete
-------------
+^^^^^^^^^^^^
 
 These arrays allow you to specify callback methods that will be run on the data at the
 time specified in the property name.
 
-$allowCallbacks
----------------
-
-Whether the callbacks defined above should be used.
-
-Working With Data
+Working with Data
 *****************
 
 Finding Data
@@ -254,8 +277,8 @@ of just one:
 
 .. literalinclude:: model/007.php
 
-If no parameters are passed in, will return all rows in that model's table, effectively acting
-like ``findAll()``, though less explicit.
+.. note:: If no parameters are passed in, ``find()`` will return all rows in that model's table,
+    effectively acting like ``findAll()``, though less explicit.
 
 findColumn()
 ------------
@@ -264,7 +287,7 @@ Returns null or an indexed array of column values:
 
 .. literalinclude:: model/008.php
 
-``$column_name`` should be a name of single column else you will get the DataException.
+``$column_name`` should be a name of single column else you will get the ``DataException``.
 
 findAll()
 ---------
@@ -292,7 +315,7 @@ Returns the first row in the result set. This is best used in combination with t
 withDeleted()
 -------------
 
-If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where 'deleted_at IS NOT NULL'.
+If ``$useSoftDeletes`` is true, then the **find*()** methods will not return any rows where ``deleted_at IS NOT NULL``.
 To temporarily override this, you can use the ``withDeleted()`` method prior to calling the **find*()** method.
 
 .. literalinclude:: model/013.php
@@ -548,33 +571,6 @@ testing, migrations, or seeds. In these cases, you can turn the protection on or
 
 .. literalinclude:: model/042.php
 
-Working With Query Builder
-==========================
-
-You can get access to a shared instance of the Query Builder for that model's database connection any time you
-need it:
-
-.. literalinclude:: model/043.php
-
-This builder is already set up with the model's ``$table``. If you need access to another table
-you can pass it in as a parameter, but be aware that this will not return a shared instance:
-
-.. literalinclude:: model/044.php
-
-You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
-very elegant use:
-
-.. literalinclude:: model/045.php
-
-.. important:: The Model does not provide a perfect interface to the Query Builder.
-    The Model and the Query Builder are separate classes with different purposes.
-    They should not be expected to return the same data.
-    For example, if you need to get the compiledInsert you should do so directly on the builder instance.
-
-.. note:: You can also access the model's database connection seamlessly:
-
-    .. literalinclude:: model/046.php
-
 Runtime Return Type Changes
 ===========================
 
@@ -610,6 +606,57 @@ parameter is a Closure that will be called for each row of data.
 This is best used during cronjobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
+
+Working with Query Builder
+**************************
+
+Getting Query Builder for the Model's Table
+===========================================
+
+CodeIgniter Model has one instance of the Query Builder for that model's database connection.
+You can get access to the **shared** instance of the Query Builder any time you need it:
+
+.. literalinclude:: model/043.php
+
+This builder is already set up with the model's ``$table``.
+
+.. note:: Once you get the Query Builder instance, you can call methods of the
+    :doc:`Query Builder <../database/query_builder>`.
+    However, since Query Builder is not a Model, you cannot call methods of the Model.
+
+Getting Query Builder for Another Table
+=======================================
+
+If you need access to another table, you can get another instance of the Query Builder.
+Pass the table name in as a parameter, but be aware that this will **not** return
+a shared instance:
+
+.. literalinclude:: model/044.php
+
+Mixing Methods of Query Builder and Model
+=========================================
+
+You can also use Query Builder methods and the Model's CRUD methods in the same chained call, allowing for
+very elegant use:
+
+.. literalinclude:: model/045.php
+
+In this case, it operates on the shared instance of the Query Builder held by the model.
+
+.. important:: The Model does not provide a perfect interface to the Query Builder.
+    The Model and the Query Builder are separate classes with different purposes.
+    They should not be expected to return the same data.
+
+If the Query Builder returns a result, it is returned as is.
+In that case, the result may be different from the one returned by the model's method
+and may not be what was expected. The model's events are not triggered.
+
+To prevent unexpected behavior, do not use Query Builder methods that return results
+and specify the model's method at the end of the method chaining.
+
+.. note:: You can also access the model's database connection seamlessly:
+
+    .. literalinclude:: model/046.php
 
 Model Events
 ************
