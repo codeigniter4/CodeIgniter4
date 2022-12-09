@@ -56,8 +56,8 @@ If you want the same behavior as the previous version, set the CSRF filter like 
 
 Protecting **GET** method needs only when you use ``form_open()`` auto-generation of CSRF field.
 
-.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable auto-routing <use-defined-routes-only>`
-    because auto-routing permits any HTTP method to access a controller.
+.. Warning:: In general, if you use ``$methods`` filters, you should :ref:`disable Auto Routing (Legacy) <use-defined-routes-only>`
+    because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
 CURLRequest header change

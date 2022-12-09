@@ -313,7 +313,7 @@ your **app/Config/Routes.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
-.. _controller-auto-routing:
+.. _controller-auto-routing-legacy:
 
 Auto Routing (Legacy)
 *********************
