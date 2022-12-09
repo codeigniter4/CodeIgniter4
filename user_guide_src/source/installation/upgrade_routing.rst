@@ -22,10 +22,11 @@ Upgrade Guide
 =============
 
 1. If you use the Auto Routing in the same way as CI3, you need to enable :ref:`auto-routing`.
-2. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
+2. The placeholder ``(:any)`` in CI3 will be ``(:segment)`` in CI4.
+3. You have to change the syntax of each routing line and append it in **app/Config/Routes.php**. For example:
 
     - ``$route['journals'] = 'blogs';`` to ``$routes->add('journals', 'Blogs::index');``. This would map to the ``index()`` method in the ``Blogs`` controller.
-    - ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:any)', 'Catalog::productLookup');``
+    - ``$route['product/(:any)'] = 'catalog/product_lookup';`` to ``$routes->add('product/(:segment)', 'Catalog::productLookup');``
     - ``$route['login/(.+)'] = 'auth/login/$1';`` to ``$routes->add('login/(.+)', 'Auth::login/$1');``
 
 Code Example

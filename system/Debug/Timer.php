@@ -34,8 +34,8 @@ class Timer
      * Multiple calls can be made to this method so that several
      * execution points can be measured.
      *
-     * @param string $name The name of this timer.
-     * @param float  $time Allows user to provide time.
+     * @param string     $name The name of this timer.
+     * @param float|null $time Allows user to provide time.
      *
      * @return Timer
      */
