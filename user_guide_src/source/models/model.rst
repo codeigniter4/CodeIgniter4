@@ -79,7 +79,7 @@ configuration file.
 Configuring Your Model
 ======================
 
-The model class has a few configuration options that can be set to allow the class' methods
+The model class has some configuration options that can be set to allow the class' methods
 to work seamlessly for you. The first two are used by all of the CRUD methods to determine
 what table to use and how we can find the required records:
 
