@@ -331,6 +331,7 @@ class Services extends BaseService
             return static::getSharedInstance('image', $handler, $config);
         }
 
+        /** @var Images $config */
         $config ??= config('Images');
         $handler = $handler ?: $config->defaultHandler;
         $class   = $config->handlers[$handler];
@@ -638,6 +639,7 @@ class Services extends BaseService
             return static::getSharedInstance('session', $config);
         }
 
+        /** @var App $config */
         $config ??= config('App');
         $logger = AppServices::logger();
 
