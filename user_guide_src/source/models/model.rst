@@ -168,7 +168,7 @@ $dateFormat
 This value works with ``$useTimestamps`` and ``$useSoftDeletes`` to ensure that the correct type of
 date value gets inserted into the database. By default, this creates DATETIME values, but
 valid options are: ``'datetime'``, ``'date'``, or ``'int'`` (a PHP timestamp). Using **useSoftDeletes** or
-useTimestamps with an invalid or missing dateFormat will cause an exception.
+**useTimestamps** with an invalid or missing **dateFormat** will cause an exception.
 
 $createdField
 ^^^^^^^^^^^^^
@@ -185,7 +185,7 @@ Leave it empty to avoid update it (even ``$useTimestamps`` is enabled).
 $deletedField
 ^^^^^^^^^^^^^
 
-Specifies which database field should use for soft deletions. See :ref:`model-use-soft-deletes`.
+Specifies which database field to use for soft deletions. See :ref:`model-use-soft-deletes`.
 
 Validation
 ----------
@@ -649,7 +649,7 @@ In this case, it operates on the shared instance of the Query Builder held by th
 
 If the Query Builder returns a result, it is returned as is.
 In that case, the result may be different from the one returned by the model's method
-and may not be what was expected. The model's event is not be triggered.
+and may not be what was expected. The model's events are not triggered.
 
 To prevent unexpected behavior, do not use Query Builder methods that return results
 and specify the model's method at the end of the method chaining.
