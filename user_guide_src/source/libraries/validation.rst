@@ -642,6 +642,7 @@ You need to use an array for validation rules:
 
 .. literalinclude:: validation/040.php
 
+You must set the error message for the closure rule.
 When you specify the error message, set the array key for the closure rule.
 In the above code, the ``required`` rule has the key ``0``, and the closure has ``1``.
 
