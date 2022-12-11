@@ -57,7 +57,9 @@ final class TransactionTest extends CIUnitTestCase
 
     public function testTransStartDBDebugTrue()
     {
-        $builder = $this->db->table('job');
+        $this->enableDBDebug();
+
+        $builder = $this->db->transException(true)->table('job');
         $e       = null;
 
         try {
