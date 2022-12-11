@@ -106,14 +106,14 @@ CodeIgniter's classes provide an interface that they adhere to. When you want to
 core classes, you only need to ensure you meet the requirements of the interface and you know that
 the classes are compatible.
 
-For example, the ``RouterCollection`` class implements the ``RouterCollectionInterface``. When you
+For example, the ``RouteCollection`` class implements the ``RouteCollectionInterface``. When you
 want to create a replacement that provides a different way to create routes, you just need to
-create a new class that implements the ``RouterCollectionInterface``:
+create a new class that implements the ``RouteCollectionInterface``:
 
 .. literalinclude:: services/006.php
 
-Finally, modify **app/Config/Services.php** to create a new instance of ``MyRouter``
-instead of ``CodeIgniter\Router\RouterCollection``:
+Finally, add the ``routes()`` method to **app/Config/Services.php** to create a new instance of ``MyRouteCollection``
+instead of ``CodeIgniter\Router\RouteCollection``:
 
 .. literalinclude:: services/007.php
 

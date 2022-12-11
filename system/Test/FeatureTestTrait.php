@@ -15,9 +15,9 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\URI;
-use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Router\Exceptions\RedirectException;
 use CodeIgniter\Router\RouteCollection;
+use Config\App;
 use Config\Services;
 use Exception;
 use ReflectionException;
@@ -285,8 +285,8 @@ trait FeatureTestTrait
     protected function setupRequest(string $method, ?string $path = null): IncomingRequest
     {
         $path    = URI::removeDotSegments($path);
-        $config  = config('App');
-        $request = new IncomingRequest($config, new URI(), null, new UserAgent());
+        $config  = config(App::class);
+        $request = Services::request($config, true);
 
         // $path may have a query in it
         $parts                   = explode('?', $path);

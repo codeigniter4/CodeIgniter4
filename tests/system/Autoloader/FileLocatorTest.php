@@ -44,6 +44,8 @@ final class FileLocatorTest extends CIUnitTestCase
             'CodeIgniter\\Devkit' => [
                 TESTPATH . '_support/',
             ],
+            'Acme\SampleProject' => TESTPATH . '_support',
+            'Acme\Sample'        => TESTPATH . '_support/does/not/exists',
         ]);
 
         $this->locator = new FileLocator($autoloader);
@@ -149,6 +151,15 @@ final class FileLocatorTest extends CIUnitTestCase
         $file = '\Blogger\admin/posts.php';
 
         $this->assertFalse($this->locator->locateFile($file, 'Views'));
+    }
+
+    public function testLocateFileWithProperNamespace()
+    {
+        $file = 'Acme\SampleProject\View\Views\simple';
+
+        $expected = ROOTPATH . 'tests/_support/View/Views/simple.php';
+
+        $this->assertSame($expected, $this->locator->locateFile($file, 'Views'));
     }
 
     public function testSearchSimple()

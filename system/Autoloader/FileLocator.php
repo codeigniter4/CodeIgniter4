@@ -71,13 +71,13 @@ class FileLocator
         $namespaces = $this->autoloader->getNamespace();
 
         foreach (array_keys($namespaces) as $namespace) {
-            if (substr($file, 0, strlen($namespace)) === $namespace) {
+            if (substr($file, 0, strlen($namespace) + 1) === $namespace . '\\') {
+                $fileWithoutNamespace = substr($file, strlen($namespace));
+
                 // There may be sub-namespaces of the same vendor,
                 // so overwrite them with namespaces found later.
-                $paths = $namespaces[$namespace];
-
-                $fileWithoutNamespace = substr($file, strlen($namespace));
-                $filename             = ltrim(str_replace('\\', '/', $fileWithoutNamespace), '/');
+                $paths    = $namespaces[$namespace];
+                $filename = ltrim(str_replace('\\', '/', $fileWithoutNamespace), '/');
             }
         }
 

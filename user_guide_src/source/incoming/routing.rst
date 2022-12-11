@@ -379,8 +379,8 @@ available from the command line:
 .. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
     See the :doc:`../cli/cli_commands` page for detailed information.
 
-.. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
-    anyone could access the command with the help of auto-routing via HTTP.
+.. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
+    anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
 
 .. note:: It is recommended to use Spark Commands instead of CLI routes.
     See the :doc:`../cli/spark_commands` page for detailed information.
@@ -407,8 +407,8 @@ The value for the filter can be a string or an array of strings:
 See :doc:`Controller filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
-    (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
-    When auto-routing is enabled, it may be possible that a controller can be accessed
+    (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
+    When :ref:`auto-routing-legacy` is enabled, it may be possible that a controller can be accessed
     via a different URL than the configured route,
     in which case the filter you specified to the route will not be applied.
     See :ref:`use-defined-routes-only` to disable auto-routing.
@@ -689,7 +689,7 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 .. note:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
-.. _auto-routing:
+.. _auto-routing-legacy:
 
 Auto Routing (Legacy)
 *********************
@@ -733,7 +733,7 @@ Consider this URI::
 In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php**
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
-See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
 Configuration Options (Legacy)
 ==============================
@@ -753,7 +753,7 @@ The default controller is also used when no matching route has been found, and t
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
 Default Method (Legacy)
 -----------------------
