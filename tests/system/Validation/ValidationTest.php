@@ -229,6 +229,35 @@ class ValidationTest extends CIUnitTestCase
         );
     }
 
+    public function testClosureRuleWithParamError(): void
+    {
+        $this->validation->setRules(
+            [
+                'foo' => [
+                    'required',
+                    static function ($value, $data, &$error, $field) {
+                        if ($value !== 'abc') {
+                            $error = 'The ' . $field . ' value is not "abc"';
+
+                            return false;
+                        }
+
+                        return true;
+                    },
+                ],
+            ],
+        );
+
+        $data   = ['foo' => 'xyz'];
+        $return = $this->validation->run($data);
+
+        $this->assertFalse($return);
+        $this->assertSame(
+            ['foo' => 'The foo value is not "abc"'],
+            $this->validation->getErrors()
+        );
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
      *

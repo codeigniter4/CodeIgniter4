@@ -293,7 +293,9 @@ class Validation implements ValidationInterface
             $error = null;
 
             // If it's a callable, call and get out of here.
-            if ($isCallable) {
+            if ($this->isClosure($rule)) {
+                $passed = $rule($value, $data, $error, $field);
+            } elseif ($isCallable) {
                 $passed = $param === false ? $rule($value) : $rule($value, $param, $data);
             } else {
                 $found = false;
