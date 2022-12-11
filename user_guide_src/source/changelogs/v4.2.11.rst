@@ -1,0 +1,17 @@
+Version 4.2.11
+##############
+
+Release Date: Unreleased
+
+**4.2.11 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+Bugs Fixed
+**********
+
+- Fixed a ``FileLocator::locateFile()`` bug where a similar namespace name could be replaced by another, causing a failure to find a file that exists.
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
