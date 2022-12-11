@@ -428,23 +428,23 @@ the class:</p>
 CodeIgniter’s classes provide an interface that they adhere to. When you want to extend or replace
 core classes, you only need to ensure you meet the requirements of the interface and you know that
 the classes are compatible.</p>
-<p>For example, the <code class="docutils literal notranslate"><span class="pre">RouterCollection</span></code> class implements the <code class="docutils literal notranslate"><span class="pre">RouterCollectionInterface</span></code>. When you
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">RouteCollection</span></code> class implements the <code class="docutils literal notranslate"><span class="pre">RouteCollectionInterface</span></code>. When you
 want to create a replacement that provides a different way to create routes, you just need to
-create a new class that implements the <code class="docutils literal notranslate"><span class="pre">RouterCollectionInterface</span></code>:</p>
+create a new class that implements the <code class="docutils literal notranslate"><span class="pre">RouteCollectionInterface</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">App\Router</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Router\RouteCollectionInterface</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">MyRouter</span> <span class="k">implements</span> <span class="nx">RouteCollectionInterface</span>
+<span class="k">class</span> <span class="nc">MyRouteCollection</span> <span class="k">implements</span> <span class="nx">RouteCollectionInterface</span>
 <span class="p">{</span>
     <span class="c1">// Implement required methods here.</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Finally, modify <strong>app/Config/Services.php</strong> to create a new instance of <code class="docutils literal notranslate"><span class="pre">MyRouter</span></code>
-instead of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouterCollection</span></code>:</p>
+<p>Finally, add the <code class="docutils literal notranslate"><span class="pre">routes()</span></code> method to <strong>app/Config/Services.php</strong> to create a new instance of <code class="docutils literal notranslate"><span class="pre">MyRouteCollection</span></code>
+instead of <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Router\RouteCollection</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -453,12 +453,12 @@ instead of <code class="docutils literal notranslate"><span class="pre">CodeIgni
 
 <span class="k">class</span> <span class="nc">Services</span> <span class="k">extends</span> <span class="nx">BaseService</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouter</span><span class="p">();</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouteCollection</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">locator</span><span class="p">(),</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Modules&#39;</span><span class="p">));</span>
     <span class="p">}</span>
-
-    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -478,12 +478,12 @@ as a constructor parameter. The service method looks like this:</p>
 
 <span class="k">class</span> <span class="nc">Services</span> <span class="k">extends</span> <span class="nx">BaseService</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">renderer</span><span class="p">(</span><span class="nv">$viewPath</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;views/&#39;</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\View\View</span><span class="p">(</span><span class="nv">$viewPath</span><span class="p">);</span>
     <span class="p">}</span>
-
-    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -510,16 +510,16 @@ within the class, and, if not, creates a new one. All of the factory methods pro
 
 <span class="k">class</span> <span class="nc">Services</span> <span class="k">extends</span> <span class="nx">BaseService</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nv">$getShared</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">routes</span><span class="p">(</span><span class="nv">$getShared</span> <span class="o">=</span> <span class="k">true</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$getShared</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Router\RouteCollection</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$getShared</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="k">static</span><span class="o">::</span><span class="na">getSharedInstance</span><span class="p">(</span><span class="s1">&#39;routes&#39;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">\App\Router\MyRouteCollection</span><span class="p">(</span><span class="k">static</span><span class="o">::</span><span class="na">locator</span><span class="p">(),</span> <span class="nx">config</span><span class="p">(</span><span class="s1">&#39;Modules&#39;</span><span class="p">));</span>
     <span class="p">}</span>
-
-    <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -580,7 +580,7 @@ would simply use the framework’s <code class="docutils literal notranslate"><s
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 09, 2022.
+      <span class="lastupdated">Last updated on Dec 11, 2022.
       </span></p>
   </div>
 
