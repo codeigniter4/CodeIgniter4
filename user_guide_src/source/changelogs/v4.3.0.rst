@@ -27,16 +27,22 @@ Exceptions when Database Errors Occur
 
 - The exceptions thrown by the database connection classes have been changed to ``CodeIgniter\Database\Exceptions\DatabaseException``. Previously, different database drivers threw different exception classes, but these have been unified into ``DatabaseException``.
 - The exceptions thrown by the ``execute()`` method of Prepared Queries have been changed to ``DatabaseException``. Previously, different database drivers might throw different exception classes or did not throw exceptions, but these have been unified into ``DatabaseException``.
-- ``DBDebug`` and ``CI_DEBUG``
+- During transactions, exceptions are not thrown by default even if ``DBDebug`` is true.
+- ``DBDebug`` and ``CI_DEBUG`` Changes
 
     - To be consistent in behavior regardless of environments, ``Config\Database::$default['DBDebug']``
       and ``Config\Database::$tests['DBDebug']`` has been changed to ``true`` by default. With these
-      settings, an exception is always thrown when a database error occurs.
+      settings, an exception is always thrown when a database error occurs. Previously, it is ``false``
+      **only in the production environment**.
     - Now ``DatabaseException`` thrown in ``BaseBuilder`` is thrown if ``$DBDebug`` is true.
       Previously, it is thrown if ``CI_DEBUG`` is true.
     - The default value of ``BaseConnection::$DBDebug`` has been changed to ``true``.
     - With these changes, ``DBDebug`` **now means whether or not to throw an exception when an error occurs**.
       Although unrelated to debugging, the name has not been changed.
+    - When running transactions with ``DBDebug`` is ``true``, even if a query error occurs, exceptions
+      are not thrown by default. Previously, if a query error occurs, all the queries
+      will be rolled backed, and an exception will be thrown, so :ref:`transactions-managing-errors` or
+      :ref:`transactions-manual-transactions` won't work.
     - Now when you delete without WHERE clause in ``Model``, ``DatabaseException`` is thrown even if
       ``CI_DEBUG`` is false. Previously, it is thrown if ``CI_DEBUG`` is true.
 
@@ -233,6 +239,8 @@ Others
 - Improved data returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>`. All DBMS returns the same structure.
 - SQLite :ref:`BaseConnection::getIndexData() <db-metadata-getindexdata>` now can return pseudo index named ``PRIMARY`` for `AUTOINCREMENT` column, and each returned index data has ``type`` property.
 - ``BasePreparedQuery::close()`` now deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8. See :ref:`database-queries-stmt-close`.
+- Added ``BaseConnection::transException()`` to throw exceptinons during transactions.
+  See :ref:`transactions-throwing-exceptions`
 
 Model
 =====
