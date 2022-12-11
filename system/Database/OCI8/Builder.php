@@ -81,8 +81,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " FROM DUAL UNION ALL\n",
@@ -307,8 +307,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " UNION ALL\n",
@@ -416,8 +416,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " FROM DUAL UNION ALL\n",
@@ -495,8 +495,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " FROM DUAL UNION ALL\n",
@@ -512,5 +512,13 @@ class Builder extends BaseBuilder
         }
 
         return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
+     * Gets column names from a select query
+     */
+    protected function fieldsFromQuery(string $sql): array
+    {
+        return $this->db->query('SELECT * FROM (' . $sql . ') "_u_" WHERE ROWNUM = 1')->getFieldNames();
     }
 }

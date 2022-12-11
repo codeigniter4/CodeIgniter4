@@ -169,7 +169,7 @@ class BaseBuilder
      *   tableIdentity?: string,
      *   updateFields?: array,
      *   constraints?: array,
-     *   fromQuery?: string,
+     *   setQueryAsData?: string,
      *   sql?: string,
      *   alias?: string
      * }
@@ -1925,6 +1925,22 @@ class BaseBuilder
      */
     public function upsertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $sql = $this->_upsertBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
+
         if ($set !== null) {
             $this->setData($set, $escape);
         }
@@ -1965,8 +1981,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }
@@ -2068,6 +2084,60 @@ class BaseBuilder
     }
 
     /**
+     * Sets data source as a query for insertBatch()/updateBatch()/upsertBatch()/deleteBatch()
+     *
+     * @param BaseBuilder|RawSql $query
+     * @param array|string|null  $columns an array or comma delimited string of columns
+     */
+    public function setQueryAsData($query, ?string $alias = null, $columns = null): BaseBuilder
+    {
+        if (is_string($query)) {
+            throw new InvalidArgumentException('$query parameter must be BaseBuilder or RawSql class.');
+        }
+
+        if ($query instanceof BaseBuilder) {
+            $query = $query->getCompiledSelect();
+        } elseif ($query instanceof RawSql) {
+            $query = $query->__toString();
+        }
+
+        if (is_string($query)) {
+            if ($columns !== null && is_string($columns)) {
+                $columns = explode(',', $columns);
+                $columns = array_map(static fn ($key) => trim($key), $columns);
+            }
+
+            $columns = (array) $columns;
+
+            if ($columns === []) {
+                $columns = $this->fieldsFromQuery($query);
+            }
+
+            if ($alias !== null) {
+                $this->setAlias($alias);
+            }
+
+            foreach ($columns as $key => $value) {
+                $columns[$key] = $this->db->escapeChar . $value . $this->db->escapeChar;
+            }
+
+            $this->QBOptions['setQueryAsData'] = $query;
+            $this->QBKeys                      = $columns;
+            $this->QBSet                       = [];
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets column names from a select query
+     */
+    protected function fieldsFromQuery(string $sql): array
+    {
+        return $this->db->query('SELECT * FROM (' . $sql . ') _u_ LIMIT 1')->getFieldNames();
+    }
+
+    /**
      * Converts value array of array to array of strings
      */
     protected function formatValues(array $values): array
@@ -2084,6 +2154,22 @@ class BaseBuilder
      */
     public function insertBatch($set = null, ?bool $escape = null, int $batchSize = 100)
     {
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $sql = $this->_insertBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
+
         if ($set !== null && $set !== []) {
             $this->setData($set, $escape);
         }
@@ -2114,8 +2200,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
@@ -2427,9 +2513,9 @@ class BaseBuilder
     }
 
     /**
-     * Sets data and calls batchExecute to run queryies
+     * Sets data and calls batchExecute to run queries
      *
-     * @param array|object|null        $set         a dataset or select query
+     * @param array|object|null        $set         a dataset
      * @param array|RawSql|string|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
@@ -2437,6 +2523,22 @@ class BaseBuilder
     public function updateBatch($set = null, $constraints = null, int $batchSize = 100)
     {
         $this->onConstraint($constraints);
+
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $sql = $this->_updateBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
 
         if ($set !== null && $set !== []) {
             $this->setData($set, true);
@@ -2521,8 +2623,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " UNION ALL\n",
@@ -2677,7 +2779,7 @@ class BaseBuilder
     /**
      * Sets data and calls batchExecute to run queries
      *
-     * @param array|object|null $set         a dataset or select query
+     * @param array|object|null $set         a dataset
      * @param array|RawSql|null $constraints
      *
      * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
@@ -2685,6 +2787,22 @@ class BaseBuilder
     public function deleteBatch($set = null, $constraints = null, int $batchSize = 100)
     {
         $this->onConstraint($constraints);
+
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $sql = $this->_deleteBatch($this->QBFrom[0], $this->QBKeys, []);
+
+            if ($sql === '') {
+                return false; // @codeCoverageIgnore
+            }
+
+            if ($this->testMode === false) {
+                $this->db->query($sql, null, false);
+            }
+
+            $this->resetWrite();
+
+            return $this->testMode ? $sql : $this->db->affectedRows();
+        }
 
         if ($set !== null && $set !== []) {
             $this->setData($set, true);
@@ -2757,8 +2875,8 @@ class BaseBuilder
             $this->QBOptions['sql'] = trim($sql);
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = implode(
                 " UNION ALL\n",
@@ -3156,7 +3274,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function resetQuery()
+    public function resetQueryAsData()
     {
         $this->resetSelect();
         $this->resetWrite();
@@ -3311,7 +3429,7 @@ class BaseBuilder
      */
     protected function cleanClone()
     {
-        return (clone $this)->from([], true)->resetQuery();
+        return (clone $this)->from([], true)->resetQueryAsData();
     }
 
     /**

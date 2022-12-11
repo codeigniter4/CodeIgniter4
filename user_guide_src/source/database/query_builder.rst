@@ -860,6 +860,8 @@ The reason the second query worked is that the first parameter is set to ``false
 
 .. note:: This method doesn't work for batch inserts.
 
+.. _insert-batch-data:
+
 insertBatch
 ===========
 
@@ -877,6 +879,14 @@ The first parameter is an associative array of values.
 .. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
 
 .. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+You can also insert from a query:
+
+.. literalinclude:: query_builder/117.php
+
+.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+
+.. note:: It is required to alias the columns of the select query to match those of the target table. 
 
 .. _upsert-data:
 
@@ -937,6 +947,14 @@ constraint by default. Here is an example using an array:
 The first parameter is an associative array of values.
 
 .. note:: All values are escaped automatically producing safer queries.
+
+You can also upsert from a query:
+
+.. literalinclude:: query_builder/115.php
+
+.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->onConstraint()
 ------------------------
@@ -1073,6 +1091,14 @@ The first parameter is an associative array of values, the second parameter is t
 .. note:: ``affectedRows()`` won't give you proper results with this method,
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
+    
+You can also update from a query:
+
+.. literalinclude:: query_builder/116.php
+
+.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->getCompiledUpdate()
 -----------------------------
@@ -1119,6 +1145,12 @@ Generates a batch **DELETE** statement based on a set of data.
 This method may be especially useful when deleting data in a table with a composite primary key.
 
 .. note:: SQLite does not support the use of ``where()``.
+
+You can also delete from a query:
+
+.. literalinclude:: query_builder/119.php
+
+.. note:: ``$deleteBatch()`` can be used since v4.3.0.
 
 $builder->emptyTable()
 ----------------------
@@ -1372,6 +1404,17 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Specifies the ``FROM`` clause of a query using a subquery.
+
+    .. php:method:: setQueryAsData($query[, $alias[, $columns = null]])
+
+        :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
+        :param string|null $alias: Alias for query
+        :param array|string|null $columns: Array or comma delimited string of columns in the query
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Sets a query as a datasource for ``insertBatch()``, ``updateBatch()``, ``upsertBatch()``.
+        If ``$columns`` is null the query will be run to generate column names.
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 

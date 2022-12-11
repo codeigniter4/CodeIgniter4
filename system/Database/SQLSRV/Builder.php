@@ -190,8 +190,8 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values));
         }
@@ -756,12 +756,20 @@ class Builder extends BaseBuilder
             $this->QBOptions['sql'] = $sql;
         }
 
-        if (isset($this->QBOptions['fromQuery'])) {
-            $data = $this->QBOptions['fromQuery'];
+        if (isset($this->QBOptions['setQueryAsData'])) {
+            $data = $this->QBOptions['setQueryAsData'];
         } else {
             $data = 'VALUES ' . implode(', ', $this->formatValues($values)) . "\n";
         }
 
         return str_replace('{:_table_:}', $data, $sql);
+    }
+
+    /**
+     * Gets column names from a select query
+     */
+    protected function fieldsFromQuery(string $sql): array
+    {
+        return $this->db->query('SELECT TOP 1 * FROM (' . $sql . ') _u_')->getFieldNames();
     }
 }
