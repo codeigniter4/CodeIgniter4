@@ -386,6 +386,12 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
+        if ($builder->getCompiledQBWhere() === []) {
+            throw new DatabaseException(
+                'Updates are not allowed unless they contain a "where" or "like" clause.'
+            );
+        }
+
         return $builder->update();
     }
 
@@ -589,7 +595,7 @@ class Model extends BaseModel
         }
 
         // When $reset === false, the $tempUseSoftDeletes will be
-        // dependant on $useSoftDeletes value because we don't
+        // dependent on $useSoftDeletes value because we don't
         // want to add the same "where" condition for the second time
         $this->tempUseSoftDeletes = $reset
             ? $this->useSoftDeletes

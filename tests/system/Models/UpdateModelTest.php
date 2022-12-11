@@ -11,8 +11,11 @@
 
 namespace CodeIgniter\Models;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
+use Generator;
+use InvalidArgumentException;
 use stdClass;
 use Tests\Support\Models\EventModel;
 use Tests\Support\Models\JobModel;
@@ -377,5 +380,37 @@ final class UpdateModelTest extends LiveModelTestCase
             'country' => '4',
             'email'   => '1+1',
         ]);
+    }
+
+    /**
+     * @dataProvider provideInvalidIds
+     *
+     * @param false|null $id
+     */
+    public function testUpdateThrowDatabaseExceptionWithoutWhereClause($id, string $exception, string $exceptionMessage): void
+    {
+        $this->expectException($exception);
+        $this->expectExceptionMessage($exceptionMessage);
+
+        // $useSoftDeletes = false
+        $this->createModel(JobModel::class);
+
+        $this->model->update($id, ['name' => 'Foo Bar']);
+    }
+
+    public function provideInvalidIds(): Generator
+    {
+        yield from [
+            [
+                null,
+                DatabaseException::class,
+                'Updates are not allowed unless they contain a "where" or "like" clause.',
+            ],
+            [
+                false,
+                InvalidArgumentException::class,
+                'update(): argument #1 ($id) should not be boolean.',
+            ],
+        ];
     }
 }

@@ -81,6 +81,8 @@ Others
 - **Database:** ``InvalidArgumentException`` that is a kind of ``LogicException`` in ``BaseBuilder::_whereIn()`` is not suppressed by the configuration. Previously if ``CI_DEBUG`` was false, the exception was suppressed.
 - **Database:** The data structure returned by :ref:`BaseConnection::getForeignKeyData() <metadata-getforeignkeydata>` has been changed.
 - **Database:** ``CodeIgniter\Database\BasePreparedQuery`` class returns now a bool value for write-type queries instead of the ``Result`` class object.
+- **Model:** ``Model::update()`` method now raises a ``DatabaseException`` if it generates an SQL
+  statement without a WHERE clause; Model does not support operations that update all records.
 - **Routing:** ``RouteCollection::resetRoutes()`` resets Auto-Discovery of Routes. Previously once discovered, RouteCollection never discover Routes files again even if ``RouteCollection::resetRoutes()`` is called.
 
 .. _v430-interface-changes:

@@ -353,7 +353,11 @@ of the columns in a ``$table``, while the array's values are the values to save 
 
 .. literalinclude:: model/016.php
 
-.. important:: If the ``$primaryKey`` field is set to ``null`` then the update will affect all records in the table.
+.. important:: Since v4.3.0, this method raises a ``DatabaseException``
+    if it generates an SQL statement without a WHERE clause.
+    In previous versions, if it is called without ``$primaryKey`` specified and
+    an SQL statement was generated without a WHERE clause, the query would still
+    execute and all records in the table would be updated.
 
 Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:
 

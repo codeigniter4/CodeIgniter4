@@ -332,6 +332,8 @@ class Services extends BaseService
         }
 
         $config ??= config('Images');
+        assert($config instanceof Images);
+
         $handler = $handler ?: $config->defaultHandler;
         $class   = $config->handlers[$handler];
 
@@ -639,6 +641,8 @@ class Services extends BaseService
         }
 
         $config ??= config('App');
+        assert($config instanceof App);
+
         $logger = AppServices::logger();
 
         $driverName = $config->sessionDriver;
