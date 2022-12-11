@@ -518,20 +518,6 @@ class IncomingRequest extends Request
             strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false
             && $this->body !== null
         ) {
-            if ($index === null) {
-                return $this->getJSON();
-            }
-
-            if (is_array($index)) {
-                $output = [];
-
-                foreach ($index as $key) {
-                    $output[$key] = $this->getJsonVar($key, false, $filter, $flags);
-                }
-
-                return $output;
-            }
-
             return $this->getJsonVar($index, false, $filter, $flags);
         }
 
@@ -561,35 +547,76 @@ class IncomingRequest extends Request
     /**
      * Get a specific variable from a JSON input stream
      *
-     * @param string         $index  The variable that you want which can use dot syntax for getting specific values.
-     * @param bool           $assoc  If true, return the result as an associative array.
-     * @param int|null       $filter Filter Constant
-     * @param array|int|null $flags  Option
+     * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param bool              $assoc  If true, return the result as an associative array.
+     * @param int|null          $filter Filter Constant
+     * @param array|int|null    $flags  Option
      *
      * @return array|bool|float|int|stdClass|string|null
      */
-    public function getJsonVar(string $index, bool $assoc = false, ?int $filter = null, $flags = null)
+    public function getJsonVar($index = null, bool $assoc = false, ?int $filter = null, $flags = null)
     {
         helper('array');
 
-        $json = $this->getJSON(true);
-        if (! is_array($json)) {
+        $data = $this->getJSON(true);
+        if (! is_array($data)) {
             return null;
         }
-        $data = dot_array_search($index, $json);
+
+        if (is_string($index)) {
+            $data = dot_array_search($index, $data);
+        } elseif (is_array($index)) {
+            $result = [];
+
+            foreach ($index as $key) {
+                $result[$key] = dot_array_search($key, $data);
+            }
+
+            [$data, $result] = [$result, null];
+        }
 
         if ($data === null) {
             return null;
         }
 
-        if (! is_array($data)) {
-            $filter ??= FILTER_DEFAULT;
-            $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+        $filter ??= FILTER_DEFAULT;
+        $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
-            return filter_var($data, $filter, $flags);
+        if ($filter !== FILTER_DEFAULT
+            || (
+                (is_numeric($flags) && $flags !== 0)
+                || is_array($flags) && $flags !== []
+            )
+        ) {
+            if (is_array($data)) {
+                // Iterate over array and append filter and flags
+                array_walk_recursive($data, static function (&$val) use ($filter, $flags) {
+                    $valType = gettype($val);
+                    $val     = filter_var($val, $filter, $flags);
+
+                    if (in_array($valType, ['int', 'integer', 'float', 'double', 'bool', 'boolean'], true) && $val !== false) {
+                        settype($val, $valType);
+                    }
+                });
+            } else {
+                $dataType = gettype($data);
+                $data     = filter_var($data, $filter, $flags);
+
+                if (in_array($dataType, ['int', 'integer', 'float', 'double', 'bool', 'boolean'], true) && $data !== false) {
+                    settype($data, $dataType);
+                }
+            }
         }
 
         if (! $assoc) {
+            if (is_array($index)) {
+                foreach ($data as &$val) {
+                    $val = is_array($val) ? json_decode(json_encode($val)) : $val;
+                }
+
+                return $data;
+            }
+
             return json_decode(json_encode($data));
         }
 
