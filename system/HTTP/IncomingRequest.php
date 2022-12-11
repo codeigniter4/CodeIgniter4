@@ -610,6 +610,60 @@ class IncomingRequest extends Request
     }
 
     /**
+     * Gets a specific variable from raw input stream (send method in PUT, PATCH, DELETE).
+     *
+     * @param array|string|null $index  The variable that you want which can use dot syntax for getting specific values.
+     * @param int|null          $filter Filter Constant
+     * @param array|int|null    $flags  Option
+     *
+     * @return mixed
+     */
+    public function getRawInputVar($index = null, ?int $filter = null, $flags = null)
+    {
+        helper('array');
+
+        parse_str($this->body ?? '', $output);
+
+        if (is_string($index)) {
+            $output = dot_array_search($index, $output);
+        } elseif (is_array($index)) {
+            $data = [];
+
+            foreach ($index as $key) {
+                $data[$key] = dot_array_search($key, $output);
+            }
+
+            [$output, $data] = [$data, null];
+        }
+
+        $filter ??= FILTER_DEFAULT;
+        $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+
+        if (is_array($output)
+            && (
+                $filter !== FILTER_DEFAULT
+                || (
+                    (is_numeric($flags) && $flags !== 0)
+                    || is_array($flags) && $flags !== []
+                )
+            )
+        ) {
+            // Iterate over array and append filter and flags
+            array_walk_recursive($output, static function (&$val) use ($filter, $flags) {
+                $val = filter_var($val, $filter, $flags);
+            });
+
+            return $output;
+        }
+
+        if (is_string($output)) {
+            return filter_var($output, $filter, $flags);
+        }
+
+        return $output;
+    }
+
+    /**
      * Fetch an item from GET data.
      *
      * @param array|string|null $index  Index for item to fetch from $_GET.

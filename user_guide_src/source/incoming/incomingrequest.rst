@@ -155,6 +155,10 @@ This will retrieve data and convert it to an array. Like this:
 
 .. literalinclude:: incomingrequest/013.php
 
+You can also use ``getRawInputVar()``, to get the specified variable from raw stream and filter it.
+
+.. literalinclude:: incomingrequest/039.php
+
 Filtering Input Data
 ====================
 
@@ -168,7 +172,7 @@ Filtering a POST variable would look like this:
 .. literalinclude:: incomingrequest/014.php
 
 All of the methods mentioned above support the filter type passed in as the second parameter, with the
-exception of ``getJSON()``.
+exception of ``getJSON()`` and ``getRawInput()``.
 
 Retrieving Headers
 ******************
