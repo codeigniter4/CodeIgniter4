@@ -646,6 +646,10 @@ You must set the error message for the closure rule.
 When you specify the error message, set the array key for the closure rule.
 In the above code, the ``required`` rule has the key ``0``, and the closure has ``1``.
 
+Or you can use the following parameters:
+
+.. literalinclude:: validation/041.php
+
 Available Rules
 ***************
 
