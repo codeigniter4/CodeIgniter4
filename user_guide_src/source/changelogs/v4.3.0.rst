@@ -323,6 +323,7 @@ Changes
 
 - Config
     - All atomic type properties in ``Config`` classes have been typed.
+    - See :ref:`Upgrading <upgrade_430_config>` for information on changing the default values.
 - Changed the processing of Spark commands:
     - The ``CodeIgniter\CodeIgniter`` no longer handles Spark commands.
     - The ``CodeIgniter::isSparked()`` method has been removed.
