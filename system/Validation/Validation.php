@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Validation;
 
+use Closure;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -195,7 +196,7 @@ class Validation implements ValidationInterface
      *
      * @param array|string $value
      * @param array|null   $rules
-     * @param array        $data          The array of data to validate, with `DBGroup`.
+     * @param array|null   $data          The array of data to validate, with `DBGroup`.
      * @param string|null  $originalField The original asterisk field name like "foo.*.bar".
      */
     protected function processRules(
@@ -277,7 +278,7 @@ class Validation implements ValidationInterface
             $rules = array_diff($rules, ['permit_empty']);
         }
 
-        foreach ($rules as $rule) {
+        foreach ($rules as $i => $rule) {
             $isCallable = is_callable($rule);
 
             $passed = false;
@@ -292,7 +293,9 @@ class Validation implements ValidationInterface
             $error = null;
 
             // If it's a callable, call and get out of here.
-            if ($isCallable) {
+            if ($this->isClosure($rule)) {
+                $passed = $rule($value, $data, $error, $field);
+            } elseif ($isCallable) {
                 $passed = $param === false ? $rule($value) : $rule($value, $param, $data);
             } else {
                 $found = false;
@@ -333,7 +336,7 @@ class Validation implements ValidationInterface
 
                 // @phpstan-ignore-next-line $error may be set by rule methods.
                 $this->errors[$field] = $error ?? $this->getErrorMessage(
-                    $rule,
+                    $this->isClosure($rule) ? $i : $rule,
                     $field,
                     $label,
                     $param,
@@ -346,6 +349,14 @@ class Validation implements ValidationInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param Closure|string $rule
+     */
+    private function isClosure($rule): bool
+    {
+        return $rule instanceof Closure;
     }
 
     /**

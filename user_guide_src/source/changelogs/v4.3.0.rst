@@ -307,6 +307,7 @@ Others
 - **Routing:** Added new ``$routes->view()`` method to return the view directly. See :ref:`View Routes <view-routes>`.
 - **View:** View Cells are now first-class citizens and can be located in the **app/Cells** directory. See :ref:`View Cells <app-cells>`.
 - **View:** Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
+- **Validation:** Added Closure validation rule. See :ref:`validation-using-closure-rule` for details.
 - **Config:** Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 - **Debug:** Kint has been updated to 5.0.1.
 - **Request:** Added new ``$request->getRawInputVar()`` method to return a specified variable from raw stream. See :ref:`Retrieving Raw data <incomingrequest-retrieving-raw-data>`.
