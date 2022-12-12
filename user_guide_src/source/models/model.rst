@@ -634,9 +634,8 @@ This is best used during cronjobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
 
-<<<<<<< HEAD
 .. _model-events-callbacks:
-=======
+
 Working with Query Builder
 **************************
 
@@ -687,7 +686,6 @@ and specify the model's method at the end of the method chaining.
 .. note:: You can also access the model's database connection seamlessly:
 
     .. literalinclude:: model/046.php
->>>>>>> upstream/develop
 
 Model Events
 ************
