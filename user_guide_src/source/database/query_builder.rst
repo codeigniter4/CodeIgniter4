@@ -884,9 +884,9 @@ You can also insert from a query:
 
 .. literalinclude:: query_builder/117.php
 
-.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+.. note:: ``setQueryAsData()`` can be used since v4.3.0.
 
-.. note:: It is required to alias the columns of the select query to match those of the target table. 
+.. note:: It is required to alias the columns of the select query to match those of the target table.
 
 .. _upsert-data:
 
@@ -952,7 +952,7 @@ You can also upsert from a query:
 
 .. literalinclude:: query_builder/115.php
 
-.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+.. note:: ``setQueryAsData()`` can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
@@ -1091,12 +1091,12 @@ The first parameter is an associative array of values, the second parameter is t
 .. note:: ``affectedRows()`` won't give you proper results with this method,
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
-    
+
 You can also update from a query:
 
 .. literalinclude:: query_builder/116.php
 
-.. note:: ``$setQueryAsData()`` can be used since v4.3.0.
+.. note:: ``setQueryAsData()`` can be used since v4.3.0.
 
 .. note:: It is required to alias the columns of the select query to match those of the target table.
 
