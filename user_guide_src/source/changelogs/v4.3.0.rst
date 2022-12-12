@@ -12,7 +12,16 @@ Release Date: Unreleased
 Highlights
 **********
 
-- TBD
+- Query Builder supports **upsert()**, **upsertBatch()**, **deleteBatch()** and
+  now ***batch()** methods can set data from a query
+  (*contributed by* `sclubricants <https://github.com/sclubricants>`_).
+  See `Query Builder`_.
+- Database Forge supports to **add indexes in the existing tables** and
+  **name indexes** (*contributed by* `sclubricants <https://github.com/sclubricants>`_).
+  See `Forge`_.
+- To make the default configuration more secure, the default Validation Rules
+  have been changed to **Strict Rules**.
+- The behavior when a database error occurs has been changed. See :ref:`exceptions-when-database-errors-occur`.
 
 BREAKING
 ********
