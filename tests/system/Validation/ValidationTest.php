@@ -256,6 +256,29 @@ class ValidationTest extends CIUnitTestCase
         );
     }
 
+    public function testClosureRuleWithLabel(): void
+    {
+        $this->validation->setRules([
+            'secret' => [
+                'label'  => 'シークレット',
+                'rules'  => ['required', static fn ($value) => $value === 'abc'],
+                'errors' => [
+                    // Specify the array key for the closure rule.
+                    1 => 'The {field} is invalid',
+                ],
+            ],
+        ]);
+
+        $data   = ['secret' => 'xyz'];
+        $return = $this->validation->run($data);
+
+        $this->assertFalse($return);
+        $this->assertSame(
+            ['secret' => 'The シークレット is invalid'],
+            $this->validation->getErrors()
+        );
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
      *
