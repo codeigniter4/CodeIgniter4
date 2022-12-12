@@ -260,6 +260,9 @@ Config
 - app/Config/Exceptions.php
     - Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
       See See :ref:`logging_deprecation_warnings` for details.
+- app/Config/Logger.php
+    - The property ``$threshold`` has been changed to ``9`` in other than ``production``
+      environment.
 - app/Config/Modules.php
     - The new property ``$composerPackages`` is added to limit Composer package Auto-Discovery for better
       performance.
