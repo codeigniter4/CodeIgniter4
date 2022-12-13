@@ -293,7 +293,7 @@ final class InsertModelTest extends LiveModelTestCase
         $this->assertGreaterThan(0, $this->model->getInsertID());
         $result = $this->model->where('name', 'Scott')->where('country', '2')->where('email', '2+2')->first();
 
-        $this->assertCloseEnough(time(), strtotime($result->created_at));
+        $this->assertNotNull($result->created_at);
     }
 
     /**
