@@ -14,6 +14,5 @@ Bugs Fixed
 
 - Fixed a ``FileLocator::locateFile()`` bug where a similar namespace name could be replaced by another, causing a failure to find a file that exists.
 - Fixed a ``RedisHandler`` session class to use the correct config when used with a socket connection.
-- Fixed a ``FeatureTestTrait`` to use Services class for grabbing the ``IncomingRequest`` class.
 
 See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
