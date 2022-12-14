@@ -80,7 +80,7 @@ class Namespaces extends BaseCommand
 
                 $tbody[] = [
                     $ns,
-                    realpath($path) ?: $path,
+                    $path,
                     is_dir($path) ? 'Yes' : 'MISSING',
                 ];
             }
