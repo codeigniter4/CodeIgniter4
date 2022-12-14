@@ -38,7 +38,8 @@ class Autoload extends AutoloadConfig
      *   ];
      *```
      *
-     * @var array<string, string>
+     * @var array<string, array<int, string>|string>
+     * @phpstan-var array<string, string|list<string>>
      */
     public $psr4 = [
         APP_NAMESPACE => APPPATH, // For custom app namespace
