@@ -82,6 +82,7 @@ configured to make integrating modules into your applications simpler by automat
 file types, including:
 
 - :doc:`Events </extending/events>`
+- :doc:`Filters </incoming/filters>`
 - :doc:`Registrars </general/configuration>`
 - :doc:`Route files </incoming/routing>`
 - :doc:`Services </concepts/services>`
