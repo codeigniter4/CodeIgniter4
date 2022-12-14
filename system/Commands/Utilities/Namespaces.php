@@ -75,11 +75,7 @@ class Namespaces extends BaseCommand
         $tbody = [];
 
         foreach ($config->psr4 as $ns => $paths) {
-            if (is_string($paths)) {
-                $paths = [$paths];
-            }
-
-            foreach ($paths as $path) {
+            foreach ((array) $paths as $path) {
                 $path = realpath($path) ?: $path;
 
                 $tbody[] = [
