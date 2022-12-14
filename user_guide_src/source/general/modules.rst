@@ -195,10 +195,12 @@ is provided. If calling on the CLI, you will need to provide double backslashes:
 Helpers
 =======
 
-Helpers will be located automatically from defined namespaces when using the ``helper()`` method, as long as it
+Helpers will be automatically discovered within defined namespaces when using the ``helper()`` function, as long as it
 is within the namespaces **Helpers** directory:
 
 .. literalinclude:: modules/009.php
+
+You can specify namespaces. See :ref:`helpers-loading-from-non-standard-locations` for details.
 
 Language Files
 ==============
