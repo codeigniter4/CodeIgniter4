@@ -11,21 +11,6 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$classmap \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$files \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$psr4 \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
 			message: "#^Property Config\\\\Cache\\:\\:\\$backupHandler \\(string\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/CacheFactory.php
