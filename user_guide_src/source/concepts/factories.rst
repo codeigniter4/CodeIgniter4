@@ -36,6 +36,8 @@ On the other hand, Services have code to create instances, so it can create a co
 that needs other services or class instances. When you get a service, Services require a service name,
 not a class name, so the returned instance can be changed without changing the client code.
 
+.. _factories-example:
+
 Example
 =======
 

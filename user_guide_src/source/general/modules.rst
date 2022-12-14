@@ -176,7 +176,7 @@ Config files are automatically discovered whenever using the ``config()`` functi
 
 .. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-options` for more information.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
 
 Migrations
 ==========
