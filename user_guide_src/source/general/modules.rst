@@ -17,7 +17,7 @@ Namespaces
 
 The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading <../concepts/autoloader>`
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
-modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
+modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``$psr4`` property.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **app**
@@ -30,7 +30,7 @@ directory in the main project root::
     tests/
     writable/
 
-Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``psr4`` array property:
+Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``$psr4`` array property:
 
 .. literalinclude:: modules/001.php
 
