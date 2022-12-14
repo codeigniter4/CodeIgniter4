@@ -23,12 +23,12 @@ For example, let's say we want to keep a simple blog module that we can re-use b
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **app**
 directory in the main project root::
 
-    /acme        // New modules directory
-    /app
-    /public
-    /system
-    /tests
-    /writable
+    acme/        // New modules directory
+    app/
+    public/
+    system/
+    tests/
+    writable/
 
 Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``psr4`` array property:
 
@@ -40,19 +40,19 @@ and become comfortable with their use. Several file types will be scanned for au
 
 A common directory structure within a module will mimic the main application folder::
 
-    /acme
-        /Blog
-            /Config
-            /Controllers
-            /Database
-                /Migrations
-                /Seeds
-            /Helpers
-            /Language
-                /en
-            /Libraries
-            /Models
-            /Views
+    acme/
+        Blog/
+            Config/
+            Controllers/
+            Database/
+                Migrations/
+                Seeds/
+            Helpers/
+            Language/
+                en/
+            Libraries/
+            Models/
+            Views/
 
 Of course, there is nothing forcing you to use this exact structure, and you should organize it in the manner that
 best suits your module, leaving out directories you don't need, creating new directories for Entities, Interfaces,
