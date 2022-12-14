@@ -117,7 +117,7 @@ by editing the ``$discoverInComposer`` variable in ``Config\Modules.php``:
 .. literalinclude:: modules/004.php
 
 ==================
-Working With Files
+Working with Files
 ==================
 
 This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
