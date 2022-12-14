@@ -21,7 +21,9 @@ Highlights
   See `Forge`_.
 - To make the default configuration more secure, the default Validation Rules
   have been changed to **Strict Rules**.
-- The behavior when a database error occurs has been changed. See :ref:`exceptions-when-database-errors-occur`.
+- When a database error occurs, the conditions that an exception is thrown and
+  the exception classes that can be thrown have been changed.
+  See :ref:`exceptions-when-database-errors-occur`.
 
 BREAKING
 ********
