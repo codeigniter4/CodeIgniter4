@@ -15,7 +15,7 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
 Namespaces
 ==========
 
-The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading </concepts/autoloader>`
+The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading <../concepts/autoloader>`
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
 modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
 
@@ -81,11 +81,11 @@ Many times, you will need to specify the full namespace to files you want to inc
 configured to make integrating modules into your applications simpler by automatically discovering many different
 file types, including:
 
-- :doc:`Events </extending/events>`
-- :doc:`Filters </incoming/filters>`
-- :doc:`Registrars </general/configuration>`
-- :doc:`Route files </incoming/routing>`
-- :doc:`Services </concepts/services>`
+- :doc:`Events <../extending/events>`
+- :doc:`Filters <../incoming/filters>`
+- :doc:`Registrars <./configuration>`
+- :doc:`Route files <../incoming/routing>`
+- :doc:`Services <../concepts/services>`
 
 This is configured in the file **app/Config/Modules.php**.
 
@@ -127,7 +127,7 @@ guide, but is being reproduced here so that it's easier to grasp how all of the 
 Routes
 ======
 
-By default, :doc:`routes </incoming/routing>` are automatically scanned for within modules. It can be turned off in
+By default, :doc:`routes <../incoming/routing>` are automatically scanned for within modules. It can be turned off in
 the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
@@ -139,7 +139,7 @@ In that case, see :ref:`routing-priority`.
 Filters
 =======
 
-By default, :doc:`filters </incoming/filters>` are automatically scanned for within modules.
+By default, :doc:`filters <../incoming/filters>` are automatically scanned for within modules.
 It can be turned off in the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$filters`` instance is already defined for you.
