@@ -290,7 +290,7 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
 <li><p><a class="reference internal" href="#discovery-and-composer" id="id6">Discovery and Composer</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#working-with-files" id="id7">Working With Files</a></p>
+<li><p><a class="reference internal" href="#working-with-files" id="id7">Working with Files</a></p>
 <ul>
 <li><p><a class="reference internal" href="#routes" id="id8">Routes</a></p></li>
 <li><p><a class="reference internal" href="#filters" id="id9">Filters</a></p></li>
@@ -311,19 +311,19 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
 <h2><a class="toc-backref" href="#id1">Namespaces</a><a class="headerlink" href="#namespaces" title="Permalink to this headline"></a></h2>
 <p>The core element of the modules functionality comes from the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">PSR-4 compatible autoloading</span></a>
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
-modules is to namespace your code and add it to <strong>app/Config/Autoload.php</strong>, in the <code class="docutils literal notranslate"><span class="pre">psr4</span></code> section.</p>
+modules is to namespace your code and add it to <strong>app/Config/Autoload.php</strong>, in the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> property.</p>
 <p>For example, let’s say we want to keep a simple blog module that we can re-use between applications. We might create
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our <strong>app</strong>
 directory in the main project root:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">acme</span>        <span class="c1">// New modules directory</span>
-<span class="o">/</span><span class="nx">app</span>
-<span class="o">/</span><span class="k">public</span>
-<span class="o">/</span><span class="nb">system</span>
-<span class="o">/</span><span class="nx">tests</span>
-<span class="o">/</span><span class="nx">writable</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">acme</span><span class="o">/</span>        <span class="c1">// New modules directory</span>
+<span class="nx">app</span><span class="o">/</span>
+<span class="k">public</span><span class="o">/</span>
+<span class="nb">system</span><span class="o">/</span>
+<span class="nx">tests</span><span class="o">/</span>
+<span class="nx">writable</span><span class="o">/</span>
 </pre></div>
 </div>
-<p>Open <strong>app/Config/Autoload.php</strong> and add the <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace to the <code class="docutils literal notranslate"><span class="pre">psr4</span></code> array property:</p>
+<p>Open <strong>app/Config/Autoload.php</strong> and add the <code class="docutils literal notranslate"><span class="pre">Acme\Blog</span></code> namespace to the <code class="docutils literal notranslate"><span class="pre">$psr4</span></code> array property:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -346,19 +346,19 @@ directory in the main project root:</p>
 takes care of 80% of what is needed for modules to work, so you should be sure to familiarize yourself with namespaces
 and become comfortable with their use. Several file types will be scanned for automatically through all defined namespaces - a crucial ingredient for working with modules.</p>
 <p>A common directory structure within a module will mimic the main application folder:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">acme</span>
-    <span class="o">/</span><span class="nx">Blog</span>
-        <span class="o">/</span><span class="nx">Config</span>
-        <span class="o">/</span><span class="nx">Controllers</span>
-        <span class="o">/</span><span class="nx">Database</span>
-            <span class="o">/</span><span class="nx">Migrations</span>
-            <span class="o">/</span><span class="nx">Seeds</span>
-        <span class="o">/</span><span class="nx">Helpers</span>
-        <span class="o">/</span><span class="nx">Language</span>
-            <span class="o">/</span><span class="nx">en</span>
-        <span class="o">/</span><span class="nx">Libraries</span>
-        <span class="o">/</span><span class="nx">Models</span>
-        <span class="o">/</span><span class="nx">Views</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">acme</span><span class="o">/</span>
+    <span class="nx">Blog</span><span class="o">/</span>
+        <span class="nx">Config</span><span class="o">/</span>
+        <span class="nx">Controllers</span><span class="o">/</span>
+        <span class="nx">Database</span><span class="o">/</span>
+            <span class="nx">Migrations</span><span class="o">/</span>
+            <span class="nx">Seeds</span><span class="o">/</span>
+        <span class="nx">Helpers</span><span class="o">/</span>
+        <span class="nx">Language</span><span class="o">/</span>
+            <span class="nx">en</span><span class="o">/</span>
+        <span class="nx">Libraries</span><span class="o">/</span>
+        <span class="nx">Models</span><span class="o">/</span>
+        <span class="nx">Views</span><span class="o">/</span>
 </pre></div>
 </div>
 <p>Of course, there is nothing forcing you to use this exact structure, and you should organize it in the manner that
@@ -402,6 +402,7 @@ configured to make integrating modules into your applications simpler by automat
 file types, including:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a></p></li>
+<li><p><a class="reference internal" href="../incoming/filters.html"><span class="doc">Filters</span></a></p></li>
 <li><p><a class="reference internal" href="configuration.html"><span class="doc">Registrars</span></a></p></li>
 <li><p><a class="reference internal" href="../incoming/routing.html"><span class="doc">Route files</span></a></p></li>
 <li><p><a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a></p></li>
@@ -442,7 +443,7 @@ by editing the <code class="docutils literal notranslate"><span class="pre">$dis
 </section>
 </section>
 <section id="working-with-files">
-<h2><a class="toc-backref" href="#id7">Working With Files</a><a class="headerlink" href="#working-with-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Working with Files</a><a class="headerlink" href="#working-with-files" title="Permalink to this headline"></a></h2>
 <p>This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
 be used within the module. Some of this information is described in more detail in the relevant location of the user
 guide, but is being reproduced here so that it’s easier to grasp how all of the pieces fit together.</p>
@@ -481,7 +482,7 @@ but must be specified within the Routes file itself:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Routes.php</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;Acme\Blog\Controllers\Blog::index&#39;</span><span class="p">);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="s1">&#39;\Acme\Blog\Controllers\Blog::index&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>To reduce the amount of typing needed here, the <strong>group</strong> routing feature is helpful:</p>
@@ -512,7 +513,7 @@ Modules that need to override or add to known configurations in <strong>app/Conf
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">config()</span></code> finds the file in <strong>app/Config/</strong> when there is a class with the same shortname,
 even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">config(\Acme\Blog\Config\Blog::class)</span></code>.
-This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-options"><span class="std std-ref">Factories Options</span></a> for more information.</p>
+This is because <code class="docutils literal notranslate"><span class="pre">config()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-example"><span class="std std-ref">Factories Example</span></a> for more information.</p>
 </div>
 </section>
 <section id="migrations">
@@ -530,13 +531,14 @@ is provided. If calling on the CLI, you will need to provide double backslashes:
 </section>
 <section id="helpers">
 <h3><a class="toc-backref" href="#id14">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
-<p>Helpers will be located automatically from defined namespaces when using the <code class="docutils literal notranslate"><span class="pre">helper()</span></code> method, as long as it
+<p>Helpers will be automatically discovered within defined namespaces when using the <code class="docutils literal notranslate"><span class="pre">helper()</span></code> function, as long as it
 is within the namespaces <strong>Helpers</strong> directory:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">helper</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>You can specify namespaces. See <a class="reference internal" href="helpers.html#helpers-loading-from-non-standard-locations"><span class="std std-ref">Loading from Non-standard Locations</span></a> for details.</p>
 </section>
 <section id="language-files">
 <h3><a class="toc-backref" href="#id15">Language Files</a><a class="headerlink" href="#language-files" title="Permalink to this headline"></a></h3>
@@ -554,11 +556,22 @@ file follows the same directory structures as the main application directory.</p
 </section>
 <section id="models">
 <h3><a class="toc-backref" href="#id17">Models</a><a class="headerlink" href="#models" title="Permalink to this headline"></a></h3>
-<p>Models are always instantiated by their fully-qualified class name, so no special access is provided:</p>
+<p>If you instantiate models with <code class="docutils literal notranslate"><span class="pre">new</span></code> keyword by their fully-qualified class names, no special access is provided:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Acme\Blog\Models\PostModel</span><span class="p">();</span>
 </pre></div>
+</div>
+<p>Model files are automatically discovered whenever using the <a class="reference internal" href="common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> function that is always available.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We don’t recommend you use the same short classname in modules.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">model()</span></code> finds the file in <strong>app/Models/</strong> when there is a class with the same shortname,
+even if you specify a fully qualified class name like <code class="docutils literal notranslate"><span class="pre">model(\Acme\Blog\Model\PostModel::class)</span></code>.
+This is because <code class="docutils literal notranslate"><span class="pre">model()</span></code> is a wrapper for the <code class="docutils literal notranslate"><span class="pre">Factories</span></code> class which uses <code class="docutils literal notranslate"><span class="pre">preferApp</span></code> by default. See <a class="reference internal" href="../concepts/factories.html#factories-example"><span class="std std-ref">Factories Example</span></a> for more information.</p>
 </div>
 </section>
 <section id="views">
@@ -585,7 +598,7 @@ file follows the same directory structures as the main application directory.</p
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 13, 2022.
+      <span class="lastupdated">Last updated on Dec 14, 2022.
       </span></p>
   </div>
 
