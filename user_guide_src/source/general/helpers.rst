@@ -93,6 +93,10 @@ use the following command to load the helper for us:
 
 .. literalinclude:: helpers/004.php
 
+You can also use the following way:
+
+.. literalinclude:: helpers/007.php
+
 .. note:: The functions within files loaded this way are not truly namespaced.
     The namespace is simply used as a convenient way to locate the files.
 
