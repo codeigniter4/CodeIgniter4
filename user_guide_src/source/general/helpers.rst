@@ -72,6 +72,8 @@ it.
 However if you want to load in your controller constructor, you can use the ``$helpers``
 property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 
+.. _helpers-loading-from-non-standard-locations:
+
 Loading from Non-standard Locations
 -----------------------------------
 

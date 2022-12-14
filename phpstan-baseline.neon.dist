@@ -11,21 +11,6 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$classmap \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$files \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$psr4 \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
 			message: "#^Comparison operation \"\\>\" between int and \\(array\\|float\\|int\\) results in an error\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php

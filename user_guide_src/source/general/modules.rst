@@ -15,22 +15,22 @@ language files, etc. Modules may contain as few, or as many, of these as you lik
 Namespaces
 ==========
 
-The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading </concepts/autoloader>`
+The core element of the modules functionality comes from the :doc:`PSR-4 compatible autoloading <../concepts/autoloader>`
 that CodeIgniter uses. While any code can use the PSR-4 autoloader and namespaces, the primary way to take full advantage of
-modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``psr4`` section.
+modules is to namespace your code and add it to **app/Config/Autoload.php**, in the ``$psr4`` property.
 
 For example, let's say we want to keep a simple blog module that we can re-use between applications. We might create
 folder with our company name, Acme, to store all of our modules within. We will put it right alongside our **app**
 directory in the main project root::
 
-    /acme        // New modules directory
-    /app
-    /public
-    /system
-    /tests
-    /writable
+    acme/        // New modules directory
+    app/
+    public/
+    system/
+    tests/
+    writable/
 
-Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``psr4`` array property:
+Open **app/Config/Autoload.php** and add the ``Acme\Blog`` namespace to the ``$psr4`` array property:
 
 .. literalinclude:: modules/001.php
 
@@ -40,19 +40,19 @@ and become comfortable with their use. Several file types will be scanned for au
 
 A common directory structure within a module will mimic the main application folder::
 
-    /acme
-        /Blog
-            /Config
-            /Controllers
-            /Database
-                /Migrations
-                /Seeds
-            /Helpers
-            /Language
-                /en
-            /Libraries
-            /Models
-            /Views
+    acme/
+        Blog/
+            Config/
+            Controllers/
+            Database/
+                Migrations/
+                Seeds/
+            Helpers/
+            Language/
+                en/
+            Libraries/
+            Models/
+            Views/
 
 Of course, there is nothing forcing you to use this exact structure, and you should organize it in the manner that
 best suits your module, leaving out directories you don't need, creating new directories for Entities, Interfaces,
@@ -81,10 +81,11 @@ Many times, you will need to specify the full namespace to files you want to inc
 configured to make integrating modules into your applications simpler by automatically discovering many different
 file types, including:
 
-- :doc:`Events </extending/events>`
-- :doc:`Registrars </general/configuration>`
-- :doc:`Route files </incoming/routing>`
-- :doc:`Services </concepts/services>`
+- :doc:`Events <../extending/events>`
+- :doc:`Filters <../incoming/filters>`
+- :doc:`Registrars <./configuration>`
+- :doc:`Route files <../incoming/routing>`
+- :doc:`Services <../concepts/services>`
 
 This is configured in the file **app/Config/Modules.php**.
 
@@ -134,7 +135,7 @@ by editing the ``$discoverInComposer`` variable in **app/Config/Modules.php**:
 .. literalinclude:: modules/004.php
 
 ==================
-Working With Files
+Working with Files
 ==================
 
 This section will take a look at each of the file types (controllers, views, language files, etc) and how they can
@@ -144,7 +145,7 @@ guide, but is being reproduced here so that it's easier to grasp how all of the 
 Routes
 ======
 
-By default, :doc:`routes </incoming/routing>` are automatically scanned for within modules. It can be turned off in
+By default, :doc:`routes <../incoming/routing>` are automatically scanned for within modules. It can be turned off in
 the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$routes`` instance is already defined for you.
@@ -156,7 +157,7 @@ In that case, see :ref:`routing-priority`.
 Filters
 =======
 
-By default, :doc:`filters </incoming/filters>` are automatically scanned for within modules.
+By default, :doc:`filters <../incoming/filters>` are automatically scanned for within modules.
 It can be turned off in the **Modules** config file, described above.
 
 .. note:: Since the files are being included into the current scope, the ``$filters`` instance is already defined for you.
@@ -193,7 +194,7 @@ Config files are automatically discovered whenever using the ``config()`` functi
 
 .. note:: ``config()`` finds the file in **app/Config/** when there is a class with the same shortname,
     even if you specify a fully qualified class name like ``config(\Acme\Blog\Config\Blog::class)``.
-    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`factories-options` for more information.
+    This is because ``config()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
 
 Migrations
 ==========
@@ -212,10 +213,12 @@ is provided. If calling on the CLI, you will need to provide double backslashes:
 Helpers
 =======
 
-Helpers will be located automatically from defined namespaces when using the ``helper()`` method, as long as it
+Helpers will be automatically discovered within defined namespaces when using the ``helper()`` function, as long as it
 is within the namespaces **Helpers** directory:
 
 .. literalinclude:: modules/009.php
+
+You can specify namespaces. See :ref:`helpers-loading-from-non-standard-locations` for details.
 
 Language Files
 ==============
@@ -233,9 +236,17 @@ Libraries are always instantiated by their fully-qualified class name, so no spe
 Models
 ======
 
-Models are always instantiated by their fully-qualified class name, so no special access is provided:
+If you instantiate models with ``new`` keyword by their fully-qualified class names, no special access is provided:
 
 .. literalinclude:: modules/011.php
+
+Model files are automatically discovered whenever using the :php:func:`model()` function that is always available.
+
+.. note:: We don't recommend you use the same short classname in modules.
+
+.. note:: ``model()`` finds the file in **app/Models/** when there is a class with the same shortname,
+    even if you specify a fully qualified class name like ``model(\Acme\Blog\Model\PostModel::class)``.
+    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
 
 Views
 =====

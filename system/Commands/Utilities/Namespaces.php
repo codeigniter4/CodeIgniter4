@@ -134,18 +134,22 @@ class Namespaces extends BaseCommand
 
         $tbody = [];
 
-        foreach ($config->psr4 as $ns => $path) {
+        foreach ($config->psr4 as $ns => $paths) {
             if (array_key_exists('r', $params)) {
-                $pathOutput = $this->truncate($path, $maxLength);
+                $pathOutput = $this->truncate($paths, $maxLength);
             } else {
-                $pathOutput = $this->truncate(clean_path($path), $maxLength);
+                $pathOutput = $this->truncate(clean_path($paths), $maxLength);
             }
 
-            $tbody[] = [
-                $ns,
-                $pathOutput,
-                is_dir($path) ? 'Yes' : 'MISSING',
-            ];
+            foreach ((array) $paths as $path) {
+                $path = realpath($path) ?: $path;
+
+                $tbody[] = [
+                    $ns,
+                    $pathOutput,
+                    is_dir($path) ? 'Yes' : 'MISSING',
+                ];
+            }
         }
 
         return $tbody;
