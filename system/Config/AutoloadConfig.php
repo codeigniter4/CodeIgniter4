@@ -73,6 +73,7 @@ class AutoloadConfig
      * or for loading functions.
      *
      * @var array<int, string>
+     * @phpstan-var list<string>
      */
     public $files = [];
 
