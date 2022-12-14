@@ -218,9 +218,17 @@ Libraries are always instantiated by their fully-qualified class name, so no spe
 Models
 ======
 
-Models are always instantiated by their fully-qualified class name, so no special access is provided:
+If you instantiate models with ``new`` keyword by their fully-qualified class names, no special access is provided:
 
 .. literalinclude:: modules/011.php
+
+Model files are automatically discovered whenever using the :php:func:`model()` function that is always available.
+
+.. note:: We don't recommend you use the same short classname in modules.
+
+.. note:: ``model()`` finds the file in **app/Models/** when there is a class with the same shortname,
+    even if you specify a fully qualified class name like ``model(\Acme\Blog\Model\PostModel::class)``.
+    This is because ``model()`` is a wrapper for the ``Factories`` class which uses ``preferApp`` by default. See :ref:`Factories Example <factories-example>` for more information.
 
 Views
 =====
