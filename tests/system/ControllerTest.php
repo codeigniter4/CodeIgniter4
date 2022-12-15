@@ -39,11 +39,7 @@ use Tests\Support\Config\Validation;
 final class ControllerTest extends CIUnitTestCase
 {
     private App $config;
-
-    /**
-     * @var Controller|null
-     */
-    private $controller;
+    private ?Controller $controller = null;
 
     /**
      * Current request.
