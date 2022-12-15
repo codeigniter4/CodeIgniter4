@@ -118,9 +118,6 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/tests/system/Email/EmailTest.php',
         ],
 
-        // buggy on union mixed type, new class extends SomeClass marked as object in union, and false replaced with bool in Union
-        TypedPropertyFromAssignsRector::class,
-
         // rector mistakenly removes `@return true`
         RemoveUselessReturnTagRector::class => [
             __DIR__ . '/system/Debug/Exceptions.php',
