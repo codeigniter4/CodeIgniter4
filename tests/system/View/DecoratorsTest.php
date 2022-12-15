@@ -28,7 +28,7 @@ final class DecoratorsTest extends CIUnitTestCase
 {
     private FileLocator $loader;
     private string $viewsDir;
-    private $config;
+    private ?\Config\View $config = null;
 
     protected function setUp(): void
     {
