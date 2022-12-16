@@ -174,6 +174,7 @@ class Exceptions
     {
         if (
             $severity === E_DEPRECATED
+            && defined('VENDORPATH')
             && strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
             && $message === 'Use of "static" in callables is deprecated'
         ) {
