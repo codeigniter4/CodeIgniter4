@@ -36,7 +36,7 @@ class Upload extends BaseController
         if (! $img->hasMoved()) {
             $filepath = WRITEPATH . 'uploads/' . $img->store();
 
-            $data = ['uploaded_flleinfo' => new File($filepath)];
+            $data = ['uploaded_fileinfo' => new File($filepath)];
 
             return view('upload_success', $data);
         }
