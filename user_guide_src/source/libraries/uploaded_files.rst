@@ -126,7 +126,7 @@ request, use ``getFiles()``. This will return an array of files represented by i
 Of course, there are multiple ways to name the file input, and anything but the simplest can create strange results.
 The array returns in a manner that you would expect. With the simplest usage, a single file might be submitted like::
 
-    <input type="file" name="avatar" />
+    <input type="file" name="avatar">
 
 Which would return a simple array like::
 
@@ -138,7 +138,7 @@ Which would return a simple array like::
 
 If you used an array notation for the name, the input would look something like::
 
-    <input type="file" name="my-form[details][avatar]" />
+    <input type="file" name="my-form[details][avatar]"
 
 The array returned by ``getFiles()`` would look more like this::
 
@@ -153,8 +153,8 @@ The array returned by ``getFiles()`` would look more like this::
 
 In some cases, you may specify an array of files to upload::
 
-    Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
-    Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
+    Upload an avatar: <input type="file" name="my-form[details][avatars][]">
+    Upload an avatar: <input type="file" name="my-form[details][avatars][]">
 
 In this case, the returned array of files would be more like::
 
@@ -179,7 +179,7 @@ Simplest usage
 
 With the simplest usage, a single file might be submitted like::
 
-    <input type="file" name="userfile" />
+    <input type="file" name="userfile">
 
 Which would return a simple file instance like:
 
@@ -190,7 +190,7 @@ Array notation
 
 If you used an array notation for the name, the input would look something like::
 
-    <input type="file" name="my-form[details][avatar]" />
+    <input type="file" name="my-form[details][avatar]">
 
 For get the file instance:
 
@@ -201,7 +201,7 @@ Multiple files
 
 ::
 
-    <input type="file" name="images[]" multiple />
+    <input type="file" name="images[]" multiple>
 
 In controller:
 
@@ -221,8 +221,8 @@ You might find it easier to use ``getFileMultiple()``, to get an array of upload
 
 Another example::
 
-    Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
-    Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
+    Upload an avatar: <input type="file" name="my-form[details][avatars][]">
+    Upload an avatar: <input type="file" name="my-form[details][avatars][]">
 
 In controller:
 
@@ -334,7 +334,7 @@ Each file can be moved to its new location with the aptly named ``store()`` meth
 
 With the simplest usage, a single file might be submitted like::
 
-    <input type="file" name="userfile" />
+    <input type="file" name="userfile">
 
 By default, upload files are saved in **writable/uploads** directory. The **YYYYMMDD** folder
 and random file name will be created. Returns a file path:
