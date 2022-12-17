@@ -11,9 +11,11 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Session\Handlers\RedisHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Redis;
 
 /**
@@ -29,37 +31,32 @@ final class RedisHandlerTest extends CIUnitTestCase
     private string $sessionSavePath = 'tcp://127.0.0.1:6379';
     private string $userIpAddress   = '127.0.0.1';
 
-    private function getInstance($options = [])
+    protected function getInstance($options = [])
     {
         $defaults = [
-            'sessionDriver'            => RedisHandler::class,
-            'sessionCookieName'        => $this->sessionName,
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => $this->sessionSavePath,
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
+            'driver'            => RedisHandler::class,
+            'cookieName'        => $this->sessionName,
+            'expiration'        => 7200,
+            'savePath'          => $this->sessionSavePath,
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
         ];
+        $sessionConfig = new SessionConfig();
+        $config        = array_merge($defaults, $options);
 
-        $config    = array_merge($defaults, $options);
-        $appConfig = new AppConfig();
-
-        foreach ($config as $key => $c) {
-            $appConfig->{$key} = $c;
+        foreach ($config as $key => $value) {
+            $sessionConfig->{$key} = $value;
         }
+        Factories::injectMock('config', 'Session', $sessionConfig);
 
-        return new RedisHandler($appConfig, $this->userIpAddress);
+        return new RedisHandler(new AppConfig(), $this->userIpAddress);
     }
 
     public function testSavePathTimeoutFloat()
     {
         $handler = $this->getInstance(
-            ['sessionSavePath' => 'tcp://127.0.0.1:6379?timeout=2.5']
+            ['savePath' => 'tcp://127.0.0.1:6379?timeout=2.5']
         );
 
         $savePath = $this->getPrivateProperty($handler, 'savePath');
@@ -70,7 +67,7 @@ final class RedisHandlerTest extends CIUnitTestCase
     public function testSavePathTimeoutInt()
     {
         $handler = $this->getInstance(
-            ['sessionSavePath' => 'tcp://127.0.0.1:6379?timeout=10']
+            ['savePath' => 'tcp://127.0.0.1:6379?timeout=10']
         );
 
         $savePath = $this->getPrivateProperty($handler, 'savePath');

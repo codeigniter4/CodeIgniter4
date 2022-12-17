@@ -20,6 +20,7 @@ use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
 use Config\Cookie as CookieConfig;
 use Config\Logger as LoggerConfig;
+use Config\Session as SessionConfig;
 
 /**
  * @runTestsInSeparateProcesses
@@ -42,27 +43,24 @@ final class SessionTest extends CIUnitTestCase
 
     protected function getInstance($options = [])
     {
-        $defaults = [
-            'sessionDriver'            => FileHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => '',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
-        ];
-
-        $config    = array_merge($defaults, $options);
         $appConfig = new AppConfig();
 
-        foreach ($config as $key => $c) {
-            $appConfig->{$key} = $c;
+        $defaults = [
+            'driver'            => FileHandler::class,
+            'cookieName'        => 'ci_session',
+            'expiration'        => 7200,
+            'savePath'          => '',
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
+        ];
+        $sessionConfig = new SessionConfig();
+        $config        = array_merge($defaults, $options);
+
+        foreach ($config as $key => $value) {
+            $sessionConfig->{$key} = $value;
         }
+        Factories::injectMock('config', 'Session', $sessionConfig);
 
         $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
         $session->setLogger(new TestLogger(new LoggerConfig()));
@@ -626,7 +624,7 @@ final class SessionTest extends CIUnitTestCase
 
     public function testExpires()
     {
-        $session = $this->getInstance(['sessionExpiration' => 8000]);
+        $session = $this->getInstance(['expiration' => 8000]);
         $session->start();
 
         $cookies = $session->cookies;
@@ -636,7 +634,7 @@ final class SessionTest extends CIUnitTestCase
 
     public function testExpiresOnClose()
     {
-        $session = $this->getInstance(['sessionExpiration' => 0]);
+        $session = $this->getInstance(['expiration' => 0]);
         $session->start();
 
         $cookies = $session->cookies;

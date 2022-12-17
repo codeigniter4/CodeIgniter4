@@ -11,9 +11,11 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Session\Handlers\DatabaseHandler;
 use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
+use Config\Session as SessionConfig;
 
 /**
  * @group DatabaseLive
@@ -34,27 +36,22 @@ final class MySQLiHandlerTest extends AbstractHandlerTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'sessionDriver'            => DatabaseHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => 'ci_sessions',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
+            'driver'            => DatabaseHandler::class,
+            'cookieName'        => 'ci_session',
+            'expiration'        => 7200,
+            'savePath'          => 'ci_sessions',
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
         ];
+        $sessionConfig = new SessionConfig();
+        $config        = array_merge($defaults, $options);
 
-        $config    = array_merge($defaults, $options);
-        $appConfig = new AppConfig();
-
-        foreach ($config as $key => $c) {
-            $appConfig->{$key} = $c;
+        foreach ($config as $key => $value) {
+            $sessionConfig->{$key} = $value;
         }
+        Factories::injectMock('config', 'Session', $sessionConfig);
 
-        return new MySQLiHandler($appConfig, '127.0.0.1');
+        return new MySQLiHandler(new AppConfig(), '127.0.0.1');
     }
 }
