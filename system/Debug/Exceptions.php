@@ -159,11 +159,6 @@ class Exceptions
     public function errorHandler(int $severity, string $message, ?string $file = null, ?int $line = null)
     {
         if ($this->isDeprecationError($severity)) {
-            // @TODO Remove if Faker is fixed.
-            if ($this->isFakerDeprecationError($message, $file, $line)) {
-                return true;
-            }
-
             if (! $this->config->logDeprecations || (bool) env('CODEIGNITER_SCREAM_DEPRECATIONS')) {
                 throw new ErrorException($message, 0, $severity, $file, $line);
             }
@@ -176,34 +171,6 @@ class Exceptions
         }
 
         return false; // return false to propagate the error to PHP standard error handler
-    }
-
-    /**
-     * Workaround for Faker deprecation errors in PHP 8.2.
-     *
-     * @see https://github.com/FakerPHP/Faker/issues/479
-     */
-    private function isFakerDeprecationError(string $message, ?string $file = null, ?int $line = null)
-    {
-        if (
-            defined('VENDORPATH')
-            && strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
-            && $message === 'Use of "static" in callables is deprecated'
-        ) {
-            log_message(
-                LogLevel::WARNING,
-                '[DEPRECATED] {message} in {errFile} on line {errLine}.',
-                [
-                    'message' => $message,
-                    'errFile' => clean_path($file ?? ''),
-                    'errLine' => $line ?? 0,
-                ]
-            );
-
-            return true;
-        }
-
-        return false;
     }
 
     /**
