@@ -14,6 +14,8 @@ namespace CodeIgniter\Commands\Generators;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\CLI\GeneratorTrait;
+use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 
 /**
  * Generates a skeleton migration file.
@@ -105,7 +107,18 @@ class MigrationGenerator extends BaseCommand
             $data['table']    = is_string($table) ? $table : 'ci_sessions';
             $data['DBGroup']  = is_string($DBGroup) ? $DBGroup : 'default';
             $data['DBDriver'] = config('Database')->{$data['DBGroup']}['DBDriver'];
-            $data['matchIP']  = config('App')->sessionMatchIP;
+
+            /** @var AppConfig $config */
+            $config = config('App');
+            /** @var SessionConfig|null $session */
+            $session = config('Session');
+            // Store Session configurations
+            if ($session instanceof SessionConfig) {
+                $data['matchIP'] = $session->matchIP;
+            } else {
+                // `Config/Session.php` is absence
+                $data['matchIP'] = $config->sessionMatchIP;
+            }
         }
 
         return $this->parseTemplate($class, [], [], $data);
