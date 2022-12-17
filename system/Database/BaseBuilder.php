@@ -3397,20 +3397,18 @@ class BaseBuilder
     {
         $whereKey = trim($whereKey);
 
-        if ($this->pregOperators === []) {
-            $this->pregOperators = [
-                '\s*(?:<|>|!)?=', // =, <=, >=, !=
-                '\s*<>?',         // <, <>
-                '\s*>',           // >
-                '\s+IS NULL',     // IS NULL
-                '\s+IS NOT NULL', // IS NOT NULL
-                '\s+LIKE',        // LIKE
-                '\s+NOT LIKE',    // NOT LIKE
-            ];
-        }
+        $pregOperators = [
+            '\s*(?:<|>|!)?=', // =, <=, >=, !=
+            '\s*<>?',         // <, <>
+            '\s*>',           // >
+            '\s+IS NULL',     // IS NULL
+            '\s+IS NOT NULL', // IS NOT NULL
+            '\s+LIKE',        // LIKE
+            '\s+NOT LIKE',    // NOT LIKE
+        ];
 
         return preg_match_all(
-            '/' . implode('|', $this->pregOperators) . '/i',
+            '/' . implode('|', $pregOperators) . '/i',
             $whereKey,
             $match
         ) ? $match[0] : false;
