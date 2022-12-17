@@ -12,7 +12,6 @@
 namespace CodeIgniter\Session\Handlers\Database;
 
 use CodeIgniter\Config\Factories;
-use CodeIgniter\Session\Handlers\DatabaseHandler;
 use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
@@ -36,10 +35,10 @@ final class PostgreHandlerTest extends AbstractHandlerTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'driver'            => DatabaseHandler::class,
-            'cookieName'        => 'ci_session',
+            'driver'            => $this->sessionDriver,
+            'cookieName'        => $this->sessionName,
             'expiration'        => 7200,
-            'savePath'          => 'ci_sessions',
+            'savePath'          => $this->sessionSavePath,
             'matchIP'           => false,
             'timeToUpdate'      => 300,
             'regenerateDestroy' => false,
@@ -52,6 +51,6 @@ final class PostgreHandlerTest extends AbstractHandlerTestCase
         }
         Factories::injectMock('config', 'Session', $sessionConfig);
 
-        return new PostgreHandler(new AppConfig(), '127.0.0.1');
+        return new PostgreHandler(new AppConfig(), $this->userIpAddress);
     }
 }

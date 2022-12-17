@@ -27,6 +27,7 @@ use Redis;
  */
 final class RedisHandlerTest extends CIUnitTestCase
 {
+    private string $sessionDriver   = RedisHandler::class;
     private string $sessionName     = 'ci_session';
     private string $sessionSavePath = 'tcp://127.0.0.1:6379';
     private string $userIpAddress   = '127.0.0.1';
@@ -34,7 +35,7 @@ final class RedisHandlerTest extends CIUnitTestCase
     protected function getInstance($options = [])
     {
         $defaults = [
-            'driver'            => RedisHandler::class,
+            'driver'            => $this->sessionDriver,
             'cookieName'        => $this->sessionName,
             'expiration'        => 7200,
             'savePath'          => $this->sessionSavePath,
