@@ -186,7 +186,8 @@ class Exceptions
     private function isFakerDeprecationError(string $message, ?string $file = null, ?int $line = null)
     {
         if (
-            strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
+            defined('VENDORPATH')
+            && strpos($file, VENDORPATH . 'fakerphp/faker/') !== false
             && $message === 'Use of "static" in callables is deprecated'
         ) {
             log_message(

@@ -20,8 +20,8 @@ functions.
 
 CodeIgniter does not load Helper Files by default, so the first step in
 using a Helper is to load it. Once loaded, it becomes globally available
-in your :doc:`controller </incoming/controllers>` and
-:doc:`views </outgoing/views>`.
+in your :doc:`controller <../incoming/controllers>` and
+:doc:`views <../outgoing/views>`.
 
 Helpers are typically stored in your **system/Helpers**, or
 **app/Helpers** directory. CodeIgniter will look first in your
@@ -93,6 +93,10 @@ use the following command to load the helper for us:
 
 .. literalinclude:: helpers/004.php
 
+You can also use the following way:
+
+.. literalinclude:: helpers/007.php
+
 .. note:: The functions within files loaded this way are not truly namespaced.
     The namespace is simply used as a convenient way to locate the files.
 
@@ -156,5 +160,5 @@ is as follows:
 Now What?
 =========
 
-In the Table of Contents, you'll find a list of all the available :doc:`Helpers </helpers/index>`.
+In the Table of Contents, you'll find a list of all the available :doc:`Helpers <../helpers/index>`.
 Browse each one to see what they do.
