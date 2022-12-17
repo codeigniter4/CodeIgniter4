@@ -73,14 +73,13 @@ class DatabaseHandler extends BaseHandler
 
         // Store Session configurations
         if ($session instanceof SessionConfig) {
-            $this->table   = $session->savePath;
             $this->DBGroup = $session->DBGroup ?? config(Database::class)->defaultGroup;
         } else {
             // `Config/Session.php` is absence
-            $this->table   = $config->sessionSavePath;
             $this->DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
         }
 
+        $this->table = $this->savePath;
         if (empty($this->table)) {
             throw SessionException::forMissingDatabaseTable();
         }
