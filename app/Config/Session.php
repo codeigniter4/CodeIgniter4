@@ -97,5 +97,5 @@ class Session extends BaseConfig
      *
      * DB Group for the database session.
      */
-    public ?bool $DBGroup = null;
+    public ?string $DBGroup = null;
 }

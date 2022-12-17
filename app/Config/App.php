@@ -243,7 +243,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Session::$DBGroup instead.
      */
-    public ?bool $sessionDBGroup = null;
+    public ?string $sessionDBGroup = null;
 
     /**
      * --------------------------------------------------------------------------
