@@ -138,7 +138,7 @@ Which would return a simple array like::
 
 If you used an array notation for the name, the input would look something like::
 
-    <input type="file" name="my-form[details][avatar]"
+    <input type="file" name="my-form[details][avatar]">
 
 The array returned by ``getFiles()`` would look more like this::
 
