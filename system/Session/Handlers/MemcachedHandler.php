@@ -61,13 +61,8 @@ class MemcachedHandler extends BaseHandler
         /** @var SessionConfig|null $session */
         $session = config('Session');
 
-        // Store Session configurations
-        if ($session instanceof SessionConfig) {
-            $this->sessionExpiration = $session->expiration;
-        } else {
-            // `Config/Session.php` is absence
-            $this->sessionExpiration = $config->sessionExpiration;
-        }
+        $this->sessionExpiration = ($session instanceof SessionConfig)
+            ? $session->expiration : $config->sessionExpiration;
 
         if (empty($this->savePath)) {
             throw SessionException::forEmptySavepath();

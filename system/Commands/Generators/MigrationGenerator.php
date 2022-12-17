@@ -112,13 +112,9 @@ class MigrationGenerator extends BaseCommand
             $config = config('App');
             /** @var SessionConfig|null $session */
             $session = config('Session');
-            // Store Session configurations
-            if ($session instanceof SessionConfig) {
-                $data['matchIP'] = $session->matchIP;
-            } else {
-                // `Config/Session.php` is absence
-                $data['matchIP'] = $config->sessionMatchIP;
-            }
+
+            $data['matchIP'] = ($session instanceof SessionConfig)
+                ? $session->matchIP : $config->sessionMatchIP;
         }
 
         return $this->parseTemplate($class, [], [], $data);
