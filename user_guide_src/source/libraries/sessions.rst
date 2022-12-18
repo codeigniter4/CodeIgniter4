@@ -387,29 +387,32 @@ Sessions are a very sensitive component of any application, so some
 careful configuration must be done. Please take your time to consider
 all of the options and their effects.
 
-You'll find the following Session related preferences in your
-**app/Config/App.php** file:
+.. note:: Since v4.3.0, the new **app/Config/Session.php** has been added.
+    Previously, the Session Preferences were in your **app/Config/App.php** file.
 
-============================== ============================================ ================================================= ============================================================================================
+You'll find the following Session related preferences in your
+**app/Config/Session.php** file:
+
+======================= ============================================ ================================================= ============================================================================================
 Preference                     Default                                      Options                                           Description
-============================== ============================================ ================================================= ============================================================================================
-**sessionDriver**              CodeIgniter\\Session\\Handlers\\FileHandler  CodeIgniter\\Session\\Handlers\\FileHandler       The session storage driver to use.
-                                                                            CodeIgniter\\Session\\Handlers\\DatabaseHandler
-                                                                            CodeIgniter\\Session\\Handlers\\MemcachedHandler
-                                                                            CodeIgniter\\Session\\Handlers\\RedisHandler
-                                                                            CodeIgniter\\Session\\Handlers\\ArrayHandler
-**sessionCookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
-**sessionExpiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
-                                                                                                                              If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**sessionSavePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
-**sessionMatchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
-                                                                                                                              Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-                                                                                                                              will likely set this to false.
-**sessionTimeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
-                                                                                                                              session ID. Setting it to 0 will disable session ID regeneration.
-**sessionRegenerateDestroy**   false                                        true/false (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
-                                                                                                                              the session ID. When set to false, the data will be later deleted by the garbage collector.
-============================== ============================================ ================================================= ============================================================================================
+======================= ============================================ ================================================= ============================================================================================
+**driver**              CodeIgniter\\Session\\Handlers\\FileHandler  CodeIgniter\\Session\\Handlers\\FileHandler       The session storage driver to use.
+                                                                     CodeIgniter\\Session\\Handlers\\DatabaseHandler
+                                                                     CodeIgniter\\Session\\Handlers\\MemcachedHandler
+                                                                     CodeIgniter\\Session\\Handlers\\RedisHandler
+                                                                     CodeIgniter\\Session\\Handlers\\ArrayHandler
+**cookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
+**expiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
+                                                                                                                       If you would like a non-expiring session (until browser is closed) set the value to zero: 0
+**savePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
+**matchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
+                                                                                                                       Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+                                                                                                                       will likely set this to false.
+**timeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
+                                                                                                                       session ID. Setting it to 0 will disable session ID regeneration.
+**regenerateDestroy**   false                                        true/false (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
+                                                                                                                       the session ID. When set to false, the data will be later deleted by the garbage collector.
+======================= ============================================ ================================================= ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
     session related INI settings, as well as legacy CI settings such as
