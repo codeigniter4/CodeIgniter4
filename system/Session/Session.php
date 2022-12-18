@@ -116,7 +116,7 @@ class Session implements SessionInterface
      *
      * @var string
      *
-     * @deprecated
+     * @deprecated No longer used.
      */
     protected $cookieDomain = '';
 
@@ -126,7 +126,7 @@ class Session implements SessionInterface
      *
      * @var string
      *
-     * @deprecated
+     * @deprecated No longer used.
      */
     protected $cookiePath = '/';
 
@@ -135,7 +135,7 @@ class Session implements SessionInterface
      *
      * @var bool
      *
-     * @deprecated
+     * @deprecated No longer used.
      */
     protected $cookieSecure = false;
 
@@ -145,7 +145,7 @@ class Session implements SessionInterface
      *
      * @var string
      *
-     * @deprecated
+     * @deprecated No longer used.
      */
     protected $cookieSameSite = Cookie::SAMESITE_LAX;
 
