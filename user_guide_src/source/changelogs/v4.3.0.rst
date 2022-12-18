@@ -320,6 +320,7 @@ Others
 - **View:** Added ``Controlled Cells`` that provide more structure and flexibility to your View Cells. See :ref:`View Cells <controlled-cells>` for details.
 - **Validation:** Added Closure validation rule. See :ref:`validation-using-closure-rule` for details.
 - **Config:** Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
+- **Config:** Added ``Config\Session`` class to handle session configuration.
 - **Debug:** Kint has been updated to 5.0.1.
 - **Request:** Added new ``$request->getRawInputVar()`` method to return a specified variable from raw stream. See :ref:`Retrieving Raw data <incomingrequest-retrieving-raw-data>`.
 
@@ -353,6 +354,7 @@ Deprecations
 - The public property ``IncomingRequest::$uri`` is deprecated. It will be protected. Use ``IncomingRequest::getUri()`` instead.
 - The public property ``IncomingRequest::$config`` is deprecated. It will be protected.
 - The method ``CLI::isWindows()`` is deprecated. Use ``is_windows()`` instead.
+- The ``Config\App`` session properties in favor of the new session config class ``Config\Session``.
 
 Bugs Fixed
 **********
