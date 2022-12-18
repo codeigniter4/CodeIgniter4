@@ -24,15 +24,15 @@ final class MimesTest extends CIUnitTestCase
     public function extensionsList()
     {
         return [
-            'null' => [
+            'null'      => [
                 null,
                 'xkadjflkjdsf',
             ],
-            'single' => [
+            'single'    => [
                 'cpt',
                 'application/mac-compactpro',
             ],
-            'trimmed' => [
+            'trimmed'   => [
                 'cpt',
                 ' application/mac-compactpro ',
             ],
@@ -58,19 +58,19 @@ final class MimesTest extends CIUnitTestCase
     public function mimesList()
     {
         return [
-            'null' => [
+            'null'      => [
                 null,
                 'xalkjdlfkj',
             ],
-            'single' => [
+            'single'    => [
                 'audio/midi',
                 'mid',
             ],
-            'many' => [
+            'many'      => [
                 'image/bmp',
                 'bmp',
             ],
-            'trimmed' => [
+            'trimmed'   => [
                 'image/bmp',
                 '.bmp',
             ],

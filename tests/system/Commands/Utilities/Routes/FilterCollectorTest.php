@@ -35,7 +35,7 @@ final class FilterCollectorTest extends CIUnitTestCase
         $expected = [
             'before' => [
             ],
-            'after' => [
+            'after'  => [
                 'toolbar',
             ],
         ];

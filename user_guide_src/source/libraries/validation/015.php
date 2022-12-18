@@ -15,7 +15,7 @@ class Validation
         'username' => [
             'required' => 'You must choose a username.',
         ],
-        'email' => [
+        'email'    => [
             'valid_email' => 'Please check the Email field. It does not appear to be valid.',
         ],
     ];

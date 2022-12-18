@@ -11,12 +11,12 @@
 
 // CLI language settings
 return [
-    'altCommandPlural'   => 'Did you mean one of these?',
-    'altCommandSingular' => 'Did you mean this?',
-    'commandNotFound'    => 'Command "{0}" not found.',
-    'generator'          => [
-        'cancelOperation' => 'Operation has been cancelled.',
-        'className'       => [
+    'altCommandPlural'    => 'Did you mean one of these?',
+    'altCommandSingular'  => 'Did you mean this?',
+    'commandNotFound'     => 'Command "{0}" not found.',
+    'generator'           => [
+        'cancelOperation'  => 'Operation has been cancelled.',
+        'className'        => [
             'command'    => 'Command class name',
             'config'     => 'Config class name',
             'controller' => 'Controller class name',

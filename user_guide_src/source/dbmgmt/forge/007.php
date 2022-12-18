@@ -1,18 +1,18 @@
 <?php
 
 $fields = [
-    'id' => [
+    'id'          => [
         'type'           => 'INT',
         'constraint'     => 5,
         'unsigned'       => true,
         'auto_increment' => true,
     ],
-    'title' => [
+    'title'       => [
         'type'       => 'VARCHAR',
         'constraint' => '100',
         'unique'     => true,
     ],
-    'author' => [
+    'author'      => [
         'type'       => 'VARCHAR',
         'constraint' => 100,
         'default'    => 'King of Town',
@@ -21,7 +21,7 @@ $fields = [
         'type' => 'TEXT',
         'null' => true,
     ],
-    'status' => [
+    'status'      => [
         'type'       => 'ENUM',
         'constraint' => ['publish', 'pending', 'draft'],
         'default'    => 'pending',

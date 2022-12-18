@@ -97,7 +97,7 @@ class MockLogger
             ],
 
             // Logging Directory Path
-            'path' => '',
+            'path'    => '',
         ],
     ];
 }

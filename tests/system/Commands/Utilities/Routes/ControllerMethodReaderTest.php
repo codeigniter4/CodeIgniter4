@@ -30,43 +30,43 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
         $routes = $reader->read(Popcorn::class);
 
         $expected = [
-            0 => [
+            0  => [
                 'route'   => 'popcorn',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::index',
             ],
-            1 => [
+            1  => [
                 'route'   => 'popcorn/index[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::index',
             ],
-            2 => [
+            2  => [
                 'route'   => 'popcorn/pop[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::pop',
             ],
-            3 => [
+            3  => [
                 'route'   => 'popcorn/popper[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::popper',
             ],
-            4 => [
+            4  => [
                 'route'   => 'popcorn/weasel[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::weasel',
             ],
-            5 => [
+            5  => [
                 'route'   => 'popcorn/oops[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::oops',
             ],
-            6 => [
+            6  => [
                 'route'   => 'popcorn/goaway[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::goaway',
             ],
-            7 => [
+            7  => [
                 'route'   => 'popcorn/index3[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::index3',
             ],
-            8 => [
+            8  => [
                 'route'   => 'popcorn/canyon[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::canyon',
             ],
-            9 => [
+            9  => [
                 'route'   => 'popcorn/cat[/...]',
                 'handler' => '\\Tests\\Support\\Controllers\\Popcorn::cat',
             ],

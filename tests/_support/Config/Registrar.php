@@ -24,7 +24,7 @@ class Registrar
      * @var array
      */
     protected static $dbConfig = [
-        'MySQLi' => [
+        'MySQLi'  => [
             'DSN'      => '',
             'hostname' => '127.0.0.1',
             'username' => 'root',
@@ -82,7 +82,7 @@ class Registrar
             'port'        => 3306,
             'foreignKeys' => true,
         ],
-        'SQLSRV' => [
+        'SQLSRV'  => [
             'DSN'      => '',
             'hostname' => 'localhost',
             'username' => 'sa',
@@ -101,7 +101,7 @@ class Registrar
             'failover' => [],
             'port'     => 1433,
         ],
-        'OCI8' => [
+        'OCI8'    => [
             'DSN'      => 'localhost:1521/XEPDB1',
             'hostname' => '',
             'username' => 'ORACLE',

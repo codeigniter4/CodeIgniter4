@@ -34,17 +34,17 @@ class ValidationTest extends CIUnitTestCase
 {
     protected Validation $validation;
     protected array $config = [
-        'ruleSets' => [
+        'ruleSets'      => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA' => [
+        'groupA'        => [
             'foo' => 'required|min_length[5]',
         ],
-        'login' => [
+        'login'         => [
             'username' => [
                 'label'  => 'Username',
                 'rules'  => 'required',
@@ -65,8 +65,8 @@ class ValidationTest extends CIUnitTestCase
                 'min_length' => 'Shame, shame. Too short.',
             ],
         ],
-        'groupX'    => 'Not an array, so not a real group',
-        'templates' => [
+        'groupX'        => 'Not an array, so not a real group',
+        'templates'     => [
             'list'   => 'CodeIgniter\Validation\Views\list',
             'single' => 'CodeIgniter\Validation\Views\single',
         ],
@@ -245,7 +245,7 @@ class ValidationTest extends CIUnitTestCase
             false,
         ];
 
-        yield 'bool' => [
+        yield 'bool'       => [
             false,
             false,
         ];
@@ -854,30 +854,30 @@ class ValidationTest extends CIUnitTestCase
     public function arrayFieldDataProvider(): Generator
     {
         yield from [
-            'all_rules_should_pass' => [
-                'body' => [
+            'all_rules_should_pass'                                            => [
+                'body'    => [
                     'foo' => [
                         'a',
                         'b',
                         'c',
                     ],
                 ],
-                'rules' => [
+                'rules'   => [
                     'foo.0' => 'required|alpha|max_length[2]',
                     'foo.1' => 'required|alpha|max_length[2]',
                     'foo.2' => 'required|alpha|max_length[2]',
                 ],
                 'results' => [],
             ],
-            'first_field_will_return_required_error' => [
-                'body' => [
+            'first_field_will_return_required_error'                           => [
+                'body'    => [
                     'foo' => [
                         '',
                         'b',
                         'c',
                     ],
                 ],
-                'rules' => [
+                'rules'   => [
                     'foo.0' => 'required|alpha|max_length[2]',
                     'foo.1' => 'required|alpha|max_length[2]',
                     'foo.2' => 'required|alpha|max_length[2]',
@@ -887,14 +887,14 @@ class ValidationTest extends CIUnitTestCase
                 ],
             ],
             'first_and second_field_will_return_required_and_min_length_error' => [
-                'body' => [
+                'body'    => [
                     'foo' => [
                         '',
                         'b',
                         'c',
                     ],
                 ],
-                'rules' => [
+                'rules'   => [
                     'foo.0' => 'required|alpha|max_length[2]',
                     'foo.1' => 'required|alpha|min_length[2]|max_length[4]',
                     'foo.2' => 'required|alpha|max_length[2]',
@@ -913,7 +913,7 @@ class ValidationTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         $_REQUEST = [
-            'id_user' => [
+            'id_user'   => [
                 1,
                 3,
             ],
@@ -940,7 +940,7 @@ class ValidationTest extends CIUnitTestCase
         $config->baseURL = 'http://example.com/';
 
         $_REQUEST = [
-            'id_user' => [
+            'id_user'   => [
                 '1dfd',
                 3,
             ],
@@ -949,7 +949,7 @@ class ValidationTest extends CIUnitTestCase
                 'alpha',
                 'xyz098',
             ],
-            'contacts' => [
+            'contacts'  => [
                 'friends' => [
                     ['name' => ''],
                     ['name' => 'John'],
@@ -1090,19 +1090,19 @@ class ValidationTest extends CIUnitTestCase
     {
         yield 'dot-on-end-fail' => [
             false,
-            ['status.*' => 'if_exist|in_list[status_1,status_2]'],
-            ['status'   => ['bad-status']],
+            ['status.*'         => 'if_exist|in_list[status_1,status_2]'],
+            ['status'           => ['bad-status']],
         ];
 
         yield 'dot-on-end-pass' => [
             true,
-            ['status.*' => 'if_exist|in_list[status_1,status_2]'],
-            ['status'   => ['status_1']],
+            ['status.*'            => 'if_exist|in_list[status_1,status_2]'],
+            ['status'              => ['status_1']],
         ];
 
         yield 'dot-on-middle-fail' => [
             false,
-            ['fizz.*.baz' => 'if_exist|numeric'],
+            ['fizz.*.baz'         => 'if_exist|numeric'],
             [
                 'fizz' => [
                     'bar' => ['baz' => 'yes'],
@@ -1160,10 +1160,10 @@ class ValidationTest extends CIUnitTestCase
     {
         yield 'fail-empty-string' => [
             false,
-            ['bar.*.foo' => 'required'],
-            ['bar' => [
+            ['bar.*.foo'             => 'required'],
+            ['bar'               => [
                 ['foo' => 'baz'],
-                ['foo' => ''],
+                ['foo'              => ''],
             ]],
         ];
 
@@ -1364,11 +1364,11 @@ class ValidationTest extends CIUnitTestCase
     public function testNestedArrayThrowsException(): void
     {
         $rule = [
-            'customer_account_number' => [
+            'customer_account_number'                 => [
                 'label' => 'ACCOUNT NUMBER',
                 'rules' => 'required|exact_length[5]',
             ],
-            'debit_amount' => [
+            'debit_amount'                            => [
                 'label' => 'DEBIT AMOUNT',
                 'rules' => 'required|decimal|is_natural_no_zero',
             ],
@@ -1376,11 +1376,11 @@ class ValidationTest extends CIUnitTestCase
                 'label' => 'BENEFICIARY ACCOUNT NUMBER',
                 'rules' => 'exact_length[5]',
             ],
-            'beneficiaries_accounts.*.credit_amount' => [
+            'beneficiaries_accounts.*.credit_amount'  => [
                 'label' => 'CREDIT AMOUNT',
                 'rules' => 'required|decimal|is_natural_no_zero',
             ],
-            'beneficiaries_accounts.*.purpose' => [
+            'beneficiaries_accounts.*.purpose'        => [
                 'label' => 'PURPOSE',
                 'rules' => 'required_without[beneficiaries_accounts.*.account_number]|min_length[3]|max_length[255]',
             ],

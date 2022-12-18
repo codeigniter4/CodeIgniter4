@@ -28,14 +28,14 @@ class RulesTest extends CIUnitTestCase
 {
     protected Validation $validation;
     protected array $config = [
-        'ruleSets' => [
+        'ruleSets'      => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA' => [
+        'groupA'        => [
             'foo' => 'required|min_length[5]',
         ],
         'groupA_errors' => [
@@ -660,25 +660,25 @@ class RulesTest extends CIUnitTestCase
     public function requiredWithoutMultipleProvider(): Generator
     {
         yield from [
-            'all empty' => [
+            'all empty'             => [
                 '',
                 '',
                 '',
                 false,
             ],
-            'foo is not empty' => [
+            'foo is not empty'      => [
                 'a',
                 '',
                 '',
                 true,
             ],
-            'bar is not empty' => [
+            'bar is not empty'      => [
                 '',
                 'b',
                 '',
                 false,
             ],
-            'baz is not empty' => [
+            'baz is not empty'      => [
                 '',
                 '',
                 'c',
@@ -706,7 +706,7 @@ class RulesTest extends CIUnitTestCase
     public function requiredWithoutMultipleWithoutFieldsProvider(): Generator
     {
         yield from [
-            'baz is missing' => [
+            'baz is missing'      => [
                 [
                     'foo' => '',
                     'bar' => '',
@@ -719,14 +719,14 @@ class RulesTest extends CIUnitTestCase
                 ],
                 false,
             ],
-            'bar is not empty' => [
+            'bar is not empty'    => [
                 [
                     'foo' => '',
                     'bar' => 'b',
                 ],
                 false,
             ],
-            'foo is not empty' => [
+            'foo is not empty'    => [
                 [
                     'foo' => 'a',
                 ],

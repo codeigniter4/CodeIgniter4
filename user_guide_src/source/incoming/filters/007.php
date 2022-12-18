@@ -10,7 +10,7 @@ class Filters extends BaseConfig
         'before' => [
             'csrf' => ['except' => ['foo/*', 'bar/*']],
         ],
-        'after' => [],
+        'after'  => [],
     ];
 
     // ...

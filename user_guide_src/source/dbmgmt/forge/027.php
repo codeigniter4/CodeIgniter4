@@ -3,7 +3,7 @@
 use CodeIgniter\Database\RawSql;
 
 $fields = [
-    'id' => [
+    'id'         => [
         'type'           => 'INT',
         'constraint'     => 5,
         'unsigned'       => true,

@@ -48,7 +48,7 @@ class ChromeLoggerHandler extends BaseHandler
             'backtrace',
             'type',
         ],
-        'rows' => [],
+        'rows'    => [],
     ];
 
     /**

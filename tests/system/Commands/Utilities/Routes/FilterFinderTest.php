@@ -80,7 +80,7 @@ final class FilterFinderTest extends CIUnitTestCase
                 'before' => [
                     'csrf',
                 ],
-                'after' => [
+                'after'  => [
                     'toolbar',
                 ],
             ],

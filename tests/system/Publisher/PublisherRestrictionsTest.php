@@ -102,7 +102,7 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
     public function destinationProvider()
     {
         return [
-            'explicit' => [
+            'explicit'     => [
                 APPPATH,
                 true,
             ],
@@ -110,11 +110,11 @@ final class PublisherRestrictionsTest extends CIUnitTestCase
                 APPPATH . 'Config',
                 true,
             ],
-            'relative' => [
+            'relative'     => [
                 SUPPORTPATH . 'Files/able/../',
                 true,
             ],
-            'parent' => [
+            'parent'       => [
                 SUPPORTPATH,
                 false,
             ],

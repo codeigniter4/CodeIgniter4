@@ -12,11 +12,11 @@
 // Validation language settings
 return [
     // Core Messages
-    'noRuleSets'      => 'No rulesets specified in Validation configuration.',
-    'ruleNotFound'    => '{0} is not a valid rule.',
-    'groupNotFound'   => '{0} is not a validation rules group.',
-    'groupNotArray'   => '{0} rule group must be an array.',
-    'invalidTemplate' => '{0} is not a valid Validation template.',
+    'noRuleSets'            => 'No rulesets specified in Validation configuration.',
+    'ruleNotFound'          => '{0} is not a valid rule.',
+    'groupNotFound'         => '{0} is not a validation rules group.',
+    'groupNotArray'         => '{0} rule group must be an array.',
+    'invalidTemplate'       => '{0} is not a valid Validation template.',
 
     // Rule Messages
     'alpha'                 => 'The {field} field may only contain alphabetical characters.',
@@ -62,13 +62,13 @@ return [
     'valid_json'            => 'The {field} field must contain a valid json.',
 
     // Credit Cards
-    'valid_cc_num' => '{field} does not appear to be a valid credit card number.',
+    'valid_cc_num'          => '{field} does not appear to be a valid credit card number.',
 
     // Files
-    'uploaded' => '{field} is not a valid uploaded file.',
-    'max_size' => '{field} is too large of a file.',
-    'is_image' => '{field} is not a valid, uploaded image file.',
-    'mime_in'  => '{field} does not have a valid mime type.',
-    'ext_in'   => '{field} does not have a valid file extension.',
-    'max_dims' => '{field} is either not an image, or it is too wide or tall.',
+    'uploaded'              => '{field} is not a valid uploaded file.',
+    'max_size'              => '{field} is too large of a file.',
+    'is_image'              => '{field} is not a valid, uploaded image file.',
+    'mime_in'               => '{field} does not have a valid mime type.',
+    'ext_in'                => '{field} does not have a valid file extension.',
+    'max_dims'              => '{field} is either not an image, or it is too wide or tall.',
 ];

@@ -501,15 +501,15 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $_FILES = [
             'userfile' => [
-                'name' => [
+                'name'     => [
                     'someFile.txt',
                     'someFile2.txt',
                 ],
-                'type' => [
+                'type'     => [
                     'text/plain',
                     'text/plain',
                 ],
-                'size' => [
+                'size'     => [
                     '124',
                     '125',
                 ],
@@ -517,7 +517,7 @@ final class IncomingRequestTest extends CIUnitTestCase
                     '/tmp/myTempFile.txt',
                     '/tmp/myTempFile2.txt',
                 ],
-                'error' => [
+                'error'    => [
                     0,
                     0,
                 ],
@@ -609,7 +609,7 @@ final class IncomingRequestTest extends CIUnitTestCase
                 '/test.php',
                 '/',
             ],
-            '/index.php' => [
+            '/index.php'     => [
                 '/index.php',
                 '/',
             ],

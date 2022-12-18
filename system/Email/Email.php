@@ -682,9 +682,9 @@ class Email
             'name'        => $namesAttached,
             'disposition' => empty($disposition) ? 'attachment' : $disposition,
             // Can also be 'inline'  Not sure if it matters
-            'type'      => $mime,
-            'content'   => chunk_split(base64_encode($fileContent)),
-            'multipart' => 'mixed',
+            'type'        => $mime,
+            'content'     => chunk_split(base64_encode($fileContent)),
+            'multipart'   => 'mixed',
         ];
 
         return $this;

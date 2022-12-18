@@ -109,7 +109,7 @@ final class ValidationModelTest extends LiveModelTestCase
         ];
 
         $this->model->setValidationRules([
-            'name' => [
+            'name'        => [
                 'rules'  => 'required',
                 'errors' => [
                     'required' => 'Give me a name baby.',
@@ -242,7 +242,7 @@ final class ValidationModelTest extends LiveModelTestCase
     {
         $config = new class () extends Validation {
             public $grouptest = [
-                'name' => [
+                'name'  => [
                     'required',
                     'min_length[3]',
                 ],

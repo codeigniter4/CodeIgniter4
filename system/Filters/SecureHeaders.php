@@ -24,19 +24,19 @@ class SecureHeaders implements FilterInterface
      */
     protected $headers = [
         // https://owasp.org/www-project-secure-headers/#x-frame-options
-        'X-Frame-Options' => 'SAMEORIGIN',
+        'X-Frame-Options'                   => 'SAMEORIGIN',
 
         // https://owasp.org/www-project-secure-headers/#x-content-type-options
-        'X-Content-Type-Options' => 'nosniff',
+        'X-Content-Type-Options'            => 'nosniff',
 
         // https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/jj542450(v=vs.85)#the-noopen-directive
-        'X-Download-Options' => 'noopen',
+        'X-Download-Options'                => 'noopen',
 
         // https://owasp.org/www-project-secure-headers/#x-permitted-cross-domain-policies
         'X-Permitted-Cross-Domain-Policies' => 'none',
 
         // https://owasp.org/www-project-secure-headers/#referrer-policy
-        'Referrer-Policy' => 'same-origin',
+        'Referrer-Policy'                   => 'same-origin',
 
         // https://owasp.org/www-project-secure-headers/#x-xss-protection
         // If you do not need to support legacy browsers, it is recommended that you use

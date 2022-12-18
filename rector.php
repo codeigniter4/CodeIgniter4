@@ -82,13 +82,13 @@ return static function (RectorConfig $rectorConfig): void {
         JsonThrowOnErrorRector::class,
         StringifyStrNeedlesRector::class,
 
-        RemoveUnusedPrivateMethodRector::class => [
+        RemoveUnusedPrivateMethodRector::class         => [
             // private method called via getPrivateMethodInvoker
             __DIR__ . '/tests/system/Test/ReflectionHelperTest.php',
         ],
 
         // call on purpose for nothing happen check
-        RemoveEmptyMethodCallRector::class => [
+        RemoveEmptyMethodCallRector::class             => [
             __DIR__ . '/tests',
         ],
 

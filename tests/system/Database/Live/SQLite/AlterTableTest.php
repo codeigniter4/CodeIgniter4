@@ -264,7 +264,7 @@ final class AlterTableTest extends CIUnitTestCase
     {
         // Create support table for foreign keys
         $this->forge->addField([
-            'id' => [
+            'id'   => [
                 'type'           => 'integer',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -280,18 +280,18 @@ final class AlterTableTest extends CIUnitTestCase
 
         // Create main table
         $this->forge->addField([
-            'id' => [
+            'id'     => [
                 'type'           => 'integer',
                 'constraint'     => 11,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'name' => [
+            'name'   => [
                 'type'       => 'varchar',
                 'constraint' => 255,
                 'null'       => false,
             ],
-            'email' => [
+            'email'  => [
                 'type'       => 'varchar',
                 'constraint' => 255,
                 'null'       => true,
@@ -301,7 +301,7 @@ final class AlterTableTest extends CIUnitTestCase
                 'constraint' => 11,
                 'unsigned'   => true,
             ],
-            'group' => [
+            'group'  => [
                 'type'       => 'varchar',
                 'constraint' => 255,
                 'null'       => true,

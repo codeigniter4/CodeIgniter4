@@ -370,7 +370,7 @@ final class FormHelperTest extends CIUnitTestCase
                 'volvo' => 'Volvo',
                 'saab'  => 'Saab',
             ],
-            'German Cars' => [
+            'German Cars'  => [
                 'mercedes' => 'Mercedes',
                 'audi'     => 'Audi',
             ],
@@ -397,7 +397,7 @@ final class FormHelperTest extends CIUnitTestCase
                 'volvo' => 'Volvo',
                 'saab'  => 'Saab',
             ],
-            'German Cars' => [
+            'German Cars'  => [
                 'mercedes' => 'Mercedes',
                 'audi'     => 'Audi',
             ],
@@ -424,7 +424,7 @@ final class FormHelperTest extends CIUnitTestCase
                 '1' => 'Volvo',
                 '2' => 'Saab',
             ],
-            2 => [
+            2              => [
                 3   => 'Mercedes',
                 '4' => 'Audi',
             ],
@@ -452,7 +452,7 @@ final class FormHelperTest extends CIUnitTestCase
                 'volvo' => 'Volvo',
                 'saab'  => 'Saab',
             ],
-            'German Cars' => [
+            'German Cars'  => [
                 'mercedes' => 'Mercedes',
                 'audi'     => 'Audi',
             ],

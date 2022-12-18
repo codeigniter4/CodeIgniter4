@@ -179,7 +179,7 @@ final class UpdateModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 
@@ -198,7 +198,7 @@ final class UpdateModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 
@@ -326,7 +326,7 @@ final class UpdateModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 

@@ -203,12 +203,12 @@ final class CookieTest extends CIUnitTestCase
     {
         yield 'basic' => [
             'test=value',
-            ['name' => 'test', 'value' => 'value'],
+            ['name'         => 'test', 'value' => 'value'],
         ];
 
         yield 'empty-value' => [
             'test',
-            ['name' => 'test', 'value' => ''],
+            ['name'        => 'test', 'value' => ''],
         ];
 
         yield 'with-other-attrs' => [

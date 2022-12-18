@@ -421,9 +421,9 @@ final class ParserTest extends CIUnitTestCase
     public function escValueTypes()
     {
         return [
-            'scalar'     => [42],
-            'string'     => ['George'],
-            'scalarlist' => [
+            'scalar'      => [42],
+            'string'      => ['George'],
+            'scalarlist'  => [
                 [
                     1,
                     2,
@@ -431,7 +431,7 @@ final class ParserTest extends CIUnitTestCase
                     -4,
                 ],
             ],
-            'stringlist' => [
+            'stringlist'  => [
                 [
                     'George',
                     'Paul',
@@ -445,7 +445,7 @@ final class ParserTest extends CIUnitTestCase
                     'role' => 'guitar',
                 ],
             ],
-            'compound' => [
+            'compound'    => [
                 [
                     'name'    => 'George',
                     'address' => [
@@ -454,7 +454,7 @@ final class ParserTest extends CIUnitTestCase
                     ],
                 ],
             ],
-            'pseudo' => [
+            'pseudo'      => [
                 [
                     'name'   => 'George',
                     'emails' => [

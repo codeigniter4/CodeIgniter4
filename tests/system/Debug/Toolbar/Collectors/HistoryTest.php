@@ -55,7 +55,7 @@ final class HistoryTest extends CIUnitTestCase
         $path = WRITEPATH . 'debugbar' . DIRECTORY_SEPARATOR . "debugbar_{$time}.json";
 
         $dummyData = [
-            'vars' => [
+            'vars'   => [
                 'response' => [
                     'statusCode'  => 200,
                     'contentType' => 'text/html; charset=UTF-8',

@@ -181,7 +181,7 @@ final class InsertModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 
@@ -238,7 +238,7 @@ final class InsertModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 

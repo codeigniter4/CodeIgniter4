@@ -764,23 +764,23 @@ class MigrationRunner
         $forge = Database::forge($this->db);
 
         $forge->addField([
-            'id' => [
+            'id'        => [
                 'type'           => 'BIGINT',
                 'constraint'     => 20,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'version' => [
+            'version'   => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => false,
             ],
-            'class' => [
+            'class'     => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => false,
             ],
-            'group' => [
+            'group'     => [
                 'type'       => 'VARCHAR',
                 'constraint' => 255,
                 'null'       => false,
@@ -790,12 +790,12 @@ class MigrationRunner
                 'constraint' => 255,
                 'null'       => false,
             ],
-            'time' => [
+            'time'      => [
                 'type'       => 'INT',
                 'constraint' => 11,
                 'null'       => false,
             ],
-            'batch' => [
+            'batch'     => [
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,

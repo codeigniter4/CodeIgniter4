@@ -311,15 +311,15 @@ final class URITest extends CIUnitTestCase
     public function invalidPaths()
     {
         return [
-            'dot-segment' => [
+            'dot-segment'  => [
                 '/./path/to/nowhere',
                 '/path/to/nowhere',
             ],
-            'double-dots' => [
+            'double-dots'  => [
                 '/../path/to/nowhere',
                 '/path/to/nowhere',
             ],
-            'start-dot' => [
+            'start-dot'    => [
                 './path/to/nowhere',
                 '/path/to/nowhere',
             ],
@@ -327,11 +327,11 @@ final class URITest extends CIUnitTestCase
                 '../path/to/nowhere',
                 '/path/to/nowhere',
             ],
-            'decoded' => [
+            'decoded'      => [
                 '../%41path',
                 '/Apath',
             ],
-            'encoded' => [
+            'encoded'      => [
                 '/path^here',
                 '/path%5Ehere',
             ],
@@ -433,15 +433,15 @@ final class URITest extends CIUnitTestCase
     public function authorityInfo()
     {
         return [
-            'host-only' => [
+            'host-only'      => [
                 'http://foo.com/bar',
                 'foo.com',
             ],
-            'host-port' => [
+            'host-port'      => [
                 'http://foo.com:3000/bar',
                 'foo.com:3000',
             ],
-            'user-host' => [
+            'user-host'      => [
                 'http://me@foo.com/bar',
                 'me@foo.com',
             ],
@@ -467,7 +467,7 @@ final class URITest extends CIUnitTestCase
     public function defaultPorts()
     {
         return [
-            'http' => [
+            'http'  => [
                 'http',
                 80,
             ],

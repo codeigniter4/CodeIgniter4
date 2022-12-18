@@ -183,28 +183,28 @@ class Typography
         $table = [
             // If the user submitted their own paragraph tags within the text
             // we will retain them instead of using our tags.
-            '/(<p[^>*?]>)<p>/' => '$1', // <?php BBEdit syntax coloring bug fix
+            '/(<p[^>*?]>)<p>/'                              => '$1', // <?php BBEdit syntax coloring bug fix
             // Reduce multiple instances of opening/closing paragraph tags to a single one
-            '#(</p>)+#'      => '</p>',
-            '/(<p>\W*<p>)+/' => '<p>',
+            '#(</p>)+#'                                     => '</p>',
+            '/(<p>\W*<p>)+/'                                => '<p>',
             // Clean up stray paragraph tags that appear before block level elements
-            '#<p></p><(' . $this->blockElements . ')#' => '<$1',
+            '#<p></p><(' . $this->blockElements . ')#'      => '<$1',
             // Clean up stray non-breaking spaces preceeding block elements
             '#(&nbsp;\s*)+<(' . $this->blockElements . ')#' => '  <$2',
             // Replace the temporary markers we added earlier
-            '/\{@TAG\}/' => '<',
-            '/\{@DQ\}/'  => '"',
-            '/\{@SQ\}/'  => "'",
-            '/\{@DD\}/'  => '--',
-            '/\{@NBS\}/' => '  ',
+            '/\{@TAG\}/'                                    => '<',
+            '/\{@DQ\}/'                                     => '"',
+            '/\{@SQ\}/'                                     => "'",
+            '/\{@DD\}/'                                     => '--',
+            '/\{@NBS\}/'                                    => '  ',
             // An unintended consequence of the _format_newlines function is that
             // some of the newlines get truncated, resulting in <p> tags
             // starting immediately after <block> tags on the same line.
             // This forces a newline after such occurrences, which looks much nicer.
-            "/><p>\n/" => ">\n<p>",
+            "/><p>\n/"                                      => ">\n<p>",
             // Similarly, there might be cases where a closing </block> will follow
             // a closing </p> tag, so we'll correct it by adding a newline in between
-            '#</p></#' => "</p>\n</",
+            '#</p></#'                                      => "</p>\n</",
         ];
 
         // Do we need to reduce empty lines?
@@ -239,31 +239,31 @@ class Typography
                 // Note that in all cases, whitespace is the primary determining factor
                 // on which direction to curl, with non-word characters like punctuation
                 // being a secondary factor only after whitespace is addressed.
-                '/\'"(\s|$)/'     => '&#8217;&#8221;$1',
-                '/(^|\s|<p>)\'"/' => '$1&#8216;&#8220;',
-                '/\'"(\W)/'       => '&#8217;&#8221;$1',
-                '/(\W)\'"/'       => '$1&#8216;&#8220;',
-                '/"\'(\s|$)/'     => '&#8221;&#8217;$1',
-                '/(^|\s|<p>)"\'/' => '$1&#8220;&#8216;',
-                '/"\'(\W)/'       => '&#8221;&#8217;$1',
-                '/(\W)"\'/'       => '$1&#8220;&#8216;',
+                '/\'"(\s|$)/'               => '&#8217;&#8221;$1',
+                '/(^|\s|<p>)\'"/'           => '$1&#8216;&#8220;',
+                '/\'"(\W)/'                 => '&#8217;&#8221;$1',
+                '/(\W)\'"/'                 => '$1&#8216;&#8220;',
+                '/"\'(\s|$)/'               => '&#8221;&#8217;$1',
+                '/(^|\s|<p>)"\'/'           => '$1&#8220;&#8216;',
+                '/"\'(\W)/'                 => '&#8221;&#8217;$1',
+                '/(\W)"\'/'                 => '$1&#8220;&#8216;',
                 // single quote smart quotes
-                '/\'(\s|$)/'     => '&#8217;$1',
-                '/(^|\s|<p>)\'/' => '$1&#8216;',
-                '/\'(\W)/'       => '&#8217;$1',
-                '/(\W)\'/'       => '$1&#8216;',
+                '/\'(\s|$)/'                => '&#8217;$1',
+                '/(^|\s|<p>)\'/'            => '$1&#8216;',
+                '/\'(\W)/'                  => '&#8217;$1',
+                '/(\W)\'/'                  => '$1&#8216;',
                 // double quote smart quotes
-                '/"(\s|$)/'     => '&#8221;$1',
-                '/(^|\s|<p>)"/' => '$1&#8220;',
-                '/"(\W)/'       => '&#8221;$1',
-                '/(\W)"/'       => '$1&#8220;',
+                '/"(\s|$)/'                 => '&#8221;$1',
+                '/(^|\s|<p>)"/'             => '$1&#8220;',
+                '/"(\W)/'                   => '&#8221;$1',
+                '/(\W)"/'                   => '$1&#8220;',
                 // apostrophes
-                '/(\w)\'(\w)/' => '$1&#8217;$2',
+                '/(\w)\'(\w)/'              => '$1&#8217;$2',
                 // Em dash and ellipses dots
-                '/\s?\-\-\s?/' => '&#8212;',
-                '/(\w)\.{3}/'  => '$1&#8230;',
+                '/\s?\-\-\s?/'              => '&#8212;',
+                '/(\w)\.{3}/'               => '$1&#8230;',
                 // double space after sentences
-                '/(\W)  /' => '$1&nbsp; ',
+                '/(\W)  /'                  => '$1&nbsp; ',
                 // ampersands, if not a character entity
                 '/&(?!#?[a-zA-Z0-9]{2,};)/' => '&amp;',
             ];

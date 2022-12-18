@@ -22,17 +22,17 @@ use Tests\Support\Validation\TestRules;
 final class ValidationTest extends TraditionalValidationTest
 {
     protected array $config = [
-        'ruleSets' => [
+        'ruleSets'      => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA' => [
+        'groupA'        => [
             'foo' => 'required|min_length[5]',
         ],
-        'login' => [
+        'login'         => [
             'username' => [
                 'label'  => 'Username',
                 'rules'  => 'required',
@@ -53,8 +53,8 @@ final class ValidationTest extends TraditionalValidationTest
                 'min_length' => 'Shame, shame. Too short.',
             ],
         ],
-        'groupX'    => 'Not an array, so not a real group',
-        'templates' => [
+        'groupX'        => 'Not an array, so not a real group',
+        'templates'     => [
             'list'   => 'CodeIgniter\Validation\Views\list',
             'single' => 'CodeIgniter\Validation\Views\single',
         ],

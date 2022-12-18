@@ -129,7 +129,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 'abc',
                 'http://example.com/abc',
             ],
-            'URL decode' => [
+            'URL decode'        => [
                 'http://example.com/',
                 '',
                 null,
@@ -137,7 +137,7 @@ final class SiteUrlTest extends CIUnitTestCase
                 'template/meet-%26-greet',
                 'http://example.com/template/meet-&-greet',
             ],
-            'URL encode' => [
+            'URL encode'        => [
                 'http://example.com/',
                 '',
                 null,

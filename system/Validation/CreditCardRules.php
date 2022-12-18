@@ -31,110 +31,110 @@ class CreditCardRules
      * @var array
      */
     protected $cards = [
-        'American Express' => [
+        'American Express'                 => [
             'name'       => 'amex',
             'length'     => '15',
             'prefixes'   => '34,37',
             'checkdigit' => true,
         ],
-        'China UnionPay' => [
+        'China UnionPay'                   => [
             'name'       => 'unionpay',
             'length'     => '16,17,18,19',
             'prefixes'   => '62',
             'checkdigit' => true,
         ],
-        'Dankort' => [
+        'Dankort'                          => [
             'name'       => 'dankort',
             'length'     => '16',
             'prefixes'   => '5019,4175,4571,4',
             'checkdigit' => true,
         ],
-        'DinersClub' => [
+        'DinersClub'                       => [
             'name'       => 'dinersclub',
             'length'     => '14,16',
             'prefixes'   => '300,301,302,303,304,305,309,36,38,39,54,55',
             'checkdigit' => true,
         ],
-        'DinersClub CarteBlanche' => [
+        'DinersClub CarteBlanche'          => [
             'name'       => 'carteblanche',
             'length'     => '14',
             'prefixes'   => '300,301,302,303,304,305',
             'checkdigit' => true,
         ],
-        'Discover Card' => [
+        'Discover Card'                    => [
             'name'       => 'discover',
             'length'     => '16,19',
             'prefixes'   => '6011,622,644,645,656,647,648,649,65',
             'checkdigit' => true,
         ],
-        'InterPayment' => [
+        'InterPayment'                     => [
             'name'       => 'interpayment',
             'length'     => '16,17,18,19',
             'prefixes'   => '4',
             'checkdigit' => true,
         ],
-        'JCB' => [
+        'JCB'                              => [
             'name'       => 'jcb',
             'length'     => '16,17,18,19',
             'prefixes'   => '352,353,354,355,356,357,358',
             'checkdigit' => true,
         ],
-        'Maestro' => [
+        'Maestro'                          => [
             'name'       => 'maestro',
             'length'     => '12,13,14,15,16,18,19',
             'prefixes'   => '50,56,57,58,59,60,61,62,63,64,65,66,67,68,69',
             'checkdigit' => true,
         ],
-        'MasterCard' => [
+        'MasterCard'                       => [
             'name'       => 'mastercard',
             'length'     => '16',
             'prefixes'   => '51,52,53,54,55,22,23,24,25,26,27',
             'checkdigit' => true,
         ],
-        'NSPK MIR' => [
+        'NSPK MIR'                         => [
             'name'       => 'mir',
             'length'     => '16',
             'prefixes'   => '2200,2201,2202,2203,2204',
             'checkdigit' => true,
         ],
-        'Troy' => [
+        'Troy'                             => [
             'name'       => 'troy',
             'length'     => '16',
             'prefixes'   => '979200,979289',
             'checkdigit' => true,
         ],
-        'UATP' => [
+        'UATP'                             => [
             'name'       => 'uatp',
             'length'     => '15',
             'prefixes'   => '1',
             'checkdigit' => true,
         ],
-        'Verve' => [
+        'Verve'                            => [
             'name'       => 'verve',
             'length'     => '16,19',
             'prefixes'   => '506,650',
             'checkdigit' => true,
         ],
-        'Visa' => [
+        'Visa'                             => [
             'name'       => 'visa',
             'length'     => '13,16,19',
             'prefixes'   => '4',
             'checkdigit' => true,
         ],
         // Canadian Cards
-        'BMO ABM Card' => [
+        'BMO ABM Card'                     => [
             'name'       => 'bmoabm',
             'length'     => '16',
             'prefixes'   => '500',
             'checkdigit' => false,
         ],
-        'CIBC Convenience Card' => [
+        'CIBC Convenience Card'            => [
             'name'       => 'cibc',
             'length'     => '16',
             'prefixes'   => '4506',
             'checkdigit' => false,
         ],
-        'HSBC Canada Card' => [
+        'HSBC Canada Card'                 => [
             'name'       => 'hsbc',
             'length'     => '16',
             'prefixes'   => '56',
@@ -146,13 +146,13 @@ class CreditCardRules
             'prefixes'   => '45',
             'checkdigit' => false,
         ],
-        'Scotiabank Scotia Card' => [
+        'Scotiabank Scotia Card'           => [
             'name'       => 'scotia',
             'length'     => '16',
             'prefixes'   => '4536',
             'checkdigit' => false,
         ],
-        'TD Canada Trust Access Card' => [
+        'TD Canada Trust Access Card'      => [
             'name'       => 'tdtrust',
             'length'     => '16',
             'prefixes'   => '589297',

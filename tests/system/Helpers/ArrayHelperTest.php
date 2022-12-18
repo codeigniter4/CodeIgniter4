@@ -74,7 +74,7 @@ final class ArrayHelperTest extends CIUnitTestCase
     public function testArrayDotEscape()
     {
         $data = [
-            'foo' => [
+            'foo'     => [
                 'bar.baz' => 23,
             ],
             'foo.bar' => [
@@ -169,7 +169,7 @@ final class ArrayHelperTest extends CIUnitTestCase
                 'buzz' => [
                     'fizz' => 11,
                 ],
-                'bar' => [
+                'bar'  => [
                     'baz' => 23,
                 ],
             ],
@@ -186,7 +186,7 @@ final class ArrayHelperTest extends CIUnitTestCase
                 'buzz' => [
                     'fizz' => 11,
                 ],
-                'bar' => [
+                'bar'  => [
                     'baz' => 23,
                 ],
             ],
@@ -411,18 +411,18 @@ final class ArrayHelperTest extends CIUnitTestCase
     {
         yield 'normal' => [
             [
-                'id'   => '12',
-                'user' => [
-                    'first_name' => 'john',
-                    'last_name'  => 'smith',
-                    'age'        => '26 years',
+                'id'              => '12',
+                'user'            => [
+                    'first_name'        => 'john',
+                    'last_name'         => 'smith',
+                    'age'               => '26 years',
                 ],
             ],
             [
-                'id'              => '12',
-                'user.first_name' => 'john',
-                'user.last_name'  => 'smith',
-                'user.age'        => '26 years',
+                'id'                  => '12',
+                'user.first_name'     => 'john',
+                'user.last_name'      => 'smith',
+                'user.age'            => '26 years',
             ],
         ];
 
@@ -468,8 +468,8 @@ final class ArrayHelperTest extends CIUnitTestCase
 
         yield 'with-empty-string-index' => [
             [
-                'foo' => 1,
-                ''    => [
+                'foo'   => 1,
+                ''      => [
                     'bar' => 2,
                     'baz' => 3,
                 ],

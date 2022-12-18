@@ -154,10 +154,10 @@ final class XMLFormatterTest extends CIUnitTestCase
                     'email'      => 'foo@bar.com',
                     'dependents' => [],
                 ],
-                'vote' => [
+                'vote'   => [
                     'list' => [],
                 ],
-                'user' => [
+                'user'   => [
                     'account' => [
                         'demo' => [
                             'info' => [
@@ -168,7 +168,7 @@ final class XMLFormatterTest extends CIUnitTestCase
                         ],
                     ],
                 ],
-                'xml' => [
+                'xml'    => [
                     'xml_version'  => '1.0',
                     'xml_encoding' => 'utf-8',
                 ],

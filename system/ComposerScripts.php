@@ -40,7 +40,7 @@ final class ComposerScripts
      * @var array<string, array<string, string>>
      */
     private static array $dependencies = [
-        'kint-src' => [
+        'kint-src'       => [
             'license' => __DIR__ . '/../vendor/kint-php/kint/LICENSE',
             'from'    => __DIR__ . '/../vendor/kint-php/kint/src/',
             'to'      => __DIR__ . '/ThirdParty/Kint/',
@@ -49,12 +49,12 @@ final class ComposerScripts
             'from' => __DIR__ . '/../vendor/kint-php/kint/resources/',
             'to'   => __DIR__ . '/ThirdParty/Kint/resources/',
         ],
-        'escaper' => [
+        'escaper'        => [
             'license' => __DIR__ . '/../vendor/laminas/laminas-escaper/LICENSE.md',
             'from'    => __DIR__ . '/../vendor/laminas/laminas-escaper/src/',
             'to'      => __DIR__ . '/ThirdParty/Escaper/',
         ],
-        'psr-log' => [
+        'psr-log'        => [
             'license' => __DIR__ . '/../vendor/psr/log/LICENSE',
             'from'    => __DIR__ . '/../vendor/psr/log/Psr/Log/',
             'to'      => __DIR__ . '/ThirdParty/PSR/Log/',

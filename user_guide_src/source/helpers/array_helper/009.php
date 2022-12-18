@@ -1,7 +1,7 @@
 <?php
 
 $arrayToFlatten = [
-    'personal' => [
+    'personal'      => [
         'first_name' => 'john',
         'last_name'  => 'smith',
         'age'        => '26',

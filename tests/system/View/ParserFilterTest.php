@@ -409,7 +409,7 @@ final class ParserFilterTest extends CIUnitTestCase
                     'svalue2' => 2,
                 ],
             ],
-            'loop' => [
+            'loop'   => [
                 [
                     'lvalue' => -3,
                 ],
@@ -427,7 +427,7 @@ final class ParserFilterTest extends CIUnitTestCase
                             'nsvalue2' => 5,
                         ],
                     ],
-                    'nsloop' => [
+                    'nsloop'  => [
                         [
                             'nlvalue' => -6,
                         ],

@@ -59,11 +59,11 @@ final class PublisherOutputTest extends CIUnitTestCase
         parent::setUp();
 
         $this->structure = [
-            'able' => [
+            'able'          => [
                 'apple.php' => 'Once upon a midnight dreary',
                 'bazam'     => 'While I pondered weak and weary',
             ],
-            'boo' => [
+            'boo'           => [
                 'far' => 'Upon a tome of long-forgotten lore',
                 'faz' => 'There came a tapping up on the door',
             ],

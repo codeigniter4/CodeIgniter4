@@ -20,7 +20,7 @@ $list = [
             'sphere',
         ],
     ],
-    'moods' => [
+    'moods'  => [
         'happy',
         'upset' => [
             'defeated' => [

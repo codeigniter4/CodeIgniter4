@@ -23,14 +23,14 @@ use Tests\Support\Validation\TestRules;
 final class FormatRulesTest extends TraditionalFormatRulesTest
 {
     protected array $config = [
-        'ruleSets' => [
+        'ruleSets'      => [
             Rules::class,
             FormatRules::class,
             FileRules::class,
             CreditCardRules::class,
             TestRules::class,
         ],
-        'groupA' => [
+        'groupA'        => [
             'foo' => 'required|min_length[5]',
         ],
         'groupA_errors' => [

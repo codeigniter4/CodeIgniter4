@@ -190,7 +190,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['bar'], // not excluded
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'baz',
                 ],
             ],
@@ -203,7 +203,7 @@ final class FiltersTest extends CIUnitTestCase
                 'foo',
                 'bar',
             ],
-            'after' => ['baz'],
+            'after'  => ['baz'],
         ];
         $this->assertSame($expected, $filters->initialize()->getFilters());
     }
@@ -238,7 +238,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => $except],
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'baz',
                 ],
             ],
@@ -251,7 +251,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar',
             ],
-            'after' => ['baz'],
+            'after'  => ['baz'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
@@ -334,7 +334,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foog' => ['except' => ['admin/*']],
                     'barg',
                 ],
-                'after' => [
+                'after'  => [
                     'bazg',
                 ],
             ],
@@ -359,7 +359,7 @@ final class FiltersTest extends CIUnitTestCase
                 'bar',
                 'foof',
             ],
-            'after' => ['bazg'],
+            'after'  => ['bazg'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
@@ -560,7 +560,7 @@ final class FiltersTest extends CIUnitTestCase
                     'nowhere',
                     'banana',
                 ],
-                'after' => [],
+                'after'  => [],
             ],
         ];
         $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
@@ -587,7 +587,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'admin/*'],
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'baz',
                 ],
             ],
@@ -600,7 +600,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar',
             ],
-            'after' => ['baz'],
+            'after'  => ['baz'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
@@ -620,7 +620,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'george/*'],
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'baz',
                 ],
             ],
@@ -634,7 +634,7 @@ final class FiltersTest extends CIUnitTestCase
                 'foo',
                 'bar',
             ],
-            'after' => ['baz'],
+            'after'  => ['baz'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
@@ -653,7 +653,7 @@ final class FiltersTest extends CIUnitTestCase
                 'before' => [
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'foo' => ['except' => 'admin/*'],
                     'baz',
                 ],
@@ -667,7 +667,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar',
             ],
-            'after' => ['baz'],
+            'after'  => ['baz'],
         ];
         $this->assertSame($expected, $filters->initialize($uri)->getFilters());
     }
@@ -686,7 +686,7 @@ final class FiltersTest extends CIUnitTestCase
                 'before' => [
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'foo' => ['except' => 'george/*'],
                     'baz',
                 ],
@@ -700,7 +700,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'bar',
             ],
-            'after' => [
+            'after'  => [
                 'foo',
                 'baz',
             ],
@@ -884,7 +884,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'Admin/*'],
                     'bar',
                 ],
-                'after' => [
+                'after'  => [
                     'foo' => ['except' => 'Admin/*'],
                     'baz',
                 ],
@@ -905,7 +905,7 @@ final class FiltersTest extends CIUnitTestCase
                 'bar',
                 'frak',
             ],
-            'after' => [
+            'after'  => [
                 'baz',
                 'frak',
             ],
@@ -944,7 +944,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'frak',
             ],
-            'after' => [],
+            'after'  => [],
         ];
         $this->assertSame($expected, $actual);
     }
@@ -967,7 +967,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'admin*'],
                     'one',
                 ],
-                'after' => [
+                'after'  => [
                     'foo' => ['except' => 'admin/*'],
                     'two',
                 ],
@@ -983,7 +983,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'one',
             ],
-            'after' => [
+            'after'  => [
                 'foo',
                 'two',
             ],
@@ -1010,7 +1010,7 @@ final class FiltersTest extends CIUnitTestCase
                     'foo' => ['except' => 'admin*'],
                     'one',
                 ],
-                'after' => [
+                'after'  => [
                     'foo' => ['except' => 'admin/*'],
                     'two',
                 ],
@@ -1031,7 +1031,7 @@ final class FiltersTest extends CIUnitTestCase
                 'one',
                 'frak',
             ],
-            'after' => [
+            'after'  => [
                 'foo',
                 'two',
             ],
@@ -1056,7 +1056,7 @@ final class FiltersTest extends CIUnitTestCase
                 'before' => [
                     'foo' => ['except' => 'admin*'],
                 ],
-                'after' => [
+                'after'  => [
                     'foo' => ['except' => 'admin/*'],
                 ],
             ],
@@ -1075,7 +1075,7 @@ final class FiltersTest extends CIUnitTestCase
             'before' => [
                 'frak',
             ],
-            'after' => [
+            'after'  => [
                 'frak',
             ],
         ];

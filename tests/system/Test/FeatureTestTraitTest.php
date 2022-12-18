@@ -257,22 +257,22 @@ final class FeatureTestTraitTest extends CIUnitTestCase
     public function provideRoutesData()
     {
         return [
-            'non parameterized cli' => [
+            'non parameterized cli'                => [
                 'hello',
                 'Hello::index',
                 'Hello',
             ],
-            'parameterized param cli' => [
+            'parameterized param cli'              => [
                 'hello/(:any)',
                 'Hello::index/$1',
                 'Hello/index/samsonasik',
             ],
-            'parameterized method cli' => [
+            'parameterized method cli'             => [
                 'hello/(:segment)',
                 'Hello::$1',
                 'Hello/index',
             ],
-            'default method index' => [
+            'default method index'                 => [
                 'hello',
                 'Hello',
                 'Hello',

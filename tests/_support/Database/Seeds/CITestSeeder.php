@@ -19,7 +19,7 @@ class CITestSeeder extends Seeder
     {
         // Job Data
         $data = [
-            'user' => [
+            'user'                   => [
                 [
                     'name'    => 'Derek Jones',
                     'email'   => 'derek@world.com',
@@ -41,7 +41,7 @@ class CITestSeeder extends Seeder
                     'country' => 'UK',
                 ],
             ],
-            'job' => [
+            'job'                    => [
                 [
                     'name'        => 'Developer',
                     'description' => 'Awesome job, but sometimes makes you bored',
@@ -59,7 +59,7 @@ class CITestSeeder extends Seeder
                     'description' => 'Only Coldplay can actually called Musician',
                 ],
             ],
-            'misc' => [
+            'misc'                   => [
                 [
                     'key'   => '\\xxxfoo456',
                     'value' => 'Entry with \\xxx',
@@ -73,7 +73,7 @@ class CITestSeeder extends Seeder
                     'value' => ' One  two   three	tab',
                 ],
             ],
-            'stringifypkey' => [
+            'stringifypkey'          => [
                 [
                     'id'    => 'A01',
                     'value' => 'test',
@@ -85,7 +85,7 @@ class CITestSeeder extends Seeder
                     'value' => 'value',
                 ],
             ],
-            'type_test' => [
+            'type_test'              => [
                 [
                     'type_varchar'    => 'test',
                     'type_char'       => 'test',

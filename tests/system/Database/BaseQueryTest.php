@@ -107,35 +107,35 @@ final class BaseQueryTest extends CIUnitTestCase
     public function queryTypes()
     {
         return [
-            'select' => [
+            'select'   => [
                 false,
                 'SELECT * FROM users',
             ],
-            'set' => [
+            'set'      => [
                 true,
                 'SET ...',
             ],
-            'insert' => [
+            'insert'   => [
                 true,
                 'INSERT INTO ...',
             ],
-            'update' => [
+            'update'   => [
                 true,
                 'UPDATE ...',
             ],
-            'delete' => [
+            'delete'   => [
                 true,
                 'DELETE ...',
             ],
-            'replace' => [
+            'replace'  => [
                 true,
                 'REPLACE ...',
             ],
-            'create' => [
+            'create'   => [
                 true,
                 'CREATE ...',
             ],
-            'drop' => [
+            'drop'     => [
                 true,
                 'DROP ...',
             ],
@@ -143,39 +143,39 @@ final class BaseQueryTest extends CIUnitTestCase
                 true,
                 'TRUNCATE ...',
             ],
-            'load' => [
+            'load'     => [
                 true,
                 'LOAD ...',
             ],
-            'copy' => [
+            'copy'     => [
                 true,
                 'COPY ...',
             ],
-            'alter' => [
+            'alter'    => [
                 true,
                 'ALTER ...',
             ],
-            'rename' => [
+            'rename'   => [
                 true,
                 'RENAME ...',
             ],
-            'grant' => [
+            'grant'    => [
                 true,
                 'GRANT ...',
             ],
-            'revoke' => [
+            'revoke'   => [
                 true,
                 'REVOKE ...',
             ],
-            'lock' => [
+            'lock'     => [
                 true,
                 'LOCK ...',
             ],
-            'unlock' => [
+            'unlock'   => [
                 true,
                 'UNLOCK ...',
             ],
-            'reindex' => [
+            'reindex'  => [
                 true,
                 'REINDEX ...',
             ],
@@ -580,7 +580,7 @@ final class BaseQueryTest extends CIUnitTestCase
     public function queryKeywords()
     {
         return [
-            'highlightKeyWords' => [
+            'highlightKeyWords'      => [
                 '<strong>SELECT</strong> `a`.*, `b`.`id` <strong>AS</strong> `b_id` <strong>FROM</strong> `a` <strong>LEFT</strong> <strong>JOIN</strong> `b` <strong>ON</strong> `b`.`a_id` = `a`.`id` <strong>WHERE</strong> `b`.`id` <strong>IN</strong> (&#039;1&#039;) <strong>AND</strong> `a`.`deleted_at` <strong>IS</strong> <strong>NOT</strong> <strong>NULL</strong> <strong>LIMIT</strong> 1',
                 'SELECT `a`.*, `b`.`id` AS `b_id` FROM `a` LEFT JOIN `b` ON `b`.`a_id` = `a`.`id` WHERE `b`.`id` IN (\'1\') AND `a`.`deleted_at` IS NOT NULL LIMIT 1',
             ],
@@ -588,7 +588,7 @@ final class BaseQueryTest extends CIUnitTestCase
                 '<strong>SELECT</strong> * <strong>FROM</strong> `a` <strong>WHERE</strong> `a`.`col` = &#039;SELECT escaped keyword in value&#039; <strong>LIMIT</strong> 1',
                 'SELECT * FROM `a` WHERE `a`.`col` = \'SELECT escaped keyword in value\' LIMIT 1',
             ],
-            'escapeHtmlValues' => [
+            'escapeHtmlValues'       => [
                 '<strong>SELECT</strong> &#039;&lt;s&gt;&#039; <strong>FROM</strong> dual',
                 'SELECT \'<s>\' FROM dual',
             ],

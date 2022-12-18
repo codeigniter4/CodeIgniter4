@@ -727,10 +727,10 @@ final class EntityTest extends CIUnitTestCase
         $result = $entity->toArray(false, true, true);
 
         $this->assertSame([
-            'foo'     => null,
-            'bar'     => ':bar',
-            'default' => 'sumfin',
-            'entity'  => [
+            'foo'       => null,
+            'bar'       => ':bar',
+            'default'   => 'sumfin',
+            'entity'    => [
                 'foo'       => null,
                 'bar'       => ':bar',
                 'default'   => 'sumfin',

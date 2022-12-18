@@ -231,7 +231,7 @@ final class SaveModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 
@@ -261,7 +261,7 @@ final class SaveModelTest extends LiveModelTestCase
                     'updated_at',
                     'deleted_at',
                 ],
-                'casts' => [],
+                'casts'   => [],
             ];
         };
 

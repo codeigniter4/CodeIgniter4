@@ -422,7 +422,7 @@ final class CLIRequestTest extends CIUnitTestCase
                     'DETAIL' => 'sdfg',
                 ],
             ],
-            'submit' => 'SAVE',
+            'submit'        => 'SAVE',
         ];
         $this->request->setGlobal('post', $post);
         $result = $this->request->fetchGlobal('post');
@@ -489,7 +489,7 @@ final class CLIRequestTest extends CIUnitTestCase
                 'address' => [
                     'zipcode' => 90210,
                 ],
-                'stuff' => [['a']],
+                'stuff'   => [['a']],
             ],
         ];
         $this->request->setGlobal('post', $post);
@@ -520,38 +520,38 @@ final class CLIRequestTest extends CIUnitTestCase
     public function ipAddressChecks()
     {
         return [
-            'empty' => [
+            'empty'         => [
                 false,
                 '',
             ],
-            'zero' => [
+            'zero'          => [
                 false,
                 0,
             ],
-            'large_ipv4' => [
+            'large_ipv4'    => [
                 false,
                 '256.256.256.999',
                 'ipv4',
             ],
-            'good_ipv4' => [
+            'good_ipv4'     => [
                 true,
                 '100.100.100.0',
                 'ipv4',
             ],
-            'good_default' => [
+            'good_default'  => [
                 true,
                 '100.100.100.0',
             ],
-            'zeroed_ipv4' => [
+            'zeroed_ipv4'   => [
                 true,
                 '0.0.0.0',
             ],
-            'large_ipv6' => [
+            'large_ipv6'    => [
                 false,
                 'h123:0000:0000:0000:0000:0000:0000:0000',
                 'ipv6',
             ],
-            'good_ipv6' => [
+            'good_ipv6'     => [
                 true,
                 '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
             ],

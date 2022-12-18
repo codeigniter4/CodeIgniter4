@@ -287,7 +287,7 @@ final class TextHelperTest extends CIUnitTestCase
     public function testEllipsize()
     {
         $strs = [
-            '0' => [
+            '0'  => [
                 'this is my string'             => '&hellip; my string',
                 "here's another one"            => '&hellip;nother one',
                 'this one is just a bit longer' => '&hellip;bit longer',
@@ -299,7 +299,7 @@ final class TextHelperTest extends CIUnitTestCase
                 'this one is just a bit longer' => 'this &hellip;onger',
                 'short'                         => 'short',
             ],
-            '1' => [
+            '1'  => [
                 'this is my string'             => 'this is my&hellip;',
                 "here's another one"            => "here's ano&hellip;",
                 'this one is just a bit longer' => 'this one i&hellip;',

@@ -135,7 +135,7 @@ class Migration_Create_test_tables extends Migration
                 'id'         => ['type' => 'VARCHAR', 'constraint' => 128, 'null' => false],
                 'ip_address' => ['type' => 'VARCHAR', 'constraint' => 45, 'null' => false],
                 'timestamp timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL',
-                'data' => ['type' => 'BLOB', 'null' => false],
+                'data'       => ['type' => 'BLOB', 'null' => false],
             ]);
             $this->forge->addKey('id', true);
             $this->forge->createTable('ci_sessions', true);

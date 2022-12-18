@@ -32,11 +32,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         parent::setUp();
 
         $this->structure = [
-            'foo' => [
+            'foo'           => [
                 'bar' => 'Once upon a midnight dreary',
                 'baz' => 'While I pondered weak and weary',
             ],
-            'boo' => [
+            'boo'           => [
                 'far' => 'Upon a tome of long-forgotten lore',
                 'faz' => 'There came a tapping up on the door',
             ],
@@ -53,11 +53,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR => [
+            'foo' . DIRECTORY_SEPARATOR           => [
                 'bar',
                 'baz',
             ],
-            'boo' . DIRECTORY_SEPARATOR => [
+            'boo' . DIRECTORY_SEPARATOR           => [
                 'far',
                 'faz',
             ],
@@ -76,11 +76,11 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(function_exists('directory_map'));
 
         $expected = [
-            'foo' . DIRECTORY_SEPARATOR => [
+            'foo' . DIRECTORY_SEPARATOR           => [
                 'bar',
                 'baz',
             ],
-            'boo' . DIRECTORY_SEPARATOR => [
+            'boo' . DIRECTORY_SEPARATOR           => [
                 'far',
                 'faz',
             ],
@@ -173,7 +173,7 @@ final class FilesystemHelperTest extends CIUnitTestCase
         $this->assertTrue(function_exists('directory_mirror'));
 
         $this->structure = [
-            'src' => [
+            'src'  => [
                 'AnEmptyFolder' => [],
             ],
             'dest' => [

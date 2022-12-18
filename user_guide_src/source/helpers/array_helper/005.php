@@ -1,7 +1,7 @@
 <?php
 
 $data = [
-    'foo' => [
+    'foo'     => [
         'bar.baz' => 23,
     ],
     'foo.bar' => [

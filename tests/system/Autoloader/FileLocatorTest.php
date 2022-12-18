@@ -32,10 +32,10 @@ final class FileLocatorTest extends CIUnitTestCase
         $autoloader = new Autoloader();
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->addNamespace([
-            'Unknown'       => '/i/do/not/exist',
-            'Tests/Support' => TESTPATH . '_support/',
-            'App'           => APPPATH,
-            'CodeIgniter'   => [
+            'Unknown'             => '/i/do/not/exist',
+            'Tests/Support'       => TESTPATH . '_support/',
+            'App'                 => APPPATH,
+            'CodeIgniter'         => [
                 TESTPATH,
                 SYSTEMPATH,
             ],
@@ -44,8 +44,8 @@ final class FileLocatorTest extends CIUnitTestCase
             'CodeIgniter\\Devkit' => [
                 TESTPATH . '_support/',
             ],
-            'Acme\SampleProject' => TESTPATH . '_support',
-            'Acme\Sample'        => TESTPATH . '_support/does/not/exists',
+            'Acme\SampleProject'  => TESTPATH . '_support',
+            'Acme\Sample'         => TESTPATH . '_support/does/not/exists',
         ]);
 
         $this->locator = new FileLocator($autoloader);

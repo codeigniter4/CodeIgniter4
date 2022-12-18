@@ -24,7 +24,7 @@ class ValidErrorsModel extends Model
         'description',
     ];
     protected $validationRules = [
-        'name' => [
+        'name'  => [
             'required',
             'min_length[10]',
             'errors' => [
