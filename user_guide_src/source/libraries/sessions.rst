@@ -426,20 +426,19 @@ Preference                     Default                                      Opti
     (often the default value of ``1440``). This needs to be changed in
     ``php.ini`` or via ``ini_set()`` as needed.
 
-In addition to the values above, the cookie and native drivers apply the
-following configuration values shared by the :doc:`IncomingRequest </incoming/incomingrequest>` and
-:doc:`Security <security>` classes:
+In addition to the values above, the Session cookie uses the
+following configuration values in your **app/Config/Cookie.php** file:
 
-==================== =============== ===========================================================================
+============== =============== ===========================================================================
 Preference           Default         Description
-==================== =============== ===========================================================================
-**cookieDomain**     ''              The domain for which the session is applicable
-**cookiePath**       /               The path to which the session is applicable
-**cookieSecure**     false           Whether to create the session cookie only on encrypted (HTTPS) connections
-**cookieSameSite**   Lax             The SameSite setting for the session cookie
-==================== =============== ===========================================================================
+============== =============== ===========================================================================
+**domain**     ''              The domain for which the session is applicable
+**path**       /               The path to which the session is applicable
+**secure**     false           Whether to create the session cookie only on encrypted (HTTPS) connections
+**sameSite**   Lax             The SameSite setting for the session cookie
+============== =============== ===========================================================================
 
-.. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
+.. note:: The ``httponly`` setting doesn't have an effect on sessions.
     Instead the HttpOnly parameter is always enabled, for security
     reasons. Additionally, the ``Config\Cookie::$prefix`` setting is completely
     ignored.
