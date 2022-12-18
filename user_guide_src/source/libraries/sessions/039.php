@@ -3,10 +3,13 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Handlers\FileHandler;
 
-class App extends BaseConfig
+class Session extends BaseConfig
 {
-    public $sessionDriver   = 'CodeIgniter\Session\Handlers\DatabaseHandler';
-    public $sessionSavePath = 'ci_sessions';
+    // ...
+    public string $driver = 'CodeIgniter\Session\Handlers\DatabaseHandler';
+    // ...
+    public string $savePath = 'ci_sessions';
     // ...
 }

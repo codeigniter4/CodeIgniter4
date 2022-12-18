@@ -459,8 +459,8 @@ By default, the ``FileHandler`` Driver will be used when a session is initialize
 because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).
 
-However, any other driver may be selected via the ``public $sessionDriver``
-line in your **app/Config/App.php** file, if you chose to do so.
+However, any other driver may be selected via the ``public $driver``
+line in your **app/Config/Session.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
@@ -481,12 +481,12 @@ To be more specific, it doesn't support PHP's `directory level and mode
 formats used in session.save_path
 <https://www.php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
 and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported for ``public $sessionSavePath``.
+absolute paths are supported for ``public string $savePath``.
 
 Another important thing that you should know, is to make sure that you
 don't use a publicly-readable or shared directory for storing your session
 files. Make sure that *only you* have access to see the contents of your
-chosen *sessionSavePath* directory. Otherwise, anybody who can do that, can
+chosen *savePath* directory. Otherwise, anybody who can do that, can
 also steal any of the current sessions (also known as "session fixation"
 attack).
 
@@ -534,7 +534,7 @@ However, there are some conditions that must be met:
 
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
-``$sessionSavePath`` value.
+``$savePath`` value.
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this:
 
@@ -576,7 +576,7 @@ setting**. The examples below work both on MySQL and PostgreSQL::
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
 You can choose the Database group to use by adding a new line to the
-**app/Config/App.php** file with the name of the group to use:
+**app/Config/Session.php** file with the name of the group to use:
 
 .. literalinclude:: sessions/040.php
 
@@ -586,7 +586,7 @@ from the cli to generate a migration file for you::
   > php spark make:migration --session
   > php spark migrate
 
-This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
+This command will take the **savePath** and **matchIP** settings into account
 when it generates the code.
 
 .. important:: Only MySQL and PostgreSQL databases are officially
@@ -617,7 +617,7 @@ both familiar with Redis and using it for other purposes.
 
 Just as with the 'FileHandler' and 'DatabaseHandler' drivers, you must also configure
 the storage location for your sessions via the
-``$sessionSavePath`` setting.
+``$savePath`` setting.
 The format here is a bit different and complicated at the same time. It is
 best explained by the *phpredis* extension's README file, so we'll simply
 link you to it:
@@ -655,7 +655,7 @@ deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
-The ``$sessionSavePath`` format is fairly straightforward here,
+The ``$savePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:
 
 .. literalinclude:: sessions/042.php

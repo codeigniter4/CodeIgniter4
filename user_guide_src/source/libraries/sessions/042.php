@@ -3,10 +3,13 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Handlers\FileHandler;
 
-class App extends BaseConfig
+class Session extends BaseConfig
 {
-    public $sessionDriver   = 'CodeIgniter\Session\Handlers\MemcachedHandler';
-    public $sessionSavePath = 'localhost:11211';
+    // ...
+    public string $driver = 'CodeIgniter\Session\Handlers\MemcachedHandler';
+    // ...
+    public string $savePath = 'localhost:11211';
     // ...
 }
