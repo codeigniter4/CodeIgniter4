@@ -415,7 +415,7 @@ Preference                     Default                                      Opti
 ======================= ============================================ ================================================= ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
-    session related INI settings, as well as legacy CI settings such as
+    session related INI settings, as well as CodeIgniter 3 settings such as
     'sess_expire_on_close' when any of the above is not configured.
     However, you should never rely on this behavior as it can cause
     unexpected results or be changed in the future. Please configure
