@@ -24,7 +24,9 @@ if (PHP_SAPI === 'cli') {
     return;
 }
 
-$uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+$uri = urldecode(
+    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? ''
+);
 
 // All request handle by index.php file.
 $_SERVER['SCRIPT_NAME'] = '/index.php';
