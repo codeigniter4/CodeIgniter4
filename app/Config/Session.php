@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Session\Handlers\FileHandler;
+use SessionHandlerInterface;
 
 class Session extends BaseConfig
 {
@@ -18,7 +19,7 @@ class Session extends BaseConfig
      * - `CodeIgniter\Session\Handlers\MemcachedHandler`
      * - `CodeIgniter\Session\Handlers\RedisHandler`
      *
-     * @phpstan-var class-string
+     * @phpstan-var class-string<SessionHandlerInterface>
      */
     public string $driver = FileHandler::class;
 
