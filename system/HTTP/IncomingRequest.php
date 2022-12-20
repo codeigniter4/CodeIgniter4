@@ -154,8 +154,16 @@ class IncomingRequest extends Request
             throw new InvalidArgumentException('You must supply the parameters: uri, userAgent.');
         }
 
-        // Get our body from php://input
-        if ($body === 'php://input') {
+        $this->populateHeaders();
+
+        if (
+            $body === 'php://input'
+            // php://input is not available with enctype="multipart/form-data".
+            // See https://www.php.net/manual/en/wrappers.php.php#wrappers.php.input
+            && strpos($this->getHeaderLine('Content-Type'), 'multipart/form-data') === false
+            && (int) $this->getHeaderLine('Content-Length') <= $this->getPostMaxSize()
+        ) {
+            // Get our body from php://input
             $body = file_get_contents('php://input');
         }
 
@@ -167,9 +175,32 @@ class IncomingRequest extends Request
 
         parent::__construct($config);
 
-        $this->populateHeaders();
         $this->detectURI($config->uriProtocol, $config->baseURL);
         $this->detectLocale($config);
+    }
+
+    private function getPostMaxSize(): int
+    {
+        $postMaxSize = ini_get('post_max_size');
+
+        switch (strtoupper(substr($postMaxSize, -1))) {
+            case 'G':
+                $postMaxSize = (int) str_replace('G', '', $postMaxSize) * 1024 ** 3;
+                break;
+
+            case 'M':
+                $postMaxSize = (int) str_replace('M', '', $postMaxSize) * 1024 ** 2;
+                break;
+
+            case 'K':
+                $postMaxSize = (int) str_replace('K', '', $postMaxSize) * 1024;
+                break;
+
+            default:
+                $postMaxSize = (int) $postMaxSize;
+        }
+
+        return $postMaxSize;
     }
 
     /**
