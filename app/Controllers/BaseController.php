@@ -42,7 +42,7 @@ abstract class BaseController extends Controller
      * initialization in the initController() method
      * See the Creation of dynamic property depreciation i php 8.2 
      */
-    public $session;
+    // public $session;
 
     /**
      * Constructor.
