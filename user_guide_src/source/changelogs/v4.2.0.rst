@@ -60,6 +60,8 @@ Behavior Changes
 Enhancements
 ************
 
+.. _v420-new-improved-auto-routing:
+
 New Improved Auto Routing
 =========================
 
