@@ -153,8 +153,9 @@ Auto Routing (Improved)
 
 Since v4.2.0, the new more secure Auto Routing has been introduced.
 
-.. note:: If you are familiar with CodeIgniter 3's Auto Routing or Auto Routing (Legacy),
-    you can see the differences in :ref:`ChangeLog v4.2.0 <v420-new-improved-auto-routing>`.
+.. note:: If you are familiar with Auto Routing, which was enabled by default
+    from CodeIgniter 3 through 4.1.x, you can see the differences in
+    :ref:`ChangeLog v4.2.0 <v420-new-improved-auto-routing>`.
 
 This section describes the functionality of the new auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
