@@ -387,32 +387,35 @@ Sessions are a very sensitive component of any application, so some
 careful configuration must be done. Please take your time to consider
 all of the options and their effects.
 
-You'll find the following Session related preferences in your
-**app/Config/App.php** file:
+.. note:: Since v4.3.0, the new **app/Config/Session.php** has been added.
+    Previously, the Session Preferences were in your **app/Config/App.php** file.
 
-============================== ============================================ ================================================= ============================================================================================
+You'll find the following Session related preferences in your
+**app/Config/Session.php** file:
+
+======================= ============================================ ================================================= ============================================================================================
 Preference                     Default                                      Options                                           Description
-============================== ============================================ ================================================= ============================================================================================
-**sessionDriver**              CodeIgniter\\Session\\Handlers\\FileHandler  CodeIgniter\\Session\\Handlers\\FileHandler       The session storage driver to use.
-                                                                            CodeIgniter\\Session\\Handlers\\DatabaseHandler
-                                                                            CodeIgniter\\Session\\Handlers\\MemcachedHandler
-                                                                            CodeIgniter\\Session\\Handlers\\RedisHandler
-                                                                            CodeIgniter\\Session\\Handlers\\ArrayHandler
-**sessionCookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
-**sessionExpiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
-                                                                                                                              If you would like a non-expiring session (until browser is closed) set the value to zero: 0
-**sessionSavePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
-**sessionMatchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
-                                                                                                                              Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-                                                                                                                              will likely set this to false.
-**sessionTimeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
-                                                                                                                              session ID. Setting it to 0 will disable session ID regeneration.
-**sessionRegenerateDestroy**   false                                        true/false (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
-                                                                                                                              the session ID. When set to false, the data will be later deleted by the garbage collector.
-============================== ============================================ ================================================= ============================================================================================
+======================= ============================================ ================================================= ============================================================================================
+**driver**              CodeIgniter\\Session\\Handlers\\FileHandler  CodeIgniter\\Session\\Handlers\\FileHandler       The session storage driver to use.
+                                                                     CodeIgniter\\Session\\Handlers\\DatabaseHandler
+                                                                     CodeIgniter\\Session\\Handlers\\MemcachedHandler
+                                                                     CodeIgniter\\Session\\Handlers\\RedisHandler
+                                                                     CodeIgniter\\Session\\Handlers\\ArrayHandler
+**cookieName**          ci_session                                   [A-Za-z\_-] characters only                       The name used for the session cookie.
+**expiration**          7200 (2 hours)                               Time in seconds (integer)                         The number of seconds you would like the session to last.
+                                                                                                                       If you would like a non-expiring session (until browser is closed) set the value to zero: 0
+**savePath**            null                                         None                                              Specifies the storage location, depends on the driver being used.
+**matchIP**             false                                        true/false (boolean)                              Whether to validate the user's IP address when reading the session cookie.
+                                                                                                                       Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+                                                                                                                       will likely set this to false.
+**timeToUpdate**        300                                          Time in seconds (integer)                         This option controls how often the session class will regenerate itself and create a new
+                                                                                                                       session ID. Setting it to 0 will disable session ID regeneration.
+**regenerateDestroy**   false                                        true/false (boolean)                              Whether to destroy session data associated with the old session ID when auto-regenerating
+                                                                                                                       the session ID. When set to false, the data will be later deleted by the garbage collector.
+======================= ============================================ ================================================= ============================================================================================
 
 .. note:: As a last resort, the Session library will try to fetch PHP's
-    session related INI settings, as well as legacy CI settings such as
+    session related INI settings, as well as CodeIgniter 3 settings such as
     'sess_expire_on_close' when any of the above is not configured.
     However, you should never rely on this behavior as it can cause
     unexpected results or be changed in the future. Please configure
@@ -423,20 +426,19 @@ Preference                     Default                                      Opti
     (often the default value of ``1440``). This needs to be changed in
     ``php.ini`` or via ``ini_set()`` as needed.
 
-In addition to the values above, the cookie and native drivers apply the
-following configuration values shared by the :doc:`IncomingRequest </incoming/incomingrequest>` and
-:doc:`Security <security>` classes:
+In addition to the values above, the Session cookie uses the
+following configuration values in your **app/Config/Cookie.php** file:
 
-==================== =============== ===========================================================================
+============== =============== ===========================================================================
 Preference           Default         Description
-==================== =============== ===========================================================================
-**cookieDomain**     ''              The domain for which the session is applicable
-**cookiePath**       /               The path to which the session is applicable
-**cookieSecure**     false           Whether to create the session cookie only on encrypted (HTTPS) connections
-**cookieSameSite**   Lax             The SameSite setting for the session cookie
-==================== =============== ===========================================================================
+============== =============== ===========================================================================
+**domain**     ''              The domain for which the session is applicable
+**path**       /               The path to which the session is applicable
+**secure**     false           Whether to create the session cookie only on encrypted (HTTPS) connections
+**sameSite**   Lax             The SameSite setting for the session cookie
+============== =============== ===========================================================================
 
-.. note:: The 'cookieHTTPOnly' setting doesn't have an effect on sessions.
+.. note:: The ``httponly`` setting doesn't have an effect on sessions.
     Instead the HttpOnly parameter is always enabled, for security
     reasons. Additionally, the ``Config\Cookie::$prefix`` setting is completely
     ignored.
@@ -457,8 +459,8 @@ By default, the ``FileHandler`` Driver will be used when a session is initialize
 because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).
 
-However, any other driver may be selected via the ``public $sessionDriver``
-line in your **app/Config/App.php** file, if you chose to do so.
+However, any other driver may be selected via the ``public $driver``
+line in your **app/Config/Session.php** file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.
 
@@ -479,12 +481,12 @@ To be more specific, it doesn't support PHP's `directory level and mode
 formats used in session.save_path
 <https://www.php.net/manual/en/session.configuration.php#ini.session.save-path>`_,
 and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported for ``public $sessionSavePath``.
+absolute paths are supported for ``public string $savePath``.
 
 Another important thing that you should know, is to make sure that you
 don't use a publicly-readable or shared directory for storing your session
 files. Make sure that *only you* have access to see the contents of your
-chosen *sessionSavePath* directory. Otherwise, anybody who can do that, can
+chosen *savePath* directory. Otherwise, anybody who can do that, can
 also steal any of the current sessions (also known as "session fixation"
 attack).
 
@@ -532,7 +534,7 @@ However, there are some conditions that must be met:
 
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
-``$sessionSavePath`` value.
+``$savePath`` value.
 For example, if you would like to use 'ci_sessions' as your table name,
 you would do this:
 
@@ -574,7 +576,7 @@ setting**. The examples below work both on MySQL and PostgreSQL::
     ALTER TABLE ci_sessions DROP PRIMARY KEY;
 
 You can choose the Database group to use by adding a new line to the
-**app/Config/App.php** file with the name of the group to use:
+**app/Config/Session.php** file with the name of the group to use:
 
 .. literalinclude:: sessions/040.php
 
@@ -584,7 +586,7 @@ from the cli to generate a migration file for you::
   > php spark make:migration --session
   > php spark migrate
 
-This command will take the **sessionSavePath** and **sessionMatchIP** settings into account
+This command will take the **savePath** and **matchIP** settings into account
 when it generates the code.
 
 .. important:: Only MySQL and PostgreSQL databases are officially
@@ -615,7 +617,7 @@ both familiar with Redis and using it for other purposes.
 
 Just as with the 'FileHandler' and 'DatabaseHandler' drivers, you must also configure
 the storage location for your sessions via the
-``$sessionSavePath`` setting.
+``$savePath`` setting.
 The format here is a bit different and complicated at the same time. It is
 best explained by the *phpredis* extension's README file, so we'll simply
 link you to it:
@@ -653,7 +655,7 @@ deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
 
-The ``$sessionSavePath`` format is fairly straightforward here,
+The ``$savePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:
 
 .. literalinclude:: sessions/042.php

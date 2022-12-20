@@ -149,6 +149,8 @@ class App extends BaseConfig
      * - `CodeIgniter\Session\Handlers\RedisHandler`
      *
      * @var string
+     *
+     * @deprecated use Config\Session::$driver instead.
      */
     public $sessionDriver = FileHandler::class;
 
@@ -158,6 +160,8 @@ class App extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * The session cookie name, must contain only [0-9a-z_-] characters
+     *
+     * @deprecated use Config\Session::$cookieName  instead.
      */
     public string $sessionCookieName = 'ci_session';
 
@@ -168,6 +172,8 @@ class App extends BaseConfig
      *
      * The number of SECONDS you want the session to last.
      * Setting to 0 (zero) means expire when the browser is closed.
+     *
+     * @deprecated use Config\Session::$expiration instead.
      */
     public int $sessionExpiration = 7200;
 
@@ -185,6 +191,8 @@ class App extends BaseConfig
      * Please read up the manual for the format with other session drivers.
      *
      * IMPORTANT: You are REQUIRED to set a valid save path!
+     *
+     * @deprecated use Config\Session::$savePath instead.
      */
     public string $sessionSavePath = WRITEPATH . 'session';
 
@@ -197,6 +205,8 @@ class App extends BaseConfig
      *
      * WARNING: If you're using the database driver, don't forget to update
      *          your session table's PRIMARY KEY when changing this setting.
+     *
+     * @deprecated use Config\Session::$matchIP instead.
      */
     public bool $sessionMatchIP = false;
 
@@ -206,6 +216,8 @@ class App extends BaseConfig
      * --------------------------------------------------------------------------
      *
      * How many seconds between CI regenerating the session ID.
+     *
+     * @deprecated use Config\Session::$timeToUpdate instead.
      */
     public int $sessionTimeToUpdate = 300;
 
@@ -217,8 +229,21 @@ class App extends BaseConfig
      * Whether to destroy session data associated with the old session ID
      * when auto-regenerating the session ID. When set to FALSE, the data
      * will be later deleted by the garbage collector.
+     *
+     * @deprecated use Config\Session::$regenerateDestroy instead.
      */
     public bool $sessionRegenerateDestroy = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Session Database Group
+     * --------------------------------------------------------------------------
+     *
+     * DB Group for the database session.
+     *
+     * @deprecated use Config\Session::$DBGroup instead.
+     */
+    public ?string $sessionDBGroup = null;
 
     /**
      * --------------------------------------------------------------------------

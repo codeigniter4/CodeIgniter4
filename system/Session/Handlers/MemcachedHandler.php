@@ -14,6 +14,7 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Memcached;
 use ReturnTypeWillChange;
 
@@ -57,6 +58,12 @@ class MemcachedHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
+        /** @var SessionConfig|null $session */
+        $session = config('Session');
+
+        $this->sessionExpiration = ($session instanceof SessionConfig)
+            ? $session->expiration : $config->sessionExpiration;
+
         if (empty($this->savePath)) {
             throw SessionException::forEmptySavepath();
         }
@@ -68,8 +75,6 @@ class MemcachedHandler extends BaseHandler
         if (! empty($this->keyPrefix)) {
             ini_set('memcached.sess_prefix', $this->keyPrefix);
         }
-
-        $this->sessionExpiration = $config->sessionExpiration;
     }
 
     /**
