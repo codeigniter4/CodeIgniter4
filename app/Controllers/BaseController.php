@@ -37,6 +37,13 @@ abstract class BaseController extends Controller
      */
     protected $helpers = [];
 
+     /**
+     * To declare the session propety to allow for global
+     * initialization in the initController() method
+     * @var object
+     */
+    public $session;
+
     /**
      * Constructor.
      */
