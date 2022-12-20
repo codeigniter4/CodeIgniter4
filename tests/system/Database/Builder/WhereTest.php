@@ -132,6 +132,20 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereLikeInAssociateArray()
+    {
+        $builder = $this->db->table('user');
+
+        $where = [
+            'id <'      => 100,
+            'col1 LIKE' => '%gmail%',
+        ];
+        $builder->where($where);
+
+        $expectedSQL = 'SELECT * FROM "user" WHERE "id" < 100 AND "col1" LIKE \'%gmail%\'';
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledSelect()));
+    }
+
     public function testWhereCustomString()
     {
         $builder = $this->db->table('jobs');

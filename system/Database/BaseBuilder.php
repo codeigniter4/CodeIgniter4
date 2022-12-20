@@ -749,7 +749,7 @@ class BaseBuilder
                 $k  = '';
                 $op = '';
             } elseif ($v !== null) {
-                $op = $this->getOperator($k, true);
+                $op = $this->getOperatorFromWhereKey($k);
 
                 if (! empty($op)) {
                     $k = trim($k);
@@ -3385,6 +3385,33 @@ class BaseBuilder
             $str,
             $match
         ) ? ($list ? $match[0] : $match[0][0]) : false;
+    }
+
+    /**
+     * Returns the SQL string operator from where key
+     *
+     * @return array<int, string>|false
+     * @phpstan-return list<string>|false
+     */
+    private function getOperatorFromWhereKey(string $whereKey)
+    {
+        $whereKey = trim($whereKey);
+
+        $pregOperators = [
+            '\s*(?:<|>|!)?=', // =, <=, >=, !=
+            '\s*<>?',         // <, <>
+            '\s*>',           // >
+            '\s+IS NULL',     // IS NULL
+            '\s+IS NOT NULL', // IS NOT NULL
+            '\s+LIKE',        // LIKE
+            '\s+NOT LIKE',    // NOT LIKE
+        ];
+
+        return preg_match_all(
+            '/' . implode('|', $pregOperators) . '/i',
+            $whereKey,
+            $match
+        ) ? $match[0] : false;
     }
 
     /**
