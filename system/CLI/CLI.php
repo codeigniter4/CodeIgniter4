@@ -965,6 +965,7 @@ class CLI
         }
 
         $table = '';
+        $cols  = '';
 
         // Joins columns and append the well formatted rows to the table
         for ($row = 0; $row < $totalRows; $row++) {
