@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Generator;
 use TypeError;
 
 /**
@@ -613,6 +614,46 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
         $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
+    }
+
+    /**
+     * @dataProvider provideIsHTTPMethods
+     */
+    public function testIsHTTPMethodLowerCase(string $value)
+    {
+        $request = $this->request->withMethod($value);
+
+        $this->assertTrue($request->is($value));
+    }
+
+    public function provideIsHTTPMethods(): Generator
+    {
+        yield from [
+            ['get'],
+            ['post'],
+            ['put'],
+            ['delete'],
+            ['head'],
+            ['patch'],
+            ['options'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideIsHTTPMethods
+     */
+    public function testIsHTTPMethodUpperCase(string $value)
+    {
+        $request = $this->request->withMethod(strtoupper($value));
+
+        $this->assertTrue($request->is($value));
+    }
+
+    public function testIsJson()
+    {
+        $request = $this->request->setHeader('Content-Type', 'application/json');
+
+        $this->assertTrue($request->is('json'));
     }
 
     public function testIsCLI()

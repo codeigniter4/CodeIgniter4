@@ -376,6 +376,30 @@ class IncomingRequest extends Request
     }
 
     /**
+     * Checks if this request is.
+     *
+     * @param string $value HTTP verb or 'json'
+     * @phpstan-param 'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json' $value
+     */
+    public function is(string $value): bool
+    {
+        $value = strtolower($value);
+
+        $httpMethods = ['get', 'post', 'put', 'delete', 'head', 'patch', 'options'];
+
+        if (in_array($value, $httpMethods, true)) {
+            return strtolower($this->getMethod()) === $value;
+        }
+
+        if ($value === 'json') {
+            return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
+        }
+
+        // @phpstan-ignore-next-line
+        throw new InvalidArgumentException('Unknown value: ' . $value);
+    }
+
+    /**
      * Determines if this request was made from the command line (CLI).
      */
     public function isCLI(): bool
