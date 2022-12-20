@@ -17,6 +17,7 @@ use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
 use Generator;
+use InvalidArgumentException;
 use TypeError;
 
 /**
@@ -647,6 +648,16 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = $this->request->withMethod(strtoupper($value));
 
         $this->assertTrue($request->is($value));
+    }
+
+    public function testIsInvalidValue()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown value: invalid');
+
+        $request = $this->request->withMethod('GET');
+
+        $request->is('invalid');
     }
 
     public function testIsJson()
