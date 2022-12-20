@@ -378,8 +378,8 @@ class IncomingRequest extends Request
     /**
      * Checks if this request is.
      *
-     * @param string $value HTTP verb or 'json'
-     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json' $value
+     * @param string $value HTTP verb or 'json' or 'ajax'
+     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $value
      */
     public function is(string $value): bool
     {
@@ -393,6 +393,10 @@ class IncomingRequest extends Request
 
         if ($value === 'json') {
             return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
+        }
+
+        if ($value === 'ajax') {
+            return $this->isAJAX();
         }
 
         throw new InvalidArgumentException('Unknown value: ' . $value);

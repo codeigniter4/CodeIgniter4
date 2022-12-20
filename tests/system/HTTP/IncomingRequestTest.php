@@ -667,6 +667,13 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertTrue($request->is('json'));
     }
 
+    public function testIsWithAjax()
+    {
+        $request = $this->request->setHeader('X-Requested-With', 'XMLHttpRequest');
+
+        $this->assertTrue($request->is('ajax'));
+    }
+
     public function testIsCLI()
     {
         $this->assertFalse($this->request->isCLI());
