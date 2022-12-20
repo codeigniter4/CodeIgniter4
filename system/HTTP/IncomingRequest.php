@@ -379,7 +379,7 @@ class IncomingRequest extends Request
      * Checks if this request is.
      *
      * @param string $value HTTP verb or 'json'
-     * @phpstan-param 'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json' $value
+     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json' $value
      */
     public function is(string $value): bool
     {
@@ -395,7 +395,6 @@ class IncomingRequest extends Request
             return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
         }
 
-        // @phpstan-ignore-next-line
         throw new InvalidArgumentException('Unknown value: ' . $value);
     }
 
