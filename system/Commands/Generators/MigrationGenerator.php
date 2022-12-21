@@ -107,7 +107,7 @@ class MigrationGenerator extends BaseCommand
             $data['DBGroup']  = is_string($DBGroup) ? $DBGroup : 'default';
             $data['DBDriver'] = config('Database')->{$data['DBGroup']}['DBDriver'];
 
-            /** @var SessionConfig|null $session */
+            /** @var SessionConfig $session */
             $session = config('Session');
 
             $data['matchIP'] = $session->matchIP;
