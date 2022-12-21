@@ -383,19 +383,19 @@ class IncomingRequest extends Request
      */
     public function is(string $value): bool
     {
-        $value = strtolower($value);
+        $valueUpper = strtoupper($value);
 
-        $httpMethods = ['get', 'post', 'put', 'delete', 'head', 'patch', 'options'];
+        $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
 
-        if (in_array($value, $httpMethods, true)) {
-            return strtolower($this->getMethod()) === $value;
+        if (in_array($valueUpper, $httpMethods, true)) {
+            return strtoupper($this->getMethod()) === $valueUpper;
         }
 
-        if ($value === 'json') {
+        if ($valueUpper === 'JSON') {
             return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
         }
 
-        if ($value === 'ajax') {
+        if ($valueUpper === 'AJAX') {
             return $this->isAJAX();
         }
 

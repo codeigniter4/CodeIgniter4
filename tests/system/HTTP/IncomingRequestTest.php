@@ -624,19 +624,19 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $request = $this->request->withMethod($value);
 
-        $this->assertTrue($request->is($value));
+        $this->assertTrue($request->is(strtolower($value)));
     }
 
     public function provideIsHTTPMethods(): Generator
     {
         yield from [
-            ['get'],
-            ['post'],
-            ['put'],
-            ['delete'],
-            ['head'],
-            ['patch'],
-            ['options'],
+            ['GET'],
+            ['POST'],
+            ['PUT'],
+            ['DELETE'],
+            ['HEAD'],
+            ['PATCH'],
+            ['OPTIONS'],
         ];
     }
 
@@ -645,7 +645,7 @@ final class IncomingRequestTest extends CIUnitTestCase
      */
     public function testIsHTTPMethodUpperCase(string $value)
     {
-        $request = $this->request->withMethod(strtoupper($value));
+        $request = $this->request->withMethod($value);
 
         $this->assertTrue($request->is($value));
     }
