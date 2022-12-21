@@ -634,6 +634,8 @@ class Services extends BaseService
      * Return the session manager.
      *
      * @return Session
+     *
+     * @TODO replace the first parameter type `?App` with `?SessionConfig`
      */
     public static function session(?App $config = null, bool $getShared = true)
     {
@@ -641,18 +643,14 @@ class Services extends BaseService
             return static::getSharedInstance('session', $config);
         }
 
-        $config ??= config('App');
-        assert($config instanceof App);
+        /** @var SessionConfig $config */
+        $config = config('Session');
+        assert($config instanceof SessionConfig, 'Missing "Config/Session.php".');
 
-        $logger = AppServices::logger();
-
-        /** @var SessionConfig|null $sessionConfig */
-        $sessionConfig = config('Session');
-
-        $driverName = $sessionConfig->driver ?? $config->sessionDriver;
+        $driverName = $config->driver;
 
         if ($driverName === DatabaseHandler::class) {
-            $DBGroup = $sessionConfig->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+            $DBGroup = $config->DBGroup ?? config(Database::class)->defaultGroup;
             $db      = Database::connect($DBGroup);
 
             $driver = $db->getPlatform();
@@ -664,6 +662,7 @@ class Services extends BaseService
             }
         }
 
+        $logger = AppServices::logger();
         $driver = new $driverName($config, AppServices::request()->getIPAddress());
         $driver->setLogger($logger);
 

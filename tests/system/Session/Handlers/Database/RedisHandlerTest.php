@@ -11,10 +11,8 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
-use CodeIgniter\Config\Factories;
 use CodeIgniter\Session\Handlers\RedisHandler;
 use CodeIgniter\Test\CIUnitTestCase;
-use Config\App as AppConfig;
 use Config\Session as SessionConfig;
 use Redis;
 
@@ -43,15 +41,15 @@ final class RedisHandlerTest extends CIUnitTestCase
             'timeToUpdate'      => 300,
             'regenerateDestroy' => false,
         ];
+        $config = array_merge($defaults, $options);
+
         $sessionConfig = new SessionConfig();
-        $config        = array_merge($defaults, $options);
 
         foreach ($config as $key => $value) {
             $sessionConfig->{$key} = $value;
         }
-        Factories::injectMock('config', 'Session', $sessionConfig);
 
-        return new RedisHandler(new AppConfig(), $this->userIpAddress);
+        return new RedisHandler($sessionConfig, $this->userIpAddress);
     }
 
     public function testSavePathTimeoutFloat()

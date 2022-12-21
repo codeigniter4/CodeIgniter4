@@ -11,8 +11,6 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
-use CodeIgniter\Config\Factories;
-use Config\App as AppConfig;
 use Config\Database as DatabaseConfig;
 use Config\Session as SessionConfig;
 
@@ -43,14 +41,14 @@ final class PostgreHandlerTest extends AbstractHandlerTestCase
             'timeToUpdate'      => 300,
             'regenerateDestroy' => false,
         ];
+        $config = array_merge($defaults, $options);
+
         $sessionConfig = new SessionConfig();
-        $config        = array_merge($defaults, $options);
 
         foreach ($config as $key => $value) {
             $sessionConfig->{$key} = $value;
         }
-        Factories::injectMock('config', 'Session', $sessionConfig);
 
-        return new PostgreHandler(new AppConfig(), $this->userIpAddress);
+        return new PostgreHandler($sessionConfig, $this->userIpAddress);
     }
 }

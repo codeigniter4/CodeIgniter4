@@ -17,7 +17,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\HTTP\UserAgent;
 use CodeIgniter\Security\Exceptions\SecurityException;
-use CodeIgniter\Session\Handlers\ArrayHandler;
 use CodeIgniter\Session\Handlers\FileHandler;
 use CodeIgniter\Session\Session;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -25,9 +24,9 @@ use CodeIgniter\Test\Mock\MockAppConfig;
 use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
-use Config\App as AppConfig;
 use Config\Logger as LoggerConfig;
 use Config\Security as SecurityConfig;
+use Config\Session as SessionConfig;
 
 /**
  * @runTestsInSeparateProcesses
@@ -68,28 +67,26 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
     private function createSession($options = []): Session
     {
         $defaults = [
-            'sessionDriver'            => FileHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => '',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
+            'driver'            => FileHandler::class,
+            'cookieName'        => 'ci_session',
+            'expiration'        => 7200,
+            'savePath'          => '',
+            'matchIP'           => false,
+            'timeToUpdate'      => 300,
+            'regenerateDestroy' => false,
         ];
+        $config = array_merge($defaults, $options);
 
-        $config    = array_merge($defaults, $options);
-        $appConfig = new AppConfig();
+        $sessionConfig = new SessionConfig();
 
-        foreach ($config as $key => $c) {
-            $appConfig->{$key} = $c;
+        foreach ($config as $key => $value) {
+            $sessionConfig->{$key} = $value;
         }
 
-        $session = new MockSession(new ArrayHandler($appConfig, '127.0.0.1'), $appConfig);
+        $session = new MockSession(
+            new FileHandler($sessionConfig, '127.0.0.1'),
+            $sessionConfig
+        );
         $session->setLogger(new TestLogger(new LoggerConfig()));
 
         return $session;

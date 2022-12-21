@@ -105,25 +105,18 @@ abstract class BaseHandler implements SessionHandlerInterface
      */
     protected $ipAddress;
 
-    public function __construct(AppConfig $config, string $ipAddress)
+    public function __construct(SessionConfig $session, string $ipAddress)
     {
-        /** @var SessionConfig|null $session */
-        $session = config('Session');
-
         // Store Session configurations
-        if ($session instanceof SessionConfig) {
-            $this->cookieName = $session->cookieName;
-            $this->matchIP    = $session->matchIP;
-            $this->savePath   = $session->savePath;
-        } else {
-            // `Config/Session.php` is absence
-            $this->cookieName = $config->sessionCookieName;
-            $this->matchIP    = $config->sessionMatchIP;
-            $this->savePath   = $config->sessionSavePath;
-        }
+        $this->cookieName = $session->cookieName;
+        $this->matchIP    = $session->matchIP;
+        $this->savePath   = $session->savePath;
 
         /** @var CookieConfig|null $cookie */
         $cookie = config('Cookie');
+
+        /** @var AppConfig $config */
+        $config = config('App');
 
         if ($cookie instanceof CookieConfig) {
             // Session cookies have no prefix.
@@ -151,7 +144,13 @@ abstract class BaseHandler implements SessionHandlerInterface
         return setcookie(
             $this->cookieName,
             '',
-            ['expires' => 1, 'path' => $this->cookiePath, 'domain' => $this->cookieDomain, 'secure' => $this->cookieSecure, 'httponly' => true]
+            [
+                'expires'  => 1,
+                'path'     => $this->cookiePath,
+                'domain'   => $this->cookieDomain,
+                'secure'   => $this->cookieSecure,
+                'httponly' => true,
+            ]
         );
     }
 

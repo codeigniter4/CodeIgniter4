@@ -27,6 +27,7 @@ use Config\App;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use Config\Session;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -333,8 +334,13 @@ abstract class CIUnitTestCase extends TestCase
     {
         $_SESSION = [];
 
-        $config  = config('App');
-        $session = new MockSession(new ArrayHandler($config, '0.0.0.0'), $config);
+        /** @var Session $sessionConfig */
+        $sessionConfig = config('Session');
+
+        $session = new MockSession(
+            new ArrayHandler($sessionConfig, '0.0.0.0'),
+            $sessionConfig
+        );
 
         Services::injectMock('session', $session);
     }

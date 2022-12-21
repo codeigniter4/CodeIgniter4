@@ -31,6 +31,7 @@ use Config\App;
 use Config\Logger;
 use Config\Modules;
 use Config\Services;
+use Config\Session as SessionConfig;
 use Kint;
 use RuntimeException;
 use stdClass;
@@ -483,7 +484,6 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('/', slash_item('cookiePath')); // /
         $this->assertSame('', slash_item('cookieDomain')); // ''
         $this->assertSame('en/', slash_item('defaultLocale')); // en
-        $this->assertSame('7200/', slash_item('sessionExpiration')); // int 7200
         $this->assertSame('', slash_item('negotiateLocale')); // false
         $this->assertSame('1/', slash_item('cookieHTTPOnly')); // true
     }
@@ -506,28 +506,11 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     protected function injectSessionMock()
     {
-        $defaults = [
-            'sessionDriver'            => FileHandler::class,
-            'sessionCookieName'        => 'ci_session',
-            'sessionExpiration'        => 7200,
-            'sessionSavePath'          => '',
-            'sessionMatchIP'           => false,
-            'sessionTimeToUpdate'      => 300,
-            'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
-        ];
-
-        $appConfig = new App();
-
-        foreach ($defaults as $key => $config) {
-            $appConfig->{$key} = $config;
-        }
-
-        $session = new MockSession(new FileHandler($appConfig, '127.0.0.1'), $appConfig);
+        $sessionConfig = new SessionConfig();
+        $session       = new MockSession(
+            new FileHandler($sessionConfig, '127.0.0.1'),
+            $sessionConfig
+        );
         $session->setLogger(new TestLogger(new Logger()));
         BaseService::injectMock('session', $session);
     }
