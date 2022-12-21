@@ -296,11 +296,6 @@ parameters:
 			path: system/Session/Handlers/RedisHandler.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
 			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: system/Test/CIUnitTestCase.php
