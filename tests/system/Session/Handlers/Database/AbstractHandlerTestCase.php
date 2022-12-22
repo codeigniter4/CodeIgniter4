@@ -81,7 +81,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $this->setPrivateProperty($handler, 'lock', false);
 
         $row = $this->db->table('ci_sessions')
-            ->getWhere(['id' => '555556b43phsnnf8if6bo33b635e4444'])
+            ->getWhere(['id' => 'ci_session:555556b43phsnnf8if6bo33b635e4444'])
             ->getRow();
 
         $this->assertGreaterThan(time() - 100, strtotime($row->timestamp));
@@ -105,7 +105,7 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
         $releaseLock();
 
         $row = $this->db->table('ci_sessions')
-            ->getWhere(['id' => '1f5o06b43phsnnf8if6bo33b635e4p2o'])
+            ->getWhere(['id' => 'ci_session:1f5o06b43phsnnf8if6bo33b635e4p2o'])
             ->getRow();
 
         $this->assertGreaterThan(time() - 100, strtotime($row->timestamp));
