@@ -323,7 +323,7 @@ Others
 - **Config:** Added ``Config\Session`` class to handle session configuration.
 - **Debug:** Kint has been updated to 5.0.1.
 - **Request:** Added new ``$request->getRawInputVar()`` method to return a specified variable from raw stream. See :ref:`Retrieving Raw data <incomingrequest-retrieving-raw-data>`.
-- **Request:** Added new ``$request->is()`` method to to query the request type.
+- **Request:** Added new ``$request->is()`` method to query the request type.
   See :ref:`Determining Request Type <incomingrequest-is>`.
 
 Message Changes
