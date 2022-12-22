@@ -16,6 +16,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use TypeError;
 
 /**
  * @backupGlobals enabled
@@ -1072,10 +1073,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyInvalidConfigString()
     {
-        $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage(
-            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
-        );
+        $this->expectException(TypeError::class);
 
         $config           = new App();
         $config->proxyIPs = '192.168.5.0/28';
