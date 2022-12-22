@@ -1,6 +1,6 @@
 # Changelog
 
-## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.10) (2022-12-21)
+## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.11) (2022-12-21)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.10...v4.2.11)
 
 ### SECURITY
