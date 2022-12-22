@@ -12,6 +12,23 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
+Breaking Changes
+****************
+
+.. _upgrade-4211-proxyips:
+
+Config\\App::$proxyIPs
+======================
+
+The config value format has been changed. Now you must set your proxy IP address and the HTTP header name for the client IP address pair as an array::
+
+    public $proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+    ];
+
+``ConfigException`` will be thrown for old format config value.
+
 Project Files
 *************
 

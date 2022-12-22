@@ -9,6 +9,16 @@ Release Date: December 21, 2022
     :local:
     :depth: 2
 
+SECURITY
+********
+
+- *Attackers may spoof IP address when using proxy* was fixed. See the `Security advisory GHSA-ghw3-5qvm-3mqc <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-ghw3-5qvm-3mqc>`_ for more information.
+
+BREAKING
+********
+
+- The ``Config\App::$proxyIPs`` value format has been changed. See :ref:`Upgrading Guide <upgrade-4211-proxyips>`.
+
 Bugs Fixed
 **********
 
