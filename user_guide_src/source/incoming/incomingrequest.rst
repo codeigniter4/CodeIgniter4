@@ -40,13 +40,13 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods:
     which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
     See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
-You can check the HTTP method that this request represents with the ``method()`` method:
+You can check the HTTP method that this request represents with the ``getMethod()`` method:
 
 .. literalinclude:: incomingrequest/005.php
 
 By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc).
 
-.. note:: The functionality to convert the return value to lower case is deprecated.
+.. important:: The functionality to convert the return value to lower case is deprecated.
     It will be removed in the future version, and this method will be PSR-7 equivalent.
 
 You can get an

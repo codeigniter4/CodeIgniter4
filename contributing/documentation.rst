@@ -130,3 +130,18 @@ To a Method
 =============
 
     :php:meth:`CodeIgniter\\HTTP\\Response::setCookie()`
+
+****************
+Other Directives
+****************
+
+New Feature
+===========
+
+    .. versionadded:: 4.3.0
+
+Deprecated
+==========
+
+    .. deprecated:: 4.3.0
+       Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
