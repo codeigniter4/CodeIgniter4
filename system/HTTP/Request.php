@@ -24,7 +24,7 @@ class Request extends OutgoingRequest implements RequestInterface
     /**
      * Proxy IPs
      *
-     * @var array|string
+     * @var array<string, string>
      *
      * @deprecated Check the App config directly
      */

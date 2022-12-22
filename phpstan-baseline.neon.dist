@@ -176,11 +176,6 @@ parameters:
 			path: system/HTTP/RedirectResponse.php
 
 		-
-			message: "#^Property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$proxyIPs \\(array\\|string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/HTTP/Request.php
-
-		-
 			message: "#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$fragment \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/HTTP/URI.php

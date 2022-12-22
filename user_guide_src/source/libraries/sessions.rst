@@ -358,8 +358,8 @@ same way:
     unusable during the same request after you destroy the session.
 
 You may also use the ``stop()`` method to completely kill the session
-by removing the old session_id, destroying all data, and destroying
-the cookie that contained the session id:
+by removing the old session ID, destroying all data, and destroying
+the cookie that contained the session ID:
 
 .. literalinclude:: sessions/038.php
 
@@ -500,9 +500,9 @@ permissions will probably break your application.
 Instead, you should do something like this, depending on your environment
 ::
 
-    mkdir /<path to your application directory>/Writable/sessions/
-    chmod 0700 /<path to your application directory>/Writable/sessions/
-    chown www-data /<path to your application directory>/Writable/sessions/
+    > mkdir /<path to your application directory>/writable/sessions/
+    > chmod 0700 /<path to your application directory>/writable/sessions/
+    > chown www-data /<path to your application directory>/writable/sessions/
 
 Bonus Tip
 ---------
@@ -519,6 +519,8 @@ consistently outperform almost all relational database setups.
 In addition, if performance is your only concern, you may want to look
 into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in-memory-using-tmpfs/>`_,
 (warning: external resource), which can make your sessions blazing fast.
+
+.. _sessions-databasehandler-driver:
 
 DatabaseHandler Driver
 ======================
@@ -563,6 +565,10 @@ For PostgreSQL::
 
     CREATE INDEX "ci_sessions_timestamp" ON "ci_sessions" ("timestamp");
 
+.. note:: The ``id`` value contains the session cookie name (``Config\Session::$cookieName``)
+    and the session ID and a delimiter. It should be increased as needed, for example,
+    when using long session IDs.
+
 You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
 setting**. The examples below work both on MySQL and PostgreSQL::
 
@@ -596,6 +602,8 @@ when it generates the code.
     support such cases. Use ``session_write_close()`` after you've
     done processing session data if you're having performance
     issues.
+
+.. _sessions-redishandler-driver:
 
 RedisHandler Driver
 ===================
@@ -632,6 +640,8 @@ For the most common case however, a simple ``host:port`` pair should be
 sufficient:
 
 .. literalinclude:: sessions/041.php
+
+.. _sessions-memcachedhandler-driver:
 
 MemcachedHandler Driver
 =======================

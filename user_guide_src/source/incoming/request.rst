@@ -28,9 +28,8 @@ Class Reference
 
         .. literalinclude:: request/001.php
 
-        .. important:: This method takes into account the ``App->proxyIPs`` setting and will
-            return the reported HTTP_X_FORWARDED_FOR, HTTP_CLIENT_IP, HTTP_X_CLIENT_IP, or
-            HTTP_X_CLUSTER_CLIENT_IP address for the allowed IP address.
+        .. important:: This method takes into account the ``Config\App::$proxyIPs`` setting and will
+            return the reported client IP address by the HTTP header for the allowed IP address.
 
     .. php:method:: isValidIP($ip[, $which = ''])
 

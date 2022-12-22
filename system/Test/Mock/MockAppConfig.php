@@ -23,7 +23,7 @@ class MockAppConfig extends App
     public bool $cookieSecure      = false;
     public bool $cookieHTTPOnly    = false;
     public ?string $cookieSameSite = 'Lax';
-    public $proxyIPs               = '';
+    public $proxyIPs               = [];
     public string $CSRFTokenName   = 'csrf_test_name';
     public string $CSRFHeaderName  = 'X-CSRF-TOKEN';
     public string $CSRFCookieName  = 'csrf_cookie_name';
