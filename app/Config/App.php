@@ -148,11 +148,9 @@ class App extends BaseConfig
      * - `CodeIgniter\Session\Handlers\MemcachedHandler`
      * - `CodeIgniter\Session\Handlers\RedisHandler`
      *
-     * @var string
-     *
      * @deprecated use Config\Session::$driver instead.
      */
-    public $sessionDriver = FileHandler::class;
+    public string $sessionDriver = FileHandler::class;
 
     /**
      * --------------------------------------------------------------------------
@@ -345,7 +343,7 @@ class App extends BaseConfig
      *
      * @var array<string, string>
      */
-    public $proxyIPs = [];
+    public array $proxyIPs = [];
 
     /**
      * --------------------------------------------------------------------------

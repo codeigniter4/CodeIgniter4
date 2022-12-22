@@ -8,7 +8,7 @@ class App extends BaseConfig
 {
     // ...
 
-    public $indexPage = 'index.php';
+    public string $indexPage = 'index.php';
 
     // ...
 }
