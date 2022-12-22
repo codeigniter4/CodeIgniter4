@@ -38,11 +38,11 @@ abstract class BaseController extends Controller
     protected $helpers = [];
 
      /**
-     * To declare the session propety to allow for global
-     * initialization in the initController() method
-     * See the Creation of dynamic property depreciation i php 8.2 
+     * Be sure to declare properties for anything you assign.
+     * The creation of dynamic property is deprecated in PHP 8.2.
+     * 
+     * protected $session; 
      */
-    // public $session;
 
     /**
      * Constructor.
