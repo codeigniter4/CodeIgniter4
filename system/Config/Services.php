@@ -73,6 +73,7 @@ use Config\Images;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
 use Config\Services as AppServices;
+use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
@@ -645,10 +646,13 @@ class Services extends BaseService
 
         $logger = AppServices::logger();
 
-        $driverName = $config->sessionDriver;
+        /** @var SessionConfig|null $sessionConfig */
+        $sessionConfig = config('Session');
+
+        $driverName = $sessionConfig->driver ?? $config->sessionDriver;
 
         if ($driverName === DatabaseHandler::class) {
-            $DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+            $DBGroup = $sessionConfig->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
             $db      = Database::connect($DBGroup);
 
             $driver = $db->getPlatform();
