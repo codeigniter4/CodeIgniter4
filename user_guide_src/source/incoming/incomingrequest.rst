@@ -46,7 +46,7 @@ You can check the HTTP method that this request represents with the ``getMethod(
 
 By default, the method is returned as a lower-case string (i.e., ``'get'``, ``'post'``, etc).
 
-.. note:: The functionality to convert the return value to lower case is deprecated.
+.. important:: The functionality to convert the return value to lower case is deprecated.
     It will be removed in the future version, and this method will be PSR-7 equivalent.
 
 You can get an
