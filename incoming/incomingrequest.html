@@ -369,7 +369,7 @@ be checked with the <code class="docutils literal notranslate"><span class="pre"
 which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
 See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
 </div>
-<p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">method()</span></code> method:</p>
+<p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">getMethod()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// Returns &#39;post&#39;</span>
@@ -377,8 +377,8 @@ See the <a class="reference internal" href="../general/ajax.html"><span class="d
 </pre></div>
 </div>
 <p>By default, the method is returned as a lower-case string (i.e., <code class="docutils literal notranslate"><span class="pre">'get'</span></code>, <code class="docutils literal notranslate"><span class="pre">'post'</span></code>, etc).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>The functionality to convert the return value to lower case is deprecated.
 It will be removed in the future version, and this method will be PSR-7 equivalent.</p>
 </div>
