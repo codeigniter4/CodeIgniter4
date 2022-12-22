@@ -521,10 +521,10 @@ The following functions are available:
 
 .. php:function:: validation_errors()
 
+    .. versionadded:: 4.3.0
+
     :returns:   The validation errors
     :rtype:    array
-
-    .. versionadded:: 4.3.0
 
     Returns the validation errors. First, this function checks the validation errors
     that are stored in the session. To store the errors in the session, you need to use ``withInput()`` with :php:func:`redirect() <redirect>`.
@@ -538,11 +538,11 @@ The following functions are available:
 
 .. php:function:: validation_list_errors($template = 'list')
 
+    .. versionadded:: 4.3.0
+
     :param    string    $template: Validation template name
     :returns:    Rendered HTML of the validation errors
     :rtype:    string
-
-    .. versionadded:: 4.3.0
 
     Returns the rendered HTML of the validation errors.
 
@@ -557,12 +557,12 @@ The following functions are available:
 
 .. php:function:: validation_show_error($field, $template = 'single')
 
+    .. versionadded:: 4.3.0
+
     :param    string    $field: Field name
     :param    string    $template: Validation template name
     :returns:    Rendered HTML of the validation error
     :rtype:    string
-
-    .. versionadded:: 4.3.0
 
     Returns a single error for the specified field in formatted HTML.
 

@@ -349,19 +349,19 @@ Miscellaneous Functions
 
 .. php:function:: request()
 
+    .. versionadded:: 4.3.0
+
     :returns:    The shared Request object.
     :rtype:    IncomingRequest|CLIRequest
-
-    .. versionadded:: 4.3.0
 
     This function is a wrapper for ``Services::request()``.
 
 .. php:function:: response()
 
+    .. versionadded:: 4.3.0
+
     :returns:    The shared Response object.
     :rtype:    Response
-
-    .. versionadded:: 4.3.0
 
     This function is a wrapper for ``Services::response()``.
 
