@@ -1,7 +1,11 @@
 # Changelog
 
-## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.10) (2022-12-21)
+## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.11) (2022-12-21)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.10...v4.2.11)
+
+### SECURITY
+* *Attackers may spoof IP address when using proxy* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-ghw3-5qvm-3mqc) for more information.
+* *Potential Session Handlers Vulnerability* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-6cq5-8cj7-g558) for more information.
 
 ### Fixed Bugs
 * fix:  Request::getIPAddress() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6820
@@ -76,6 +80,9 @@
 
 ## [v4.2.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.7) (2022-10-06)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.6...v4.2.7)
+
+### SECURITY
+* *Secure or HttpOnly flag set in Config\Cookie is not reflected in Cookies issued* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-745p-r637-7vvp) for more information.
 
 ### Breaking Changes
 * fix: make Time::__toString() database-compatible on any locale by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6461
