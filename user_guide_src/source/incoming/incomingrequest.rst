@@ -40,7 +40,7 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods:
     which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
     See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
-You can check the HTTP method that this request represents with the ``method()`` method:
+You can check the HTTP method that this request represents with the ``getMethod()`` method:
 
 .. literalinclude:: incomingrequest/005.php
 
