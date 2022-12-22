@@ -40,6 +40,20 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods:
     which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
     See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
+.. _incomingrequest-is:
+
+is()
+====
+
+    .. versionadded:: 4.3.0
+
+Since v4.3.0, you can use the ``is()`` method. It returns boolean.
+
+.. literalinclude:: incomingrequest/040.php
+
+getMethod()
+===========
+
 You can check the HTTP method that this request represents with the ``getMethod()`` method:
 
 .. literalinclude:: incomingrequest/005.php
