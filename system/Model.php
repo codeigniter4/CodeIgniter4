@@ -41,21 +41,31 @@ use ReflectionProperty;
  * @property BaseConnection $db
  *
  * @method $this groupBy($by, ?bool $escape = null)
+ * @method $this groupEnd()
+ * @method $this groupStart()
+ * @method $this havingGroupEnd()
+ * @method $this havingGroupStart()
  * @method $this havingIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this havingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this havingNotIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this join(string $table, string $cond, string $type = '', ?bool $escape = null)
  * @method $this like($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this limit(?int $value = null, ?int $offset = 0)
+ * @method $this notGroupStart()
+ * @method $this notHavingGroupStart()
  * @method $this notHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this notLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this offset(int $offset)
  * @method $this orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
+ * @method $this orGroupStart()
  * @method $this orHaving($key, $value = null, ?bool $escape = null)
+ * @method $this orHavingGroupStart()
  * @method $this orHavingIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this orHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this orHavingNotIn(?string $key = null, $values = null, ?bool $escape = null)
  * @method $this orLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
+ * @method $this orNotGroupStart()
+ * @method $this orNotHavingGroupStart()
  * @method $this orNotHavingLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this orNotLike($field, string $match = '', string $side = 'both', ?bool $escape = null, bool $insensitiveSearch = false)
  * @method $this orWhere($key, $value = null, ?bool $escape = null)
@@ -117,6 +127,13 @@ class Model extends BaseModel
      * @var array
      */
     protected $escape = [];
+
+    /**
+     * Primary Key value when inserting and useAutoIncrement is false.
+     *
+     * @var int|string|null
+     */
+    private $tempPrimaryKeyValue;
 
     /**
      * Builder method names that should not be used in the Model.
@@ -263,7 +280,14 @@ class Model extends BaseModel
         $escape       = $this->escape;
         $this->escape = [];
 
-        // Require non empty primaryKey when
+        // If $useAutoIncrement is false, add the primary key data.
+        if ($this->useAutoIncrement === false && $this->tempPrimaryKeyValue !== null) {
+            $data[$this->primaryKey] = $this->tempPrimaryKeyValue;
+
+            $this->tempPrimaryKeyValue = null;
+        }
+
+        // Require non-empty primaryKey when
         // not using auto-increment feature
         if (! $this->useAutoIncrement && empty($data[$this->primaryKey])) {
             throw DataException::forEmptyPrimaryKey('insert');
@@ -301,7 +325,7 @@ class Model extends BaseModel
     {
         if (is_array($set)) {
             foreach ($set as $row) {
-                // Require non empty primaryKey when
+                // Require non-empty primaryKey when
                 // not using auto-increment feature
                 if (! $this->useAutoIncrement && empty($row[$this->primaryKey])) {
                     throw DataException::forEmptyPrimaryKey('insertBatch');
@@ -347,7 +371,7 @@ class Model extends BaseModel
      * @param int         $batchSize The size of the batch to run
      * @param bool        $returnSQL True means SQL is returned, false will execute the query
      *
-     * @return mixed Number of rows affected or FALSE on failure
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
      *
      * @throws DatabaseException
      */
@@ -432,7 +456,7 @@ class Model extends BaseModel
      * @param array|null $data      Data
      * @param bool       $returnSQL Set to true to return Query String
      *
-     * @return mixed
+     * @return BaseResult|false|Query|string
      */
     protected function doReplace(?array $data = null, bool $returnSQL = false)
     {
@@ -533,7 +557,7 @@ class Model extends BaseModel
     /**
      * Override countAllResults to account for soft deleted accounts.
      *
-     * @return mixed
+     * @return int|string
      */
     public function countAllResults(bool $reset = true, bool $test = false)
     {
@@ -599,9 +623,9 @@ class Model extends BaseModel
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
      *
-     * @param mixed     $key    Field name, or an array of field/value pairs
-     * @param mixed     $value  Field value, if $key is a single field
-     * @param bool|null $escape Whether to escape values
+     * @param array|object|string               $key    Field name, or an array of field/value pairs
+     * @param bool|float|int|object|string|null $value  Field value, if $key is a single field
+     * @param bool|null                         $escape Whether to escape values
      *
      * @return $this
      */
@@ -661,6 +685,10 @@ class Model extends BaseModel
             }
         }
 
+        if ($this->useAutoIncrement === false && isset($data[$this->primaryKey])) {
+            $this->tempPrimaryKeyValue = $data[$this->primaryKey];
+        }
+
         $this->escape   = $this->tempData['escape'] ?? [];
         $this->tempData = [];
 
@@ -710,8 +738,13 @@ class Model extends BaseModel
 
         // Always grab the primary key otherwise updates will fail.
         if (
-            method_exists($data, 'toRawArray') && (! empty($properties) && ! empty($this->primaryKey) && ! in_array($this->primaryKey, $properties, true)
-            && ! empty($data->{$this->primaryKey}))
+            method_exists($data, 'toRawArray')
+            && (
+                ! empty($properties)
+                && ! empty($this->primaryKey)
+                && ! in_array($this->primaryKey, $properties, true)
+                && ! empty($data->{$this->primaryKey})
+            )
         ) {
             $properties[$this->primaryKey] = $data->{$this->primaryKey};
         }

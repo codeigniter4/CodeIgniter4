@@ -11,21 +11,6 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$classmap \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$files \\(array\\<int, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
-			message: "#^Property Config\\\\Autoload\\:\\:\\$psr4 \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Autoloader/Autoloader.php
-
-		-
 			message: "#^Property Config\\\\Cache\\:\\:\\$backupHandler \\(string\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/CacheFactory.php
@@ -41,7 +26,7 @@ parameters:
 			path: system/Cache/CacheFactory.php
 
 		-
-			message: "#^Comparison operation \"\\>\" between int\\<1, max\\> and \\(array\\|float\\|int\\) results in an error\\.$#"
+			message: "#^Comparison operation \"\\>\" between int and \\(array\\|float\\|int\\) results in an error\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php
 
@@ -514,11 +499,6 @@ parameters:
 			message: "#^Variable \\$_POST on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: system/HTTP/RedirectResponse.php
-
-		-
-			message: "#^Property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$proxyIPs \\(array\\|string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/HTTP/Request.php
 
 		-
 			message: "#^Property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$uri \\(CodeIgniter\\\\HTTP\\\\URI\\) in empty\\(\\) is not falsy\\.$#"

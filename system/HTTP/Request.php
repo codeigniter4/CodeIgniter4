@@ -23,7 +23,7 @@ class Request extends Message implements MessageInterface, RequestInterface
     /**
      * Proxy IPs
      *
-     * @var array|string
+     * @var array<string, string>
      *
      * @deprecated Check the App config directly
      */
@@ -98,7 +98,7 @@ class Request extends Message implements MessageInterface, RequestInterface
     /**
      * Sets the request method. Used when spoofing the request.
      *
-     * @return Request
+     * @return $this
      *
      * @deprecated Use withMethod() instead for immutability
      *

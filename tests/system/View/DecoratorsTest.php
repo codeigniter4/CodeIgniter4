@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\View;
 
+use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -25,9 +26,9 @@ use Tests\Support\View\WorldDecorator;
  */
 final class DecoratorsTest extends CIUnitTestCase
 {
-    private $loader;
-    private $viewsDir;
-    private $config;
+    private FileLocator $loader;
+    private string $viewsDir;
+    private ?\Config\View $config = null;
 
     protected function setUp(): void
     {

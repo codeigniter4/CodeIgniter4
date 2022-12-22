@@ -21,8 +21,12 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class ClearLogsTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
-    private $date;
+
+    private string $date;
 
     protected function setUp(): void
     {

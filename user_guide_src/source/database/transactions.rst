@@ -36,13 +36,13 @@ Running Transactions
 ====================
 
 To run your queries using transactions you will use the
-``$this->db->transStart()`` and ``$this->db->transComplete()`` functions as
+``$this->db->transStart()`` and ``$this->db->transComplete()`` methods as
 follows:
 
 .. literalinclude:: transactions/001.php
 
-You can run as many queries as you want between the start/complete
-functions and they will all be committed or rolled back based on the success
+You can run as many queries as you want between the ``transStart()``/``transComplete()``
+methods and they will all be committed or rolled back based on the success
 or failure of any given query.
 
 Strict Mode
@@ -50,7 +50,7 @@ Strict Mode
 
 By default, CodeIgniter runs all transactions in Strict Mode. When strict
 mode is enabled, if you are running multiple groups of transactions, if
-one group fails all groups will be rolled back. If strict mode is
+one group fails all subsequent groups will be rolled back. If strict mode is
 disabled, each group is treated independently, meaning a failure of one
 group will not affect any others.
 
@@ -61,9 +61,11 @@ Strict Mode can be disabled as follows:
 Managing Errors
 ===============
 
-If you have error reporting enabled in your Config/Database.php file
-you'll see a standard error message if the commit was unsuccessful. If
-debugging is turned off, you can manage your own errors like this:
+When you have ``DBDebug`` true in your **app/Config/Database.php** file,
+if a query error occurs, all the queries will be rolled backed, and an exception
+will be thrown. So you'll see a standard error page.
+
+If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
 
@@ -84,14 +86,15 @@ Test Mode
 You can optionally put the transaction system into "test mode", which
 will cause your queries to be rolled back -- even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
-``$this->db->transStart()`` function to true:
+``$this->db->transStart()`` method to true:
 
 .. literalinclude:: transactions/005.php
 
 Running Transactions Manually
 =============================
 
-If you would like to run transactions manually you can do so as follows:
+When you have ``DBDebug`` false in your **app/Config/Database.php** file, and
+if you would like to run transactions manually you can do so as follows:
 
 .. literalinclude:: transactions/006.php
 

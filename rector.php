@@ -60,7 +60,7 @@ return static function (RectorConfig $rectorConfig): void {
         PHPUnitSetList::REMOVE_MOCKS,
     ]);
 
-    $rectorConfig->disableParallel();
+    $rectorConfig->parallel(240, 8, 1);
 
     // paths to refactor; solid alternative to CLI arguments
     $rectorConfig->paths([__DIR__ . '/app', __DIR__ . '/system', __DIR__ . '/tests', __DIR__ . '/utils']);
@@ -95,15 +95,6 @@ return static function (RectorConfig $rectorConfig): void {
         // session handlers have the gc() method with underscored parameter `$max_lifetime`
         UnderscoreToCamelCaseVariableNameRector::class => [
             __DIR__ . '/system/Session/Handlers',
-        ],
-
-        StringClassNameToClassConstantRector::class => [
-            // may cause load view files directly when detecting namespaced string
-            // due to internal PHPStan issue
-            __DIR__ . '/app/Config/Pager.php',
-            __DIR__ . '/app/Config/Validation.php',
-            __DIR__ . '/tests/system/Validation/StrictRules/ValidationTest.php',
-            __DIR__ . '/tests/system/Validation/ValidationTest.php',
         ],
 
         // sometime too detail

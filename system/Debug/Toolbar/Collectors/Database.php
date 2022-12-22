@@ -12,6 +12,7 @@
 namespace CodeIgniter\Debug\Toolbar\Collectors;
 
 use CodeIgniter\Database\Query;
+use CodeIgniter\I18n\Time;
 
 /**
  * Collector for the Database tab of the Debug Toolbar.
@@ -184,7 +185,7 @@ class Database extends BaseCollector
                 'sql'        => $query['query']->debugToolbarDisplay(),
                 'trace'      => $query['trace'],
                 'trace-file' => $firstNonSystemLine,
-                'qid'        => md5($query['query'] . microtime()),
+                'qid'        => md5($query['query'] . Time::now()->format('0.u00 U')),
             ];
         }, static::$queries);
 

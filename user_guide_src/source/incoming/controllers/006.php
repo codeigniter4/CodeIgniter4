@@ -17,7 +17,9 @@ class StoreController extends BaseController
         ];
 
         if (! $this->validateData($data, $rule)) {
-            // ...
+            return view('store/product', [
+                'errors' => $this->validator->getErrors(),
+            ]);
         }
 
         // ...

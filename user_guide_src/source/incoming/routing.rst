@@ -32,12 +32,41 @@ If you expect a GET request, you use the ``get()`` method:
 .. literalinclude:: routing/001.php
 
 A route takes the URI path (``/``) on the left, and maps it to the controller and method (``Home::index``) on the right,
-along with any parameters that should be passed to the controller. The controller and method should
+along with any parameters that should be passed to the controller.
+
+The controller and method should
 be listed in the same way that you would use a static method, by separating the class
-and its method with a double-colon, like ``Users::list``. If that method requires parameters to be
+and its method with a double-colon, like ``Users::list``.
+
+If that method requires parameters to be
 passed to it, then they would be listed after the method name, separated by forward-slashes:
 
 .. literalinclude:: routing/002.php
+
+Examples
+========
+
+Here are a few basic routing examples.
+
+A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
+and the default method, which is usually ``index()``:
+
+.. literalinclude:: routing/006.php
+
+A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
+The ID will be set to ``34``:
+
+.. literalinclude:: routing/007.php
+
+A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookup()`` method:
+
+.. literalinclude:: routing/008.php
+
+A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookupByID()`` method passing in the match as a variable to the method:
+
+.. literalinclude:: routing/009.php
 
 HTTP verbs
 ==========
@@ -99,31 +128,6 @@ Placeholders Description
 .. note:: ``{locale}`` cannot be used as a placeholder or other part of the route, as it is reserved for use
     in :doc:`localization </outgoing/localization>`.
 
-Examples
-========
-
-Here are a few basic routing examples.
-
-A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
-and the default method, which is usually ``index()``:
-
-.. literalinclude:: routing/006.php
-
-A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
-The ID will be set to ``34``:
-
-.. literalinclude:: routing/007.php
-
-A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookup()`` method:
-
-.. literalinclude:: routing/008.php
-
-A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookupByID()`` method passing in the match as a variable to the method:
-
-.. literalinclude:: routing/009.php
-
 Note that a single ``(:any)`` will match multiple segments in the URL if present. For example the route:
 
 .. literalinclude:: routing/010.php
@@ -132,6 +136,9 @@ will match **product/123**, **product/123/456**, **product/123/456/789** and so 
 Controller should take into account the maximum parameters:
 
 .. literalinclude:: routing/011.php
+
+.. important:: Do not put any placeholder after ``(:any)``. Because the number of
+    parameters passed to the controller method may change.
 
 If matching multiple segments is not the intended behavior, ``(:segment)`` should be used when defining the
 routes. With the examples URLs from above:
@@ -188,7 +195,7 @@ is allowed, as are back-references.
 
     .. literalinclude:: routing/018.php
 
-In the above example, a URI similar to **products/shirts/123** would instead call the ``show`` method
+In the above example, a URI similar to **products/shirts/123** would instead call the ``show()`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
 
 With regular expressions, you can also catch a segment containing a forward slash (``/``), which would usually
@@ -202,7 +209,7 @@ redirect them back to the same page after they log in, you may find this example
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
 
-.. important:: Note: You can also mix and match wildcards with regular expressions.
+.. note:: You can also mix and match placeholders with regular expressions.
 
 Closures
 ========
@@ -354,8 +361,8 @@ available from the command line:
 .. note:: It is recommended to use Spark Commands for CLI scripts instead of calling controllers via CLI.
     See the :doc:`../cli/cli_commands` page for detailed information.
 
-.. warning:: If you enable :ref:`auto-routing` and place the command file in **app/Controllers**,
-    anyone could access the command with the help of auto-routing via HTTP.
+.. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
+    anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
 
 Global Options
 ==============
@@ -379,8 +386,8 @@ The value for the filter can be a string or an array of strings:
 See :doc:`Controller filters <filters>` for more information on setting up filters.
 
 .. Warning:: If you set filters to routes in **app/Config/Routes.php**
-    (not in **app/Config/Filters.php**), it is recommended to disable auto-routing.
-    When auto-routing is enabled, it may be possible that a controller can be accessed
+    (not in **app/Config/Filters.php**), it is recommended to disable Auto Routing (Legacy).
+    When :ref:`auto-routing-legacy` is enabled, it may be possible that a controller can be accessed
     via a different URL than the configured route,
     in which case the filter you specified to the route will not be applied.
     See :ref:`use-defined-routes-only` to disable auto-routing.
@@ -578,6 +585,10 @@ Auto Routing (Improved)
 
 Since v4.2.0, the new more secure Auto Routing has been introduced.
 
+.. note:: If you are familiar with Auto Routing, which was enabled by default
+    from CodeIgniter 3 through 4.1.x, you can see the differences in
+    :ref:`ChangeLog v4.2.0 <v420-new-improved-auto-routing>`.
+
 When no defined route is found that matches the URI, the system will attempt to match that URI against the controllers and methods when Auto Routing is enabled.
 
 .. important:: For security reasons, if a controller is used in the defined routes, Auto Routing (Improved) does not route to the controller.
@@ -661,7 +672,7 @@ In this example, if the user were to visit **example.com/products**, and a ``Pro
 .. note:: You cannot access the controller with the URI of the default method name.
     In the example above, you can access **example.com/products**, but if you access **example.com/products/listall**, it will be not found.
 
-.. _auto-routing:
+.. _auto-routing-legacy:
 
 Auto Routing (Legacy)
 *********************
@@ -705,7 +716,7 @@ Consider this URI::
 In the above example, CodeIgniter would attempt to find a controller named **Helloworld.php**
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
-See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
 Configuration Options (Legacy)
 ==============================
@@ -725,7 +736,7 @@ The default controller is also used when no matching route has been found, and t
 in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
 **app/Controllers/Admin/Home.php**, it would be used.
 
-See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+See :ref:`Auto Routing (Legacy) in Controllers <controller-auto-routing-legacy>` for more info.
 
 Default Method (Legacy)
 -----------------------

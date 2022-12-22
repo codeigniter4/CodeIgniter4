@@ -23,6 +23,9 @@ use RuntimeException;
  */
 final class CLITest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $stream_filter;
 
     protected function setUp(): void

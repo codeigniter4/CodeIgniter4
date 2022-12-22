@@ -1334,20 +1334,21 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Returns an array of table names
      *
-     * @return array|bool
+     * @return array|false
      *
      * @throws DatabaseException
      */
     public function listTables(bool $constrainByPrefix = false)
     {
-        // Is there a cached result?
         if (isset($this->dataCache['table_names']) && $this->dataCache['table_names']) {
-            return $constrainByPrefix ?
-                preg_grep("/^{$this->DBPrefix}/", $this->dataCache['table_names'])
+            return $constrainByPrefix
+                ? preg_grep("/^{$this->DBPrefix}/", $this->dataCache['table_names'])
                 : $this->dataCache['table_names'];
         }
 
-        if (false === ($sql = $this->_listTables($constrainByPrefix))) {
+        $sql = $this->_listTables($constrainByPrefix);
+
+        if ($sql === false) {
             if ($this->DBDebug) {
                 throw new DatabaseException('This feature is not available for the database you are using.');
             }
@@ -1360,24 +1361,9 @@ abstract class BaseConnection implements ConnectionInterface
         $query = $this->query($sql);
 
         foreach ($query->getResultArray() as $row) {
-            // Do we know from which column to get the table name?
-            if (! isset($key)) {
-                if (isset($row['table_name'])) {
-                    $key = 'table_name';
-                } elseif (isset($row['TABLE_NAME'])) {
-                    $key = 'TABLE_NAME';
-                } else {
-                    /* We have no other choice but to just get the first element's key.
-                     * Due to array_shift() accepting its argument by reference, if
-                     * E_STRICT is on, this would trigger a warning. So we'll have to
-                     * assign it first.
-                     */
-                    $key = array_keys($row);
-                    $key = array_shift($key);
-                }
-            }
+            $table = $row['table_name'] ?? $row['TABLE_NAME'] ?? $row[array_key_first($row)];
 
-            $this->dataCache['table_names'][] = $row[$key];
+            $this->dataCache['table_names'][] = $table;
         }
 
         return $this->dataCache['table_names'];

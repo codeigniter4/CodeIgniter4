@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Commands\Database;
 
+use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
@@ -26,12 +27,19 @@ final class ShowTableInfoTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
+
     protected $migrateOnce = true;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        putenv('NO_COLOR=1');
+        CLI::init();
 
         CITestStreamFilter::$buffer = '';
 
@@ -43,40 +51,35 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         parent::tearDown();
 
+        putenv('NO_COLOR');
+        CLI::init();
+
         stream_filter_remove($this->streamFilter);
     }
 
-    private function getResultWithoutControlCode(): string
+    private function getNormalizedResult(): string
     {
-        return str_replace(
-            ["\033[0;30m", "\033[0;33m", "\033[43m", "\033[0m"],
-            '',
-            CITestStreamFilter::$buffer
-        );
+        return str_replace(PHP_EOL, "\n", CITestStreamFilter::$buffer);
     }
 
     public function testDbTable(): void
     {
         command('db:table db_migrations');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
 
-        $expected = <<<'EOL'
-            +----+----------------+--------------------+-------+---------------+------------+-------+
-            | id | version        | class              | group | namespace     | time       | batch |
-            +----+----------------+--------------------+-------+---------------+------------+-------+
-            EOL;
-        $this->assertStringContainsString($expected, $result);
+        $expectedPattern = '/\| id[[:blank:]]+\| version[[:blank:]]+\| class[[:blank:]]+\| group[[:blank:]]+\| namespace[[:blank:]]+\| time[[:blank:]]+\| batch \|/';
+        $this->assertMatchesRegularExpression($expectedPattern, $result);
     }
 
     public function testDbTableShow(): void
     {
         command('db:table --show');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'The following is a list of the names of all database tables:';
         $this->assertStringContainsString($expected, $result);
@@ -93,7 +96,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_migrations --metadata');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'List of Metadata Information in Table "db_migrations":';
         $this->assertStringContainsString($expected, $result);
@@ -112,7 +115,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
         command('db:table db_user --desc');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);
@@ -134,7 +137,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_user --limit-field-value 5');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);
@@ -156,7 +159,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_user --limit-rows 2');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);
@@ -176,7 +179,7 @@ final class ShowTableInfoTest extends CIUnitTestCase
     {
         command('db:table db_user --limit-rows 2 --limit-field-value 5 --desc');
 
-        $result = $this->getResultWithoutControlCode();
+        $result = $this->getNormalizedResult();
 
         $expected = 'Data of Table "db_user":';
         $this->assertStringContainsString($expected, $result);

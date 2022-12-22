@@ -35,20 +35,25 @@ Included Properties
 
 The CodeIgniter's Controller provides these properties.
 
-**Request Object**
+Request Object
+==============
 
 The application's main :doc:`Request Instance </incoming/incomingrequest>` is always available
 as a class property, ``$this->request``.
 
-**Response Object**
+Response Object
+===============
 
 The application's main :doc:`Response Instance </outgoing/response>` is always available
 as a class property, ``$this->response``.
 
-**Logger Object**
+Logger Object
+=============
 
 An instance of the :doc:`Logger <../general/logging>` class is available as a class property,
 ``$this->logger``.
+
+.. _controllers-helpers:
 
 Helpers
 =======
@@ -79,7 +84,7 @@ modify this by passing the duration (in seconds) as the first parameter:
 
 .. _controller-validate:
 
-Validating data
+Validating Data
 ***************
 
 $this->validate()
@@ -90,20 +95,33 @@ The method accepts an array of rules in the first parameter,
 and in the optional second parameter, an array of custom error messages to display
 if the items are not valid. Internally, this uses the controller's
 ``$this->request`` instance to get the data to be validated.
+
+.. warning::
+    The ``validate()`` method uses :ref:`Validation::withRequest() <validation-withrequest>` method.
+    It validates data from :ref:`$request->getJSON() <incomingrequest-getting-json-data>`
+    or :ref:`$request->getRawInput() <incomingrequest-retrieving-raw-data>`
+    or :ref:`$request->getVar() <incomingrequest-getting-data>`.
+    Which data is used depends on the request. Remember that an attacker is free to send any request to
+    the server.
+
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
 
 .. literalinclude:: controllers/004.php
 
 If you find it simpler to keep the rules in the configuration file, you can replace
-the ``$rules`` array with the name of the group as defined in ``Config\Validation.php``:
+the ``$rules`` array with the name of the group as defined in **app/Config/Validation.php**:
 
 .. literalinclude:: controllers/005.php
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
 
+.. _controller-validatedata:
+
 $this->validateData()
 =====================
+
+.. versionadded:: 4.2.0
 
 Sometimes you may want to check the controller method parameters or other custom data.
 In that case, you can use the ``$this->validateData()`` method.
@@ -134,6 +152,10 @@ Auto Routing (Improved)
 ************************
 
 Since v4.2.0, the new more secure Auto Routing has been introduced.
+
+.. note:: If you are familiar with Auto Routing, which was enabled by default
+    from CodeIgniter 3 through 4.1.x, you can see the differences in
+    :ref:`ChangeLog v4.2.0 <v420-new-improved-auto-routing>`.
 
 This section describes the functionality of the new auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
@@ -295,7 +317,7 @@ your **app/Config/Routes.php** file.
 
 CodeIgniter also permits you to map your URIs using its :ref:`Defined Route Routing <defined-route-routing>`..
 
-.. _controller-auto-routing:
+.. _controller-auto-routing-legacy:
 
 Auto Routing (Legacy)
 *********************

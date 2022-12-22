@@ -965,6 +965,7 @@ class CLI
         }
 
         $table = '';
+        $cols  = '';
 
         // Joins columns and append the well formatted rows to the table
         for ($row = 0; $row < $totalRows; $row++) {
@@ -982,7 +983,7 @@ class CLI
             $table .= '| ' . implode(' | ', $tableRows[$row]) . ' |' . PHP_EOL;
 
             // Set the thead and table borders-bottom
-            if (isset($cols) && (($row === 0 && ! empty($thead)) || ($row + 1 === $totalRows))) {
+            if (($row === 0 && ! empty($thead)) || ($row + 1 === $totalRows)) {
                 $table .= $cols . PHP_EOL;
             }
         }

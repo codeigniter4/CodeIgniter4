@@ -34,11 +34,12 @@ class Autoload extends AutoloadConfig
      *```
      *   $psr4 = [
      *       'CodeIgniter' => SYSTEMPATH,
-     *       'App'	       => APPPATH
+     *       'App'         => APPPATH
      *   ];
      *```
      *
-     * @var array<string, string>
+     * @var array<string, array<int, string>|string>
+     * @phpstan-var array<string, string|list<string>>
      */
     public $psr4 = [
         APP_NAMESPACE => APPPATH, // For custom app namespace
@@ -76,8 +77,8 @@ class Autoload extends AutoloadConfig
      *
      * Prototype:
      * ```
-     *	  $files = [
-     *	 	   '/path/to/my/file.php',
+     *    $files = [
+     *        '/path/to/my/file.php',
      *    ];
      * ```
      *

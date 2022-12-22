@@ -22,6 +22,7 @@ use Config\Database;
 use Config\Migrations;
 use Config\Services;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 
 /**
  * @group DatabaseLive
@@ -39,8 +40,8 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
     // Use specific migration files for this test case.
     protected $namespace = 'Tests\Support\MigrationTestMigrations';
-    private $root;
-    private $config;
+    private vfsStreamDirectory $root;
+    private Migrations $config;
 
     protected function setUp(): void
     {
@@ -238,7 +239,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $mig1 = (object) [
             'version'   => '2018-01-24-102301',
             'name'      => 'Some_migration',
-            'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php',
+            'path'      => realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102301_Some_migration.php'),
             'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_some_migration',
             'namespace' => 'Tests\Support\MigrationTestMigrations',
         ];
@@ -247,7 +248,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
         $mig2 = (object) [
             'version'   => '2018-01-24-102302',
             'name'      => 'Another_migration',
-            'path'      => TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php',
+            'path'      => realpath(TESTPATH . '_support/MigrationTestMigrations/Database/Migrations/2018-01-24-102302_Another_migration.php'),
             'class'     => 'Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',
             'namespace' => 'Tests\Support\MigrationTestMigrations',
             'uid'       => '20180124102302Tests\Support\MigrationTestMigrations\Database\Migrations\Migration_another_migration',

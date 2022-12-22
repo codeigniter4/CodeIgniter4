@@ -15,6 +15,7 @@ use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\Cookie\Exceptions\CookieException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Pager\PagerInterface;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Cookie as CookieConfig;
@@ -464,7 +465,7 @@ trait ResponseTrait
         // Per spec, MUST be sent with each request, if possible.
         // http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html
         if (! isset($this->headers['Date']) && PHP_SAPI !== 'cli-server') {
-            $this->setDate(DateTime::createFromFormat('U', (string) time()));
+            $this->setDate(DateTime::createFromFormat('U', (string) Time::now()->getTimestamp()));
         }
 
         // HTTP Status
@@ -587,7 +588,7 @@ trait ResponseTrait
         }
 
         if (is_numeric($expire)) {
-            $expire = $expire > 0 ? time() + $expire : 0;
+            $expire = $expire > 0 ? Time::now()->getTimestamp() + $expire : 0;
         }
 
         $cookie = new Cookie($name, $value, [

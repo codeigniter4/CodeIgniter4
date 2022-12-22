@@ -60,6 +60,8 @@ Behavior Changes
 Enhancements
 ************
 
+.. _v420-new-improved-auto-routing:
+
 New Improved Auto Routing
 =========================
 
@@ -93,6 +95,7 @@ Database
     - Added the class ``CodeIgniter\Database\RawSql`` which expresses raw SQL strings.
     - :ref:`select() <query-builder-select-rawsql>`, :ref:`where() <query-builder-where-rawsql>`, :ref:`like() <query-builder-like-rawsql>`, :ref:`join() <query-builder-join-rawsql>` accept the ``CodeIgniter\Database\RawSql`` instance.
     - ``DBForge::addField()`` default value raw SQL string support. See :ref:`forge-addfield-default-value-rawsql`.
+- SQLite3 has a new Config item ``foreignKeys`` that enables foreign key constraints.
 
 Helpers and Functions
 =====================
@@ -118,6 +121,7 @@ Commands
 Others
 ======
 
+- Added ``$this->validateData()`` in Controller. See :ref:`controller-validatedata`.
 - Content Security Policy (CSP) enhancements
     - Added the configs ``$scriptNonceTag`` and ``$styleNonceTag`` in  ``Config\ContentSecurityPolicy`` to customize the CSP placeholders (``{csp-script-nonce}`` and ``{csp-style-nonce}``)
     - Added the config ``$autoNonce`` in ``Config\ContentSecurityPolicy`` to disable the CSP placeholder replacement

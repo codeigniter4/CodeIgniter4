@@ -47,7 +47,7 @@ class CodeIgniter
     /**
      * The current version of CodeIgniter Framework
      */
-    public const CI_VERSION = '4.2.10';
+    public const CI_VERSION = '4.2.11';
 
     /**
      * App startup time.
@@ -205,11 +205,9 @@ class CodeIgniter
     protected function resolvePlatformExtensions()
     {
         $requiredExtensions = [
-            'curl',
             'intl',
             'json',
             'mbstring',
-            'xml',
         ];
 
         $missingExtensions = [];

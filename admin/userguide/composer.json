@@ -9,7 +9,7 @@
         "codeigniter4/framework": "^4"
     },
     "support": {
-        "forum": "http://forum.codeigniter.com/",
+        "forum": "https://forum.codeigniter.com/",
         "source": "https://github.com/codeigniter4/CodeIgniter4",
         "slack": "https://codeigniterchat.slack.com"
     }

@@ -44,12 +44,12 @@ Read the :doc:`upgrade instructions <upgrading>`, and check Breaking Changes and
 Pros
 ====
 
-Download and run
+Download and run.
 
 Cons
 ====
 
-You are responsible for merge conflicts when updating
+You are responsible for merge conflicts when updating.
 
 Structure
 =========

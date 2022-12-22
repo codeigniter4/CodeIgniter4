@@ -21,7 +21,11 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class MigrationIntegrationTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
+
     private string $migrationFileFrom = SUPPORTPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
     private string $migrationFileTo   = APPPATH . 'Database/Migrations/20160428212500_Create_test_tables.php';
 

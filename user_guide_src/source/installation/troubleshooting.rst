@@ -24,9 +24,9 @@ I have to include index.php in my URL
 -------------------------------------
 
 If a URL like ``/mypage/find/apple`` doesn't work, but the similar
-URL ``/index.php/mypage/find/apple`` does, that sounds like your ``.htaccess`` rules
+URL ``/index.php/mypage/find/apple`` does, that sounds like your **.htaccess** rules
 (for Apache) are not set up properly, or the ``mod_rewrite`` extension
-in Apache's ``httpd.conf`` is commented out.
+in Apache's **httpd.conf** is commented out.
 
 Only the default page loads
 ---------------------------
@@ -37,7 +37,7 @@ REQUEST_URI variable needed to serve search-engine friendly URLs. As a
 first step, open your **app/Config/App.php** file and look for
 the URI Protocol information. It will recommend that you try a couple of
 alternate settings. If it still doesn't work after you've tried this
-you'll need to force CodeIgniter to add a question mark to your URLs. To
+you'll need to force CodeIgniter to add a question mark (``?``) to your URLs. To
 do this open your **app/Config/App.php** file and change this:
 
 .. literalinclude:: troubleshooting/001.php
@@ -59,7 +59,7 @@ The tutorial gives 404 errors everywhere :(
 -------------------------------------------
 
 You can't follow the tutorial using PHP's built-in web server.
-It doesn't process the `.htaccess` file needed to route
+It doesn't process the **.htaccess** file needed to route
 requests properly.
 
 The solution: use Apache to serve your site, or else the built-in
@@ -88,7 +88,7 @@ CodeIgniter Error Logs
 
 CodeIgniter logs error messages, according to the settings in **app/Config/Logger.php**.
 
-You can adjust the error threshold to see more or fewer messages.
+You can adjust the error threshold to see more or fewer messages. See :ref:`Logging <logging-configuration>` for details.
 
-The default configuration has daily log files stored in `writable/logs`.
+The default configuration has daily log files stored in **writable/logs**.
 It would be a good idea to check them if things aren't working the way you expect!

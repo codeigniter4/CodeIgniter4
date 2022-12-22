@@ -305,8 +305,6 @@ final class BaseQueryTest extends CIUnitTestCase
     }
 
     /**
-     * @group single
-     *
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/201
      */
     public function testSimilarNamedBinds()

@@ -21,6 +21,9 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class ValidationGeneratorTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

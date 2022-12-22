@@ -49,7 +49,7 @@ class Toolbar extends BaseConfig
      * Collect Var Data
      * --------------------------------------------------------------------------
      *
-     * If set to false var data from the views will not be colleted. Usefull to
+     * If set to false var data from the views will not be colleted. Useful to
      * avoid high memory usage when there are lots of data passed to the view.
      *
      * @var bool

@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  *
- * @group auto-review
+ * @group AutoReview
  */
 final class ComposerJsonTest extends TestCase
 {
@@ -32,8 +32,8 @@ final class ComposerJsonTest extends TestCase
     {
         parent::setUp();
 
-        $this->devComposer       = $this->getComposerJson(dirname(__DIR__, 2) . '/composer.json');
-        $this->frameworkComposer = $this->getComposerJson(dirname(__DIR__, 2) . '/admin/framework/composer.json');
+        $this->devComposer       = $this->getComposerJson(dirname(__DIR__, 3) . '/composer.json');
+        $this->frameworkComposer = $this->getComposerJson(dirname(__DIR__, 3) . '/admin/framework/composer.json');
     }
 
     public function testFrameworkRequireIsTheSameWithDevRequire(): void

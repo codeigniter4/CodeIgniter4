@@ -148,12 +148,13 @@ final class DeleteModelTest extends LiveModelTestCase
     }
 
     /**
-     * If where condition is set, beyond the value was empty (0,'', NULL, etc.),
-     * Exception should not be thrown because condition was explicity set
+     * Given an explicit empty value in the WHERE condition
+     * When executing a soft delete
+     * Then an exception should not be thrown
      *
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testDontThrowExceptionWhenSoftDeleteConditionIsSetWithEmptyValue($emptyValue): void
     {
@@ -167,7 +168,7 @@ final class DeleteModelTest extends LiveModelTestCase
     /**
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testThrowExceptionWhenSoftDeleteParamIsEmptyValue($emptyValue): void
     {
@@ -175,22 +176,25 @@ final class DeleteModelTest extends LiveModelTestCase
         $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
 
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
+
         $this->createModel(UserModel::class)->delete($emptyValue);
     }
 
     /**
      * @dataProvider emptyPkValues
      *
-     * @param mixed $emptyValue
+     * @param int|string|null $emptyValue
      */
     public function testDontDeleteRowsWhenSoftDeleteParamIsEmpty($emptyValue): void
     {
-        $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('Deletes are not allowed unless they contain a "where" or "like" clause.');
-
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
 
-        $this->createModel(UserModel::class)->delete($emptyValue);
+        try {
+            $this->createModel(UserModel::class)->delete($emptyValue);
+        } catch (DatabaseException $e) {
+            // Do nothing.
+        }
+
         $this->seeInDatabase('user', ['name' => 'Derek Jones', 'deleted_at IS NULL' => null]);
     }
 

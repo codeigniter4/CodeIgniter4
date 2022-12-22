@@ -12,6 +12,7 @@
 namespace CodeIgniter\Throttle;
 
 use CodeIgniter\Cache\CacheInterface;
+use CodeIgniter\I18n\Time;
 
 /**
  * Class Throttler
@@ -176,6 +177,6 @@ class Throttler implements ThrottlerInterface
      */
     public function time(): int
     {
-        return $this->testTime ?? time();
+        return $this->testTime ?? Time::now()->getTimestamp();
     }
 }

@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
@@ -31,7 +32,7 @@ abstract class AbstractHandlerTest extends CIUnitTestCase
 
     public function testGetMetaData()
     {
-        $time = time();
+        $time = Time::now()->getTimestamp();
         $this->handler->save(self::$key1, 'value');
 
         $actual = $this->handler->getMetaData(self::$key1);

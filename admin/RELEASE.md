@@ -2,7 +2,7 @@
 
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
 >
-> Updated for `4.2.3` on August 6, 2022.
+> Updated for `4.2.10` on November 5, 2022.
 >
 > -MGatner
 
@@ -17,7 +17,7 @@ When generating the changelog each Pull Request to be included must have one of 
 PRs with breaking changes must have the following additional label:
 - **breaking change** ... PRs that may break existing functionalities
 
-To auto-generate, start drafting a new Release and use the "Auto-generate release notes" button.
+To auto-generate, start drafting a new Release and use the "Generate release notes" button.
 Copy the resulting content into **CHANGELOG.md** and adjust the format to match the existing content.
 
 ## Preparation
@@ -43,6 +43,7 @@ git clone git@github.com:codeigniter4/userguide.git
 * Set the date in **user_guide_src/source/changelogs/{version}.rst** to format `Release Date: January 31, 2021`
 * Create a new changelog for the next version at **user_guide_src/source/changelogs/{next_version}.rst** and add it to **index.rst**
 * Create **user_guide_src/source/installation/upgrade_{ver}.rst**, fill in the "All Changes" section, and add it to **upgrading.rst**
+    * git diff --name-status master -- . ':!system'
 * Commit the changes with "Prep for 4.x.x release" and push to origin
 * Create a new PR from `release-4.x.x` to `develop`:
     * Title: "Prep for 4.x.x release"
@@ -53,12 +54,16 @@ git clone git@github.com:codeigniter4/userguide.git
     * Description: blank
 * Merge the PR then create a new Release:
     * Version: "v4.x.x"
+    * Target: master
     * Title: "CodeIgniter 4.x.x"
     * Description:
 ```
 CodeIgniter 4.x.x release.
 
 See the changelog: https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md
+
+## New Contributors
+*
 ```
 * Watch for the "Deploy Distributable Repos" action to make sure **framework**, **appstarter**, and **userguide** get updated
 * Run the following commands to install and test `appstarter` and verify the new version:
@@ -70,8 +75,15 @@ composer test && composer info codeigniter4/framework
 * Verify that the user guide actions succeeded:
     * "Deploy Distributable Repos", framework repo
     * "Deploy Production", UG repo
-    * "pages-build-deployment", both repos
+    * "pages-build-deployment", UG repo
 * Fast-forward `develop` branch to catch the merge commit from `master`
+```console
+git fetch origin
+git checkout develop
+git merge origin/develop
+git merge origin/master
+git push origin HEAD
+```
 * Update the next minor upgrade branch `4.x`:
 ```console
 git fetch origin

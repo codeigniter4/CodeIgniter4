@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
-        "ext-curl": "*",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
@@ -17,7 +16,7 @@
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
         "fakerphp/faker": "^1.9",
-        "friendsofphp/php-cs-fixer": "~3.13.0",
+        "friendsofphp/php-cs-fixer": "3.13.0",
         "mikey179/vfsstream": "^1.6",
         "nexusphp/cs-config": "^3.6",
         "nexusphp/tachycardia": "^1.0",
@@ -26,9 +25,10 @@
         "phpunit/phpcov": "^8.2",
         "phpunit/phpunit": "^9.1",
         "predis/predis": "^1.1 || ^2.0",
-        "rector/rector": "0.14.6"
+        "rector/rector": "0.15.1"
     },
     "suggest": {
+        "ext-curl": "If you use CURLRequest class",
         "ext-imagick": "If you use Image class ImageMagickHandler",
         "ext-gd": "If you use Image class GDHandler",
         "ext-exif": "If you run Image class tests",
@@ -68,7 +68,6 @@
     "autoload-dev": {
         "psr-4": {
             "CodeIgniter\\": "tests/system/",
-            "CodeIgniter\\AutoReview\\": "tests/AutoReview/",
             "Utils\\": "utils/"
         }
     },
@@ -78,7 +77,7 @@
             "bash -c \"if [ -f admin/setup.sh ]; then bash admin/setup.sh; fi\""
         ],
         "analyze": [
-            "phpstan analyze",
+            "bash -c \"XDEBUG_MODE=off phpstan analyse\"",
             "rector process --dry-run"
         ],
         "sa": "@analyze",
@@ -102,7 +101,7 @@
         "cs-fix": "Fix the coding style"
     },
     "support": {
-        "forum": "http://forum.codeigniter.com/",
+        "forum": "https://forum.codeigniter.com/",
         "source": "https://github.com/codeigniter4/CodeIgniter4",
         "slack": "https://codeigniterchat.slack.com"
     }

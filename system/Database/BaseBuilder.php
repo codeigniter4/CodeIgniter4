@@ -2111,7 +2111,7 @@ class BaseBuilder
     /**
      * This method is used by both update() and getCompiledUpdate() to
      * validate that data is actually being set and that a table has been
-     * chosen to be update.
+     * chosen to be updated.
      *
      * @throws DatabaseException
      */

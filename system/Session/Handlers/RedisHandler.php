@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers;
 
+use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
 use Redis;
@@ -70,6 +71,9 @@ class RedisHandler extends BaseHandler
 
         $this->setSavePath();
 
+        // Add sessionCookieName for multiple session cookies.
+        $this->keyPrefix .= $config->sessionCookieName . ':';
+
         if ($this->matchIP === true) {
             $this->keyPrefix .= $this->ipAddress . ':';
         }
@@ -118,7 +122,7 @@ class RedisHandler extends BaseHandler
 
         $redis = new Redis();
 
-        if (! $redis->connect($this->savePath['host'], $this->savePath['port'], $this->savePath['timeout'])) {
+        if (! $redis->connect($this->savePath['host'], ($this->savePath['host'][0] === '/' ? 0 : $this->savePath['port']), $this->savePath['timeout'])) {
             $this->logger->error('Session: Unable to connect to Redis with the configured settings.');
         } elseif (isset($this->savePath['password']) && ! $redis->auth($this->savePath['password'])) {
             $this->logger->error('Session: Unable to authenticate to Redis instance.');
@@ -293,7 +297,7 @@ class RedisHandler extends BaseHandler
                 continue;
             }
 
-            if (! $this->redis->setex($lockKey, 300, (string) time())) {
+            if (! $this->redis->setex($lockKey, 300, (string) Time::now()->getTimestamp())) {
                 $this->logger->error('Session: Error while trying to obtain lock for ' . $this->keyPrefix . $sessionID);
 
                 return false;

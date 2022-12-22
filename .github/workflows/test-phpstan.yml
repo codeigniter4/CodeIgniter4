@@ -46,6 +46,7 @@ jobs:
         with:
           php-version: '8.1'
           extensions: intl
+          coverage: none
 
       - name: Use latest Composer
         run: composer self-update

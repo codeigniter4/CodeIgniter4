@@ -88,19 +88,19 @@ class Autoloader
 
         // We have to have one or the other, though we don't enforce the need
         // to have both present in order to work.
-        if (empty($config->psr4) && empty($config->classmap)) {
+        if ($config->psr4 === [] && $config->classmap === []) {
             throw new InvalidArgumentException('Config array must contain either the \'psr4\' key or the \'classmap\' key.');
         }
 
-        if (isset($config->psr4)) {
+        if ($config->psr4 !== []) {
             $this->addNamespace($config->psr4);
         }
 
-        if (isset($config->classmap)) {
+        if ($config->classmap !== []) {
             $this->classmap = $config->classmap;
         }
 
-        if (isset($config->files)) {
+        if ($config->files !== []) {
             $this->files = $config->files;
         }
 
@@ -148,7 +148,8 @@ class Autoloader
     /**
      * Registers namespaces with the autoloader.
      *
-     * @param array|string $namespace
+     * @param array<string, array<int, string>|string>|string $namespace
+     * @phpstan-param array<string, list<string>|string>|string $namespace
      *
      * @return $this
      */

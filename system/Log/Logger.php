@@ -349,11 +349,9 @@ class Logger implements LoggerInterface
         if (strpos($message, 'env:') !== false) {
             preg_match('/env:[^}]+/', $message, $matches);
 
-            if ($matches) {
-                foreach ($matches as $str) {
-                    $key                 = str_replace('env:', '', $str);
-                    $replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
-                }
+            foreach ($matches as $str) {
+                $key                 = str_replace('env:', '', $str);
+                $replace["{{$str}}"] = $_ENV[$key] ?? 'n/a';
             }
         }
 

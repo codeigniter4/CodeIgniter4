@@ -51,7 +51,7 @@ Views are generally stored in **app/Views**, but can quickly become unwieldy if 
 CodeIgniter does not enforce any type of organization, but a good rule of thumb would be to create a new directory in
 the **Views** directory for each controller. Then, name views by the method name. This makes them very easy to find later
 on. For example, a user's profile might be displayed in a controller named ``User``, and a method named ``profile``.
-You might store the view file for this method in **app/Views/User/Profile.php**.
+You might store the view file for this method in **app/Views/user/profile.php**.
 
 That type of organization works great as a base habit to get into. At times you might need to organize it differently.
 That's not a problem. As long as CodeIgniter can find the file, it can display it.

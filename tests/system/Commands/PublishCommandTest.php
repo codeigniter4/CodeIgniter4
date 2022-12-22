@@ -22,6 +22,9 @@ use Tests\Support\Publishers\TestPublisher;
  */
 final class PublishCommandTest extends CIUnitTestCase
 {
+    /**
+     * @var false|resource
+     */
     private $streamFilter;
 
     protected function setUp(): void

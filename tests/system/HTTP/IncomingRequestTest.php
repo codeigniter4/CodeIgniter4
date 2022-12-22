@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
@@ -700,7 +701,10 @@ final class IncomingRequestTest extends CIUnitTestCase
     {
         $expected               = '123.123.123.123';
         $_SERVER['REMOTE_ADDR'] = $expected;
-        $this->request          = new Request(new App());
+
+        $this->request = new Request(new App());
+        $this->request->populateHeaders();
+
         $this->assertSame($expected, $this->request->getIPAddress());
         // call a second time to exercise the initial conditional block in getIPAddress()
         $this->assertSame($expected, $this->request->getIPAddress());
@@ -709,66 +713,214 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testGetIPAddressThruProxy()
     {
         $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
+        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
 
         // we should see the original forwarded address
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyInvalid()
+    public function testGetIPAddressThruProxyIPv6()
     {
-        $expected                        = '123.456.23.123';
-        $_SERVER['REMOTE_ADDR']          = '10.0.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
+        $expected                        = '123.123.123.123';
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
+        $_SERVER['REMOTE_ADDR']          = '2001:db8::2:1';
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '2001:db8::2:1' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyInvalidIPAddress()
+    {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
+        $expected                        = '10.0.1.200';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
 
         // spoofed address invalid
-        $this->assertSame('10.0.1.200', $this->request->getIPAddress());
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyInvalidIPAddressIPv6()
+    {
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '2001:xyz::1';
+        $expected                        = '2001:db8::2:1';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '2001:db8::2:1' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
+
+        // spoofed address invalid
+        $this->assertSame($expected, $this->request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxyNotWhitelisted()
     {
-        $expected                        = '123.456.23.123';
-        $_SERVER['REMOTE_ADDR']          = '10.10.1.200';
-        $config                          = new App();
-        $config->proxyIPs                = '10.0.1.200,192.168.5.0/24';
-        $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
+        $expected                        = '10.10.1.200';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '10.0.1.200'     => 'X-Forwarded-For',
+            '192.168.5.0/24' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
 
         // spoofed address invalid
-        $this->assertSame('10.10.1.200', $this->request->getIPAddress());
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyNotWhitelistedIPv6()
+    {
+        $expected                        = '2001:db8::2:2';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.456.23.123';
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '2001:db8::2:1' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
+
+        // spoofed address invalid
+        $this->assertSame($expected, $this->request->getIPAddress());
     }
 
     public function testGetIPAddressThruProxySubnet()
     {
         $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $config                          = new App();
-        $config->proxyIPs                = ['192.168.5.0/24'];
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
+        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
+
+        $config           = new App();
+        $config->proxyIPs = ['192.168.5.0/24' => 'X-Forwarded-For'];
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
 
         // we should see the original forwarded address
         $this->assertSame($expected, $this->request->getIPAddress());
     }
 
-    public function testGetIPAddressThruProxyOutofSubnet()
+    public function testGetIPAddressThruProxySubnetIPv6()
     {
         $expected                        = '123.123.123.123';
-        $_SERVER['REMOTE_ADDR']          = '192.168.5.21';
-        $config                          = new App();
-        $config->proxyIPs                = ['192.168.5.0/28'];
         $_SERVER['HTTP_X_FORWARDED_FOR'] = $expected;
-        $this->request                   = new Request($config);
+        $_SERVER['REMOTE_ADDR']          = '2001:db8:1234:ffff:ffff:ffff:ffff:ffff';
+
+        $config           = new App();
+        $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
 
         // we should see the original forwarded address
-        $this->assertSame('192.168.5.21', $this->request->getIPAddress());
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyOutOfSubnet()
+    {
+        $expected                        = '192.168.5.21';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+
+        $config           = new App();
+        $config->proxyIPs = ['192.168.5.0/28' => 'X-Forwarded-For'];
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyOutOfSubnetIPv6()
+    {
+        $expected                        = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+
+        $config           = new App();
+        $config->proxyIPs = ['2001:db8:1234::/48' => 'X-Forwarded-For'];
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyBothIPv4AndIPv6()
+    {
+        $expected                        = '2001:db8:1235:ffff:ffff:ffff:ffff:ffff';
+        $_SERVER['REMOTE_ADDR']          = $expected;
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '123.123.123.123';
+
+        $config           = new App();
+        $config->proxyIPs = [
+            '192.168.5.0/28'     => 'X-Forwarded-For',
+            '2001:db8:1234::/48' => 'X-Forwarded-For',
+        ];
+        $this->request = new Request($config);
+        $this->request->populateHeaders();
+
+        // we should see the original forwarded address
+        $this->assertSame($expected, $this->request->getIPAddress());
+    }
+
+    public function testGetIPAddressThruProxyInvalidConfigString()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
+        );
+
+        $config           = new App();
+        $config->proxyIPs = '192.168.5.0/28';
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
+
+        $this->request->getIPAddress();
+    }
+
+    public function testGetIPAddressThruProxyInvalidConfigArray()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage(
+            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
+        );
+
+        $config           = new App();
+        $config->proxyIPs = ['192.168.5.0/28'];
+        $this->request    = new Request($config);
+        $this->request->populateHeaders();
+
+        $this->request->getIPAddress();
     }
 
     // @TODO getIPAddress should have more testing, to 100% code coverage

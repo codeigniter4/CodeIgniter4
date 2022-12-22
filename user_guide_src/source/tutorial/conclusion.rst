@@ -21,4 +21,4 @@ If you still have questions about the framework or your own CodeIgniter
 code, you can:
 
 -  Check out our `Forum <https://forum.codeigniter.com/>`_
--  Check out our `Slack <https://codeigniterchat.slack.com/>`_
+-  Check out our `Slack <https://join.slack.com/t/codeigniterchat/shared_invite/zt-rl30zw00-obL1Hr1q1ATvkzVkFp8S0Q>`_

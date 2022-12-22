@@ -78,7 +78,7 @@ class ResourceController extends BaseResource
     /**
      * Add or update a model resource, from "posted" properties
      *
-     * @param string|null|int$id
+     * @param int|string|null $id
      *
      * @return Response|string|void
      */
@@ -101,6 +101,8 @@ class ResourceController extends BaseResource
 
     /**
      * Set/change the expected response representation for returned objects
+     *
+     * @param string $format json/xml
      *
      * @return void
      */
