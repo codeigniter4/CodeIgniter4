@@ -326,6 +326,8 @@ Class Reference
 
     .. php:method:: withNeverExpiring()
 
+        .. deprecated:: 4.2.6
+
         .. important:: This method is deprecated. It will be removed in future releases.
 
         :param string $name:

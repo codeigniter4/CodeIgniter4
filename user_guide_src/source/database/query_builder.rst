@@ -1799,6 +1799,9 @@ Class Reference
 
     .. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
 
+        .. deprecated:: 4.3.0
+           Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
+
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
         :param bool $escape: Whether to escape values
@@ -1899,6 +1902,9 @@ Class Reference
         Used for ``*Batch()`` methods to set data for insert, update, upsert.
 
     .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
+
+        .. deprecated:: 4.3.0
+           Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
 
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
