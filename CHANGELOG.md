@@ -1,5 +1,41 @@
 # Changelog
 
+## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.10) (2022-12-21)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.10...v4.2.11)
+
+### Fixed Bugs
+* fix:  Request::getIPAddress() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6820
+* fix: Model cannot insert when $useAutoIncrement is false by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6827
+* fix: View Parser regexp does not support UTF-8 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6835
+* Handle key generation when key is not present in .env by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6839
+* Fix: Controller Test withBody() by @MGatner in https://github.com/codeigniter4/CodeIgniter4/pull/6843
+* fix: body assigned via options array in CURLRequest class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/6854
+* Fix CreateDatabase leaving altered database config in connection by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6856
+* fix: cast to string all values except arrays in Header class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/6862
+* add missing @method Query grouping in Model by @paul45 in https://github.com/codeigniter4/CodeIgniter4/pull/6874
+* fix: `composer update` might cause error "Failed to open directory" by @LeMyst in https://github.com/codeigniter4/CodeIgniter4/pull/6833
+* fix: required PHP extentions by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6897
+* fix: Use Services for the FeatureTestTrait request. by @lonnieezell in https://github.com/codeigniter4/CodeIgniter4/pull/6966
+* fix: FileLocator::locateFile() bug with a similar namespace name by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/6964
+* fix: socket connection in RedisHandler class by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/6972
+* fix: `spark namespaces` cannot show a namespace with mutilple paths by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6977
+* fix: Undefined constant "CodeIgniter\Debug\VENDORPATH" by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6985
+* fix: large HTTP input crashes framework by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6984
+* fix: empty paths for `rewrite.php` by @datamweb in https://github.com/codeigniter4/CodeIgniter4/pull/6991
+* fix: `PHPStan` $cols not defined in `CLI` by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/6994
+* Fix MigrationRunnerTest for Windows by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6855
+* fix: turn off `Xdebug` note when running phpstan by @ddevsr in https://github.com/codeigniter4/CodeIgniter4/pull/6851
+* Fix ShowTableInfoTest to pass on Windows by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6853
+* Fix MigrateStatusTest for Windows by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6866
+* Fix ShowTableInfoTest when migration records are numerous by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6868
+* Fix CreateDatabaseTest to not leave database by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6867
+* Fix coverage merge warning by @paulbalandan in https://github.com/codeigniter4/CodeIgniter4/pull/6885
+* fix: replace tabs to spaces  by @zl59503020 in https://github.com/codeigniter4/CodeIgniter4/pull/6898
+* fix: slack links by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6907
+* Fix typo in database/queries.rst by @philFernandez in https://github.com/codeigniter4/CodeIgniter4/pull/6920
+* Fix testInsertWithSetAndEscape to make not time dependent by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6974
+* fix: remove unnecessary global variables in rewrite.php by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6973
+
 ## [v4.2.10](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.10) (2022-11-05)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.9...v4.2.10)
 
