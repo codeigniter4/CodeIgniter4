@@ -501,11 +501,6 @@ parameters:
 			path: system/HTTP/RedirectResponse.php
 
 		-
-			message: "#^Property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$proxyIPs \\(array\\|string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/HTTP/Request.php
-
-		-
 			message: "#^Property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$uri \\(CodeIgniter\\\\HTTP\\\\URI\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/HTTP/Request.php
