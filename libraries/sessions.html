@@ -765,8 +765,8 @@ tempdata) will be destroyed permanently and functions will be
 unusable during the same request after you destroy the session.</p>
 </div>
 <p>You may also use the <code class="docutils literal notranslate"><span class="pre">stop()</span></code> method to completely kill the session
-by removing the old session_id, destroying all data, and destroying
-the cookie that contained the session id:</p>
+by removing the old session ID, destroying all data, and destroying
+the cookie that contained the session ID:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">();</span>
@@ -801,10 +801,10 @@ all of the options and their effects.</p>
 <strong>app/Config/App.php</strong> file:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 14%" />
+<col style="width: 22%" />
+<col style="width: 13%" />
 <col style="width: 20%" />
-<col style="width: 23%" />
-<col style="width: 43%" />
+<col style="width: 46%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -815,48 +815,59 @@ all of the options and their effects.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>sessionDriver</strong></p></td>
-<td><p>CodeIgniter\Session\Handlers\FileHandler</p></td>
-<td><p>CodeIgniter\Session\Handlers\FileHandler
-CodeIgniter\Session\Handlers\DatabaseHandler
-CodeIgniter\Session\Handlers\MemcachedHandler
-CodeIgniter\Session\Handlers\RedisHandler
-CodeIgniter\Session\Handlers\ArrayHandler</p></td>
-<td><p>The session storage driver to use.</p></td>
+<td><p>FileHandler::class</p></td>
+<td><p>FileHandler::class
+DatabaseHandler::class
+MemcachedHandler::class
+RedisHandler::class
+ArrayHandler::class</p></td>
+<td><p>The session storage driver to use.
+All the session drivers are located in the
+<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\</span></code> namespace.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>sessionCookieName</strong></p></td>
 <td><p>ci_session</p></td>
 <td><p>[A-Za-z_-] characters only</p></td>
-<td><p>The name used for the session cookie.</p></td>
+<td><p>The name used for the session cookie.
+The value will be included in the key of the
+Database/Memcached/Redis session records. So, set the value
+so that it does not exceed the maximum length of the key.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>sessionExpiration</strong></p></td>
 <td><p>7200 (2 hours)</p></td>
 <td><p>Time in seconds (integer)</p></td>
 <td><p>The number of seconds you would like the session to last.
-If you would like a non-expiring session (until browser is closed) set the value to zero: 0</p></td>
+If you would like a non-expiring session (until browser is
+closed) set the value to zero: 0</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>sessionSavePath</strong></p></td>
 <td><p>null</p></td>
 <td><p>None</p></td>
-<td><p>Specifies the storage location, depends on the driver being used.</p></td>
+<td><p>Specifies the storage location, depends on the driver being
+used.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>sessionMatchIP</strong></p></td>
 <td><p>false</p></td>
 <td><p>true/false (boolean)</p></td>
-<td><p>Whether to validate the user’s IP address when reading the session cookie.
-Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
-will likely set this to false.</p></td>
+<td><p>Whether to validate the user’s IP address when reading the
+session cookie. Note that some ISPs dynamically changes the IP,
+so if you want a non-expiring session you will likely set this
+to false.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>sessionTimeToUpdate</strong></p></td>
 <td><p>300</p></td>
 <td><p>Time in seconds (integer)</p></td>
-<td><p>This option controls how often the session class will regenerate itself and create a new
-session ID. Setting it to 0 will disable session ID regeneration.</p></td>
+<td><p>This option controls how often the session class will
+regenerate itself and create a new session ID. Setting it to 0
+will disable session ID regeneration.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>sessionRegenerateDestroy</strong></p></td>
 <td><p>false</p></td>
 <td><p>true/false (boolean)</p></td>
-<td><p>Whether to destroy session data associated with the old session ID when auto-regenerating
-the session ID. When set to false, the data will be later deleted by the garbage collector.</p></td>
+<td><p>Whether to destroy session data associated with the old
+session ID when auto-regenerating
+the session ID. When set to false, the data will be later
+deleted by the garbage collector.</p></td>
 </tr>
 </tbody>
 </table>
@@ -967,9 +978,9 @@ it. But be careful because the system user <em>running</em> the script is usuall
 not your own, but something like ‘www-data’ instead, so only setting those
 permissions will probably break your application.</p>
 <p>Instead, you should do something like this, depending on your environment</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nb">mkdir</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">Writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
-<span class="nb">chmod</span> <span class="mo">0700</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">Writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
-<span class="nb">chown</span> <span class="nx">www</span><span class="o">-</span><span class="nx">data</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">Writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nb">mkdir</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
+<span class="o">&gt;</span> <span class="nb">chmod</span> <span class="mo">0700</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
+<span class="o">&gt;</span> <span class="nb">chown</span> <span class="nx">www</span><span class="o">-</span><span class="nx">data</span> <span class="o">/&lt;</span><span class="nx">path</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">directory</span><span class="o">&gt;/</span><span class="nx">writable</span><span class="o">/</span><span class="nx">sessions</span><span class="o">/</span>
 </pre></div>
 </div>
 <section id="bonus-tip">
@@ -987,7 +998,7 @@ into using <a class="reference external" href="https://eddmann.com/posts/storing
 </section>
 </section>
 <section id="databasehandler-driver">
-<h3><a class="toc-backref" href="#id17">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-databasehandler-driver"></span><h3><a class="toc-backref" href="#id17">DatabaseHandler Driver</a><a class="headerlink" href="#databasehandler-driver" title="Permalink to this headline"></a></h3>
 <p>The ‘DatabaseHandler’ driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
 because it allows the developer easy access to the session data within
@@ -1011,7 +1022,9 @@ you would do this:</p>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nv">$sessionDriver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;ci_sessions&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1039,6 +1052,12 @@ you would do this:</p>
 <span class="nx">CREATE</span> <span class="nx">INDEX</span> <span class="s2">&quot;ci_sessions_timestamp&quot;</span> <span class="nx">ON</span> <span class="s2">&quot;ci_sessions&quot;</span> <span class="p">(</span><span class="s2">&quot;timestamp&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">id</span></code> value contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>)
+and the session ID and a delimiter. It should be increased as needed, for example,
+when using long session IDs.</p>
+</div>
 <p>You will also need to add a PRIMARY KEY <strong>depending on your ‘sessionMatchIP’
 setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// When sessionMatchIP = true</span>
@@ -1061,6 +1080,7 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$sessionDBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1086,7 +1106,7 @@ issues.</p>
 </div>
 </section>
 <section id="redishandler-driver">
-<h3><a class="toc-backref" href="#id18">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-redishandler-driver"></span><h3><a class="toc-backref" href="#id18">RedisHandler Driver</a><a class="headerlink" href="#redishandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Redis doesn’t have a locking mechanism exposed, locks for
@@ -1127,7 +1147,9 @@ sufficient:</p>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$sessionDiver</span>    <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nv">$sessionDiver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1135,7 +1157,7 @@ sufficient:</p>
 </div>
 </section>
 <section id="memcachedhandler-driver">
-<h3><a class="toc-backref" href="#id19">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
+<span id="sessions-memcachedhandler-driver"></span><h3><a class="toc-backref" href="#id19">MemcachedHandler Driver</a><a class="headerlink" href="#memcachedhandler-driver" title="Permalink to this headline"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since Memcached doesn’t have a locking mechanism exposed, locks
@@ -1163,7 +1185,9 @@ being just a <code class="docutils literal notranslate"><span class="pre">host:p
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$sessionDriver</span>   <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="nv">$sessionDriver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
+    <span class="c1">// ...</span>
     <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1184,6 +1208,8 @@ separate the multiple server paths with commas:</p>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="c1">// localhost will be given higher priority (5) here,</span>
     <span class="c1">// compared to 192.0.2.1 with a weight of 1.</span>
     <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>

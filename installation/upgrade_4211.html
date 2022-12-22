@@ -287,11 +287,12 @@
 <li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
 <ul>
 <li><p><a class="reference internal" href="#config-app-proxyips" id="id2">Config\App::$proxyIPs</a></p></li>
+<li><p><a class="reference internal" href="#session-handler-key-changes" id="id3">Session Handler Key Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#project-files" id="id3">Project Files</a></p>
+<li><p><a class="reference internal" href="#project-files" id="id4">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#all-changes" id="id4">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id5">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
@@ -309,12 +310,33 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ConfigException</span></code> will be thrown for old format config value.</p>
 </section>
+<section id="session-handler-key-changes">
+<span id="upgrade-4211-session-key"></span><h3><a class="toc-backref" href="#id3">Session Handler Key Changes</a><a class="headerlink" href="#session-handler-key-changes" title="Permalink to this headline"></a></h3>
+<p>The key of the session data record for <a class="reference internal" href="../libraries/sessions.html#sessions-databasehandler-driver"><span class="std std-ref">DatabaseHandler Driver</span></a>,
+<a class="reference internal" href="../libraries/sessions.html#sessions-memcachedhandler-driver"><span class="std std-ref">MemcachedHandler Driver</span></a> and <a class="reference internal" href="../libraries/sessions.html#sessions-redishandler-driver"><span class="std std-ref">RedisHandler Driver</span></a>
+has changed. Therefore, any existing session data will be invalidated after
+the upgrade if you are using these session handlers.</p>
+<ul class="simple">
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code>, the <code class="docutils literal notranslate"><span class="pre">id</span></code> column value in the session table
+now contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
+<li><p>When using <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code> or <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>, the key value contains
+the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
+</ul>
+<p>There is maximum length for the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and Memcached key (250 bytes).
+If the following values exceed those maximum length, the session will not work properly.</p>
+<ul class="simple">
+<li><p>the session cookie name, delimiter, and session id (32 characters by default)
+when using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code></p></li>
+<li><p>the prefix (<code class="docutils literal notranslate"><span class="pre">ci_session</span></code>), session cookie name, delimiters, and session id
+when using  <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code></p></li>
+</ul>
+</section>
 </section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id3">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Version <code class="docutils literal notranslate"><span class="pre">4.2.11</span></code> did not alter any executable code in project files.</p>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id4">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -324,6 +346,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 <li><p>app/Config/Toolbar.php</p></li>
 <li><p>app/Views/welcome_message.php</p></li>
 <li><p>composer.json</p></li>
+<li><p>phpunit.xml.dist</p></li>
 </ul>
 </section>
 </section>
