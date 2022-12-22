@@ -1799,6 +1799,9 @@ Class Reference
 
     .. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
 
+        .. deprecated:: 4.3.0
+           Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
+
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
         :param bool $escape: Whether to escape values
@@ -1866,27 +1869,29 @@ Class Reference
 
     .. php:method:: updateFields($set, [$addToDefault = false, [$ignore = null]])
 
+        .. versionadded:: 4.3.0
+
         :param mixed $set: Row of columns or array of rows, a row is an array or object
         :param bool $addToDefault: Adds an additional column than those in dataset
         :param bool $ignore: An array of columns to ignore from those in $set
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        .. versionadded:: 4.3.0
-
         Used with ``updateBatch()`` and ``upsertBatch()`` methods. This defines the fields which will be updated.
 
     .. php:method:: onConstraint($set)
+
+        .. versionadded:: 4.3.0
 
         :param mixed $set: A set of fields or field used has keys or constraints
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        .. versionadded:: 4.3.0
-
         Used with ``updateBatch()`` and ``upsertBatch()`` methods. This takes a comma delimited string of columns, and array, associative array, or RawSql.
 
     .. php:method:: setData($set, [$escape = null, [$alias = '']])
+
+        .. versionadded:: 4.3.0
 
         :param mixed $set: Row of columns or array of rows, a row is an array or object
         :param bool $escape: Whether to escape values
@@ -1894,11 +1899,12 @@ Class Reference
         :returns:   ``BaseBuilder`` instance (method chaining)
         :rtype:     ``BaseBuilder``
 
-        .. versionadded:: 4.3.0
-
         Used for ``*Batch()`` methods to set data for insert, update, upsert.
 
     .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
+
+        .. deprecated:: 4.3.0
+           Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
 
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
