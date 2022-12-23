@@ -222,18 +222,12 @@ class Security implements SecurityInterface
 
     private function configureCookie(App $config): void
     {
-        /** @var CookieConfig|null $cookie */
+        /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
 
-        if ($cookie instanceof CookieConfig) {
-            $cookiePrefix     = $cookie->prefix;
-            $this->cookieName = $cookiePrefix . $this->rawCookieName;
-            Cookie::setDefaults($cookie);
-        } else {
-            // `Config/Cookie.php` is absence
-            $cookiePrefix     = $config->cookiePrefix;
-            $this->cookieName = $cookiePrefix . $this->rawCookieName;
-        }
+        $cookiePrefix     = $cookie->prefix;
+        $this->cookieName = $cookiePrefix . $this->rawCookieName;
+        Cookie::setDefaults($cookie);
     }
 
     /**

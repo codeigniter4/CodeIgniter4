@@ -9,7 +9,6 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Config\App;
 use Config\Cookie;
 use Config\Services;
 
@@ -68,11 +67,10 @@ if (! function_exists('get_cookie')) {
     function get_cookie($index, bool $xssClean = false, ?string $prefix = '')
     {
         if ($prefix === '') {
-            /** @var Cookie|null $cookie */
+            /** @var Cookie $cookie */
             $cookie = config('Cookie');
 
-            // @TODO Remove Config\App fallback when deprecated `App` members are removed.
-            $prefix = $cookie instanceof Cookie ? $cookie->prefix : config('App')->cookiePrefix;
+            $prefix = $cookie->prefix;
         }
 
         $request = Services::request();

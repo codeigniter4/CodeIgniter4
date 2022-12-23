@@ -188,22 +188,16 @@ class Session implements SessionInterface
             $this->sessionRegenerateDestroy = $config->sessionRegenerateDestroy ?? $this->sessionRegenerateDestroy;
         }
 
-        // DEPRECATED COOKIE MANAGEMENT
-        $this->cookiePath     = $config->cookiePath ?? $this->cookiePath;
-        $this->cookieDomain   = $config->cookieDomain ?? $this->cookieDomain;
-        $this->cookieSecure   = $config->cookieSecure ?? $this->cookieSecure;
-        $this->cookieSameSite = $config->cookieSameSite ?? $this->cookieSameSite;
-
         /** @var CookieConfig $cookie */
         $cookie = config('Cookie');
 
         $this->cookie = (new Cookie($this->sessionCookieName, '', [
             'expires'  => $this->sessionExpiration === 0 ? 0 : Time::now()->getTimestamp() + $this->sessionExpiration,
-            'path'     => $cookie->path ?? $config->cookiePath,
-            'domain'   => $cookie->domain ?? $config->cookieDomain,
-            'secure'   => $cookie->secure ?? $config->cookieSecure,
+            'path'     => $cookie->path,
+            'domain'   => $cookie->domain,
+            'secure'   => $cookie->secure,
             'httponly' => true, // for security
-            'samesite' => $cookie->samesite ?? $config->cookieSameSite ?? Cookie::SAMESITE_LAX,
+            'samesite' => $cookie->samesite ?? Cookie::SAMESITE_LAX,
             'raw'      => $cookie->raw ?? false,
         ]))->withPrefix(''); // Cookie prefix should be ignored.
 
