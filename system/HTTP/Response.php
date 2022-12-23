@@ -15,6 +15,7 @@ use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\Cookie\CookieStore;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use Config\App;
+use Config\Cookie as CookieConfig;
 use Config\Services;
 
 /**
@@ -156,7 +157,11 @@ class Response extends Message implements ResponseInterface
         $this->CSPEnabled = $config->CSPEnabled;
 
         $this->cookieStore = new CookieStore([]);
-        Cookie::setDefaults(config('Cookie'));
+
+        /** @var CookieConfig $cookie */
+        $cookie = config('Cookie');
+
+        Cookie::setDefaults($cookie);
 
         // Default to an HTML Content-Type. Devs can override if needed.
         $this->setContentType('text/html');
