@@ -653,7 +653,7 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testIsInvalidValue()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown value: invalid');
+        $this->expectExceptionMessage('Unknown type: invalid');
 
         $request = $this->request->withMethod('GET');
 

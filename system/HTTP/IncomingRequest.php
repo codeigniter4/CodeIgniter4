@@ -376,14 +376,14 @@ class IncomingRequest extends Request
     }
 
     /**
-     * Checks if this request is.
+     * Checks this request type.
      *
-     * @param string $value HTTP verb or 'json' or 'ajax'
-     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $value
+     * @param string $type HTTP verb or 'json' or 'ajax'
+     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $type
      */
-    public function is(string $value): bool
+    public function is(string $type): bool
     {
-        $valueUpper = strtoupper($value);
+        $valueUpper = strtoupper($type);
 
         $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
 
@@ -399,7 +399,7 @@ class IncomingRequest extends Request
             return $this->isAJAX();
         }
 
-        throw new InvalidArgumentException('Unknown value: ' . $value);
+        throw new InvalidArgumentException('Unknown type: ' . $type);
     }
 
     /**
