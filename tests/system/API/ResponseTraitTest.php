@@ -542,16 +542,24 @@ final class ResponseTraitTest extends CIUnitTestCase
             'negotiateLocale'  => false,
             'supportedLocales' => ['en'],
             'CSPEnabled'       => false,
-            'cookiePrefix'     => '',
-            'cookieDomain'     => '',
-            'cookiePath'       => '/',
-            'cookieSecure'     => false,
-            'cookieHTTPOnly'   => false,
             'proxyIPs'         => [],
-            'cookieSameSite'   => 'Lax',
         ] as $key => $value) {
             $config->{$key} = $value;
         }
+
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
 
         $request  = new MockIncomingRequest($config, new URI($config->baseURL), null, new UserAgent());
         $response = new MockResponse($config);
