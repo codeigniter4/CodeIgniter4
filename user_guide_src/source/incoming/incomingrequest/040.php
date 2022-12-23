@@ -9,7 +9,7 @@ $request->is('head');
 $request->is('patch');
 $request->is('options');
 
-// Checks if it is an AJAX request.
+// Checks if it is an AJAX request. The same as `$request->isAJAX()`.
 $request->is('ajax');
 
 // Checks if it is a JSON request.
