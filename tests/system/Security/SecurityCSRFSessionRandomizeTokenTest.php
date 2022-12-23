@@ -26,6 +26,7 @@ use CodeIgniter\Test\Mock\MockSecurity;
 use CodeIgniter\Test\Mock\MockSession;
 use CodeIgniter\Test\TestLogger;
 use Config\App as AppConfig;
+use Config\Cookie;
 use Config\Logger as LoggerConfig;
 use Config\Security as SecurityConfig;
 
@@ -75,19 +76,27 @@ final class SecurityCSRFSessionRandomizeTokenTest extends CIUnitTestCase
             'sessionMatchIP'           => false,
             'sessionTimeToUpdate'      => 300,
             'sessionRegenerateDestroy' => false,
-            'cookieDomain'             => '',
-            'cookiePrefix'             => '',
-            'cookiePath'               => '/',
-            'cookieSecure'             => false,
-            'cookieSameSite'           => 'Lax',
         ];
+        $config = array_merge($defaults, $options);
 
-        $config    = array_merge($defaults, $options);
         $appConfig = new AppConfig();
 
         foreach ($config as $key => $c) {
             $appConfig->{$key} = $c;
         }
+
+        $cookie = new Cookie();
+
+        foreach ([
+            'prefix'   => '',
+            'domain'   => '',
+            'path'     => '/',
+            'secure'   => false,
+            'samesite' => 'Lax',
+        ] as $key => $value) {
+            $cookie->{$key} = $value;
+        }
+        Factories::injectMock('config', 'Cookie', $cookie);
 
         $session = new MockSession(new ArrayHandler($appConfig, '127.0.0.1'), $appConfig);
         $session->setLogger(new TestLogger(new LoggerConfig()));
