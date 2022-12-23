@@ -37,12 +37,11 @@ abstract class BaseController extends Controller
      */
     protected $helpers = [];
 
-     /**
+    /**
      * Be sure to declare properties for anything you assign.
      * The creation of dynamic property is deprecated in PHP 8.2.
-     * 
-     * protected $session; 
      */
+    // protected $session;
 
     /**
      * Constructor.
