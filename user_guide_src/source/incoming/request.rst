@@ -1,5 +1,6 @@
+#############
 Request Class
-*************
+#############
 
 The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
@@ -11,7 +12,7 @@ See the documentation for the :doc:`IncomingRequest Class </incoming/incomingreq
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
 
 Class Reference
-===============
+***************
 
 .. php:namespace:: CodeIgniter\HTTP
 
