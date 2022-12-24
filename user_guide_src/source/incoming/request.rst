@@ -74,8 +74,8 @@ Class Reference
         .. deprecated:: 4.0.5
            Use :php:meth:`CodeIgniter\\HTTP\\Request::withMethod()` instead.
 
-        :param string $upper: Sets the request method. Used when spoofing the request.
-        :returns: HTTP request method
+        :param string $method: Sets the request method. Used when spoofing the request.
+        :returns: This request
         :rtype: Request
 
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
@@ -118,8 +118,8 @@ Class Reference
 
         :param    string $method: Method name
         :param    mixed  $value:  Data to be added
-        :returns: HTTP request method
-        :rtype:    Request
+        :returns: This request
+        :rtype:   Request
 
         Allows manually setting the value of PHP global, like ``$_GET``, ``$_POST``, etc.
 
