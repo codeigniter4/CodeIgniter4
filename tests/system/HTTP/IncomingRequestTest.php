@@ -16,6 +16,8 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Generator;
+use InvalidArgumentException;
 use TypeError;
 
 /**
@@ -613,6 +615,63 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
         $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
+    }
+
+    /**
+     * @dataProvider provideIsHTTPMethods
+     */
+    public function testIsHTTPMethodLowerCase(string $value)
+    {
+        $request = $this->request->withMethod($value);
+
+        $this->assertTrue($request->is(strtolower($value)));
+    }
+
+    public function provideIsHTTPMethods(): Generator
+    {
+        yield from [
+            ['GET'],
+            ['POST'],
+            ['PUT'],
+            ['DELETE'],
+            ['HEAD'],
+            ['PATCH'],
+            ['OPTIONS'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideIsHTTPMethods
+     */
+    public function testIsHTTPMethodUpperCase(string $value)
+    {
+        $request = $this->request->withMethod($value);
+
+        $this->assertTrue($request->is($value));
+    }
+
+    public function testIsInvalidValue()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown type: invalid');
+
+        $request = $this->request->withMethod('GET');
+
+        $request->is('invalid');
+    }
+
+    public function testIsJson()
+    {
+        $request = $this->request->setHeader('Content-Type', 'application/json');
+
+        $this->assertTrue($request->is('json'));
+    }
+
+    public function testIsWithAjax()
+    {
+        $request = $this->request->setHeader('X-Requested-With', 'XMLHttpRequest');
+
+        $this->assertTrue($request->is('ajax'));
     }
 
     public function testIsCLI()

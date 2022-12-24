@@ -376,6 +376,33 @@ class IncomingRequest extends Request
     }
 
     /**
+     * Checks this request type.
+     *
+     * @param string $type HTTP verb or 'json' or 'ajax'
+     * @phpstan-param string|'get'|'post'|'put'|'delete'|'head'|'patch'|'options'|'json'|'ajax' $type
+     */
+    public function is(string $type): bool
+    {
+        $valueUpper = strtoupper($type);
+
+        $httpMethods = ['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'PATCH', 'OPTIONS'];
+
+        if (in_array($valueUpper, $httpMethods, true)) {
+            return strtoupper($this->getMethod()) === $valueUpper;
+        }
+
+        if ($valueUpper === 'JSON') {
+            return strpos($this->getHeaderLine('Content-Type'), 'application/json') !== false;
+        }
+
+        if ($valueUpper === 'AJAX') {
+            return $this->isAJAX();
+        }
+
+        throw new InvalidArgumentException('Unknown type: ' . $type);
+    }
+
+    /**
      * Determines if this request was made from the command line (CLI).
      */
     public function isCLI(): bool
