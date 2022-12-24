@@ -804,6 +804,9 @@ Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name 
 
 .. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
 
+Auto Routing (Improved)
+-----------------------
+
 When you use Auto Routing (Improved), the output is like the following:
 
 .. code-block:: none
@@ -817,6 +820,9 @@ When you use Auto Routing (Improved), the output is like the following:
 The *Method* will be like ``GET(auto)``.
 
 ``/..`` in the *Route* column indicates one segment. ``[/..]`` indicates it is optional.
+
+Auto Routing (Legacy)
+---------------------
 
 When you use Auto Routing (Legacy), the output is like the following:
 
@@ -833,3 +839,14 @@ The *Method* will be ``auto``.
 ``[/...]`` in the *Route* column indicates any number of segments.
 
 .. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
+
+.. _routing-spark-routes-sort-by-handler:
+
+Sort by Handler
+---------------
+
+.. versionadded:: 4.3.0
+
+You can sort the routes by *Handler*::
+
+    > php spark routes -h
