@@ -68,13 +68,17 @@ class Routes extends BaseCommand
      *
      * @var array
      */
-    protected $options = [];
+    protected $options = [
+        '-h' => 'Sort by Handler.',
+    ];
 
     /**
      * Displays the help for the spark cli script itself.
      */
     public function run(array $params)
     {
+        $sortByHandler = array_key_exists('h', $params) ? true : false;
+
         $collection = Services::routes()->loadRoutes();
         $methods    = [
             'get',
@@ -157,10 +161,15 @@ class Routes extends BaseCommand
             'Method',
             'Route',
             'Name',
-            'Handler',
+            $sortByHandler ? 'Handler ↓' : 'Handler',
             'Before Filters',
             'After Filters',
         ];
+
+        // Sort by Handler.
+        if ($sortByHandler) {
+            usort($tbody, static fn ($handler1, $handler2) => strcmp($handler1[3], $handler2[3]));
+        }
 
         CLI::table($tbody, $thead);
     }

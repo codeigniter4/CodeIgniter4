@@ -77,6 +77,32 @@ final class RoutesTest extends CIUnitTestCase
         $this->assertStringContainsString($expected, $this->getBuffer());
     }
 
+    public function testRoutesCommandSortByHandler()
+    {
+        $this->getCleanRoutes();
+
+        command('routes -h');
+
+        $expected = <<<'EOL'
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | Method  | Route   | Name          | Handler ↓                              | Before Filters | After Filters |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            | GET     | closure | »             | (Closure)                              |                | toolbar       |
+            | GET     | /       | »             | \App\Controllers\Home::index           |                | toolbar       |
+            | GET     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | HEAD    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | POST    | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | PUT     | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | DELETE  | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | OPTIONS | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | TRACE   | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CONNECT | testing | testing-index | \App\Controllers\TestController::index |                | toolbar       |
+            | CLI     | testing | testing-index | \App\Controllers\TestController::index |                |               |
+            +---------+---------+---------------+----------------------------------------+----------------+---------------+
+            EOL;
+        $this->assertStringContainsString($expected, $this->getBuffer());
+    }
+
     public function testRoutesCommandAutoRouteImproved()
     {
         $routes = $this->getCleanRoutes();
