@@ -75,8 +75,8 @@ Class Reference
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
 
         :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns: $_SERVER item value if found, null if not
         :rtype:   mixed
 
@@ -93,8 +93,8 @@ Class Reference
     .. php:method:: getEnv([$index = null[, $filter = null[, $flags = null]]])
 
         :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :returns: $_ENV item value if found, null if not
         :rtype:   mixed
 
@@ -121,8 +121,8 @@ Class Reference
 
         :param    string    $method: Input filter constant
         :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :rtype:   mixed
 
         Fetches one or more items from a global, like cookies, get, post, etc.
