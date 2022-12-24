@@ -78,6 +78,14 @@ Class Reference
         :returns: This request
         :rtype: Request
 
+    .. php:method:: withMethod($method)
+
+        .. versionadded:: 4.0.5
+
+        :param string $method: Sets the request method.
+        :returns: New request instance
+        :rtype: Request
+
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
 
         :param    mixed     $index: Value name
