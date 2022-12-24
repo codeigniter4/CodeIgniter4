@@ -80,7 +80,7 @@ Class Reference
         :returns: ``$_SERVER`` item value if found, null if not
         :rtype:   mixed
 
-        This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
+        This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
         :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches server data (``$_SERVER``):
 
         .. literalinclude:: request/004.php
@@ -98,8 +98,8 @@ Class Reference
         :returns: ``$_ENV`` item value if found, null if not
         :rtype:   mixed
 
-        This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getEnv data (``$_ENV``):
+        This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
+        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches env data (``$_ENV``):
 
         .. literalinclude:: request/006.php
 
