@@ -8,7 +8,7 @@ like would be used to send a request from the application to a third-party appli
 
 This class
 provides the common functionality they both need, but both cases have custom classes that extend
-from the Request class to add specific functionality.
+from the Request class to add specific functionality. In practice, you will need to use these classes.
 
 See the documentation for the :doc:`IncomingRequest Class </incoming/incomingrequest>` and
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
