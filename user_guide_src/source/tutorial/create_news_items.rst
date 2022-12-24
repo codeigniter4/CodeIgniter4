@@ -90,7 +90,8 @@ Most helper functions require the helper to be loaded before use.
 Next, we check if we deal with the **POST** request with the
 :doc:`IncomingRequest <../incoming/incomingrequest>` object ``$this->request``.
 It is set in the controller by the framework.
-If the HTTP method is not POST, that is it is GET,
+The :ref:`IncomingRequest::is() <incomingrequest-is>` method checks the type of the request.
+If the request is not a POST request, that is it is a GET request,
 the form is loaded and returned to display.
 
 Then, we get the necessary items from the POST data by the user and set them in the ``$post`` variable.
