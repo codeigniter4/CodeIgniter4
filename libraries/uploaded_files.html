@@ -411,11 +411,13 @@ this code and save it to your <strong>app/Controllers/</strong> directory:</p>
         <span class="nv">$validationRule</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
                 <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Image File&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;uploaded[userfile]&#39;</span>
-                    <span class="o">.</span> <span class="s1">&#39;|is_image[userfile]&#39;</span>
-                    <span class="o">.</span> <span class="s1">&#39;|mime_in[userfile,image/jpg,image/jpeg,image/gif,image/png,image/webp]&#39;</span>
-                    <span class="o">.</span> <span class="s1">&#39;|max_size[userfile,100]&#39;</span>
-                    <span class="o">.</span> <span class="s1">&#39;|max_dims[userfile,1024,768]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rules&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                    <span class="s1">&#39;uploaded[userfile]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;is_image[userfile]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;mime_in[userfile,image/jpg,image/jpeg,image/gif,image/png,image/webp]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;max_size[userfile,100]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;max_dims[userfile,1024,768]&#39;</span><span class="p">,</span>
+                <span class="p">],</span>
             <span class="p">],</span>
         <span class="p">];</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$validationRule</span><span class="p">))</span> <span class="p">{</span>
@@ -429,10 +431,11 @@ this code and save it to your <strong>app/Controllers/</strong> directory:</p>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">hasMoved</span><span class="p">())</span> <span class="p">{</span>
             <span class="nv">$filepath</span> <span class="o">=</span> <span class="nx">WRITEPATH</span> <span class="o">.</span> <span class="s1">&#39;uploads/&#39;</span> <span class="o">.</span> <span class="nv">$img</span><span class="o">-&gt;</span><span class="na">store</span><span class="p">();</span>
 
-            <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;uploaded_flleinfo&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">File</span><span class="p">(</span><span class="nv">$filepath</span><span class="p">)];</span>
+            <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;uploaded_fileinfo&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">File</span><span class="p">(</span><span class="nv">$filepath</span><span class="p">)];</span>
 
             <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_success&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
         <span class="p">}</span>
+
         <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The file has already been moved.&#39;</span><span class="p">];</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;upload_form&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
@@ -792,7 +795,7 @@ passing it as the second parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 22, 2022.
+      <span class="lastupdated">Last updated on Dec 24, 2022.
       </span></p>
   </div>
 
