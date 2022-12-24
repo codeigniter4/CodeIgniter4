@@ -77,7 +77,7 @@ class Routes extends BaseCommand
      */
     public function run(array $params)
     {
-        $sortByHandler = array_key_exists('h', $params) ? true : false;
+        $sortByHandler = array_key_exists('h', $params);
 
         $collection = Services::routes()->loadRoutes();
         $methods    = [
