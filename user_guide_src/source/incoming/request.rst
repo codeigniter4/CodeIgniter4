@@ -4,7 +4,9 @@ Request Class
 
 The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
-like would be used to send a request from the application to a third-party application. This class
+like would be used to send a request from the application to a third-party application.
+
+This class
 provides the common functionality they both need, but both cases have custom classes that extend
 from the Request class to add specific functionality.
 
