@@ -77,7 +77,7 @@ Class Reference
         :param    mixed     $index: Value name
         :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
         :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns: $_SERVER item value if found, null if not
+        :returns: ``$_SERVER`` item value if found, null if not
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
@@ -95,7 +95,7 @@ Class Reference
         :param    mixed     $index: Value name
         :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
         :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns: $_ENV item value if found, null if not
+        :returns: ``$_ENV`` item value if found, null if not
         :rtype:   mixed
 
         This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
@@ -115,7 +115,7 @@ Class Reference
         :returns: HTTP request method
         :rtype:    Request
 
-        Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
+        Allows manually setting the value of PHP global, like ``$_GET``, ``$_POST``, etc.
 
     .. php:method:: fetchGlobal($method [, $index = null[, $filter = null[, $flags = null]]])
 
