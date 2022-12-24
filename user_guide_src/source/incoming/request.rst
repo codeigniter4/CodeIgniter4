@@ -36,6 +36,9 @@ Class Reference
 
     .. php:method:: isValidIP($ip[, $which = ''])
 
+        .. deprecated:: 4.0.5
+           Use :doc:`../libraries/validation` instead.
+
         .. important:: This method is deprecated. It will be removed in future releases.
 
         :param    string $ip: IP address
@@ -67,6 +70,9 @@ Class Reference
         .. literalinclude:: request/003.php
 
     .. php:method:: setMethod($method)
+
+        .. deprecated:: 4.0.5
+           Use :php:meth:`CodeIgniter\\HTTP\\Request::withMethod()` instead.
 
         :param string $upper: Sets the request method. Used when spoofing the request.
         :returns: HTTP request method
