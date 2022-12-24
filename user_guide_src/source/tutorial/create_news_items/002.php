@@ -13,7 +13,7 @@ class News extends BaseController
         helper('form');
 
         // Checks whether the form is submitted.
-        if (strtolower($this->request->getMethod()) !== 'post') {
+        if (! $this->request->is('post')) {
             // The form is not submitted, so returns the form.
             return view('templates/header', ['title' => 'Create a news item'])
                 . view('news/create')
