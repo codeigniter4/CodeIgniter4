@@ -44,7 +44,7 @@ Additional related deprecations from the HTTP layer:
 **ResponseInterface**
 
 This interface intends to include the necessary methods for any framework-compatible response class.
-A number of methods expected by the framework were missing and have noe been added. If you use any
+A number of methods expected by the framework were missing and have now been added. If you use any
 classes the implement ``ResponseInterface`` directly they will need to be compatible with the
 updated requirements. These methods are as follows:
 
