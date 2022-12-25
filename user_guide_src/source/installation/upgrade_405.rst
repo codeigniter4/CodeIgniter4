@@ -48,22 +48,22 @@ A number of methods expected by the framework were missing and have now been add
 classes the implement ``ResponseInterface`` directly they will need to be compatible with the
 updated requirements. These methods are as follows:
 
-* ``setLastModified($date);``
-* ``setLink(PagerInterface $pager);``
-* ``setJSON($body, bool $unencoded = false);``
-* ``getJSON();``
-* ``setXML($body);``
-* ``getXML();``
-* ``send();``
-* ``sendHeaders();``
-* ``sendBody();``
-* ``setCookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = false, $httponly = false, $samesite = null);``
-* ``hasCookie(string $name, string $value = null, string $prefix = ''): bool;``
-* ``getCookie(string $name = null, string $prefix = '');``
-* ``deleteCookie(string $name = '', string $domain = '', string $path = '/', string $prefix = '');``
-* ``getCookies();``
-* ``redirect(string $uri, string $method = 'auto', int $code = null);``
-* ``download(string $filename = '', $data = '', bool $setMime = false);``
+* ``setLastModified($date)``
+* ``setLink(PagerInterface $pager)``
+* ``setJSON($body, bool $unencoded = false)``
+* ``getJSON(;``
+* ``setXML($body)``
+* ``getXML()``
+* ``send()``
+* ``sendHeaders()``
+* ``sendBody()``
+* ``setCookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = false, $httponly = false, $samesite = null)``
+* ``hasCookie(string $name, string $value = null, string $prefix = ''): bool``
+* ``getCookie(string $name = null, string $prefix = '')``
+* ``deleteCookie(string $name = '', string $domain = '', string $path = '/', string $prefix = '')``
+* ``getCookies()``
+* ``redirect(string $uri, string $method = 'auto', int $code = null)``
+* ``download(string $filename = '', $data = '', bool $setMime = false)``
 
 To facilitate use of this interface these methods have been moved from the framework's ``Response`` into a ``ResponseTrait``
 which you may use, and ``DownloadResponse`` now extends ``Response`` directly to ensure maximum compatibility.
