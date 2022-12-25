@@ -319,6 +319,44 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
     }
 
+    public function testLinkTagFavicon()
+    {
+        $tag = link_tag('favicon.ico', 'shortcut icon', 'image/ico');
+
+        $expected = '<link href="http://example.com/favicon.ico" rel="shortcut icon" type="image/ico" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagRss()
+    {
+        $tag = link_tag('feed', 'alternate', 'application/rss+xml', 'My RSS Feed');
+
+        $expected = '<link href="http://example.com/feed" rel="alternate" type="application/rss+xml" title="My RSS Feed" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagAlternate()
+    {
+        $tag = link_tag(
+            'http://sp.example.com/',
+            'alternate',
+            '',
+            '',
+            'only screen and (max-width: 640px)'
+        );
+
+        $expected = '<link href="http://sp.example.com/" rel="alternate" media="only screen and (max-width: 640px)" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagCanonical()
+    {
+        $tag = link_tag('http://www.example.com/', 'canonical');
+
+        $expected = '<link href="http://www.example.com/" rel="canonical" />';
+        $this->assertSame($expected, $tag);
+    }
+
     public function testLinkTagArray()
     {
         $parms = [
