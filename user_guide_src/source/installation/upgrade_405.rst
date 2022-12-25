@@ -16,7 +16,7 @@ Please refer to the upgrade instructions corresponding to your installation meth
 
 CodeIgniter 4.0.5 introduces a setting for the cookie SameSite attribute. Prior versions did not set this
 attribute at all. The default setting for cookies is now `Lax`. This will affect how cookies are handled in
-cross-domain contexts and you may need to adjust this setting in your projects. Separate settings in `app/Config/App.php`
+cross-domain contexts and you may need to adjust this setting in your projects. Separate settings in **app/Config/App.php**
 exists for Response cookies and for CSRF cookies.
 
 For additional information, see `MDN Web Docs <https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Set-Cookie/SameSite>`_.
