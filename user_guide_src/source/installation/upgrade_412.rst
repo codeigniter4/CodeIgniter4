@@ -12,7 +12,11 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**current_url() and indexPage**
+Breaking Changes
+****************
+
+current_url() and indexPage
+===========================
 
 Due to `a bug <https://github.com/codeigniter4/CodeIgniter4/issues/4116>`_ in ``current_url()``,
 the resulting URIs could be incorrect for a project's configuration, most importantly: ``indexPage``
@@ -20,7 +24,8 @@ would *not* be included. Projects using ``App::$indexPage`` should expect altere
 ``current_url()`` and all its dependencies (including Response Testing, Pager, Form Helper, Pager,
 and View Parser). Update your projects accordingly.
 
-**Cache Keys**
+Cache Keys
+==========
 
 Cache handlers had wildly different compatibility for keys. The updated cache drivers now pass
 all keys through validation, roughly matching PSR-6's recommendations:
@@ -35,7 +40,8 @@ all keys through validation, roughly matching PSR-6's recommendations:
 
 Update your projects to remove any invalid cache keys.
 
-**BaseConnection::query() return values**
+BaseConnection::query() Return Values
+=====================================
 
 ``BaseConnection::query()`` method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return ``false`` for failed queries (or throw an
@@ -44,13 +50,18 @@ of ``query()`` method and be assess whether the value might be boolean instead o
 For a better idea of what queries are write-type queries, check ``BaseConnection::isWriteType()``
 and any DBMS-specific override ``isWriteType()`` in the relevant Connection class.
 
-**ConnectionInterface::isWriteType() declaration added**
+Breaking Enhancements
+*********************
+
+ConnectionInterface::isWriteType() Declaration Added
+====================================================
 
 If you have written any classes that implement ConnectionInterface, these must now implement the
 ``isWriteType()`` method, declared as ``public function isWriteType($sql): bool``. If your class extends BaseConnection, then that class will provide a basic ``isWriteType()``
 method which you might want to override.
 
-**Test Traits**
+Test Traits
+===========
 
 The ``CodeIgniter\Test`` namespace has had significant improvements to help developers with their
 own test cases. Most notably test extensions have moved to Traits to make them easier to
@@ -68,7 +79,8 @@ and use any traits you need. For example:
 Finally, ``ControllerTester`` has been superseded by ``ControllerTestTrait`` to standardize
 approach and take advantage of the updated response testing (below).
 
-**Test Responses**
+Test Responses
+==============
 
 The tools for testing responses have been consolidated and improved. A new
 ``TestResponse`` replaces ``ControllerResponse`` and ``FeatureResponse`` with a complete
@@ -80,7 +92,7 @@ changes to be aware of:
 * ``TestResponse`` does not have ``getBody()`` and ``setBody()`` methods, but rather uses the Response methods directly, e.g.: ``$body = $result->response()->getBody();``
 
 Project Files
-=============
+*************
 
 Numerous files in the project space (root, app, public, writable) received updates. Due to
 these files being outside of the system scope they will not be changed without your intervention.
@@ -92,7 +104,7 @@ the project space: `Explore on Packagist <https://packagist.org/explore/?query=c
     and any mandatory changes will be covered in the sections above.
 
 Content Changes
----------------
+===============
 
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
@@ -108,7 +120,7 @@ and it is recommended that you merge the updated versions with your application:
 * ``spark``
 
 All Changes
------------
+===========
 
 This is a list of all files in the project space that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
