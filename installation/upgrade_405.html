@@ -295,7 +295,7 @@
 <p><strong>Cookie SameSite support</strong></p>
 <p>CodeIgniter 4.0.5 introduces a setting for the cookie SameSite attribute. Prior versions did not set this
 attribute at all. The default setting for cookies is now <cite>Lax</cite>. This will affect how cookies are handled in
-cross-domain contexts and you may need to adjust this setting in your projects. Separate settings in <cite>app/Config/App.php</cite>
+cross-domain contexts and you may need to adjust this setting in your projects. Separate settings in <strong>app/Config/App.php</strong>
 exists for Response cookies and for CSRF cookies.</p>
 <p>For additional information, see <a class="reference external" href="https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Set-Cookie/SameSite">MDN Web Docs</a>.
 The SameSite specifications are described in <a class="reference external" href="https://tools.ietf.org/html/rfc6265">RFC 6265</a>
@@ -307,8 +307,8 @@ with <code class="docutils literal notranslate"><span class="pre">Message::heade
 to all classes that extend <code class="docutils literal notranslate"><span class="pre">Message</span></code> as well: <code class="docutils literal notranslate"><span class="pre">Request</span></code>, <code class="docutils literal notranslate"><span class="pre">Response</span></code> and their subclasses.</p>
 <p>Additional related deprecations from the HTTP layer:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Message::isJSON</span></code>: Check the “Content-Type” header directly</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::isValidIP</span></code>: Use the Validation class with <code class="docutils literal notranslate"><span class="pre">valid_ip</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Message::isJSON()</span></code>: Check the “Content-Type” header directly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::isValidIP()</span></code>: Use the Validation class with <code class="docutils literal notranslate"><span class="pre">valid_ip</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request[Interface]::getMethod()</span></code>: The <code class="docutils literal notranslate"><span class="pre">$upper</span></code> parameter will be removed, use str_to_upper()</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request[Trait]::$ipAddress</span></code>: This property will become private</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Request::$proxyIPs</span></code>: This property will be removed; access <code class="docutils literal notranslate"><span class="pre">config('App')-&gt;proxyIPs</span></code> directly</p></li>
@@ -318,26 +318,26 @@ to all classes that extend <code class="docutils literal notranslate"><span clas
 </ul>
 <p><strong>ResponseInterface</strong></p>
 <p>This interface intends to include the necessary methods for any framework-compatible response class.
-A number of methods expected by the framework were missing and have noe been added. If you use any
+A number of methods expected by the framework were missing and have now been added. If you use any
 classes the implement <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code> directly they will need to be compatible with the
 updated requirements. These methods are as follows:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">setLastModified($date);</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">setLink(PagerInterface</span> <span class="pre">$pager);</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">setJSON($body,</span> <span class="pre">bool</span> <span class="pre">$unencoded</span> <span class="pre">=</span> <span class="pre">false);</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">getJSON();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">setXML($body);</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">getXML();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">send();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sendHeaders();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sendBody();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">setCookie($name,</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$expire</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/',</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">false,</span> <span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">false,</span> <span class="pre">$samesite</span> <span class="pre">=</span> <span class="pre">null);</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hasCookie(string</span> <span class="pre">$name,</span> <span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''):</span> <span class="pre">bool;</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">getCookie(string</span> <span class="pre">$name</span> <span class="pre">=</span> <span class="pre">null,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'');</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">deleteCookie(string</span> <span class="pre">$name</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">string</span> <span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">string</span> <span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/',</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'');</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">getCookies();</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">redirect(string</span> <span class="pre">$uri,</span> <span class="pre">string</span> <span class="pre">$method</span> <span class="pre">=</span> <span class="pre">'auto',</span> <span class="pre">int</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null);</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">download(string</span> <span class="pre">$filename</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$data</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">bool</span> <span class="pre">$setMime</span> <span class="pre">=</span> <span class="pre">false);</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setLastModified($date)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setLink(PagerInterface</span> <span class="pre">$pager)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setJSON($body,</span> <span class="pre">bool</span> <span class="pre">$unencoded</span> <span class="pre">=</span> <span class="pre">false)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getJSON()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setXML($body)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getXML()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">send()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sendHeaders()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sendBody()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setCookie($name,</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$expire</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/',</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$secure</span> <span class="pre">=</span> <span class="pre">false,</span> <span class="pre">$httponly</span> <span class="pre">=</span> <span class="pre">false,</span> <span class="pre">$samesite</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hasCookie(string</span> <span class="pre">$name,</span> <span class="pre">string</span> <span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">''):</span> <span class="pre">bool</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getCookie(string</span> <span class="pre">$name</span> <span class="pre">=</span> <span class="pre">null,</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'')</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deleteCookie(string</span> <span class="pre">$name</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">string</span> <span class="pre">$domain</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">string</span> <span class="pre">$path</span> <span class="pre">=</span> <span class="pre">'/',</span> <span class="pre">string</span> <span class="pre">$prefix</span> <span class="pre">=</span> <span class="pre">'')</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getCookies()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">redirect(string</span> <span class="pre">$uri,</span> <span class="pre">string</span> <span class="pre">$method</span> <span class="pre">=</span> <span class="pre">'auto',</span> <span class="pre">int</span> <span class="pre">$code</span> <span class="pre">=</span> <span class="pre">null)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">download(string</span> <span class="pre">$filename</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">$data</span> <span class="pre">=</span> <span class="pre">'',</span> <span class="pre">bool</span> <span class="pre">$setMime</span> <span class="pre">=</span> <span class="pre">false)</span></code></p></li>
 </ul>
 <p>To facilitate use of this interface these methods have been moved from the framework’s <code class="docutils literal notranslate"><span class="pre">Response</span></code> into a <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>
 which you may use, and <code class="docutils literal notranslate"><span class="pre">DownloadResponse</span></code> now extends <code class="docutils literal notranslate"><span class="pre">Response</span></code> directly to ensure maximum compatibility.</p>
@@ -441,7 +441,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 24, 2022.
+      <span class="lastupdated">Last updated on Dec 25, 2022.
       </span></p>
   </div>
 
