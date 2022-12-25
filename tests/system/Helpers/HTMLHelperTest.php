@@ -367,6 +367,18 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, link_tag($parms));
     }
 
+    public function testLinkTagArrayHreflang()
+    {
+        $tag = link_tag([
+            'href'     => 'https://example.com/en',
+            'rel'      => 'alternate',
+            'hreflang' => 'x-default',
+        ]);
+
+        $expected = '<link href="https://example.com/en" hreflang="x-default" rel="alternate" />';
+        $this->assertSame($expected, $tag);
+    }
+
     public function testDocType()
     {
         $target   = 'html4-strict';
