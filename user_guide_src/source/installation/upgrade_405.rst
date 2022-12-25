@@ -51,7 +51,7 @@ updated requirements. These methods are as follows:
 * ``setLastModified($date)``
 * ``setLink(PagerInterface $pager)``
 * ``setJSON($body, bool $unencoded = false)``
-* ``getJSON(;``
+* ``getJSON()``
 * ``setXML($body)``
 * ``getXML()``
 * ``send()``
