@@ -7,7 +7,12 @@ We try to develop our products to be as backward compatible (BC) as possible.
 Only major releases (such as 4.0, 5.0 etc.) are allowed to break backward compatibility.
 Minor releases (such as 4.2, 4.3 etc.) may introduce new features, but must do so without breaking the existing API.
 
-However, the code is not mature and bug fixes may break compatibility in minor releases, or even in patch releases (such as 4.2.5). In that case, all the breaking changes are described in the :doc:`../changelogs/index`.
+However, the code is not mature and bug fixes may break compatibility in **minor** releases, or even in **patch** releases (such as 4.2.5).
+
+Deprecated functionality may be removed in the next **minor** version or later.
+Please discontinue use as soon as possible.
+
+In any case, all the breaking changes are described in the :doc:`../changelogs/index`.
 
 *****************************
 What are not Breaking Changes
