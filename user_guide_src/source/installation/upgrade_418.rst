@@ -15,4 +15,4 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
--  Due to a security issue in the ``API\ResponseTrait`` all trait methods are now scoped to ``protected``. See the `Security advisory` <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7528-7jg5-6g62>` for more information.
+-  Due to a security issue in the ``API\ResponseTrait`` all trait methods are now scoped to ``protected``. See the `Security advisory GHSA-7528-7jg5-6g62 <https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-7528-7jg5-6g62>`_ for more information.
