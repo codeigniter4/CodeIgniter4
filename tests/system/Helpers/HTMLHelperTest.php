@@ -312,11 +312,21 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, link_tag($target));
     }
 
-    public function testLinkTagComplete()
+    public function testLinkTagMedia()
     {
-        $target   = 'https://styles.com/css/mystyles.css';
-        $expected = '<link href="https://styles.com/css/mystyles.css" rel="banana" type="fruit" media="VHS" title="Go away" />';
-        $this->assertSame($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
+        $target = 'https://styles.com/css/mystyles.css';
+        $tag    = link_tag($target, 'stylesheet', 'text/css', '', 'print');
+
+        $expected = '<link href="https://styles.com/css/mystyles.css" rel="stylesheet" type="text/css" media="print" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagTitle()
+    {
+        $tag = link_tag('default.css', 'stylesheet', 'text/css', 'Default Style');
+
+        $expected = '<link href="http://example.com/default.css" rel="stylesheet" type="text/css" title="Default Style" />';
+        $this->assertSame($expected, $tag);
     }
 
     public function testLinkTagFavicon()
@@ -344,6 +354,18 @@ final class HTMLHelperTest extends CIUnitTestCase
             '',
             'only screen and (max-width: 640px)'
         );
+
+        $expected = '<link href="http://sp.example.com/" rel="alternate" media="only screen and (max-width: 640px)" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagArrayAlternate()
+    {
+        $tag = link_tag([
+            'href'  => 'http://sp.example.com/',
+            'rel'   => 'alternate',
+            'media' => 'only screen and (max-width: 640px)',
+        ]);
 
         $expected = '<link href="http://sp.example.com/" rel="alternate" media="only screen and (max-width: 640px)" />';
         $this->assertSame($expected, $tag);

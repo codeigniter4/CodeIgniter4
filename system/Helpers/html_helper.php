@@ -265,7 +265,7 @@ if (! function_exists('link_tag')) {
 
         $link .= 'rel="' . $rel . '" ';
 
-        if ($type !== '' && $rel !== 'canonical' && $hreflang === '') {
+        if ($type !== '' && $rel !== 'canonical' && $hreflang === '' && ! ($rel === 'alternate' && $media !== '')) {
             $link .= 'type="' . $type . '" ';
         }
 
