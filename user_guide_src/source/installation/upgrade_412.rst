@@ -45,7 +45,7 @@ BaseConnection::query() Return Values
 
 ``BaseConnection::query()`` method in prior versions was incorrectly returning BaseResult objects
 even if the query failed. This method will now return ``false`` for failed queries (or throw an
-Exception if ``DBDebug==true``) and will return booleans for write-type queries. Review any use
+Exception if ``DBDebug`` is ``true``) and will return booleans for write-type queries. Review any use
 of ``query()`` method and be assess whether the value might be boolean instead of Result object.
 For a better idea of what queries are write-type queries, check ``BaseConnection::isWriteType()``
 and any DBMS-specific override ``isWriteType()`` in the relevant Connection class.
