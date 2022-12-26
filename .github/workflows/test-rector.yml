@@ -33,6 +33,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: PHP ${{ matrix.php-versions }} Analyze code (Rector) on ${{ matrix.paths }}

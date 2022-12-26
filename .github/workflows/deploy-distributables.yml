@@ -9,6 +9,8 @@ on:
 jobs:
   check-version:
     name: Check for updated version
+    permissions:
+      contents: read
     runs-on: ubuntu-22.04
 
     steps:
@@ -31,6 +33,10 @@ jobs:
 
   framework:
     name: Deploy to framework
+    permissions:
+      # Allow actions/github-script to create release
+      contents: write
+      pull-requests: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
     needs: check-version
@@ -78,6 +84,10 @@ jobs:
 
   appstarter:
     name: Deploy to appstarter
+    permissions:
+      # Allow actions/github-script to create release
+      contents: write
+      pull-requests: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
     needs: check-version
@@ -125,6 +135,10 @@ jobs:
 
   userguide:
     name: Deploy to userguide
+    permissions:
+      # Allow actions/github-script to create release
+      contents: write
+      pull-requests: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
     needs: check-version
