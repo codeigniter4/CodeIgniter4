@@ -109,6 +109,24 @@ Helpers
 =======
 
 - Helpers are pretty much the same as before, though some have been simplified.
+- Some helpers from CodeIgniter 3 no longer exists in Version 4. For all these
+  helpers, you have to find a new way to implement your functions. These
+  helpers are `CAPTCHA Helper <https://www.codeigniter.com/userguide3/helpers/captcha_helper.html>`_,
+  `Email Helper <https://www.codeigniter.com/userguide3/helpers/email_helper.html>`_.
+  `Path Helper <https://www.codeigniter.com/userguide3/helpers/path_helper.html>`_.
+  and `Smiley Helper <https://www.codeigniter.com/userguide3/helpers/smiley_helper.html>`_.
+- `Download Helper <https://www.codeigniter.com/userguide3/helpers/download_helper.html>`_
+  in CI3 was removed. You need to use Response object where you are using ``force_download()``.
+  See :ref:`force-file-download`.
+- `Language Helper <https://www.codeigniter.com/userguide3/helpers/language_helper.html>`_
+  in CI3 was removed. But ``lang()`` is always available in CI4. See :php:func:`lang()`.
+- `Typography Helper <https://www.codeigniter.com/userguide3/helpers/typography_helper.html>`_
+  in CI3 wll be :doc:`Typography Library <../libraries/typography>` in CI4.
+- `Directory Helper <https://www.codeigniter.com/userguide3/helpers/directory_helper.html>`_
+  and `File Helper <https://www.codeigniter.com/userguide3/helpers/file_helper.html>`_ in CI3
+  will be :doc:`../helpers/filesystem_helper` in CI4.
+- `String Helper <https://www.codeigniter.com/userguide3/helpers/string_helper.html>`_ functions
+  in CI3 are included in :doc:`../helpers/text_helper` in CI4.
 - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_

@@ -59,6 +59,8 @@ parameter. This is not case-sensitive.
 
 .. literalinclude:: response/006.php
 
+.. _force-file-download:
+
 Force File Download
 ===================
 
