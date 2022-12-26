@@ -83,7 +83,7 @@ interface CacheInterface
      * The information returned and the structure of the data
      * varies depending on the handler.
      *
-     * @return array|bool|float|int|object|string|null
+     * @return array|bool|object|null
      */
     public function getCacheInfo();
 
