@@ -282,9 +282,21 @@
 <li><p><a class="reference internal" href="installing_composer.html#adding-codeigniter4-upgrading"><span class="std std-ref">Composer Installation Adding CodeIgniter4 to an Existing Project Upgrading</span></a></p></li>
 <li><p><a class="reference internal" href="installing_manual.html#installing-manual-upgrading"><span class="std std-ref">Manual Installation Upgrading</span></a></p></li>
 </ul>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#update-filterinterface-declarations" id="id2">Update FilterInterface Declarations</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
 <p>CodeIgniter 4.0.4 fixes a bug in the implementation of <a class="reference internal" href="../incoming/filters.html"><span class="doc">Controller Filters</span></a>, breaking
 code implementing the <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>.</p>
-<p><strong>Update FilterInterface declarations</strong></p>
+<section id="breaking-changes">
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<section id="update-filterinterface-declarations">
+<h3><a class="toc-backref" href="#id2">Update FilterInterface Declarations</a><a class="headerlink" href="#update-filterinterface-declarations" title="Permalink to this headline"></a></h3>
 <p>The method signatures for <code class="docutils literal notranslate"><span class="pre">after()</span></code> and <code class="docutils literal notranslate"><span class="pre">before()</span></code> must be updated to include <code class="docutils literal notranslate"><span class="pre">$arguments</span></code>. The function
 definitions should be changed from:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">before</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">)</span>
@@ -296,6 +308,8 @@ definitions should be changed from:</p>
 <span class="k">public</span> <span class="k">function</span> <span class="nf">after</span><span class="p">(</span><span class="nx">RequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">,</span> <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+</section>
 </section>
 
 
@@ -310,7 +324,7 @@ definitions should be changed from:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 25, 2022.
+      <span class="lastupdated">Last updated on Dec 26, 2022.
       </span></p>
   </div>
 

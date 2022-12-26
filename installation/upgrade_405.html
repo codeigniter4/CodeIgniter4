@@ -284,15 +284,26 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#project-files" id="id1">Project Files</a></p>
+<li><p><a class="reference internal" href="#breaking-enhancements" id="id1">Breaking Enhancements</a></p>
 <ul>
-<li><p><a class="reference internal" href="#content-changes" id="id2">Content Changes</a></p></li>
-<li><p><a class="reference internal" href="#all-changes" id="id3">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#cookie-samesite-support" id="id2">Cookie SameSite Support</a></p></li>
+<li><p><a class="reference internal" href="#message-getheader-s" id="id3">Message::getHeader(s)</a></p></li>
+<li><p><a class="reference internal" href="#responseinterface" id="id4">ResponseInterface</a></p></li>
+<li><p><a class="reference internal" href="#config-services" id="id5">Config\Services</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#project-files" id="id6">Project Files</a></p>
+<ul>
+<li><p><a class="reference internal" href="#content-changes" id="id7">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id8">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<p><strong>Cookie SameSite support</strong></p>
+<section id="breaking-enhancements">
+<h2><a class="toc-backref" href="#id1">Breaking Enhancements</a><a class="headerlink" href="#breaking-enhancements" title="Permalink to this headline"></a></h2>
+<section id="cookie-samesite-support">
+<h3><a class="toc-backref" href="#id2">Cookie SameSite Support</a><a class="headerlink" href="#cookie-samesite-support" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter 4.0.5 introduces a setting for the cookie SameSite attribute. Prior versions did not set this
 attribute at all. The default setting for cookies is now <cite>Lax</cite>. This will affect how cookies are handled in
 cross-domain contexts and you may need to adjust this setting in your projects. Separate settings in <strong>app/Config/App.php</strong>
@@ -300,7 +311,9 @@ exists for Response cookies and for CSRF cookies.</p>
 <p>For additional information, see <a class="reference external" href="https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Set-Cookie/SameSite">MDN Web Docs</a>.
 The SameSite specifications are described in <a class="reference external" href="https://tools.ietf.org/html/rfc6265">RFC 6265</a>
 and the <a class="reference external" href="https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/?include_text=1">RFC 6265bis revision</a>.</p>
-<p><strong>Message::getHeader(s)</strong></p>
+</section>
+<section id="message-getheader-s">
+<h3><a class="toc-backref" href="#id3">Message::getHeader(s)</a><a class="headerlink" href="#message-getheader-s" title="Permalink to this headline"></a></h3>
 <p>The HTTP layer is moving towards <a class="reference external" href="https://www.php-fig.org/psr/psr-7/">PSR-7 compliance</a>. Towards this end
 <code class="docutils literal notranslate"><span class="pre">Message::getHeader()</span></code> and <code class="docutils literal notranslate"><span class="pre">Message::getHeaders()</span></code> are deprecated and should be replaced
 with <code class="docutils literal notranslate"><span class="pre">Message::header()</span></code> and <code class="docutils literal notranslate"><span class="pre">Message::headers()</span></code> respectively. Note that this pertains
@@ -316,7 +329,9 @@ to all classes that extend <code class="docutils literal notranslate"><span clas
 <li><p><code class="docutils literal notranslate"><span class="pre">Response[Interface]::getReason()</span></code>: Use <code class="docutils literal notranslate"><span class="pre">getReasonPhrase()</span></code> instead</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Response[Interface]::getStatusCode()</span></code>: The explicit <code class="docutils literal notranslate"><span class="pre">int</span></code> return type will be removed (no action required)</p></li>
 </ul>
-<p><strong>ResponseInterface</strong></p>
+</section>
+<section id="responseinterface">
+<h3><a class="toc-backref" href="#id4">ResponseInterface</a><a class="headerlink" href="#responseinterface" title="Permalink to this headline"></a></h3>
 <p>This interface intends to include the necessary methods for any framework-compatible response class.
 A number of methods expected by the framework were missing and have now been added. If you use any
 classes the implement <code class="docutils literal notranslate"><span class="pre">ResponseInterface</span></code> directly they will need to be compatible with the
@@ -341,11 +356,15 @@ updated requirements. These methods are as follows:</p>
 </ul>
 <p>To facilitate use of this interface these methods have been moved from the framework’s <code class="docutils literal notranslate"><span class="pre">Response</span></code> into a <code class="docutils literal notranslate"><span class="pre">ResponseTrait</span></code>
 which you may use, and <code class="docutils literal notranslate"><span class="pre">DownloadResponse</span></code> now extends <code class="docutils literal notranslate"><span class="pre">Response</span></code> directly to ensure maximum compatibility.</p>
-<p><strong>ConfigServices</strong></p>
+</section>
+<section id="config-services">
+<h3><a class="toc-backref" href="#id5">Config\Services</a><a class="headerlink" href="#config-services" title="Permalink to this headline"></a></h3>
 <p>Service discovery has been updated to allow third-party services (when enabled via Modules) to take precedence over core services. Update
 <strong>app/Config/Services.php</strong> so the class extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code> to allow proper discovery of third-party services.</p>
+</section>
+</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id1">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>Numerous files in the project space (root, app, public, writable) received updates. Due to
 these files being outside of the system scope they will not be changed without your intervention.
 There are some third-party CodeIgniter modules available to assist with merging changes to
@@ -357,7 +376,7 @@ will break your application. All changes noted here are optional until the next 
 and any mandatory changes will be covered in the sections above.</p>
 </div>
 <section id="content-changes">
-<h3><a class="toc-backref" href="#id2">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
 <p>The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:</p>
 <ul class="simple">
@@ -370,7 +389,7 @@ and it is recommended that you merge the updated versions with your application:
 </ul>
 </section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id3">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the project space that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
@@ -441,7 +460,7 @@ many will be simple comments or formatting that have no effect on the runtime:</
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 25, 2022.
+      <span class="lastupdated">Last updated on Dec 26, 2022.
       </span></p>
   </div>
 

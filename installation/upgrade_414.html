@@ -284,13 +284,21 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#project-files" id="id1">Project Files</a></p></li>
+<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#method-scope" id="id2">Method Scope</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#project-files" id="id3">Project Files</a></p></li>
 </ul>
 </div>
 <p>This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
 <a class="reference external" href="https://github.com/CodeIgniter/coding-standard">CodeIgniter Coding Standard</a> (based on PSR-12).</p>
-<p><strong>Method Scope</strong></p>
-<p>The following methods were changed from “public” to “protected” to match their parent class methods and better align with their uses.
+<section id="breaking-changes">
+<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
+<section id="method-scope">
+<h3><a class="toc-backref" href="#id2">Method Scope</a><a class="headerlink" href="#method-scope" title="Permalink to this headline"></a></h3>
+<p>The following methods were changed from <code class="docutils literal notranslate"><span class="pre">public</span></code> to <code class="docutils literal notranslate"><span class="pre">protected</span></code> to match their parent class methods and better align with their uses.
 If you relied on any of these methods being public (highly unlikely) adjust your code accordingly:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Database\MySQLi\Connection::execute()</span></code></p></li>
@@ -317,8 +325,10 @@ If you relied on any of these methods being public (highly unlikely) adjust your
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Mock\MockIncomingRequest::detectURI()</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">CodeIgniter\Test\Mock\MockSecurity.php::sendCookie()</span></code></p></li>
 </ul>
+</section>
+</section>
 <section id="project-files">
-<h2><a class="toc-backref" href="#id1">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
 <p>All files in the project space were reformatted with the new coding style. This will not affect
 existing code but you may want to apply the updated coding style to your own projects to keep
 them in line with the framework’s version of these files.</p>
@@ -337,7 +347,7 @@ them in line with the framework’s version of these files.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 25, 2022.
+      <span class="lastupdated">Last updated on Dec 26, 2022.
       </span></p>
   </div>
 
