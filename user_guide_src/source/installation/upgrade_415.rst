@@ -24,7 +24,7 @@ and modified the ``set()`` method, then you need to change its definition from
 ``public function set($key, ?string $value = '', ?bool $escape = null)`` to
 ``public function set($key, $value = '', ?bool $escape = null)``.
 
-Session DatabaseHandler's database table change
+Session DatabaseHandler's Database Table Change
 -----------------------------------------------
 
 The types of the following columns in the session table have been changed for optimization.
@@ -60,7 +60,7 @@ Protecting **GET** method needs only when you use ``form_open()`` auto-generatio
     because :ref:`auto-routing-legacy` permits any HTTP method to access a controller.
     Accessing the controller with a method you don't expect could bypass the filter.
 
-CURLRequest header change
+CURLRequest Header Change
 -------------------------
 
 In the previous version, if you didn't provide your own headers, ``CURLRequest`` would send the request-headers from the browser.
@@ -68,7 +68,7 @@ The bug was fixed. If your requests depend on the headers, your requests might f
 In this case, add the necessary headers manually.
 See :ref:`CURLRequest Class <curlrequest-request-options-headers>` for how to add.
 
-Query Builder changes
+Query Builder Changes
 ---------------------
 
 For optimization and a bug fix, the following behaviors, mostly used in testing, have been changed.
@@ -81,7 +81,7 @@ Breaking Enhancements
 
 .. _upgrade-415-multiple-filters-for-a-route:
 
-Multiple filters for a route
+Multiple Filters for a Route
 ----------------------------
 
 A new feature to set multiple filters for a route.

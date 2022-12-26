@@ -15,7 +15,8 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Breaking Changes
 ****************
 
-**Legacy Autoloading**
+Legacy Autoloading
+==================
 
 ``Autoloader::loadLegacy()`` method was originally for transition to CodeIgniter v4. Since v4.1.0,
 this support was removed. All classes must be namespaced.
