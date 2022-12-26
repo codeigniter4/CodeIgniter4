@@ -35,8 +35,8 @@ General Adjustments
 Downloads
 =========
 
-- CI4 is still available as a ready-to-run zip or tarball.
-- It can also be installed using Composer.
+- CI4 is still available as a :doc:`ready-to-run zip or tarball <../installation/installing_manual>`.
+- It can also be installed using :doc:`Composer <../installation/installing_composer>`.
 
 Namespaces
 ==========
@@ -90,10 +90,10 @@ Class Loading
 
 - There is no longer a CodeIgniter "superobject", with framework component
   references magically injected as properties of your controller.
-- Classes are instantiated where needed, and components are managed
-  by ``Services``.
-- The class loader automatically handles PSR-4 style class locating,
-  within the ``App`` (**app**) and ``CodeIgniter`` (i.e., **system**) top level
+- Classes are instantiated where needed, and framework components are managed
+  by :doc:`../concepts/services`.
+- The :doc:`Autoloader <../concepts/autoloader>` automatically handles PSR-4 style class locating,
+  within the ``App`` (**app** folder) and ``CodeIgniter`` (i.e., **system** folder) top level
   namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
@@ -108,7 +108,7 @@ Libraries
 Helpers
 =======
 
-- Helpers are pretty much the same as before, though some have been simplified.
+- :doc:`Helpers <../general/helpers>` are pretty much the same as before, though some have been simplified.
 - Some helpers from CodeIgniter 3 no longer exists in Version 4. For all these
   helpers, you have to find a new way to implement your functions. These
   helpers are `CAPTCHA Helper <https://www.codeigniter.com/userguide3/helpers/captcha_helper.html>`_,
@@ -134,7 +134,8 @@ Helpers
 Events
 ======
 
-- Hooks have been replaced by Events.
+- `Hooks <https://www.codeigniter.com/userguide3/general/hooks.html>`_ have been
+  replaced by :doc:`../extending/events`.
 - Instead of CI3's ``$hook['post_controller_constructor']`` you now use
   ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``, with the namespace ``CodeIgniter\Events\Events;``.
 - Events are always enabled, and are available globally.
@@ -149,6 +150,7 @@ Extending the Framework
 - Make any such classes where you like, and add appropriate
   service methods in **app/Config/Services.php** to load
   your components instead of the default ones.
+- See :doc:`../extending/core_classes` for details.
 
 Upgrading Libraries
 *******************
