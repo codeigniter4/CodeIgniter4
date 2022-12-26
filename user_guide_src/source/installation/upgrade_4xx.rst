@@ -102,7 +102,7 @@ Libraries
 =========
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
-- Instead of CI3's ``$this->load->library(x);`` you can now use
+- Instead of CI3's ``$this->load->library('x');`` you can now use
   ``$this->x = new X();``, following namespaced conventions for your component.
 
 Helpers
@@ -156,7 +156,7 @@ Upgrading Libraries
 *******************
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
-- Instead of CI3's ``$this->load->library(x);`` you can now use ``$this->x = new X();``,
+- Instead of CI3's ``$this->load->library('x');`` you can now use ``$this->x = new X();``,
   following namespaced conventions for your component.
 - Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
   libraries, you have to find a new way to implement your functions. These

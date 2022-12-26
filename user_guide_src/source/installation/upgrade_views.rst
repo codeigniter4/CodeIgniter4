@@ -15,7 +15,7 @@ What has been changed
 =====================
 
 - Your views look much like before, but they are invoked differently ... instead of CI3's
-  ``$this->load->view(x);``, you can use ``return view(x);``.
+  ``$this->load->view('x');``, you can use ``return view('x');``.
 - CI4 supports *View Cells* to build your response in pieces, and *View Layouts* for page layout.
 - The template parser is still there, and substantially enhanced.
 
