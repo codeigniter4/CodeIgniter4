@@ -145,7 +145,7 @@ Extending the Framework
 
 - You don't need a **core** folder to hold ``MY_...`` framework
   component extensions or replacements.
-- You don't need ``MY_x`` classes inside your libraries folder
+- You don't need ``MY_X`` classes inside your libraries folder
   to extend or replace CI4 pieces.
 - Make any such classes where you like, and add appropriate
   service methods in **app/Config/Services.php** to load
