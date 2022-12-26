@@ -12,7 +12,11 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**Cookie SameSite support**
+Breaking Enhancements
+*********************
+
+Cookie SameSite Support
+=======================
 
 CodeIgniter 4.0.5 introduces a setting for the cookie SameSite attribute. Prior versions did not set this
 attribute at all. The default setting for cookies is now `Lax`. This will affect how cookies are handled in
@@ -23,7 +27,8 @@ For additional information, see `MDN Web Docs <https://developer.mozilla.org/pl/
 The SameSite specifications are described in `RFC 6265 <https://tools.ietf.org/html/rfc6265>`_
 and the `RFC 6265bis revision <https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/?include_text=1>`_.
 
-**Message::getHeader(s)**
+Message::getHeader(s)
+=====================
 
 The HTTP layer is moving towards `PSR-7 compliance <https://www.php-fig.org/psr/psr-7/>`_. Towards this end
 ``Message::getHeader()`` and ``Message::getHeaders()`` are deprecated and should be replaced
@@ -41,7 +46,8 @@ Additional related deprecations from the HTTP layer:
 * ``Response[Interface]::getReason()``: Use ``getReasonPhrase()`` instead
 * ``Response[Interface]::getStatusCode()``: The explicit ``int`` return type will be removed (no action required)
 
-**ResponseInterface**
+ResponseInterface
+=================
 
 This interface intends to include the necessary methods for any framework-compatible response class.
 A number of methods expected by the framework were missing and have now been added. If you use any
@@ -68,13 +74,14 @@ updated requirements. These methods are as follows:
 To facilitate use of this interface these methods have been moved from the framework's ``Response`` into a ``ResponseTrait``
 which you may use, and ``DownloadResponse`` now extends ``Response`` directly to ensure maximum compatibility.
 
-**Config\Services**
+Config\\Services
+================
 
 Service discovery has been updated to allow third-party services (when enabled via Modules) to take precedence over core services. Update
 **app/Config/Services.php** so the class extends ``CodeIgniter\Config\BaseService`` to allow proper discovery of third-party services.
 
 Project Files
-=============
+*************
 
 Numerous files in the project space (root, app, public, writable) received updates. Due to
 these files being outside of the system scope they will not be changed without your intervention.
@@ -86,7 +93,7 @@ the project space: `Explore on Packagist <https://packagist.org/explore/?query=c
     and any mandatory changes will be covered in the sections above.
 
 Content Changes
----------------
+===============
 
 The following files received significant changes (including deprecations or visual adjustments)
 and it is recommended that you merge the updated versions with your application:
@@ -99,7 +106,7 @@ and it is recommended that you merge the updated versions with your application:
 * ``composer.json``
 
 All Changes
------------
+===========
 
 This is a list of all files in the project space that received changes;
 many will be simple comments or formatting that have no effect on the runtime:

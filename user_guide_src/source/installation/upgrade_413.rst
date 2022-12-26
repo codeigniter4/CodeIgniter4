@@ -12,7 +12,11 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-**Cache TTL**
+Breaking Enhancements
+*********************
+
+Cache TTL
+=========
 
 There is a new value in **app/Config/Cache.php**: ``$ttl``. This is not used by framework
 handlers where 60 seconds is hard-coded, but may be useful to projects and modules.
@@ -20,7 +24,7 @@ In a future release this value will replace the hard-coded version, so either le
 ``60`` or stop relying on the hard-coded version.
 
 Project Files
-=============
+*************
 
 Only a few files in the project space (root, app, public, writable) received updates. Due to
 these files being outside of the system scope they will not be changed without your intervention.
