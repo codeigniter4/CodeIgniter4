@@ -13,7 +13,7 @@ Documentations of Library
 
 What has been changed
 =====================
-- If you want to change validation error display, you have to set CI4 validation View templates.
+- If you want to change validation error display, you have to set CI4 :ref:`validation View templates <validation-customizing-error-display>`.
 - CI4 validation has no Callbacks nor Callable in CI3.
 - CI4 validation format rules do not permit empty string.
 - CI4 validation never changes your data.

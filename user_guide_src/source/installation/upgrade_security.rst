@@ -12,7 +12,7 @@ Documentations
 - :doc:`Security Documentation CodeIgniter 4.X </libraries/security>`
 
 .. note::
-    If you use the :doc:`form helper </helpers/form_helper>` and enable the CSRF filter globally, then ``form_open()`` will automatically insert a hidden CSRF field in your forms. So you do not have to upgrade this by yourself.
+    If you use the :doc:`../helpers/form_helper` and enable the CSRF filter globally, then :php:func:`form_open()` will automatically insert a hidden CSRF field in your forms. So you do not have to upgrade this by yourself.
 
 What has been changed
 =====================
