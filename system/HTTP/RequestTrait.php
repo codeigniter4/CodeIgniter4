@@ -44,7 +44,7 @@ trait RequestTrait
     /**
      * Gets the user's IP address.
      *
-     * @return string IP address if it can be detected, or empty string.
+     * @return string IP address if it can be detected.
      *                If the IP address is not a valid IP address,
      *                then will return '0.0.0.0'.
      */
@@ -156,7 +156,7 @@ trait RequestTrait
             return $this->ipAddress = '0.0.0.0';
         }
 
-        return empty($this->ipAddress) ? '' : $this->ipAddress;
+        return $this->ipAddress;
     }
 
     /**
