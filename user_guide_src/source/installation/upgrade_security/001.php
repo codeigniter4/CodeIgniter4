@@ -14,5 +14,6 @@ class Filters extends BaseConfig
             'csrf',
         ],
     ];
+
     // ...
 }
