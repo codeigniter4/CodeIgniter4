@@ -301,6 +301,8 @@
 <h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>In CI4, the configurations are now stored in classes which extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseConfig</span></code>.</p></li>
+<li><p>The <strong>application/config/config.php</strong> in CI3 will be <strong>app/Config/App.php</strong>
+and some other files like <strong>app/Config/Security.php</strong> for the specific classes.</p></li>
 <li><p>Within the configuration class, the config values are stored in public class properties.</p></li>
 <li><p>The method to fetch config values has been changed.</p></li>
 </ul>
@@ -317,14 +319,14 @@ should be in the <code class="docutils literal notranslate"><span class="pre">Co
 from the CI3 config into the new CI4 config class as public class properties.</p></li>
 <li><p>Now, you have to change the config fetching syntax everywhere you fetch config
 values. The CI3 syntax is something like <code class="docutils literal notranslate"><span class="pre">$this-&gt;config-&gt;item('item_name');</span></code>.
-You have to change this into <code class="docutils literal notranslate"><span class="pre">config('MyConfigFile')-&gt;item_name;</span></code>.</p></li>
+You have to change this into <code class="docutils literal notranslate"><span class="pre">config('MyConfig')-&gt;item_name;</span></code>.</p></li>
 </ol>
 </section>
 <section id="code-example">
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-x">
 <h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
-<p>Path: <strong>application/config</strong>:</p>
+<p>Path: <strong>application/config/site.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nb">defined</span><span class="p">(</span><span class="s1">&#39;BASEPATH&#39;</span><span class="p">)</span> <span class="k">OR</span> <span class="k">exit</span><span class="p">(</span><span class="s1">&#39;No direct script access allowed&#39;</span><span class="p">);</span>
@@ -336,14 +338,14 @@ You have to change this into <code class="docutils literal notranslate"><span cl
 </section>
 <section id="codeigniter-version-4-x">
 <h3><a class="toc-backref" href="#id6">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
-<p>Path: <strong>app/Config</strong>:</p>
+<p>Path: <strong>app/Config/Site.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">CustomClass</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="k">class</span> <span class="nc">Site</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="nv">$siteName</span>  <span class="o">=</span> <span class="s1">&#39;My Great Site&#39;</span><span class="p">;</span>
     <span class="k">public</span> <span class="nv">$siteEmail</span> <span class="o">=</span> <span class="s1">&#39;webmaster@example.com&#39;</span><span class="p">;</span>

@@ -368,9 +368,13 @@ To store the file you could use <code class="docutils literal notranslate"><span
     <span class="k">public</span> <span class="k">function</span> <span class="nf">do_upload</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
-            <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;uploaded[userfile]|max_size[userfile,100]&#39;</span>
-                           <span class="o">.</span> <span class="s1">&#39;|mime_in[userfile,image/png,image/jpg,image/gif]&#39;</span>
-                           <span class="o">.</span> <span class="s1">&#39;|ext_in[userfile,png,jpg,gif]|max_dims[userfile,1024,768]&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;userfile&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;uploaded[userfile]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;max_size[userfile,100]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;mime_in[userfile,image/png,image/jpg,image/gif]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ext_in[userfile,png,jpg,gif]&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;max_dims[userfile,1024,768]&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
         <span class="p">]);</span>
 
         <span class="nv">$file</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(</span><span class="s1">&#39;userfile&#39;</span><span class="p">);</span>

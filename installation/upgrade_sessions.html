@@ -339,7 +339,7 @@
 
 <span class="nv">$session</span> <span class="o">=</span> <span class="nx">session</span><span class="p">();</span>
 
-<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>
+<span class="nv">$_SESSION</span><span class="p">[</span><span class="s1">&#39;item&#39;</span><span class="p">];</span>  <span class="c1">// But we do not recommend to use superglobal directly.</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>
 <span class="nv">$session</span><span class="o">-&gt;</span><span class="na">item</span><span class="p">;</span>
 <span class="nx">session</span><span class="p">(</span><span class="s1">&#39;item&#39;</span><span class="p">);</span>

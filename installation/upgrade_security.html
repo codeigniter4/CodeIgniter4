@@ -298,13 +298,13 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">form helper</span></a> and enable the CSRF filter globally, then <code class="docutils literal notranslate"><span class="pre">form_open()</span></code> will automatically insert a hidden CSRF field in your forms. So you do not have to upgrade this by yourself.</p>
+<p>If you use the <a class="reference internal" href="../helpers/form_helper.html"><span class="doc">Form Helper</span></a> and enable the CSRF filter globally, then <a class="reference internal" href="../helpers/form_helper.html#form_open" title="form_open"><code class="xref php php-func docutils literal notranslate"><span class="pre">form_open()</span></code></a> will automatically insert a hidden CSRF field in your forms. So you do not have to upgrade this by yourself.</p>
 </div>
 </section>
 <section id="what-has-been-changed">
 <h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>The method to implement CSRF tokens to html forms has been changed.</p></li>
+<li><p>The method to implement CSRF tokens to HTML forms has been changed.</p></li>
 </ul>
 </section>
 <section id="upgrade-guide">
@@ -327,6 +327,7 @@
             <span class="s1">&#39;csrf&#39;</span><span class="p">,</span>
         <span class="p">],</span>
     <span class="p">];</span>
+
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
