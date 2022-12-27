@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Honeypot;
 
+use CodeIgniter\Config\Factories;
 use CodeIgniter\Config\Services;
 use CodeIgniter\Filters\Filters;
 use CodeIgniter\Honeypot\Exceptions\HoneypotException;
@@ -18,6 +19,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\App;
 use Config\Honeypot as HoneypotConfig;
 
 /**
@@ -42,14 +44,16 @@ final class HoneypotTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
 
         unset($_POST[$this->config->name]);
         $_SERVER['REQUEST_METHOD']  = 'POST';
         $_POST[$this->config->name] = 'hey';
-        $this->request              = Services::request(null, false);
-        $this->response             = Services::response();
+
+        $this->request  = Services::request(null, false);
+        $this->response = Services::response();
     }
 
     public function testAttachHoneypot()
@@ -75,6 +79,25 @@ final class HoneypotTest extends CIUnitTestCase
         $this->honeypot->attachHoneypot($this->response);
         $expected = '<form><div class="hidden"><label>Fill This Field</label><input type="text" name="honeypot" value=""></div></form>';
         $this->assertSame($expected, $this->response->getBody());
+    }
+
+    public function testAttachHoneypotAndContainerWithCSP()
+    {
+        $this->resetServices();
+
+        $config             = new App();
+        $config->CSPEnabled = true;
+        Factories::injectMock('config', 'App', $config);
+        $this->response = Services::response($config, false);
+
+        $this->config   = new HoneypotConfig();
+        $this->honeypot = new Honeypot($this->config);
+
+        $this->response->setBody('<head></head><body><form></form></body>');
+        $this->honeypot->attachHoneypot($this->response);
+
+        $regex = '!<head><style nonce="[0-9a-f]+">#hpc { display:none }</style></head><body><form><div style="display:none" id="hpc"><label>Fill This Field</label><input type="text" name="honeypot" value=""></div></form></body>!u';
+        $this->assertMatchesRegularExpression($regex, $this->response->getBody());
     }
 
     public function testHasntContent()
