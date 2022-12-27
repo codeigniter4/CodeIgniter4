@@ -216,6 +216,16 @@ Database
 - The ``Model::update()`` method now raises a ``DatabaseException`` if it generates an SQL
   statement without a WHERE clause. If you need to update all records in a table, use Query Builder instead. E.g., ``$model->builder()->update($data)``.
 
+.. _upgrade-430-honeypot-and-csp:
+
+Honeypot and CSP
+================
+
+When CSP is enabled, id attribute ``id="hpc"`` will be injected into the container tag
+for the Honeypot field to hide the field. If the id is already used in your views, you need to change it
+with ``Config\Honeypot::$containerId``.
+And you can remove ``style="display:none"`` in ``Config\Honeypot::$container``.
+
 Others
 ======
 
@@ -260,6 +270,10 @@ Config
 - app/Config/Exceptions.php
     - Two additional public properties were added: ``$logDeprecations`` and ``$deprecationLogLevel``.
       See See :ref:`logging_deprecation_warnings` for details.
+- app/Config/Honeypot.php
+    - The new property ``$containerId`` is added to set id attribute value for the container tag
+      when CSP is enabled.
+    - The ``input`` tag in the property ``$template`` value has been changed to HTML5 compatible.
 - app/Config/Logger.php
     - The property ``$threshold`` has been changed to ``9`` in other than ``production``
       environment.
