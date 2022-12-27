@@ -14,7 +14,8 @@ Documentations
 What has been changed
 =====================
 - The functionality in CI3 is basically the same as in CI4.
-- The method names have changed to camelCase and the query builder now needs to be initialized before you can run queries on it.
+- The method names have changed to camelCase and the :doc:`Query Builder <../database/query_builder>`
+  now needs to be initialized before you can run queries on it.
 
 Upgrade Guide
 =============
