@@ -15,6 +15,8 @@ What has been changed
 =====================
 
 - In CI4, the configurations are now stored in classes which extend ``CodeIgniter\Config\BaseConfig``.
+- The **application/config/config.php** in CI3 will be **app/Config/App.php**
+  and some other files like **app/Config/Security.php** for the specific classes.
 - Within the configuration class, the config values are stored in public class properties.
 - The method to fetch config values has been changed.
 
