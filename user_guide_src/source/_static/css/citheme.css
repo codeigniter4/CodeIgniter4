@@ -263,6 +263,16 @@ html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(
 	background: #dd4814;
 }
 
+.versionadded {
+    background: #dff0d8;
+    padding: 0 5px;
+}
+
+.deprecated:not(.versionmodified) {
+    background: #f2dede;
+    padding: 0 5px;
+}
+
 /* Footer ------------------------------------------------------------------- */
 
 .rst-footer-buttons {
