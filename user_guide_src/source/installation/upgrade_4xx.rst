@@ -35,8 +35,8 @@ General Adjustments
 Downloads
 =========
 
-- CI4 is still available as a ready-to-run zip or tarball.
-- It can also be installed using Composer.
+- CI4 is still available as a :doc:`ready-to-run zip or tarball <../installation/installing_manual>`.
+- It can also be installed using :doc:`Composer <../installation/installing_composer>`.
 
 Namespaces
 ==========
@@ -90,10 +90,10 @@ Class Loading
 
 - There is no longer a CodeIgniter "superobject", with framework component
   references magically injected as properties of your controller.
-- Classes are instantiated where needed, and components are managed
-  by ``Services``.
-- The class loader automatically handles PSR-4 style class locating,
-  within the ``App`` (**app**) and ``CodeIgniter`` (i.e., **system**) top level
+- Classes are instantiated where needed, and framework components are managed
+  by :doc:`../concepts/services`.
+- The :doc:`Autoloader <../concepts/autoloader>` automatically handles PSR-4 style class locating,
+  within the ``App`` (**app** folder) and ``CodeIgniter`` (i.e., **system** folder) top level
   namespaces; with Composer autoloading support.
 - You can configure the class loading to support whatever application structure
   you are most comfortable with, including the "HMVC" style.
@@ -102,14 +102,32 @@ Libraries
 =========
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
-- Instead of CI3's ``$this->load->library(x);`` you can now use
+- Instead of CI3's ``$this->load->library('x');`` you can now use
   ``$this->x = new X();``, following namespaced conventions for your component.
 
 Helpers
 =======
 
-- Helpers are pretty much the same as before, though some have been simplified.
+- :doc:`Helpers <../general/helpers>` are pretty much the same as before, though some have been simplified.
 - Since v4.3.0, you can autoload helpers by **app/Config/Autoload.php** as well as CI3.
+- Some helpers from CodeIgniter 3 no longer exists in Version 4. For all these
+  helpers, you have to find a new way to implement your functions. These
+  helpers are `CAPTCHA Helper <https://www.codeigniter.com/userguide3/helpers/captcha_helper.html>`_,
+  `Email Helper <https://www.codeigniter.com/userguide3/helpers/email_helper.html>`_.
+  `Path Helper <https://www.codeigniter.com/userguide3/helpers/path_helper.html>`_.
+  and `Smiley Helper <https://www.codeigniter.com/userguide3/helpers/smiley_helper.html>`_.
+- `Download Helper <https://www.codeigniter.com/userguide3/helpers/download_helper.html>`_
+  in CI3 was removed. You need to use Response object where you are using ``force_download()``.
+  See :ref:`force-file-download`.
+- `Language Helper <https://www.codeigniter.com/userguide3/helpers/language_helper.html>`_
+  in CI3 was removed. But ``lang()`` is always available in CI4. See :php:func:`lang()`.
+- `Typography Helper <https://www.codeigniter.com/userguide3/helpers/typography_helper.html>`_
+  in CI3 wll be :doc:`Typography Library <../libraries/typography>` in CI4.
+- `Directory Helper <https://www.codeigniter.com/userguide3/helpers/directory_helper.html>`_
+  and `File Helper <https://www.codeigniter.com/userguide3/helpers/file_helper.html>`_ in CI3
+  will be :doc:`../helpers/filesystem_helper` in CI4.
+- `String Helper <https://www.codeigniter.com/userguide3/helpers/string_helper.html>`_ functions
+  in CI3 are included in :doc:`../helpers/text_helper` in CI4.
 - In CI4, ``redirect()`` returns a ``RedirectResponse`` instance instead of redirecting and terminating script execution. You must return it.
     - `redirect() Documentation CodeIgniter 3.X <https://codeigniter.com/userguide3/helpers/url_helper.html#redirect>`_
     - `redirect() Documentation CodeIgniter 4.X <../general/common_functions.html#redirect>`_
@@ -117,7 +135,8 @@ Helpers
 Events
 ======
 
-- Hooks have been replaced by Events.
+- `Hooks <https://www.codeigniter.com/userguide3/general/hooks.html>`_ have been
+  replaced by :doc:`../extending/events`.
 - Instead of CI3's ``$hook['post_controller_constructor']`` you now use
   ``Events::on('post_controller_constructor', ['MyClass', 'MyFunction']);``, with the namespace ``CodeIgniter\Events\Events;``.
 - Events are always enabled, and are available globally.
@@ -127,17 +146,18 @@ Extending the Framework
 
 - You don't need a **core** folder to hold ``MY_...`` framework
   component extensions or replacements.
-- You don't need ``MY_x`` classes inside your libraries folder
+- You don't need ``MY_X`` classes inside your libraries folder
   to extend or replace CI4 pieces.
 - Make any such classes where you like, and add appropriate
   service methods in **app/Config/Services.php** to load
   your components instead of the default ones.
+- See :doc:`../extending/core_classes` for details.
 
 Upgrading Libraries
 *******************
 
 - Your app classes can still go inside **app/Libraries**, but they don't have to.
-- Instead of CI3's ``$this->load->library(x);`` you can now use ``$this->x = new X();``,
+- Instead of CI3's ``$this->load->library('x');`` you can now use ``$this->x = new X();``,
   following namespaced conventions for your component.
 - Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
   libraries, you have to find a new way to implement your functions. These
