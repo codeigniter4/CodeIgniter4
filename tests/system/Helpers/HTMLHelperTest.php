@@ -312,11 +312,71 @@ final class HTMLHelperTest extends CIUnitTestCase
         $this->assertSame($expected, link_tag($target));
     }
 
-    public function testLinkTagComplete()
+    public function testLinkTagMedia()
     {
-        $target   = 'https://styles.com/css/mystyles.css';
-        $expected = '<link href="https://styles.com/css/mystyles.css" rel="banana" type="fruit" media="VHS" title="Go away" />';
-        $this->assertSame($expected, link_tag($target, 'banana', 'fruit', 'Go away', 'VHS'));
+        $target = 'https://styles.com/css/mystyles.css';
+        $tag    = link_tag($target, 'stylesheet', 'text/css', '', 'print');
+
+        $expected = '<link href="https://styles.com/css/mystyles.css" rel="stylesheet" type="text/css" media="print" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagTitle()
+    {
+        $tag = link_tag('default.css', 'stylesheet', 'text/css', 'Default Style');
+
+        $expected = '<link href="http://example.com/default.css" rel="stylesheet" type="text/css" title="Default Style" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagFavicon()
+    {
+        $tag = link_tag('favicon.ico', 'shortcut icon', 'image/ico');
+
+        $expected = '<link href="http://example.com/favicon.ico" rel="shortcut icon" type="image/ico" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagRss()
+    {
+        $tag = link_tag('feed', 'alternate', 'application/rss+xml', 'My RSS Feed');
+
+        $expected = '<link href="http://example.com/feed" rel="alternate" type="application/rss+xml" title="My RSS Feed" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagAlternate()
+    {
+        $tag = link_tag(
+            'http://sp.example.com/',
+            'alternate',
+            '',
+            '',
+            'only screen and (max-width: 640px)'
+        );
+
+        $expected = '<link href="http://sp.example.com/" rel="alternate" media="only screen and (max-width: 640px)" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagArrayAlternate()
+    {
+        $tag = link_tag([
+            'href'  => 'http://sp.example.com/',
+            'rel'   => 'alternate',
+            'media' => 'only screen and (max-width: 640px)',
+        ]);
+
+        $expected = '<link href="http://sp.example.com/" rel="alternate" media="only screen and (max-width: 640px)" />';
+        $this->assertSame($expected, $tag);
+    }
+
+    public function testLinkTagCanonical()
+    {
+        $tag = link_tag('http://www.example.com/', 'canonical');
+
+        $expected = '<link href="http://www.example.com/" rel="canonical" />';
+        $this->assertSame($expected, $tag);
     }
 
     public function testLinkTagArray()
@@ -327,6 +387,18 @@ final class HTMLHelperTest extends CIUnitTestCase
         ];
         $expected = '<link href="http://example.com/index.php/css/mystyles.css" rel="stylesheet" type="text/css" />';
         $this->assertSame($expected, link_tag($parms));
+    }
+
+    public function testLinkTagArrayHreflang()
+    {
+        $tag = link_tag([
+            'href'     => 'https://example.com/en',
+            'rel'      => 'alternate',
+            'hreflang' => 'x-default',
+        ]);
+
+        $expected = '<link href="https://example.com/en" hreflang="x-default" rel="alternate" />';
+        $this->assertSame($expected, $tag);
     }
 
     public function testDocType()
