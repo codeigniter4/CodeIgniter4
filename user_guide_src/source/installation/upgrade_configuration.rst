@@ -32,7 +32,7 @@ Upgrade Guide
    from the CI3 config into the new CI4 config class as public class properties.
 4. Now, you have to change the config fetching syntax everywhere you fetch config
    values. The CI3 syntax is something like ``$this->config->item('item_name');``.
-   You have to change this into ``config('MyConfigFile')->item_name;``.
+   You have to change this into ``config('MyConfig')->item_name;``.
 
 Code Example
 ============
