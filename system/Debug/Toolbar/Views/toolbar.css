@@ -427,8 +427,8 @@
     -webkit-box-shadow: 0 0 4px #DFDFDF;
   }
   #debug-icon a:active,
-#debug-icon a:link,
-#debug-icon a:visited {
+  #debug-icon a:link,
+  #debug-icon a:visited {
     color: #DD8615;
   }
   #debug-bar {
@@ -436,17 +436,17 @@
     color: #DFDFDF;
   }
   #debug-bar h1,
-#debug-bar h2,
-#debug-bar h3,
-#debug-bar p,
-#debug-bar a,
-#debug-bar button,
-#debug-bar table,
-#debug-bar thead,
-#debug-bar tr,
-#debug-bar td,
-#debug-bar button,
-#debug-bar .toolbar {
+  #debug-bar h2,
+  #debug-bar h3,
+  #debug-bar p,
+  #debug-bar a,
+  #debug-bar button,
+  #debug-bar table,
+  #debug-bar thead,
+  #debug-bar tr,
+  #debug-bar td,
+  #debug-bar button,
+  #debug-bar .toolbar {
     background-color: transparent;
     color: #DFDFDF;
   }
@@ -498,7 +498,7 @@
     color: #DFDFDF;
   }
   #debug-bar #toolbar-position,
-#debug-bar #toolbar-theme {
+  #debug-bar #toolbar-theme {
     filter: brightness(0) invert(0.6);
   }
   #debug-bar .ci-label.active {
@@ -518,7 +518,7 @@
     -webkit-box-shadow: 0 -1px 4px #434343;
   }
   #debug-bar .timeline th,
-#debug-bar .timeline td {
+  #debug-bar .timeline td {
     border-color: #434343;
   }
   #debug-bar .timeline .timer {
