@@ -16,6 +16,8 @@ A Controller is simply a class file that handles a HTTP request. :doc:`URI Routi
 Every controller you create should extend ``BaseController`` class.
 This class provides several features that are available to all of your controllers.
 
+.. _controller-constructor:
+
 Constructor
 ***********
 
