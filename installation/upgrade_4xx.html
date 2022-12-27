@@ -318,8 +318,8 @@ them one by one.</p>
 <section id="downloads">
 <h3><a class="toc-backref" href="#id2">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>CI4 is still available as a ready-to-run zip or tarball.</p></li>
-<li><p>It can also be installed using Composer.</p></li>
+<li><p>CI4 is still available as a <a class="reference internal" href="installing_manual.html"><span class="doc">ready-to-run zip or tarball</span></a>.</p></li>
+<li><p>It can also be installed using <a class="reference internal" href="installing_composer.html"><span class="doc">Composer</span></a>.</p></li>
 </ul>
 </section>
 <section id="namespaces">
@@ -378,10 +378,10 @@ you some step-by-step instructions to convert the MVC classes in CodeIgniter4:</
 <ul class="simple">
 <li><p>There is no longer a CodeIgniter “superobject”, with framework component
 references magically injected as properties of your controller.</p></li>
-<li><p>Classes are instantiated where needed, and components are managed
-by <code class="docutils literal notranslate"><span class="pre">Services</span></code>.</p></li>
-<li><p>The class loader automatically handles PSR-4 style class locating,
-within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (<strong>app</strong>) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e., <strong>system</strong>) top level
+<li><p>Classes are instantiated where needed, and framework components are managed
+by <a class="reference internal" href="../concepts/services.html"><span class="doc">Services</span></a>.</p></li>
+<li><p>The <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader</span></a> automatically handles PSR-4 style class locating,
+within the <code class="docutils literal notranslate"><span class="pre">App</span></code> (<strong>app</strong> folder) and <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> (i.e., <strong>system</strong> folder) top level
 namespaces; with Composer autoloading support.</p></li>
 <li><p>You can configure the class loading to support whatever application structure
 you are most comfortable with, including the “HMVC” style.</p></li>
@@ -391,14 +391,32 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 <h3><a class="toc-backref" href="#id8">Libraries</a><a class="headerlink" href="#libraries" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use
 <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component.</p></li>
 </ul>
 </section>
 <section id="helpers">
 <h3><a class="toc-backref" href="#id9">Helpers</a><a class="headerlink" href="#helpers" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Helpers are pretty much the same as before, though some have been simplified.</p></li>
+<li><p><a class="reference internal" href="../general/helpers.html"><span class="doc">Helpers</span></a> are pretty much the same as before, though some have been simplified.</p></li>
+<li><p>Some helpers from CodeIgniter 3 no longer exists in Version 4. For all these
+helpers, you have to find a new way to implement your functions. These
+helpers are <a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/captcha_helper.html">CAPTCHA Helper</a>,
+<a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/email_helper.html">Email Helper</a>.
+<a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/path_helper.html">Path Helper</a>.
+and <a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/smiley_helper.html">Smiley Helper</a>.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/download_helper.html">Download Helper</a>
+in CI3 was removed. You need to use Response object where you are using <code class="docutils literal notranslate"><span class="pre">force_download()</span></code>.
+See <a class="reference internal" href="../outgoing/response.html#force-file-download"><span class="std std-ref">Force File Download</span></a>.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/language_helper.html">Language Helper</a>
+in CI3 was removed. But <code class="docutils literal notranslate"><span class="pre">lang()</span></code> is always available in CI4. See <a class="reference internal" href="../general/common_functions.html#lang" title="lang"><code class="xref php php-func docutils literal notranslate"><span class="pre">lang()</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/typography_helper.html">Typography Helper</a>
+in CI3 wll be <a class="reference internal" href="../libraries/typography.html"><span class="doc">Typography Library</span></a> in CI4.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/directory_helper.html">Directory Helper</a>
+and <a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/file_helper.html">File Helper</a> in CI3
+will be <a class="reference internal" href="../helpers/filesystem_helper.html"><span class="doc">Filesystem Helper</span></a> in CI4.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/helpers/string_helper.html">String Helper</a> functions
+in CI3 are included in <a class="reference internal" href="../helpers/text_helper.html"><span class="doc">Text Helper</span></a> in CI4.</p></li>
 <li><dl class="simple">
 <dt>In CI4, <code class="docutils literal notranslate"><span class="pre">redirect()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">RedirectResponse</span></code> instance instead of redirecting and terminating script execution. You must return it.</dt><dd><ul>
 <li><p><a class="reference external" href="https://codeigniter.com/userguide3/helpers/url_helper.html#redirect">redirect() Documentation CodeIgniter 3.X</a></p></li>
@@ -412,7 +430,8 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 <section id="events">
 <h3><a class="toc-backref" href="#id10">Events</a><a class="headerlink" href="#events" title="Permalink to this headline"></a></h3>
 <ul class="simple">
-<li><p>Hooks have been replaced by Events.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/general/hooks.html">Hooks</a> have been
+replaced by <a class="reference internal" href="../extending/events.html"><span class="doc">Events</span></a>.</p></li>
 <li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$hook['post_controller_constructor']</span></code> you now use
 <code class="docutils literal notranslate"><span class="pre">Events::on('post_controller_constructor',</span> <span class="pre">['MyClass',</span> <span class="pre">'MyFunction']);</span></code>, with the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Events\Events;</span></code>.</p></li>
 <li><p>Events are always enabled, and are available globally.</p></li>
@@ -423,11 +442,12 @@ you are most comfortable with, including the “HMVC” style.</p></li>
 <ul class="simple">
 <li><p>You don’t need a <strong>core</strong> folder to hold <code class="docutils literal notranslate"><span class="pre">MY_...</span></code> framework
 component extensions or replacements.</p></li>
-<li><p>You don’t need <code class="docutils literal notranslate"><span class="pre">MY_x</span></code> classes inside your libraries folder
+<li><p>You don’t need <code class="docutils literal notranslate"><span class="pre">MY_X</span></code> classes inside your libraries folder
 to extend or replace CI4 pieces.</p></li>
 <li><p>Make any such classes where you like, and add appropriate
 service methods in <strong>app/Config/Services.php</strong> to load
 your components instead of the default ones.</p></li>
+<li><p>See <a class="reference internal" href="../extending/core_classes.html"><span class="doc">Creating Core System Classes</span></a> for details.</p></li>
 </ul>
 </section>
 </section>
@@ -435,7 +455,7 @@ your components instead of the default ones.</p></li>
 <h2><a class="toc-backref" href="#id12">Upgrading Libraries</a><a class="headerlink" href="#upgrading-libraries" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Your app classes can still go inside <strong>app/Libraries</strong>, but they don’t have to.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library(x);</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;library('x');</span></code> you can now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>,
 following namespaced conventions for your component.</p></li>
 <li><p>Some libraries from CodeIgniter 3 no longer exists in Version 4. For all these
 libraries, you have to find a new way to implement your functions. These
@@ -490,7 +510,7 @@ steps and examples to adjust your code.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 26, 2022.
+      <span class="lastupdated">Last updated on Dec 27, 2022.
       </span></p>
   </div>
 

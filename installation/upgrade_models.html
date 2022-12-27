@@ -311,13 +311,13 @@
 <li><p>Add this line just after the opening php tag: <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code>.</p></li>
 <li><p>Below the <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models;</span></code> line add this line: <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Model;</span></code>.</p></li>
 <li><p>Replace <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">CI_Model</span></code> with <code class="docutils literal notranslate"><span class="pre">extends</span> <span class="pre">Model</span></code>.</p></li>
-<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model(x);</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
+<li><p>Instead of CI3’s <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;model('x');</span></code>, you would now use <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">X();</span></code>, following namespaced conventions for your component. Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> function: <code class="docutils literal notranslate"><span class="pre">$this-&gt;x</span> <span class="pre">=</span> <span class="pre">model('X');</span></code>.</p></li>
 </ol>
 <p>If you use sub-directories in your model structure you have to change the namespace according to that.
 Example: You have a version 3 model located in <strong>application/models/users/user_contact.php</strong> the namespace has to be <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models\Users;</span></code> and the model path in the version 4 should look like this: <strong>app/Models/Users/UserContact.php</strong></p>
 <p>The new Model in CI4 has a lot of built-in methods. For example, the <code class="docutils literal notranslate"><span class="pre">find($id)</span></code> method. With this you can find data where the primary key is equal to <code class="docutils literal notranslate"><span class="pre">$id</span></code>.
 Inserting data is also easier than before. In CI4 there is an <code class="docutils literal notranslate"><span class="pre">insert($data)</span></code> method. You can optionally make use of all those built-in methods and migrate your code to the new methods.</p>
-<p>You can find more information to those methods <a class="reference internal" href="../models/model.html"><span class="doc">here</span></a>.</p>
+<p>You can find more information to those methods in <a class="reference internal" href="../models/model.html"><span class="doc">Using CodeIgniter’s Model</span></a>.</p>
 </section>
 <section id="code-example">
 <h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
@@ -372,7 +372,7 @@ Inserting data is also easier than before. In CI4 there is an <code class="docut
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Dec 26, 2022.
+      <span class="lastupdated">Last updated on Dec 27, 2022.
       </span></p>
   </div>
 
