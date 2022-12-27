@@ -16,7 +16,7 @@ Documentations
 
 What has been changed
 =====================
-- The method to implement CSRF tokens to html forms has been changed.
+- The method to implement CSRF tokens to HTML forms has been changed.
 
 Upgrade Guide
 =============
