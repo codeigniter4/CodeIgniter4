@@ -73,6 +73,11 @@ trait RequestTrait
 
         $this->ipAddress = $this->getServer('REMOTE_ADDR');
 
+        // If this is a CLI request, $this->ipAddress is null.
+        if ($this->ipAddress === null) {
+            return $this->ipAddress = '0.0.0.0';
+        }
+
         if ($proxyIPs) {
             // @TODO Extract all this IP address logic to another class.
             foreach ($proxyIPs as $proxyIP => $header) {
