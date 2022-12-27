@@ -36,7 +36,6 @@ jobs:
     permissions:
       # Allow actions/github-script to create release
       contents: write
-      pull-requests: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
     needs: check-version
@@ -87,7 +86,6 @@ jobs:
     permissions:
       # Allow actions/github-script to create release
       contents: write
-      pull-requests: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
     needs: check-version
@@ -138,7 +136,6 @@ jobs:
     permissions:
       # Allow actions/github-script to create release
       contents: write
-      pull-requests: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
     needs: check-version

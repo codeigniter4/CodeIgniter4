@@ -11,13 +11,11 @@ on:
       - 'system/**'
       - '.github/workflows/deploy-apidocs.yml'
 
-permissions:
-    contents: write
-    pull-requests: write
-
 jobs:
   build:
     name: Deploy to api
+    permissions:
+      contents: write
     if: github.repository == 'codeigniter4/CodeIgniter4'
     runs-on: ubuntu-22.04
 

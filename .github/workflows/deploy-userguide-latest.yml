@@ -18,7 +18,6 @@ jobs:
     permissions:
       # Allow ad-m/github-push-action to push commit to branch gh-pages
       contents: write
-      pull-requests: write
     if: (github.repository == 'codeigniter4/CodeIgniter4')
     runs-on: ubuntu-latest
     steps:
