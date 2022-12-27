@@ -40,13 +40,13 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/config**:
+Path: **application/config/site.php**:
 
 .. literalinclude:: upgrade_configuration/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Config**:
+Path: **app/Config/Site.php**:
 
 .. literalinclude:: upgrade_configuration/001.php
