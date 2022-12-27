@@ -35,3 +35,6 @@ Honeypot can be customized. The fields below can be set either in
 * ``$label`` - HTML label for the honeypot field, default is ``'Fill This Field'``
 * ``$name`` - name of the HTML form field used for the template; default is ``'honeypot'``
 * ``$template`` - form field template used for the honeypot; default is ``'<label>{label}</label><input type="text" name="{name}" value="">'``
+* ``$container`` - container tag for the template; default is ``'<div style="display:none">{template}</div>'``.
+  If you enables CSP, you can remove ``style="display:none"``.
+* ``$containerId`` - [Since v4.3.0] this setting is used only when you enables CSP. You can change the id attribute for the container tag; default is ``'hpc'``
