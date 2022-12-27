@@ -277,9 +277,10 @@
 <h1>Request Class<a class="headerlink" href="#request-class" title="Permalink to this headline"></a></h1>
 <p>The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
-like would be used to send a request from the application to a third-party application. This class
+like would be used to send a request from the application to a third-party application.</p>
+<p>This class
 provides the common functionality they both need, but both cases have custom classes that extend
-from the Request class to add specific functionality.</p>
+from the Request class to add specific functionality. In practice, you will need to use these classes.</p>
 <p>See the documentation for the <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a> and
 <a class="reference internal" href="../libraries/curlrequest.html"><span class="doc">CURLRequest Class</span></a> for more usage details.</p>
 <section id="namespace-CodeIgniter\HTTP">
@@ -316,7 +317,10 @@ return the reported client IP address by the HTTP header for the allowed IP addr
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::isValidIP">
 <span class="sig-name descname"><span class="pre">isValidIP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$ip</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$which</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::isValidIP" title="Permalink to this definition"></a></dt>
-<dd><div class="admonition important">
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.0.5: </span>Use <a class="reference internal" href="../libraries/validation.html"><span class="doc">Validation</span></a> instead.</p>
+</div>
+<div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>This method is deprecated. It will be removed in future releases.</p>
 </div>
@@ -377,9 +381,9 @@ an IP format. The default checks for both formats.</p>
 in uppercase or lowercase.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// Outputs: POST</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>  <span class="c1">// Outputs: POST</span>
 <span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">(</span><span class="k">false</span><span class="p">);</span> <span class="c1">// Outputs: post</span>
-<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span> <span class="c1">// Outputs: post</span>
+<span class="k">echo</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>      <span class="c1">// Outputs: post</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -387,14 +391,38 @@ in uppercase or lowercase.</p>
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::setMethod">
 <span class="sig-name descname"><span class="pre">setMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::setMethod" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.0.5: </span>Use <a class="reference internal" href="#CodeIgniter\HTTP\Request::withMethod" title="CodeIgniter\HTTP\Request::withMethod"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Request::withMethod()</span></code></a> instead.</p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$upper</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Sets the request method. Used when spoofing the request.</p></li>
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Sets the request method. Used when spoofing the request.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>HTTP request method</p>
+<dd class="field-even"><p>This request</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\HTTP\Request" title="CodeIgniter\HTTP\Request"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Request</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\HTTP\Request::withMethod">
+<span class="sig-name descname"><span class="pre">withMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\HTTP\Request::withMethod" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.0.5.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Sets the request method.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>New request instance</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\HTTP\Request" title="CodeIgniter\HTTP\Request"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Request</span></code></a></span></p>
@@ -409,18 +437,18 @@ in uppercase or lowercase.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">PHP manual</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">PHP manual</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_SERVER item value if found, null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code> item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
+<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">getPost()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code> methods from the
 <a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches server data (<code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -443,19 +471,19 @@ as an array.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">PHP manual</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">PHP manual</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>$_ENV item value if found, null if not</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> item value if found, null if not</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span></p>
 </dd>
 </dl>
-<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">post()</span></code>, <code class="docutils literal notranslate"><span class="pre">get()</span></code> and <code class="docutils literal notranslate"><span class="pre">cookie()</span></code> methods from the
-<a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches getEnv data (<code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>):</p>
+<p>This method is identical to the <code class="docutils literal notranslate"><span class="pre">getPost()</span></code>, <code class="docutils literal notranslate"><span class="pre">getGet()</span></code> and <code class="docutils literal notranslate"><span class="pre">getCookie()</span></code> methods from the
+<a class="reference internal" href="incomingrequest.html"><span class="doc">IncomingRequest Class</span></a>, only it fetches env data (<code class="docutils literal notranslate"><span class="pre">$_ENV</span></code>):</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getEnv</span><span class="p">(</span><span class="s1">&#39;some_data&#39;</span><span class="p">);</span>
@@ -481,13 +509,13 @@ as an array.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>HTTP request method</p>
+<dd class="field-even"><p>This request</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><span><a class="reference internal" href="#CodeIgniter\HTTP\Request" title="CodeIgniter\HTTP\Request"><code class="xref php php-obj docutils literal notranslate"><span class="pre">Request</span></code></a></span></p>
 </dd>
 </dl>
-<p>Allows manually setting the value of PHP global, like $_GET, $_POST, etc.</p>
+<p>Allows manually setting the value of PHP global, like <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, etc.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -498,8 +526,8 @@ as an array.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input filter constant</p></li>
 <li><p><strong>$index</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Value name</p></li>
-<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">here</a>.</p></li>
-<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">here</a>.</p></li>
+<li><p><strong>$filter</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of filter to apply. A list of filters can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">PHP manual</a>.</p></li>
+<li><p><strong>$flags</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|array</span></code></span>) – Flags to apply. A list of flags can be found in <a class="reference external" href="https://www.php.net/manual/en/filter.filters.flags.php">PHP manual</a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
