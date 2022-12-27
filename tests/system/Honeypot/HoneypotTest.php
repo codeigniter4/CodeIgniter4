@@ -18,6 +18,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use CodeIgniter\Test\CIUnitTestCase;
+use Config\Honeypot as HoneypotConfig;
 
 /**
  * @backupGlobals enabled
@@ -28,7 +29,7 @@ use CodeIgniter\Test\CIUnitTestCase;
  */
 final class HoneypotTest extends CIUnitTestCase
 {
-    private \Config\Honeypot $config;
+    private HoneypotConfig $config;
     private Honeypot $honeypot;
 
     /**
@@ -41,7 +42,7 @@ final class HoneypotTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->config   = new \Config\Honeypot();
+        $this->config   = new HoneypotConfig();
         $this->honeypot = new Honeypot($this->config);
 
         unset($_POST[$this->config->name]);
@@ -147,7 +148,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     public function testEmptyConfigContainer()
     {
-        $config            = new \Config\Honeypot();
+        $config            = new HoneypotConfig();
         $config->container = '';
         $honeypot          = new Honeypot($config);
 
@@ -159,7 +160,7 @@ final class HoneypotTest extends CIUnitTestCase
 
     public function testNoTemplateConfigContainer()
     {
-        $config            = new \Config\Honeypot();
+        $config            = new HoneypotConfig();
         $config->container = '<div></div>';
         $honeypot          = new Honeypot($config);
 
