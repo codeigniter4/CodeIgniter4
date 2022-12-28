@@ -46,6 +46,10 @@ Loading a helper file is quite simple using the following method:
 Where ``name`` is the file name of the helper, without the "**.php**" file
 extension or the "**_helper**" part.
 
+.. important:: CodeIgniter helper file names are all lowercase.
+    Therefore, ``helper('Name')`` will not work on case-sensitive file systems
+    such as Linux.
+
 For example, to load the **Cookie Helper** file, which is named
 **cookie_helper.php**, you would do this:
 
