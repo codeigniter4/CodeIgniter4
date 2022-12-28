@@ -115,7 +115,7 @@ return static function (RectorConfig $rectorConfig): void {
         // @TODO remove if https://github.com/rectorphp/rector-phpunit/issues/86 is fixed
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
-        ]
+        ],
     ]);
 
     // auto import fully qualified class names
