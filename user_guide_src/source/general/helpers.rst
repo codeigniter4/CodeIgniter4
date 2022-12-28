@@ -2,16 +2,20 @@
 Helper Functions
 ################
 
+.. contents::
+    :local:
+    :depth: 2
+
+*****************
+What are Helpers?
+*****************
+
 Helpers, as the name suggests, help you with tasks. Each helper file is
 simply a collection of functions in a particular category. There are **URL
 Helpers**, that assist in creating links, there are **Form Helpers** that help
 you create form elements, **Text Helpers** perform various text formatting
 routines, **Cookie Helpers** set and read cookies, **File Helpers** help you
 deal with files, etc.
-
-.. contents::
-    :local:
-    :depth: 2
 
 Unlike most other systems in CodeIgniter, Helpers are not written in an
 Object Oriented format. They are simple, procedural functions. Each
