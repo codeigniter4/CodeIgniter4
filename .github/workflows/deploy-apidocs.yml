@@ -11,6 +11,9 @@ on:
       - 'system/**'
       - '.github/workflows/deploy-apidocs.yml'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Deploy to api

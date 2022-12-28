@@ -12,6 +12,9 @@ on:
     paths:
       - 'user_guide_src/**'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Deploy to gh-pages
