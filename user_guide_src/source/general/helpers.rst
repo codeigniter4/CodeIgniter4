@@ -29,8 +29,9 @@ Helpers are typically stored in your **system/Helpers**, or
 specified helper is not located there CI will instead look in your
 global **system/Helpers** directory.
 
+****************
 Loading a Helper
-================
+****************
 
 .. note:: The URL helper is always loaded so you do not need to load it yourself.
 
@@ -50,7 +51,7 @@ For example, to load the **Cookie Helper** file, which is named
     don't try to assign it to a variable. Just use it as shown.
 
 Loading Multiple Helpers
-------------------------
+========================
 
 If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded:
@@ -58,7 +59,7 @@ an array of file names in and all of them will be loaded:
 .. literalinclude:: helpers/003.php
 
 Loading in a Controller
------------------------
+=======================
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -75,7 +76,7 @@ property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 .. _helpers-loading-from-non-standard-locations:
 
 Loading from Non-standard Locations
------------------------------------
+===================================
 
 Helpers can be loaded from directories outside of **app/Helpers** and
 **system/Helpers**, as long as that path can be found through a namespace that
@@ -100,8 +101,9 @@ You can also use the following way:
 .. note:: The functions within files loaded this way are not truly namespaced.
     The namespace is simply used as a convenient way to locate the files.
 
+**************
 Using a Helper
-==============
+**************
 
 Once you've loaded the Helper File containing the function you intend to
 use, you'll call it the way you would a standard PHP function.
@@ -114,8 +116,9 @@ your view files you would do this:
 Where ``Click Here`` is the name of the link, and ``blog/comments`` is the
 URI to the controller/method you wish to link to.
 
+*******************
 "Extending" Helpers
-===================
+*******************
 
 To "extend" Helpers, create a file in your **app/Helpers/** folder
 with an identical name to the existing Helper.
@@ -145,8 +148,9 @@ is as follows:
 2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
 3. system/Helpers - The base file is loaded last
 
+*********
 Now What?
-=========
+*********
 
 In the Table of Contents, you'll find a list of all the available :doc:`Helpers <../helpers/index>`.
 Browse each one to see what they do.
