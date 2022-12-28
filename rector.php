@@ -29,7 +29,6 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
-use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
@@ -116,12 +115,7 @@ return static function (RectorConfig $rectorConfig): void {
         // @TODO remove if https://github.com/rectorphp/rector-phpunit/issues/86 is fixed
         GetMockBuilderGetMockToCreateMockRector::class => [
             __DIR__ . '/tests/system/Email/EmailTest.php',
-        ],
-
-        // rector mistakenly removes `@return true`
-        RemoveUselessReturnTagRector::class => [
-            __DIR__ . '/system/Debug/Exceptions.php',
-        ],
+        ]
     ]);
 
     // auto import fully qualified class names
