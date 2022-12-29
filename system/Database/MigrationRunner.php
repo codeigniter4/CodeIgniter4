@@ -538,14 +538,18 @@ class MigrationRunner
     }
 
     /**
-     * Extracts the migration class name from a filename
+     * Extracts the migration name from a filename
+     *
+     * Note: The migration name should be the classname, but maybe they are
+     *       different.
+     *
+     * @param string $migration A migration filename w/o path.
      */
     protected function getMigrationName(string $migration): string
     {
         $parts = explode('_', $migration);
-        array_shift($parts);
 
-        return implode('_', $parts);
+        return array_pop($parts);
     }
 
     /**
