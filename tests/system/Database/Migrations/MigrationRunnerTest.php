@@ -192,7 +192,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
         $method = $this->getPrivateMethodInvoker($runner, 'getMigrationName');
 
-        $this->assertSame('Foo', $method('2019-08-06-235100_Foo'));
+        $this->assertSame('Foo_bar', $method('2019-08-06-235100_Foo_bar'));
     }
 
     public function testGetMigrationNameUnderscores()
@@ -201,7 +201,7 @@ final class MigrationRunnerTest extends CIUnitTestCase
 
         $method = $this->getPrivateMethodInvoker($runner, 'getMigrationName');
 
-        $this->assertSame('Foo', $method('2019_08_06_235100_Foo'));
+        $this->assertSame('Foo_bar', $method('2019_08_06_235100_Foo_bar'));
     }
 
     public function testSetSilentStoresValue()
