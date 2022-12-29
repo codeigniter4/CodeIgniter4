@@ -2,16 +2,20 @@
 Helper Functions
 ################
 
+.. contents::
+    :local:
+    :depth: 2
+
+*****************
+What are Helpers?
+*****************
+
 Helpers, as the name suggests, help you with tasks. Each helper file is
 simply a collection of functions in a particular category. There are **URL
 Helpers**, that assist in creating links, there are **Form Helpers** that help
 you create form elements, **Text Helpers** perform various text formatting
 routines, **Cookie Helpers** set and read cookies, **File Helpers** help you
 deal with files, etc.
-
-.. contents::
-    :local:
-    :depth: 2
 
 Unlike most other systems in CodeIgniter, Helpers are not written in an
 Object Oriented format. They are simple, procedural functions. Each
@@ -29,8 +33,9 @@ Helpers are typically stored in your **system/Helpers**, or
 specified helper is not located there CI will instead look in your
 global **system/Helpers** directory.
 
+****************
 Loading a Helper
-================
+****************
 
 .. note:: The URL helper is always loaded so you do not need to load it yourself.
 
@@ -41,6 +46,10 @@ Loading a helper file is quite simple using the following method:
 Where ``name`` is the file name of the helper, without the "**.php**" file
 extension or the "**_helper**" part.
 
+.. important:: CodeIgniter helper file names are all lowercase.
+    Therefore, ``helper('Name')`` will not work on case-sensitive file systems
+    such as Linux.
+
 For example, to load the **Cookie Helper** file, which is named
 **cookie_helper.php**, you would do this:
 
@@ -50,7 +59,7 @@ For example, to load the **Cookie Helper** file, which is named
     don't try to assign it to a variable. Just use it as shown.
 
 Loading Multiple Helpers
-------------------------
+========================
 
 If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded:
@@ -58,7 +67,7 @@ an array of file names in and all of them will be loaded:
 .. literalinclude:: helpers/003.php
 
 Loading in a Controller
------------------------
+=======================
 
 A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that's not a good practice), as
@@ -75,7 +84,7 @@ property in Controller instead. See :ref:`Controllers <controllers-helpers>`.
 .. _helpers-loading-from-non-standard-locations:
 
 Loading from Non-standard Locations
------------------------------------
+===================================
 
 Helpers can be loaded from directories outside of **app/Helpers** and
 **system/Helpers**, as long as that path can be found through a namespace that
@@ -103,7 +112,7 @@ You can also use the following way:
 .. _auto-loading-helpers:
 
 Auto-loading Helpers
---------------------
+====================
 
 .. versionadded:: 4.3.0
 
@@ -112,8 +121,9 @@ you can tell CodeIgniter to auto-load it during system initialization.
 This is done by opening the **app/Config/Autoload.php** file
 and adding the helper to the ``$helpers`` property.
 
+**************
 Using a Helper
-==============
+**************
 
 Once you've loaded the Helper File containing the function you intend to
 use, you'll call it the way you would a standard PHP function.
@@ -126,8 +136,9 @@ your view files you would do this:
 Where ``Click Here`` is the name of the link, and ``blog/comments`` is the
 URI to the controller/method you wish to link to.
 
+*******************
 "Extending" Helpers
-===================
+*******************
 
 To "extend" Helpers, create a file in your **app/Helpers/** folder
 with an identical name to the existing Helper.
@@ -148,7 +159,9 @@ functions:
 
 .. literalinclude:: helpers/006.php
 
-The ``helper()`` function will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
+.. important:: Do not specify the namespace ``App\Helpers``.
+
+The :php:func:`helper()` function will scan through all PSR-4 namespaces defined in **app/Config/Autoload.php**
 and load in ALL matching helpers of the same name. This allows any module's helpers
 to be loaded, as well as any helpers you've created specifically for this application. The load order
 is as follows:
@@ -157,8 +170,9 @@ is as follows:
 2. {namespace}/Helpers - All namespaces are looped through in the order they are defined.
 3. system/Helpers - The base file is loaded last
 
+*********
 Now What?
-=========
+*********
 
 In the Table of Contents, you'll find a list of all the available :doc:`Helpers <../helpers/index>`.
 Browse each one to see what they do.
