@@ -14,7 +14,7 @@ Documentations
 What has been changed
 =====================
 - The functionality in CI3 is basically the same as in CI4.
-- `Database Caching <https://www.codeigniter.com/userguide3/database/caching.html>`_ in CI3 is removed.
+- `Database Caching <https://www.codeigniter.com/userguide3/database/caching.html>`_ functionality known from CI3 was removed.
 - The method names have changed to camelCase and the :doc:`Query Builder <../database/query_builder>`
   now needs to be initialized before you can run queries on it.
 
