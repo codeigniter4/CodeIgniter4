@@ -1,0 +1,18 @@
+Version 4.2.12
+##############
+
+Release Date: Unreleased
+
+**4.2.12 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 2
+
+Bugs Fixed
+**********
+
+- Fixed ``Request::getIPaddress()`` causes an error on CLI.
+- Fixed ``link_tag()`` missing ``type="application/rss+xml"``.
+
+See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
