@@ -22,11 +22,11 @@ and must extend ``CodeIgniter\CLI\BaseCommand``, and implement the ``run()`` met
 The following properties should be used in order to get listed in CLI commands and to add help functionality to your command:
 
 * ``$group``: a string to describe the group the command is lumped under when listing commands. For example: ``Database``
-* ``$name``: a string to describe the command's name. For example: ``migrate:create``
-* ``$description``: a string to describe the command. For example: ``Creates a new migration file.``
-* ``$usage``: a string to describe the command usage. For example: ``migrate:create [name] [options]``
-* ``$arguments``: an array of strings to describe each command argument. For example: ``'name' => 'The migration file name'``
-* ``$options``: an array of strings to describe each command option. For example: ``'-n' => 'Set migration namespace'``
+* ``$name``: a string to describe the command's name. For example: ``make:controller``
+* ``$description``: a string to describe the command. For example: ``Generates a new controller file.``
+* ``$usage``: a string to describe the command usage. For example: ``make:controller <name> [options]``
+* ``$arguments``: an array of strings to describe each command argument. For example: ``'name' => 'The controller class name.'``
+* ``$options``: an array of strings to describe each command option. For example: ``'--force' => 'Force overwrite existing file.'``
 
 **Help description will be automatically generated according to the above parameters.**
 

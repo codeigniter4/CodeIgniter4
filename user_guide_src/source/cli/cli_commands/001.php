@@ -1,3 +1,3 @@
 <?php
 
-echo command('migrate:create TestMigration');
+echo command('make:migration TestMigration');
