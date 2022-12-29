@@ -67,7 +67,7 @@ class MigrationRunner
      *
      * @var string
      */
-    protected $regex = '/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}_(\w+)$/';
+    protected $regex = '/\A(\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6})_(\w+)\z/';
 
     /**
      * The main database connection. Used to store
@@ -547,9 +547,9 @@ class MigrationRunner
      */
     protected function getMigrationName(string $migration): string
     {
-        $parts = explode('_', $migration);
+        preg_match($this->regex, $migration, $matches);
 
-        return array_pop($parts);
+        return count($matches) ? $matches[2] : '';
     }
 
     /**
