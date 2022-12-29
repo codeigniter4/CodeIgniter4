@@ -42,7 +42,7 @@ Upgrade Guide
     - ``$this->db->join('comments', 'comments.id = blogs.id');`` to ``$builder->join('comments', 'comments.id = blogs.id');``
     - ``$this->db->having('user_id',  45);`` to ``$builder->having('user_id',  45);``
 6. CI4 does not provide `Database Caching <https://www.codeigniter.com/userguide3/database/caching.html>`_
-   in CI3, so if you need to cache the result, use :doc:`../libraries/caching` instead.
+   layer known from CI3, so if you need to cache the result, use :doc:`../libraries/caching` instead.
 
 Code Example
 ============
