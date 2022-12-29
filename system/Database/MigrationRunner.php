@@ -458,9 +458,9 @@ class MigrationRunner
             return false;
         }
 
-        $name = basename($path, '.php');
+        $filename = basename($path, '.php');
 
-        if (! preg_match($this->regex, $name)) {
+        if (! preg_match($this->regex, $filename)) {
             return false;
         }
 
@@ -468,8 +468,8 @@ class MigrationRunner
 
         $migration = new stdClass();
 
-        $migration->version   = $this->getMigrationNumber($name);
-        $migration->name      = $this->getMigrationName($name);
+        $migration->version   = $this->getMigrationNumber($filename);
+        $migration->name      = $this->getMigrationName($filename);
         $migration->path      = $path;
         $migration->class     = $locator->getClassname($path);
         $migration->namespace = $namespace;
