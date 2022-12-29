@@ -817,9 +817,8 @@ class MigrationRunner
      */
     protected function migrate($direction, $migration): bool
     {
-        include_once $migration->path;
-
-        $class = $migration->class;
+        $class = $this->generateUniqClassname($migration);
+        $this->loadMigrationClass($migration, $class);
         $this->setName($migration->name);
 
         // Validate the migration file structure
@@ -869,5 +868,71 @@ class MigrationRunner
         $instance->{$direction}();
 
         return true;
+    }
+
+    /**
+     * Generates a new unique classname with the version.
+     *
+     * @return string New unique migration classname
+     */
+    private function generateUniqClassname(stdClass $migration): string
+    {
+        $number = preg_replace('/[^0-9]/', '', $migration->version);
+
+        return $migration->class . $number;
+    }
+
+    /**
+     * Loads the migration class as the given classname.
+     */
+    private function loadMigrationClass(stdClass $migration, string $classname): void
+    {
+        if (class_exists($classname, false)) {
+            return;
+        }
+
+        $classShortName = class_basename($classname);
+        $migrationCode  = file_get_contents($migration->path);
+        $newCode        = $this->replaceMigrationClassname($migrationCode, $classShortName);
+
+        eval($newCode);
+    }
+
+    /**
+     * Replaces classname in the migration class code.
+     *
+     * @return string New migration code without `<?php`.
+     */
+    private function replaceMigrationClassname(string $migrationCode, string $classShortName): string
+    {
+        $tokens = token_get_all($migrationCode);
+
+        $newCode = '';
+
+        for ($i = 0; $i < count($tokens); $i++) {
+            $token = $tokens[$i];
+
+            if (is_string($token)) {
+                $newCode .= $token;
+            } elseif ($token[0] === T_OPEN_TAG) {
+                // do nothing.
+            } elseif ($token[0] === T_CLASS) {
+                $newCode .= 'class ' . $classShortName;
+
+                $i++;
+
+                while ($tokens[$i][0] === T_WHITESPACE) {
+                    $i++;
+                }
+
+                if ($tokens[$i][0] === T_STRING) {
+                    // do nothing.
+                }
+            } else {
+                $newCode .= $token[1];
+            }
+        }
+
+        return $newCode;
     }
 }
