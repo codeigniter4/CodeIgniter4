@@ -448,6 +448,8 @@ class MigrationRunner
     /**
      * Create a migration object from a file path.
      *
+     * @param string $path Full path to a valid migration file.
+     *
      * @return false|object Returns the migration object, or false on failure
      */
     protected function migrationFromFile(string $path, string $namespace)
@@ -525,6 +527,8 @@ class MigrationRunner
 
     /**
      * Extracts the migration number from a filename
+     *
+     * @param string $migration A migration filename w/o path.
      */
     protected function getMigrationNumber(string $migration): string
     {
