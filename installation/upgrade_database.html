@@ -279,34 +279,35 @@
 <h1>Upgrade Database<a class="headerlink" href="#upgrade-database" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#documentations" id="id1">Documentations</a></p></li>
-<li><p><a class="reference internal" href="#what-has-been-changed" id="id2">What has been changed</a></p></li>
-<li><p><a class="reference internal" href="#upgrade-guide" id="id3">Upgrade Guide</a></p></li>
-<li><p><a class="reference internal" href="#code-example" id="id4">Code Example</a></p>
+<li><p><a class="reference internal" href="#documentations" id="id2">Documentations</a></p></li>
+<li><p><a class="reference internal" href="#what-has-been-changed" id="id3">What has been changed</a></p></li>
+<li><p><a class="reference internal" href="#upgrade-guide" id="id4">Upgrade Guide</a></p></li>
+<li><p><a class="reference internal" href="#code-example" id="id5">Code Example</a></p>
 <ul>
-<li><p><a class="reference internal" href="#codeigniter-version-3-x" id="id5">CodeIgniter Version 3.x</a></p></li>
-<li><p><a class="reference internal" href="#codeigniter-version-4-x" id="id6">CodeIgniter Version 4.x</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-version-3-x" id="id6">CodeIgniter Version 3.x</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-version-4-x" id="id7">CodeIgniter Version 4.x</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="documentations">
-<h2><a class="toc-backref" href="#id1">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Documentations</a><a class="headerlink" href="#documentations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="http://codeigniter.com/userguide3/database/index.html">Database Reference Documentation CodeIgniter 3.X</a></p></li>
 <li><p><a class="reference internal" href="../database/index.html"><span class="doc">Working with Databases Documentation CodeIgniter 4.X</span></a></p></li>
 </ul>
 </section>
 <section id="what-has-been-changed">
-<h2><a class="toc-backref" href="#id2">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">What has been changed</a><a class="headerlink" href="#what-has-been-changed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The functionality in CI3 is basically the same as in CI4.</p></li>
+<li><p><a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a> functionality known from CI3 was removed.</p></li>
 <li><p>The method names have changed to camelCase and the <a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a>
 now needs to be initialized before you can run queries on it.</p></li>
 </ul>
 </section>
 <section id="upgrade-guide">
-<h2><a class="toc-backref" href="#id3">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Upgrade Guide</a><a class="headerlink" href="#upgrade-guide" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
 <li><p>Add your database credentials to <strong>app/Config/Database.php</strong>. The options are pretty much the same as in CI3 only some names have changed slightly.</p></li>
 <li><p>Everywhere you have used the database you have to replace <code class="docutils literal notranslate"><span class="pre">$this-&gt;load-&gt;database();</span></code> with <code class="docutils literal notranslate"><span class="pre">$db</span> <span class="pre">=</span> <span class="pre">db_connect();</span></code>.</p></li>
@@ -336,12 +337,14 @@ now needs to be initialized before you can run queries on it.</p></li>
 </ul>
 </div></blockquote>
 </li>
+<li><p>CI4 does not provide <a class="reference external" href="https://www.codeigniter.com/userguide3/database/caching.html">Database Caching</a>
+layer known from CI3, so if you need to cache the result, use <a class="reference internal" href="../libraries/caching.html"><span class="doc">Caching Driver</span></a> instead.</p></li>
 </ol>
 </section>
 <section id="code-example">
-<h2><a class="toc-backref" href="#id4">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Code Example</a><a class="headerlink" href="#code-example" title="Permalink to this headline"></a></h2>
 <section id="codeigniter-version-3-x">
-<h3><a class="toc-backref" href="#id5">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">CodeIgniter Version 3.x</a><a class="headerlink" href="#codeigniter-version-3-x" title="Permalink to this headline"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">)</span>
@@ -352,7 +355,7 @@ now needs to be initialized before you can run queries on it.</p></li>
 </div>
 </section>
 <section id="codeigniter-version-4-x">
-<h3><a class="toc-backref" href="#id6">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">CodeIgniter Version 4.x</a><a class="headerlink" href="#codeigniter-version-4-x" title="Permalink to this headline"></a></h3>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;mytable&#39;</span><span class="p">);</span>
