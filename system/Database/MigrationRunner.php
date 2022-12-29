@@ -532,9 +532,9 @@ class MigrationRunner
      */
     protected function getMigrationNumber(string $migration): string
     {
-        preg_match('/^\d{4}[_-]?\d{2}[_-]?\d{2}[_-]?\d{6}/', $migration, $matches);
+        preg_match($this->regex, $migration, $matches);
 
-        return count($matches) ? $matches[0] : '0';
+        return count($matches) ? $matches[1] : '0';
     }
 
     /**
