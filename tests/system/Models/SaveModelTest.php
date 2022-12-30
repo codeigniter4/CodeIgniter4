@@ -322,4 +322,27 @@ final class SaveModelTest extends LiveModelTestCase
         $this->assertSame($insert['key'], $this->model->getInsertID());
         $this->seeInDatabase('without_auto_increment', $update);
     }
+
+    public function testUseAutoIncrementSetToFalseSaveObject(): void
+    {
+        $this->createModel(WithoutAutoIncrementModel::class);
+
+        $insert = [
+            'key'   => 'some_random_key',
+            'value' => 'some value',
+        ];
+        $this->model->save((object) $insert);
+
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $insert);
+
+        $update = [
+            'key'   => 'some_random_key',
+            'value' => 'some different value',
+        ];
+        $this->model->save((object) $update);
+
+        $this->assertSame($insert['key'], $this->model->getInsertID());
+        $this->seeInDatabase('without_auto_increment', $update);
+    }
 }

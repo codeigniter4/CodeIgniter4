@@ -685,8 +685,12 @@ class Model extends BaseModel
             }
         }
 
-        if ($this->useAutoIncrement === false && isset($data[$this->primaryKey])) {
-            $this->tempPrimaryKeyValue = $data[$this->primaryKey];
+        if ($this->useAutoIncrement === false) {
+            if (is_array($data) && isset($data[$this->primaryKey])) {
+                $this->tempPrimaryKeyValue = $data[$this->primaryKey];
+            } elseif (is_object($data) && isset($data->{$this->primaryKey})) {
+                $this->tempPrimaryKeyValue = $data->{$this->primaryKey};
+            }
         }
 
         $this->escape   = $this->tempData['escape'] ?? [];
