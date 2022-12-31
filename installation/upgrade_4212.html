@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.2.7 to 4.2.8 &mdash; CodeIgniter 4.2.11 documentation</title>
+  <title>Upgrading from 4.2.11 to 4.2.12 &mdash; CodeIgniter 4.2.11 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrading from 4.2.6 to 4.2.7" href="upgrade_427.html" />
-    <link rel="prev" title="Upgrading from 4.2.9 to 4.2.10" href="upgrade_4210.html" /> 
+    <link rel="next" title="Upgrading from 4.2.10 to 4.2.11" href="upgrade_4211.html" />
+    <link rel="prev" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -258,14 +258,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_428.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_4212.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Installation</a></li>
           <li class="breadcrumb-item"><a href="upgrading.html">Upgrading From a Previous Version</a></li>
-      <li class="breadcrumb-item active">Upgrading from 4.2.7 to 4.2.8</li>
+      <li class="breadcrumb-item active">Upgrading from 4.2.11 to 4.2.12</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -274,8 +274,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-4-2-7-to-4-2-8">
-<h1>Upgrading from 4.2.7 to 4.2.8<a class="headerlink" href="#upgrading-from-4-2-7-to-4-2-8" title="Permalink to this headline"></a></h1>
+  <section id="upgrading-from-4-2-11-to-4-2-12">
+<h1>Upgrading from 4.2.11 to 4.2.12<a class="headerlink" href="#upgrading-from-4-2-11-to-4-2-12" title="Permalink to this headline"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
@@ -293,17 +293,14 @@
 </div>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id1">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
-<p>The following files had changes to code or behavior that merit updating in your projects:</p>
-<ul class="simple">
-<li><p>app/Views/errors/html/error_exception.php</p></li>
-</ul>
+<p>Version <code class="docutils literal notranslate"><span class="pre">4.2.12</span></code> did not alter any executable code in project files.</p>
 <section id="all-changes">
 <h3><a class="toc-backref" href="#id2">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/Logger.php</p></li>
-<li><p>app/Views/errors/html/error_exception.php</p></li>
+<li><p>app/Controllers/BaseController.php</p></li>
+<li><p>composer.json</p></li>
 </ul>
 </section>
 </section>
@@ -313,8 +310,8 @@ many will be simple comments or formatting that have no effect on the runtime:</
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_4210.html" class="btn btn-neutral float-left" title="Upgrading from 4.2.9 to 4.2.10" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="upgrade_427.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.6 to 4.2.7" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-left" title="Backward Compatibility Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_4211.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.10 to 4.2.11" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
