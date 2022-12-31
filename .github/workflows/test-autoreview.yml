@@ -18,6 +18,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   auto-review-tests:
     uses: ./.github/workflows/reusable-serviceless-phpunit-test.yml # @TODO Extract to codeigniter4/.github repo
