@@ -31,6 +31,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   # Any environment variables set in an env context defined at the workflow level
   # in the caller workflow are not propagated to the called workflow.

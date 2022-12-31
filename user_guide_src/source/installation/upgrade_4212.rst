@@ -1,6 +1,6 @@
-#############################
-Upgrading from 4.2.2 to 4.2.3
-#############################
+###############################
+Upgrading from 4.2.11 to 4.2.12
+###############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
 
@@ -15,4 +15,13 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Project Files
 *************
 
-Version ``4.2.3`` is an internal change for security measures and requires no intervention in projects.
+Version ``4.2.12`` did not alter any executable code in project files.
+
+All Changes
+===========
+
+This is a list of all files in the **project space** that received changes;
+many will be simple comments or formatting that have no effect on the runtime:
+
+* app/Controllers/BaseController.php
+* composer.json
