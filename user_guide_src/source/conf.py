@@ -18,7 +18,7 @@
 
 project = 'CodeIgniter'
 author = 'CodeIgniter Foundation'
-copyright = '2019-2022 CodeIgniter Foundation'
+copyright = '2019-2023 CodeIgniter Foundation'
 
 # The short X.Y version.
 version = '4.2'
