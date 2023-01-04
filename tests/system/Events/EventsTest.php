@@ -55,21 +55,21 @@ final class EventsTest extends CIUnitTestCase
 
         // it should start out empty
         MockEvents::setFiles([]);
-        $this->assertEmpty(MockEvents::getFiles());
+        $this->assertEmpty($this->manager->getFiles());
 
         // make sure we have a default events file
         $default = [APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Events.php'];
         $this->manager->unInitialize();
         MockEvents::initialize();
-        $this->assertSame($default, MockEvents::getFiles());
+        $this->assertSame($default, $this->manager->getFiles());
 
         // but we should be able to change it through the backdoor
         MockEvents::setFiles(['/peanuts']);
-        $this->assertSame(['/peanuts'], MockEvents::getFiles());
+        $this->assertSame(['/peanuts'], $this->manager->getFiles());
 
         // re-initializing should have no effect
         MockEvents::initialize();
-        $this->assertSame(['/peanuts'], MockEvents::getFiles());
+        $this->assertSame(['/peanuts'], $this->manager->getFiles());
     }
 
     public function testPerformance()
