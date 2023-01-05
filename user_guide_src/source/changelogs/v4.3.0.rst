@@ -291,6 +291,7 @@ The following items are affected:
 
 - Typography class: Creation of ``br`` tag
 - View Parser: The ``nl2br`` filter
+- Honeypot: ``input`` tag
 - Form helper
 - HTML helper
 - Common Functions
@@ -364,3 +365,4 @@ Bugs Fixed
 - Fixed a bug when all types of ``Prepared Queries`` were returning a ``Result`` object instead of a bool value for write-type queries.
 - Fixed a bug with variable filtering in JSON requests using with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
 - Fixed a bug when variable type may be changed when using a specified index with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
+- Fixed a bug that Honeypot field appears when CSP is enabled. See also :ref:`upgrade-430-honeypot-and-csp`.
