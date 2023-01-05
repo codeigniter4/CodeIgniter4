@@ -370,10 +370,10 @@ by different servers, but we will show examples for the two most common web serv
 <p>Apache must have the <em>mod_rewrite</em> extension enabled. If it does, you can use a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file with some simple rules.
 Here is an example of such a file, using the “negative” method in which everything is redirected except the specified
 items:</p>
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">RewriteEngine</span><span class="w"> </span><span class="k">On</span><span class="w"></span>
-<span class="nb">RewriteCond</span><span class="w"> </span>%{REQUEST_FILENAME}<span class="w"> </span>!-f<span class="w"></span>
-<span class="nb">RewriteCond</span><span class="w"> </span>%{REQUEST_FILENAME}<span class="w"> </span>!-d<span class="w"></span>
-<span class="nb">RewriteRule</span><span class="w"> </span>^(.*)$<span class="w"> </span>index.php/$1<span class="w"> </span>[L]<span class="w"></span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">RewriteEngine</span><span class="w"> </span><span class="k">On</span>
+<span class="nb">RewriteCond</span><span class="w"> </span>%{REQUEST_FILENAME}<span class="w"> </span>!-f
+<span class="nb">RewriteCond</span><span class="w"> </span>%{REQUEST_FILENAME}<span class="w"> </span>!-d
+<span class="nb">RewriteRule</span><span class="w"> </span>^(.*)$<span class="w"> </span>index.php/$1<span class="w"> </span>[L]
 </pre></div>
 </div>
 <p>In this example, any HTTP request other than those for existing directories and existing files are treated as a
@@ -391,9 +391,9 @@ request for your index.php file.</p>
 <span id="urls-remove-index-php-nginx"></span><h3><a class="toc-backref" href="#id6">NGINX</a><a class="headerlink" href="#nginx" title="Permalink to this headline"></a></h3>
 <p>Under NGINX, you can define a location block and use the <code class="docutils literal notranslate"><span class="pre">try_files</span></code> directive to get the same effect as we did with
 the above Apache configuration:</p>
-<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>This will first look for a file or directory matching the URI (constructing the full path to each file from the
@@ -413,8 +413,8 @@ settings of the root and alias directives), and then sends the request to the in
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 01, 2023.
+    <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Jan 05, 2023.
       </span></p>
   </div>
 

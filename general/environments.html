@@ -319,7 +319,7 @@ You can’t use it for your development.</p>
 <section id="env">
 <h3><a class="toc-backref" href="#id2">.env</a><a class="headerlink" href="#env" title="Permalink to this headline"></a></h3>
 <p>The simplest method to set the variable is in your <a class="reference internal" href="configuration.html"><span class="doc">.env file</span></a>.</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">CI_ENVIRONMENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">development</span><span class="w"></span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">CI_ENVIRONMENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">development</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -334,7 +334,7 @@ You can’t use it for your development.</p>
 <span id="environment-apache"></span><h3><a class="toc-backref" href="#id3">Apache</a><a class="headerlink" href="#apache" title="Permalink to this headline"></a></h3>
 <p>This server variable can be set in your <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file or Apache
 config using <a class="reference external" href="https://httpd.apache.org/docs/2.2/mod/mod_env.html#setenv">SetEnv</a>.</p>
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">SetEnv</span><span class="w"> </span>CI_ENVIRONMENT<span class="w"> </span>development<span class="w"></span>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">SetEnv</span><span class="w"> </span>CI_ENVIRONMENT<span class="w"> </span>development
 </pre></div>
 </div>
 </section>
@@ -345,16 +345,16 @@ in order for it to show up under the <cite>$_SERVER</cite> variable. This allows
 virtual-host level, instead of using <cite>env</cite> to set it for the entire server, though that
 would work fine on a dedicated server. You would then modify your server config to something
 like:</p>
-<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">include</span><span class="w">     </span><span class="s">conf/defaults.conf</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kn">root</span><span class="w">        </span><span class="s">/var/www</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">localhost</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">include</span><span class="w">     </span><span class="s">conf/defaults.conf</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">root</span><span class="w">        </span><span class="s">/var/www</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kn">location</span><span class="w">    </span><span class="p">~</span><span class="sr">*</span><span class="w"> </span><span class="s">\.php</span>$<span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kn">fastcgi_param</span><span class="w"> </span><span class="s">CI_ENVIRONMENT</span><span class="w"> </span><span class="s">&quot;production&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="kn">include</span><span class="w"> </span><span class="s">conf/fastcgi-php.conf</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kn">location</span><span class="w">    </span><span class="p">~</span><span class="sr">*</span><span class="w"> </span><span class="s">\.php</span>$<span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kn">fastcgi_param</span><span class="w"> </span><span class="s">CI_ENVIRONMENT</span><span class="w"> </span><span class="s">&quot;production&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">include</span><span class="w"> </span><span class="s">conf/fastcgi-php.conf</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Alternative methods are available for nginx and other servers, or you can
@@ -406,8 +406,8 @@ output. Disabling error reporting in production is a
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2022 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 01, 2023.
+    <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Jan 05, 2023.
       </span></p>
   </div>
 
