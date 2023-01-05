@@ -164,7 +164,9 @@ class CLI
         } else {
             // If the command is being called from a controller
             // we need to define STDOUT ourselves
-            define('STDOUT', 'php://output'); // @codeCoverageIgnore
+            if (! defined('STDOUT')) {
+                define('STDOUT', 'php://output'); // @codeCoverageIgnore
+            }
         }
     }
 
