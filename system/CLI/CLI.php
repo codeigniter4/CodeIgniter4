@@ -150,16 +150,22 @@ class CLI
             // much more bash-like.
             // http://www.php.net/manual/en/readline.installation.php
             static::$readline_support = extension_loaded('readline');
+
             // clear segments & options to keep testing clean
             static::$segments = [];
             static::$options  = [];
+
             // Check our stream resource for color support
             static::$isColored = static::hasColorSupport(STDOUT);
+
             static::parseCommandLine();
+
             static::$initialized = true;
+        // See: https://github.com/codeigniter4/CodeIgniter4/issues/7047
         } elseif (! defined('STDOUT')) {
+            // @codeCoverageIgnoreStart
             define('STDOUT', 'php://output');
-            // @codeCoverageIgnore
+            // @codeCoverageIgnoreEnd
         }
     }
 
