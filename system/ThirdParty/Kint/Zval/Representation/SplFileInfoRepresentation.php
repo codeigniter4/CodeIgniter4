@@ -28,6 +28,7 @@ declare(strict_types=1);
 namespace Kint\Zval\Representation;
 
 use Kint\Utils;
+use RuntimeException;
 use SplFileInfo;
 
 class SplFileInfoRepresentation extends Representation
@@ -53,24 +54,30 @@ class SplFileInfoRepresentation extends Representation
     {
         parent::__construct('SplFileInfo');
 
-        if ($fileInfo->getRealPath()) {
-            $this->realpath = $fileInfo->getRealPath();
-            $this->perms = $fileInfo->getPerms();
-            $this->size = $fileInfo->getSize();
-            $this->owner = $fileInfo->getOwner();
-            $this->group = $fileInfo->getGroup();
-            $this->ctime = $fileInfo->getCTime();
-            $this->mtime = $fileInfo->getMTime();
-        }
-
         $this->path = $fileInfo->getPathname();
 
-        $this->is_dir = $fileInfo->isDir();
-        $this->is_file = $fileInfo->isFile();
-        $this->is_link = $fileInfo->isLink();
+        try {
+            if ($fileInfo->getRealPath()) {
+                $this->perms = $fileInfo->getPerms();
+                $this->size = $fileInfo->getSize();
+                $this->owner = $fileInfo->getOwner();
+                $this->group = $fileInfo->getGroup();
+                $this->ctime = $fileInfo->getCTime();
+                $this->mtime = $fileInfo->getMTime();
+                $this->realpath = $fileInfo->getRealPath();
+            }
 
-        if ($this->is_link) {
-            $this->linktarget = $fileInfo->getLinkTarget();
+            $this->is_dir = $fileInfo->isDir();
+            $this->is_file = $fileInfo->isFile();
+            $this->is_link = $fileInfo->isLink();
+
+            if ($this->is_link) {
+                $this->linktarget = $fileInfo->getLinkTarget();
+            }
+        } catch (RuntimeException $e) {
+            if (false === \strpos($e->getMessage(), ' open_basedir ')) {
+                throw $e;
+            }
         }
 
         switch ($this->perms & 0xF000) {

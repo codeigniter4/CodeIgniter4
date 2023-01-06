@@ -74,8 +74,11 @@ class BlobValue extends Value
      * windows-125x and iso-8859-x which have practically undetectable
      * differences because they use every single byte available.
      *
-     * This is *NOT* reliable and should not be trusted implicitly. As
-     * with char_encodings, the order of the charsets is significant.
+     * This is *NOT* reliable and should not be trusted implicitly. Since it
+     * works by triggering and suppressing conversion warnings, your error
+     * handler may complain.
+     *
+     * As with char_encodings, the order of the charsets is significant.
      *
      * This depends on the iconv extension
      */
@@ -182,6 +185,8 @@ class BlobValue extends Value
 
         if (\function_exists('iconv')) {
             foreach (self::$legacy_encodings as $encoding) {
+                // Iconv detection works by triggering
+                // "Detected an illegal character in input string" warnings
                 if (@\iconv($encoding, $encoding, $string) === $string) {
                     return $encoding;
                 }

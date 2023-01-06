@@ -113,11 +113,6 @@ class XmlPlugin extends AbstractPlugin
     /**
      * Get the DOMDocument info.
      *
-     * The documentation of DOMDocument::loadXML() states that while you can
-     * call it statically, it will give an E_STRICT warning. On my system it
-     * actually gives an E_DEPRECATED warning, but it works so we'll just add
-     * an error-silencing '@' to the access path.
-     *
      * If it errors loading then we wouldn't have gotten this far in the first place.
      *
      * @psalm-param non-empty-string $var         The XML string

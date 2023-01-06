@@ -322,7 +322,7 @@ Others
 - **Validation:** Added Closure validation rule. See :ref:`validation-using-closure-rule` for details.
 - **Config:** Now you can specify Composer packages to auto-discover manually. See :ref:`Code Modules <modules-specify-composer-packages>`.
 - **Config:** Added ``Config\Session`` class to handle session configuration.
-- **Debug:** Kint has been updated to 5.0.1.
+- **Debug:** Kint has been updated to 5.0.2.
 - **Request:** Added new ``$request->getRawInputVar()`` method to return a specified variable from raw stream. See :ref:`Retrieving Raw data <incomingrequest-retrieving-raw-data>`.
 - **Request:** Added new ``$request->is()`` method to query the request type.
   See :ref:`Determining Request Type <incomingrequest-is>`.
