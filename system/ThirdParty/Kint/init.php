@@ -53,8 +53,12 @@ if (false !== \ini_get('xdebug.file_link_format')) {
 if (isset($_SERVER['DOCUMENT_ROOT'])) {
     Kint::$app_root_dirs = [
         $_SERVER['DOCUMENT_ROOT'] => '<ROOT>',
-        \realpath($_SERVER['DOCUMENT_ROOT']) => '<ROOT>',
     ];
+
+    // Suppressed for unreadable document roots (related to open_basedir)
+    if (false !== @\realpath($_SERVER['DOCUMENT_ROOT'])) {
+        Kint::$app_root_dirs[\realpath($_SERVER['DOCUMENT_ROOT'])] = '<ROOT>';
+    }
 }
 
 Utils::composerSkipFlags();
