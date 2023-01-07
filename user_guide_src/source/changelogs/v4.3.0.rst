@@ -208,6 +208,9 @@ Commands
 - Added ``spark filter:check`` command to check the filters for a route. See :ref:`Controller Filters <spark-filter-check>` for the details.
 - Added ``spark make:cell`` command to create a new Cell file and its view. See :ref:`generating-cell-via-command` for the details.
 - Now ``spark routes`` command shows route names. See :ref:`URI Routing <routing-spark-routes>`.
+- Now ``spark routes`` command can sort the output by Handler.
+  See :ref:`routing-spark-routes-sort-by-handler`.
+
 - Help information for a spark command can now be accessed using the ``--help`` option (e.g. ``php spark serve --help``)
 - Added methods ``CLI::promptByMultipleKeys()`` to support multiple value in input, unlike ``promptByKey()``. See :ref:`prompt-by-multiple-keys` for details.
 - HTTP/3 is now considered a valid protocol.
