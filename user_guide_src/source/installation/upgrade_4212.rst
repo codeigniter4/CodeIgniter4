@@ -23,5 +23,7 @@ All Changes
 This is a list of all files in the **project space** that received changes;
 many will be simple comments or formatting that have no effect on the runtime:
 
-* app/Controllers/BaseController.php
-* composer.json
+*   app/Config/Cache.php
+*   app/Config/Migrations.php
+*   app/Controllers/BaseController.php
+*   composer.json

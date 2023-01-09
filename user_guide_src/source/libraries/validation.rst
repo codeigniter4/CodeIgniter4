@@ -714,8 +714,8 @@ is_not_unique           Yes        Checks the database to see if the given value
                                    filter (currently accept only one filter).
 is_unique               Yes        Checks if this field value exists in the      is_unique[table.field,ignore_field,ignore_value]
                                    database. Optionally set a column and value
-                                   value to ignore, useful when updating records
-                                   to ignore itself.
+                                   to ignore, useful when updating records to
+                                   ignore itself.
 less_than               Yes        Fails if field is greater than or equal to    less_than[8]
                                    the parameter value or not numeric.
 less_than_equal_to      Yes        Fails if field is greater than the parameter  less_than_equal_to[8]
