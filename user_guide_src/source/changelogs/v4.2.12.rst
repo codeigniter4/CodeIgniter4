@@ -1,7 +1,7 @@
 Version 4.2.12
 ##############
 
-Release Date: Unreleased
+Release Date: January 9, 2023
 
 **4.2.12 release of CodeIgniter4**
 
