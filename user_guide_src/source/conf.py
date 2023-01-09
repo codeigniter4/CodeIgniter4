@@ -12,19 +12,21 @@
 #
 # import os
 # import sys
+import datetime
 # sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
 project = 'CodeIgniter'
 author = 'CodeIgniter Foundation'
-copyright = '2019-2022 CodeIgniter Foundation'
+year_now = datetime.date.today().year
+copyright = '2019-' + str(year_now) + ' CodeIgniter Foundation'
 
 # The short X.Y version.
 version = '4.2'
 
 # The full version, including alpha/beta/rc tags.
-release = '4.2.11'
+release = '4.2.12'
 
 # -- General configuration ---------------------------------------------------
 
@@ -137,4 +139,4 @@ man_pages = [
 epub_title = 'CodeIgniter4'
 epub_author = 'CodeIgniter Foundation'
 epub_publisher = 'CodeIgniter Foundation'
-epub_copyright = '2019-2022 CodeIgniter Foundation'
+epub_copyright = copyright

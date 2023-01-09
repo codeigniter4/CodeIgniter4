@@ -15,6 +15,8 @@ What has been changed
 =====================
 
 - In CI4, the configurations are now stored in classes which extend ``CodeIgniter\Config\BaseConfig``.
+- The **application/config/config.php** in CI3 will be **app/Config/App.php**
+  and some other files like **app/Config/Security.php** for the specific classes.
 - Within the configuration class, the config values are stored in public class properties.
 - The method to fetch config values has been changed.
 
@@ -30,7 +32,7 @@ Upgrade Guide
    from the CI3 config into the new CI4 config class as public class properties.
 4. Now, you have to change the config fetching syntax everywhere you fetch config
    values. The CI3 syntax is something like ``$this->config->item('item_name');``.
-   You have to change this into ``config('MyConfigFile')->item_name;``.
+   You have to change this into ``config('MyConfig')->item_name;``.
 
 Code Example
 ============
@@ -38,13 +40,13 @@ Code Example
 CodeIgniter Version 3.x
 ------------------------
 
-Path: **application/config**:
+Path: **application/config/site.php**:
 
 .. literalinclude:: upgrade_configuration/ci3sample/001.php
 
 CodeIgniter Version 4.x
 -----------------------
 
-Path: **app/Config**:
+Path: **app/Config/Site.php**:
 
 .. literalinclude:: upgrade_configuration/001.php

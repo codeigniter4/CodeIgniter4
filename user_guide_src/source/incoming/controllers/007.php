@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class Products extends BaseController
+class Helloworld extends BaseController
 {
     protected function utility()
     {

@@ -15,10 +15,11 @@ What has been changed
 =====================
 
 - Since namespaces have been added to CodeIgniter 4, the controllers must be changed to support namespaces.
-- Controllers don't use constructors any more (to invoke CI 'magic') unless those are part of base controllers you make.
-- CI provides Request and Response objects for you to work with - more powerful than the CI3-way.
-- If you want a base controller (``MY_Controller`` in CI3), make it where you like,
-  e.g., BaseController extends Controller, and then have your controllers extend it
+- The constructor of CI4 Controller does not automatically load core classes into the properties.
+- CI4's Controller has a special constructor :ref:`initController() <controller-constructor>`.
+- CI4 provides :doc:`Request </incoming/incomingrequest>` and :doc:`Responses </outgoing/response>`
+  objects for you to work with - more powerful than the CI3-way.
+- If you want a base controller (``MY_Controller`` in CI3), use **app/Controllers/BaseController.php**.
 
 Upgrade Guide
 =============

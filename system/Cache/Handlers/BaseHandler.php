@@ -77,7 +77,7 @@ abstract class BaseHandler implements CacheInterface
      * @param int     $ttl      Time to live
      * @param Closure $callback Callback return value
      *
-     * @return mixed
+     * @return array|bool|float|int|object|string|null
      */
     public function remember(string $key, int $ttl, Closure $callback)
     {

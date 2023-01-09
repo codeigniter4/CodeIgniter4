@@ -50,6 +50,8 @@ Route    /blog/news/2022/10
 Query    page=2
 ======== ====================================
 
+.. _urls-remove-index-php:
+
 Removing the index.php file
 ===========================
 

@@ -1,7 +1,30 @@
 # Changelog
 
-## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.10) (2022-12-21)
+## [v4.2.12](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.12) (2023-01-09)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.11...v4.2.12)
+
+### Fixed Bugs
+* docs: fix request.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7014
+* fix: `link_tag()` missing `type="application/rss+xml"` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7022
+* fix: Request::getIPaddress() causes error on CLI by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7030
+* docs: fix upgrade_database.rst by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7036
+* fix: `spark migrate:status` shows incorrect filename when format is `Y_m_d_His_` by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7038
+* fix: Model::save() object when useAutoIncrement is disabled by @michalsn in https://github.com/codeigniter4/CodeIgniter4/pull/7042
+* fix: define of STDOUT in CLI init() method by @jozefrebjak in https://github.com/codeigniter4/CodeIgniter4/pull/7052
+* fix: change `getFile()` function of \CodeIgniter\Events\Events to static. by @ping-yee in https://github.com/codeigniter4/CodeIgniter4/pull/7046
+* fix: [Email] add fallback to use gethostname() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7053
+* Fixing bug with legacy autoRoute when testing by @baycik in https://github.com/codeigniter4/CodeIgniter4/pull/7060
+
+### Refactoring
+* refactor: RequestTrait by rector by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7006
+* refactor: update sass output by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7026
+
+## [v4.2.11](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.11) (2022-12-21)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.10...v4.2.11)
+
+### SECURITY
+* *Attackers may spoof IP address when using proxy* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-ghw3-5qvm-3mqc) for more information.
+* *Potential Session Handlers Vulnerability* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-6cq5-8cj7-g558) for more information.
 
 ### Fixed Bugs
 * fix:  Request::getIPAddress() by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6820
@@ -76,6 +99,9 @@
 
 ## [v4.2.7](https://github.com/codeigniter4/CodeIgniter4/tree/v4.2.7) (2022-10-06)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.6...v4.2.7)
+
+### SECURITY
+* *Secure or HttpOnly flag set in Config\Cookie is not reflected in Cookies issued* was fixed. See the [Security advisory](https://github.com/codeigniter4/CodeIgniter4/security/advisories/GHSA-745p-r637-7vvp) for more information.
 
 ### Breaking Changes
 * fix: make Time::__toString() database-compatible on any locale by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6461

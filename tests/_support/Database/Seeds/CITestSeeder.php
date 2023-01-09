@@ -150,7 +150,7 @@ class CITestSeeder extends Seeder
 
         if ($this->db->DBDriver === 'MySQLi') {
             $data['ci_sessions'][] = [
-                'id'         => '1f5o06b43phsnnf8if6bo33b635e4p2o',
+                'id'         => 'ci_session:1f5o06b43phsnnf8if6bo33b635e4p2o',
                 'ip_address' => '127.0.0.1',
                 'timestamp'  => '2021-06-25 21:54:14',
                 'data'       => '__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";',
@@ -159,7 +159,7 @@ class CITestSeeder extends Seeder
 
         if ($this->db->DBDriver === 'Postgre') {
             $data['ci_sessions'][] = [
-                'id'         => '1f5o06b43phsnnf8if6bo33b635e4p2o',
+                'id'         => 'ci_session:1f5o06b43phsnnf8if6bo33b635e4p2o',
                 'ip_address' => '127.0.0.1',
                 'timestamp'  => '2021-06-25 21:54:14.991403+02',
                 'data'       => '\x' . bin2hex('__ci_last_regenerate|i:1624650854;_ci_previous_url|s:40:\"http://localhost/index.php/home/index\";'),

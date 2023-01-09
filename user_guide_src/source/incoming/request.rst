@@ -1,17 +1,20 @@
+#############
 Request Class
-*************
+#############
 
 The request class is an object-oriented representation of an HTTP request. This is meant to
 work for both incoming, such as a request to the application from a browser, and outgoing requests,
-like would be used to send a request from the application to a third-party application. This class
+like would be used to send a request from the application to a third-party application.
+
+This class
 provides the common functionality they both need, but both cases have custom classes that extend
-from the Request class to add specific functionality.
+from the Request class to add specific functionality. In practice, you will need to use these classes.
 
 See the documentation for the :doc:`IncomingRequest Class </incoming/incomingrequest>` and
 :doc:`CURLRequest Class </libraries/curlrequest>` for more usage details.
 
 Class Reference
-===============
+***************
 
 .. php:namespace:: CodeIgniter\HTTP
 
@@ -19,8 +22,8 @@ Class Reference
 
     .. php:method:: getIPAddress()
 
-        :returns: The user's IP Address, if it can be detected, or null. If the IP address
-                    is not a valid IP address, then will return 0.0.0.0
+        :returns: The user's IP Address, if it can be detected. If the IP address
+                    is not a valid IP address, then will return 0.0.0.0.
         :rtype:   string
 
         Returns the IP address for the current user. If the IP address is not valid, the method
@@ -32,6 +35,9 @@ Class Reference
             return the reported client IP address by the HTTP header for the allowed IP address.
 
     .. php:method:: isValidIP($ip[, $which = ''])
+
+        .. deprecated:: 4.0.5
+           Use :doc:`../libraries/validation` instead.
 
         .. important:: This method is deprecated. It will be removed in future releases.
 
@@ -65,19 +71,30 @@ Class Reference
 
     .. php:method:: setMethod($method)
 
-        :param string $upper: Sets the request method. Used when spoofing the request.
-        :returns: HTTP request method
+        .. deprecated:: 4.0.5
+           Use :php:meth:`CodeIgniter\\HTTP\\Request::withMethod()` instead.
+
+        :param string $method: Sets the request method. Used when spoofing the request.
+        :returns: This request
+        :rtype: Request
+
+    .. php:method:: withMethod($method)
+
+        .. versionadded:: 4.0.5
+
+        :param string $method: Sets the request method.
+        :returns: New request instance
         :rtype: Request
 
     .. php:method:: getServer([$index = null[, $filter = null[, $flags = null]]])
 
         :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns: $_SERVER item value if found, null if not
+        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns: ``$_SERVER`` item value if found, null if not
         :rtype:   mixed
 
-        This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
+        This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
         :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches server data (``$_SERVER``):
 
         .. literalinclude:: request/004.php
@@ -90,13 +107,13 @@ Class Reference
     .. php:method:: getEnv([$index = null[, $filter = null[, $flags = null]]])
 
         :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
-        :returns: $_ENV item value if found, null if not
+        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :returns: ``$_ENV`` item value if found, null if not
         :rtype:   mixed
 
-        This method is identical to the ``post()``, ``get()`` and ``cookie()`` methods from the
-        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches getEnv data (``$_ENV``):
+        This method is identical to the ``getPost()``, ``getGet()`` and ``getCookie()`` methods from the
+        :doc:`IncomingRequest Class </incoming/incomingrequest>`, only it fetches env data (``$_ENV``):
 
         .. literalinclude:: request/006.php
 
@@ -109,17 +126,17 @@ Class Reference
 
         :param    string $method: Method name
         :param    mixed  $value:  Data to be added
-        :returns: HTTP request method
-        :rtype:    Request
+        :returns: This request
+        :rtype:   Request
 
-        Allows manually setting the value of PHP global, like $_GET, $_POST, etc.
+        Allows manually setting the value of PHP global, like ``$_GET``, ``$_POST``, etc.
 
     .. php:method:: fetchGlobal($method [, $index = null[, $filter = null[, $flags = null]]])
 
         :param    string    $method: Input filter constant
         :param    mixed     $index: Value name
-        :param    int       $filter: The type of filter to apply. A list of filters can be found `here <https://www.php.net/manual/en/filter.filters.php>`__.
-        :param    int|array $flags: Flags to apply. A list of flags can be found `here <https://www.php.net/manual/en/filter.filters.flags.php>`__.
+        :param    int       $filter: The type of filter to apply. A list of filters can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.php>`__.
+        :param    int|array $flags: Flags to apply. A list of flags can be found in `PHP manual <https://www.php.net/manual/en/filter.filters.flags.php>`__.
         :rtype:   mixed
 
         Fetches one or more items from a global, like cookies, get, post, etc.

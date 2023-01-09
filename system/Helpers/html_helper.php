@@ -222,13 +222,20 @@ if (! function_exists('link_tag')) {
     /**
      * Link
      *
-     * Generates link to a CSS file
+     * Generates link tag
      *
-     * @param array|string $href      Stylesheet href or an array
-     * @param bool         $indexPage should indexPage be added to the CSS path.
+     * @param array<string, bool|string>|string $href      Stylesheet href or an array
+     * @param bool                              $indexPage should indexPage be added to the CSS path.
      */
-    function link_tag($href = '', string $rel = 'stylesheet', string $type = 'text/css', string $title = '', string $media = '', bool $indexPage = false, string $hreflang = ''): string
-    {
+    function link_tag(
+        $href = '',
+        string $rel = 'stylesheet',
+        string $type = 'text/css',
+        string $title = '',
+        string $media = '',
+        bool $indexPage = false,
+        string $hreflang = ''
+    ): string {
         $link = '<link ';
 
         // extract fields if needed
@@ -258,7 +265,7 @@ if (! function_exists('link_tag')) {
 
         $link .= 'rel="' . $rel . '" ';
 
-        if (! in_array($rel, ['alternate', 'canonical'], true)) {
+        if ($type !== '' && $rel !== 'canonical' && $hreflang === '' && ! ($rel === 'alternate' && $media !== '')) {
             $link .= 'type="' . $type . '" ';
         }
 
