@@ -581,8 +581,6 @@ class Router implements RouterInterface
     {
         if (empty($dir)) {
             $this->directory = null;
-
-            return;
         }
 
         if ($this->autoRouter instanceof AutoRouter) {

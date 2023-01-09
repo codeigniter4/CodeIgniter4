@@ -161,9 +161,10 @@ class CLI
             static::parseCommandLine();
 
             static::$initialized = true;
-        } else {
+        } elseif (! defined('STDOUT')) {
             // If the command is being called from a controller
             // we need to define STDOUT ourselves
+            // For "! defined('STDOUT')" see: https://github.com/codeigniter4/CodeIgniter4/issues/7047
             define('STDOUT', 'php://output'); // @codeCoverageIgnore
         }
     }

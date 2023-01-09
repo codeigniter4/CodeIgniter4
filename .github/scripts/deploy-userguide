@@ -23,6 +23,12 @@ cd $TARGET
 git checkout master
 rm -rf docs
 
+# Copy common files
+cp -Rf ${SOURCE}/LICENSE ./
+
+# Copy repo-specific files
+cp -Rf ${SOURCE}/admin/userguide/. ./
+
 # Copy files
 cp -Rf ${SOURCE}/user_guide_src/build/html ./docs
 cp -Rf ${SOURCE}/user_guide_src/build/epub/CodeIgniter.epub ./CodeIgniter${VERSION}.epub

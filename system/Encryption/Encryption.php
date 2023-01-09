@@ -71,7 +71,7 @@ class Encryption
     /**
      * Handlers that are to be installed
      *
-     * @var array<string, boolean>
+     * @var array<string, bool>
      */
     protected $handlers = [];
 

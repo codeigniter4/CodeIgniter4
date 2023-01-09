@@ -2101,6 +2101,11 @@ class Email
             return '[' . $_SERVER['SERVER_ADDR'] . ']';
         }
 
+        $hostname = gethostname();
+        if ($hostname !== false) {
+            return $hostname;
+        }
+
         return '[127.0.0.1]';
     }
 
