@@ -289,6 +289,14 @@
         box-shadow: 0 0 0 2px #b3a159;
     }
 
+    .versionadded {
+        background: #275b11;
+    }
+
+    .deprecated:not(.versionmodified) {
+        background: #86371b;
+    }
+
     /* Elements ----------------------------------------------------------------- */
 
     .highlight .m {
