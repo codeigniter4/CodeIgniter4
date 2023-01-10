@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -30,19 +32,19 @@ use Kint\Zval\ResourceValue;
 use Kint\Zval\StreamValue;
 use Kint\Zval\Value;
 
-class StreamPlugin extends Plugin
+class StreamPlugin extends AbstractPlugin
 {
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['resource'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (!$o instanceof ResourceValue || 'stream' !== $o->resource_type) {
             return;

@@ -89,7 +89,7 @@ is not the right type, etc:
 
 .. literalinclude:: errors/008.php
 
-This provides an HTTP status code of 500 and an exit code of 3.
+This provides an exit code of 3.
 
 DatabaseException
 -----------------
@@ -99,7 +99,7 @@ or when it is temporarily lost:
 
 .. literalinclude:: errors/009.php
 
-This provides an HTTP status code of 500 and an exit code of 8.
+This provides an exit code of 8.
 
 RedirectException
 -----------------
@@ -113,3 +113,54 @@ forcing a redirect to a specific route or URL:
 redirect code to use instead of the default (``302``, "temporary redirect"):
 
 .. literalinclude:: errors/011.php
+
+.. _error-specify-http-status-code:
+
+Specify HTTP Status Code in Your Exception
+==========================================
+
+Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
+``HTTPExceptionInterface``.
+
+When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgniter's exception handler, the Exception code will become the HTTP status code.
+
+.. _error-specify-exit-code:
+
+Specify Exit Code in Your Exception
+===================================
+
+Since v4.3.0, you can specify the exit code for your Exception class to implement
+``HasExitCodeInterface``.
+
+When an exception implementing ``HasExitCodeInterface`` is caught by CodeIgniter's exception handler, the code returned from the ``getExitCode()`` method will become the exit code.
+
+.. _logging_deprecation_warnings:
+
+Logging Deprecation Warnings
+============================
+
+.. versionadded:: 4.3.0
+
+By default, all errors reported by ``error_reporting()`` will be thrown as an ``ErrorException`` object. These
+include both ``E_DEPRECATED`` and ``E_USER_DEPRECATED`` errors. With the surge in use of PHP 8.1+, many users
+may see exceptions thrown for `passing null to non-nullable arguments of internal functions <https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg>`_.
+To ease the migration to PHP 8.1, you can instruct CodeIgniter to log the deprecations instead of throwing them.
+
+First, make sure your copy of ``Config\Exceptions`` is updated with the two new properties and set as follows:
+
+.. literalinclude:: errors/012.php
+
+Next, depending on the log level you set in ``Config\Exceptions::$deprecationLogLevel``, check whether the
+logger threshold defined in ``Config\Logger::$threshold`` covers the deprecation log level. If not, adjust
+it accordingly.
+
+.. literalinclude:: errors/013.php
+
+After that, subsequent deprecations will be logged instead of thrown.
+
+This feature also works with user deprecations:
+
+.. literalinclude:: errors/014.php
+
+For testing your application you may want to always throw on deprecations. You may configure this by
+setting the environment variable ``CODEIGNITER_SCREAM_DEPRECATIONS`` to a truthy value.

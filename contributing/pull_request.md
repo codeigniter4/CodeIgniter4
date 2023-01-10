@@ -121,10 +121,14 @@ all changes will need an entry in it, but the following items should.
 
 #### Upgrading Guide
 
-If your PR requires users to do something when they upgrade CodeIgniter, the
-[Upgrading Guide](https://codeigniter4.github.io/CodeIgniter4/installation/upgrading.html) is also needed.
+If your PR requires users to do something when they upgrade CodeIgniter, or
+changes the Config values,
+the [Upgrading Guide](https://codeigniter4.github.io/CodeIgniter4/installation/upgrading.html)
+is also needed.
 
-Add an instruction what to do.
+- Add an instruction what to do when upgrading.
+- If you add new properties or changes default values in Config files, add the
+changes in *"Project Files > Content Changes > Config"*.
 
 ### CSS
 

@@ -64,11 +64,11 @@ final class TypographyTest extends CIUnitTestCase
             "\n\n"                                 => "\n\n<p>&nbsp;</p>",
             "\n\n\n"                               => "\n\n<p>&nbsp;</p>",
             "Line One\n"                           => "<p>Line One</p>\n\n",
-            "Line One\nLine Two"                   => "<p>Line One<br />\nLine Two</p>",
+            "Line One\nLine Two"                   => "<p>Line One<br>\nLine Two</p>",
             "Line One\r\n"                         => "<p>Line One</p>\n\n",
-            "Line One\r\nLine Two"                 => "<p>Line One<br />\nLine Two</p>",
+            "Line One\r\nLine Two"                 => "<p>Line One<br>\nLine Two</p>",
             "Line One\r"                           => "<p>Line One</p>\n\n",
-            "Line One\rLine Two"                   => "<p>Line One<br />\nLine Two</p>",
+            "Line One\rLine Two"                   => "<p>Line One<br>\nLine Two</p>",
             "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p>Line Three</p>",
         ];
 
@@ -84,12 +84,12 @@ final class TypographyTest extends CIUnitTestCase
             "\n\n"                                 => "\n\n",
             "\n\n\n"                               => "\n\n\n\n",
             "Line One\n"                           => "<p>Line One</p>\n\n",
-            "Line One\nLine Two"                   => "<p>Line One<br />\nLine Two</p>",
+            "Line One\nLine Two"                   => "<p>Line One<br>\nLine Two</p>",
             "Line One\r\n"                         => "<p>Line One</p>\n\n",
-            "Line One\r\nLine Two"                 => "<p>Line One<br />\nLine Two</p>",
+            "Line One\r\nLine Two"                 => "<p>Line One<br>\nLine Two</p>",
             "Line One\r"                           => "<p>Line One</p>\n\n",
-            "Line One\rLine Two"                   => "<p>Line One<br />\nLine Two</p>",
-            "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p><br />\nLine Three</p>",
+            "Line One\rLine Two"                   => "<p>Line One<br>\nLine Two</p>",
+            "Line One\n\nLine Two\n\n\nLine Three" => "<p>Line One</p>\n\n<p>Line Two</p>\n\n<p><br>\nLine Three</p>",
         ];
 
         foreach ($strs as $str => $expect) {
@@ -141,9 +141,9 @@ final class TypographyTest extends CIUnitTestCase
     public function testNewlinesToHTMLLineBreaksExceptWithinPRE()
     {
         $strs = [
-            "Line One\nLine Two"            => "Line One<br />\nLine Two",
+            "Line One\nLine Two"            => "Line One<br>\nLine Two",
             "<pre>Line One\nLine Two</pre>" => "<pre>Line One\nLine Two</pre>",
-            "<div>Line One\nLine Two</div>" => "<div>Line One<br />\nLine Two</div>",
+            "<div>Line One\nLine Two</div>" => "<div>Line One<br>\nLine Two</div>",
         ];
 
         foreach ($strs as $str => $expect) {

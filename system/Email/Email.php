@@ -2152,7 +2152,7 @@ class Email
      */
     protected function setErrorMessage($msg)
     {
-        $this->debugMessage[]    = $msg . '<br />';
+        $this->debugMessage[]    = $msg . '<br>';
         $this->debugMessageRaw[] = $msg;
     }
 

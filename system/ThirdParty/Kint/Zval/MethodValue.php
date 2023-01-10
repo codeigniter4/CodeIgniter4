@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -26,17 +28,18 @@
 namespace Kint\Zval;
 
 use Kint\Utils;
-use Kint\Zval\Representation\DocstringRepresentation;
+use Kint\Zval\Representation\MethodDefinitionRepresentation;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
 
 class MethodValue extends Value
 {
+    use ParameterHoldingTrait;
+
     public $type = 'method';
     public $filename;
     public $startline;
     public $endline;
-    public $parameters = [];
     public $abstract;
     public $final;
     public $internal;
@@ -45,8 +48,6 @@ class MethodValue extends Value
     public $return_reference = false;
     public $hints = ['callable', 'method'];
     public $showparams = true;
-
-    private $paramcache;
 
     public function __construct(ReflectionFunctionAbstract $method)
     {
@@ -57,18 +58,16 @@ class MethodValue extends Value
         $this->startline = $method->getStartLine();
         $this->endline = $method->getEndLine();
         $this->internal = $method->isInternal();
-        $this->docstring = $method->getDocComment();
+        $this->docstring = $method->getDocComment() ?: null;
         $this->return_reference = $method->returnsReference();
 
         foreach ($method->getParameters() as $param) {
             $this->parameters[] = new ParameterValue($param);
         }
 
-        if (KINT_PHP70) {
-            $this->returntype = $method->getReturnType();
-            if ($this->returntype) {
-                $this->returntype = Utils::getTypeString($this->returntype);
-            }
+        $this->returntype = $method->getReturnType();
+        if ($this->returntype) {
+            $this->returntype = Utils::getTypeString($this->returntype);
         }
 
         if ($method instanceof ReflectionMethod) {
@@ -89,10 +88,11 @@ class MethodValue extends Value
             return;
         }
 
-        $docstring = new DocstringRepresentation(
-            $this->docstring,
+        $docstring = new MethodDefinitionRepresentation(
             $this->filename,
-            $this->startline
+            $this->startline,
+            $this->owner_class,
+            $this->docstring
         );
 
         $docstring->implicit_label = true;
@@ -100,7 +100,7 @@ class MethodValue extends Value
         $this->value = $docstring;
     }
 
-    public function setAccessPathFrom(InstanceValue $parent)
+    public function setAccessPathFrom(InstanceValue $parent): void
     {
         static $magic = [
             '__call' => true,
@@ -141,9 +141,9 @@ class MethodValue extends Value
         }
     }
 
-    public function getValueShort()
+    public function getValueShort(): ?string
     {
-        if (!$this->value || !($this->value instanceof DocstringRepresentation)) {
+        if (!$this->value || !($this->value instanceof MethodDefinitionRepresentation)) {
             return parent::getValueShort();
         }
 
@@ -168,9 +168,11 @@ class MethodValue extends Value
         if (\strlen($out)) {
             return \rtrim($out);
         }
+
+        return null;
     }
 
-    public function getModifiers()
+    public function getModifiers(): ?string
     {
         $mods = [
             $this->abstract ? 'abstract' : null,
@@ -190,47 +192,20 @@ class MethodValue extends Value
         if (\strlen($out)) {
             return \rtrim($out);
         }
+
+        return null;
     }
 
-    public function getAccessPath()
+    public function getAccessPath(): ?string
     {
-        if (null !== $this->access_path) {
-            if ($this->showparams) {
-                return parent::getAccessPath().'('.$this->getParams().')';
-            }
-
-            return parent::getAccessPath();
+        if (null !== $this->access_path && $this->showparams) {
+            return parent::getAccessPath().'('.$this->getParams().')';
         }
+
+        return parent::getAccessPath();
     }
 
-    public function getParams()
-    {
-        if (null !== $this->paramcache) {
-            return $this->paramcache;
-        }
-
-        $out = [];
-
-        foreach ($this->parameters as $p) {
-            $type = $p->getType();
-            if ($type) {
-                $type .= ' ';
-            }
-
-            $default = $p->getDefault();
-            if ($default) {
-                $default = ' = '.$default;
-            }
-
-            $ref = $p->reference ? '&' : '';
-
-            $out[] = $type.$ref.$p->getName().$default;
-        }
-
-        return $this->paramcache = \implode(', ', $out);
-    }
-
-    public function getPhpDocUrl()
+    public function getPhpDocUrl(): ?string
     {
         if (!$this->internal) {
             return null;

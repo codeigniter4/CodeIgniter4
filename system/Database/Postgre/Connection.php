@@ -13,11 +13,16 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\RawSql;
 use ErrorException;
+use PgSql\Connection as PgSqlConnection;
+use PgSql\Result as PgSqlResult;
 use stdClass;
 
 /**
  * Connection for Postgre
+ *
+ * @extends BaseConnection<PgSqlConnection, PgSqlResult>
  */
 class Connection extends BaseConnection
 {
@@ -50,7 +55,8 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|resource
+     * @phpstan-return false|PgSqlConnection
      */
     public function connect(bool $persistent = false)
     {
@@ -133,6 +139,7 @@ class Connection extends BaseConnection
      * Executes the query against the database.
      *
      * @return false|resource
+     * @phpstan-return false|PgSqlResult
      */
     protected function execute(string $sql)
     {
@@ -140,8 +147,9 @@ class Connection extends BaseConnection
             return pg_query($this->connID, $sql);
         } catch (ErrorException $e) {
             log_message('error', (string) $e);
+
             if ($this->DBDebug) {
-                throw $e;
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
             }
         }
 
@@ -180,7 +188,12 @@ class Connection extends BaseConnection
             $this->initialize();
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
+            if ($str instanceof RawSql) {
+                return $str->__toString();
+            }
+
             return pg_escape_literal($this->connID, $str);
         }
 
@@ -188,6 +201,7 @@ class Connection extends BaseConnection
             return $str ? 'TRUE' : 'FALSE';
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         return parent::escape($str);
     }
 
@@ -320,38 +334,42 @@ class Connection extends BaseConnection
      */
     protected function _foreignKeyData(string $table): array
     {
-        $sql = 'SELECT
-            tc.constraint_name, tc.table_name, kcu.column_name,
-            ccu.table_name AS foreign_table_name,
-            ccu.column_name AS foreign_column_name
-        FROM information_schema.table_constraints AS tc
-        JOIN information_schema.key_column_usage AS kcu
-            ON tc.constraint_name = kcu.constraint_name
-        JOIN information_schema.constraint_column_usage AS ccu
-            ON ccu.constraint_name = tc.constraint_name
-        WHERE constraint_type = ' . $this->escape('FOREIGN KEY') . ' AND
-            tc.table_name = ' . $this->escape($table);
+        $sql = 'SELECT c.constraint_name,
+                x.table_name,
+                x.column_name,
+                y.table_name as foreign_table_name,
+                y.column_name as foreign_column_name,
+                c.delete_rule,
+                c.update_rule,
+                c.match_option
+                FROM information_schema.referential_constraints c
+                JOIN information_schema.key_column_usage x
+                    on x.constraint_name = c.constraint_name
+                JOIN information_schema.key_column_usage y
+                    on y.ordinal_position = x.position_in_unique_constraint
+                    and y.constraint_name = c.unique_constraint_name
+                WHERE x.table_name = ' . $this->escape($table) .
+                'order by c.constraint_name, x.ordinal_position';
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
 
-        $query  = $query->getResultObject();
-        $retVal = [];
+        $query   = $query->getResultObject();
+        $indexes = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
-
-            $obj->constraint_name     = $row->constraint_name;
-            $obj->table_name          = $row->table_name;
-            $obj->column_name         = $row->column_name;
-            $obj->foreign_table_name  = $row->foreign_table_name;
-            $obj->foreign_column_name = $row->foreign_column_name;
-
-            $retVal[] = $obj;
+            $indexes[$row->constraint_name]['constraint_name']       = $row->constraint_name;
+            $indexes[$row->constraint_name]['table_name']            = $table;
+            $indexes[$row->constraint_name]['column_name'][]         = $row->column_name;
+            $indexes[$row->constraint_name]['foreign_table_name']    = $row->foreign_table_name;
+            $indexes[$row->constraint_name]['foreign_column_name'][] = $row->foreign_column_name;
+            $indexes[$row->constraint_name]['on_delete']             = $row->delete_rule;
+            $indexes[$row->constraint_name]['on_update']             = $row->update_rule;
+            $indexes[$row->constraint_name]['match']                 = $row->match_option;
         }
 
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

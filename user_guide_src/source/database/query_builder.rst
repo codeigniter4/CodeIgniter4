@@ -827,7 +827,9 @@ Here is an example using an object:
 
 The first parameter is an object.
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 $builder->ignore()
 ------------------
@@ -858,6 +860,8 @@ The reason the second query worked is that the first parameter is set to ``false
 
 .. note:: This method doesn't work for batch inserts.
 
+.. _insert-batch-data:
+
 insertBatch
 ===========
 
@@ -872,7 +876,109 @@ method. Here is an example using an array:
 
 The first parameter is an associative array of values.
 
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
+
+You can also insert from a query:
+
+.. literalinclude:: query_builder/117.php
+
+.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
+
+.. _upsert-data:
+
+**************
+Upserting Data
+**************
+
+Upsert
+======
+
+$builder->upsert()
+------------------
+
+Generates an upsert string based on the data you supply, and runs the
+query. You can either pass an **array** or an **object** to the
+method. By default a constraint will be defined in order. A primary
+key will be selected first and then unique keys. MySQL will use any
+constraint by default. Here is an example using an array:
+
+.. literalinclude:: query_builder/112.php
+
+The first parameter is an associative array of values.
+
+Here is an example using an object:
+
+.. literalinclude:: query_builder/113.php
+
+The first parameter is an object.
+
 .. note:: All values are escaped automatically producing safer queries.
+
+$builder->getCompiledUpsert()
+-----------------------------
+
+Compiles the upsert query just like ``$builder->upsert()`` but does not
+*run* the query. This method simply returns the SQL query as a string.
+
+Example:
+
+.. literalinclude:: query_builder/114.php
+
+.. note:: This method doesn't work for batch upserts.
+
+upsertBatch
+===========
+
+$builder->upsertBatch()
+-----------------------
+
+Generates an upsert string based on the data you supply, and runs the
+query. You can either pass an **array** or an **object** to the
+method. By default a constraint will be defined in order. A primary
+key will be selected first and then unique keys. Mysql will use any
+constraint by default. Here is an example using an array:
+
+.. literalinclude:: query_builder/108.php
+
+The first parameter is an associative array of values.
+
+.. note:: All values are escaped automatically producing safer queries.
+
+You can also upsert from a query:
+
+.. literalinclude:: query_builder/115.php
+
+.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
+
+$builder->onConstraint()
+------------------------
+
+Allows manually setting constraint to be used for upsert. This does
+not work with MySQL because MySQL checks all constraints by default.
+
+.. literalinclude:: query_builder/109.php
+
+This method accepts a string or an array of columns.
+
+$builder->updateFields()
+------------------------
+Allows manually setting the fields to be updated when performing upserts.
+
+.. literalinclude:: query_builder/110.php
+
+This method accepts a string, an array of columns, or RawSql. You can also
+specify an extra column to be updated that isn't included in the dataset.
+This can be done by setting the second parameter to ``true``.
+
+.. literalinclude:: query_builder/111.php
+
+Notice that the ``updated_at`` field is not inserted but is used on update.
 
 *************
 Updating Data
@@ -945,7 +1051,9 @@ Or you can supply an object:
 
 .. literalinclude:: query_builder/089.php
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 You'll notice the use of the ``$builder->where()`` method, enabling you
 to set the **WHERE** clause. You can optionally pass this information
@@ -959,6 +1067,8 @@ Or as an array:
 
 You may also use the ``$builder->set()`` method described above when
 performing updates.
+
+.. _update-batch:
 
 UpdateBatch
 ===========
@@ -974,11 +1084,21 @@ Here is an example using an array:
 
 The first parameter is an associative array of values, the second parameter is the where key.
 
-.. note:: All values are escaped automatically producing safer queries.
+.. note:: All values except ``RawSql`` are escaped automatically producing safer queries.
+
+.. warning:: When you use ``RawSql``, you MUST escape the data manually. Failure to do so could result in SQL injections.
 
 .. note:: ``affectedRows()`` won't give you proper results with this method,
     due to the very nature of how it works. Instead, ``updateBatch()``
     returns the number of rows affected.
+
+You can also update from a query:
+
+.. literalinclude:: query_builder/116.php
+
+.. note:: ``setQueryAsData()`` can be used since v4.3.0.
+
+.. note:: It is required to alias the columns of the select query to match those of the target table.
 
 $builder->getCompiledUpdate()
 -----------------------------
@@ -1013,6 +1133,25 @@ the data to the first parameter of the method:
 If you want to delete all data from a table, you can use the ``truncate()``
 method, or ``emptyTable()``.
 
+.. _delete-batch:
+
+$builder->deleteBatch()
+-----------------------
+
+Generates a batch **DELETE** statement based on a set of data.
+
+.. literalinclude:: query_builder/118.php
+
+This method may be especially useful when deleting data in a table with a composite primary key.
+
+.. note:: SQLite does not support the use of ``where()``.
+
+You can also delete from a query:
+
+.. literalinclude:: query_builder/119.php
+
+.. note:: ``$deleteBatch()`` can be used since v4.3.0.
+
 $builder->emptyTable()
 ----------------------
 
@@ -1038,6 +1177,48 @@ This works exactly the same way as ``$builder->getCompiledInsert()`` except
 that it produces a **DELETE** SQL string instead of an **INSERT** SQL string.
 
 For more information view documentation for ``$builder->getCompiledInsert()``.
+
+**********************
+Conditional Statements
+**********************
+
+.. _db-builder-when:
+
+When
+====
+
+$builder->when()
+----------------
+
+This allows modifying the query based on a condition without breaking out of the
+query builder chain. The first parameter is the condition, and it should evaluate
+to a boolean. The second parameter is a callable that will be ran
+when the condition is true.
+
+For example, you might only want to apply a given WHERE statement based on the
+value sent within an HTTP request:
+
+.. literalinclude:: query_builder/105.php
+
+Since the condition is evaluated as ``true``, the callable will be called. The value
+set in the condition will be passed as the second parameter to the callable so it
+can be used in the query.
+
+Sometimes you might want to apply a different statement if the condition evaluates to false.
+This can be accomplished by providing a second closure:
+
+.. literalinclude:: query_builder/106.php
+
+WhenNot
+=======
+
+$builder->whenNot()
+-------------------
+
+This works exactly the same way as ``$builder->when()`` except that it will
+only run the callable when the condition evaluates to ``false``, instead of ``true`` like ``when()``.
+
+.. literalinclude:: query_builder/107.php
 
 ***************
 Method Chaining
@@ -1223,6 +1404,17 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Specifies the ``FROM`` clause of a query using a subquery.
+
+    .. php:method:: setQueryAsData($query[, $alias[, $columns = null]])
+
+        :param BaseBuilder|RawSql $query: Instance of the BaseBuilder or RawSql
+        :param string|null $alias: Alias for query
+        :param array|string|null $columns: Array or comma delimited string of columns in the query
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Sets a query as a datasource for ``insertBatch()``, ``updateBatch()``, ``upsertBatch()``.
+        If ``$columns`` is null the query will be run to generate column names.
 
     .. php:method:: join($table, $cond[, $type = ''[, $escape = null]])
 
@@ -1607,6 +1799,9 @@ Class Reference
 
     .. php:method:: setInsertBatch($key[, $value = ''[, $escape = null]])
 
+        .. deprecated:: 4.3.0
+           Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
+
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
         :param bool $escape: Whether to escape values
@@ -1614,6 +1809,35 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be inserted in a table later via ``insertBatch()``.
+
+        .. important:: This method is deprecated. It will be removed in future releases.
+
+    .. php:method:: upsert([$set = null[, $escape = null]])
+
+        :param array $set: An associative array of field/value pairs
+        :param bool $escape: Whether to escape values
+        :returns:   ``true`` on success, ``false`` on failure
+        :rtype:     bool
+
+        Compiles and executes an ``UPSERT`` statement.
+
+    .. php:method:: upsertBatch([$set = null[, $escape = null[, $batch_size = 100]]])
+
+        :param array $set: Data to upsert
+        :param bool $escape: Whether to escape values
+        :param int $batch_size: Count of rows to upsert at once
+        :returns: Number of rows upserted or ``false`` on failure
+        :rtype:    int|false
+
+        Compiles and executes batch ``UPSERT`` statements.
+
+        .. note:: MySQL uses ``ON DUPLICATE KEY UPDATE``, the affected-rows value
+            per row is 1 if the row is inserted as a new row, 2 if an existing row
+            is updated, and 0 if an existing row is set to its current values.
+
+        .. note:: When more than ``$batch_size`` rows are provided, multiple
+            ``UPSERT`` queries will be executed, each trying to upsert
+            up to ``$batch_size`` rows.
 
     .. php:method:: update([$set = null[, $where = null[, $limit = null]]])
 
@@ -1625,21 +1849,62 @@ Class Reference
 
         Compiles and executes an ``UPDATE`` statement.
 
-    .. php:method:: updateBatch([$set = null[, $value = null[, $batch_size = 100]]])
+    .. php:method:: updateBatch([$set = null[, $constraints = null[, $batchSize = 100]]])
 
-        :param array $set: Field name, or an associative array of field/value pairs
-        :param string $value: Field value, if $set is a single field
-        :param int $batch_size: Count of conditions to group in a single query
+        :param array|object|null $set: Field name, or an associative array of field/value pairs
+        :param array|RawSql|string|null $constraints: The field or fields used as keys to update on.
+        :param int $batchSize: Count of conditions to group in a single query
         :returns:   Number of rows updated or ``false`` on failure
         :rtype:     int|false
 
-        Compiles and executes batch ``UPDATE`` statements.
+        .. note:: Since v4.3.0, the types of the parameters ``$set`` and ``$constraints`` have changed.
 
-        .. note:: When more than ``$batch_size`` field/value pairs are provided,
-            multiple queries will be executed, each handling up to
-            ``$batch_size`` field/value pairs.
+        Compiles and executes batch ``UPDATE`` statements.
+        The ``$constraints`` parameter takes a comma delimited string of columns, an array, an associative array, or ``RawSql``.
+
+        .. note:: When more than ``$batchSize`` field/value pairs are provided,
+             multiple queries will be executed, each handling up to ``$batchSize``
+             field/value pairs. If we set ``$batchSize`` to 0, then all field/value
+             pairs will be executed in one query.
+
+    .. php:method:: updateFields($set, [$addToDefault = false, [$ignore = null]])
+
+        .. versionadded:: 4.3.0
+
+        :param mixed $set: Row of columns or array of rows, a row is an array or object
+        :param bool $addToDefault: Adds an additional column than those in dataset
+        :param bool $ignore: An array of columns to ignore from those in $set
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Used with ``updateBatch()`` and ``upsertBatch()`` methods. This defines the fields which will be updated.
+
+    .. php:method:: onConstraint($set)
+
+        .. versionadded:: 4.3.0
+
+        :param mixed $set: A set of fields or field used has keys or constraints
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Used with ``updateBatch()`` and ``upsertBatch()`` methods. This takes a comma delimited string of columns, and array, associative array, or RawSql.
+
+    .. php:method:: setData($set, [$escape = null, [$alias = '']])
+
+        .. versionadded:: 4.3.0
+
+        :param mixed $set: Row of columns or array of rows, a row is an array or object
+        :param bool $escape: Whether to escape values
+        :param bool $alias: A table alias for dataset
+        :returns:   ``BaseBuilder`` instance (method chaining)
+        :rtype:     ``BaseBuilder``
+
+        Used for ``*Batch()`` methods to set data for insert, update, upsert.
 
     .. php:method:: setUpdateBatch($key[, $value = ''[, $escape = null]])
+
+        .. deprecated:: 4.3.0
+           Use :php:meth:`CodeIgniter\\Database\\BaseBuilder::setData()` instead.
 
         :param mixed $key: Field name or an array of field/value pairs
         :param string $value: Field value, if $key is a single field
@@ -1648,6 +1913,8 @@ Class Reference
         :rtype:     ``BaseBuilder``
 
         Adds field/value pairs to be updated in a table later via ``updateBatch()``.
+
+        .. important:: This method is deprecated. It will be removed in future releases.
 
     .. php:method:: replace([$set = null])
 
@@ -1666,6 +1933,16 @@ Class Reference
         :rtype:     ``BaseBuilder|false``
 
         Compiles and executes a ``DELETE`` query.
+
+    .. php:method:: deleteBatch([$set = null[, $constraints = null[, $batchSize = 100]]])
+
+        :param array|object|null $set: Field name, or an associative array of field/value pairs
+        :param array|RawSql|string|null $constraints: The field or fields used as keys to delete on.
+        :param int $batchSize: Count of conditions to group in a single query
+        :returns:   Number of rows deleted or ``false`` on failure
+        :rtype:     int|false
+
+        Compiles and executes batch ``DELETE`` query.
 
     .. php:method:: increment($column[, $value = 1])
 

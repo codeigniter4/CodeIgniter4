@@ -6,6 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 
 class Security extends BaseConfig
 {
-    public $redirect = false;
+    // ...
+
+    public bool $redirect = true;
+
     // ...
 }

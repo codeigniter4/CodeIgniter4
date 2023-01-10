@@ -204,6 +204,81 @@ class ValidationTest extends CIUnitTestCase
         $this->assertFalse($this->validation->run($data));
     }
 
+    public function testClosureRule(): void
+    {
+        $this->validation->setRules(
+            [
+                'foo' => ['required', static fn ($value) => $value === 'abc'],
+            ],
+            [
+                // Errors
+                'foo' => [
+                    // Specify the array key for the closure rule.
+                    1 => 'The value is not "abc"',
+                ],
+            ],
+        );
+
+        $data   = ['foo' => 'xyz'];
+        $return = $this->validation->run($data);
+
+        $this->assertFalse($return);
+        $this->assertSame(
+            ['foo' => 'The value is not "abc"'],
+            $this->validation->getErrors()
+        );
+    }
+
+    public function testClosureRuleWithParamError(): void
+    {
+        $this->validation->setRules([
+            'foo' => [
+                'required',
+                static function ($value, $data, &$error, $field) {
+                    if ($value !== 'abc') {
+                        $error = 'The ' . $field . ' value is not "abc"';
+
+                        return false;
+                    }
+
+                    return true;
+                },
+            ],
+        ]);
+
+        $data   = ['foo' => 'xyz'];
+        $return = $this->validation->run($data);
+
+        $this->assertFalse($return);
+        $this->assertSame(
+            ['foo' => 'The foo value is not "abc"'],
+            $this->validation->getErrors()
+        );
+    }
+
+    public function testClosureRuleWithLabel(): void
+    {
+        $this->validation->setRules([
+            'secret' => [
+                'label'  => 'シークレット',
+                'rules'  => ['required', static fn ($value) => $value === 'abc'],
+                'errors' => [
+                    // Specify the array key for the closure rule.
+                    1 => 'The {field} is invalid',
+                ],
+            ],
+        ]);
+
+        $data   = ['secret' => 'xyz'];
+        $return = $this->validation->run($data);
+
+        $this->assertFalse($return);
+        $this->assertSame(
+            ['secret' => 'The シークレット is invalid'],
+            $this->validation->getErrors()
+        );
+    }
+
     /**
      * @see https://github.com/codeigniter4/CodeIgniter4/issues/5368
      *

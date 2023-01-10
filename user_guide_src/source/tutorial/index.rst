@@ -125,11 +125,13 @@ brings up additional information. Clicking the X on the right of the toolbar min
 to a small square with the CodeIgniter flame on it. If you click that the toolbar
 will show again.
 
+.. image:: ../images/debugbar.png
+
 Error Pages
 ===========
 
 In addition to this, CodeIgniter has some helpful error pages when you hit exceptions or
-other errors in your program. Open up ``app/Controllers/Home.php`` and change some line
+other errors in your program. Open up **app/Controllers/Home.php** and change some line
 to generate an error (removing a semi-colon or brace should do the trick!). You will be
 greeted by a screen looking something like this:
 
@@ -137,9 +139,9 @@ greeted by a screen looking something like this:
 
 There are a couple of things to note here:
 
-1. Hovering over the red header at the top reveals a ``search`` link that will open up
+1. Hovering over the red header at the top reveals a **search** link that will open up
    DuckDuckGo.com in a new tab and searching for the exception.
-2. Clicking the ``arguments`` link on any line in the Backtrace will expand a list of
+2. Clicking the **arguments** link on any line in the Backtrace will expand a list of
    the arguments that were passed into that function call.
 
 Everything else should be clear when you see it.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -26,18 +28,22 @@
 namespace Kint;
 
 use InvalidArgumentException;
+use Kint\Parser\ConstructablePluginInterface;
 use Kint\Parser\Parser;
-use Kint\Parser\Plugin;
-use Kint\Renderer\Renderer;
+use Kint\Parser\PluginInterface;
+use Kint\Renderer\RendererInterface;
 use Kint\Renderer\TextRenderer;
 use Kint\Zval\Value;
 
-class Kint
+/**
+ * @psalm-consistent-constructor
+ */
+class Kint implements FacadeInterface
 {
-    const MODE_RICH = 'r';
-    const MODE_TEXT = 't';
-    const MODE_CLI = 'c';
-    const MODE_PLAIN = 'p';
+    public const MODE_RICH = 'r';
+    public const MODE_TEXT = 't';
+    public const MODE_CLI = 'c';
+    public const MODE_PLAIN = 'p';
 
     /**
      * @var mixed Kint mode
@@ -131,39 +137,42 @@ class Kint
     ];
 
     /**
-     * @var array<mixed, string> Array of modes to renderer class names
+     * @psalm-var class-string[] Array of modes to renderer class names
      */
     public static $renderers = [
-        self::MODE_RICH => 'Kint\\Renderer\\RichRenderer',
-        self::MODE_PLAIN => 'Kint\\Renderer\\PlainRenderer',
-        self::MODE_TEXT => 'Kint\\Renderer\\TextRenderer',
-        self::MODE_CLI => 'Kint\\Renderer\\CliRenderer',
+        self::MODE_RICH => \Kint\Renderer\RichRenderer::class,
+        self::MODE_PLAIN => \Kint\Renderer\PlainRenderer::class,
+        self::MODE_TEXT => \Kint\Renderer\TextRenderer::class,
+        self::MODE_CLI => \Kint\Renderer\CliRenderer::class,
     ];
 
+    /**
+     * @psalm-var class-string[]
+     */
     public static $plugins = [
-        'Kint\\Parser\\ArrayLimitPlugin',
-        'Kint\\Parser\\ArrayObjectPlugin',
-        'Kint\\Parser\\Base64Plugin',
-        'Kint\\Parser\\BlacklistPlugin',
-        'Kint\\Parser\\ClassMethodsPlugin',
-        'Kint\\Parser\\ClassStaticsPlugin',
-        'Kint\\Parser\\ClosurePlugin',
-        'Kint\\Parser\\ColorPlugin',
-        'Kint\\Parser\\DateTimePlugin',
-        'Kint\\Parser\\EnumPlugin',
-        'Kint\\Parser\\FsPathPlugin',
-        'Kint\\Parser\\IteratorPlugin',
-        'Kint\\Parser\\JsonPlugin',
-        'Kint\\Parser\\MicrotimePlugin',
-        'Kint\\Parser\\SimpleXMLElementPlugin',
-        'Kint\\Parser\\SplFileInfoPlugin',
-        'Kint\\Parser\\SplObjectStoragePlugin',
-        'Kint\\Parser\\StreamPlugin',
-        'Kint\\Parser\\TablePlugin',
-        'Kint\\Parser\\ThrowablePlugin',
-        'Kint\\Parser\\TimestampPlugin',
-        'Kint\\Parser\\TracePlugin',
-        'Kint\\Parser\\XmlPlugin',
+        \Kint\Parser\ArrayLimitPlugin::class,
+        \Kint\Parser\ArrayObjectPlugin::class,
+        \Kint\Parser\Base64Plugin::class,
+        \Kint\Parser\BlacklistPlugin::class,
+        \Kint\Parser\ClassMethodsPlugin::class,
+        \Kint\Parser\ClassStaticsPlugin::class,
+        \Kint\Parser\ClosurePlugin::class,
+        \Kint\Parser\ColorPlugin::class,
+        \Kint\Parser\DateTimePlugin::class,
+        \Kint\Parser\EnumPlugin::class,
+        \Kint\Parser\FsPathPlugin::class,
+        \Kint\Parser\IteratorPlugin::class,
+        \Kint\Parser\JsonPlugin::class,
+        \Kint\Parser\MicrotimePlugin::class,
+        \Kint\Parser\SimpleXMLElementPlugin::class,
+        \Kint\Parser\SplFileInfoPlugin::class,
+        \Kint\Parser\SplObjectStoragePlugin::class,
+        \Kint\Parser\StreamPlugin::class,
+        \Kint\Parser\TablePlugin::class,
+        \Kint\Parser\ThrowablePlugin::class,
+        \Kint\Parser\TimestampPlugin::class,
+        \Kint\Parser\TracePlugin::class,
+        \Kint\Parser\XmlPlugin::class,
     ];
 
     protected static $plugin_pool = [];
@@ -171,33 +180,33 @@ class Kint
     protected $parser;
     protected $renderer;
 
-    public function __construct(Parser $p, Renderer $r)
+    public function __construct(Parser $p, RendererInterface $r)
     {
         $this->parser = $p;
         $this->renderer = $r;
     }
 
-    public function setParser(Parser $p)
+    public function setParser(Parser $p): void
     {
         $this->parser = $p;
     }
 
-    public function getParser()
+    public function getParser(): Parser
     {
         return $this->parser;
     }
 
-    public function setRenderer(Renderer $r)
+    public function setRenderer(RendererInterface $r): void
     {
         $this->renderer = $r;
     }
 
-    public function getRenderer()
+    public function getRenderer(): RendererInterface
     {
         return $this->renderer;
     }
 
-    public function setStatesFromStatics(array $statics)
+    public function setStatesFromStatics(array $statics): void
     {
         $this->renderer->setStatics($statics);
 
@@ -211,11 +220,10 @@ class Kint
         $plugins = [];
 
         foreach ($statics['plugins'] as $plugin) {
-            if ($plugin instanceof Plugin) {
+            if ($plugin instanceof PluginInterface) {
                 $plugins[] = $plugin;
-            } elseif (\is_string($plugin) && \is_subclass_of($plugin, Plugin::class)) {
+            } elseif (\is_string($plugin) && \is_subclass_of($plugin, ConstructablePluginInterface::class)) {
                 if (!isset(static::$plugin_pool[$plugin])) {
-                    /** @psalm-suppress UnsafeInstantiation */
                     $p = new $plugin();
                     static::$plugin_pool[$plugin] = $p;
                 }
@@ -230,7 +238,7 @@ class Kint
         }
     }
 
-    public function setStatesFromCallInfo(array $info)
+    public function setStatesFromCallInfo(array $info): void
     {
         $this->renderer->setCallInfo($info);
 
@@ -241,15 +249,7 @@ class Kint
         $this->parser->setCallerClass(isset($info['caller']['class']) ? $info['caller']['class'] : null);
     }
 
-    /**
-     * Renders a list of vars including the pre and post renders.
-     *
-     * @param array $vars Data to dump
-     * @param array $base Base Zval\Value objects
-     *
-     * @return string
-     */
-    public function dumpAll(array $vars, array $base)
+    public function dumpAll(array $vars, array $base): string
     {
         if (\array_keys($vars) !== \array_keys($base)) {
             throw new InvalidArgumentException('Kint::dumpAll requires arrays of identical size and keys as arguments');
@@ -276,12 +276,10 @@ class Kint
     /**
      * Dumps and renders a var.
      *
-     * @param mixed $var  Data to dump
+     * @param mixed &$var Data to dump
      * @param Value $base Base object
-     *
-     * @return string
      */
-    public function dumpVar(&$var, Value $base)
+    protected function dumpVar(&$var, Value $base): string
     {
         return $this->renderer->render(
             $this->parser->parse($var, $base)
@@ -293,7 +291,7 @@ class Kint
      *
      * @return array Current static settings
      */
-    public static function getStatics()
+    public static function getStatics(): array
     {
         return [
             'aliases' => static::$aliases,
@@ -313,15 +311,11 @@ class Kint
     }
 
     /**
-     * Creates a Kint instances based on static settings.
-     *
-     * Also calls setStatesFromStatics for you
+     * Creates a Kint instance based on static settings.
      *
      * @param array $statics array of statics as returned by getStatics
-     *
-     * @return null|\Kint\Kint
      */
-    public static function createFromStatics(array $statics)
+    public static function createFromStatics(array $statics): ?FacadeInterface
     {
         $mode = false;
 
@@ -341,14 +335,13 @@ class Kint
             return null;
         }
 
-        if (!isset($statics['renderers'][$mode])) {
-            $renderer = new TextRenderer();
-        } else {
-            /** @var Renderer */
+        /** @psalm-var class-string[] $statics['renderers'] */
+        if (isset($statics['renderers'][$mode]) && \is_subclass_of($statics['renderers'][$mode], RendererInterface::class)) {
             $renderer = new $statics['renderers'][$mode]();
+        } else {
+            $renderer = new TextRenderer();
         }
 
-        /** @psalm-suppress UnsafeInstantiation */
         return new static(new Parser(), $renderer);
     }
 
@@ -360,7 +353,7 @@ class Kint
      *
      * @return Value[] Base objects for the arguments
      */
-    public static function getBasesFromParamInfo(array $params, $argc)
+    public static function getBasesFromParamInfo(array $params, int $argc): array
     {
         static $blacklist = [
             'null',
@@ -382,11 +375,7 @@ class Kint
         $bases = [];
 
         for ($i = 0; $i < $argc; ++$i) {
-            if (isset($params[$i])) {
-                $param = $params[$i];
-            } else {
-                $param = null;
-            }
+            $param = $params[$i] ?? null;
 
             if (!isset($param['name']) || \is_numeric($param['name'])) {
                 $name = null;
@@ -419,11 +408,11 @@ class Kint
      *
      * @param array   $aliases Call aliases as found in Kint::$aliases
      * @param array[] $trace   Backtrace
-     * @param int     $argc    Number of arguments
+     * @param array   $args    Arguments
      *
-     * @return array{params:null|array, modifiers:array, callee:null|array, caller:null|array, trace:array[]} Call info
+     * @return array Call info
      */
-    public static function getCallInfo(array $aliases, array $trace, $argc)
+    public static function getCallInfo(array $aliases, array $trace, array $args): array
     {
         $found = false;
         $callee = null;
@@ -457,7 +446,7 @@ class Kint
 
         $miniTrace = \array_values($miniTrace);
 
-        $call = static::getSingleCall($callee ?: [], $argc);
+        $call = static::getSingleCall($callee ?: [], $args);
 
         $ret = [
             'params' => null,
@@ -490,7 +479,7 @@ class Kint
 
         Utils::normalizeAliases(static::$aliases);
 
-        $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \func_num_args());
+        $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), []);
 
         $statics = static::getStatics();
 
@@ -500,8 +489,7 @@ class Kint
 
         $kintstance = static::createFromStatics($statics);
         if (!$kintstance) {
-            // Should never happen
-            return 0; // @codeCoverageIgnore
+            return 0;
         }
 
         if (\in_array('-', $call_info['modifiers'], true)) {
@@ -561,7 +549,7 @@ class Kint
 
         Utils::normalizeAliases(static::$aliases);
 
-        $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), \count($args));
+        $call_info = static::getCallInfo(static::$aliases, \debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), $args);
 
         $statics = static::getStatics();
 
@@ -571,8 +559,7 @@ class Kint
 
         $kintstance = static::createFromStatics($statics);
         if (!$kintstance) {
-            // Should never happen
-            return 0; // @codeCoverageIgnore
+            return 0;
         }
 
         if (\in_array('-', $call_info['modifiers'], true)) {
@@ -584,10 +571,7 @@ class Kint
         $kintstance->setStatesFromStatics($statics);
         $kintstance->setStatesFromCallInfo($call_info);
 
-        $bases = static::getBasesFromParamInfo(
-            isset($call_info['params']) ? $call_info['params'] : [],
-            \count($args)
-        );
+        $bases = static::getBasesFromParamInfo($call_info['params'] ?? [], \count($args));
         $output = $kintstance->dumpAll(\array_values($args), $bases);
 
         if (static::$return || \in_array('@', $call_info['modifiers'], true)) {
@@ -606,12 +590,8 @@ class Kint
     /**
      * generic path display callback, can be configured in app_root_dirs; purpose is
      * to show relevant path info and hide as much of the path as possible.
-     *
-     * @param string $file
-     *
-     * @return string
      */
-    public static function shortenPath($file)
+    public static function shortenPath(string $file): string
     {
         $file = \array_values(\array_filter(\explode('/', \str_replace('\\', '/', $file)), 'strlen'));
 
@@ -649,7 +629,7 @@ class Kint
         return '/'.\implode('/', $file);
     }
 
-    public static function getIdeLink($file, $line)
+    public static function getIdeLink(string $file, int $line): string
     {
         return \str_replace(['%f', '%l'], [$file, $line], static::$file_link_format);
     }
@@ -658,13 +638,17 @@ class Kint
      * Returns specific function call info from a stack trace frame, or null if no match could be found.
      *
      * @param array $frame The stack trace frame in question
-     * @param int   $argc  The amount of arguments received
+     * @param array $args  The arguments
      *
-     * @return null|array{parameters:array, modifiers:array} params and modifiers, or null if a specific call could not be determined
+     * @return ?array params and modifiers, or null if a specific call could not be determined
      */
-    protected static function getSingleCall(array $frame, $argc)
+    protected static function getSingleCall(array $frame, array $args): ?array
     {
-        if (!isset($frame['file'], $frame['line'], $frame['function']) || !\is_readable($frame['file'])) {
+        if (
+            !isset($frame['file'], $frame['line'], $frame['function']) ||
+            !\is_readable($frame['file']) ||
+            !$source = \file_get_contents($frame['file'])
+        ) {
             return null;
         }
 
@@ -674,11 +658,9 @@ class Kint
             $callfunc = [$frame['class'], $frame['function']];
         }
 
-        $calls = CallFinder::getFunctionCalls(
-            \file_get_contents($frame['file']),
-            $frame['line'],
-            $callfunc
-        );
+        $calls = CallFinder::getFunctionCalls($source, $frame['line'], $callfunc);
+
+        $argc = \count($args);
 
         $return = null;
 
@@ -688,23 +670,40 @@ class Kint
             // Handle argument unpacking as a last resort
             foreach ($call['parameters'] as $i => &$param) {
                 if (0 === \strpos($param['name'], '...')) {
+                    $is_unpack = true;
+
+                    // If we're on the last param
                     if ($i < $argc && $i === \count($call['parameters']) - 1) {
-                        for ($j = 1; $j + $i < $argc; ++$j) {
-                            $call['parameters'][] = [
-                                'name' => 'array_values('.\substr($param['name'], 3).')['.$j.']',
-                                'path' => 'array_values('.\substr($param['path'], 3).')['.$j.']',
-                                'expression' => false,
-                            ];
+                        unset($call['parameters'][$i]);
+
+                        if (Utils::isAssoc($args)) {
+                            // Associated unpacked arrays can be accessed by key
+                            $keys = \array_slice(\array_keys($args), $i);
+
+                            foreach ($keys as $key) {
+                                $call['parameters'][] = [
+                                    'name' => \substr($param['name'], 3).'['.\var_export($key, true).']',
+                                    'path' => \substr($param['path'], 3).'['.\var_export($key, true).']',
+                                    'expression' => false,
+                                ];
+                            }
+                        } else {
+                            // Numeric unpacked arrays have their order blown away like a pass
+                            // through array_values so we can't access them directly at all
+                            for ($j = 0; $j + $i < $argc; ++$j) {
+                                $call['parameters'][] = [
+                                    'name' => 'array_values('.\substr($param['name'], 3).')['.$j.']',
+                                    'path' => 'array_values('.\substr($param['path'], 3).')['.$j.']',
+                                    'expression' => false,
+                                ];
+                            }
                         }
 
-                        $param['name'] = 'reset('.\substr($param['name'], 3).')';
-                        $param['path'] = 'reset('.\substr($param['path'], 3).')';
-                        $param['expression'] = false;
+                        $call['parameters'] = \array_values($call['parameters']);
                     } else {
                         $call['parameters'] = \array_slice($call['parameters'], 0, $i);
                     }
 
-                    $is_unpack = true;
                     break;
                 }
 

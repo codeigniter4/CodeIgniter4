@@ -14,6 +14,7 @@ namespace CodeIgniter\Session\Handlers;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Session\Exceptions\SessionException;
 use Config\App as AppConfig;
+use Config\Session as SessionConfig;
 use Redis;
 use RedisException;
 use ReturnTypeWillChange;
@@ -69,18 +70,30 @@ class RedisHandler extends BaseHandler
     {
         parent::__construct($config, $ipAddress);
 
-        $this->setSavePath();
+        /** @var SessionConfig|null $session */
+        $session = config('Session');
 
-        // Add sessionCookieName for multiple session cookies.
-        $this->keyPrefix .= $config->sessionCookieName . ':';
+        // Store Session configurations
+        if ($session instanceof SessionConfig) {
+            $this->sessionExpiration = empty($session->expiration)
+                ? (int) ini_get('session.gc_maxlifetime')
+                : (int) $session->expiration;
+            // Add sessionCookieName for multiple session cookies.
+            $this->keyPrefix .= $session->cookieName . ':';
+        } else {
+            // `Config/Session.php` is absence
+            $this->sessionExpiration = empty($config->sessionExpiration)
+                ? (int) ini_get('session.gc_maxlifetime')
+                : (int) $config->sessionExpiration;
+            // Add sessionCookieName for multiple session cookies.
+            $this->keyPrefix .= $config->sessionCookieName . ':';
+        }
+
+        $this->setSavePath();
 
         if ($this->matchIP === true) {
             $this->keyPrefix .= $this->ipAddress . ':';
         }
-
-        $this->sessionExpiration = empty($config->sessionExpiration)
-            ? (int) ini_get('session.gc_maxlifetime')
-            : (int) $config->sessionExpiration;
     }
 
     protected function setSavePath(): void

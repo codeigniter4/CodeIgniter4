@@ -34,6 +34,9 @@ final class TimeTest extends CIUnitTestCase
     {
         parent::setUp();
 
+        // Need to reset Services::language() that lang() uses in Time::humanize()
+        $this->resetServices();
+
         helper('date');
 
         $this->currentLocale = Locale::getDefault();
@@ -394,6 +397,10 @@ final class TimeTest extends CIUnitTestCase
         $this->assertSame($expected, $time->timestamp);
     }
 
+    /**
+     * This test might fail if your timezone has Daylight Saving Time.
+     * See https://github.com/codeigniter4/CodeIgniter4/issues/6818
+     */
     public function testGetAge()
     {
         $time = Time::parse('5 years ago');
@@ -451,9 +458,10 @@ final class TimeTest extends CIUnitTestCase
     public function testGetDST()
     {
         // America/Chicago. DST from early March -> early Nov
-        $time = Time::createFromDate(2012, 1, 1);
+        $time = Time::createFromDate(2012, 1, 1, 'America/Chicago');
         $this->assertFalse($time->dst);
-        $time = Time::createFromDate(2012, 9, 1);
+
+        $time = Time::createFromDate(2012, 9, 1, 'America/Chicago');
         $this->assertTrue($time->dst);
     }
 
@@ -1130,6 +1138,15 @@ final class TimeTest extends CIUnitTestCase
         $this->assertNotSame($time1, $time2);
     }
 
+    public function testSetTestNowWithTimeZone()
+    {
+        Time::setTestNow('2017/03/10 12:00', 'Asia/Tokyo');
+
+        $now = Time::now('UTC');
+
+        $this->assertSame('2017-03-10T03:00:00+00:00', $now->format('c'));
+    }
+
     public function testSetTestNowWithFaLocale()
     {
         Locale::setDefault('fa');
@@ -1161,5 +1178,16 @@ final class TimeTest extends CIUnitTestCase
             ['ar'],
             ['fa'],
         ];
+    }
+
+    public function testModify()
+    {
+        $time  = new Time('2017/03/10 12:00');
+        $time2 = $time->modify('+1 day');
+
+        $this->assertInstanceOf(Time::class, $time2);
+        $this->assertNotSame($time, $time2);
+        $this->assertSame('2017-03-10 12:00:00', (string) $time);
+        $this->assertSame('2017-03-11 12:00:00', (string) $time2);
     }
 }

@@ -300,7 +300,34 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
-        $result = $builder->insert();
+        if ($this->allowEmptyInserts && empty($data)) {
+            $table = $this->db->protectIdentifiers($this->table, true, null, false);
+            if ($this->db->getPlatform() === 'MySQLi') {
+                $sql = 'INSERT INTO ' . $table . ' VALUES ()';
+            } elseif ($this->db->getPlatform() === 'OCI8') {
+                $allFields = $this->db->protectIdentifiers(
+                    array_map(
+                        static fn ($row) => $row->name,
+                        $this->db->getFieldData($this->table)
+                    ),
+                    false,
+                    true
+                );
+
+                $sql = sprintf(
+                    'INSERT INTO %s (%s) VALUES (%s)',
+                    $table,
+                    implode(',', $allFields),
+                    substr(str_repeat(',DEFAULT', count($allFields)), 1)
+                );
+            } else {
+                $sql = 'INSERT INTO ' . $table . ' DEFAULT VALUES';
+            }
+
+            $result = $this->db->query($sql);
+        } else {
+            $result = $builder->insert();
+        }
 
         // If insertion succeeded then save the insert ID
         if ($result) {
@@ -359,6 +386,12 @@ class Model extends BaseModel
             $builder->set($key, $val, $escape[$key] ?? null);
         }
 
+        if ($builder->getCompiledQBWhere() === []) {
+            throw new DatabaseException(
+                'Updates are not allowed unless they contain a "where" or "like" clause.'
+            );
+        }
+
         return $builder->update();
     }
 
@@ -402,13 +435,9 @@ class Model extends BaseModel
 
         if ($this->useSoftDeletes && ! $purge) {
             if (empty($builder->getCompiledQBWhere())) {
-                if (CI_DEBUG) {
-                    throw new DatabaseException(
-                        'Deletes are not allowed unless they contain a "where" or "like" clause.'
-                    );
-                }
-
-                return false; // @codeCoverageIgnore
+                throw new DatabaseException(
+                    'Deletes are not allowed unless they contain a "where" or "like" clause.'
+                );
             }
 
             $builder->where($this->deletedField);
@@ -566,7 +595,7 @@ class Model extends BaseModel
         }
 
         // When $reset === false, the $tempUseSoftDeletes will be
-        // dependant on $useSoftDeletes value because we don't
+        // dependent on $useSoftDeletes value because we don't
         // want to add the same "where" condition for the second time
         $this->tempUseSoftDeletes = $reset
             ? $this->useSoftDeletes

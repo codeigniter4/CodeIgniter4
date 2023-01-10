@@ -1,7 +1,7 @@
 <?php
 
-$forge->addPrimaryKey('blog_id');
-// gives PRIMARY KEY `blog_id` (`blog_id`)
+$forge->addPrimaryKey('blog_id', 'pd_name');
+// gives PRIMARY KEY `pd_name` (`blog_id`)
 
-$forge->addUniqueKey(['blog_id', 'uri']);
-// gives UNIQUE KEY `blog_id_uri` (`blog_id`, `uri`)
+$forge->addUniqueKey(['blog_id', 'uri'], 'key_name');
+// gives UNIQUE KEY `key_name` (`blog_id`, `uri`)

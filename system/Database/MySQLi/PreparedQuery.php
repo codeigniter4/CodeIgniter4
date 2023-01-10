@@ -13,9 +13,16 @@ namespace CodeIgniter\Database\MySQLi;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
+use mysqli;
+use mysqli_result;
+use mysqli_sql_exception;
+use mysqli_stmt;
 
 /**
  * Prepared query for MySQLi
+ *
+ * @extends BasePreparedQuery<mysqli, mysqli_stmt, mysqli_result>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -28,10 +35,8 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the MySQLi driver.
-     *
-     * @return mixed
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         // Mysqli driver doesn't like statements
         // with terminating semicolons.
@@ -40,6 +45,10 @@ class PreparedQuery extends BasePreparedQuery
         if (! $this->statement = $this->db->mysqli->prepare($sql)) {
             $this->errorCode   = $this->db->mysqli->errno;
             $this->errorString = $this->db->mysqli->error;
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         return $this;
@@ -72,16 +81,32 @@ class PreparedQuery extends BasePreparedQuery
         // Bind it
         $this->statement->bind_param($bindTypes, ...$data);
 
-        return $this->statement->execute();
+        try {
+            return $this->statement->execute();
+        } catch (mysqli_sql_exception $e) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
+            }
+
+            return false;
+        }
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the result object for the prepared query or false on failure.
      *
-     * @return mixed
+     * @return false|mysqli_result
      */
     public function _getResult()
     {
         return $this->statement->get_result();
+    }
+
+    /**
+     * Deallocate prepared statements.
+     */
+    protected function _close(): bool
+    {
+        return $this->statement->close();
     }
 }

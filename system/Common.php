@@ -18,10 +18,12 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\URI;
 use CodeIgniter\Model;
@@ -46,7 +48,7 @@ if (! function_exists('app_timezone')) {
     function app_timezone(): string
     {
         /** @var App $config */
-        $config = config(App::class);
+        $config = config('App');
 
         return $config->appTimezone;
     }
@@ -280,7 +282,7 @@ if (! function_exists('csrf_field')) {
      */
     function csrf_field(?string $id = null): string
     {
-        return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '" />';
+        return '<input type="hidden"' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_token() . '" value="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -290,7 +292,7 @@ if (! function_exists('csrf_meta')) {
      */
     function csrf_meta(?string $id = null): string
     {
-        return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '" />';
+        return '<meta' . (! empty($id) ? ' id="' . esc($id, 'attr') . '"' : '') . ' name="' . csrf_header() . '" content="' . csrf_hash() . '"' . _solidus() . '>';
     }
 }
 
@@ -348,23 +350,6 @@ if (! function_exists('db_connect')) {
     function db_connect($db = null, bool $getShared = true)
     {
         return Database::connect($db, $getShared);
-    }
-}
-
-if (! function_exists('dd')) {
-    /**
-     * Prints a Kint debug report and exits.
-     *
-     * @param array ...$vars
-     *
-     * @codeCoverageIgnore Can't be tested ... exits
-     */
-    function dd(...$vars)
-    {
-        Kint::$aliases[] = 'dd';
-        Kint::dump(...$vars);
-
-        exit;
     }
 }
 
@@ -487,12 +472,13 @@ if (! function_exists('force_https')) {
         if ($request === null) {
             $request = Services::request(null, true);
         }
-        if ($response === null) {
-            $response = Services::response(null, true);
-        }
 
         if (! $request instanceof IncomingRequest) {
             return;
+        }
+
+        if ($response === null) {
+            $response = Services::response(null, true);
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
@@ -505,17 +491,19 @@ if (! function_exists('force_https')) {
             Services::session(null, true)->regenerate(); // @codeCoverageIgnore
         }
 
-        $baseURL = config(App::class)->baseURL;
+        $baseURL = config('App')->baseURL;
 
         if (strpos($baseURL, 'https://') === 0) {
-            $baseURL = substr($baseURL, strlen('https://'));
+            $authority = substr($baseURL, strlen('https://'));
         } elseif (strpos($baseURL, 'http://') === 0) {
-            $baseURL = substr($baseURL, strlen('http://'));
+            $authority = substr($baseURL, strlen('http://'));
+        } else {
+            $authority = $baseURL;
         }
 
         $uri = URI::createURIString(
             'https',
-            $baseURL,
+            $authority,
             $request->getUri()->getPath(), // Absolute URIs should use a "/" for an empty path
             $request->getUri()->getQuery(),
             $request->getUri()->getFragment()
@@ -704,7 +692,7 @@ if (! function_exists('is_really_writable')) {
     function is_really_writable(string $file): bool
     {
         // If we're on a Unix server we call is_writable
-        if (DIRECTORY_SEPARATOR === '/') {
+        if (! is_windows()) {
             return is_writable($file);
         }
 
@@ -731,6 +719,26 @@ if (! function_exists('is_really_writable')) {
         fclose($fp);
 
         return true;
+    }
+}
+
+if (! function_exists('is_windows')) {
+    /**
+     * Detect if platform is running in Windows.
+     */
+    function is_windows(?bool $mock = null): bool
+    {
+        static $mocked;
+
+        if (func_num_args() === 1) {
+            $mocked = $mock;
+        }
+
+        if (isset($mocked)) {
+            return $mocked;
+        }
+
+        return DIRECTORY_SEPARATOR === '\\';
     }
 }
 
@@ -865,6 +873,22 @@ if (! function_exists('redirect')) {
     }
 }
 
+if (! function_exists('_solidus')) {
+    /**
+     * Generates the solidus character (`/`) depending on the HTML5 compatibility flag in `Config\DocTypes`
+     *
+     * @internal
+     */
+    function _solidus(): string
+    {
+        if (config('DocTypes')->html5 ?? false) {
+            return '';
+        }
+
+        return ' /';
+    }
+}
+
 if (! function_exists('remove_invisible_characters')) {
     /**
      * Remove Invisible Characters
@@ -893,6 +917,28 @@ if (! function_exists('remove_invisible_characters')) {
     }
 }
 
+if (! function_exists('request')) {
+    /**
+     * Returns the shared Request.
+     *
+     * @return CLIRequest|IncomingRequest
+     */
+    function request()
+    {
+        return Services::request();
+    }
+}
+
+if (! function_exists('response')) {
+    /**
+     * Returns the shared Response.
+     */
+    function response(): ResponseInterface
+    {
+        return Services::response();
+    }
+}
+
 if (! function_exists('route_to')) {
     /**
      * Given a controller/method string and any params,
@@ -903,7 +949,8 @@ if (! function_exists('route_to')) {
      * have a route defined in the routes Config file.
      *
      * @param string     $method    Named route or Controller::method
-     * @param int|string ...$params One or more parameters to be passed to the route
+     * @param int|string ...$params One or more parameters to be passed to the route.
+     *                              The last parameter allows you to set the locale.
      *
      * @return false|string
      */
@@ -1013,7 +1060,7 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config = config(App::class);
+        $config = config('App');
 
         if (! property_exists($config, $item)) {
             return null;
@@ -1074,12 +1121,14 @@ if (! function_exists('stringify_attributes')) {
 if (! function_exists('timer')) {
     /**
      * A convenience method for working with the timer.
-     * If no parameter is passed, it will return the timer instance,
-     * otherwise will start or stop the timer intelligently.
+     * If no parameter is passed, it will return the timer instance.
+     * If callable is passed, it measures time of callable and
+     * returns its return value if any.
+     * Otherwise will start or stop the timer intelligently.
      *
      * @return Timer
      */
-    function timer(?string $name = null)
+    function timer(?string $name = null, ?callable $callable = null)
     {
         $timer = Services::timer();
 
@@ -1087,22 +1136,15 @@ if (! function_exists('timer')) {
             return $timer;
         }
 
+        if ($callable !== null) {
+            return $timer->record($name, $callable);
+        }
+
         if ($timer->has($name)) {
             return $timer->stop($name);
         }
 
         return $timer->start($name);
-    }
-}
-
-if (! function_exists('trace')) {
-    /**
-     * Provides a backtrace to the current execution point, from Kint.
-     */
-    function trace()
-    {
-        Kint::$aliases[] = 'trace';
-        Kint::trace();
     }
 }
 

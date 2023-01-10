@@ -14,7 +14,6 @@ namespace CodeIgniter\Database;
 use Closure;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Events\Events;
-use Exception;
 use stdClass;
 use Throwable;
 
@@ -30,7 +29,7 @@ use Throwable;
  * @property string     $DBDriver
  * @property string     $DBPrefix
  * @property string     $DSN
- * @property mixed      $encrypt
+ * @property array|bool $encrypt
  * @property array      $failover
  * @property string     $hostname
  * @property Query      $lastQuery
@@ -46,6 +45,11 @@ use Throwable;
  * @property int        $transDepth
  * @property bool       $transFailure
  * @property bool       $transStatus
+ *
+ * @template TConnection of object|resource
+ * @template TResult of object|resource
+ *
+ * @implements ConnectionInterface<TConnection, TResult>
  */
 abstract class BaseConnection implements ConnectionInterface
 {
@@ -122,13 +126,11 @@ abstract class BaseConnection implements ConnectionInterface
     protected $pConnect = false;
 
     /**
-     * Debug flag
-     *
-     * Whether to display error messages.
+     * Whether to throw Exception or not when an error occurs.
      *
      * @var bool
      */
-    protected $DBDebug = false;
+    protected $DBDebug = true;
 
     /**
      * Character set
@@ -192,14 +194,16 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Connection ID
      *
-     * @var bool|object|resource
+     * @var false|object|resource
+     * @phpstan-var false|TConnection
      */
     public $connID = false;
 
     /**
      * Result ID
      *
-     * @var bool|object|resource
+     * @var false|object|resource
+     * @phpstan-var false|TResult
      */
     public $resultID = false;
 
@@ -317,6 +321,11 @@ abstract class BaseConnection implements ConnectionInterface
     protected $transFailure = false;
 
     /**
+     * Whether to throw exceptions during transaction
+     */
+    protected bool $transException = false;
+
+    /**
      * Array of table aliases.
      *
      * @var array
@@ -358,7 +367,7 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed
+     * @return void
      *
      * @throws DatabaseException
      */
@@ -460,7 +469,8 @@ abstract class BaseConnection implements ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return TConnection
      */
     public function getConnection(?string $alias = null)
     {
@@ -535,7 +545,8 @@ abstract class BaseConnection implements ConnectionInterface
     /**
      * Executes the query against the database.
      *
-     * @return bool|object|resource
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     abstract protected function execute(string $sql);
 
@@ -550,6 +561,7 @@ abstract class BaseConnection implements ConnectionInterface
      * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query BaseResult when “read” type query, bool when “write” type query, Query when prepared query
+     * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
      *
      * @todo BC set $queryClass default as null in 4.1
      */
@@ -591,7 +603,7 @@ abstract class BaseConnection implements ConnectionInterface
         try {
             $exception      = null;
             $this->resultID = $this->simpleQuery($query->getQuery());
-        } catch (Exception $exception) {
+        } catch (DatabaseException $exception) {
             $this->resultID = false;
         }
 
@@ -603,7 +615,15 @@ abstract class BaseConnection implements ConnectionInterface
                 $this->transStatus = false;
             }
 
-            if ($this->DBDebug) {
+            if (
+                $this->DBDebug
+                && (
+                    // Not in transactions
+                    $this->transDepth === 0
+                    // In transactions, do not throw exception by default.
+                    || $this->transException
+                )
+            ) {
                 // We call this function in order to roll-back queries
                 // if transactions are enabled. If we don't call this here
                 // the error message will trigger an exit, causing the
@@ -622,7 +642,11 @@ abstract class BaseConnection implements ConnectionInterface
                 Events::trigger('DBQuery', $query);
 
                 if ($exception !== null) {
-                    throw $exception;
+                    throw new DatabaseException(
+                        $exception->getMessage(),
+                        $exception->getCode(),
+                        $exception
+                    );
                 }
 
                 return false;
@@ -655,7 +679,8 @@ abstract class BaseConnection implements ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     public function simpleQuery(string $sql)
     {
@@ -707,6 +732,18 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         return $this->transBegin($testMode);
+    }
+
+    /**
+     * If set to true, exceptions are thrown during transactions.
+     *
+     * @return $this
+     */
+    public function transException(bool $transExcetion)
+    {
+        $this->transException = $transExcetion;
+
+        return $this;
     }
 
     /**
@@ -994,15 +1031,18 @@ abstract class BaseConnection implements ConnectionInterface
         // Added exception for single quotes as well, we don't want to alter
         // literal strings.
         if (strcspn($item, "()'") !== strlen($item)) {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             return $item;
         }
 
         // Do not protect identifiers and do not prefix, no swap prefix, there is nothing to do
         if ($protectIdentifiers === false && $prefixSingle === false && $this->swapPre === '') {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             return $item;
         }
 
         // Convert tabs or multiple spaces into single spaces
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         $item = preg_replace('/\s+/', ' ', trim($item));
 
         // If the item has an alias declaration we remove it and set it aside.
@@ -1164,6 +1204,7 @@ abstract class BaseConnection implements ConnectionInterface
         }
 
         foreach ($this->reservedIdentifiers as $id) {
+            /** @psalm-suppress NoValue I don't know why ERROR. */
             if (strpos($item, '.' . $id) !== false) {
                 return preg_replace(
                     '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?\./i',
@@ -1173,6 +1214,7 @@ abstract class BaseConnection implements ConnectionInterface
             }
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         return preg_replace(
             '/' . $this->pregEscapeChar[0] . '?([^' . $this->pregEscapeChar[1] . '\.]+)' . $this->pregEscapeChar[1] . '?(\.)?/i',
             $this->pregEscapeChar[2] . '$1' . $this->pregEscapeChar[3] . '$2',
@@ -1216,7 +1258,12 @@ abstract class BaseConnection implements ConnectionInterface
             return array_map([&$this, 'escape'], $str);
         }
 
+        /** @psalm-suppress NoValue I don't know why ERROR. */
         if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
+            if ($str instanceof RawSql) {
+                return $str->__toString();
+            }
+
             return "'" . $this->escapeString($str) . "'";
         }
 
@@ -1493,6 +1540,51 @@ abstract class BaseConnection implements ConnectionInterface
     public function getForeignKeyData(string $table)
     {
         return $this->_foreignKeyData($this->protectIdentifiers($table, true, false, false));
+    }
+
+    /**
+     * Converts array of arrays generated by _foreignKeyData() to array of objects
+     *
+     * @return array[
+     *    {constraint_name} =>
+     *        stdClass[
+     *            'constraint_name'     => string,
+     *            'table_name'          => string,
+     *            'column_name'         => string[],
+     *            'foreign_table_name'  => string,
+     *            'foreign_column_name' => string[],
+     *            'on_delete'           => string,
+     *            'on_update'           => string,
+     *            'match'               => string
+     *        ]
+     * ]
+     */
+    protected function foreignKeyDataToObjects(array $data)
+    {
+        $retVal = [];
+
+        foreach ($data as $row) {
+            $name = $row['constraint_name'];
+
+            // for sqlite generate name
+            if ($name === null) {
+                $name = $row['table_name'] . '_' . implode('_', $row['column_name']) . '_foreign';
+            }
+
+            $obj                      = new stdClass();
+            $obj->constraint_name     = $name;
+            $obj->table_name          = $row['table_name'];
+            $obj->column_name         = $row['column_name'];
+            $obj->foreign_table_name  = $row['foreign_table_name'];
+            $obj->foreign_column_name = $row['foreign_column_name'];
+            $obj->on_delete           = $row['on_delete'];
+            $obj->on_update           = $row['on_update'];
+            $obj->match               = $row['match'];
+
+            $retVal[$name] = $obj;
+        }
+
+        return $retVal;
     }
 
     /**

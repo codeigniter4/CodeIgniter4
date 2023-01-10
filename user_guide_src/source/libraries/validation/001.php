@@ -11,17 +11,13 @@ class Form extends BaseController
     public function index()
     {
         if (strtolower($this->request->getMethod()) !== 'post') {
-            return view('signup', [
-                'validation' => Services::validation(),
-            ]);
+            return view('signup');
         }
 
         $rules = [];
 
         if (! $this->validate($rules)) {
-            return view('signup', [
-                'validation' => $this->validator,
-            ]);
+            return view('signup');
         }
 
         return view('success');

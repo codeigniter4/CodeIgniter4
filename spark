@@ -81,10 +81,9 @@ require_once SYSTEMPATH . 'Config/DotEnv.php';
 // Grab our CodeIgniter
 $app = Config\Services::codeigniter();
 $app->initialize();
-$app->setContext('spark');
 
 // Grab our Console
-$console = new CodeIgniter\CLI\Console($app);
+$console = new CodeIgniter\CLI\Console();
 
 // Show basic information before we do anything else.
 if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
@@ -95,8 +94,6 @@ if (is_int($suppress = array_search('--no-header', $_SERVER['argv'], true))) {
 $console->showHeader($suppress);
 
 // fire off the command in the main framework.
-$response = $console->run();
+$exit = $console->run();
 
-if ($response->getStatusCode() >= 300) {
-    exit($response->getStatusCode());
-}
+exit(is_int($exit) ? $exit : EXIT_SUCCESS);

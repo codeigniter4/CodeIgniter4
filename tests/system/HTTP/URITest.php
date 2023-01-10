@@ -980,9 +980,17 @@ final class URITest extends CIUnitTestCase
 
     public function testCreateURIString()
     {
-        $expected = 'https://example.com/';
-        $uri      = URI::createURIString('https', 'example.com/', '/');
+        $uri = URI::createURIString('https', 'example.com', '/');
 
+        $expected = 'https://example.com/';
+        $this->assertSame($expected, $uri);
+    }
+
+    public function testCreateURIStringAuthorityMisuseEndWithSlash()
+    {
+        $uri = URI::createURIString('https', 'example.com/', '/');
+
+        $expected = 'https://example.com/';
         $this->assertSame($expected, $uri);
     }
 

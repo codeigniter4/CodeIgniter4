@@ -11,32 +11,12 @@ parameters:
 			path: system/Autoloader/Autoloader.php
 
 		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$backupHandler \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/CacheFactory.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$handler \\(string\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/CacheFactory.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$validHandlers \\(array\\<string, string\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/CacheFactory.php
-
-		-
 			message: "#^Comparison operation \"\\>\" between int and \\(array\\|float\\|int\\) results in an error\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php
 
 		-
 			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: system/Cache/Handlers/FileHandler.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$storePath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Cache/Handlers/FileHandler.php
 
@@ -49,11 +29,6 @@ parameters:
 			message: "#^Variable \\$data might not be defined\\.$#"
 			count: 1
 			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
-			message: "#^Property Config\\\\Cache\\:\\:\\$redis \\(array\\<string, int\\|string\\|null\\>\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Cache/Handlers/PredisHandler.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
@@ -71,16 +46,6 @@ parameters:
 			path: system/CodeIgniter.php
 
 		-
-			message: "#^Property Config\\\\App\\:\\:\\$appTimezone \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$defaultLocale \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/CodeIgniter.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Database\\\\BaseBuilder\\:\\:\\$db \\(CodeIgniter\\\\Database\\\\BaseConnection\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/Database/BaseBuilder.php
@@ -89,11 +54,6 @@ parameters:
 			message: "#^Call to an undefined method CodeIgniter\\\\Database\\\\QueryInterface\\:\\:getOriginalQuery\\(\\)\\.$#"
 			count: 1
 			path: system/Database/BaseConnection.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 3
-			path: system/Database/BaseResult.php
 
 		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
@@ -121,169 +81,19 @@ parameters:
 			path: system/Database/Migration.php
 
 		-
-			message: "#^Property Config\\\\Migrations\\:\\:\\$enabled \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Database/MigrationRunner.php
-
-		-
-			message: "#^Property Config\\\\Migrations\\:\\:\\$table \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Database/MigrationRunner.php
-
-		-
-			message: "#^Cannot access property \\$errno on bool\\|object\\|resource\\.$#"
+			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli,mysqli_result\\>\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Database/MySQLi/Connection.php
 
 		-
-			message: "#^Cannot access property \\$error on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot access property \\$insert_id on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method autocommit\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 3
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method begin_transaction\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method close\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method commit\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method more_results\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method next_result\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method query\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method real_escape_string\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method rollback\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method select_db\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Cannot call method store_result\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$strictOn \\(bool\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\MySQLi\\\\Connection\\:\\:\\$mysqli \\(mysqli\\) in empty\\(\\) is not falsy\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Connection.php
-
-		-
-			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$mysqli\\.$#"
+			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\<mysqli, mysqli_result\\>\\:\\:\\$mysqli\\.$#"
 			count: 3
 			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method bind_param\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method execute\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method get_result\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/MySQLi/PreparedQuery.php
-
-		-
-			message: "#^Cannot access property \\$field_count on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot access property \\$num_rows on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method data_seek\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_assoc\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_field\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_fields\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method fetch_object\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
-
-		-
-			message: "#^Cannot call method field_seek\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/MySQLi/Result.php
 
 		-
 			message: "#^Strict comparison using \\=\\=\\= between array<string, int|string|null> and false will always evaluate to false\\.$#"
 			count: 1
 			path: system/Database/Postgre/Connection.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/Postgre/PreparedQuery.php
 
 		-
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
@@ -294,121 +104,6 @@ parameters:
 			message: "#^Access to an undefined property CodeIgniter\\\\Database\\\\BaseConnection\\:\\:\\$schema\\.$#"
 			count: 13
 			path: system/Database/SQLSRV/Forge.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/SQLSRV/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method changes\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method close\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method escapeString\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method exec\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 4
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastErrorCode\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastErrorMsg\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method lastInsertRowID\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method query\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Connection.php
-
-		-
-			message: "#^Cannot call method bindValue\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method execute\\(\\) on object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method lastErrorCode\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method lastErrorMsg\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method prepare\\(\\) on bool\\|object\\|resource\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Property CodeIgniter\\\\Database\\\\BasePreparedQuery\\:\\:\\$statement \\(object\\|resource\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Database/SQLite3/PreparedQuery.php
-
-		-
-			message: "#^Cannot call method columnName\\(\\) on object\\|resource\\|false\\.$#"
-			count: 2
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method columnType\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method fetchArray\\(\\) on object\\|resource\\|false\\.$#"
-			count: 2
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method numColumns\\(\\) on object\\|resource\\|false\\.$#"
-			count: 1
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Cannot call method reset\\(\\) on object\\|resource\\|false\\.$#"
-			count: 2
-			path: system/Database/SQLite3/Result.php
-
-		-
-			message: "#^Property Config\\\\Database\\:\\:\\$filesPath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Database/Seeder.php
-
-		-
-			message: "#^Property Config\\\\Exceptions\\:\\:\\$sensitiveDataInTrace \\(array\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Exceptions.php
-
-		-
-			message: "#^Property Config\\\\Toolbar\\:\\:\\$collectVarData \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Debug/Toolbar.php
 
 		-
 			message: "#^Call to an undefined method CodeIgniter\\\\View\\\\RendererInterface\\:\\:getPerformanceData\\(\\)\\.$#"
@@ -436,32 +131,12 @@ parameters:
 			path: system/Email/Email.php
 
 		-
-			message: "#^Property Config\\\\Encryption\\:\\:\\$digest \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 2
-			path: system/Encryption/Encryption.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Files\\\\File\\:\\:\\$size \\(int\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Files/File.php
 
 		-
 			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Filters/Filters.php
-
-		-
-			message: "#^Property Config\\\\Filters\\:\\:\\$filters \\(array\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Filters/Filters.php
-
-		-
-			message: "#^Property Config\\\\Filters\\:\\:\\$globals \\(array\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Filters/Filters.php
-
-		-
-			message: "#^Property Config\\\\Filters\\:\\:\\$methods \\(array\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Filters/Filters.php
 
@@ -499,11 +174,6 @@ parameters:
 			message: "#^Variable \\$_POST on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: system/HTTP/RedirectResponse.php
-
-		-
-			message: "#^Property CodeIgniter\\\\HTTP\\\\Request\\:\\:\\$uri \\(CodeIgniter\\\\HTTP\\\\URI\\) in empty\\(\\) is not falsy\\.$#"
-			count: 1
-			path: system/HTTP/Request.php
 
 		-
 			message: "#^Property CodeIgniter\\\\HTTP\\\\URI\\:\\:\\$fragment \\(string\\) on left side of \\?\\? is not nullable\\.$#"
@@ -576,11 +246,6 @@ parameters:
 			path: system/Images/Handlers/ImageMagickHandler.php
 
 		-
-			message: "#^Property Config\\\\Logger\\:\\:\\$dateFormat \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Log/Logger.php
-
-		-
 			message: "#^Call to an undefined method CodeIgniter\\\\Router\\\\RouteCollectionInterface\\:\\:getDefaultNamespace\\(\\)\\.$#"
 			count: 3
 			path: system/Router/Router.php
@@ -626,87 +291,12 @@ parameters:
 			path: system/Router/Router.php
 
 		-
-			message: "#^Property Config\\\\App\\:\\:\\$CSRF[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 6
-			path: system/Security/Security.php
-
-		-
-			message: "#^Property Config\\\\Security\\:\\:\\$[a-zA-Z]+ \\([a-zA-Z]+\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 8
-			path: system/Security/Security.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between string and true will always evaluate to false\\.$#"
 			count: 1
 			path: system/Session/Handlers/RedisHandler.php
 
 		-
 			message: "#^Property CodeIgniter\\\\Session\\\\Session\\:\\:\\$sessionExpiration \\(int\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$cookieDomain \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$cookiePath \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$cookieSecure \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionCookieName \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionExpiration \\(int\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionMatchIP \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionRegenerateDestroy \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\App\\:\\:\\$sessionTimeToUpdate \\(int\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$domain \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$path \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$raw \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$samesite \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Session/Session.php
-
-		-
-			message: "#^Property Config\\\\Cookie\\:\\:\\$secure \\(bool\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: system/Session/Session.php
 
@@ -746,7 +336,7 @@ parameters:
 			path: system/Test/FeatureTestCase.php
 
 		-
-			message: "#^Cannot access property \\$insert_id on bool\\|object\\|resource\\.$#"
+			message: "#^Cannot access property \\$insert_id on object\\|resource\\|false\\.$#"
 			count: 1
 			path: system/Test/Mock/MockConnection.php
 
@@ -756,18 +346,13 @@ parameters:
 			path: system/Throttle/Throttler.php
 
 		-
-			message: "#^Property CodeIgniter\\\\Validation\\\\Validation\\:\\:\\$errors \\(array\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: system/Validation/Validation.php
-
-		-
-			message: "#^Variable \\$error on left side of \\?\\? always exists and is always null\\.$#"
-			count: 1
-			path: system/Validation/Validation.php
-
-		-
 			message: "#^Property CodeIgniter\\\\View\\\\Cell\\:\\:\\$cache \\(CodeIgniter\\\\Cache\\\\CacheInterface\\) in empty\\(\\) is not falsy\\.$#"
 			count: 2
+			path: system/View/Cell.php
+
+		-
+			message: "#^Call to an undefined static method CodeIgniter\\\\Config\\\\Factories\\:\\:cells\\(\\)\\.$#"
+			count: 1
 			path: system/View/Cell.php
 
 		-
@@ -776,10 +361,6 @@ parameters:
 			path: system/View/Parser.php
 
 		-
-			message: "#^Result of \\|\\| is always false\\.$#"
-			paths:
-				- system/Cache/CacheFactory.php
-
-		-
-			message: "#^Binary operation \"/\" between string and 8 results in an error\\.$#"
-			path: system/Encryption/Handlers/OpenSSLHandler.php
+			message: "#^Constructor of class CodeIgniter\\\\HTTP\\\\CURLRequest has an unused parameter \\$config\\.$#"
+			count: 1
+			path: system/HTTP/CURLRequest.php

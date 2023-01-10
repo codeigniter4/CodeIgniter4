@@ -32,6 +32,10 @@ contrast, we've implemented a smart transaction system that does all
 this for you automatically (you can also manage your transactions
 manually if you choose to, but there's really no benefit).
 
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
+
 Running Transactions
 ====================
 
@@ -58,6 +62,8 @@ Strict Mode can be disabled as follows:
 
 .. literalinclude:: transactions/002.php
 
+.. _transactions-managing-errors:
+
 Managing Errors
 ===============
 
@@ -68,6 +74,25 @@ will be thrown. So you'll see a standard error page.
 If the ``DBDebug`` is false, you can manage your own errors like this:
 
 .. literalinclude:: transactions/003.php
+
+.. _transactions-throwing-exceptions:
+
+Throwing Exceptions
+===================
+
+.. versionadded:: 4.3.0
+
+.. note::
+    Since v4.3.0, during transactions, exceptions are not thrown by default
+    even if ``DBDebug`` is true.
+
+If you want an exception to be thrown when a query error occurs, you can use
+``$this->db->transException(true)``:
+
+.. literalinclude:: transactions/008.php
+
+If a query error occurs, all the queries will be rolled backed, and a
+``DatabaseException`` will be thrown.
 
 Disabling Transactions
 ======================
@@ -89,6 +114,8 @@ a valid result. To use test mode simply set the first parameter in the
 ``$this->db->transStart()`` method to true:
 
 .. literalinclude:: transactions/005.php
+
+.. _transactions-manual-transactions:
 
 Running Transactions Manually
 =============================

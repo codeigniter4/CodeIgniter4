@@ -40,7 +40,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
         $config->CSPEnabled = $CSPEnabled;
         $this->response     = new Response($config);
         $this->response->pretend(false);
-        $this->csp = $this->response->CSP;
+        $this->csp = $this->response->getCSP();
     }
 
     protected function work(string $parm = 'Hello')
@@ -605,7 +605,7 @@ final class ContentSecurityPolicyTest extends CIUnitTestCase
     {
         $this->prepare(false);
         $this->work();
-        $this->response->CSP->addStyleSrc('https://example.com');
+        $this->response->getCSP()->addStyleSrc('https://example.com');
 
         $this->assertHeaderNotEmitted('content-security-policy', true);
     }

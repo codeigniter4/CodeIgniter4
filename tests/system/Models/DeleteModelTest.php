@@ -210,7 +210,7 @@ final class DeleteModelTest extends LiveModelTestCase
     public function testThrowsWithNoDateFormat(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not have a valid dateFormat.');
+        $this->expectExceptionMessage('"Tests\Support\Models\UserModel" model class does not have a valid dateFormat.');
 
         $this->createModel(UserModel::class);
         $this->setPrivateProperty($this->model, 'dateFormat', '');
@@ -238,5 +238,43 @@ final class DeleteModelTest extends LiveModelTestCase
 
         $jobs = $this->model->findAll();
         $this->assertCount(4, $jobs);
+    }
+
+    /**
+     * @dataProvider emptyPkValues
+     *
+     * @param int|string|null $id
+     */
+    public function testDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
+    {
+        // BaseBuilder throws Exception.
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage(
+            'Deletes are not allowed unless they contain a "where" or "like" clause.'
+        );
+
+        // $useSoftDeletes = false
+        $this->createModel(JobModel::class);
+
+        $this->model->delete($id);
+    }
+
+    /**
+     * @dataProvider emptyPkValues
+     *
+     * @param int|string|null $id
+     */
+    public function testDeleteWithSoftDeleteThrowDatabaseExceptionWithoutWhereClause($id): void
+    {
+        // Model throws Exception.
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage(
+            'Deletes are not allowed unless they contain a "where" or "like" clause.'
+        );
+
+        // $useSoftDeletes = true
+        $this->createModel(UserModel::class);
+
+        $this->model->delete($id);
     }
 }

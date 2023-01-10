@@ -11,10 +11,10 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
-use Exception;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -57,7 +57,9 @@ final class TransactionTest extends CIUnitTestCase
 
     public function testTransStartDBDebugTrue()
     {
-        $builder = $this->db->table('job');
+        $this->enableDBDebug();
+
+        $builder = $this->db->transException(true)->table('job');
         $e       = null;
 
         try {
@@ -78,7 +80,7 @@ final class TransactionTest extends CIUnitTestCase
             $builder->insert($jobData);
 
             $this->db->transComplete();
-        } catch (Exception $e) {
+        } catch (DatabaseException $e) {
             // Do nothing.
 
             // MySQLi
@@ -99,7 +101,7 @@ final class TransactionTest extends CIUnitTestCase
             // ErrorException: oci_execute(): ORA-00001: unique constraint (ORACLE.pk_db_job) violated
         }
 
-        $this->assertInstanceOf(Exception::class, $e);
+        $this->assertInstanceOf(DatabaseException::class, $e);
         $this->dontSeeInDatabase('job', ['name' => 'Grocery Sales']);
     }
 

@@ -137,7 +137,7 @@ final class ControllerTest extends CIUnitTestCase
 
         $method = $this->getPrivateMethodInvoker($this->controller, 'validate');
         $this->assertFalse($method('signup'));
-        $this->assertSame('You must choose a username.', Services::validation()->getError());
+        $this->assertSame('You must choose a username.', Services::validation()->getError('username'));
     }
 
     public function testValidateWithStringRulesFoundUseMessagesParameter()
@@ -159,7 +159,7 @@ final class ControllerTest extends CIUnitTestCase
                 'required' => 'You must choose a username.',
             ],
         ]));
-        $this->assertSame('You must choose a username.', Services::validation()->getError());
+        $this->assertSame('You must choose a username.', Services::validation()->getError('username'));
     }
 
     public function testValidateData()

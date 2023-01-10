@@ -12,6 +12,8 @@
 namespace CodeIgniter\Database\Live;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\Forge;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Config\Database;
@@ -25,6 +27,11 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 final class UpdateTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+
+    /**
+     * @var Forge
+     */
+    public $forge;
 
     protected $refresh = true;
     protected $seed    = CITestSeeder::class;
@@ -51,8 +58,15 @@ final class UpdateTest extends CIUnitTestCase
                 ->get()
                 ->getResult();
 
-            $this->assertSame('Bobby', $result[0]->name);
-            $this->assertSame('Ahmadinejad', $result[1]->name);
+            // this is really a bad test - indexes and other things can affect sort order
+            if ($this->db->DBDriver === 'SQLSRV') {
+                $this->assertSame('Derek Jones', $result[0]->name);
+                $this->assertSame('Bobby', $result[1]->name);
+            } else {
+                $this->assertSame('Bobby', $result[0]->name);
+                $this->assertSame('Ahmadinejad', $result[1]->name);
+            }
+
             $this->assertSame('Richard A Causey', $result[2]->name);
             $this->assertSame('Chris Martin', $result[3]->name);
         } catch (DatabaseException $e) {
@@ -228,5 +242,372 @@ final class UpdateTest extends CIUnitTestCase
         $this->seeInDatabase('type_test', [
             'type_boolean' => true,
         ]);
+    }
+
+    public function testUpdateBatchTwoConstraints()
+    {
+        if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
+            $this->markTestSkipped('This SQLite version does not support this test.');
+        }
+
+        $data = [
+            [
+                'id'      => 1,
+                'name'    => 'Derek Jones Changes',
+                'country' => 'US',
+            ],
+            [
+                'id'      => 2,
+                'name'    => 'Ahmadinejad Does Not Change',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $this->db->table('user')->updateBatch($data, 'id, country');
+
+        $this->seeInDatabase('user', [
+            'name'    => 'Derek Jones Changes',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Ahmadinejad',
+            'country' => 'Iran',
+        ]);
+    }
+
+    public function testUpdateBatchConstraintsRawSqlAndAlias()
+    {
+        if (version_compare($this->db->getVersion(), '3.33.0') < 0) {
+            $this->markTestSkipped('This SQLite version does not support this test.');
+        }
+
+        $data = [
+            [
+                'id'      => 1,
+                'name'    => 'Derek Jones Changes',
+                'country' => 'US',
+            ],
+            [
+                'id'      => 2,
+                'name'    => 'Ahmadinejad Changes',
+                'country' => 'Uruguay',
+            ],
+            [
+                'id'      => 3,
+                'name'    => 'Richard A Causey Changes',
+                'country' => 'US',
+            ],
+            [
+                'id'      => 4,
+                'name'    => 'Chris Martin Does Not Change',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $this->db->table('user')->setData($data, true, 'd')->updateBatch(
+            null,
+            ['id', new RawSql($this->db->protectIdentifiers('d')
+            . '.' . $this->db->protectIdentifiers('country')
+            . " LIKE 'U%'")]
+        );
+
+        $this->seeInDatabase('user', [
+            'name'    => 'Derek Jones Changes',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Ahmadinejad Changes',
+            'country' => 'Uruguay',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Richard A Causey Changes',
+            'country' => 'US',
+        ]);
+        $this->seeInDatabase('user', [
+            'name'    => 'Chris Martin',
+            'country' => 'UK',
+        ]);
+    }
+
+    public function testUpdateBatchUpdateFieldsAndAlias()
+    {
+        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+            $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
+        }
+
+        $data = [
+            [
+                'email'   => 'derek@world.com',
+                'name'    => 'Derek Jones Does Not Change',
+                'country' => 'Greece',
+            ],
+            [
+
+                'email'   => 'ahmadinejad@world.com',
+                'name'    => 'Ahmadinejad No change',
+                'country' => 'Greece',
+            ],
+        ];
+
+        $rawSql = new RawSql('CURRENT_TIMESTAMP');
+
+        $updateFields = ['country', 'updated_at' => $rawSql];
+
+        $this->db->table('user')->updateFields($updateFields)->onConstraint('email')->updateBatch($data);
+
+        // check to see if update_at was updated
+        $result = $this->db->table('user')
+            ->where("email IN ('derek@world.com','ahmadinejad@world.com')")
+            ->get()
+            ->getResultArray();
+
+        foreach ($result as $row) {
+            $this->assertNotNull($row['updated_at']);
+        }
+
+        // only country and update_at should have changed
+        $this->seeInDatabase('user', ['name' => 'Derek Jones', 'country' => 'Greece']);
+        $this->seeInDatabase('user', ['name' => 'Ahmadinejad', 'country' => 'Greece']);
+
+        // Original dataset from seeder
+        $data = [
+            [
+                'name'    => 'Derek Should Change',
+                'email'   => 'derek@world.com',
+                'country' => 'Greece', // will update
+            ],
+            [
+                'name'    => 'Ahmadinejad', // did't change above and will not change
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Iran', // will not update
+            ],
+            [
+                'name'    => 'Should Not Change',
+                'email'   => 'richard@world.com',
+                'country' => 'Greece', // will not update
+            ],
+            [
+                'name'    => 'Should Change',
+                'email'   => 'chris@world.com',
+                'country' => 'UK', // will update
+            ],
+        ];
+
+        $updateFields = ['name', 'updated_at' => new RawSql('NULL')];
+
+        $esc = $this->db->escapeChar;
+
+        // contraint is email and if the updated country = the source country
+        // setting alias allows us to reference it in RawSql
+        $this->db->table('user')
+            ->updateFields($updateFields)
+            ->onConstraint(['email', new RawSql("{$esc}db_user{$esc}.{$esc}country{$esc} = {$esc}_update{$esc}.{$esc}country{$esc}")])
+            ->setData($data, null, '_update')
+            ->updateBatch();
+
+        $result = $this->db->table('user')->get()->getResultArray();
+
+        foreach ($result as $row) {
+            if ($row['email'] === 'ahmadinejad@world.com') {
+                $this->assertNotNull($row['updated_at']);
+            } else {
+                $this->assertNull($row['updated_at']);
+            }
+        }
+
+        $this->seeInDatabase('user', ['name' => 'Derek Should Change', 'country' => 'Greece']);
+        $this->seeInDatabase('user', ['name' => 'Ahmadinejad', 'country' => 'Greece']);
+        $this->seeInDatabase('user', ['name' => 'Richard A Causey', 'country' => 'US']);
+        $this->seeInDatabase('user', ['name' => 'Should Change', 'country' => 'UK']);
+    }
+
+    public function testUpdateBatchWithoutOnConstraint()
+    {
+        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+            $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
+        }
+
+        $data = [
+            [
+                'name'    => 'Derek Nothing', // won't update
+                'email'   => 'derek@world.com',
+                'country' => 'Canada',
+            ],
+            [
+                'name'    => 'Ahmadinejad',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Canada',
+            ],
+            [
+                'name'    => 'Richard A Causey',
+                'email'   => 'richard@world.com',
+                'country' => 'Canada',
+            ],
+            [
+                'name'    => 'Chris Martin',
+                'email'   => 'chris@world.com',
+                'country' => 'Canada',
+            ],
+        ];
+
+        $this->db->table('user')->updateBatch($data, 'email, name', 2);
+
+        $result = $this->db->table('user')->get()->getResultArray();
+
+        foreach ($result as $row) {
+            if ($row['email'] === 'derek@world.com') {
+                $this->assertSame('US', $row['country']);
+            } else {
+                $this->assertSame('Canada', $row['country']);
+            }
+        }
+    }
+
+    public function testRawSqlConstraint()
+    {
+        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+            $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
+        }
+
+        $data = [
+            [
+                'name'    => 'Derek Jones',
+                'email'   => 'derek@world.com',
+                'country' => 'Germany',
+            ],
+        ];
+
+        $builder = $this->db->table('user');
+
+        $builder->setData($data, true, 'myalias')
+            ->updateFields('name, country')
+            ->onConstraint(new RawSql($this->db->protectIdentifiers('user.email') . ' = ' . $this->db->protectIdentifiers('myalias.email')))
+            ->updateBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
+    }
+
+    public function testRawSqlConstraintWithKey()
+    {
+        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+            $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
+        }
+
+        $data = [
+            [
+                'name'    => 'Derek Jones',
+                'email'   => 'derek@world.com',
+                'country' => 'Germany',
+            ],
+        ];
+
+        $builder = $this->db->table('user');
+
+        $builder->setData($data, true, 'myalias')
+            ->updateFields('name, country')
+            ->onConstraint(['email' => new RawSql($this->db->protectIdentifiers('myalias.email'))])
+            ->updateBatch();
+
+        $this->seeInDatabase('user', ['email' => 'derek@world.com', 'country' => 'Germany']);
+    }
+
+    public function testNoConstraintFound()
+    {
+        $jobData = [
+            'name'        => 'Programmer',
+            'description' => 'General PHP Coding',
+        ];
+
+        $this->expectException(DatabaseException::class);
+        $this->expectExceptionMessage('You must specify a constraint to match on for batch updates.');
+
+        $this->db->table('job')
+            ->updateBatch($jobData);
+    }
+
+    public function testUpdateBatchWithQuery()
+    {
+        $this->forge = Database::forge($this->DBGroup);
+
+        $this->forge->dropTable('user2', true);
+
+        $this->forge->addField([
+            'id'          => ['type' => 'INTEGER', 'constraint' => 3, 'auto_increment' => true],
+            'name'        => ['type' => 'VARCHAR', 'constraint' => 80],
+            'email'       => ['type' => 'VARCHAR', 'constraint' => 100],
+            'country'     => ['type' => 'VARCHAR', 'constraint' => 40],
+            'created_at'  => ['type' => 'DATETIME', 'null' => true],
+            'updated_at'  => ['type' => 'DATETIME', 'null' => true],
+            'deleted_at'  => ['type' => 'DATETIME', 'null' => true],
+            'last_loggin' => ['type' => 'DATETIME', 'null' => true],
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user2', true);
+
+        $data = [
+            [
+                'name'    => 'Derek Jones user2',
+                'email'   => 'derek@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Ahmadinejad user2',
+                'email'   => 'ahmadinejad@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'Richard A Causey user2',
+                'email'   => 'richard@world.com',
+                'country' => 'France',
+            ],
+            [
+                'name'    => 'Chris Martin user2',
+                'email'   => 'chris@world.com',
+                'country' => 'Greece',
+            ],
+            [
+                'name'    => 'New User user2',
+                'email'   => 'newuser@example.com',
+                'country' => 'US',
+            ],
+            [
+                'name'    => 'New User2 user2',
+                'email'   => 'newuser2@example.com',
+                'country' => 'US',
+            ],
+        ];
+        $this->db->table('user2')->insertBatch($data);
+
+        if ($this->db->DBDriver === 'SQLite3' && ! (version_compare($this->db->getVersion(), '3.33.0') >= 0)) {
+            $this->markTestSkipped('Only SQLite 3.33 and newer can complete this test.');
+        }
+
+        $updateFields = ['country', 'updated_at' => new RawSql('CURRENT_TIMESTAMP')];
+
+        $subQuery = $this->db->table('user2')
+            ->select('email, country')
+            ->where('country', 'France');
+
+        $affectedRows = $this->db->table('user')
+            ->setQueryAsData($subQuery)
+            ->updateFields($updateFields, true)
+            ->updateBatch(null, 'email');
+
+        $this->assertSame(2, (int) $affectedRows);
+
+        $this->seeInDatabase('user', ['name' => 'Derek Jones', 'country' => 'France']);
+        $this->seeInDatabase('user', ['name' => 'Ahmadinejad', 'country' => 'Iran']);
+        $this->seeInDatabase('user', ['name' => 'Richard A Causey', 'country' => 'France']);
+        $this->seeInDatabase('user', ['name' => 'Chris Martin', 'country' => 'UK']);
+
+        $result = $this->db->table('user')->get()->getResultArray();
+
+        foreach ($result as $row) {
+            if ($row['email'] === 'richard@world.com' || $row['email'] === 'derek@world.com') {
+                $this->assertNotNull($row['updated_at']);
+            } else {
+                $this->assertNull($row['updated_at']);
+            }
+        }
+
+        $this->forge->dropTable('user2', true);
     }
 }

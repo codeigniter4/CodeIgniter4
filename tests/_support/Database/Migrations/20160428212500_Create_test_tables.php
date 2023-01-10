@@ -26,7 +26,7 @@ class Migration_Create_test_tables extends Migration
             'created_at' => ['type' => 'DATETIME', 'null' => true],
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
             'deleted_at' => ['type' => 'DATETIME', 'null' => true],
-        ])->addKey('id', true)->createTable('user', true);
+        ])->addKey('id', true)->addUniqueKey('email')->addKey('country')->createTable('user', true);
 
         // Job Table
         $this->forge->addField([

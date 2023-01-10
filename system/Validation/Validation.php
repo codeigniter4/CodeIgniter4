@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Validation;
 
+use Closure;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Validation\Exceptions\ValidationException;
@@ -108,12 +109,6 @@ class Validation implements ValidationInterface
      */
     public function run(?array $data = null, ?string $group = null, ?string $dbGroup = null): bool
     {
-        // If there are still validation errors for redirect_with_input request, remove them.
-        // See `getErrors()` method.
-        if (isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
-            unset($_SESSION['_ci_validation_errors']);
-        }
-
         $data ??= $this->data;
 
         // i.e. is_unique
@@ -201,7 +196,7 @@ class Validation implements ValidationInterface
      *
      * @param array|string $value
      * @param array|null   $rules
-     * @param array        $data          The array of data to validate, with `DBGroup`.
+     * @param array|null   $data          The array of data to validate, with `DBGroup`.
      * @param string|null  $originalField The original asterisk field name like "foo.*.bar".
      */
     protected function processRules(
@@ -283,7 +278,7 @@ class Validation implements ValidationInterface
             $rules = array_diff($rules, ['permit_empty']);
         }
 
-        foreach ($rules as $rule) {
+        foreach ($rules as $i => $rule) {
             $isCallable = is_callable($rule);
 
             $passed = false;
@@ -298,7 +293,9 @@ class Validation implements ValidationInterface
             $error = null;
 
             // If it's a callable, call and get out of here.
-            if ($isCallable) {
+            if ($this->isClosure($rule)) {
+                $passed = $rule($value, $data, $error, $field);
+            } elseif ($isCallable) {
                 $passed = $param === false ? $rule($value) : $rule($value, $param, $data);
             } else {
                 $found = false;
@@ -337,8 +334,9 @@ class Validation implements ValidationInterface
 
                 $param = ($param === false) ? '' : $param;
 
+                // @phpstan-ignore-next-line $error may be set by rule methods.
                 $this->errors[$field] = $error ?? $this->getErrorMessage(
-                    $rule,
+                    $this->isClosure($rule) ? $i : $rule,
                     $field,
                     $label,
                     $param,
@@ -351,6 +349,14 @@ class Validation implements ValidationInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param Closure|string $rule
+     */
+    private function isClosure($rule): bool
+    {
+        return $rule instanceof Closure;
     }
 
     /**
@@ -411,7 +417,7 @@ class Validation implements ValidationInterface
      *
      *    [
      *        'rule' => 'message',
-     *        'rule' => 'message'
+     *        'rule' => 'message',
      *    ]
      *
      * @param array|string $rules
@@ -507,7 +513,7 @@ class Validation implements ValidationInterface
      *
      * @return string[] Rule group.
      *
-     * @throws InvalidArgumentException If group not found.
+     * @throws ValidationException If group not found.
      */
     public function getRuleGroup(string $group): array
     {
@@ -527,7 +533,7 @@ class Validation implements ValidationInterface
      *
      * @param string $group Group.
      *
-     * @throws InvalidArgumentException If group not found.
+     * @throws ValidationException If group not found.
      */
     public function setRuleGroup(string $group)
     {
@@ -542,6 +548,8 @@ class Validation implements ValidationInterface
 
     /**
      * Returns the rendered HTML of the errors as defined in $template.
+     *
+     * You can also use validation_list_errors() in Form helper.
      */
     public function listErrors(string $template = 'list'): string
     {
@@ -556,6 +564,8 @@ class Validation implements ValidationInterface
 
     /**
      * Displays a single error in formatted HTML as defined in the $template view.
+     *
+     * You can also use validation_show_error() in Form helper.
      */
     public function showError(string $field, string $template = 'single'): string
     {
@@ -595,12 +605,14 @@ class Validation implements ValidationInterface
      * same format used with setRules(). Additionally, check
      * for {group}_errors for an array of custom error messages.
      *
-     * @return array|ValidationException|null
+     * @return array
+     *
+     * @throws ValidationException
      */
     public function loadRuleGroup(?string $group = null)
     {
         if (empty($group)) {
-            return null;
+            return [];
         }
 
         if (! isset($this->config->{$group})) {
@@ -717,14 +729,7 @@ class Validation implements ValidationInterface
      */
     public function getErrors(): array
     {
-        // If we already have errors, we'll use those.
-        // If we don't, check the session to see if any were
-        // passed along from a redirect_with_input request.
-        if (empty($this->errors) && ! is_cli() && isset($_SESSION, $_SESSION['_ci_validation_errors'])) {
-            $this->errors = unserialize($_SESSION['_ci_validation_errors']);
-        }
-
-        return $this->errors ?? [];
+        return $this->errors;
     }
 
     /**

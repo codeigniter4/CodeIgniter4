@@ -2,9 +2,12 @@
 
 // ...
 
-$routes->get('news/(:segment)', 'News::view/$1');
-$routes->get('news', 'News::index');
-$routes->get('pages', 'Pages::index');
-$routes->get('(:segment)', 'Pages::view/$1');
+use App\Controllers\News;
+use App\Controllers\Pages;
+
+$routes->get('news/(:segment)', [News::class, 'view']);
+$routes->get('news', [News::class, 'index']);
+$routes->get('pages', [Pages::class, 'index']);
+$routes->get('(:segment)', [Pages::class, 'view']);
 
 // ...

@@ -46,4 +46,12 @@ jobs:
           extensions: dom, mbstring
 
       - name: Detect code duplication
-        run: phpcpd --exclude system/Test --exclude system/ThirdParty --exclude system/Database/SQLSRV/Builder.php --exclude system/Database/SQLSRV/Forge.php -- app/ public/ system/
+        run: phpcpd
+            --exclude system/Test
+            --exclude system/ThirdParty
+            --exclude system/Database/SQLSRV/Builder.php
+            --exclude system/Database/SQLSRV/Forge.php
+            --exclude system/Database/MySQLi/Builder.php
+            --exclude system/Database/OCI8/Builder.php
+            --exclude system/Database/Postgre/Builder.php
+            -- app/ public/ system/

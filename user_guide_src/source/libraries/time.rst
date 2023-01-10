@@ -2,12 +2,16 @@
 Times and Dates
 ###############
 
-CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP's DateTime object, but uses the Intl
+CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP's DateTimeImmutable object, but uses the Intl
 extension's features to convert times across timezones and display the output correctly for different locales. This class
 is the ``Time`` class and lives in the ``CodeIgniter\I18n`` namespace.
 
-.. note:: Since the Time class extends DateTime, if there are features that you need that this class doesn't provide,
-    you can likely find them within the `DateTime <https://www.php.net/manual/en/class.datetime.php>`_  class itself.
+.. note:: Since the Time class extends ``DateTimeImmutable``, if there are features that you need that this class doesn't provide,
+    you can likely find them within the `DateTimeImmutable <https://www.php.net/manual/en/class.datetimeimmutable.php>`_  class itself.
+
+.. note:: Prior to v4.3.0, the Time class extended ``DateTime`` and some inherited methods changed
+    the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
+    compatibility, you can use deprecated ``TimeLegay`` class for the time being.
 
 .. contents::
     :local:
@@ -42,7 +46,7 @@ in the second and parameters, respectively. If no locale or timezone is provided
 parse()
 =======
 
-This helper method is a static version of the default constructor. It takes a string acceptable as DateTime's
+This helper method is a static version of the default constructor. It takes a string acceptable as DateTimeImmutable's
 constructor as the first parameter, a timezone as the second parameter, and the locale as the third parameter:
 
 .. literalinclude:: time/004.php
@@ -101,8 +105,8 @@ timezone and locale in the fourth and fifth parameters:
 createFromFormat()
 ==================
 
-This is a replacement for DateTime's method of the same name. This allows the timezone to be set at the same time,
-and returns a ``Time`` instance, instead of DateTime:
+This is a replacement for DateTimeImmutable's method of the same name. This allows the timezone to be set at the same time,
+and returns a ``Time`` instance, instead of DateTimeImmutable:
 
 .. literalinclude:: time/011.php
 
@@ -136,14 +140,14 @@ not aware of locales:
 Displaying the Value
 ********************
 
-Since the Time class extends DateTime, you get all of the output methods that provides, including the ``format()`` method.
-However, the DateTime methods do not provide a localized result. The Time class does provide a number of helper methods
+Since the Time class extends DateTimeImmutable, you get all of the output methods that provides, including the ``format()`` method.
+However, the DateTimeImmutable methods do not provide a localized result. The Time class does provide a number of helper methods
 to display localized versions of the value, though.
 
 toLocalizedString()
 ===================
 
-This is the localized version of DateTime's ``format()`` method. Instead of using the values you might be familiar with, though,
+This is the localized version of DateTimeImmutable's ``format()`` method. Instead of using the values you might be familiar with, though,
 you must use values acceptable to the `IntlDateFormatter <https://www.php.net/manual/en/class.intldateformatter.php>`__ class.
 A full listing of values can be found `here <https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details>`__.
 

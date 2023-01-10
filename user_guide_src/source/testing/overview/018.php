@@ -2,26 +2,22 @@
 
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 final class SomeTest extends CIUnitTestCase
 {
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->stream_filter);
-    }
+    use StreamFilterTrait;
 
     public function testSomeOutput(): void
     {
         CLI::write('first.');
 
-        $expected = "first.\n";
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
+        $this->assertSame("\nfirst.\n", $this->getStreamFilterBuffer());
+
+        $this->resetStreamFilterBuffer();
+
+        CLI::write('second.');
+
+        $this->assertSame("second.\n", $this->getStreamFilterBuffer());
     }
 }

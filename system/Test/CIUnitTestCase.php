@@ -350,8 +350,6 @@ abstract class CIUnitTestCase extends TestCase
      * @param string|null $expectedMessage
      *
      * @return bool
-     *
-     * @throws Exception
      */
     public function assertLogged(string $level, $expectedMessage = null)
     {
@@ -364,6 +362,21 @@ abstract class CIUnitTestCase extends TestCase
         ));
 
         return $result;
+    }
+
+    /**
+     * Asserts that there is a log record that contains `$logMessage` in the message.
+     */
+    public function assertLogContains(string $level, string $logMessage, string $message = ''): void
+    {
+        $this->assertTrue(
+            TestLogger::didLog($level, $logMessage, false),
+            $message ?: sprintf(
+                'Failed asserting that logs have a record of message containing "%s" with level "%s".',
+                $logMessage,
+                $level
+            )
+        );
     }
 
     /**

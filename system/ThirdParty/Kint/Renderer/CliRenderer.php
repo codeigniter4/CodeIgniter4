@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -25,7 +27,6 @@
 
 namespace Kint\Renderer;
 
-use Exception;
 use Kint\Zval\Value;
 use Throwable;
 
@@ -62,9 +63,9 @@ class CliRenderer extends TextRenderer
     /**
      * Which stream to check for VT100 support on windows.
      *
-     * null uses STDOUT if it's defined
+     * uses STDOUT by default if it's defined
      *
-     * @var null|resource
+     * @var ?resource
      */
     public static $windows_stream = null;
 
@@ -79,7 +80,7 @@ class CliRenderer extends TextRenderer
         parent::__construct();
 
         if (!self::$force_utf8 && KINT_WIN) {
-            if (!KINT_PHP72) {
+            if (!KINT_PHP72 || !\function_exists('sapi_windows_vt100_support')) {
                 $this->windows_output = true;
             } else {
                 $stream = self::$windows_stream;
@@ -99,9 +100,7 @@ class CliRenderer extends TextRenderer
         if (!self::$terminal_width) {
             if (!KINT_WIN && self::$detect_width) {
                 try {
-                    self::$terminal_width = \exec('tput cols');
-                } catch (Exception $e) {
-                    self::$terminal_width = self::$default_width;
+                    self::$terminal_width = (int) \exec('tput cols');
                 } catch (Throwable $t) {
                     self::$terminal_width = self::$default_width;
                 }
@@ -117,7 +116,7 @@ class CliRenderer extends TextRenderer
         $this->header_width = self::$terminal_width;
     }
 
-    public function colorValue($string)
+    public function colorValue(string $string): string
     {
         if (!$this->colors) {
             return $string;
@@ -126,7 +125,7 @@ class CliRenderer extends TextRenderer
         return "\x1b[32m".\str_replace("\n", "\x1b[0m\n\x1b[32m", $string)."\x1b[0m";
     }
 
-    public function colorType($string)
+    public function colorType(string $string): string
     {
         if (!$this->colors) {
             return $string;
@@ -135,7 +134,7 @@ class CliRenderer extends TextRenderer
         return "\x1b[35;1m".\str_replace("\n", "\x1b[0m\n\x1b[35;1m", $string)."\x1b[0m";
     }
 
-    public function colorTitle($string)
+    public function colorTitle(string $string): string
     {
         if (!$this->colors) {
             return $string;
@@ -144,7 +143,7 @@ class CliRenderer extends TextRenderer
         return "\x1b[36m".\str_replace("\n", "\x1b[0m\n\x1b[36m", $string)."\x1b[0m";
     }
 
-    public function renderTitle(Value $o)
+    public function renderTitle(Value $o): string
     {
         if ($this->windows_output) {
             return $this->utf8ToWindows(parent::renderTitle($o));
@@ -153,12 +152,12 @@ class CliRenderer extends TextRenderer
         return parent::renderTitle($o);
     }
 
-    public function preRender()
+    public function preRender(): string
     {
         return PHP_EOL;
     }
 
-    public function postRender()
+    public function postRender(): string
     {
         if ($this->windows_output) {
             return $this->utf8ToWindows(parent::postRender());
@@ -167,12 +166,12 @@ class CliRenderer extends TextRenderer
         return parent::postRender();
     }
 
-    public function escape($string, $encoding = false)
+    public function escape(string $string, $encoding = false): string
     {
         return \str_replace("\x1b", '\\x1b', $string);
     }
 
-    protected function utf8ToWindows($string)
+    protected function utf8ToWindows(string $string): string
     {
         return \str_replace(
             ['┌', '═', '┐', '│', '└', '─', '┘'],

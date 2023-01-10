@@ -14,6 +14,8 @@ namespace CodeIgniter\Models;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Entity\Entity;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Model;
+use Config\Database;
 use stdClass;
 use Tests\Support\Entity\User;
 use Tests\Support\Models\JobModel;
@@ -185,16 +187,24 @@ final class InsertModelTest extends LiveModelTestCase
             ];
         };
 
+        $entityTwo = clone $entity;
+
         $this->createModel(UserModel::class);
 
-        $entity->name       = 'Mark';
-        $entity->email      = 'mark@example.com';
+        $entity->name       = 'Mark One';
+        $entity->email      = 'markone@example.com';
         $entity->country    = 'India';
         $entity->deleted    = 0;
         $entity->created_at = new Time('now');
 
+        $entityTwo->name       = 'Mark Two';
+        $entityTwo->email      = 'marktwo@example.com';
+        $entityTwo->country    = 'India';
+        $entityTwo->deleted    = 0;
+        $entityTwo->created_at = $entity->created_at;
+
         $this->setPrivateProperty($this->model, 'useTimestamps', true);
-        $this->assertSame(2, $this->model->insertBatch([$entity, $entity]));
+        $this->assertSame(2, $this->model->insertBatch([$entity, $entityTwo]));
     }
 
     public function testInsertArrayWithNoDataException(): void
@@ -202,6 +212,35 @@ final class InsertModelTest extends LiveModelTestCase
         $this->expectException(DataException::class);
         $this->expectExceptionMessage('There is no data to insert.');
         $this->createModel(UserModel::class)->insert([]);
+    }
+
+    public function testInsertPermitInsertNoData(): void
+    {
+        $forge = Database::forge();
+        $forge->addField([
+            'id'         => ['type' => 'INTEGER', 'constraint' => 11, 'auto_increment' => true],
+            'created_at' => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
+            'updated_at' => ['type' => 'INTEGER', 'constraint' => 11, 'null' => true],
+        ])->addKey('id', true)->createTable('insert_no_data', true);
+
+        $model = new class () extends Model {
+            protected $table         = 'insert_no_data';
+            protected $allowedFields = [
+                'updated_at',
+            ];
+        };
+
+        $model->allowEmptyInserts()->insert([]);
+
+        $this->seeInDatabase('insert_no_data', ['id' => $model->getInsertID()]);
+
+        $forge->dropTable('insert_no_data');
+
+        $this->expectException(DataException::class);
+        $this->expectExceptionMessage('There is no data to insert.');
+
+        $model->allowEmptyInserts(false);
+        $model->insert([]);
     }
 
     public function testInsertObjectWithNoDataException(): void

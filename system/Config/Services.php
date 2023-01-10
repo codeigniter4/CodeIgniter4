@@ -54,6 +54,7 @@ use CodeIgniter\Session\Session;
 use CodeIgniter\Throttle\Throttler;
 use CodeIgniter\Typography\Typography;
 use CodeIgniter\Validation\Validation;
+use CodeIgniter\Validation\ValidationInterface;
 use CodeIgniter\View\Cell;
 use CodeIgniter\View\Parser;
 use CodeIgniter\View\RendererInterface;
@@ -72,6 +73,7 @@ use Config\Images;
 use Config\Migrations;
 use Config\Pager as PagerConfig;
 use Config\Services as AppServices;
+use Config\Session as SessionConfig;
 use Config\Toolbar as ToolbarConfig;
 use Config\Validation as ValidationConfig;
 use Config\View as ViewConfig;
@@ -252,7 +254,7 @@ class Services extends BaseService
     public static function exceptions(
         ?ExceptionsConfig $config = null,
         ?IncomingRequest $request = null,
-        ?Response $response = null,
+        ?ResponseInterface $response = null,
         bool $getShared = true
     ) {
         if ($getShared) {
@@ -331,6 +333,8 @@ class Services extends BaseService
         }
 
         $config ??= config('Images');
+        assert($config instanceof Images);
+
         $handler = $handler ?: $config->defaultHandler;
         $class   = $config->handlers[$handler];
 
@@ -545,7 +549,7 @@ class Services extends BaseService
     /**
      * The Response class models an HTTP response.
      *
-     * @return Response
+     * @return ResponseInterface
      */
     public static function response(?App $config = null, bool $getShared = true)
     {
@@ -638,12 +642,17 @@ class Services extends BaseService
         }
 
         $config ??= config('App');
+        assert($config instanceof App);
+
         $logger = AppServices::logger();
 
-        $driverName = $config->sessionDriver;
+        /** @var SessionConfig|null $sessionConfig */
+        $sessionConfig = config('Session');
+
+        $driverName = $sessionConfig->driver ?? $config->sessionDriver;
 
         if ($driverName === DatabaseHandler::class) {
-            $DBGroup = $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
+            $DBGroup = $sessionConfig->DBGroup ?? $config->sessionDBGroup ?? config(Database::class)->defaultGroup;
             $db      = Database::connect($DBGroup);
 
             $driver = $db->getPlatform();
@@ -733,7 +742,7 @@ class Services extends BaseService
     /**
      * The Validation class provides tools for validating input data.
      *
-     * @return Validation
+     * @return ValidationInterface
      */
     public static function validation(?ValidationConfig $config = null, bool $getShared = true)
     {

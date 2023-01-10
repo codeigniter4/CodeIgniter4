@@ -12,28 +12,31 @@
 namespace CodeIgniter\Database;
 
 /**
- * Interface ConnectionInterface
+ * @template TConnection of object|resource
+ * @template TResult of object|resource
  */
 interface ConnectionInterface
 {
     /**
      * Initializes the database connection/settings.
      *
-     * @return mixed
+     * @return void
      */
     public function initialize();
 
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function connect(bool $persistent = false);
 
     /**
      * Create a persistent database connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function persistentConnect();
 
@@ -41,7 +44,7 @@ interface ConnectionInterface
      * Keep or establish the connection if no queries have been sent for
      * a length of time exceeding the server's idle timeout.
      *
-     * @return mixed
+     * @return void
      */
     public function reconnect();
 
@@ -51,7 +54,8 @@ interface ConnectionInterface
      * get that connection. If you pass either alias in and only a single
      * connection is present, it must return the sole connection.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TConnection
      */
     public function getConnection(?string $alias = null);
 
@@ -97,6 +101,7 @@ interface ConnectionInterface
      * @param mixed ...$binds
      *
      * @return BaseResult|bool|Query
+     * @phpstan-return BaseResult<TConnection, TResult>|bool|Query
      */
     public function query(string $sql, $binds = null);
 
@@ -105,7 +110,8 @@ interface ConnectionInterface
      * is performed, nor are transactions handled. Simply takes a raw
      * query string and returns the database-specific result id.
      *
-     * @return mixed
+     * @return false|object|resource
+     * @phpstan-return false|TResult
      */
     public function simpleQuery(string $sql);
 

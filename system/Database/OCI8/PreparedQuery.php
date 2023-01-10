@@ -13,9 +13,12 @@ namespace CodeIgniter\Database\OCI8;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
  * Prepared query for OCI8
+ *
+ * @extends BasePreparedQuery<resource, resource, resource>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -40,15 +43,17 @@ class PreparedQuery extends BasePreparedQuery
      *
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the OCI8 driver.
-     *
-     * @return mixed
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         if (! $this->statement = oci_parse($this->db->connID, $this->parameterize($sql))) {
             $error             = oci_error($this->db->connID);
             $this->errorCode   = $error['code'] ?? 0;
             $this->errorString = $error['message'] ?? '';
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         $this->lastInsertTableName = $this->db->parseInsertTableName($sql);
@@ -62,15 +67,12 @@ class PreparedQuery extends BasePreparedQuery
      */
     public function _execute(array $data): bool
     {
-        if (null === $this->statement) {
+        if (! isset($this->statement)) {
             throw new BadMethodCallException('You must call prepare before trying to execute a prepared statement.');
         }
 
-        $lastKey = 0;
-
         foreach (array_keys($data) as $key) {
             oci_bind_by_name($this->statement, ':' . $key, $data[$key]);
-            $lastKey = $key;
         }
 
         $result = oci_execute($this->statement, $this->db->commitMode);
@@ -83,13 +85,21 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the statement resource for the prepared query or false when preparing failed.
      *
-     * @return mixed
+     * @return resource|null
      */
     public function _getResult()
     {
         return $this->statement;
+    }
+
+    /**
+     * Deallocate prepared statements.
+     */
+    protected function _close(): bool
+    {
+        return oci_free_statement($this->statement);
     }
 
     /**

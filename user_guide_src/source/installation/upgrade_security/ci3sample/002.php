@@ -12,6 +12,6 @@ $csrf = array(
     <input name="email" type="text">
     <input name="password" type="password">
 
-    <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" />
+    <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
     <input type="submit" value="Save">
 </form>

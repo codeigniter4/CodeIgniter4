@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -27,18 +29,10 @@ namespace Kint\Renderer\Text;
 
 use Kint\Zval\Value;
 
-class BlacklistPlugin extends Plugin
+class BlacklistPlugin extends AbstractPlugin
 {
-    public function render(Value $o)
+    public function render(Value $o): string
     {
-        $out = '';
-
-        if (0 == $o->depth) {
-            $out .= $this->renderer->colorTitle($this->renderer->renderTitle($o)).PHP_EOL;
-        }
-
-        $out .= $this->renderer->renderHeader($o).' '.$this->renderer->colorValue('BLACKLISTED').PHP_EOL;
-
-        return $out;
+        return $this->renderLockedHeader($o, 'BLACKLISTED');
     }
 }

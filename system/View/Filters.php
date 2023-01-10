@@ -182,7 +182,7 @@ class Filters
 
     /**
      * Returns a string with all instances of newline character (\n)
-     * converted to an HTML <br/> tag.
+     * converted to an HTML <br> tag.
      */
     public static function nl2br(string $value): string
     {

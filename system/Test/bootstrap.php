@@ -10,7 +10,6 @@
  */
 
 use CodeIgniter\Config\DotEnv;
-use CodeIgniter\Router\RouteCollection;
 use Config\Autoload;
 use Config\Modules;
 use Config\Paths;
@@ -91,9 +90,4 @@ $env->load();
 // Always load the URL helper, it should be used in most of apps.
 helper('url');
 
-require_once APPPATH . 'Config/Routes.php';
-
-/**
- * @var RouteCollection $routes
- */
-$routes->getRoutes('*');
+Services::routes()->loadRoutes();

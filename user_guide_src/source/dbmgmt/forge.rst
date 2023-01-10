@@ -150,14 +150,18 @@ Primary Key.
 
 .. literalinclude:: forge/009.php
 
+.. _adding-keys:
+
 Adding Keys
 ===========
 
 Generally speaking, you'll want your table to have Keys. This is
 accomplished with ``$forge->addKey('field')``. The optional second
 parameter set to true will make it a primary key and the third
-parameter set to true will make it a unique key. Note that ``addKey()``
-must be followed by a call to ``createTable()``.
+parameter set to true will make it a unique key. You may specify a name
+with the fourth parameter. Note that ``addKey()`` must be followed by a
+call to ``createTable()`` or ``processIndexes()`` when the table already
+exists.
 
 Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
@@ -169,6 +173,12 @@ and unique keys with specific methods:
 
 .. literalinclude:: forge/011.php
 
+.. note:: When you add a primary key, MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
+
+You may add keys to an existing table by using ``processIndexes()``:
+
+.. literalinclude:: forge/029.php
+
 .. _adding-foreign-keys:
 
 Adding Foreign Keys
@@ -179,9 +189,11 @@ you may add them directly in forge:
 
 .. literalinclude:: forge/012.php
 
-You can specify the desired action for the "on update" and "on delete" properties of the constraint:
+You can specify the desired action for the "on update" and "on update" properties of the constraint as well as the name:
 
 .. literalinclude:: forge/013.php
+
+.. note:: SQLite3 does not support the naming of foreign keys. CodeIgniter will refer to them by ``prefix_table_column_foreign``.
 
 Creating a Table
 ================
@@ -229,6 +241,17 @@ Execute a DROP KEY.
 
 .. literalinclude:: forge/020.php
 
+.. _dropping-a-primary-key:
+
+Dropping a Primary Key
+======================
+
+.. versionadded:: 4.3.0
+
+Execute a DROP PRIMARY KEY.
+
+.. literalinclude:: forge/028.php
+
 Renaming a Table
 ================
 
@@ -261,6 +284,8 @@ Examples:
 
 Dropping Columns From a Table
 ==============================
+
+.. _db-forge-dropColumn:
 
 $forge->dropColumn()
 --------------------
@@ -310,43 +335,57 @@ Class Reference
 
                 Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
-    .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = ''])
+    .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = '', $fkName = ''])
 
         :param    string|string[]    $fieldName: Name of a key field or an array of fields
         :param    string    $tableName: Name of a parent table
         :param    string|string[]    $tableField: Name of a parent table field or an array of fields
         :param    string    $onUpdate: Desired action for the "on update"
         :param    string    $onDelete: Desired action for the "on delete"
+        :param    string    $fkName: Name of foreign key. This does not work with SQLite3
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
+        .. note:: ``$fkName`` can be used since v4.3.0.
+
         Adds a foreign key to the set that will be used to create a table. Usage:  See `Adding Foreign Keys`_.
 
-    .. php:method:: addKey($key[, $primary = false[, $unique = false]])
+        .. note:: ``$fkName`` can be used since v4.3.0.
+
+    .. php:method:: addKey($key[, $primary = false[, $unique = false[, $keyName = '']]])
 
         :param    mixed    $key: Name of a key field or an array of fields
         :param    bool    $primary: Set to true if it should be a primary key or a regular one
         :param    bool    $unique: Set to true if it should be a unique key or a regular one
+        :param    string    $keyName: Name of key to be added
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
         Adds a key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
-    .. php:method:: addPrimaryKey($key)
+        .. note:: ``$keyName`` can be used since v4.3.0.
+
+    .. php:method:: addPrimaryKey($key[, $keyName = ''])
 
         :param    mixed    $key: Name of a key field or an array of fields
+        :param    string    $keyName: Name of key to be added
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
         Adds a primary key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
 
-    .. php:method:: addUniqueKey($key)
+        .. note:: ``$keyName`` can be used since v4.3.0.
+
+    .. php:method:: addUniqueKey($key[, $keyName = ''])
 
         :param    mixed    $key: Name of a key field or an array of fields
+        :param    string    $keyName: Name of key to be added
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
         Adds a unique key to the set that will be used to create a table. Usage:  See `Adding Keys`_.
+
+        .. note:: ``$keyName`` can be used since v4.3.0.
 
     .. php:method:: createDatabase($dbName[, $ifNotExists = false])
 
@@ -384,6 +423,29 @@ Class Reference
 
         Drops a database. Usage:  See `Creating and Dropping Databases`_.
 
+    .. php:method:: dropKey($table, $keyName[, $prefixKeyName = true])
+
+        :param    string    $table: Name of table that has key
+        :param    string    $keyName: Name of key to be dropped
+        :param    string    $prefixKeyName: If database prefix should be added to ``$keyName``
+        :returns:    true on success, false on failure
+        :rtype:    bool
+
+        Drops an index or unique index.
+
+        .. note:: ``$keyName`` and ``$prefixKeyName`` can be used since v4.3.0.
+
+    .. php:method:: dropPrimaryKey($table[, $keyName = ''])
+
+        :param    string    $table: Name of table to drop primary key
+        :param    string    $keyName: Name of primary key to be dropped
+        :returns:    true on success, false on failure
+        :rtype:    bool
+
+        Drops a primary key from a table.
+
+        .. note:: ``$keyName`` can be used since v4.3.0.
+
     .. php:method:: dropTable($table_name[, $if_exists = false])
 
         :param    string    $table: Name of the table to drop
@@ -392,6 +454,15 @@ Class Reference
         :rtype:    bool
 
         Drops a table. Usage:  See `Dropping a Table`_.
+
+    .. php:method:: processIndexes($table)
+
+        :param    string    $table: Name of the table to add indexes to
+        :returns:    true on success, false on failure
+        :rtype:    bool
+
+        Used following ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()``,
+        and ``addForeignKey()`` to add indexes to an existing table.
 
     .. php:method:: modifyColumn($table, $field)
 

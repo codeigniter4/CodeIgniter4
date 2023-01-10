@@ -15,7 +15,6 @@ use CodeIgniter\Cookie\Cookie;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\Response;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use CodeIgniter\Session\Session;
@@ -125,7 +124,7 @@ class Security implements SecurityInterface
      *
      * @var bool
      */
-    protected $redirect = true;
+    protected $redirect = false;
 
     /**
      * CSRF SameSite
@@ -572,7 +571,6 @@ class Security implements SecurityInterface
             ]
         );
 
-        /** @var Response $response */
         $response = Services::response();
         $response->setCookie($this->cookie);
     }

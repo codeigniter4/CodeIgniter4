@@ -84,6 +84,13 @@ class Forge extends BaseForge
     ];
 
     /**
+     * Foreign Key Allowed Actions
+     *
+     * @var array
+     */
+    protected $fkAllowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
+
+    /**
      * CREATE TABLE IF statement
      *
      * @var string
@@ -143,7 +150,25 @@ class Forge extends BaseForge
                 }
             }
 
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table) . ' DROP ';
+            $fullTable = $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table);
+
+            // Drop default constraints
+            $fields = implode(',', $this->db->escape((array) $field));
+
+            $sql = <<<SQL
+                SELECT name
+                FROM SYS.DEFAULT_CONSTRAINTS
+                WHERE PARENT_OBJECT_ID = OBJECT_ID('{$fullTable}')
+                AND PARENT_COLUMN_ID IN (
+                SELECT column_id FROM sys.columns WHERE NAME IN ({$fields}) AND object_id = OBJECT_ID(N'{$fullTable}')
+                )
+                SQL;
+
+            foreach ($this->db->query($sql)->getResultArray() as $index) {
+                $this->db->query('ALTER TABLE ' . $fullTable . ' DROP CONSTRAINT ' . $index['name'] . '');
+            }
+
+            $sql = 'ALTER TABLE ' . $fullTable . ' DROP ';
 
             $fields = array_map(static fn ($item) => 'COLUMN [' . trim($item) . ']', (array) $field);
 
@@ -216,40 +241,42 @@ class Forge extends BaseForge
     }
 
     /**
-     * Process indexes
+     * Generates SQL to add indexes
      *
-     * @return array|string
+     * @param bool $asQuery When true returns stand alone SQL, else partial SQL used with CREATE TABLE
      */
-    protected function _processIndexes(string $table)
+    protected function _processIndexes(string $table, bool $asQuery = false): array
     {
         $sqls = [];
 
         for ($i = 0, $c = count($this->keys); $i < $c; $i++) {
-            $this->keys[$i] = (array) $this->keys[$i];
-
-            for ($i2 = 0, $c2 = count($this->keys[$i]); $i2 < $c2; $i2++) {
-                if (! isset($this->fields[$this->keys[$i][$i2]])) {
-                    unset($this->keys[$i][$i2]);
+            for ($i2 = 0, $c2 = count($this->keys[$i]['fields']); $i2 < $c2; $i2++) {
+                if (! isset($this->fields[$this->keys[$i]['fields'][$i2]])) {
+                    unset($this->keys[$i]['fields'][$i2]);
                 }
             }
 
-            if (count($this->keys[$i]) <= 0) {
+            if (count($this->keys[$i]['fields']) <= 0) {
                 continue;
             }
+
+            $keyName = $this->db->escapeIdentifiers(($this->keys[$i]['keyName'] === '') ?
+                $table . '_' . implode('_', $this->keys[$i]['fields']) :
+                $this->keys[$i]['keyName']);
 
             if (in_array($i, $this->uniqueKeys, true)) {
                 $sqls[] = 'ALTER TABLE '
                     . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
-                    . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
-                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                    . ' ADD CONSTRAINT ' . $keyName
+                    . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ');';
 
                 continue;
             }
 
             $sqls[] = 'CREATE INDEX '
-                . $this->db->escapeIdentifiers($table . '_' . implode('_', $this->keys[$i]))
+                . $keyName
                 . ' ON ' . $this->db->escapeIdentifiers($this->db->schema) . '.' . $this->db->escapeIdentifiers($table)
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i])) . ');';
+                . ' (' . implode(', ', $this->db->escapeIdentifiers($this->keys[$i]['fields'])) . ');';
         }
 
         return $sqls;
@@ -262,64 +289,12 @@ class Forge extends BaseForge
     {
         return $this->db->escapeIdentifiers($field['name'])
             . (empty($field['new_name']) ? '' : ' ' . $this->db->escapeIdentifiers($field['new_name']))
-            . ' ' . $field['type'] . $field['length']
+            . ' ' . $field['type'] . ($field['type'] === 'text' ? '' : $field['length'])
             . $field['default']
             . $field['null']
             . $field['auto_increment']
             . ''
             . $field['unique'];
-    }
-
-    /**
-     * Process foreign keys
-     *
-     * @param string $table Table name
-     */
-    protected function _processForeignKeys(string $table): string
-    {
-        $sql = '';
-
-        $allowActions = ['CASCADE', 'SET NULL', 'NO ACTION', 'RESTRICT', 'SET DEFAULT'];
-
-        foreach ($this->foreignKeys as $fkey) {
-            $nameIndex            = $table . '_' . implode('_', $fkey['field']) . '_foreign';
-            $nameIndexFilled      = $this->db->escapeIdentifiers($nameIndex);
-            $foreignKeyFilled     = implode(', ', $this->db->escapeIdentifiers($fkey['field']));
-            $referenceTableFilled = $this->db->escapeIdentifiers($this->db->DBPrefix . $fkey['referenceTable']);
-            $referenceFieldFilled = implode(', ', $this->db->escapeIdentifiers($fkey['referenceField']));
-
-            $formatSql = ",\n\tCONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)";
-            $sql .= sprintf($formatSql, $nameIndexFilled, $foreignKeyFilled, $referenceTableFilled, $referenceFieldFilled);
-
-            if ($fkey['onDelete'] !== false && in_array($fkey['onDelete'], $allowActions, true)) {
-                $sql .= ' ON DELETE ' . $fkey['onDelete'];
-            }
-
-            if ($fkey['onUpdate'] !== false && in_array($fkey['onUpdate'], $allowActions, true)) {
-                $sql .= ' ON UPDATE ' . $fkey['onUpdate'];
-            }
-        }
-
-        return $sql;
-    }
-
-    /**
-     * Process primary keys
-     */
-    protected function _processPrimaryKeys(string $table): string
-    {
-        for ($i = 0, $c = count($this->primaryKeys); $i < $c; $i++) {
-            if (! isset($this->fields[$this->primaryKeys[$i]])) {
-                unset($this->primaryKeys[$i]);
-            }
-        }
-
-        if ($this->primaryKeys !== []) {
-            $sql = ",\n\tCONSTRAINT " . $this->db->escapeIdentifiers('pk_' . $table)
-                . ' PRIMARY KEY(' . implode(', ', $this->db->escapeIdentifiers($this->primaryKeys)) . ')';
-        }
-
-        return $sql ?? '';
     }
 
     /**
@@ -392,5 +367,15 @@ class Forge extends BaseForge
         }
 
         return $sql;
+    }
+
+    /**
+     * Constructs sql to check if key is a constraint.
+     */
+    protected function _dropKeyAsConstraint(string $table, string $constraintName): string
+    {
+        return "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+                WHERE TABLE_NAME= '" . trim($table, '"') . "'
+                AND CONSTRAINT_NAME = '" . trim($constraintName, '"') . "'";
     }
 }

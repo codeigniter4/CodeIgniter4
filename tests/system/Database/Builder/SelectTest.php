@@ -260,7 +260,7 @@ final class SelectTest extends CIUnitTestCase
         $builder = new BaseBuilder('invoices', $this->db);
 
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('Empty statement is given for the field `Select`');
+        $this->expectExceptionMessage('Empty statement is given for the field "Select"');
 
         $builder->selectSum('');
     }
@@ -281,7 +281,7 @@ final class SelectTest extends CIUnitTestCase
         $builder = new BaseBuilder('users', $this->db);
 
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('You must provide a valid column name not separated by comma.');
+        $this->expectExceptionMessage('You must provide a valid "column name not separated by comma".');
 
         $builder->selectSum('name,role');
     }

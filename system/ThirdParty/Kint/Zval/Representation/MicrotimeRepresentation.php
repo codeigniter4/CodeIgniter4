@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -42,12 +44,12 @@ class MicrotimeRepresentation extends Representation
     public $mem_peak_real = 0;
     public $hints = ['microtime'];
 
-    public function __construct($seconds, $microseconds, $group, $lap = null, $total = null, $i = 0)
+    public function __construct(int $seconds, int $microseconds, int $group, ?float $lap = null, ?float $total = null, int $i = 0)
     {
         parent::__construct('Microtime');
 
-        $this->seconds = (int) $seconds;
-        $this->microseconds = (int) $microseconds;
+        $this->seconds = $seconds;
+        $this->microseconds = $microseconds;
 
         $this->group = $group;
         $this->lap = $lap;
@@ -64,8 +66,8 @@ class MicrotimeRepresentation extends Representation
         $this->mem_peak_real = \memory_get_peak_usage(true);
     }
 
-    public function getDateTime()
+    public function getDateTime(): ?DateTime
     {
-        return DateTime::createFromFormat('U u', $this->seconds.' '.\str_pad($this->microseconds, 6, '0', STR_PAD_LEFT));
+        return DateTime::createFromFormat('U u', $this->seconds.' '.\str_pad((string) $this->microseconds, 6, '0', STR_PAD_LEFT)) ?: null;
     }
 }

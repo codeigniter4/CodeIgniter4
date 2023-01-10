@@ -14,7 +14,7 @@ namespace CodeIgniter\Test;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Events\Events;
 use CodeIgniter\HTTP\Response;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+
 use Config\App;
 
 /**
@@ -24,10 +24,7 @@ use Config\App;
  */
 final class TestCaseTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource|null
-     */
-    private $stream_filter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
@@ -50,6 +47,12 @@ final class TestCaseTest extends CIUnitTestCase
         $this->assertLogged('error', 'Some variable did not contain a value.');
     }
 
+    public function testAssertLogContains()
+    {
+        log_message('error', 'Some variable did not contain a value.');
+        $this->assertLogContains('error', 'variable did not');
+    }
+
     public function testEventTriggering()
     {
         Events::on('foo', static function ($arg) use (&$result) {
@@ -63,12 +66,9 @@ final class TestCaseTest extends CIUnitTestCase
 
     public function testStreamFilter()
     {
-        CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
         CLI::write('first.');
-        $expected = "\nfirst.\n";
-        $this->assertSame($expected, CITestStreamFilter::$buffer);
-        stream_filter_remove($this->stream_filter);
+        $expected = PHP_EOL . 'first.' . PHP_EOL;
+        $this->assertSame($expected, $this->getStreamFilterBuffer());
     }
 
     /**

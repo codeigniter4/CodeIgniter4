@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -28,6 +30,7 @@ namespace Kint\Parser;
 use DOMNamedNodeMap;
 use DOMNode;
 use DOMNodeList;
+use InvalidArgumentException;
 use Kint\Zval\BlobValue;
 use Kint\Zval\InstanceValue;
 use Kint\Zval\Representation\Representation;
@@ -38,7 +41,7 @@ use Kint\Zval\Value;
  * way to see inside the DOMNode without print_r, and the only way to see mixed
  * text and node inside XML (SimpleXMLElement will strip out the text).
  */
-class DOMDocumentPlugin extends Plugin
+class DOMDocumentPlugin extends AbstractPlugin
 {
     /**
      * List of properties to skip parsing.
@@ -80,33 +83,44 @@ class DOMDocumentPlugin extends Plugin
      */
     public static $verbose = false;
 
-    public function getTypes()
+    public function getTypes(): array
     {
         return ['object'];
     }
 
-    public function getTriggers()
+    public function getTriggers(): int
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, $trigger)
+    public function parse(&$var, Value &$o, int $trigger): void
     {
         if (!$o instanceof InstanceValue) {
             return;
         }
 
         if ($var instanceof DOMNamedNodeMap || $var instanceof DOMNodeList) {
-            return $this->parseList($var, $o, $trigger);
+            $this->parseList($var, $o, $trigger);
+
+            return;
         }
 
         if ($var instanceof DOMNode) {
-            return $this->parseNode($var, $o);
+            $this->parseNode($var, $o);
+
+            return;
         }
     }
 
-    protected function parseList(&$var, InstanceValue &$o, $trigger)
+    /**
+     * @param DOMNamedNodeMap|DOMNodeList &$var
+     */
+    protected function parseList($var, InstanceValue &$o, int $trigger): void
     {
+        if (!$var instanceof DOMNamedNodeMap && !$var instanceof DOMNodeList) {
+            return;
+        }
+
         // Recursion should never happen, should always be stopped at the parent
         // DOMNode. Depth limit on the other hand we're going to skip since
         // that would show an empty iterator and rather useless. Let the depth
@@ -160,7 +174,7 @@ class DOMDocumentPlugin extends Plugin
                     $base_obj->access_path .= ', ';
                     $base_obj->access_path .= \var_export($item->name, true);
                     $base_obj->access_path .= ')';
-                } elseif ($var instanceof DOMNodeList) {
+                } else { // DOMNodeList
                     $base_obj->access_path = $o->access_path.'->item('.\var_export($key, true).')';
                 }
             }
@@ -169,7 +183,10 @@ class DOMDocumentPlugin extends Plugin
         }
     }
 
-    protected function parseNode(&$var, InstanceValue &$o)
+    /**
+     * @psalm-param-out Value &$o
+     */
+    protected function parseNode(DOMNode $var, InstanceValue &$o): void
     {
         // Fill the properties
         // They can't be enumerated through reflection or casting,
@@ -272,7 +289,7 @@ class DOMDocumentPlugin extends Plugin
         }
     }
 
-    protected function parseProperty(InstanceValue $o, $prop, &$var)
+    protected function parseProperty(InstanceValue $o, string $prop, DOMNode &$var): Value
     {
         // Duplicating (And slightly optimizing) the Parser::parseObject() code here
         $base_obj = new Value();
@@ -315,14 +332,14 @@ class DOMDocumentPlugin extends Plugin
         return $base_obj;
     }
 
-    protected static function textualNodeToString(InstanceValue $o)
+    protected static function textualNodeToString(InstanceValue $o): Value
     {
         if (empty($o->value) || empty($o->value->contents) || empty($o->classname)) {
-            return;
+            throw new InvalidArgumentException('Invalid DOMNode passed to DOMDocumentPlugin::textualNodeToString');
         }
 
         if (!\in_array($o->classname, ['DOMText', 'DOMAttr', 'DOMComment'], true)) {
-            return;
+            throw new InvalidArgumentException('Invalid DOMNode passed to DOMDocumentPlugin::textualNodeToString');
         }
 
         foreach ($o->value->contents as $property) {
@@ -333,5 +350,7 @@ class DOMDocumentPlugin extends Plugin
                 return $ret;
             }
         }
+
+        throw new InvalidArgumentException('Invalid DOMNode passed to DOMDocumentPlugin::textualNodeToString');
     }
 }

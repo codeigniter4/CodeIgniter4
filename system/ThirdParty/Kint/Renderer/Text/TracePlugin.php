@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -28,9 +30,9 @@ namespace Kint\Renderer\Text;
 use Kint\Zval\MethodValue;
 use Kint\Zval\Value;
 
-class TracePlugin extends Plugin
+class TracePlugin extends AbstractPlugin
 {
-    public function render(Value $o)
+    public function render(Value $o): string
     {
         $out = '';
 
@@ -67,8 +69,10 @@ class TracePlugin extends Plugin
             if (\is_string($frame->trace['function'])) {
                 $framedesc .= $this->renderer->escape($frame->trace['function']).'(...)';
             } elseif ($frame->trace['function'] instanceof MethodValue) {
-                $framedesc .= $this->renderer->escape($frame->trace['function']->getName());
-                $framedesc .= '('.$this->renderer->escape($frame->trace['function']->getParams()).')';
+                if (null !== ($s = $frame->trace['function']->getName())) {
+                    $framedesc .= $this->renderer->escape($s);
+                    $framedesc .= '('.$this->renderer->escape($frame->trace['function']->getParams()).')';
+                }
             }
 
             $out .= $this->renderer->colorType($framedesc).PHP_EOL.PHP_EOL;

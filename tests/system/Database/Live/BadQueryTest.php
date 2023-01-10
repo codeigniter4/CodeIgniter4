@@ -11,9 +11,9 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use Exception;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
 /**
@@ -32,8 +32,7 @@ final class BadQueryTest extends CIUnitTestCase
     {
         $this->enableDBDebug();
 
-        // expect an exception, class and message varies by DBMS
-        $this->expectException(Exception::class);
+        $this->expectException(DatabaseException::class);
 
         $this->db->query('SELECT * FROM table_does_not_exist');
 

@@ -12,7 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @group DatabaseLive
@@ -21,37 +21,23 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class DatabaseCommandsTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
-        parent::setUp();
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
         command('migrate:rollback');
-        stream_filter_remove($this->streamFilter);
 
         parent::tearDown();
     }
 
     protected function getBuffer(): string
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     protected function clearBuffer(): void
     {
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
     }
 
     public function testMigrate()

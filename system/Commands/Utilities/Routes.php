@@ -66,16 +66,20 @@ class Routes extends BaseCommand
     /**
      * the Command's Options
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $options = [];
+    protected $options = [
+        '-h' => 'Sort by Handler.',
+    ];
 
     /**
      * Displays the help for the spark cli script itself.
      */
     public function run(array $params)
     {
-        $collection = Services::routes(true);
+        $sortByHandler = array_key_exists('h', $params);
+
+        $collection = Services::routes()->loadRoutes();
         $methods    = [
             'get',
             'head',
@@ -101,10 +105,17 @@ class Routes extends BaseCommand
                     $sampleUri = $uriGenerator->get($route);
                     $filters   = $filterCollector->get($method, $sampleUri);
 
+                    if ($handler instanceof Closure) {
+                        $handler = '(Closure)';
+                    }
+
+                    $routeName = $collection->getRoutesOptions($route)['as'] ?? '»';
+
                     $tbody[] = [
                         strtoupper($method),
                         $route,
-                        is_string($handler) ? $handler : '(Closure)',
+                        $routeName,
+                        $handler,
                         implode(' ', array_map('class_basename', $filters['before'])),
                         implode(' ', array_map('class_basename', $filters['after'])),
                     ];
@@ -149,10 +160,16 @@ class Routes extends BaseCommand
         $thead = [
             'Method',
             'Route',
-            'Handler',
+            'Name',
+            $sortByHandler ? 'Handler ↓' : 'Handler',
             'Before Filters',
             'After Filters',
         ];
+
+        // Sort by Handler.
+        if ($sortByHandler) {
+            usort($tbody, static fn ($handler1, $handler2) => strcmp($handler1[3], $handler2[3]));
+        }
 
         CLI::table($tbody, $thead);
     }
