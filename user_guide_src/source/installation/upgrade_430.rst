@@ -295,9 +295,49 @@ All Changes
 ===========
 
 This is a list of all files in the **project space** that received changes;
-many will be simple comments or formatting that have no effect on the runtime:
+many will be simple comments or formatting that have no effect on the runtime.
+All atomic type properties in ``Config`` classes have been typed:
 
-- app/Config/DocTypes.php
-- app/Config/Exceptions.php
-- app/Config/Routes.php
-- spark
+*   app/Config/App.php
+*   app/Config/Autoload.php
+*   app/Config/CURLRequest.php
+*   app/Config/Cache.php
+*   app/Config/ContentSecurityPolicy.php
+*   app/Config/Cookie.php
+*   app/Config/Database.php
+*   app/Config/DocTypes.php
+*   app/Config/Email.php
+*   app/Config/Encryption.php
+*   app/Config/Exceptions.php
+*   app/Config/Feature.php
+*   app/Config/Filters.php
+*   app/Config/Format.php
+*   app/Config/Generators.php
+*   app/Config/Honeypot.php
+*   app/Config/Images.php
+*   app/Config/Kint.php
+*   app/Config/Logger.php
+*   app/Config/Migrations.php
+*   app/Config/Mimes.php
+*   app/Config/Modules.php
+*   app/Config/Pager.php
+*   app/Config/Paths.php
+*   app/Config/Routes.php
+*   app/Config/Security.php
+*   app/Config/Session.php
+*   app/Config/Toolbar.php
+*   app/Config/UserAgents.php
+*   app/Config/Validation.php
+*   app/Views/errors/html/error_404.php
+*   app/Views/errors/html/error_exception.php
+*   app/Views/errors/html/production.php
+*   app/Views/welcome_message.php
+*   composer.json
+*   env
+*   phpstan-baseline.neon.dist
+*   phpunit.xml.dist
+*   psalm-baseline.xml
+*   psalm.xml
+*   psalm_autoload.php
+*   rector.php
+*   spark
