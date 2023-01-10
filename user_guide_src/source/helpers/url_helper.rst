@@ -20,14 +20,17 @@ The following functions are available:
 
 .. php:function:: site_url([$uri = ''[, $protocol = null[, $altConfig = null]]])
 
-    :param  mixed         $uri: URI string or array of URI segments
+    :param  array|string         $uri: URI string or array of URI segments
     :param  string        $protocol: Protocol, e.g., 'http' or 'https'
     :param  \\Config\\App $altConfig: Alternate configuration to use
     :returns: Site URL
     :rtype:    string
 
-    Returns your site URL, as specified in your config file. The index.php
-    file (or whatever you have set as your site **indexPage** in your config
+    .. note:: Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
+        this returns the URL with the hostname set in it if the current URL matches.
+
+    Returns your site URL, as specified in your config file. The **index.php**
+    file (or whatever you have set as your site ``Config\App::$indexPage`` in your config
     file) will be added to the URL, as will any URI segments you pass to the
     function.
 
@@ -41,7 +44,7 @@ The following functions are available:
     .. literalinclude:: url_helper/001.php
 
     The above example would return something like:
-    *http://example.com/index.php/news/local/123*
+    **http://example.com/index.php/news/local/123**
 
     Here is an example of segments passed as an array:
 
@@ -53,17 +56,20 @@ The following functions are available:
 
 .. php:function:: base_url([$uri = ''[, $protocol = null]])
 
-    :param  mixed   $uri: URI string or array of URI segments
+    :param  array|string   $uri: URI string or array of URI segments
     :param  string  $protocol: Protocol, e.g., 'http' or 'https'
     :returns: Base URL
     :rtype: string
+
+    .. note:: Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
+        this returns the URL with the hostname set in it if the current URL matches.
 
     Returns your site base URL, as specified in your config file. Example:
 
     .. literalinclude:: url_helper/003.php
 
     This function returns the same thing as :php:func:`site_url()`, without
-    the *indexPage* being appended.
+    the ``Config\App::$indexPage`` being appended.
 
     Also like :php:func:`site_url()`, you can supply segments as a string or
     an array. Here is a string example:
@@ -71,7 +77,7 @@ The following functions are available:
     .. literalinclude:: url_helper/004.php
 
     The above example would return something like:
-    *http://example.com/blog/post/123*
+    **http://example.com/blog/post/123**
 
     This is useful because unlike :php:func:`site_url()`, you can supply a
     string to a file, such as an image or stylesheet. For example:
@@ -79,7 +85,7 @@ The following functions are available:
     .. literalinclude:: url_helper/005.php
 
     This would give you something like:
-    *http://example.com/images/icons/edit.png*
+    **http://example.com/images/icons/edit.png**
 
 .. php:function:: current_url([$returnObject = false[, $request = null]])
 
@@ -89,14 +95,18 @@ The following functions are available:
     :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
     Returns the full URL (including segments) of the page being currently viewed.
+
     However for security reasons, it is created based on the ``Config\App`` settings,
     and not intended to match the browser URL.
+
+    Since v4.3.0, if you set ``Config\App::$allowedHostnames``,
+    this returns the URL with the hostname set in it if the current URL matches.
 
     .. note:: Calling this function is the same as doing this:
 
         .. literalinclude:: url_helper/006.php
 
-.. important:: Prior to v4.1.2, this function had a bug causing it to ignore the configuration on ``App::$indexPage``.
+    .. important:: Prior to v4.1.2, this function had a bug causing it to ignore the configuration on ``Config\App::$indexPage``.
 
 .. php:function:: previous_url([$returnObject = false])
 

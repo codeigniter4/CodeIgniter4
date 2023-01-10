@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
@@ -77,5 +78,23 @@ final class EscapeTest extends CIUnitTestCase
         } else {
             $this->expectNotToPerformAssertions();
         }
+    }
+
+    public function testEscapeStringArray()
+    {
+        $stringArray = [' A simple string ', new RawSql('CURRENT_TIMESTAMP()'), false, null];
+
+        $escapedString = $this->db->escape($stringArray);
+
+        $this->assertSame("' A simple string '", $escapedString[0]);
+        $this->assertSame('CURRENT_TIMESTAMP()', $escapedString[1]);
+
+        if ($this->db->DBDriver === 'Postgre') {
+            $this->assertSame('FALSE', $escapedString[2]);
+        } else {
+            $this->assertSame(0, $escapedString[2]);
+        }
+
+        $this->assertSame('NULL', $escapedString[3]);
     }
 }

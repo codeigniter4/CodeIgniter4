@@ -83,7 +83,12 @@ class Negotiate
      */
     public function charset(array $supported): string
     {
-        $match = $this->getBestMatch($supported, $this->request->getHeaderLine('accept-charset'), false, true);
+        $match = $this->getBestMatch(
+            $supported,
+            $this->request->getHeaderLine('accept-charset'),
+            false,
+            true
+        );
 
         // If no charset is shown as a match, ignore the directive
         // as allowed by the RFC, and tell it a default value.
@@ -141,8 +146,13 @@ class Negotiate
      *
      * @return string Best match
      */
-    protected function getBestMatch(array $supported, ?string $header = null, bool $enforceTypes = false, bool $strictMatch = false, bool $matchLocales = false): string
-    {
+    protected function getBestMatch(
+        array $supported,
+        ?string $header = null,
+        bool $enforceTypes = false,
+        bool $strictMatch = false,
+        bool $matchLocales = false
+    ): string {
         if (empty($supported)) {
             throw HTTPException::forEmptySupportedNegotiations();
         }

@@ -13,6 +13,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
@@ -21,10 +22,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class GenerateKeyTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     private string $envPath;
     private string $backupEnvPath;
@@ -32,10 +30,6 @@ final class GenerateKeyTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         $this->envPath       = ROOTPATH . '.env';
         $this->backupEnvPath = ROOTPATH . '.env.backup';
@@ -49,8 +43,6 @@ final class GenerateKeyTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
         if (is_file($this->envPath)) {
             unlink($this->envPath);
         }
@@ -67,7 +59,7 @@ final class GenerateKeyTest extends CIUnitTestCase
      */
     protected function getBuffer(): string
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     protected function resetEnvironment()

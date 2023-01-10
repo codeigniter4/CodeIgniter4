@@ -156,7 +156,7 @@ final class LanguageTest extends CIUnitTestCase
         $this->lang = new Language('en');
         $this->assertSame('These are not the droids you are looking for', $this->lang->getLine('More.strongForce', []));
         $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
-        $this->assertSame('Could not move file {0} to {1} ({2}).', $this->lang->getLine('Files.cannotMove', []));
+        $this->assertSame('Could not move file "{0}" to "{1}". Reason: {2}', $this->lang->getLine('Files.cannotMove', []));
         $this->assertSame('I have a very bad feeling about this', $this->lang->getLine('More.cannotMove', []));
     }
 
@@ -208,7 +208,7 @@ final class LanguageTest extends CIUnitTestCase
     {
         // this should load the replacement bundle of messages
         $message = lang('Core.missingExtension', [], 'en');
-        $this->assertSame('The framework needs the following extension(s) installed and loaded: {0}.', $message);
+        $this->assertSame('The framework needs the following extension(s) installed and loaded: "{0}".', $message);
         // and we should have our new message too
         $this->assertSame('billions and billions', lang('Core.bazillion', [], 'en'));
     }

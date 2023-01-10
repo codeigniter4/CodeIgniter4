@@ -220,6 +220,24 @@ a simple view:
 
 .. literalinclude:: routing/020.php
 
+.. _view-routes:
+
+Views
+=====
+
+.. versionadded:: 4.3.0
+
+If you just want to render a view out that has no logic associated with it, you can use the ``view()`` method.
+This is always treated as GET request.
+This method accepts the name of the view to load as the second parameter.
+
+.. literalinclude:: routing/065.php
+
+If you use placeholders within your route, you can access them within the view in a special variable, ``$segments``.
+They are available as an array, indexed in the order they appear in the route.
+
+.. literalinclude:: routing/066.php
+
 .. _redirecting-routes:
 
 Redirecting Routes
@@ -364,6 +382,9 @@ available from the command line:
 .. warning:: If you enable :ref:`auto-routing-legacy` and place the command file in **app/Controllers**,
     anyone could access the command with the help of Auto Routing (Legacy) via HTTP.
 
+.. note:: It is recommended to use Spark Commands instead of CLI routes.
+    See the :doc:`../cli/spark_commands` page for detailed information.
+
 Global Options
 ==============
 
@@ -482,7 +503,7 @@ Routes are registered in the routing table in the order in which they are define
 
 .. note:: If a route (the URI path) is defined more than once with different handlers, only the first defined route is registered.
 
-You can check registered routes in the routing table by running the :ref:`spark routes <spark-routes>` command.
+You can check registered routes in the routing table by running the :ref:`spark routes <routing-spark-routes>` command.
 
 Changing Route Priority
 =======================
@@ -755,7 +776,7 @@ Confirming Routes
 
 CodeIgniter has the following :doc:`command </cli/spark_commands>` to display all routes.
 
-.. _spark-routes:
+.. _routing-spark-routes:
 
 routes
 ======
@@ -768,36 +789,64 @@ The output is like the following:
 
 .. code-block:: none
 
-    +--------+------------------+------------------------------------------+----------------+-----------------------+
-    | Method | Route            | Handler                                  | Before Filters | After Filters         |
-    +--------+------------------+------------------------------------------+----------------+-----------------------+
-    | GET    | /                | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
-    | GET    | feed             | (Closure)                                | invalidchars   | secureheaders toolbar |
-    | CLI    | ci(.*)           | \CodeIgniter\CLI\CommandRunner::index/$1 |                |                       |
-    | auto   | /                | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
-    | auto   | home             | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
-    | auto   | home/index[/...] | \App\Controllers\Home::index             | invalidchars   | secureheaders toolbar |
-    +--------+------------------+------------------------------------------+----------------+-----------------------+
+    +---------+---------+---------------+-------------------------------+----------------+---------------+
+    | Method  | Route   | Name          | Handler                       | Before Filters | After Filters |
+    +---------+---------+---------------+-------------------------------+----------------+---------------+
+    | GET     | /       | »             | \App\Controllers\Home::index  |                | toolbar       |
+    | GET     | feed    | »             | (Closure)                     |                | toolbar       |
+    +---------+---------+---------------+-------------------------------+----------------+---------------+
 
-The *Method* column shows the HTTP method that the route is listening for. ``auto`` means that the route is discovered by Auto Routing (Legacy), so it is not defined in **app/Config/Routes.php**.
+The *Method* column shows the HTTP method that the route is listening for.
 
-The *Route* column shows the URI path to match. The route of a defined route is expressed as a regular expression.
-But ``[/...]`` in the route of an auto route is indicates any number of segments.
+The *Route* column shows the route (URI path) to match. The route of a defined route is expressed as a regular expression.
+
+Since v4.3.0, the *Name* column shows the route name. ``»`` indicates the name is the same as the route.
+
+.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. If you want to check filters for a route, you can use :ref:`spark filter:check <spark-filter-check>` command.
+
+Auto Routing (Improved)
+-----------------------
 
 When you use Auto Routing (Improved), the output is like the following:
 
 .. code-block:: none
 
-    +-----------+-------------------------+------------------------------------------+----------------+---------------+
-    | Method    | Route                   | Handler                                  | Before Filters | After Filters |
-    +-----------+-------------------------+------------------------------------------+----------------+---------------+
-    | CLI       | ci(.*)                  | \CodeIgniter\CLI\CommandRunner::index/$1 |                |               |
-    | GET(auto) | product/list/../..[/..] | \App\Controllers\Product::getList        |                | toolbar       |
-    +-----------+-------------------------+------------------------------------------+----------------+---------------+
+    +-----------+-------------------------+---------------+-----------------------------------+----------------+---------------+
+    | Method    | Route                   | Name          | Handler                           | Before Filters | After Filters |
+    +-----------+-------------------------+---------------+-----------------------------------+----------------+---------------+
+    | GET(auto) | product/list/../..[/..] |               | \App\Controllers\Product::getList |                | toolbar       |
+    +-----------+-------------------------+---------------+-----------------------------------+----------------+---------------+
 
-The *Method* will be like ``GET(auto)``. ``/..`` in the *Route* column indicates one segment.
-``[/..]`` indicates it is optional.
+The *Method* will be like ``GET(auto)``.
+
+``/..`` in the *Route* column indicates one segment. ``[/..]`` indicates it is optional.
+
+Auto Routing (Legacy)
+---------------------
+
+When you use Auto Routing (Legacy), the output is like the following:
+
+.. code-block:: none
+
+    +--------+--------------------+---------------+-----------------------------------+----------------+---------------+
+    | Method | Route              | Name          | Handler                           | Before Filters | After Filters |
+    +--------+--------------------+---------------+-----------------------------------+----------------+---------------+
+    | auto   | product/list[/...] |               | \App\Controllers\Product::getList |                | toolbar       |
+    +--------+--------------------+---------------+-----------------------------------+----------------+---------------+
+
+The *Method* will be ``auto``.
+
+``[/...]`` in the *Route* column indicates any number of segments.
 
 .. note:: When auto-routing is enabled, if you have the route ``home``, it can be also accessd by ``Home``, or maybe by ``hOme``, ``hoMe``, ``HOME``, etc. But the command shows only ``home``.
 
-.. important:: The system is not perfect. If you use Custom Placeholders, *Filters* might not be correct. But the filters defined in **app/Config/Routes.php** are always displayed correctly.
+.. _routing-spark-routes-sort-by-handler:
+
+Sort by Handler
+---------------
+
+.. versionadded:: 4.3.0
+
+You can sort the routes by *Handler*::
+
+    > php spark routes -h

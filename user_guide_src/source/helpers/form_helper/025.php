@@ -9,4 +9,4 @@ $data = [
 ];
 
 echo form_checkbox($data);
-// Would produce: <input type="checkbox" name="newsletter" id="newsletter" value="accept" checked="checked" style="margin:10px" />
+// Would produce: <input type="checkbox" name="newsletter" id="newsletter" value="accept" checked="checked" style="margin:10px">

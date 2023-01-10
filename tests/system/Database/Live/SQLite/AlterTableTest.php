@@ -70,7 +70,7 @@ final class AlterTableTest extends CIUnitTestCase
     public function testFromTableThrowsOnNoTable()
     {
         $this->expectException(DataException::class);
-        $this->expectExceptionMessage('Table `foo` was not found in the current database.');
+        $this->expectExceptionMessage('Table "foo" was not found in the current database.');
 
         $this->table->fromTable('foo');
     }
@@ -106,10 +106,10 @@ final class AlterTableTest extends CIUnitTestCase
         $this->assertCount(3, $keys);
         $this->assertArrayHasKey('foo_name', $keys);
         $this->assertSame(['fields' => ['name'], 'type' => 'index'], $keys['foo_name']);
-        $this->assertArrayHasKey('id', $keys);
-        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
-        $this->assertArrayHasKey('id', $keys);
-        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['id']);
+        $this->assertArrayHasKey('foo_email', $keys);
+        $this->assertSame(['fields' => ['email'], 'type' => 'unique'], $keys['foo_email']);
+        $this->assertArrayHasKey('primary', $keys);
+        $this->assertSame(['fields' => ['id'], 'type' => 'primary'], $keys['primary']);
     }
 
     public function testDropColumnSuccess()
@@ -220,11 +220,11 @@ final class AlterTableTest extends CIUnitTestCase
         $this->createTable('aliens');
 
         $keys = $this->db->getForeignKeyData('aliens');
-        $this->assertSame('key_id to aliens_fk.id', $keys[0]->constraint_name);
+        $this->assertSame($this->db->DBPrefix . 'aliens_key_id_foreign', $keys[$this->db->DBPrefix . 'aliens_key_id_foreign']->constraint_name);
 
         $result = $this->table
             ->fromTable('aliens')
-            ->dropForeignKey('key_id')
+            ->dropForeignKey('aliens_key_id_foreign')
             ->run();
 
         $this->assertTrue($result);

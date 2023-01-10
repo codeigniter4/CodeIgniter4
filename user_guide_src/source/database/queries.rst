@@ -101,12 +101,14 @@ It's a very good security practice to escape your data before submitting
 it into your database. CodeIgniter has three methods that help you do
 this:
 
+.. _database-queries-db_escape:
+
 1. $db->escape()
 ================
 
-This function determines the data type so
-that it can escape only string data. It also automatically adds
-single quotes around the data so you don't have to:
+This function determines the data type so that it can escape only string
+data. It also automatically adds single quotes around the data so you
+don't have to:
 
 .. literalinclude:: queries/009.php
 
@@ -225,12 +227,15 @@ query:
 
 .. literalinclude:: queries/019.php
 
-This returns a standard :doc:`result set </database/results>`.
+For queries of type "write" it returns true or false, indicating the success or failure of the query.
+For queries of type "read" it returns a standard :doc:`result set </database/results>`.
 
 Other Methods
 =============
 
 In addition to these two primary methods, the prepared query object also has the following methods:
+
+.. _database-queries-stmt-close:
 
 close()
 -------
@@ -239,6 +244,8 @@ While PHP does a pretty good job of closing all open statements with the databas
 close out the prepared statement when you're done with it:
 
 .. literalinclude:: queries/020.php
+
+.. note:: Since v4.3.0, the ``close()`` method deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8.
 
 getQueryString()
 ----------------

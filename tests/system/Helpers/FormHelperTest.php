@@ -26,11 +26,11 @@ final class FormHelperTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
+        $this->resetServices();
+
         parent::setUp();
 
         helper('form');
-
-        $this->resetServices();
     }
 
     private function setRequest(): void
@@ -56,7 +56,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
 
                 EOH;
         } else {
@@ -101,7 +101,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
 
                 EOH;
         } else {
@@ -128,7 +128,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="post" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
 
                 EOH;
         } else {
@@ -155,15 +155,15 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
-                <input type="hidden" name="foo" value="bar" />
-                <input type="hidden" name="{$Name}" value="{$Value}" />
+                <input type="hidden" name="foo" value="bar">
+                <input type="hidden" name="{$Name}" value="{$Value}">
 
                 EOH;
         } else {
             $expected = <<<'EOH'
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" accept-charset="utf-8">
 
-                <input type="hidden" name="foo" value="bar" />
+                <input type="hidden" name="foo" value="bar">
 
                 EOH;
         }
@@ -189,7 +189,7 @@ final class FormHelperTest extends CIUnitTestCase
             $Name     = csrf_token();
             $expected = <<<EOH
                 <form action="http://example.com/index.php/foo/bar" name="form" id="form" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
-                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;" />
+                <input type="hidden" name="{$Name}" value="{$Value}" style="display:none;">
 
                 EOH;
         } else {
@@ -214,7 +214,7 @@ final class FormHelperTest extends CIUnitTestCase
     {
         $expected = <<<EOH
 
-            <input type="hidden" name="username" value="johndoe" />\n
+            <input type="hidden" name="username" value="johndoe">\n
             EOH;
         $this->assertSame($expected, form_hidden('username', 'johndoe'));
     }
@@ -226,7 +226,7 @@ final class FormHelperTest extends CIUnitTestCase
         ];
         $expected = <<<'EOH'
 
-            <input type="hidden" name="foo" value="bar" />
+            <input type="hidden" name="foo" value="bar">
 
             EOH;
         $this->assertSame($expected, form_hidden($data, null));
@@ -239,7 +239,7 @@ final class FormHelperTest extends CIUnitTestCase
         ];
         $expected = <<<'EOH'
 
-            <input type="hidden" name="name[foo]" value="bar" />
+            <input type="hidden" name="name[foo]" value="bar">
 
             EOH;
         $this->assertSame($expected, form_hidden('name', $data));
@@ -248,7 +248,7 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormInput()
     {
         $expected = <<<EOH
-            <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />\n
+            <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%">\n
             EOH;
         $data = [
             'name'      => 'username',
@@ -261,10 +261,33 @@ final class FormHelperTest extends CIUnitTestCase
         $this->assertSame($expected, form_input($data));
     }
 
+    public function testFormInputXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $expected = <<<EOH
+            <input type="text" name="username" value="johndoe" id="username" maxlength="100" size="50" style="width:50%" />\n
+            EOH;
+        $data = [
+            'name'      => 'username',
+            'id'        => 'username',
+            'value'     => 'johndoe',
+            'maxlength' => '100',
+            'size'      => '50',
+            'style'     => 'width:50%',
+        ];
+        $this->assertSame($expected, form_input($data));
+
+        // Reset
+        $doctypes->html5 = $default;
+    }
+
     public function testFormInputWithExtra()
     {
         $expected = <<<EOH
-            <input type="email" name="identity" value="" id="identity" class="form-control form-control-lg" />\n
+            <input type="email" name="identity" value="" id="identity" class="form-control form-control-lg">\n
             EOH;
         $data = [
             'id'   => 'identity',
@@ -280,7 +303,7 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormPassword()
     {
         $expected = <<<EOH
-            <input type="password" name="password" value="" />\n
+            <input type="password" name="password" value="">\n
             EOH;
         $this->assertSame($expected, form_password('password'));
     }
@@ -288,9 +311,24 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormUpload()
     {
         $expected = <<<EOH
+            <input type="file" name="attachment">\n
+            EOH;
+        $this->assertSame($expected, form_upload('attachment'));
+    }
+
+    public function testFormUploadXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $expected = <<<EOH
             <input type="file" name="attachment" />\n
             EOH;
         $this->assertSame($expected, form_upload('attachment'));
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testFormTextarea()
@@ -612,9 +650,24 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormCheckbox()
     {
         $expected = <<<EOH
+            <input type="checkbox" name="newsletter" value="accept" checked="checked">\n
+            EOH;
+        $this->assertSame($expected, form_checkbox('newsletter', 'accept', true));
+    }
+
+    public function testFormCheckboxXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $expected = <<<EOH
             <input type="checkbox" name="newsletter" value="accept" checked="checked" />\n
             EOH;
         $this->assertSame($expected, form_checkbox('newsletter', 'accept', true));
+
+        // Reset
+        $doctypes->html5 = $default;
     }
 
     public function testFormCheckboxArrayData()
@@ -625,7 +678,7 @@ final class FormHelperTest extends CIUnitTestCase
             'checked' => true,
         ];
         $expected = <<<'EOH'
-            <input type="checkbox" name="foo" value="bar" checked="checked" />
+            <input type="checkbox" name="foo" value="bar" checked="checked">
 
             EOH;
         $this->assertSame($expected, form_checkbox($data));
@@ -639,7 +692,7 @@ final class FormHelperTest extends CIUnitTestCase
             'checked' => false,
         ];
         $expected = <<<'EOH'
-            <input type="checkbox" name="foo" value="bar" />
+            <input type="checkbox" name="foo" value="bar">
 
             EOH;
         $this->assertSame($expected, form_checkbox($data));
@@ -648,7 +701,7 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormRadio()
     {
         $expected = <<<EOH
-            <input type="radio" name="newsletter" value="accept" checked="checked" />\n
+            <input type="radio" name="newsletter" value="accept" checked="checked">\n
             EOH;
         $this->assertSame($expected, form_radio('newsletter', 'accept', true));
     }
@@ -656,7 +709,7 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormSubmit()
     {
         $expected = <<<EOH
-            <input type="submit" name="mysubmit" value="Submit Post!" />\n
+            <input type="submit" name="mysubmit" value="Submit Post!">\n
             EOH;
         $this->assertSame($expected, form_submit('mysubmit', 'Submit Post!'));
     }
@@ -683,7 +736,7 @@ final class FormHelperTest extends CIUnitTestCase
     public function testFormReset()
     {
         $expected = <<<EOH
-            <input type="reset" name="myreset" value="Reset" />\n
+            <input type="reset" name="myreset" value="Reset">\n
             EOH;
         $this->assertSame($expected, form_reset('myreset', 'Reset'));
     }
@@ -724,7 +777,7 @@ final class FormHelperTest extends CIUnitTestCase
             'bar1',
         ];
         $expected = <<<'EOH'
-            <input type="text" name="foo" value="bar" list="foo_list" />
+            <input type="text" name="foo" value="bar" list="foo_list">
 
             <datalist id='foo_list'><option value='foo1'>
             <option value='bar1'>
@@ -904,6 +957,43 @@ final class FormHelperTest extends CIUnitTestCase
 
         $this->assertSame(' checked="checked"', set_radio('code', 'alpha', true));
         $this->assertSame('', set_radio('code', 'beta', false));
+    }
+
+    public function testValidationErrorsFromSession()
+    {
+        $_SESSION = ['_ci_validation_errors' => ['foo' => 'bar']];
+
+        $this->assertSame(['foo' => 'bar'], validation_errors());
+
+        $_SESSION = [];
+    }
+
+    public function testValidationErrorsFromValidation()
+    {
+        $validation = Services::validation();
+        $validation->setRule('id', 'ID', 'required')->run([]);
+
+        $this->assertSame(['id' => 'The ID field is required.'], validation_errors());
+    }
+
+    public function testValidationListErrors()
+    {
+        $validation = Services::validation();
+        $validation->setRule('id', 'ID', 'required')->run([]);
+
+        $html = validation_list_errors();
+
+        $this->assertStringContainsString('<li>The ID field is required.</li>', $html);
+    }
+
+    public function testValidationShowError()
+    {
+        $validation = Services::validation();
+        $validation->setRule('id', 'ID', 'required')->run([]);
+
+        $html = validation_show_error('id');
+
+        $this->assertSame('<span class="help-block">The ID field is required.</span>' . "\n", $html);
     }
 
     public function testFormParseFormAttributesTrue()

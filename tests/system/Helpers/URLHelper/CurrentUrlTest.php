@@ -58,8 +58,34 @@ final class CurrentUrlTest extends CIUnitTestCase
 
     public function testCurrentURLReturnsBasicURL()
     {
-        // Since we're on a CLI, we must provide our own URI
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
         $this->config->baseURL = 'http://example.com/public';
+
+        $this->assertSame('http://example.com/public/index.php/', current_url());
+    }
+
+    public function testCurrentURLReturnsAllowedHostname()
+    {
+        $_SERVER['HTTP_HOST']   = 'www.example.jp';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public';
+        $this->config->allowedHostnames = ['www.example.jp'];
+
+        $this->assertSame('http://www.example.jp/public/index.php/', current_url());
+    }
+
+    public function testCurrentURLReturnsBaseURLIfNotAllowedHostname()
+    {
+        $_SERVER['HTTP_HOST']   = 'invalid.example.org';
+        $_SERVER['REQUEST_URI'] = '/public';
+        $_SERVER['SCRIPT_NAME'] = '/public/index.php';
+
+        $this->config->baseURL          = 'http://example.com/public';
+        $this->config->allowedHostnames = ['www.example.jp'];
 
         $this->assertSame('http://example.com/public/index.php/', current_url());
     }

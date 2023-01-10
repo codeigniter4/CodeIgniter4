@@ -18,6 +18,7 @@ use CodeIgniter\I18n\Time;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use DateTime;
+use DateTimeInterface;
 use ReflectionException;
 use Tests\Support\Entity\Cast\CastBase64;
 use Tests\Support\Entity\Cast\CastPassParameters;
@@ -295,6 +296,33 @@ final class EntityTest extends CIUnitTestCase
         $this->assertSame(3, $entity->first);
     }
 
+    public function testCastIntBool()
+    {
+        $entity = new class () extends Entity {
+            protected $casts = [
+                'active' => 'int-bool',
+            ];
+        };
+
+        $entity->setAttributes(['active' => '1']);
+
+        $this->assertTrue($entity->active);
+
+        $entity->setAttributes(['active' => '0']);
+
+        $this->assertFalse($entity->active);
+
+        $entity->active = true;
+
+        $this->assertTrue($entity->active);
+        $this->assertSame(['active' => 1], $entity->toRawArray());
+
+        $entity->active = false;
+
+        $this->assertFalse($entity->active);
+        $this->assertSame(['active' => 0], $entity->toRawArray());
+    }
+
     public function testCastFloat()
     {
         $entity = $this->getCastEntity();
@@ -383,7 +411,7 @@ final class EntityTest extends CIUnitTestCase
 
         $entity->eighth = 'March 12, 2017';
 
-        $this->assertInstanceOf(DateTime::class, $entity->eighth);
+        $this->assertInstanceOf(DateTimeInterface::class, $entity->eighth);
         $this->assertSame('2017-03-12', $entity->eighth->format('Y-m-d'));
     }
 
@@ -592,6 +620,9 @@ final class EntityTest extends CIUnitTestCase
         $entity->tenth = "\xB1\x31";
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONSyntaxError()
     {
         $this->expectException(CastException::class);
@@ -605,6 +636,9 @@ final class EntityTest extends CIUnitTestCase
         }, null, Entity::class))('{ this is bad string');
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONAnotherErrorDepth()
     {
         $this->expectException(CastException::class);
@@ -619,6 +653,9 @@ final class EntityTest extends CIUnitTestCase
         }, null, Entity::class))($string);
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONControlCharCheck()
     {
         $this->expectException(CastException::class);
@@ -633,6 +670,9 @@ final class EntityTest extends CIUnitTestCase
         }, null, Entity::class))($string);
     }
 
+    /**
+     * @psalm-suppress InaccessibleMethod
+     */
     public function testCastAsJSONStateMismatch()
     {
         $this->expectException(CastException::class);

@@ -24,7 +24,7 @@ class Typography
     public $blockElements = 'address|blockquote|div|dl|fieldset|form|h\d|hr|noscript|object|ol|p|pre|script|table|ul';
 
     /**
-     * Elements that should not have <p> and <br /> tags within them.
+     * Elements that should not have <p> and <br> tags within them.
      *
      * @var string
      */
@@ -63,7 +63,7 @@ class Typography
      *
      * This function converts text, making it typographically correct:
      *     - Converts double spaces into paragraphs.
-     *     - Converts single line breaks into <br /> tags
+     *     - Converts single line breaks into <br> tags
      *     - Converts single and double quotes into correctly facing curly quote entities.
      *     - Converts three dots into ellipsis.
      *     - Converts double dashes into em-dashes.
@@ -160,7 +160,7 @@ class Typography
                 $chunks[$i] .= "\n";
             }
 
-            // Convert Newlines into <p> and <br /> tags
+            // Convert Newlines into <p> and <br> tags
             $str .= $this->formatNewLines($chunks[$i]);
         }
 
@@ -275,7 +275,7 @@ class Typography
     /**
      * Format Newlines
      *
-     * Converts newline characters into either <p> tags or <br />
+     * Converts newline characters into either <p> tags or <br>
      */
     protected function formatNewLines(string $str): string
     {
@@ -286,8 +286,9 @@ class Typography
         // Convert two consecutive newlines to paragraphs
         $str = str_replace("\n\n", "</p>\n\n<p>", $str);
 
-        // Convert single spaces to <br /> tags
-        $str = preg_replace("/([^\n])(\n)([^\n])/", '\\1<br />\\2\\3', $str);
+        // Convert single spaces to <br> tags
+        $br  = '<br' . _solidus() . '>';
+        $str = preg_replace("/([^\n])(\n)([^\n])/", '\\1' . $br . '\\2\\3', $str);
 
         // Wrap the whole enchilada in enclosing paragraphs
         if ($str !== "\n") {
@@ -323,7 +324,8 @@ class Typography
         $newstr = '';
 
         for ($ex = explode('pre>', $str), $ct = count($ex), $i = 0; $i < $ct; $i++) {
-            $newstr .= (($i % 2) === 0) ? nl2br($ex[$i]) : $ex[$i];
+            $xhtml = ! (config('DocTypes')->html5 ?? false);
+            $newstr .= (($i % 2) === 0) ? nl2br($ex[$i], $xhtml) : $ex[$i];
 
             if ($ct - 1 !== $i) {
                 $newstr .= 'pre>';

@@ -16,6 +16,9 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\App;
+use Generator;
+use InvalidArgumentException;
+use TypeError;
 
 /**
  * @backupGlobals enabled
@@ -252,13 +255,19 @@ final class IncomingRequestTest extends CIUnitTestCase
         // $_SERVER['HTTP_ACCEPT_CHARSET'] = 'iso-8859-5, unicode-1-1;q=0.8';
         $this->request->setHeader('Accept-Charset', 'iso-8859-5, unicode-1-1;q=0.8');
 
-        $this->assertSame(strtolower($this->request->config->charset), $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2']));
+        $this->assertSame(
+            'utf-8',
+            $this->request->negotiate('charset', ['iso-8859', 'unicode-1-2'])
+        );
     }
 
     public function testNegotiatesMedia()
     {
         $this->request->setHeader('Accept', 'text/plain; q=0.5, text/html, text/x-dvi; q=0.8, text/x-c');
-        $this->assertSame('text/html', $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain']));
+        $this->assertSame(
+            'text/html',
+            $this->request->negotiate('media', ['text/html', 'text/x-c', 'text/x-dvi', 'text/plain'])
+        );
     }
 
     public function testNegotiatesEncoding()
@@ -290,8 +299,13 @@ final class IncomingRequestTest extends CIUnitTestCase
     public function testCanGetAVariableFromJson()
     {
         $jsonObj = [
-            'foo' => 'bar',
-            'baz' => ['fizz' => 'buzz'],
+            'foo'   => 'bar',
+            'baz'   => ['fizz' => 'buzz'],
+            'int'   => 123,
+            'float' => 3.14,
+            'true'  => true,
+            'false' => false,
+            'null'  => null,
         ];
         $json = json_encode($jsonObj);
 
@@ -307,14 +321,24 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertIsObject($jsonVar);
         $this->assertSame('buzz', $jsonVar->fizz);
         $this->assertSame('buzz', $request->getJsonVar('baz.fizz'));
+        $this->assertSame(123, $request->getJsonVar('int'));
+        $this->assertSame(3.14, $request->getJsonVar('float'));
+        $this->assertTrue($request->getJsonVar('true'));
+        $this->assertFalse($request->getJsonVar('false'));
+        $this->assertNull($request->getJsonVar('null'));
     }
 
     public function testGetJsonVarAsArray()
     {
         $jsonObj = [
             'baz' => [
-                'fizz' => 'buzz',
-                'foo'  => 'bar',
+                'fizz'  => 'buzz',
+                'foo'   => 'bar',
+                'int'   => 123,
+                'float' => 3.14,
+                'true'  => true,
+                'false' => false,
+                'null'  => null,
             ],
         ];
         $json = json_encode($jsonObj);
@@ -328,6 +352,11 @@ final class IncomingRequestTest extends CIUnitTestCase
         $this->assertIsArray($jsonVar);
         $this->assertSame('buzz', $jsonVar['fizz']);
         $this->assertSame('bar', $jsonVar['foo']);
+        $this->assertSame(123, $jsonVar['int']);
+        $this->assertSame(3.14, $jsonVar['float']);
+        $this->assertTrue($jsonVar['true']);
+        $this->assertFalse($jsonVar['false']);
+        $this->assertNull($jsonVar['null']);
     }
 
     public function testGetJsonVarCanFilter()
@@ -340,6 +369,59 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
 
         $this->assertFalse($request->getJsonVar('foo', false, FILTER_VALIDATE_INT));
+    }
+
+    public function testGetJsonVarCanFilterArray()
+    {
+        $json = json_encode([
+            'string'      => 'hello123world',
+            'int'         => 123,
+            'float'       => 3.14,
+            'stringFloat' => 'hello3.14world',
+            'array'       => [
+                'string' => 'hello123world',
+                'int'    => 123,
+            ],
+        ]);
+
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), $json, new UserAgent());
+        $request->setHeader('Content-Type', 'application/json');
+
+        $expected = [
+            'string'      => '123',
+            'int'         => 123,
+            'float'       => 3.14,
+            'stringFloat' => '3.14',
+            'array'       => [
+                'string' => '123',
+                'int'    => 123,
+            ],
+        ];
+
+        $this->assertSame(
+            $expected,
+            $request->getJsonVar(null, true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+        );
+
+        $this->assertSame(
+            $expected['array'],
+            $request->getJsonVar('array', true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+        );
+
+        $this->assertSame(
+            ['array' => $expected['array'], 'float' => $expected['float']],
+            $request->getJsonVar(['array', 'float'], true, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION)
+        );
+
+        $result = $request->getJsonVar(['array', 'float'], false, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $this->assertIsObject($result['array']);
+        $this->assertSame(
+            ['array' => $expected['array'], 'float' => $expected['float']],
+            ['array' => json_decode(json_encode($result['array']), true), 'float' => $result['float']],
+        );
     }
 
     public function testGetVarWorksWithJson()
@@ -435,6 +517,161 @@ final class IncomingRequestTest extends CIUnitTestCase
         $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
 
         $this->assertSame($expected, $request->getRawInput());
+    }
+
+    public function provideRawInputVarChecks()
+    {
+        return [
+            [
+                'username=admin001&role=administrator&usepass=0',
+                'username',
+                'admin001',
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
+                ['role', 'usepass'],
+                [
+                    'role'    => 'administrator',
+                    'usepass' => '0',
+                ],
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
+                'not_exists',
+                null,
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0',
+                null,
+                [
+                    'username' => 'admin001',
+                    'role'     => 'administrator',
+                    'usepass'  => '0',
+                ],
+                null,
+                null,
+            ],
+            [
+                '',
+                null,
+                [],
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two',
+                ['username', 'foo'],
+                [
+                    'username' => 'admin001',
+                    'foo'      => ['one', 'two'],
+                ],
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two',
+                'foo.0',
+                'one',
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two&bar[baz]=hello',
+                'bar.baz',
+                'hello',
+                null,
+                null,
+            ],
+            [
+                'username=admin001&role=administrator&usepass=0&foo[]=one&foo[]=two&bar[baz]=hello6.5world',
+                'bar.baz',
+                '6.5',
+                FILTER_SANITIZE_NUMBER_FLOAT,
+                FILTER_FLAG_ALLOW_FRACTION,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideRawInputVarChecks
+     *
+     * @param string $rawstring
+     * @param mixed  $var
+     * @param mixed  $expected
+     * @param mixed  $filter
+     * @param mixed  $flag
+     */
+    public function testCanGrabGetRawInputVar($rawstring, $var, $expected, $filter, $flag)
+    {
+        $config          = new App();
+        $config->baseURL = 'http://example.com/';
+
+        $request = new IncomingRequest($config, new URI(), $rawstring, new UserAgent());
+
+        $this->assertSame($expected, $request->getRawInputVar($var, $filter, $flag));
+    }
+
+    /**
+     * @dataProvider provideIsHTTPMethods
+     */
+    public function testIsHTTPMethodLowerCase(string $value)
+    {
+        $request = $this->request->withMethod($value);
+
+        $this->assertTrue($request->is(strtolower($value)));
+    }
+
+    public function provideIsHTTPMethods(): Generator
+    {
+        yield from [
+            ['GET'],
+            ['POST'],
+            ['PUT'],
+            ['DELETE'],
+            ['HEAD'],
+            ['PATCH'],
+            ['OPTIONS'],
+        ];
+    }
+
+    /**
+     * @dataProvider provideIsHTTPMethods
+     */
+    public function testIsHTTPMethodUpperCase(string $value)
+    {
+        $request = $this->request->withMethod($value);
+
+        $this->assertTrue($request->is($value));
+    }
+
+    public function testIsInvalidValue()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown type: invalid');
+
+        $request = $this->request->withMethod('GET');
+
+        $request->is('invalid');
+    }
+
+    public function testIsJson()
+    {
+        $request = $this->request->setHeader('Content-Type', 'application/json');
+
+        $this->assertTrue($request->is('json'));
+    }
+
+    public function testIsWithAjax()
+    {
+        $request = $this->request->setHeader('X-Requested-With', 'XMLHttpRequest');
+
+        $this->assertTrue($request->is('ajax'));
     }
 
     public function testIsCLI()
@@ -895,10 +1132,7 @@ final class IncomingRequestTest extends CIUnitTestCase
 
     public function testGetIPAddressThruProxyInvalidConfigString()
     {
-        $this->expectException(ConfigException::class);
-        $this->expectExceptionMessage(
-            'You must set an array with Proxy IP address key and HTTP header name value in Config\App::$proxyIPs.'
-        );
+        $this->expectException(TypeError::class);
 
         $config           = new App();
         $config->proxyIPs = '192.168.5.0/28';

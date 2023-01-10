@@ -56,6 +56,7 @@ final class AutoRouteCollector
                 $tbody[] = [
                     'auto',
                     $item['route'],
+                    '',
                     $item['handler'],
                 ];
             }

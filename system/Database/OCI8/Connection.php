@@ -19,6 +19,8 @@ use stdClass;
 
 /**
  * Connection for OCI8
+ *
+ * @extends BaseConnection<resource, resource>
  */
 class Connection extends BaseConnection
 {
@@ -112,7 +114,7 @@ class Connection extends BaseConnection
     /**
      * Connect to the database.
      *
-     * @return mixed
+     * @return false|resource
      */
     public function connect(bool $persistent = false)
     {
@@ -183,7 +185,7 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return bool
+     * @return false|resource
      */
     protected function execute(string $sql)
     {
@@ -206,7 +208,7 @@ class Connection extends BaseConnection
             log_message('error', (string) $e);
 
             if ($this->DBDebug) {
-                throw $e;
+                throw new DatabaseException($e->getMessage(), $e->getCode(), $e);
             }
         }
 
@@ -383,43 +385,44 @@ class Connection extends BaseConnection
     protected function _foreignKeyData(string $table): array
     {
         $sql = 'SELECT
-                 acc.constraint_name,
-                 acc.table_name,
-                 acc.column_name,
-                 ccu.table_name foreign_table_name,
-                 accu.column_name foreign_column_name
-  FROM all_cons_columns acc
-  JOIN all_constraints ac
-      ON acc.owner = ac.owner
-      AND acc.constraint_name = ac.constraint_name
-  JOIN all_constraints ccu
-      ON ac.r_owner = ccu.owner
-      AND ac.r_constraint_name = ccu.constraint_name
-  JOIN all_cons_columns accu
-      ON accu.constraint_name = ccu.constraint_name
-      AND accu.table_name = ccu.table_name
-  WHERE ac.constraint_type = ' . $this->escape('R') . '
-      AND acc.table_name = ' . $this->escape($table);
+                acc.constraint_name,
+                acc.table_name,
+                acc.column_name,
+                ccu.table_name foreign_table_name,
+                accu.column_name foreign_column_name,
+                ac.delete_rule
+                FROM all_cons_columns acc
+                JOIN all_constraints ac ON acc.owner = ac.owner
+                AND acc.constraint_name = ac.constraint_name
+                JOIN all_constraints ccu ON ac.r_owner = ccu.owner
+                AND ac.r_constraint_name = ccu.constraint_name
+                JOIN all_cons_columns accu ON accu.constraint_name = ccu.constraint_name
+                AND accu.position = acc.position
+                AND accu.table_name = ccu.table_name
+                WHERE ac.constraint_type = ' . $this->escape('R') . '
+                AND acc.table_name = ' . $this->escape($table);
+
         $query = $this->query($sql);
 
         if ($query === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
-        $query = $query->getResultObject();
 
-        $retVal = [];
+        $query   = $query->getResultObject();
+        $indexes = [];
 
         foreach ($query as $row) {
-            $obj                      = new stdClass();
-            $obj->constraint_name     = $row->CONSTRAINT_NAME;
-            $obj->table_name          = $row->TABLE_NAME;
-            $obj->column_name         = $row->COLUMN_NAME;
-            $obj->foreign_table_name  = $row->FOREIGN_TABLE_NAME;
-            $obj->foreign_column_name = $row->FOREIGN_COLUMN_NAME;
-            $retVal[]                 = $obj;
+            $indexes[$row->CONSTRAINT_NAME]['constraint_name']       = $row->CONSTRAINT_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['table_name']            = $row->TABLE_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['column_name'][]         = $row->COLUMN_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['foreign_table_name']    = $row->FOREIGN_TABLE_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['foreign_column_name'][] = $row->FOREIGN_COLUMN_NAME;
+            $indexes[$row->CONSTRAINT_NAME]['on_delete']             = $row->DELETE_RULE;
+            $indexes[$row->CONSTRAINT_NAME]['on_update']             = null;
+            $indexes[$row->CONSTRAINT_NAME]['match']                 = null;
         }
 
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**

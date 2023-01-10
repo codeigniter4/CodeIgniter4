@@ -9,5 +9,5 @@ $data = [
 echo form_input($data);
 /*
  * Would produce:
- * <input type="text" name="username" value="" id="username" required  />
+ * <input type="text" name="username" value="" id="username" required>
  */

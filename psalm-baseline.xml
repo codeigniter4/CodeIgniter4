@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+  <file src="app/Config/Routes.php">
+    <MissingFile occurrences="1">
+      <code>require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'</code>
+    </MissingFile>
+  </file>
+  <file src="system/Cache/Handlers/MemcachedHandler.php">
+    <UndefinedClass occurrences="3">
+      <code>Memcache</code>
+      <code>Memcache</code>
+      <code>Memcache</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="7">
+      <code>$this-&gt;memcached</code>
+      <code>$this-&gt;memcached</code>
+      <code>$this-&gt;memcached</code>
+      <code>$this-&gt;memcached</code>
+      <code>$this-&gt;memcached</code>
+      <code>$this-&gt;memcached</code>
+      <code>Memcache|Memcached</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="system/Commands/Utilities/Routes/AutoRouterImproved/ControllerMethodReader.php">
+    <DuplicateArrayKey occurrences="1">
+      <code>$routeWithoutController</code>
+    </DuplicateArrayKey>
+  </file>
+  <file src="system/Commands/Utilities/Routes/ControllerMethodReader.php">
+    <DuplicateArrayKey occurrences="2">
+      <code>$routeWithoutController</code>
+      <code>$routeWithoutController</code>
+    </DuplicateArrayKey>
+  </file>
+  <file src="system/Database/BasePreparedQuery.php">
+    <InaccessibleProperty occurrences="1">
+      <code>$this-&gt;db-&gt;transStatus</code>
+    </InaccessibleProperty>
+  </file>
+  <file src="system/Database/OCI8/Connection.php">
+    <UndefinedConstant occurrences="5">
+      <code>OCI_COMMIT_ON_SUCCESS</code>
+      <code>OCI_COMMIT_ON_SUCCESS</code>
+      <code>OCI_COMMIT_ON_SUCCESS</code>
+      <code>OCI_NO_AUTO_COMMIT</code>
+      <code>SQLT_CHR</code>
+    </UndefinedConstant>
+  </file>
+  <file src="system/Database/SQLSRV/Connection.php">
+    <UndefinedConstant occurrences="3">
+      <code>SQLSRV_ENC_CHAR</code>
+      <code>SQLSRV_ERR_ERRORS</code>
+      <code>SQLSRV_ERR_ERRORS</code>
+    </UndefinedConstant>
+  </file>
+  <file src="system/Database/SQLSRV/Result.php">
+    <UndefinedConstant occurrences="30">
+      <code>SQLSRV_FETCH_ASSOC</code>
+      <code>SQLSRV_SQLTYPE_BIGINT</code>
+      <code>SQLSRV_SQLTYPE_BIT</code>
+      <code>SQLSRV_SQLTYPE_CHAR</code>
+      <code>SQLSRV_SQLTYPE_DATE</code>
+      <code>SQLSRV_SQLTYPE_DATETIME</code>
+      <code>SQLSRV_SQLTYPE_DATETIME2</code>
+      <code>SQLSRV_SQLTYPE_DATETIMEOFFSET</code>
+      <code>SQLSRV_SQLTYPE_DECIMAL</code>
+      <code>SQLSRV_SQLTYPE_FLOAT</code>
+      <code>SQLSRV_SQLTYPE_IMAGE</code>
+      <code>SQLSRV_SQLTYPE_INT</code>
+      <code>SQLSRV_SQLTYPE_MONEY</code>
+      <code>SQLSRV_SQLTYPE_NCHAR</code>
+      <code>SQLSRV_SQLTYPE_NTEXT</code>
+      <code>SQLSRV_SQLTYPE_NUMERIC</code>
+      <code>SQLSRV_SQLTYPE_NVARCHAR</code>
+      <code>SQLSRV_SQLTYPE_REAL</code>
+      <code>SQLSRV_SQLTYPE_SMALLDATETIME</code>
+      <code>SQLSRV_SQLTYPE_SMALLINT</code>
+      <code>SQLSRV_SQLTYPE_SMALLMONEY</code>
+      <code>SQLSRV_SQLTYPE_TEXT</code>
+      <code>SQLSRV_SQLTYPE_TIME</code>
+      <code>SQLSRV_SQLTYPE_TIMESTAMP</code>
+      <code>SQLSRV_SQLTYPE_TINYINT</code>
+      <code>SQLSRV_SQLTYPE_UDT</code>
+      <code>SQLSRV_SQLTYPE_UNIQUEIDENTIFIER</code>
+      <code>SQLSRV_SQLTYPE_VARBINARY</code>
+      <code>SQLSRV_SQLTYPE_VARCHAR</code>
+      <code>SQLSRV_SQLTYPE_XML</code>
+    </UndefinedConstant>
+  </file>
+  <file src="system/Debug/Toolbar/Views/toolbar.tpl.php">
+    <InaccessibleMethod occurrences="1">
+      <code>renderTimeline</code>
+    </InaccessibleMethod>
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$config</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="system/Email/Email.php">
+    <LoopInvalidation occurrences="1">
+      <code>$timestamp</code>
+    </LoopInvalidation>
+  </file>
+  <file src="system/HTTP/Files/FileCollection.php">
+    <EmptyArrayAccess occurrences="1">
+      <code>$output[$name]</code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="system/Helpers/text_helper.php">
+    <LoopInvalidation occurrences="3">
+      <code>$count</code>
+      <code>$count</code>
+      <code>$count</code>
+    </LoopInvalidation>
+  </file>
+  <file src="system/I18n/TimeTrait.php">
+    <MissingImmutableAnnotation occurrences="3">
+      <code>#[ReturnTypeWillChange]</code>
+      <code>#[ReturnTypeWillChange]</code>
+      <code>#[ReturnTypeWillChange]</code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="tests/_support/Config/Filters.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$filters</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/Config/Routes.php">
+    <UndefinedGlobalVariable occurrences="2">
+      <code>$routes</code>
+      <code>$routes</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/addition.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$value</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/colors.php">
+    <InvalidScope occurrences="1">
+      <code>$this</code>
+    </InvalidScope>
+  </file>
+  <file src="tests/_support/View/Cells/greeting.php">
+    <UndefinedGlobalVariable occurrences="2">
+      <code>$greeting</code>
+      <code>$name</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/lister.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$items</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/multiplier.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$value</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/_support/View/Cells/notice.php">
+    <UndefinedGlobalVariable occurrences="1">
+      <code>$message</code>
+    </UndefinedGlobalVariable>
+  </file>
+  <file src="tests/system/CLI/ConsoleTest.php">
+    <DuplicateArrayKey occurrences="1">
+      <code>$command</code>
+    </DuplicateArrayKey>
+  </file>
+  <file src="tests/system/CommonFunctionsTest.php">
+    <UndefinedClass occurrences="2">
+      <code>'JobModel'</code>
+      <code>UnexsistenceClass</code>
+    </UndefinedClass>
+  </file>
+  <file src="tests/system/Config/FactoriesTest.php">
+    <UndefinedClass occurrences="1">
+      <code>'SomeWidget'</code>
+    </UndefinedClass>
+  </file>
+  <file src="tests/system/Database/BaseConnectionTest.php">
+    <InaccessibleProperty occurrences="2">
+      <code>$db-&gt;username</code>
+      <code>$db-&gt;username</code>
+    </InaccessibleProperty>
+  </file>
+  <file src="tests/system/Database/Live/OCI8/CallStoredProcedureTest.php">
+    <UndefinedConstant occurrences="3">
+      <code>OCI_ASSOC</code>
+      <code>OCI_B_CURSOR</code>
+      <code>OCI_RETURN_NULLS</code>
+    </UndefinedConstant>
+  </file>
+  <file src="tests/system/Entity/EntityTest.php">
+    <EmptyArrayAccess occurrences="1">
+      <code>$current[$key]</code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="tests/system/HTTP/RedirectResponseTest.php">
+    <EmptyArrayAccess occurrences="1">
+      <code>$_SESSION['_ci_old_input']</code>
+    </EmptyArrayAccess>
+  </file>
+  <file src="tests/system/Test/ControllerTestTraitTest.php">
+    <UndefinedClass occurrences="1">
+      <code>NeverHeardOfIt</code>
+    </UndefinedClass>
+  </file>
+</files>

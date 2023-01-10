@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Builder;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Database\Query;
+use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
 
@@ -85,6 +86,21 @@ final class InsertTest extends CIUnitTestCase
 
         $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
         $this->assertSame($expectedBinds, $builder->getBinds());
+    }
+
+    public function testInsertObjectWithRawSql()
+    {
+        $builder = $this->db->table('jobs');
+
+        $insertData = (object) [
+            'id'   => 1,
+            'name' => new RawSql('CONCAT("id", \'Grocery Sales\')'),
+        ];
+        $builder->testMode()->insert($insertData, true);
+
+        $expectedSQL = 'INSERT INTO "jobs" ("id", "name") VALUES (1, CONCAT("id", \'Grocery Sales\'))';
+
+        $this->assertSame($expectedSQL, str_replace("\n", ' ', $builder->getCompiledInsert()));
     }
 
     /**
@@ -251,7 +267,7 @@ final class InsertTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('You must use the "set" method to update an entry.');
+        $this->expectExceptionMessage('insertBatch() has no data.');
         $builder->insertBatch();
     }
 
@@ -260,7 +276,7 @@ final class InsertTest extends CIUnitTestCase
         $builder = $this->db->table('jobs');
 
         $this->expectException(DatabaseException::class);
-        $this->expectExceptionMessage('insertBatch() called with no data');
+        $this->expectExceptionMessage('insertBatch() has no data.');
         $builder->insertBatch([]);
     }
 }

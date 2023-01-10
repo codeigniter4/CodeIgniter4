@@ -13,7 +13,7 @@ namespace CodeIgniter\Commands;
 
 use CodeIgniter\Cache\CacheFactory;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
 
 /**
@@ -23,18 +23,11 @@ use Config\Services;
  */
 final class InfoCacheTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         // Make sure we are testing with the correct handler (override injections)
         Services::injectMock('cache', CacheFactory::getHandler(config('Cache')));
@@ -42,15 +35,13 @@ final class InfoCacheTest extends CIUnitTestCase
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
         // restore default cache handler
         config('Cache')->handler = 'file';
     }
 
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     public function testInfoCacheErrorsOnInvalidHandler()

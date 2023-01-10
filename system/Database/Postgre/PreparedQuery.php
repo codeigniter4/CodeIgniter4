@@ -13,10 +13,15 @@ namespace CodeIgniter\Database\Postgre;
 
 use BadMethodCallException;
 use CodeIgniter\Database\BasePreparedQuery;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use Exception;
+use PgSql\Connection as PgSqlConnection;
+use PgSql\Result as PgSqlResult;
 
 /**
  * Prepared query for Postgre
+ *
+ * @extends BasePreparedQuery<PgSqlConnection, PgSqlResult, PgSqlResult>
  */
 class PreparedQuery extends BasePreparedQuery
 {
@@ -32,7 +37,7 @@ class PreparedQuery extends BasePreparedQuery
      * The result resource from a successful
      * pg_exec. Or false.
      *
-     * @var bool|Result
+     * @var false|PgSqlResult
      */
     protected $result;
 
@@ -46,11 +51,9 @@ class PreparedQuery extends BasePreparedQuery
      * @param array $options Passed to the connection's prepare statement.
      *                       Unused in the MySQLi driver.
      *
-     * @return mixed
-     *
      * @throws Exception
      */
-    public function _prepare(string $sql, array $options = [])
+    public function _prepare(string $sql, array $options = []): PreparedQuery
     {
         $this->name = (string) random_int(1, 10_000_000_000_000_000);
 
@@ -63,6 +66,10 @@ class PreparedQuery extends BasePreparedQuery
         if (! $this->statement = pg_prepare($this->db->connID, $this->name, $sql)) {
             $this->errorCode   = 0;
             $this->errorString = pg_last_error($this->db->connID);
+
+            if ($this->db->DBDebug) {
+                throw new DatabaseException($this->errorString . ' code: ' . $this->errorCode);
+            }
         }
 
         return $this;
@@ -84,13 +91,22 @@ class PreparedQuery extends BasePreparedQuery
     }
 
     /**
-     * Returns the result object for the prepared query.
+     * Returns the result object for the prepared query or false on failure.
      *
-     * @return mixed
+     * @return resource|null
+     * @phpstan-return PgSqlResult|null
      */
     public function _getResult()
     {
         return $this->result;
+    }
+
+    /**
+     * Deallocate prepared statements.
+     */
+    protected function _close(): bool
+    {
+        return pg_query($this->db->connID, 'DEALLOCATE "' . $this->db->escapeIdentifiers($this->name) . '"') !== false;
     }
 
     /**

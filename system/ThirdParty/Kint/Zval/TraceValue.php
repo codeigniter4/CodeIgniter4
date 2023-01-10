@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -29,12 +31,12 @@ class TraceValue extends Value
 {
     public $hints = ['trace'];
 
-    public function getType()
+    public function getType(): string
     {
         return 'Debug Backtrace';
     }
 
-    public function getSize()
+    public function getSize(): ?string
     {
         if (!$this->size) {
             return 'empty';

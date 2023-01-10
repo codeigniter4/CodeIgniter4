@@ -40,6 +40,20 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods:
     which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
     See the :doc:`AJAX Requests </general/ajax>` section on how to avoid this problem.
 
+.. _incomingrequest-is:
+
+is()
+====
+
+    .. versionadded:: 4.3.0
+
+Since v4.3.0, you can use the ``is()`` method. It returns boolean.
+
+.. literalinclude:: incomingrequest/040.php
+
+getMethod()
+===========
+
 You can check the HTTP method that this request represents with the ``getMethod()`` method:
 
 .. literalinclude:: incomingrequest/005.php
@@ -155,6 +169,10 @@ This will retrieve data and convert it to an array. Like this:
 
 .. literalinclude:: incomingrequest/013.php
 
+You can also use ``getRawInputVar()``, to get the specified variable from raw stream and filter it.
+
+.. literalinclude:: incomingrequest/039.php
+
 Filtering Input Data
 ====================
 
@@ -168,7 +186,7 @@ Filtering a POST variable would look like this:
 .. literalinclude:: incomingrequest/014.php
 
 All of the methods mentioned above support the filter type passed in as the second parameter, with the
-exception of ``getJSON()``.
+exception of ``getJSON()`` and ``getRawInput()``.
 
 Retrieving Headers
 ******************

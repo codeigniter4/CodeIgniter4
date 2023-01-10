@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Session\Handlers\Database;
 
+use CodeIgniter\Session\Handlers\DatabaseHandler;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\ReflectionHelper;
@@ -25,8 +26,12 @@ abstract class AbstractHandlerTestCase extends CIUnitTestCase
     use DatabaseTestTrait;
     use ReflectionHelper;
 
-    protected $refresh = true;
-    protected $seed    = CITestSeeder::class;
+    protected $refresh                = true;
+    protected $seed                   = CITestSeeder::class;
+    protected string $sessionDriver   = DatabaseHandler::class;
+    protected string $sessionSavePath = 'ci_sessions';
+    protected string $sessionName     = 'ci_session';
+    protected string $userIpAddress   = '127.0.0.1';
 
     protected function setUp(): void
     {

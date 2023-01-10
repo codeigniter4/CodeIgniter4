@@ -29,6 +29,7 @@ use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsPar
 use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPrivateMethodRector;
+use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\MethodCall\RemoveEmptyMethodCallRector;
 use Rector\EarlyReturn\Rector\Foreach_\ChangeNestedForeachIfsToEarlyContinueRector;
 use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
@@ -90,6 +91,11 @@ return static function (RectorConfig $rectorConfig): void {
         // call on purpose for nothing happen check
         RemoveEmptyMethodCallRector::class => [
             __DIR__ . '/tests',
+        ],
+
+        // check on constant compare
+        UnwrapFutureCompatibleIfPhpVersionRector::class => [
+            __DIR__ . '/system/Autoloader/Autoloader.php',
         ],
 
         // session handlers have the gc() method with underscored parameter `$max_lifetime`

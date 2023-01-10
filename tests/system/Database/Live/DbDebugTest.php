@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Database\Live;
 
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
@@ -29,7 +30,7 @@ final class DbDebugTest extends CIUnitTestCase
     {
         $this->enableDBDebug();
 
-        $this->expectException('Exception');
+        $this->expectException(DatabaseException::class);
 
         $this->db->simpleQuery('SELECT * FROM db_error');
     }

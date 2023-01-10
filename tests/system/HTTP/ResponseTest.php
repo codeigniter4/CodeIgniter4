@@ -34,9 +34,9 @@ final class ResponseTest extends CIUnitTestCase
     {
         $this->server = $_SERVER;
 
-        Services::reset();
-
         parent::setUp();
+
+        $this->resetServices();
     }
 
     protected function tearDown(): void
@@ -163,6 +163,8 @@ final class ResponseTest extends CIUnitTestCase
         $config          = new App();
         $config->baseURL = 'http://example.com/test/';
         Factories::injectMock('config', 'App', $config);
+
+        $this->resetServices();
 
         $response = new Response($config);
         $pager    = Services::pager();

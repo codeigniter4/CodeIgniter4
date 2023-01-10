@@ -30,7 +30,7 @@ Using your database client, connect to your database and run the SQL command bel
         slug VARCHAR(128) NOT NULL,
         body TEXT NOT NULL,
         PRIMARY KEY (id),
-        KEY slug (slug)
+        UNIQUE slug (slug)
     );
 
 Also, add some seed records. For now, we'll just show you the SQL statements needed
@@ -69,7 +69,7 @@ Instead of writing database operations right in the controller, queries
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
-You can read more about it :doc:`here </models/model>`.
+You can read more about it in :doc:`../models/model`.
 
 Open up the **app/Models/** directory and create a new file called
 **NewsModel.php** and add the following code.
@@ -127,7 +127,7 @@ Next, there are two methods, one to view all news items, and one for a specific
 news item.
 
 Next, the :php:func:`model()` function is used to create the **NewsModel** instance.
-This is a helper function. You can read more about it :doc:`here </general/common_functions>`.
+This is a helper function. You can read more about it in :doc:`../general/common_functions`.
 You could also write ``$model = new NewsModel();``, if you don't use it.
 
 You can see that the ``$slug`` variable is passed to the model's
@@ -143,7 +143,7 @@ the views. Modify the ``index()`` method to look like this:
 The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the ``$data['title']``
 element and all data is passed to the views. You now need to create a
-view to render the news items. Create **app/Views/news/overview.php**
+view to render the news items. Create **app/Views/news/index.php**
 and add the next piece of code.
 
 .. literalinclude:: news_section/005.php
@@ -165,6 +165,9 @@ add some code to the controller and create a new view. Go back to the
 ``News`` controller and update the ``view()`` method with the following:
 
 .. literalinclude:: news_section/006.php
+
+Don't forget to add ``use CodeIgniter\Exceptions\PageNotFoundException;`` to import
+the ``PageNotFoundException`` class.
 
 Instead of calling the ``getNews()`` method without a parameter, the
 ``$slug`` variable is passed, so it will return the specific news item.

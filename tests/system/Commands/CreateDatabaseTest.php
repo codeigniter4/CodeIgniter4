@@ -16,7 +16,7 @@ use CodeIgniter\Database\Database as DatabaseFactory;
 use CodeIgniter\Database\OCI8\Connection as OCI8Connection;
 use CodeIgniter\Database\SQLite3\Connection as SQLite3Connection;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 
 /**
@@ -26,22 +26,15 @@ use Config\Database;
  */
 final class CreateDatabaseTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     private BaseConnection $connection;
 
     protected function setUp(): void
     {
+        $this->connection = Database::connect();
+
         parent::setUp();
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-        $this->connection   = Database::connect();
 
         $this->dropDatabase();
     }
@@ -50,14 +43,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
     {
         parent::tearDown();
 
-        stream_filter_remove($this->streamFilter);
-
         $this->dropDatabase();
-    }
-
-    protected function getBuffer()
-    {
-        return CITestStreamFilter::$buffer;
     }
 
     private function dropDatabase(): void
@@ -74,6 +60,11 @@ final class CreateDatabaseTest extends CIUnitTestCase
                 Database::forge()->dropDatabase('foobar');
             }
         }
+    }
+
+    protected function getBuffer()
+    {
+        return $this->getStreamFilterBuffer();
     }
 
     public function testCreateDatabase()
@@ -93,7 +84,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         }
 
         command('db:create foobar');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('db:create foobar --ext db');
         $this->assertStringContainsString('already exists.', $this->getBuffer());
@@ -106,7 +97,7 @@ final class CreateDatabaseTest extends CIUnitTestCase
         }
 
         command('db:create foobar');
-        CITestStreamFilter::$buffer = '';
+        $this->resetStreamFilterBuffer();
 
         command('db:create foobar');
         $this->assertStringContainsString('Unable to create the specified database.', $this->getBuffer());

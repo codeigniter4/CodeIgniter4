@@ -19,6 +19,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\ReflectionHelper;
 use Config\Exceptions as ExceptionsConfig;
 use Config\Services;
+use ErrorException;
 use RuntimeException;
 
 /**
@@ -32,9 +33,69 @@ final class ExceptionsTest extends CIUnitTestCase
 
     private \CodeIgniter\Debug\Exceptions $exception;
 
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        unset($_SERVER['CODEIGNITER_SCREAM_DEPRECATIONS']);
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        $_SERVER['CODEIGNITER_SCREAM_DEPRECATIONS'] = '1';
+    }
+
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->exception = new Exceptions(new ExceptionsConfig(), Services::request(), Services::response());
+    }
+
+    /**
+     * @requires PHP >= 8.1
+     */
+    public function testDeprecationsOnPhp81DoNotThrow(): void
+    {
+        $config = new ExceptionsConfig();
+
+        $config->logDeprecations     = true;
+        $config->deprecationLogLevel = 'error';
+
+        $this->exception = new Exceptions($config, Services::request(), Services::response());
+        $this->exception->initialize();
+
+        // this is only needed for IDEs not to complain that strlen does not accept explicit null
+        $maybeNull = PHP_VERSION_ID >= 80100 ? null : 'random string';
+
+        try {
+            strlen($maybeNull);
+            $this->assertLogContains('error', '[DEPRECATED] strlen(): ');
+        } catch (ErrorException $e) {
+            $this->fail('The catch block should not be reached.');
+        } finally {
+            restore_error_handler();
+            restore_exception_handler();
+        }
+    }
+
+    public function testSuppressedDeprecationsAreLogged(): void
+    {
+        $config = new ExceptionsConfig();
+
+        $config->logDeprecations     = true;
+        $config->deprecationLogLevel = 'error';
+
+        $this->exception = new Exceptions($config, Services::request(), Services::response());
+        $this->exception->initialize();
+
+        @trigger_error('Hello! I am a deprecation!', E_USER_DEPRECATED);
+        $this->assertLogContains('error', '[DEPRECATED] Hello! I am a deprecation!');
+
+        restore_error_handler();
+        restore_exception_handler();
     }
 
     public function testDetermineViews(): void
@@ -62,16 +123,13 @@ final class ExceptionsTest extends CIUnitTestCase
     {
         $determineCodes = $this->getPrivateMethodInvoker($this->exception, 'determineCodes');
 
-        $this->assertSame([500, EXIT__AUTO_MIN], $determineCodes(new RuntimeException('This.')));
+        $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('This.')));
         $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('That.', 600)));
-        $this->assertSame([404, EXIT_ERROR], $determineCodes(new RuntimeException('There.', 404)));
-        $this->assertSame([167, EXIT_ERROR], $determineCodes(new RuntimeException('This.', 167)));
-        // @TODO This exit code should be EXIT_CONFIG.
-        $this->assertSame([500, 12], $determineCodes(new ConfigException('This.')));
-        // @TODO This exit code should be EXIT_CONFIG.
-        $this->assertSame([500, 9], $determineCodes(new CastException('This.')));
-        // @TODO This exit code should be EXIT_DATABASE.
-        $this->assertSame([500, 17], $determineCodes(new DatabaseException('This.')));
+        $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('There.', 404)));
+        $this->assertSame([500, EXIT_ERROR], $determineCodes(new RuntimeException('This.', 167)));
+        $this->assertSame([500, EXIT_CONFIG], $determineCodes(new ConfigException('This.')));
+        $this->assertSame([500, EXIT_CONFIG], $determineCodes(new CastException('This.')));
+        $this->assertSame([500, EXIT_DATABASE], $determineCodes(new DatabaseException('This.')));
     }
 
     public function testRenderBacktrace(): void

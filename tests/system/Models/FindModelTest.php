@@ -304,7 +304,7 @@ final class FindModelTest extends LiveModelTestCase
     public function testThrowsWithNoPrimaryKey(): void
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('`Tests\Support\Models\UserModel` model class does not specify a Primary Key.');
+        $this->expectExceptionMessage('"Tests\Support\Models\UserModel" model class does not specify a Primary Key.');
 
         $this->createModel(UserModel::class);
         $this->setPrivateProperty($this->model, 'primaryKey', '');

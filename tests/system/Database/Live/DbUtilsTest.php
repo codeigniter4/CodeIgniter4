@@ -150,7 +150,7 @@ final class DbUtilsTest extends CIUnitTestCase
 
         $d = $util->optimizeTable('db_job');
 
-        $this->assertTrue((bool) $d);
+        $this->assertTrue($d);
     }
 
     public function testUtilsOptimizeTableFalseOptimizeTable()

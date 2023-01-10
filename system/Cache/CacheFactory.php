@@ -42,7 +42,7 @@ class CacheFactory
      */
     public static function getHandler(Cache $config, ?string $handler = null, ?string $backup = null)
     {
-        if (! isset($config->validHandlers) || ! is_array($config->validHandlers)) {
+        if (! isset($config->validHandlers) || $config->validHandlers === []) {
             throw CacheException::forInvalidHandlers();
         }
 

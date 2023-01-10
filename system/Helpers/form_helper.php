@@ -9,7 +9,7 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Config\App;
+use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\Services;
 
 // CodeIgniter Form Helpers
@@ -50,7 +50,7 @@ if (! function_exists('form_open')) {
             $attributes .= ' method="post"';
         }
         if (stripos($attributes, 'accept-charset=') === false) {
-            $config = config(App::class);
+            $config = config('App');
             $attributes .= ' accept-charset="' . strtolower($config->charset) . '"';
         }
 
@@ -148,7 +148,7 @@ if (! function_exists('form_input')) {
             'value' => $value,
         ];
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . _solidus() . ">\n";
     }
 }
 
@@ -194,7 +194,7 @@ if (! function_exists('form_upload')) {
 
         $data['type'] = 'file';
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . _solidus() . ">\n";
     }
 }
 
@@ -365,7 +365,7 @@ if (! function_exists('form_checkbox')) {
             $defaults['checked'] = 'checked';
         }
 
-        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . " />\n";
+        return '<input ' . parse_form_attributes($data, $defaults) . stringify_attributes($extra) . _solidus() . ">\n";
     }
 }
 
@@ -679,11 +679,90 @@ if (! function_exists('set_radio')) {
     }
 }
 
+if (! function_exists('validation_errors')) {
+    /**
+     * Returns the validation errors.
+     *
+     * First, checks the validation errors that are stored in the session.
+     * To store the errors in the session, you need to use `withInput()` with `redirect()`.
+     *
+     * The returned array should be in the following format:
+     *     [
+     *         'field1' => 'error message',
+     *         'field2' => 'error message',
+     *     ]
+     *
+     * @return array<string, string>
+     */
+    function validation_errors()
+    {
+        session();
+
+        // Check the session to see if any were
+        // passed along from a redirect withErrors() request.
+        if (isset($_SESSION['_ci_validation_errors']) && (ENVIRONMENT === 'testing' || ! is_cli())) {
+            return $_SESSION['_ci_validation_errors'];
+        }
+
+        $validation = Services::validation();
+
+        return $validation->getErrors();
+    }
+}
+
+if (! function_exists('validation_list_errors')) {
+    /**
+     * Returns the rendered HTML of the validation errors.
+     *
+     * See Validation::listErrors()
+     */
+    function validation_list_errors(string $template = 'list'): string
+    {
+        $config = config('Validation');
+        $view   = Services::renderer();
+
+        if (! array_key_exists($template, $config->templates)) {
+            throw ValidationException::forInvalidTemplate($template);
+        }
+
+        return $view->setVar('errors', validation_errors())
+            ->render($config->templates[$template]);
+    }
+}
+
+if (! function_exists('validation_show_error')) {
+    /**
+     * Returns a single error for the specified field in formatted HTML.
+     *
+     * See Validation::showError()
+     */
+    function validation_show_error(string $field, string $template = 'single'): string
+    {
+        $config = config('Validation');
+        $view   = Services::renderer();
+
+        $errors = validation_errors();
+
+        if (! array_key_exists($field, $errors)) {
+            return '';
+        }
+
+        if (! array_key_exists($template, $config->templates)) {
+            throw ValidationException::forInvalidTemplate($template);
+        }
+
+        return $view->setVar('error', $errors[$field])
+            ->render($config->templates[$template]);
+    }
+}
+
 if (! function_exists('parse_form_attributes')) {
     /**
      * Parse the form attributes
      *
      * Helper function used by some of the form helpers
+     *
+     * @internal
      *
      * @param array|string $attributes List of attributes
      * @param array        $default    Default values

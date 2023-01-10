@@ -13,9 +13,7 @@ class Form extends Controller
         if (! $this->validate([
             // Validation rules
         ])) {
-            return view('myform', [
-                'validation' => $this->validator,
-            ]);
+            return view('myform');
         }
 
         return view('formsuccess');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * The MIT License (MIT)
  *
@@ -29,14 +31,14 @@ use Kint\Zval\Representation\ColorRepresentation;
 use Kint\Zval\Representation\Representation;
 use Kint\Zval\Value;
 
-class ColorPlugin extends Plugin implements TabPluginInterface, ValuePluginInterface
+class ColorPlugin extends AbstractPlugin implements TabPluginInterface, ValuePluginInterface
 {
-    public function renderValue(Value $o)
+    public function renderValue(Value $o): ?string
     {
         $r = $o->getRepresentation('color');
 
         if (!$r instanceof ColorRepresentation) {
-            return;
+            return null;
         }
 
         $children = $this->renderer->renderChildren($o);
@@ -51,10 +53,10 @@ class ColorPlugin extends Plugin implements TabPluginInterface, ValuePluginInter
         return '<dl>'.$header.$children.'</dl>';
     }
 
-    public function renderTab(Representation $r)
+    public function renderTab(Representation $r): ?string
     {
         if (!$r instanceof ColorRepresentation) {
-            return;
+            return null;
         }
 
         $out = '';
@@ -92,7 +94,7 @@ class ColorPlugin extends Plugin implements TabPluginInterface, ValuePluginInter
         }
 
         if (!\strlen($out)) {
-            return;
+            return null;
         }
 
         return '<pre>'.$out.'</pre>';

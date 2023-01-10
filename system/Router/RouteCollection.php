@@ -14,9 +14,11 @@ namespace CodeIgniter\Router;
 use Closure;
 use CodeIgniter\Autoloader\FileLocator;
 use CodeIgniter\Router\Exceptions\RouterException;
+use Config\App;
 use Config\Modules;
 use Config\Services;
 use InvalidArgumentException;
+use Locale;
 
 /**
  * @todo Implement nested resource routing (See CakePHP)
@@ -232,6 +234,11 @@ class RouteCollection implements RouteCollectionInterface
     private ?string $httpHost = null;
 
     /**
+     * Flag to limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    protected bool $useSupportedLocalesOnly = false;
+
+    /**
      * Constructor
      */
     public function __construct(FileLocator $locator, Modules $moduleConfig)
@@ -240,6 +247,62 @@ class RouteCollection implements RouteCollectionInterface
         $this->moduleConfig = $moduleConfig;
 
         $this->httpHost = Services::request()->getServer('HTTP_HOST');
+    }
+
+    /**
+     * Loads main routes file and discover routes.
+     *
+     * Loads only once unless reset.
+     *
+     * @return $this
+     */
+    public function loadRoutes(string $routesFile = APPPATH . 'Config/Routes.php')
+    {
+        if ($this->didDiscover) {
+            return $this;
+        }
+
+        $routes = $this;
+        require $routesFile;
+
+        $this->discoverRoutes();
+
+        return $this;
+    }
+
+    /**
+     * Will attempt to discover any additional routes, either through
+     * the local PSR4 namespaces, or through selected Composer packages.
+     */
+    protected function discoverRoutes()
+    {
+        if ($this->didDiscover) {
+            return;
+        }
+
+        // We need this var in local scope
+        // so route files can access it.
+        $routes = $this;
+
+        if ($this->moduleConfig->shouldDiscover('routes')) {
+            $files = $this->fileLocator->search('Config/Routes.php');
+
+            $excludes = [
+                APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
+                SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
+            ];
+
+            foreach ($files as $file) {
+                // Don't include our main file again...
+                if (in_array($file, $excludes, true)) {
+                    continue;
+                }
+
+                include $file;
+            }
+        }
+
+        $this->didDiscover = true;
     }
 
     /**
@@ -363,41 +426,6 @@ class RouteCollection implements RouteCollectionInterface
     public function get404Override()
     {
         return $this->override404;
-    }
-
-    /**
-     * Will attempt to discover any additional routes, either through
-     * the local PSR4 namespaces, or through selected Composer packages.
-     */
-    protected function discoverRoutes()
-    {
-        if ($this->didDiscover) {
-            return;
-        }
-
-        // We need this var in local scope
-        // so route files can access it.
-        $routes = $this;
-
-        if ($this->moduleConfig->shouldDiscover('routes')) {
-            $files = $this->fileLocator->search('Config/Routes.php');
-
-            $excludes = [
-                APPPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
-                SYSTEMPATH . 'Config' . DIRECTORY_SEPARATOR . 'Routes.php',
-            ];
-
-            foreach ($files as $file) {
-                // Don't include our main file again...
-                if (in_array($file, $excludes, true)) {
-                    continue;
-                }
-
-                include $file;
-            }
-        }
-
-        $this->didDiscover = true;
     }
 
     /**
@@ -973,6 +1001,21 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
+     * Specifies a route that will only display a view.
+     * Only works for GET requests.
+     */
+    public function view(string $from, string $view, ?array $options = null): RouteCollectionInterface
+    {
+        $to = static fn (...$data) => Services::renderer()
+            ->setData(['segments' => $data], 'raw')
+            ->render($view, $options);
+
+        $this->create('get', $from, $to, $options);
+
+        return $this;
+    }
+
+    /**
      * Limits the routes to a specified ENVIRONMENT or they won't run.
      */
     public function environment(string $env, Closure $callback): RouteCollectionInterface
@@ -998,7 +1041,8 @@ class RouteCollection implements RouteCollectionInterface
      *      reverseRoute('Controller::method', $param1, $param2);
      *
      * @param string     $search    Named route or Controller::method
-     * @param int|string ...$params One or more parameters to be passed to the route
+     * @param int|string ...$params One or more parameters to be passed to the route.
+     *                              The last parameter allows you to set the locale.
      *
      * @return false|string
      */
@@ -1007,9 +1051,7 @@ class RouteCollection implements RouteCollectionInterface
         // Named routes get higher priority.
         foreach ($this->routes as $collection) {
             if (array_key_exists($search, $collection)) {
-                $route = $this->fillRouteParams(key($collection[$search]['route']), $params);
-
-                return $this->localizeRoute($route);
+                return $this->buildReverseRoute(key($collection[$search]['route']), $params);
             }
         }
 
@@ -1051,9 +1093,7 @@ class RouteCollection implements RouteCollectionInterface
                     continue;
                 }
 
-                $route = $this->fillRouteParams($from, $params);
-
-                return $this->localizeRoute($route);
+                return $this->buildReverseRoute($from, $params);
             }
         }
 
@@ -1063,6 +1103,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Replaces the {locale} tag with the current application locale
+     *
+     * @deprecated Unused.
      */
     protected function localizeRoute(string $route): string
     {
@@ -1127,6 +1169,8 @@ class RouteCollection implements RouteCollectionInterface
      * Given a
      *
      * @throws RouterException
+     *
+     * @deprecated Unused. Now uses buildReverseRoute().
      */
     protected function fillRouteParams(string $from, ?array $params = null): string
     {
@@ -1151,6 +1195,78 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         return '/' . ltrim($from, '/');
+    }
+
+    /**
+     * Builds reverse route
+     *
+     * @param array $params One or more parameters to be passed to the route.
+     *                      The last parameter allows you to set the locale.
+     */
+    protected function buildReverseRoute(string $from, array $params): string
+    {
+        $locale = null;
+
+        // Find all of our back-references in the original route
+        preg_match_all('/\(([^)]+)\)/', $from, $matches);
+
+        if (empty($matches[0])) {
+            if (strpos($from, '{locale}') !== false) {
+                $locale = $params[0] ?? null;
+            }
+
+            $from = $this->replaceLocale($from, $locale);
+
+            return '/' . ltrim($from, '/');
+        }
+
+        // Locale is passed?
+        $placeholderCount = count($matches[0]);
+        if (count($params) > $placeholderCount) {
+            $locale = $params[$placeholderCount];
+        }
+
+        // Build our resulting string, inserting the $params in
+        // the appropriate places.
+        foreach ($matches[0] as $index => $pattern) {
+            if (! preg_match('#^' . $pattern . '$#u', $params[$index])) {
+                throw RouterException::forInvalidParameterType();
+            }
+
+            // Ensure that the param we're inserting matches
+            // the expected param type.
+            $pos  = strpos($from, $pattern);
+            $from = substr_replace($from, $params[$index], $pos, strlen($pattern));
+        }
+
+        $from = $this->replaceLocale($from, $locale);
+
+        return '/' . ltrim($from, '/');
+    }
+
+    /**
+     * Replaces the {locale} tag with the locale
+     */
+    private function replaceLocale(string $route, ?string $locale = null): string
+    {
+        if (strpos($route, '{locale}') === false) {
+            return $route;
+        }
+
+        // Check invalid locale
+        if ($locale !== null) {
+            /** @var App $config */
+            $config = config('App');
+            if (! in_array($locale, $config->supportedLocales, true)) {
+                $locale = null;
+            }
+        }
+
+        if ($locale === null) {
+            $locale = Services::request()->getLocale();
+        }
+
+        return strtr($route, ['{locale}' => $locale]);
     }
 
     /**
@@ -1399,6 +1515,7 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         $this->prioritizeDetected = false;
+        $this->didDiscover        = false;
     }
 
     /**
@@ -1477,5 +1594,23 @@ class RouteCollection implements RouteCollectionInterface
         }
 
         return array_unique($controllers);
+    }
+
+    /**
+     * Set The flag that limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    public function useSupportedLocalesOnly(bool $useOnly): self
+    {
+        $this->useSupportedLocalesOnly = $useOnly;
+
+        return $this;
+    }
+
+    /**
+     * Get the flag that limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    public function shouldUseSupportedLocalesOnly(): bool
+    {
+        return $this->useSupportedLocalesOnly;
     }
 }

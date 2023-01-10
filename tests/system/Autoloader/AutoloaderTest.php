@@ -12,10 +12,13 @@
 namespace CodeIgniter\Autoloader;
 
 use App\Controllers\Home;
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Test\CIUnitTestCase;
 use Config\Autoload;
 use Config\Modules;
 use Config\Services;
+use InvalidArgumentException;
+use RuntimeException;
 use UnnamespacedClass;
 
 /**
@@ -47,6 +50,13 @@ final class AutoloaderTest extends CIUnitTestCase
 
         $this->loader = new Autoloader();
         $this->loader->initialize($config, $modules)->register();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->loader->unregister();
+
+        parent::tearDown();
     }
 
     public function testLoadStoredClass()
@@ -98,10 +108,13 @@ final class AutoloaderTest extends CIUnitTestCase
         $autoloader = Services::autoloader(false);
         $autoloader->initialize(new Autoload(), new Modules());
         $autoloader->register();
+
         // look for Home controller, as that should be in base repo
         $actual   = $autoloader->loadClass(Home::class);
         $expected = APPPATH . 'Controllers' . DIRECTORY_SEPARATOR . 'Home.php';
         $this->assertSame($expected, realpath($actual) ?: $actual);
+
+        $autoloader->unregister();
     }
 
     public function testExistingFile()
@@ -199,20 +212,44 @@ final class AutoloaderTest extends CIUnitTestCase
         $this->assertFalse($this->loader->loadClass('Modules'));
     }
 
-    public function testSanitizationSimply()
+    public function testSanitizationContailsSpecialChars()
     {
-        $test     = '${../path}!#/to/some/file.php_';
-        $expected = '/path/to/some/file.php';
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The file path contains special characters "${}!#" that are not allowed: "${../path}!#/to/some/file.php_"'
+        );
 
-        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
+        $test = '${../path}!#/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationFilenameEdges()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'The characters ".-_" are not allowed in filename edges: "/path/to/some/file.php_"'
+        );
+
+        $test = '/path/to/some/file.php_';
+
+        $this->loader->sanitizeFilename($test);
+    }
+
+    public function testSanitizationRegexError()
+    {
+        $this->expectException(RuntimeException::class);
+
+        $test = mb_convert_encoding('クラスファイル.php', 'EUC-JP', 'UTF-8');
+
+        $this->loader->sanitizeFilename($test);
     }
 
     public function testSanitizationAllowUnicodeChars()
     {
-        $test     = 'Ä/path/to/some/file.php_';
-        $expected = 'Ä/path/to/some/file.php';
+        $test = 'Ä/path/to/some/file.php';
 
-        $this->assertSame($expected, $this->loader->sanitizeFilename($test));
+        $this->assertSame($test, $this->loader->sanitizeFilename($test));
     }
 
     public function testSanitizationAllowsWindowsFilepaths()
@@ -228,10 +265,10 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, $modules);
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertArrayHasKey('Laminas\\Escaper', $namespaces);
     }
 
@@ -244,12 +281,69 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, $modules);
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertSame('/Config/Autoload/Psr/Log/', $namespaces['Psr\Log'][0]);
         $this->assertStringContainsString(VENDORPATH, $namespaces['Psr\Log'][1]);
+    }
+
+    public function testComposerPackagesOnly()
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = ['only' => ['laminas/laminas-escaper']];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertCount(1, $namespaces);
+        $this->assertStringContainsString(VENDORPATH, $namespaces['Laminas\Escaper'][0]);
+    }
+
+    public function testComposerPackagesExclude()
+    {
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [
+            'exclude' => [
+                'psr/log',
+                'laminas/laminas-escaper',
+            ],
+        ];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
+
+        $namespaces = $loader->getNamespace();
+
+        $this->assertArrayNotHasKey('Psr\Log', $namespaces);
+        $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
+    }
+
+    public function testComposerPackagesOnlyAndExclude()
+    {
+        $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Cannot use "only" and "exclude" at the same time in "Config\Modules::$composerPackages".');
+
+        $config                      = new Autoload();
+        $config->psr4                = [];
+        $modules                     = new Modules();
+        $modules->discoverInComposer = true;
+        $modules->composerPackages   = [
+            'only'    => ['laminas/laminas-escaper'],
+            'exclude' => ['psr/log'],
+        ];
+
+        $loader = new Autoloader();
+        $loader->initialize($config, $modules);
     }
 
     public function testFindsComposerRoutesWithComposerPathNotFound()
@@ -260,29 +354,49 @@ final class AutoloaderTest extends CIUnitTestCase
         $modules                     = new Modules();
         $modules->discoverInComposer = true;
 
-        $this->loader = new Autoloader();
+        $loader = new Autoloader();
 
         rename(COMPOSER_PATH, COMPOSER_PATH . '.backup');
-        $this->loader->initialize($config, $modules);
+        $loader->initialize($config, $modules);
         rename(COMPOSER_PATH . '.backup', $composerPath);
 
-        $namespaces = $this->loader->getNamespace();
+        $namespaces = $loader->getNamespace();
         $this->assertArrayNotHasKey('Laminas\\Escaper', $namespaces);
     }
 
     public function testAutoloaderLoadsNonClassFiles(): void
     {
-        $config = new Autoload();
-
+        $config          = new Autoload();
         $config->files[] = SUPPORTPATH . 'Autoloader/functions.php';
 
-        $this->loader = new Autoloader();
-        $this->loader->initialize($config, new Modules());
-        $this->loader->register();
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+        $loader->register();
 
         $this->assertTrue(function_exists('autoload_foo'));
         $this->assertSame('I am autoloaded by Autoloader through $files!', autoload_foo());
         $this->assertTrue(defined('AUTOLOAD_CONSTANT'));
         $this->assertSame('foo', AUTOLOAD_CONSTANT);
+
+        $loader->unregister();
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function testLoadHelpers(): void
+    {
+        $config            = new Autoload();
+        $config->helpers[] = 'form';
+
+        $loader = new Autoloader();
+        $loader->initialize($config, new Modules());
+
+        $loader->loadHelpers();
+
+        $this->assertTrue(function_exists('form_open'));
+
+        $loader->unregister();
     }
 }

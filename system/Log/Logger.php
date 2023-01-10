@@ -92,6 +92,7 @@ class Logger implements LoggerInterface
      * items.
      *
      * @var array
+     * @phpstan-var array<class-string, array<string, list<string>|string|int>>
      */
     protected $handlerConfig = [];
 

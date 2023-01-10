@@ -123,7 +123,7 @@ Explanation of Values:
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
 **pConnect**    true/false (boolean) - Whether to use a persistent connection.
-**DBDebug**     true/false (boolean) - Whether database errors should be displayed.
+**DBDebug**     true/false (boolean) - Whether to throw exceptions or not when database errors occur.
 **charset**     The character set used in communicating with the database.
 **DBCollat**    The character collation used in communicating with the database (``MySQLi`` only)
 **swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
@@ -148,6 +148,7 @@ Explanation of Values:
                 .. important:: SQLite3 Foreign Key constraint is disabled by default.
                     See `SQLite documentation <https://www.sqlite.org/pragma.html#pragma_foreign_keys>`_.
                     To enforce Foreign Key constraint, set this config item to true.
+**busyTimeout** milliseconds (int) - Sleeps for a specified amount of time when a table is locked (``SQLite3`` only).
 =============== ===========================================================================================================
 
 .. note:: Depending on what database driver you are using (``MySQLi``, ``Postgres``,

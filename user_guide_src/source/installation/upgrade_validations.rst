@@ -17,12 +17,13 @@ What has been changed
 - CI4 validation has no Callbacks nor Callable in CI3.
 - CI4 validation format rules do not permit empty string.
 - CI4 validation never changes your data.
+- Since v4.3.0, :php:func:`validation_errors()` has been introduced, but the API is different from CI3's.
 
 Upgrade Guide
 =============
 1. Within the view which contains the form you have to change:
 
-    - ``<?php echo validation_errors(); ?>`` to ``<?= $validation->listErrors() ?>``
+    - ``<?php echo validation_errors(); ?>`` to ``<?= validation_list_errors() ?>``
 
 2. Within the controller you have to change the following:
 
@@ -85,7 +86,7 @@ Path: **app/Views**::
     </head>
     <body>
 
-        <?= $validation->listErrors() ?>
+        <?= validation_list_errors() ?>
 
         <?= form_open('form') ?>
 

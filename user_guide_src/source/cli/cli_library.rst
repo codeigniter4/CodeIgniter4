@@ -31,6 +31,12 @@ Sometimes you need to ask the user for more information. They might not have pro
 arguments, or the script may have encountered an existing file and needs confirmation before overwriting. This is
 handled with the ``prompt()`` or ``promptByKey()`` method.
 
+.. note:: Since v4.3.0, you can write tests for these methods with ``PhpStreamWrapper``.
+    See :ref:`testing-cli-input`.
+
+prompt()
+========
+
 You can provide a question by passing it in as the first parameter:
 
 .. literalinclude:: cli_library/002.php
@@ -65,6 +71,19 @@ Named keys are also possible:
 .. literalinclude:: cli_library/008.php
 
 Finally, you can pass :ref:`validation <validation>` rules to the answer input as the third parameter, the acceptable answers are automatically restricted to the passed options.
+
+.. _prompt-by-multiple-keys:
+
+promptByMultipleKeys()
+======================
+
+.. versionadded:: 4.3.0
+
+This method is the same as ``promptByKey()``, but it supports multiple value.
+
+.. literalinclude:: cli_library/023.php
+
+.. important:: The method ``promptByMultipleKeys()``, unlike ``promptByKey()``, does not support named keys or validation.
 
 Providing Feedback
 ******************

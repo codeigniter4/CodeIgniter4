@@ -309,6 +309,7 @@ abstract class BaseUtils
             return $this->_backup($prefs);
         }
 
+        // @TODO gzencode() requires `ext-zlib`, but _backup() is not implemented in all databases.
         return gzencode($this->_backup($prefs));
     }
 

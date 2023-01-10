@@ -14,7 +14,7 @@ namespace CodeIgniter\Commands;
 use CodeIgniter\CLI\Commands;
 use CodeIgniter\Log\Logger;
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Services;
 use Tests\Support\Commands\ParamsReveal;
 
@@ -25,10 +25,7 @@ use Tests\Support\Commands\ParamsReveal;
  */
 final class CommandTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     private Logger $logger;
     private Commands $commands;
@@ -39,23 +36,13 @@ final class CommandTest extends CIUnitTestCase
 
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-
         $this->logger   = Services::logger();
         $this->commands = Services::commands();
     }
 
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
-    }
-
     protected function getBuffer()
     {
-        return CITestStreamFilter::$buffer;
+        return $this->getStreamFilterBuffer();
     }
 
     public function testListCommands()
@@ -98,7 +85,7 @@ final class CommandTest extends CIUnitTestCase
         $command  = new $commands['app:info']['class']($this->logger, $this->commands);
 
         $command->bomb();
-        $this->assertStringContainsString('Invalid background color:', $this->getBuffer());
+        $this->assertStringContainsString('Invalid "background" color:', $this->getBuffer());
     }
 
     public function testAbstractCommand()

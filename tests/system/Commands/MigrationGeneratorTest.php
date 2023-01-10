@@ -12,7 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
@@ -21,24 +21,11 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class MigrationGeneratorTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
-
-    protected function setUp(): void
-    {
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
-    }
+    use StreamFilterTrait;
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->streamFilter);
-
-        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', CITestStreamFilter::$buffer);
+        $result = str_replace(["\033[0;32m", "\033[0m", "\n"], '', $this->getStreamFilterBuffer());
         $file   = str_replace('APPPATH' . DIRECTORY_SEPARATOR, APPPATH, trim(substr($result, 14)));
         if (is_file($file)) {
             unlink($file);
@@ -48,24 +35,24 @@ final class MigrationGeneratorTest extends CIUnitTestCase
     public function testGenerateMigration()
     {
         command('make:migration database');
-        $this->assertStringContainsString('_Database.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_Database.php', $this->getStreamFilterBuffer());
     }
 
     public function testGenerateMigrationWithOptionSession()
     {
         command('make:migration -session');
-        $this->assertStringContainsString('_CreateCiSessionsTable.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_CreateCiSessionsTable.php', $this->getStreamFilterBuffer());
     }
 
     public function testGenerateMigrationWithOptionTable()
     {
         command('make:migration -session -table logger');
-        $this->assertStringContainsString('_CreateLoggerTable.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_CreateLoggerTable.php', $this->getStreamFilterBuffer());
     }
 
     public function testGenerateMigrationWithOptionSuffix()
     {
         command('make:migration database -suffix');
-        $this->assertStringContainsString('_DatabaseMigration.php', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('_DatabaseMigration.php', $this->getStreamFilterBuffer());
     }
 }

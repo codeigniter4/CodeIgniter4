@@ -14,7 +14,7 @@ namespace CodeIgniter\Commands\Database;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 use Config\Database;
 use Tests\Support\Database\Seeds\CITestSeeder;
 
@@ -26,11 +26,7 @@ use Tests\Support\Database\Seeds\CITestSeeder;
 final class ShowTableInfoTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
-
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     protected $migrateOnce = true;
 
@@ -40,11 +36,6 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
         putenv('NO_COLOR=1');
         CLI::init();
-
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
     protected function tearDown(): void
@@ -53,13 +44,11 @@ final class ShowTableInfoTest extends CIUnitTestCase
 
         putenv('NO_COLOR');
         CLI::init();
-
-        stream_filter_remove($this->streamFilter);
     }
 
     private function getNormalizedResult(): string
     {
-        return str_replace(PHP_EOL, "\n", CITestStreamFilter::$buffer);
+        return str_replace(PHP_EOL, "\n", $this->getStreamFilterBuffer());
     }
 
     public function testDbTable(): void

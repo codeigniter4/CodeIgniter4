@@ -968,6 +968,18 @@ Transfer-Encoding: chunked\x0d\x0a\x0d\x0a<title>Update success! config</title>"
         $this->assertSame(CURL_HTTP_VERSION_1_1, $options[CURLOPT_HTTP_VERSION]);
     }
 
+    public function testHTTPv2()
+    {
+        $this->request->request('POST', '/post', [
+            'version' => 2.0,
+        ]);
+
+        $options = $this->request->curl_options;
+
+        $this->assertArrayHasKey(CURLOPT_HTTP_VERSION, $options);
+        $this->assertSame(CURL_HTTP_VERSION_2_0, $options[CURLOPT_HTTP_VERSION]);
+    }
+
     public function testCookieOption()
     {
         $holder = SUPPORTPATH . 'HTTP/Files/CookiesHolder.txt';

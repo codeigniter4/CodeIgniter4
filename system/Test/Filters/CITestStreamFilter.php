@@ -26,6 +26,18 @@ class CITestStreamFilter extends php_user_filter
      */
     public static $buffer = '';
 
+    protected static bool $registered = false;
+
+    /**
+     * @var resource|null
+     */
+    private static $err;
+
+    /**
+     * @var resource|null
+     */
+    private static $out;
+
     /**
      * This method is called whenever data is read from or written to the
      * attached stream (such as with fread() or fwrite()).
@@ -45,6 +57,46 @@ class CITestStreamFilter extends php_user_filter
 
         return PSFS_PASS_ON;
     }
-}
 
-stream_filter_register('CITestStreamFilter', CITestStreamFilter::class); // @codeCoverageIgnore
+    public static function registration(): void
+    {
+        if (! static::$registered) {
+            static::$registered = stream_filter_register('CITestStreamFilter', self::class); // @codeCoverageIgnore
+        }
+
+        static::$buffer = '';
+    }
+
+    public static function addErrorFilter(): void
+    {
+        self::removeFilter(self::$err);
+        self::$err = stream_filter_append(STDERR, 'CITestStreamFilter');
+    }
+
+    public static function addOutputFilter(): void
+    {
+        self::removeFilter(self::$out);
+        self::$out = stream_filter_append(STDOUT, 'CITestStreamFilter');
+    }
+
+    public static function removeErrorFilter(): void
+    {
+        self::removeFilter(self::$err);
+    }
+
+    public static function removeOutputFilter(): void
+    {
+        self::removeFilter(self::$out);
+    }
+
+    /**
+     * @param resource $stream
+     */
+    protected static function removeFilter(&$stream): void
+    {
+        if (is_resource($stream)) {
+            stream_filter_remove($stream);
+            $stream = null;
+        }
+    }
+}

@@ -9,7 +9,9 @@ use CodeIgniter\Validation\Rules;
 
 class Validation
 {
-    public $ruleSets = [
+    // ...
+
+    public array $ruleSets = [
         Rules::class,
         FormatRules::class,
         FileRules::class,

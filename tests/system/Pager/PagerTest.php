@@ -464,6 +464,7 @@ final class PagerTest extends CIUnitTestCase
     {
         $_SERVER['HTTP_HOST']   = 'example.com';
         $_SERVER['REQUEST_URI'] = '/ci/v4/x/y';
+        $_SERVER['SCRIPT_NAME'] = '/ci/v4/index.php';
         $_GET                   = [];
 
         $config            = new App();
@@ -471,7 +472,13 @@ final class PagerTest extends CIUnitTestCase
         $config->indexPage = 'fc.php';
         Factories::injectMock('config', 'App', $config);
 
-        $request = Services::request($config);
+        $request = new IncomingRequest(
+            $config,
+            new URI(),
+            'php://input',
+            new UserAgent()
+        );
+        $request = $request->withMethod('GET');
         Services::injectMock('request', $request);
 
         $this->config = new PagerConfig();

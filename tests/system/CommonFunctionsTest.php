@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\Response;
@@ -137,6 +138,48 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertInstanceOf(RedirectResponse::class, redirect());
     }
 
+    public function testRequestIncomingRequest()
+    {
+        Services::createRequest(new App());
+
+        $request = request();
+
+        $this->assertInstanceOf(IncomingRequest::class, $request);
+    }
+
+    public function testRequestCLIRequest()
+    {
+        Services::createRequest(new App(), true);
+
+        $request = request();
+
+        $this->assertInstanceOf(CLIRequest::class, $request);
+    }
+
+    public function testResponse()
+    {
+        $response = response();
+
+        $this->assertInstanceOf(Response::class, $response);
+    }
+
+    public function testSolidusElement()
+    {
+        $this->assertSame('', _solidus());
+    }
+
+    public function testSolidusElementXHTML()
+    {
+        $doctypes        = config('DocTypes');
+        $default         = $doctypes->html5;
+        $doctypes->html5 = false;
+
+        $this->assertSame(' /', _solidus());
+
+        // Reset
+        $doctypes->html5 = $default;
+    }
+
     public function testView()
     {
         $data = [
@@ -228,6 +271,39 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
     }
 
+    public function testRouteToInCliWithoutLocaleInRoute()
+    {
+        Services::createRequest(new App(), true);
+        $routes = service('routes');
+        $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
+
+        $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
+    }
+
+    public function testRouteToInCliWithLocaleInRoute()
+    {
+        Services::createRequest(new App(), true);
+        $routes = service('routes');
+        $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
+
+        $this->assertSame(
+            '/en/path/string/to/13',
+            route_to('path-to', 'string', 13, 'en')
+        );
+    }
+
+    public function testRouteToWithUnsupportedLocale()
+    {
+        Services::createRequest(new App(), false);
+        $routes = service('routes');
+        $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
+
+        $this->assertSame(
+            '/en/path/string/to/13',
+            route_to('path-to', 'string', 13, 'invalid')
+        );
+    }
+
     public function testInvisible()
     {
         $this->assertSame('Javascript', remove_invisible_characters("Java\0script"));
@@ -240,7 +316,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
 
     public function testAppTimezone()
     {
-        $this->assertSame('America/Chicago', app_timezone());
+        $this->assertSame('UTC', app_timezone());
     }
 
     public function testCSRFToken()
@@ -434,7 +510,7 @@ final class CommonFunctionsTest extends CIUnitTestCase
             'sessionDriver'            => FileHandler::class,
             'sessionCookieName'        => 'ci_session',
             'sessionExpiration'        => 7200,
-            'sessionSavePath'          => null,
+            'sessionSavePath'          => '',
             'sessionMatchIP'           => false,
             'sessionTimeToUpdate'      => 300,
             'sessionRegenerateDestroy' => false,
@@ -623,5 +699,26 @@ final class CommonFunctionsTest extends CIUnitTestCase
         $this->assertSame('File created: TestController.php', $message);
 
         $this->resetServices();
+    }
+
+    public function testIsWindows()
+    {
+        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
+    }
+
+    public function testIsWindowsUsingMock()
+    {
+        is_windows(true);
+        $this->assertTrue(is_windows());
+        $this->assertNotFalse(is_windows());
+
+        is_windows(false);
+        $this->assertFalse(is_windows());
+        $this->assertNotTrue(is_windows());
+
+        is_windows(null);
+        $this->assertSame(strpos(php_uname(), 'Windows') !== false, is_windows());
+        $this->assertSame(defined('PHP_WINDOWS_VERSION_MAJOR'), is_windows());
     }
 }

@@ -109,6 +109,7 @@ Helpers
 =======
 
 - :doc:`Helpers <../general/helpers>` are pretty much the same as before, though some have been simplified.
+- Since v4.3.0, you can autoload helpers by **app/Config/Autoload.php** as well as CI3.
 - Some helpers from CodeIgniter 3 no longer exists in Version 4. For all these
   helpers, you have to find a new way to implement your functions. These
   helpers are `CAPTCHA Helper <https://www.codeigniter.com/userguide3/helpers/captcha_helper.html>`_,

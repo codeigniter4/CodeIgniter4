@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    autoloader="psalm_autoload.php"
+    cacheDirectory="build/psalm/"
+    errorBaseline="psalm-baseline.xml"
+>
+    <projectFiles>
+        <directory name="app/" />
+        <directory name="public/" />
+        <directory name="system/" />
+        <directory name="tests/" />
+        <file name="spark" />
+        <ignoreFiles>
+            <directory name="app/Views" />
+            <directory name="system/Commands/Generators/Views" />
+            <directory name="system/Validation/Views" />
+            <directory name="tests/system/View/Views" />
+            <directory name="tests/_support/View/Views" />
+            <directory name="system/ThirdParty" />
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <UndefinedGlobalVariable>
+            <errorLevel type="suppress">
+                <directory name="tests/_support/View/Cells" />
+            </errorLevel>
+        </UndefinedGlobalVariable>
+    </issueHandlers>
+</psalm>

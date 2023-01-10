@@ -3,10 +3,10 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Session\Handlers\FileHandler;
 
-class App extends BaseConfig
+class Session extends BaseConfig
 {
     // ...
-    public $sessionDBGroup = 'groupName';
-    // ...
+    public ?string $DBGroup = 'groupName';
 }

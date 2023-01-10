@@ -12,7 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
@@ -21,10 +21,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class ClearLogsTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     private string $date;
 
@@ -32,18 +29,9 @@ final class ClearLogsTest extends CIUnitTestCase
     {
         parent::setUp();
 
-        CITestStreamFilter::$buffer = '';
-        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
-
         // test runs on other tests may log errors since default threshold
         // is now 4, so set this to a safe distance
         $this->date = date('Y-m-d', strtotime('+1 year'));
-    }
-
-    protected function tearDown(): void
-    {
-        stream_filter_remove($this->streamFilter);
     }
 
     protected function createDummyLogFiles()
@@ -71,7 +59,7 @@ final class ClearLogsTest extends CIUnitTestCase
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
 
         command('logs:clear -force');
-        $result = CITestStreamFilter::$buffer;
+        $result = $this->getStreamFilterBuffer();
 
         $this->assertFileDoesNotExist(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . "log-{$this->date}.log");
         $this->assertFileExists(WRITEPATH . 'logs' . DIRECTORY_SEPARATOR . 'index.html');

@@ -41,22 +41,40 @@ final class CSRFTest extends CIUnitTestCase
         $this->config = new \Config\Filters();
     }
 
-    public function testNormal()
+    public function testDoNotCheckCliRequest()
     {
         $this->config->globals = [
             'before' => ['csrf'],
             'after'  => [],
         ];
 
-        $this->request  = Services::request(null, false);
+        $this->request  = Services::clirequest(null, false);
         $this->response = Services::response();
 
         $filters = new Filters($this->config, $this->request, $this->response);
         $uri     = 'admin/foo/bar';
 
-        // we expect CSRF requests to be ignored in CLI
-        $expected = $this->request;
-        $request  = $filters->run($uri, 'before');
-        $this->assertSame($expected, $request);
+        $request = $filters->run($uri, 'before');
+
+        $this->assertSame($this->request, $request);
+    }
+
+    public function testPassGetRequest()
+    {
+        $this->config->globals = [
+            'before' => ['csrf'],
+            'after'  => [],
+        ];
+
+        $this->request  = Services::incomingrequest(null, false);
+        $this->response = Services::response();
+
+        $filters = new Filters($this->config, $this->request, $this->response);
+        $uri     = 'admin/foo/bar';
+
+        $request = $filters->run($uri, 'before');
+
+        // GET request is not protected, so no SecurityException will be thrown.
+        $this->assertSame($this->request, $request);
     }
 }

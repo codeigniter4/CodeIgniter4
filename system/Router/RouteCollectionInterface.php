@@ -185,4 +185,9 @@ interface RouteCollectionInterface
      * Grabs the HTTP status code from a redirecting Route.
      */
     public function getRedirectCode(string $from): int;
+
+    /**
+     * Get the flag that limit or not the routes with {locale} placeholder to App::$supportedLocales
+     */
+    public function shouldUseSupportedLocalesOnly(): bool;
 }

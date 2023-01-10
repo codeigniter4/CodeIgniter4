@@ -12,7 +12,7 @@
 namespace CodeIgniter\Commands;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\Filters\CITestStreamFilter;
+use CodeIgniter\Test\StreamFilterTrait;
 
 /**
  * @internal
@@ -21,10 +21,7 @@ use CodeIgniter\Test\Filters\CITestStreamFilter;
  */
 final class EnvironmentCommandTest extends CIUnitTestCase
 {
-    /**
-     * @var false|resource
-     */
-    private $streamFilter;
+    use StreamFilterTrait;
 
     private string $envPath       = ROOTPATH . '.env';
     private string $backupEnvPath = ROOTPATH . '.env.backup';
@@ -32,10 +29,6 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        CITestStreamFilter::$buffer = '';
-
-        $this->streamFilter = stream_filter_append(STDOUT, 'CITestStreamFilter');
-        $this->streamFilter = stream_filter_append(STDERR, 'CITestStreamFilter');
 
         if (is_file($this->envPath)) {
             rename($this->envPath, $this->backupEnvPath);
@@ -45,7 +38,6 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        stream_filter_remove($this->streamFilter);
 
         if (is_file($this->envPath)) {
             unlink($this->envPath);
@@ -61,20 +53,23 @@ final class EnvironmentCommandTest extends CIUnitTestCase
     public function testUsingCommandWithNoArgumentsGivesCurrentEnvironment(): void
     {
         command('env');
-        $this->assertStringContainsString('testing', CITestStreamFilter::$buffer);
-        $this->assertStringContainsString(ENVIRONMENT, CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('testing', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString(ENVIRONMENT, $this->getStreamFilterBuffer());
     }
 
     public function testProvidingTestingAsEnvGivesErrorMessage(): void
     {
         command('env testing');
-        $this->assertStringContainsString('The "testing" environment is reserved for PHPUnit testing.', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString(
+            'The "testing" environment is reserved for PHPUnit testing.',
+            $this->getStreamFilterBuffer()
+        );
     }
 
     public function testProvidingUnknownEnvGivesErrorMessage(): void
     {
         command('env foobar');
-        $this->assertStringContainsString('Invalid environment type "foobar".', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Invalid environment type "foobar".', $this->getStreamFilterBuffer());
     }
 
     public function testDefaultShippedEnvIsMissing()
@@ -83,8 +78,11 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         command('env development');
         rename(ROOTPATH . 'lostenv', ROOTPATH . 'env');
 
-        $this->assertStringContainsString('Both default shipped', CITestStreamFilter::$buffer);
-        $this->assertStringContainsString('It is impossible to write the new environment type.', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Both default shipped', $this->getStreamFilterBuffer());
+        $this->assertStringContainsString(
+            'It is impossible to write the new environment type.',
+            $this->getStreamFilterBuffer()
+        );
     }
 
     public function testSettingNewEnvIsSuccess(): void
@@ -93,7 +91,7 @@ final class EnvironmentCommandTest extends CIUnitTestCase
         $_SERVER['CI_ENVIRONMENT'] = 'production';
         command('env development');
 
-        $this->assertStringContainsString('Environment is successfully changed to', CITestStreamFilter::$buffer);
+        $this->assertStringContainsString('Environment is successfully changed to', $this->getStreamFilterBuffer());
         $this->assertStringContainsString('CI_ENVIRONMENT = development', file_get_contents($this->envPath));
     }
 }

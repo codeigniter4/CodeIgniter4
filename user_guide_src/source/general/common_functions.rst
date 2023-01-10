@@ -281,6 +281,19 @@ Miscellaneous Functions
     :returns: true if you can write to the file, false otherwise.
     :rtype: bool
 
+.. php:function:: is_windows([$mock = null])
+
+    :param bool|null $mock: If given and is a boolean then it will be used as the return value.
+    :rtype: bool
+
+    Detect if platform is running in Windows.
+
+    .. note:: The boolean value provided to $mock will persist in subsequent calls. To reset this
+        mock value, the user must pass an explicit ``null`` to the function call. This will
+        refresh the function to use auto-detection.
+
+    .. literalinclude:: common_functions/012.php
+
 .. php:function:: log_message($level, $message [, $context])
 
     :param   string   $level: The level of severity
@@ -334,19 +347,42 @@ Miscellaneous Functions
 
     .. literalinclude:: common_functions/007.php
 
+.. php:function:: request()
+
+    .. versionadded:: 4.3.0
+
+    :returns:    The shared Request object.
+    :rtype:    IncomingRequest|CLIRequest
+
+    This function is a wrapper for ``Services::request()``.
+
+.. php:function:: response()
+
+    .. versionadded:: 4.3.0
+
+    :returns:    The shared Response object.
+    :rtype:    Response
+
+    This function is a wrapper for ``Services::response()``.
+
 .. php:function:: route_to($method[, ...$params])
 
     :param   string  $method: The named route alias, or name of the controller/method to match.
-    :param   int|string   $params: One or more parameters to be passed to be matched in the route.
+    :param   int|string   $params: One or more parameters to be passed to be matched in the route. The last parameter allows you to set the locale.
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
-    Generates a route for you based on either a named route alias,
-    or a controller::method combination. Will take parameters into effect, if provided.
+    Generates a route for you based on a controller::method combination. Will take parameters into effect, if provided.
 
     .. literalinclude:: common_functions/009.php
 
+    Generates a route for you based on a named route alias.
+
     .. literalinclude:: common_functions/010.php
+
+    Since v4.3.0, when you use ``{locale}`` in your route, you can optionally specify the locale value as the last parameter.
+
+    .. literalinclude:: common_functions/011.php
 
     .. note:: ``route_to()`` returns a route, not a full URI path for your site.
         If your **baseURL** contains sub folders, the return value is not the same

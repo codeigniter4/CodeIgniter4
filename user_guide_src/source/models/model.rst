@@ -238,10 +238,18 @@ $beforeInsert
 ^^^^^^^^^^^^^
 $afterInsert
 ^^^^^^^^^^^^
+$beforeInsertBatch
+^^^^^^^^^^^^^^^^^^
+$afterInsertBatch
+^^^^^^^^^^^^^^^^^
 $beforeUpdate
 ^^^^^^^^^^^^^
 $afterUpdate
-^^^^^^^^^^^^
+^^^^^^^^^^^^^
+$beforeUpdateBatch
+^^^^^^^^^^^^^^^^^^
+$afterUpdateBatch
+^^^^^^^^^^^^^^^^^
 $beforeFind
 ^^^^^^^^^^^
 $afterFind
@@ -346,6 +354,19 @@ You can retrieve the last inserted row's primary key using the ``getInsertID()``
 
 .. literalinclude:: model/015.php
 
+.. _model-allow-empty-inserts:
+
+allowEmptyInserts()
+-------------------
+
+.. versionadded:: 4.3.0
+
+You can use ``allowEmptyInserts()`` method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.
+
+.. literalinclude:: model/056.php
+
+You can enable the check again by calling ``allowEmptyInserts(false)``.
+
 update()
 --------
 
@@ -355,7 +376,11 @@ of the columns in a ``$table``, while the array's values are the values to save 
 
 .. literalinclude:: model/016.php
 
-.. important:: If the ``$primaryKey`` field is set to ``null`` then the update will affect all records in the table.
+.. important:: Since v4.3.0, this method raises a ``DatabaseException``
+    if it generates an SQL statement without a WHERE clause.
+    In previous versions, if it is called without ``$primaryKey`` specified and
+    an SQL statement was generated without a WHERE clause, the query would still
+    execute and all records in the table would be updated.
 
 Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:
 
@@ -365,6 +390,8 @@ When you need a more flexible solution, you can leave the parameters empty and i
 update command, with the added benefit of validation, events, etc:
 
 .. literalinclude:: model/018.php
+
+.. _model-save:
 
 save()
 ------
@@ -607,6 +634,8 @@ This is best used during cronjobs, data exports, or other large tasks.
 
 .. literalinclude:: model/049.php
 
+.. _model-events-callbacks:
+
 Working with Query Builder
 **************************
 
@@ -664,7 +693,11 @@ Model Events
 There are several points within the model's execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model's execution can be affected, each through a class property: ``$beforeInsert``, ``$afterInsert``,
-``$beforeUpdate``, ``$afterUpdate``, ``$afterFind``, and ``$afterDelete``.
+``$beforeInsertBatch``, ``$afterInsertBatch``, ``$beforeUpdate``, ``$afterUpdate``, ``$beforeUpdateBatch``,
+``$afterUpdateBatch``, ``$afterFind``, and ``$afterDelete``.
+
+.. note:: ``$beforeInsertBatch``, ``$afterInsertBatch``, ``$beforeUpdateBatch`` and
+    ``$afterUpdateBatch`` can be used since v4.3.0.
 
 Defining Callbacks
 ==================
@@ -701,20 +734,28 @@ Event Parameters
 Since the exact data passed to each callback varies a bit, here are the details on what is in the ``$data`` parameter
 passed to each event:
 
-================ =========================================================================================================
-Event            $data contents
-================ =========================================================================================================
+================= =========================================================================================================
+Event             $data contents
+================= =========================================================================================================
 beforeInsert      **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
                   insert method, it is first converted to an array.
 afterInsert       **id** = the primary key of the new row, or 0 on failure.
                   **data** = the key/value pairs being inserted.
                   **result** = the results of the insert() method used through the Query Builder.
+beforeInsertBatch **data** = associative array of values that are being inserted. If an object or Entity class is passed to the
+                  insertBatch method, it is first converted to an array.
+afterInsertBatch  **data** = the associative array of values being inserted.
+                  **result** = the results of the insertbatch() method used through the Query Builder.
 beforeUpdate      **id** = the array of primary keys of the rows being updated.
-                  **data** = the key/value pairs that are being inserted. If an object or Entity class is passed to the
-                  insert method, it is first converted to an array.
+                  **data** = the key/value pairs that are being updated. If an object or Entity class is passed to the
+                  update method, it is first converted to an array.
 afterUpdate       **id** = the array of primary keys of the rows being updated.
                   **data** = the key/value pairs being updated.
                   **result** = the results of the update() method used through the Query Builder.
+beforeUpdateBatch **data** = associative array of values that are being updated. If an object or Entity class is passed to the
+                  updateBatch method, it is first converted to an array.
+afterUpdateBatch  **data** = the key/value pairs being updated.
+                  **result** = the results of the updateBatch() method used through the Query Builder.
 beforeFind        The name of the calling **method**, whether a **singleton** was requested, and these additional fields:
 - first()         No additional fields
 - find()          **id** = the primary key of the row being searched for.
@@ -728,7 +769,7 @@ afterDelete       **id** = primary key of row being deleted.
                   **purge** = boolean whether soft-delete rows should be hard deleted.
                   **result** = the result of the delete() call on the Query Builder.
                   **data** = unused.
-================ =========================================================================================================
+================= =========================================================================================================
 
 Modifying Find* Data
 ====================

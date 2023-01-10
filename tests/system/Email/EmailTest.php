@@ -29,7 +29,7 @@ final class EmailTest extends CIUnitTestCase
         $config->validate = true;
         $email            = new Email($config);
         $email->setTo('invalid');
-        $this->assertStringContainsString('Invalid email address: invalid', $email->printDebugger());
+        $this->assertStringContainsString('Invalid email address: "invalid"', $email->printDebugger());
     }
 
     public function autoClearProvider()

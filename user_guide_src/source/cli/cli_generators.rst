@@ -44,6 +44,29 @@ Built-in Generators
 
 CodeIgniter4 ships the following generators by default.
 
+make:cell
+---------
+
+.. versionadded:: 4.3.0
+
+Creates a new Cell file and its view.
+
+Usage:
+======
+::
+
+    make:cell <name> [options]
+
+Argument:
+=========
+* ``name``: The name of the cell class. It should be in PascalCase.
+
+Options:
+========
+* ``--namespace``: Set the root namespace. Defaults to value of ``APP_NAMESPACE``.
+* ``--suffix``: Append the component suffix to the generated class name.
+* ``--force``: Set this flag to overwrite existing files on destination.
+
 make:command
 ------------
 
