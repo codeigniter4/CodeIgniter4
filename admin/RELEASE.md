@@ -73,9 +73,9 @@ cd release-test
 composer test && composer info codeigniter4/framework
 ```
 * Verify that the user guide actions succeeded:
-    * "Deploy Distributable Repos", framework repo
-    * "Deploy Production", UG repo
-    * "pages-build-deployment", UG repo
+    * "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
+    * "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
+    * "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
 * Fast-forward `develop` branch to catch the merge commit from `master`
 ```console
 git fetch origin
