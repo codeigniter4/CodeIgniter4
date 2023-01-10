@@ -453,7 +453,7 @@ database:</p>
 <section id="list-the-indexes-in-a-table">
 <h3><a class="toc-backref" href="#id8">List the Indexes in a Table</a><a class="headerlink" href="#list-the-indexes-in-a-table" title="Permalink to this headline"></a></h3>
 <section id="db-getindexdata">
-<h4>$db-&gt;getIndexData()<a class="headerlink" href="#db-getindexdata" title="Permalink to this headline"></a></h4>
+<span id="db-metadata-getindexdata"></span><h4>$db-&gt;getIndexData()<a class="headerlink" href="#db-getindexdata" title="Permalink to this headline"></a></h4>
 <p>Returns an array of objects containing index information.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -472,9 +472,10 @@ database:</p>
 <p>The key types may be unique to the database you are using.
 For instance, MySQL will return one of primary, fulltext, spatial, index or unique
 for each key associated with a table.</p>
+<p>SQLite3 returns a pseudo index named <code class="docutils literal notranslate"><span class="pre">PRIMARY</span></code>. But it is a special index, and you can’t use it in your SQL commands.</p>
 </section>
 <section id="db-getforeignkeydata">
-<h4>$db-&gt;getForeignKeyData()<a class="headerlink" href="#db-getforeignkeydata" title="Permalink to this headline"></a></h4>
+<span id="metadata-getforeignkeydata"></span><h4>$db-&gt;getForeignKeyData()<a class="headerlink" href="#db-getforeignkeydata" title="Permalink to this headline"></a></h4>
 <p>Returns an array of objects containing foreign key information.</p>
 <p>Usage example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -483,18 +484,20 @@ for each key associated with a table.</p>
 
 <span class="nv">$keys</span> <span class="o">=</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">getForeignKeyData</span><span class="p">(</span><span class="s1">&#39;table_name&#39;</span><span class="p">);</span>
 
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">table_name</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">column_name</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_table_name</span><span class="p">;</span>
-    <span class="k">echo</span> <span class="nv">$key</span><span class="o">-&gt;</span><span class="na">foreign_column_name</span><span class="p">;</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$keys</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$key</span> <span class="o">===</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">constraint_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">table_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">column_name</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// array</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">foreign_table_name</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">foreign_column_name</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// array</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">on_delete</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">on_update</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">match</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The object fields may be unique to the database you are using. For instance, SQLite3 does
-not return data on column names, but has the additional <em>sequence</em> field for compound
-foreign key definitions.</p>
+<p>Foreign keys use the naming convention <code class="docutils literal notranslate"><span class="pre">tableprefix_table_column1_column2_foreign</span></code>. Oracle uses a slightly different suffix of <code class="docutils literal notranslate"><span class="pre">_fk</span></code>.</p>
 </section>
 </section>
 </section>
@@ -512,7 +515,7 @@ foreign key definitions.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

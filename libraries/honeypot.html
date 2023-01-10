@@ -276,7 +276,7 @@
   <section id="honeypot-class">
 <h1>Honeypot Class<a class="headerlink" href="#honeypot-class" title="Permalink to this headline"></a></h1>
 <p>The Honeypot Class makes it possible to determine when a Bot makes a request to a CodeIgniter4 application,
-if it’s enabled in <code class="docutils literal notranslate"><span class="pre">Application\Config\Filters.php</span></code> file. This is done by attaching form fields to any form,
+if it’s enabled in <strong>appConfigFilters.php</strong> file. This is done by attaching form fields to any form,
 and this form field is hidden from a human but accessible to a Bot. When data is entered into the field, it’s
 assumed the request is coming from a Bot, and you can throw a <code class="docutils literal notranslate"><span class="pre">HoneypotException</span></code>.</p>
 <div class="contents local topic" id="contents">
@@ -297,14 +297,18 @@ from the <code class="docutils literal notranslate"><span class="pre">$globals</
 
 <span class="k">class</span> <span class="nc">Filters</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="nv">$globals</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s1">&#39;before&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;honeypot&#39;</span><span class="p">,</span>
             <span class="c1">// &#39;csrf&#39;,</span>
+            <span class="c1">// &#39;invalidchars&#39;,</span>
         <span class="p">],</span>
         <span class="s1">&#39;after&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
             <span class="s1">&#39;toolbar&#39;</span><span class="p">,</span>
             <span class="s1">&#39;honeypot&#39;</span><span class="p">,</span>
+            <span class="c1">// &#39;secureheaders&#39;,</span>
         <span class="p">],</span>
     <span class="p">];</span>
 
@@ -312,8 +316,8 @@ from the <code class="docutils literal notranslate"><span class="pre">$globals</
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>A sample Honeypot filter is bundled, as <code class="docutils literal notranslate"><span class="pre">system/Filters/Honeypot.php</span></code>.
-If it is not suitable, make your own at <code class="docutils literal notranslate"><span class="pre">app/Filters/Honeypot.php</span></code>,
+<p>A sample Honeypot filter is bundled, as <strong>system/Filters/Honeypot.php</strong>.
+If it is not suitable, make your own at <strong>app/Filters/Honeypot.php</strong>,
 and modify the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> in the configuration appropriately.</p>
 </section>
 <section id="customizing-honeypot">
@@ -321,10 +325,13 @@ and modify the <code class="docutils literal notranslate"><span class="pre">$ali
 <p>Honeypot can be customized. The fields below can be set either in
 <strong>app/Config/Honeypot.php</strong> or in <strong>.env</strong>.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">hidden</span></code> - true|false to control visibility of the honeypot field; default is <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code> - HTML label for the honeypot field, default is ‘Fill This Field’</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code> - name of the HTML form field used for the template; default is ‘honeypot’</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">template</span></code> - form field template used for the honeypot; default is ‘&lt;label&gt;{label}&lt;/label&gt;&lt;input type=”text” name=”{name}” value=””/&gt;’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$hidden</span></code> - <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code> to control visibility of the honeypot field; default is <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$label</span></code> - HTML label for the honeypot field, default is <code class="docutils literal notranslate"><span class="pre">'Fill</span> <span class="pre">This</span> <span class="pre">Field'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$name</span></code> - name of the HTML form field used for the template; default is <code class="docutils literal notranslate"><span class="pre">'honeypot'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$template</span></code> - form field template used for the honeypot; default is <code class="docutils literal notranslate"><span class="pre">'&lt;label&gt;{label}&lt;/label&gt;&lt;input</span> <span class="pre">type=&quot;text&quot;</span> <span class="pre">name=&quot;{name}&quot;</span> <span class="pre">value=&quot;&quot;&gt;'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$container</span></code> - container tag for the template; default is <code class="docutils literal notranslate"><span class="pre">'&lt;div</span> <span class="pre">style=&quot;display:none&quot;&gt;{template}&lt;/div&gt;'</span></code>.
+If you enables CSP, you can remove <code class="docutils literal notranslate"><span class="pre">style=&quot;display:none&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$containerId</span></code> - [Since v4.3.0] this setting is used only when you enables CSP. You can change the id attribute for the container tag; default is <code class="docutils literal notranslate"><span class="pre">'hpc'</span></code></p></li>
 </ul>
 </section>
 </section>
@@ -341,7 +348,7 @@ and modify the <code class="docutils literal notranslate"><span class="pre">$ali
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

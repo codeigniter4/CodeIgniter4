@@ -304,7 +304,7 @@ and then configure CodeIgniter to use it.</p>
     <span class="nx">slug</span> <span class="nx">VARCHAR</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
     <span class="nx">body</span> <span class="nx">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
     <span class="nx">PRIMARY</span> <span class="nx">KEY</span> <span class="p">(</span><span class="nx">id</span><span class="p">),</span>
-    <span class="nx">KEY</span> <span class="nx">slug</span> <span class="p">(</span><span class="nx">slug</span><span class="p">)</span>
+    <span class="nx">UNIQUE</span> <span class="nx">slug</span> <span class="p">(</span><span class="nx">slug</span><span class="p">)</span>
 <span class="p">);</span>
 </pre></div>
 </div>
@@ -342,7 +342,7 @@ your database properly as described in <a class="reference internal" href="../da
 should be placed in a model, so they can easily be reused later. Models
 are the place where you retrieve, insert, and update information in your
 database or other data stores. They provide access to your data.
-You can read more about it <a class="reference internal" href="../models/model.html"><span class="doc">here</span></a>.</p>
+You can read more about it in <a class="reference internal" href="../models/model.html"><span class="doc">Using CodeIgniter’s Model</span></a>.</p>
 <p>Open up the <strong>app/Models/</strong> directory and create a new file called
 <strong>NewsModel.php</strong> and add the following code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -430,7 +430,7 @@ access to the current <code class="docutils literal notranslate"><span class="pr
 <p>Next, there are two methods, one to view all news items, and one for a specific
 news item.</p>
 <p>Next, the <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> function is used to create the <strong>NewsModel</strong> instance.
-This is a helper function. You can read more about it <a class="reference internal" href="../general/common_functions.html"><span class="doc">here</span></a>.
+This is a helper function. You can read more about it in <a class="reference internal" href="../general/common_functions.html"><span class="doc">Global Functions and Constants</span></a>.
 You could also write <code class="docutils literal notranslate"><span class="pre">$model</span> <span class="pre">=</span> <span class="pre">new</span> <span class="pre">NewsModel();</span></code>, if you don’t use it.</p>
 <p>You can see that the <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed to the model’s
 method in the second method. The model is using this slug to identify the
@@ -456,7 +456,7 @@ the views. Modify the <code class="docutils literal notranslate"><span class="pr
         <span class="p">];</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/header&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">)</span>
-            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/overview&#39;</span><span class="p">)</span>
+            <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;news/index&#39;</span><span class="p">)</span>
             <span class="o">.</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;templates/footer&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 
@@ -467,7 +467,7 @@ the views. Modify the <code class="docutils literal notranslate"><span class="pr
 <p>The code above gets all news records from the model and assigns it to a
 variable. The value for the title is also assigned to the <code class="docutils literal notranslate"><span class="pre">$data['title']</span></code>
 element and all data is passed to the views. You now need to create a
-view to render the news items. Create <strong>app/Views/news/overview.php</strong>
+view to render the news items. Create <strong>app/Views/news/index.php</strong>
 and add the next piece of code.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;&lt;?=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
 
@@ -514,6 +514,7 @@ add some code to the controller and create a new view. Go back to the
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">App\Models\NewsModel</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">News</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
@@ -526,7 +527,7 @@ add some code to the controller and create a new view. Go back to the
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getNews</span><span class="p">(</span><span class="nv">$slug</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">]))</span> <span class="p">{</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">(</span><span class="s1">&#39;Cannot find the news item: &#39;</span> <span class="o">.</span> <span class="nv">$slug</span><span class="p">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">PageNotFoundException</span><span class="p">(</span><span class="s1">&#39;Cannot find the news item: &#39;</span> <span class="o">.</span> <span class="nv">$slug</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;news&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">];</span>
@@ -538,6 +539,8 @@ add some code to the controller and create a new view. Go back to the
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>Don’t forget to add <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Exceptions\PageNotFoundException;</span></code> to import
+the <code class="docutils literal notranslate"><span class="pre">PageNotFoundException</span></code> class.</p>
 <p>Instead of calling the <code class="docutils literal notranslate"><span class="pre">getNews()</span></code> method without a parameter, the
 <code class="docutils literal notranslate"><span class="pre">$slug</span></code> variable is passed, so it will return the specific news item.
 The only thing left to do is create the corresponding view at
@@ -558,10 +561,13 @@ with a slug to the <code class="docutils literal notranslate"><span class="pre">
 
 <span class="c1">// ...</span>
 
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;News::view/$1&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="s1">&#39;News::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+<span class="k">use</span> <span class="nx">App\Controllers\News</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Controllers\Pages</span><span class="p">;</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news/(:segment)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;news&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">News</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:segment)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">]);</span>
 
 <span class="c1">// ...</span>
 </pre></div>
@@ -585,7 +591,7 @@ to display just the one article.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

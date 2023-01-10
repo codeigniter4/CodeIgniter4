@@ -281,21 +281,26 @@ classes, in addition to the methods listed below.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#accessing-the-request" id="id1">Accessing the Request</a></p></li>
-<li><p><a class="reference internal" href="#determining-request-type" id="id2">Determining Request Type</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-input" id="id3">Retrieving Input</a></p>
+<li><p><a class="reference internal" href="#determining-request-type" id="id2">Determining Request Type</a></p>
 <ul>
-<li><p><a class="reference internal" href="#getting-data" id="id4">Getting Data</a></p></li>
-<li><p><a class="reference internal" href="#getting-json-data" id="id5">Getting JSON Data</a></p></li>
-<li><p><a class="reference internal" href="#getting-specific-data-from-json" id="id6">Getting Specific Data from JSON</a></p></li>
-<li><p><a class="reference internal" href="#retrieving-raw-data-put-patch-delete" id="id7">Retrieving Raw Data (PUT, PATCH, DELETE)</a></p></li>
-<li><p><a class="reference internal" href="#filtering-input-data" id="id8">Filtering Input Data</a></p></li>
+<li><p><a class="reference internal" href="#is" id="id3">is()</a></p></li>
+<li><p><a class="reference internal" href="#getmethod" id="id4">getMethod()</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#retrieving-headers" id="id9">Retrieving Headers</a></p></li>
-<li><p><a class="reference internal" href="#the-request-url" id="id10">The Request URL</a></p></li>
-<li><p><a class="reference internal" href="#uploaded-files" id="id11">Uploaded Files</a></p></li>
-<li><p><a class="reference internal" href="#content-negotiation" id="id12">Content Negotiation</a></p></li>
-<li><p><a class="reference internal" href="#class-reference" id="id13">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-input" id="id5">Retrieving Input</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getting-data" id="id6">Getting Data</a></p></li>
+<li><p><a class="reference internal" href="#getting-json-data" id="id7">Getting JSON Data</a></p></li>
+<li><p><a class="reference internal" href="#getting-specific-data-from-json" id="id8">Getting Specific Data from JSON</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-raw-data-put-patch-delete" id="id9">Retrieving Raw Data (PUT, PATCH, DELETE)</a></p></li>
+<li><p><a class="reference internal" href="#filtering-input-data" id="id10">Filtering Input Data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#retrieving-headers" id="id11">Retrieving Headers</a></p></li>
+<li><p><a class="reference internal" href="#the-request-url" id="id12">The Request URL</a></p></li>
+<li><p><a class="reference internal" href="#uploaded-files" id="id13">Uploaded Files</a></p></li>
+<li><p><a class="reference internal" href="#content-negotiation" id="id14">Content Negotiation</a></p></li>
+<li><p><a class="reference internal" href="#class-reference" id="id15">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="accessing-the-request">
@@ -369,6 +374,35 @@ be checked with the <code class="docutils literal notranslate"><span class="pre"
 which in some cases is not sent by default in XHR requests via JavaScript (i.e., fetch).
 See the <a class="reference internal" href="../general/ajax.html"><span class="doc">AJAX Requests</span></a> section on how to avoid this problem.</p>
 </div>
+<section id="is">
+<span id="incomingrequest-is"></span><h3><a class="toc-backref" href="#id3">is()</a><a class="headerlink" href="#is" title="Permalink to this headline"></a></h3>
+<blockquote>
+<div><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+</div></blockquote>
+<p>Since v4.3.0, you can use the <code class="docutils literal notranslate"><span class="pre">is()</span></code> method. It returns boolean.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Checks HTTP methods. Returns boolean.</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;put&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;patch&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">);</span>
+
+<span class="c1">// Checks if it is an AJAX request. The same as `$request-&gt;isAJAX()`.</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;ajax&#39;</span><span class="p">);</span>
+
+<span class="c1">// Checks if it is a JSON request.</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;json&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="getmethod">
+<h3><a class="toc-backref" href="#id4">getMethod()</a><a class="headerlink" href="#getmethod" title="Permalink to this headline"></a></h3>
 <p>You can check the HTTP method that this request represents with the <code class="docutils literal notranslate"><span class="pre">getMethod()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -397,8 +431,9 @@ uppercase version by wrapping the call in <code class="docutils literal notransl
 </pre></div>
 </div>
 </section>
+</section>
 <section id="retrieving-input">
-<h2><a class="toc-backref" href="#id3">Retrieving Input</a><a class="headerlink" href="#retrieving-input" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id5">Retrieving Input</a><a class="headerlink" href="#retrieving-input" title="Permalink to this headline"></a></h2>
 <p>You can retrieve input from <code class="docutils literal notranslate"><span class="pre">$_SERVER</span></code>, <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, and <code class="docutils literal notranslate"><span class="pre">$_ENV</span></code> through the Request object.
 The data is not automatically filtered and returns the raw input data as passed in the request.</p>
 <div class="admonition note">
@@ -423,7 +458,7 @@ like this:</p>
 </pre></div>
 </div>
 <section id="getting-data">
-<span id="incomingrequest-getting-data"></span><h3><a class="toc-backref" href="#id4">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this headline"></a></h3>
+<span id="incomingrequest-getting-data"></span><h3><a class="toc-backref" href="#id6">Getting Data</a><a class="headerlink" href="#getting-data" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> method will pull from <code class="docutils literal notranslate"><span class="pre">$_REQUEST</span></code>, so will return any data from <code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$POST</span></code>, or <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code> (depending on php.ini <a class="reference external" href="https://www.php.net/manual/en/ini.core.php#ini.request-order">request-order</a>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -447,7 +482,7 @@ maintaining the ability to control the order you look for it:</p>
 </ul>
 </section>
 <section id="getting-json-data">
-<span id="incomingrequest-getting-json-data"></span><h3><a class="toc-backref" href="#id5">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Permalink to this headline"></a></h3>
+<span id="incomingrequest-getting-json-data"></span><h3><a class="toc-backref" href="#id7">Getting JSON Data</a><a class="headerlink" href="#getting-json-data" title="Permalink to this headline"></a></h3>
 <p>You can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a JSON stream with <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -467,7 +502,7 @@ arrays, pass in <code class="docutils literal notranslate"><span class="pre">tru
 the JSON stream. Using <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> in this way will always return an object.</p>
 </section>
 <section id="getting-specific-data-from-json">
-<h3><a class="toc-backref" href="#id6">Getting Specific Data from JSON</a><a class="headerlink" href="#getting-specific-data-from-json" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Getting Specific Data from JSON</a><a class="headerlink" href="#getting-specific-data-from-json" title="Permalink to this headline"></a></h3>
 <p>You can get a specific piece of data from a JSON stream by passing a variable name into <code class="docutils literal notranslate"><span class="pre">getVar()</span></code> for the
 data that you want or you can use “dot” notation to dig into the JSON to get data that is not on the root level.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -508,7 +543,7 @@ correct <code class="docutils literal notranslate"><span class="pre">Content-Typ
 </div>
 </section>
 <section id="retrieving-raw-data-put-patch-delete">
-<span id="incomingrequest-retrieving-raw-data"></span><h3><a class="toc-backref" href="#id7">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Permalink to this headline"></a></h3>
+<span id="incomingrequest-retrieving-raw-data"></span><h3><a class="toc-backref" href="#id9">Retrieving Raw Data (PUT, PATCH, DELETE)</a><a class="headerlink" href="#retrieving-raw-data-put-patch-delete" title="Permalink to this headline"></a></h3>
 <p>Finally, you can grab the contents of <code class="docutils literal notranslate"><span class="pre">php://input</span></code> as a raw stream with <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -529,9 +564,41 @@ correct <code class="docutils literal notranslate"><span class="pre">Content-Typ
 <span class="cm"> */</span>
 </pre></div>
 </div>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">getRawInputVar()</span></code>, to get the specified variable from raw stream and filter it.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// When the request body is &#39;foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20&#39;</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">));</span>
+<span class="c1">// Outputs: two</span>
+
+<span class="c1">// foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">([</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">]));</span>
+<span class="cm">/*</span>
+<span class="cm"> * Outputs:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *      &#39;foo&#39; =&gt; &#39;one&#39;,</span>
+<span class="cm"> *      &#39;bar&#39; =&gt; &#39;two&#39;</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
+
+<span class="c1">// foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">));</span>
+<span class="cm">/*</span>
+<span class="cm"> * Outputs:</span>
+<span class="cm"> * [</span>
+<span class="cm"> *      &#39;10&#39;,</span>
+<span class="cm"> *      &#39;20&#39;</span>
+<span class="cm"> * ]</span>
+<span class="cm"> */</span>
+
+<span class="c1">// foo=one&amp;bar=two&amp;baz[]=10&amp;baz[]=20</span>
+<span class="nb">var_dump</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getRawInputVar</span><span class="p">(</span><span class="s1">&#39;baz.0&#39;</span><span class="p">));</span>
+<span class="c1">// Outputs: 10</span>
+</pre></div>
+</div>
 </section>
 <section id="filtering-input-data">
-<h3><a class="toc-backref" href="#id8">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Filtering Input Data</a><a class="headerlink" href="#filtering-input-data" title="Permalink to this headline"></a></h3>
 <p>To maintain security of your application, you will want to filter all input as you access it. You can
 pass the type of filter to use as the second parameter of any of these methods. The native <code class="docutils literal notranslate"><span class="pre">filter_var()</span></code>
 function is used for the filtering. Head over to the PHP manual for a list of <a class="reference external" href="https://www.php.net/manual/en/filter.filters.php">valid
@@ -543,11 +610,11 @@ filter types</a>.</p>
 </pre></div>
 </div>
 <p>All of the methods mentioned above support the filter type passed in as the second parameter, with the
-exception of <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code>.</p>
+exception of <code class="docutils literal notranslate"><span class="pre">getJSON()</span></code> and <code class="docutils literal notranslate"><span class="pre">getRawInput()</span></code>.</p>
 </section>
 </section>
 <section id="retrieving-headers">
-<h2><a class="toc-backref" href="#id9">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id11">Retrieving Headers</a><a class="headerlink" href="#retrieving-headers" title="Permalink to this headline"></a></h2>
 <p>You can get access to any header that was sent with the request with the <code class="docutils literal notranslate"><span class="pre">headers()</span></code> method, which returns
 an array of all headers, with the key as the name of the header, and the value is an instance of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Header</span></code>:</p>
@@ -598,7 +665,7 @@ specified header object in a case-insensitive manner if it exists. If not, then 
 </div>
 </section>
 <section id="the-request-url">
-<h2><a class="toc-backref" href="#id10">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id12">The Request URL</a><a class="headerlink" href="#the-request-url" title="Permalink to this headline"></a></h2>
 <p>You can retrieve a <a class="reference internal" href="../libraries/uri.html"><span class="doc">URI</span></a> object that represents the current URI for this request through the
 <code class="docutils literal notranslate"><span class="pre">$request-&gt;getUri()</span></code> method. You can cast this object as a string to get a full URL for the current request:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -645,7 +712,7 @@ functions use, so this is a helpful way to “spoof” an incoming request for t
 </div>
 </section>
 <section id="uploaded-files">
-<h2><a class="toc-backref" href="#id11">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Uploaded Files</a><a class="headerlink" href="#uploaded-files" title="Permalink to this headline"></a></h2>
 <p>Information about all uploaded files can be retrieved through <code class="docutils literal notranslate"><span class="pre">$request-&gt;getFiles()</span></code>, which returns an array of
 <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Files\UploadedFile</span></code> instance. This helps to ease the pain of working with uploaded files,
 and uses best practices to minimize any security risks.</p>
@@ -674,7 +741,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 </div>
 </section>
 <section id="content-negotiation">
-<h2><a class="toc-backref" href="#id12">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Content Negotiation</a><a class="headerlink" href="#content-negotiation" title="Permalink to this headline"></a></h2>
 <p>You can easily negotiate content types with the request through the <code class="docutils literal notranslate"><span class="pre">negotiate()</span></code> method:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -688,7 +755,7 @@ multi-file upload, based on the filename given in the HTML file input:</p>
 <p>See the <a class="reference internal" href="content_negotiation.html"><span class="doc">Content Negotiation</span></a> page for more details.</p>
 </section>
 <section id="class-reference">
-<h2><a class="toc-backref" href="#id13">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id15">Class Reference</a><a class="headerlink" href="#class-reference" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In addition to the methods listed here, this class inherits the methods from the
@@ -1089,7 +1156,7 @@ update the underlying <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

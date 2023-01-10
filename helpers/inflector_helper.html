@@ -444,6 +444,31 @@ Example:</p>
 </dd></dl>
 
 <dl class="php function">
+<dt class="sig sig-object php" id="decamelize">
+<span class="sig-name descname"><span class="pre">decamelize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="sig-paren">)</span><a class="headerlink" href="#decamelize" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$string</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Input string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>String containing underscores between words</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+</dd>
+</dl>
+<p>Takes multiple words in camelCase or PascalCase and converts them to snake_case.
+Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="nx">underscore</span><span class="p">(</span><span class="s1">&#39;my dog spot&#39;</span><span class="p">);</span> <span class="c1">// Prints &#39;my_dog_spot&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php function">
 <dt class="sig sig-object php" id="humanize">
 <span class="sig-name descname"><span class="pre">humanize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$string</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$separator</span> <span class="pre">=</span> <span class="pre">'_'</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#humanize" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -591,7 +616,7 @@ Example:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

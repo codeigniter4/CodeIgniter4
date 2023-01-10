@@ -295,7 +295,7 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – URI string or array of URI segments</p></li>
+<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments</p></li>
 <li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., ‘http’ or ‘https’</p></li>
 <li><p><strong>$altConfig</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">\Config\App</span></code></span>) – Alternate configuration to use</p></li>
 </ul>
@@ -307,8 +307,13 @@
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns your site URL, as specified in your config file. The index.php
-file (or whatever you have set as your site <strong>indexPage</strong> in your config
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>,
+this returns the URL with the hostname set in it if the current URL matches.</p>
+</div>
+<p>Returns your site URL, as specified in your config file. The <strong>index.php</strong>
+file (or whatever you have set as your site <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> in your config
 file) will be added to the URL, as will any URI segments you pass to the
 function.</p>
 <p>You are encouraged to use this function any time you need to generate a
@@ -322,7 +327,7 @@ array. Here is a string example:</p>
 </pre></div>
 </div>
 <p>The above example would return something like:
-<em>http://example.com/index.php/news/local/123</em></p>
+<strong>http://example.com/index.php/news/local/123</strong></p>
 <p>Here is an example of segments passed as an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -341,7 +346,7 @@ We use this for unit testing the framework itself.</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – URI string or array of URI segments</p></li>
+<li><p><strong>$uri</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string</span></code></span>) – URI string or array of URI segments</p></li>
 <li><p><strong>$protocol</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Protocol, e.g., ‘http’ or ‘https’</p></li>
 </ul>
 </dd>
@@ -352,6 +357,11 @@ We use this for unit testing the framework itself.</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>,
+this returns the URL with the hostname set in it if the current URL matches.</p>
+</div>
 <p>Returns your site base URL, as specified in your config file. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -359,7 +369,7 @@ We use this for unit testing the framework itself.</p>
 </pre></div>
 </div>
 <p>This function returns the same thing as <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, without
-the <em>indexPage</em> being appended.</p>
+the <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code> being appended.</p>
 <p>Also like <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply segments as a string or
 an array. Here is a string example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -368,7 +378,7 @@ an array. Here is a string example:</p>
 </pre></div>
 </div>
 <p>The above example would return something like:
-<em>http://example.com/blog/post/123</em></p>
+<strong>http://example.com/blog/post/123</strong></p>
 <p>This is useful because unlike <a class="reference internal" href="#site_url" title="site_url"><code class="xref php php-func docutils literal notranslate"><span class="pre">site_url()</span></code></a>, you can supply a
 string to a file, such as an image or stylesheet. For example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -377,7 +387,7 @@ string to a file, such as an image or stylesheet. For example:</p>
 </pre></div>
 </div>
 <p>This would give you something like:
-<em>http://example.com/images/icons/edit.png</em></p>
+<strong>http://example.com/images/icons/edit.png</strong></p>
 </dd></dl>
 
 <dl class="php function">
@@ -397,9 +407,11 @@ string to a file, such as an image or stylesheet. For example:</p>
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|\CodeIgniter\HTTP\URI</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the full URL (including segments) of the page being currently viewed.
-However for security reasons, it is created based on the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> settings,
+<p>Returns the full URL (including segments) of the page being currently viewed.</p>
+<p>However for security reasons, it is created based on the <code class="docutils literal notranslate"><span class="pre">Config\App</span></code> settings,
 and not intended to match the browser URL.</p>
+<p>Since v4.3.0, if you set <code class="docutils literal notranslate"><span class="pre">Config\App::$allowedHostnames</span></code>,
+this returns the URL with the hostname set in it if the current URL matches.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Calling this function is the same as doing this:</p>
@@ -409,12 +421,12 @@ and not intended to match the browser URL.</p>
 </pre></div>
 </div>
 </div>
-</dd></dl>
-
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Prior to v4.1.2, this function had a bug causing it to ignore the configuration on <code class="docutils literal notranslate"><span class="pre">App::$indexPage</span></code>.</p>
+<p>Prior to v4.1.2, this function had a bug causing it to ignore the configuration on <code class="docutils literal notranslate"><span class="pre">Config\App::$indexPage</span></code>.</p>
 </div>
+</dd></dl>
+
 <dl class="php function">
 <dt class="sig sig-object php" id="previous_url">
 <span class="sig-name descname"><span class="pre">previous_url</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$returnObject</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#previous_url" title="Permalink to this definition"></a></dt>
@@ -955,7 +967,7 @@ any other applicable characters in the URL:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

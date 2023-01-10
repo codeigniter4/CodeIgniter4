@@ -292,11 +292,15 @@
 <li><p><a class="reference internal" href="#filter-arguments" id="id11">Filter arguments</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#confirming-filters" id="id12">Confirming Filters</a></p></li>
-<li><p><a class="reference internal" href="#provided-filters" id="id13">Provided Filters</a></p>
+<li><p><a class="reference internal" href="#confirming-filters" id="id12">Confirming Filters</a></p>
 <ul>
-<li><p><a class="reference internal" href="#invalidchars" id="id14">InvalidChars</a></p></li>
-<li><p><a class="reference internal" href="#secureheaders" id="id15">SecureHeaders</a></p></li>
+<li><p><a class="reference internal" href="#filter-check" id="id13">filter:check</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#provided-filters" id="id14">Provided Filters</a></p>
+<ul>
+<li><p><a class="reference internal" href="#invalidchars" id="id15">InvalidChars</a></p></li>
+<li><p><a class="reference internal" href="#secureheaders" id="id16">SecureHeaders</a></p></li>
 </ul>
 </li>
 </ul>
@@ -582,18 +586,37 @@ a list of URI patterns that filter should apply to:</p>
 </section>
 <section id="confirming-filters">
 <h2><a class="toc-backref" href="#id12">Confirming Filters</a><a class="headerlink" href="#confirming-filters" title="Permalink to this headline"></a></h2>
-<p>You can see the routes and filters by the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command.
-See <a class="reference internal" href="routing.html#spark-routes"><span class="std std-ref">URI Routing</span></a>.</p>
+<p>CodeIgniter has the following <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">command</span></a> to check the filters for a route.</p>
+<section id="filter-check">
+<span id="spark-filter-check"></span><h3><a class="toc-backref" href="#id13">filter:check</a><a class="headerlink" href="#filter-check" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Check the filters for the route <code class="docutils literal notranslate"><span class="pre">/</span></code> with <strong>GET</strong> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">filter</span><span class="o">:</span><span class="nx">check</span> <span class="nx">get</span> <span class="o">/</span>
+</pre></div>
+</div>
+<p>The output is like the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>+--------+-------+----------------+---------------+
+| Method | Route | Before Filters | After Filters |
++--------+-------+----------------+---------------+
+| GET    | /     |                | toolbar       |
++--------+-------+----------------+---------------+
+</pre></div>
+</div>
+<p>You can also see the routes and filters by the <code class="docutils literal notranslate"><span class="pre">spark</span> <span class="pre">routes</span></code> command.
+See <a class="reference internal" href="routing.html#routing-spark-routes"><span class="std std-ref">URI Routing</span></a>.</p>
+</section>
 </section>
 <section id="provided-filters">
-<h2><a class="toc-backref" href="#id13">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id14">Provided Filters</a><a class="headerlink" href="#provided-filters" title="Permalink to this headline"></a></h2>
 <p>The filters bundled with CodeIgniter4 are: <a class="reference internal" href="../libraries/honeypot.html"><span class="doc">Honeypot</span></a>, <a class="reference internal" href="../libraries/security.html#cross-site-request-forgery"><span class="std std-ref">CSRF</span></a>, <code class="docutils literal notranslate"><span class="pre">InvalidChars</span></code>, <code class="docutils literal notranslate"><span class="pre">SecureHeaders</span></code>, and <a class="reference internal" href="../testing/debugging.html#the-debug-toolbar"><span class="std std-ref">DebugToolbar</span></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The filters are executed in the order defined in the config file. However, if enabled, <code class="docutils literal notranslate"><span class="pre">DebugToolbar</span></code> is always executed last because it should be able to capture everything that happens in the other filters.</p>
 </div>
 <section id="invalidchars">
-<h3><a class="toc-backref" href="#id14">InvalidChars</a><a class="headerlink" href="#invalidchars" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">InvalidChars</a><a class="headerlink" href="#invalidchars" title="Permalink to this headline"></a></h3>
 <p>This filter prohibits user input data (<code class="docutils literal notranslate"><span class="pre">$_GET</span></code>, <code class="docutils literal notranslate"><span class="pre">$_POST</span></code>, <code class="docutils literal notranslate"><span class="pre">$_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">php://input</span></code>) from containing the following characters:</p>
 <ul class="simple">
 <li><p>invalid UTF-8 characters</p></li>
@@ -601,7 +624,7 @@ See <a class="reference internal" href="routing.html#spark-routes"><span class="
 </ul>
 </section>
 <section id="secureheaders">
-<span id="id2"></span><h3><a class="toc-backref" href="#id15">SecureHeaders</a><a class="headerlink" href="#secureheaders" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id16">SecureHeaders</a><a class="headerlink" href="#secureheaders" title="Permalink to this headline"></a></h3>
 <p>This filter adds HTTP response headers that your application can use to increase the security of your application.</p>
 <p>If you want to customize the headers, extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Filters\SecureHeaders</span></code> and override the <code class="docutils literal notranslate"><span class="pre">$headers</span></code> property. And change the <code class="docutils literal notranslate"><span class="pre">$aliases</span></code> property in <strong>app/Config/Filters.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -638,7 +661,7 @@ See <a class="reference internal" href="routing.html#spark-routes"><span class="
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

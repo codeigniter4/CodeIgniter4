@@ -339,24 +339,36 @@ system.</p>
 <li><p><a class="reference internal" href="#insertbatch" id="id31">insertBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#updating-data" id="id32">Updating Data</a></p>
+<li><p><a class="reference internal" href="#upserting-data" id="id32">Upserting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#update" id="id33">Update</a></p></li>
-<li><p><a class="reference internal" href="#updatebatch" id="id34">UpdateBatch</a></p></li>
+<li><p><a class="reference internal" href="#upsert" id="id33">Upsert</a></p></li>
+<li><p><a class="reference internal" href="#upsertbatch" id="id34">upsertBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#deleting-data" id="id35">Deleting Data</a></p>
+<li><p><a class="reference internal" href="#updating-data" id="id35">Updating Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#delete" id="id36">Delete</a></p></li>
+<li><p><a class="reference internal" href="#update" id="id36">Update</a></p></li>
+<li><p><a class="reference internal" href="#updatebatch" id="id37">UpdateBatch</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#method-chaining" id="id37">Method Chaining</a></p></li>
-<li><p><a class="reference internal" href="#resetting-query-builder" id="id38">Resetting Query Builder</a></p>
+<li><p><a class="reference internal" href="#deleting-data" id="id38">Deleting Data</a></p>
 <ul>
-<li><p><a class="reference internal" href="#resetquery" id="id39">ResetQuery</a></p></li>
+<li><p><a class="reference internal" href="#delete" id="id39">Delete</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id40">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#conditional-statements" id="id40">Conditional Statements</a></p>
+<ul>
+<li><p><a class="reference internal" href="#when" id="id41">When</a></p></li>
+<li><p><a class="reference internal" href="#whennot" id="id42">WhenNot</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#method-chaining" id="id43">Method Chaining</a></p></li>
+<li><p><a class="reference internal" href="#resetting-query-builder" id="id44">Resetting Query Builder</a></p>
+<ul>
+<li><p><a class="reference internal" href="#resetquery" id="id45">ResetQuery</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Database" id="id46">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="sql-injection-protection">
@@ -1549,14 +1561,21 @@ query. You can either pass an <strong>array</strong> or an <strong>object</stron
 method. Here is an example using an array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span>          <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;DEFAULT&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;title&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;My Name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;date&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;2022-01-01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;last_update&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP()&#39;</span><span class="p">),</span>
 <span class="p">];</span>
 
 <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-<span class="c1">// Produces: INSERT INTO mytable (title, name, date) VALUES (&#39;My title&#39;, &#39;My name&#39;, &#39;My date&#39;)</span>
+<span class="cm">/* Produces:</span>
+<span class="cm">    INSERT INTO mytable (id, title, name, date, last_update)</span>
+<span class="cm">    VALUES (DEFAULT, &#39;My title&#39;, &#39;My name&#39;, &#39;2022-01-01&#39;, CURRENT_TIMESTAMP())</span>
+<span class="cm">*/</span>
 </pre></div>
 </div>
 <p>The first parameter is an associative array of values.</p>
@@ -1578,7 +1597,11 @@ method. Here is an example using an array:</p>
 <p>The first parameter is an object.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All values are escaped automatically producing safer queries.</p>
+<p>All values except <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> are escaped automatically producing safer queries.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
 </div>
 </section>
 <section id="builder-ignore">
@@ -1637,7 +1660,7 @@ will be reset (by default it will be–just like <code class="docutils literal n
 </section>
 </section>
 <section id="insertbatch">
-<h3><a class="toc-backref" href="#id31">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
+<span id="insert-batch-data"></span><h3><a class="toc-backref" href="#id31">insertBatch</a><a class="headerlink" href="#insertbatch" title="Permalink to this headline"></a></h3>
 <section id="builder-insertbatch">
 <h4>$builder-&gt;insertBatch()<a class="headerlink" href="#builder-insertbatch" title="Permalink to this headline"></a></h4>
 <p>Generates an insert string based on the data you supply, and runs the
@@ -1665,15 +1688,294 @@ method. Here is an example using an array:</p>
 <p>The first parameter is an associative array of values.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All values are escaped automatically producing safer queries.</p>
+<p>All values except <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> are escaped automatically producing safer queries.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
+</div>
+<p>You can also insert from a query:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="s1">&#39;SELECT user2.name, user2.email, user2.country</span>
+<span class="s1">          FROM user2</span>
+<span class="s1">          LEFT JOIN user ON user.email = user2.email</span>
+<span class="s1">          WHERE user.email IS NULL&#39;</span><span class="p">;</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span>
+    <span class="o">-&gt;</span><span class="na">ignore</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setQueryAsData</span><span class="p">(</span><span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="nv">$query</span><span class="p">),</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;name, country, email&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">insertBatch</span><span class="p">();</span>
+<span class="cm">/* MySQLi produces:</span>
+<span class="cm">    INSERT IGNORE INTO `db_user` (`name`, `country`, `email`)</span>
+<span class="cm">    SELECT user2.name, user2.email, user2.country</span>
+<span class="cm">    FROM user2</span>
+<span class="cm">    LEFT JOIN user ON user.email = user2.email</span>
+<span class="cm">    WHERE user.email IS NULL</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code> can be used since v4.3.0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is required to alias the columns of the select query to match those of the target table.</p>
 </div>
 </section>
 </section>
 </section>
+<section id="upserting-data">
+<span id="upsert-data"></span><h2><a class="toc-backref" href="#id32">Upserting Data</a><a class="headerlink" href="#upserting-data" title="Permalink to this headline"></a></h2>
+<section id="upsert">
+<h3><a class="toc-backref" href="#id33">Upsert</a><a class="headerlink" href="#upsert" title="Permalink to this headline"></a></h3>
+<section id="builder-upsert">
+<h4>$builder-&gt;upsert()<a class="headerlink" href="#builder-upsert" title="Permalink to this headline"></a></h4>
+<p>Generates an upsert string based on the data you supply, and runs the
+query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
+method. By default a constraint will be defined in order. A primary
+key will be selected first and then unique keys. MySQL will use any
+constraint by default. Here is an example using an array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">upsert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// MySQLi  produces: INSERT INTO.. ON DUPLICATE KEY UPDATE..</span>
+<span class="c1">// Postgre produces: INSERT INTO.. ON CONFLICT.. DO UPDATE..</span>
+<span class="c1">// SQLite3 produces: INSERT INTO.. ON CONFLICT.. DO UPDATE..</span>
+<span class="c1">// SQLSRV  produces: MERGE INTO.. WHEN MATCHED THEN UPDATE.. WHEN NOT MATCHED THEN INSERT..</span>
+<span class="c1">// OCI8    produces: MERGE INTO.. WHEN MATCHED THEN UPDATE.. WHEN NOT MATCHED THEN INSERT..</span>
+</pre></div>
+</div>
+<p>The first parameter is an associative array of values.</p>
+<p>Here is an example using an object:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">class</span> <span class="nc">Myclass</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$email</span>   <span class="o">=</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$name</span>    <span class="o">=</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$country</span> <span class="o">=</span> <span class="s1">&#39;Iran&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Myclass</span><span class="p">();</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">upsert</span><span class="p">(</span><span class="nv">$object</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first parameter is an object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All values are escaped automatically producing safer queries.</p>
+</div>
+</section>
+<section id="builder-getcompiledupsert">
+<h4>$builder-&gt;getCompiledUpsert()<a class="headerlink" href="#builder-getcompiledupsert" title="Permalink to this headline"></a></h4>
+<p>Compiles the upsert query just like <code class="docutils literal notranslate"><span class="pre">$builder-&gt;upsert()</span></code> but does not
+<em>run</em> the query. This method simply returns the SQL query as a string.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getCompiledUpsert</span><span class="p">();</span>
+<span class="k">echo</span> <span class="nv">$sql</span><span class="p">;</span>
+<span class="cm">/* MySQLi produces:</span>
+<span class="cm">    INSERT INTO `db_user` (`country`, `email`, `name`)</span>
+<span class="cm">    VALUES (&#39;Iran&#39;,&#39;ahmadinejad@example.com&#39;,&#39;Ahmadinejad&#39;)</span>
+<span class="cm">    ON DUPLICATE KEY UPDATE</span>
+<span class="cm">    `country` = VALUES(`country`),</span>
+<span class="cm">    `email` = VALUES(`email`),</span>
+<span class="cm">    `name` = VALUES(`name`)</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method doesn’t work for batch upserts.</p>
+</div>
+</section>
+</section>
+<section id="upsertbatch">
+<h3><a class="toc-backref" href="#id34">upsertBatch</a><a class="headerlink" href="#upsertbatch" title="Permalink to this headline"></a></h3>
+<section id="builder-upsertbatch">
+<h4>$builder-&gt;upsertBatch()<a class="headerlink" href="#builder-upsertbatch" title="Permalink to this headline"></a></h4>
+<p>Generates an upsert string based on the data you supply, and runs the
+query. You can either pass an <strong>array</strong> or an <strong>object</strong> to the
+method. By default a constraint will be defined in order. A primary
+key will be selected first and then unique keys. Mysql will use any
+constraint by default. Here is an example using an array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;pedro@example.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Pedro&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;El Salvador&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">upsertBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="c1">// MySQLi  produces: INSERT INTO.. ON DUPLICATE KEY UPDATE..</span>
+<span class="c1">// Postgre produces: INSERT INTO.. ON CONFLICT.. DO UPDATE..</span>
+<span class="c1">// SQLite3 produces: INSERT INTO.. ON CONFLICT.. DO UPDATE..</span>
+<span class="c1">// SQLSRV  produces: MERGE INTO.. WHEN MATCHED THEN UPDATE.. WHEN NOT MATCHED THEN INSERT..</span>
+<span class="c1">// OCI8    produces: MERGE INTO.. WHEN MATCHED THEN UPDATE.. WHEN NOT MATCHED THEN INSERT..</span>
+</pre></div>
+</div>
+<p>The first parameter is an associative array of values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All values are escaped automatically producing safer queries.</p>
+</div>
+<p>You can also upsert from a query:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user2&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user2.name, user2.email, user2.country&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;user.email = user2.email&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user.email IS NULL&#39;</span><span class="p">);</span>
+
+<span class="nv">$additionalUpdateField</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP&#39;</span><span class="p">)];</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setQueryAsData</span><span class="p">(</span><span class="nv">$query</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">(</span><span class="nv">$additionalUpdateField</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upsertBatch</span><span class="p">();</span>
+<span class="cm">/* MySQLi produces:</span>
+<span class="cm">    INSERT INTO `db_user` (`country`, `email`, `name`)</span>
+<span class="cm">    SELECT user2.name, user2.email, user2.country</span>
+<span class="cm">    FROM user2</span>
+<span class="cm">    LEFT JOIN user ON user.email = user2.email</span>
+<span class="cm">    WHERE user.email IS NULL</span>
+<span class="cm">    ON DUPLICATE KEY UPDATE</span>
+<span class="cm">    `country` = VALUES(`country`),</span>
+<span class="cm">    `email` = VALUES(`email`),</span>
+<span class="cm">    `name` = VALUES(`name`),</span>
+<span class="cm">    `updated_at` = CURRENT_TIMESTAMP</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code> can be used since v4.3.0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is required to alias the columns of the select query to match those of the target table.</p>
+</div>
+</section>
+<section id="builder-onconstraint">
+<h4>$builder-&gt;onConstraint()<a class="headerlink" href="#builder-onconstraint" title="Permalink to this headline"></a></h4>
+<p>Allows manually setting constraint to be used for upsert. This does
+not work with MySQL because MySQL checks all constraints by default.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upsert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+<span class="cm">/* Postgre produces:</span>
+<span class="cm">    INSERT INTO &quot;db_user&quot;(&quot;country&quot;, &quot;email&quot;, &quot;id&quot;, &quot;name&quot;)</span>
+<span class="cm">    VALUES (&#39;Iran&#39;,&#39;ahmadinejad@example.com&#39;,2,&#39;Ahmadinejad&#39;)</span>
+<span class="cm">    ON CONFLICT(&quot;email&quot;)</span>
+<span class="cm">    DO UPDATE SET</span>
+<span class="cm">    &quot;country&quot; = &quot;excluded&quot;.&quot;country&quot;,</span>
+<span class="cm">    &quot;id&quot; = &quot;excluded&quot;.&quot;id&quot;,</span>
+<span class="cm">    &quot;name&quot; = &quot;excluded&quot;.&quot;name&quot;</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>This method accepts a string or an array of columns.</p>
+</section>
+<section id="builder-updatefields">
+<h4>$builder-&gt;updateFields()<a class="headerlink" href="#builder-updatefields" title="Permalink to this headline"></a></h4>
+<p>Allows manually setting the fields to be updated when performing upserts.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Ahmadinejad Zaghari&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Afghanistan&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">(</span><span class="s1">&#39;name, country&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;_upsert&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upsert</span><span class="p">();</span>
+<span class="cm">/* SQLSRV produces:</span>
+<span class="cm">    MERGE INTO &quot;test&quot;.&quot;dbo&quot;.&quot;db_user&quot;</span>
+<span class="cm">    USING (</span>
+<span class="cm">     VALUES (&#39;Iran&#39;,&#39;ahmadinejad@example.com&#39;,2,&#39;Ahmadinejad&#39;)</span>
+<span class="cm">    ) &quot;_upsert&quot; (&quot;country&quot;, &quot;email&quot;, &quot;id&quot;, &quot;name&quot;)</span>
+<span class="cm">    ON (&quot;test&quot;.&quot;dbo&quot;.&quot;db_user&quot;.&quot;id&quot; = &quot;_upsert&quot;.&quot;id&quot;)</span>
+<span class="cm">    WHEN MATCHED THEN UPDATE SET</span>
+<span class="cm">    &quot;country&quot; = &quot;_upsert&quot;.&quot;country&quot;,</span>
+<span class="cm">    &quot;name&quot; = &quot;_upsert&quot;.&quot;name&quot;</span>
+<span class="cm">    WHEN NOT MATCHED THEN INSERT (&quot;country&quot;, &quot;email&quot;, &quot;id&quot;, &quot;name&quot;)</span>
+<span class="cm">    VALUES (&quot;_upsert&quot;.&quot;country&quot;, &quot;_upsert&quot;.&quot;email&quot;, &quot;_upsert&quot;.&quot;id&quot;, &quot;_upsert&quot;.&quot;name&quot;);</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>This method accepts a string, an array of columns, or RawSql. You can also
+specify an extra column to be updated that isn’t included in the dataset.
+This can be done by setting the second parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;ahmadinejad@example.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Ahmadinejad&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Iran&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>      <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;pedro@example.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;Pedro&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;country&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;El Salvador&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="nv">$additionalUpdateField</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP&#39;</span><span class="p">)];</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">(</span><span class="nv">$additionalUpdateField</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">upsertBatch</span><span class="p">();</span>
+<span class="cm">/* MySQLi produces:</span>
+<span class="cm">    INSERT INTO `db_user` (`country`, `email`, `name`)</span>
+<span class="cm">    VALUES (&#39;Iran&#39;,&#39;ahmadinejad@example.com&#39;,&#39;Ahmadinejad&#39;),(&#39;El Salvador&#39;,&#39;pedro@example.com&#39;,&#39;Pedro&#39;)</span>
+<span class="cm">    ON DUPLICATE KEY UPDATE</span>
+<span class="cm">    `country` = VALUES(`country`),</span>
+<span class="cm">    `email` = VALUES(`email`),</span>
+<span class="cm">    `name` = VALUES(`name`),</span>
+<span class="cm">    `updated_at` = CURRENT_TIMESTAMP</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>Notice that the <code class="docutils literal notranslate"><span class="pre">updated_at</span></code> field is not inserted but is used on update.</p>
+</section>
+</section>
+</section>
 <section id="updating-data">
-<h2><a class="toc-backref" href="#id32">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id35">Updating Data</a><a class="headerlink" href="#updating-data" title="Permalink to this headline"></a></h2>
 <section id="update">
-<h3><a class="toc-backref" href="#id33">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id36">Update</a><a class="headerlink" href="#update" title="Permalink to this headline"></a></h3>
 <section id="builder-replace">
 <h4>$builder-&gt;replace()<a class="headerlink" href="#builder-replace" title="Permalink to this headline"></a></h4>
 <p>This method executes a <strong>REPLACE</strong> statement, which is basically the SQL
@@ -1815,7 +2117,11 @@ is an example using an array:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All values are escaped automatically producing safer queries.</p>
+<p>All values except <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> are escaped automatically producing safer queries.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
 </div>
 <p>You’ll notice the use of the <code class="docutils literal notranslate"><span class="pre">$builder-&gt;where()</span></code> method, enabling you
 to set the <strong>WHERE</strong> clause. You can optionally pass this information
@@ -1836,7 +2142,7 @@ performing updates.</p>
 </section>
 </section>
 <section id="updatebatch">
-<h3><a class="toc-backref" href="#id34">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
+<span id="update-batch"></span><h3><a class="toc-backref" href="#id37">UpdateBatch</a><a class="headerlink" href="#updatebatch" title="Permalink to this headline"></a></h3>
 <section id="builder-updatebatch">
 <h4>$builder-&gt;updateBatch()<a class="headerlink" href="#builder-updatebatch" title="Permalink to this headline"></a></h4>
 <p>Generates an update string based on the data you supply, and runs the query.
@@ -1846,42 +2152,111 @@ Here is an example using an array:</p>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span>
-        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My title&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My Name 2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;My date 2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Title 1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;author&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Author 1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Name 1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Date 1&#39;</span><span class="p">,</span>
     <span class="p">],</span>
     <span class="p">[</span>
-        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Another title&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another Name 2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;date&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Another date 2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;title&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Title 2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;author&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Author 2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Name 2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Date 2&#39;</span><span class="p">,</span>
     <span class="p">],</span>
 <span class="p">];</span>
 
-<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">);</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">]);</span>
+
+<span class="c1">// OR</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;title, author&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">();</span>
+
+<span class="c1">// OR</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">([</span><span class="s1">&#39;`mytable`.`title`&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;`u`.`title`&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;`u`.`author`&#39;</span><span class="p">)])</span>
+    <span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">();</span>
+
+<span class="c1">// OR</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$data</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$row</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;title, author&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">();</span>
+
+<span class="c1">// OR</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;`mytable`.`title` = `u`.`title` AND `mytable`.`author` = `u`.`author`&#39;</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">([</span><span class="s1">&#39;last_update&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP()&#39;</span><span class="p">)],</span> <span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">();</span>
 <span class="cm">/*</span>
 <span class="cm"> * Produces:</span>
-<span class="cm"> * UPDATE `mytable` SET `name` = CASE</span>
-<span class="cm"> * WHEN `title` = &#39;My title&#39; THEN &#39;My Name 2&#39;</span>
-<span class="cm"> * WHEN `title` = &#39;Another title&#39; THEN &#39;Another Name 2&#39;</span>
-<span class="cm"> * ELSE `name` END,</span>
-<span class="cm"> * `date` = CASE</span>
-<span class="cm"> * WHEN `title` = &#39;My title&#39; THEN &#39;My date 2&#39;</span>
-<span class="cm"> * WHEN `title` = &#39;Another title&#39; THEN &#39;Another date 2&#39;</span>
-<span class="cm"> * ELSE `date` END</span>
-<span class="cm"> * WHERE `title` IN (&#39;My title&#39;,&#39;Another title&#39;)</span>
+<span class="cm"> * UPDATE `mytable`</span>
+<span class="cm"> * INNER JOIN (</span>
+<span class="cm"> * SELECT &#39;Title 1&#39; `title`, &#39;Author 1&#39; `author`, &#39;Name 1&#39; `name`, &#39;Date 1&#39; `date` UNION ALL</span>
+<span class="cm"> * SELECT &#39;Title 2&#39; `title`, &#39;Author 2&#39; `author`, &#39;Name 2&#39; `name`, &#39;Date 2&#39; `date`</span>
+<span class="cm"> * ) `u`</span>
+<span class="cm"> * ON `mytable`.`title` = `u`.`title` AND `mytable`.`author` = `u`.`author`</span>
+<span class="cm"> * SET</span>
+<span class="cm"> * `mytable`.`title` = `u`.`title`,</span>
+<span class="cm"> * `mytable`.`name` = `u`.`name`,</span>
+<span class="cm"> * `mytable`.`date` = `u`.`date`,</span>
+<span class="cm"> * `mytable`.`last_update` = CURRENT_TIMESTAMP() // this only applies to the last scenario</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
 <p>The first parameter is an associative array of values, the second parameter is the where key.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>All values are escaped automatically producing safer queries.</p>
+<p>All values except <code class="docutils literal notranslate"><span class="pre">RawSql</span></code> are escaped automatically producing safer queries.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you use <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>, you MUST escape the data manually. Failure to do so could result in SQL injections.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">affectedRows()</span></code> won’t give you proper results with this method,
 due to the very nature of how it works. Instead, <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>
 returns the number of rows affected.</p>
+</div>
+<p>You can also update from a query:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user2&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;user2.name, user2.email, user2.country&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">join</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;user.email = user2.email&#39;</span><span class="p">,</span> <span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;user2.country&#39;</span><span class="p">,</span> <span class="s1">&#39;US&#39;</span><span class="p">);</span>
+
+<span class="nv">$additionalUpdateField</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;updated_at&#39;</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">RawSql</span><span class="p">(</span><span class="s1">&#39;CURRENT_TIMESTAMP&#39;</span><span class="p">)];</span>
+
+<span class="nv">$sql</span> <span class="o">=</span> <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setQueryAsData</span><span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">updateFields</span><span class="p">(</span><span class="nv">$additionalUpdateField</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">updateBatch</span><span class="p">();</span>
+<span class="cm">/*</span>
+<span class="cm"> * Produces:</span>
+<span class="cm"> * UPDATE `user`</span>
+<span class="cm"> * INNER JOIN (</span>
+<span class="cm"> * SELECT user2.name, user2.email, user2.country</span>
+<span class="cm"> * FROM user2</span>
+<span class="cm"> * INNER JOIN user ON user.email = user2.email</span>
+<span class="cm"> * WHERE user2.country = &#39;US&#39;</span>
+<span class="cm"> * ) `u`</span>
+<span class="cm"> * ON `user`.`email` = `u`.`email`</span>
+<span class="cm"> * SET</span>
+<span class="cm"> * `mytable`.`name` = `u`.`name`,</span>
+<span class="cm"> * `mytable`.`email` = `u`.`email`,</span>
+<span class="cm"> * `mytable`.`country` = `u`.`country`,</span>
+<span class="cm"> * `mytable`.`updated_at` = CURRENT_TIMESTAMP()</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">setQueryAsData()</span></code> can be used since v4.3.0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is required to alias the columns of the select query to match those of the target table.</p>
 </div>
 </section>
 <section id="builder-getcompiledupdate">
@@ -1897,9 +2272,9 @@ that it produces an <strong>UPDATE</strong> SQL string instead of an <strong>INS
 </section>
 </section>
 <section id="deleting-data">
-<h2><a class="toc-backref" href="#id35">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id38">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this headline"></a></h2>
 <section id="delete">
-<h3><a class="toc-backref" href="#id36">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id39">Delete</a><a class="headerlink" href="#delete" title="Permalink to this headline"></a></h3>
 <section id="builder-delete">
 <h4>$builder-&gt;delete()<a class="headerlink" href="#builder-delete" title="Permalink to this headline"></a></h4>
 <p>Generates a <strong>DELETE</strong> SQL string and runs the query.</p>
@@ -1925,6 +2300,84 @@ the data to the first parameter of the method:</p>
 </div>
 <p>If you want to delete all data from a table, you can use the <code class="docutils literal notranslate"><span class="pre">truncate()</span></code>
 method, or <code class="docutils literal notranslate"><span class="pre">emptyTable()</span></code>.</p>
+</section>
+<section id="builder-deletebatch">
+<span id="delete-batch"></span><h4>$builder-&gt;deleteBatch()<a class="headerlink" href="#builder-deletebatch" title="Permalink to this headline"></a></h4>
+<p>Generates a batch <strong>DELETE</strong> statement based on a set of data.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;order&#39;</span>   <span class="o">=&gt;</span> <span class="mi">48372</span><span class="p">,</span>
+        <span class="s1">&#39;line&#39;</span>    <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;product&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Keyboard&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;qty&#39;</span>     <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;order&#39;</span>   <span class="o">=&gt;</span> <span class="mi">48372</span><span class="p">,</span>
+        <span class="s1">&#39;line&#39;</span>    <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s1">&#39;product&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mouse&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;qty&#39;</span>     <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;order&#39;</span>   <span class="o">=&gt;</span> <span class="mi">48372</span><span class="p">,</span>
+        <span class="s1">&#39;line&#39;</span>    <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s1">&#39;product&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Monitor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;qty&#39;</span>     <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="s1">&#39;del&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;order, line&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;del.qty &gt;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">deleteBatch</span><span class="p">();</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * MySQL Produces:</span>
+<span class="cm"> * DELETE `order_line` FROM `order_line`</span>
+<span class="cm"> * INNER JOIN (</span>
+<span class="cm"> * SELECT 3 `line`, 48372 `order`, &#39;Keyboard&#39; `product`, 1 `qty` UNION ALL</span>
+<span class="cm"> * SELECT 4 `line`, 48372 `order`, &#39;Mouse&#39;    `product`, 1 `qty` UNION ALL</span>
+<span class="cm"> * SELECT 5 `line`, 48372 `order`, &#39;Monitor&#39;  `product`, 2 `qty`</span>
+<span class="cm"> * ) `del`</span>
+<span class="cm"> * ON `order_line`.`order` = `del`.`order` AND `order_line`.`line` = `del`.`line`</span>
+<span class="cm"> * WHERE `del`.`qty` &gt; 1</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<p>This method may be especially useful when deleting data in a table with a composite primary key.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SQLite does not support the use of <code class="docutils literal notranslate"><span class="pre">where()</span></code>.</p>
+</div>
+<p>You can also delete from a query:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\RawSql</span><span class="p">;</span>
+
+<span class="nv">$query</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user2&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">select</span><span class="p">(</span><span class="s1">&#39;email, name, country&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;Greece&#39;</span><span class="p">);</span>
+
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setQueryAsData</span><span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="s1">&#39;alias&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">onConstraint</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;alias.name = user.name&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">deleteBatch</span><span class="p">();</span>
+
+<span class="cm">/* MySQLi produces:</span>
+<span class="cm">    DELETE `user` FROM `user`</span>
+<span class="cm">    INNER JOIN (</span>
+<span class="cm">    SELECT `email`, `name`, `country`</span>
+<span class="cm">    FROM `user2`</span>
+<span class="cm">    WHERE `country` = &#39;Greece&#39;) `alias`</span>
+<span class="cm">    ON `user`.`email` = `alias`.`email`</span>
+<span class="cm">    WHERE `alias`.`name` = `user`.`name`</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">$deleteBatch()</span></code> can be used since v4.3.0.</p>
+</div>
 </section>
 <section id="builder-emptytable">
 <h4>$builder-&gt;emptyTable()<a class="headerlink" href="#builder-emptytable" title="Permalink to this headline"></a></h4>
@@ -1963,8 +2416,71 @@ that it produces a <strong>DELETE</strong> SQL string instead of an <strong>INSE
 </section>
 </section>
 </section>
+<section id="conditional-statements">
+<h2><a class="toc-backref" href="#id40">Conditional Statements</a><a class="headerlink" href="#conditional-statements" title="Permalink to this headline"></a></h2>
+<section id="when">
+<span id="db-builder-when"></span><h3><a class="toc-backref" href="#id41">When</a><a class="headerlink" href="#when" title="Permalink to this headline"></a></h3>
+<section id="builder-when">
+<h4>$builder-&gt;when()<a class="headerlink" href="#builder-when" title="Permalink to this headline"></a></h4>
+<p>This allows modifying the query based on a condition without breaking out of the
+query builder chain. The first parameter is the condition, and it should evaluate
+to a boolean. The second parameter is a callable that will be ran
+when the condition is true.</p>
+<p>For example, you might only want to apply a given WHERE statement based on the
+value sent within an HTTP request:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$status</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">);</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">when</span><span class="p">(</span><span class="nv">$status</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="nv">$status</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Since the condition is evaluated as <code class="docutils literal notranslate"><span class="pre">true</span></code>, the callable will be called. The value
+set in the condition will be passed as the second parameter to the callable so it
+can be used in the query.</p>
+<p>Sometimes you might want to apply a different statement if the condition evaluates to false.
+This can be accomplished by providing a second closure:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$onlyInactive</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;return_inactive&#39;</span><span class="p">);</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">when</span><span class="p">(</span><span class="nv">$onlyInactive</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$onlyInactive</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;inactive&#39;</span><span class="p">);</span>
+    <span class="p">},</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$query</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="whennot">
+<h3><a class="toc-backref" href="#id42">WhenNot</a><a class="headerlink" href="#whennot" title="Permalink to this headline"></a></h3>
+<section id="builder-whennot">
+<h4>$builder-&gt;whenNot()<a class="headerlink" href="#builder-whennot" title="Permalink to this headline"></a></h4>
+<p>This works exactly the same way as <code class="docutils literal notranslate"><span class="pre">$builder-&gt;when()</span></code> except that it will
+only run the callable when the condition evaluates to <code class="docutils literal notranslate"><span class="pre">false</span></code>, instead of <code class="docutils literal notranslate"><span class="pre">true</span></code> like <code class="docutils literal notranslate"><span class="pre">when()</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$status</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">);</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">whenNot</span><span class="p">(</span><span class="nv">$status</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 <section id="method-chaining">
-<h2><a class="toc-backref" href="#id37">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id43">Method Chaining</a><a class="headerlink" href="#method-chaining" title="Permalink to this headline"></a></h2>
 <p>Method chaining allows you to simplify your syntax by connecting
 multiple methods. Consider this example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1977,9 +2493,9 @@ multiple methods. Consider this example:</p>
 </div>
 </section>
 <section id="resetting-query-builder">
-<span id="ar-caching"></span><h2><a class="toc-backref" href="#id38">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
+<span id="ar-caching"></span><h2><a class="toc-backref" href="#id44">Resetting Query Builder</a><a class="headerlink" href="#resetting-query-builder" title="Permalink to this headline"></a></h2>
 <section id="resetquery">
-<h3><a class="toc-backref" href="#id39">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id45">ResetQuery</a><a class="headerlink" href="#resetquery" title="Permalink to this headline"></a></h3>
 <section id="builder-resetquery">
 <h4>$builder-&gt;resetQuery()<a class="headerlink" href="#builder-resetquery" title="Permalink to this headline"></a></h4>
 <p>Resetting Query Builder allows you to start fresh with your query without
@@ -2010,7 +2526,7 @@ run the query:</p>
 </section>
 </section>
 <section id="namespace-CodeIgniter\Database">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id40">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id46">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Database" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Database\</span></span><span class="sig-name descname"><span class="pre">BaseBuilder</span></span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder" title="Permalink to this definition"></a></dt>
@@ -2327,6 +2843,28 @@ a <code class="docutils literal notranslate"><span class="pre">DISTINCT</span></
 </dd>
 </dl>
 <p>Specifies the <code class="docutils literal notranslate"><span class="pre">FROM</span></code> clause of a query using a subquery.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setQueryAsData">
+<span class="sig-name descname"><span class="pre">setQueryAsData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$query</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$columns</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setQueryAsData" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$query</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">BaseBuilder|RawSql</span></code></span>) – Instance of the BaseBuilder or RawSql</p></li>
+<li><p><strong>$alias</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string|null</span></code></span>) – Alias for query</p></li>
+<li><p><strong>$columns</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|string|null</span></code></span>) – Array or comma delimited string of columns in the query</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+</dd>
+</dl>
+<p>Sets a query as a datasource for <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code>, <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>, <code class="docutils literal notranslate"><span class="pre">upsertBatch()</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">$columns</span></code> is null the query will be run to generate column names.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -3115,7 +3653,10 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setInsertBatch">
 <span class="sig-name descname"><span class="pre">setInsertBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setInsertBatch" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.3.0: </span>Use <a class="reference internal" href="#CodeIgniter\Database\BaseBuilder::setData" title="CodeIgniter\Database\BaseBuilder::setData"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseBuilder::setData()</span></code></a> instead.</p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Field name or an array of field/value pairs</p></li>
@@ -3131,6 +3672,63 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 </dd>
 </dl>
 <p>Adds field/value pairs to be inserted in a table later via <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method is deprecated. It will be removed in future releases.</p>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::upsert">
+<span class="sig-name descname"><span class="pre">upsert</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::upsert" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – An associative array of field/value pairs</p></li>
+<li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to escape values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">true</span></code> on success, <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Compiles and executes an <code class="docutils literal notranslate"><span class="pre">UPSERT</span></code> statement.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::upsertBatch">
+<span class="sig-name descname"><span class="pre">upsertBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batch_size</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::upsertBatch" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Data to upsert</p></li>
+<li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to escape values</p></li>
+<li><p><strong>$batch_size</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Count of rows to upsert at once</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of rows upserted or <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|false</span></code></span></p>
+</dd>
+</dl>
+<p>Compiles and executes batch <code class="docutils literal notranslate"><span class="pre">UPSERT</span></code> statements.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>MySQL uses <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DUPLICATE</span> <span class="pre">KEY</span> <span class="pre">UPDATE</span></code>, the affected-rows value
+per row is 1 if the row is inserted as a new row, 2 if an existing row
+is updated, and 0 if an existing row is set to its current values.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When more than <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> rows are provided, multiple
+<code class="docutils literal notranslate"><span class="pre">UPSERT</span></code> queries will be executed, each trying to upsert
+up to <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> rows.</p>
+</div>
 </dd></dl>
 
 <dl class="php method">
@@ -3156,13 +3754,13 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::updateBatch">
-<span class="sig-name descname"><span class="pre">updateBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batch_size</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::updateBatch" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">updateBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$constraints</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batchSize</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::updateBatch" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – Field name, or an associative array of field/value pairs</p></li>
-<li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field value, if $set is a single field</p></li>
-<li><p><strong>$batch_size</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Count of conditions to group in a single query</p></li>
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|object|null</span></code></span>) – Field name, or an associative array of field/value pairs</p></li>
+<li><p><strong>$constraints</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|RawSql|string|null</span></code></span>) – The field or fields used as keys to update on.</p></li>
+<li><p><strong>$batchSize</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Count of conditions to group in a single query</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -3172,19 +3770,98 @@ up to <code class="docutils literal notranslate"><span class="pre">$batch_size</
 <dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|false</span></code></span></p>
 </dd>
 </dl>
-<p>Compiles and executes batch <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> statements.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When more than <code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> field/value pairs are provided,
-multiple queries will be executed, each handling up to
-<code class="docutils literal notranslate"><span class="pre">$batch_size</span></code> field/value pairs.</p>
+<p>Since v4.3.0, the types of the parameters <code class="docutils literal notranslate"><span class="pre">$set</span></code> and <code class="docutils literal notranslate"><span class="pre">$constraints</span></code> have changed.</p>
 </div>
+<p>Compiles and executes batch <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> statements.
+The <code class="docutils literal notranslate"><span class="pre">$constraints</span></code> parameter takes a comma delimited string of columns, an array, an associative array, or <code class="docutils literal notranslate"><span class="pre">RawSql</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When more than <code class="docutils literal notranslate"><span class="pre">$batchSize</span></code> field/value pairs are provided,
+multiple queries will be executed, each handling up to <code class="docutils literal notranslate"><span class="pre">$batchSize</span></code>
+field/value pairs. If we set <code class="docutils literal notranslate"><span class="pre">$batchSize</span></code> to 0, then all field/value
+pairs will be executed in one query.</p>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::updateFields">
+<span class="sig-name descname"><span class="pre">updateFields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$set</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$addToDefault</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$ignore</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::updateFields" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Row of columns or array of rows, a row is an array or object</p></li>
+<li><p><strong>$addToDefault</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Adds an additional column than those in dataset</p></li>
+<li><p><strong>$ignore</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – An array of columns to ignore from those in $set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+</dd>
+</dl>
+<p>Used with <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">upsertBatch()</span></code> methods. This defines the fields which will be updated.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::onConstraint">
+<span class="sig-name descname"><span class="pre">onConstraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$set</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::onConstraint" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – A set of fields or field used has keys or constraints</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+</dd>
+</dl>
+<p>Used with <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> and <code class="docutils literal notranslate"><span class="pre">upsertBatch()</span></code> methods. This takes a comma delimited string of columns, and array, associative array, or RawSql.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setData">
+<span class="sig-name descname"><span class="pre">setData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$set</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$alias</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setData" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Row of columns or array of rows, a row is an array or object</p></li>
+<li><p><strong>$escape</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to escape values</p></li>
+<li><p><strong>$alias</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span>) – A table alias for dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code> instance (method chaining)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">BaseBuilder</span></code></p>
+</dd>
+</dl>
+<p>Used for <code class="docutils literal notranslate"><span class="pre">*Batch()</span></code> methods to set data for insert, update, upsert.</p>
 </dd></dl>
 
 <dl class="php method">
 <dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::setUpdateBatch">
 <span class="sig-name descname"><span class="pre">setUpdateBatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$key</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$value</span> <span class="pre">=</span> <span class="pre">''</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$escape</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::setUpdateBatch" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 4.3.0: </span>Use <a class="reference internal" href="#CodeIgniter\Database\BaseBuilder::setData" title="CodeIgniter\Database\BaseBuilder::setData"><code class="xref php php-meth docutils literal notranslate"><span class="pre">CodeIgniter\Database\BaseBuilder::setData()</span></code></a> instead.</p>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$key</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Field name or an array of field/value pairs</p></li>
@@ -3200,6 +3877,10 @@ multiple queries will be executed, each handling up to
 </dd>
 </dl>
 <p>Adds field/value pairs to be updated in a table later via <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This method is deprecated. It will be removed in future releases.</p>
+</div>
 </dd></dl>
 
 <dl class="php method">
@@ -3240,6 +3921,27 @@ multiple queries will be executed, each handling up to
 </dd>
 </dl>
 <p>Compiles and executes a <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> query.</p>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Database\BaseBuilder::deleteBatch">
+<span class="sig-name descname"><span class="pre">deleteBatch</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$set</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$constraints</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$batchSize</span> <span class="pre">=</span> <span class="pre">100</span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Database\BaseBuilder::deleteBatch" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$set</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|object|null</span></code></span>) – Field name, or an associative array of field/value pairs</p></li>
+<li><p><strong>$constraints</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array|RawSql|string|null</span></code></span>) – The field or fields used as keys to delete on.</p></li>
+<li><p><strong>$batchSize</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Count of conditions to group in a single query</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of rows deleted or <code class="docutils literal notranslate"><span class="pre">false</span></code> on failure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|false</span></code></span></p>
+</dd>
+</dl>
+<p>Compiles and executes batch <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> query.</p>
 </dd></dl>
 
 <dl class="php method">
@@ -3400,7 +4102,7 @@ a <code class="docutils literal notranslate"><span class="pre">DELETE</span></co
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

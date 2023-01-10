@@ -797,14 +797,19 @@ accessing them:</p>
 Sessions are a very sensitive component of any application, so some
 careful configuration must be done. Please take your time to consider
 all of the options and their effects.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, the new <strong>app/Config/Session.php</strong> has been added.
+Previously, the Session Preferences were in your <strong>app/Config/App.php</strong> file.</p>
+</div>
 <p>You’ll find the following Session related preferences in your
-<strong>app/Config/App.php</strong> file:</p>
+<strong>app/Config/Session.php</strong> file:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 22%" />
-<col style="width: 13%" />
-<col style="width: 20%" />
-<col style="width: 46%" />
+<col style="width: 11%" />
+<col style="width: 21%" />
+<col style="width: 24%" />
+<col style="width: 44%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -814,67 +819,56 @@ all of the options and their effects.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>sessionDriver</strong></p></td>
-<td><p>FileHandler::class</p></td>
-<td><p>FileHandler::class
-DatabaseHandler::class
-MemcachedHandler::class
-RedisHandler::class
-ArrayHandler::class</p></td>
-<td><p>The session storage driver to use.
-All the session drivers are located in the
-<code class="docutils literal notranslate"><span class="pre">CodeIgniter\Session\Handlers\</span></code> namespace.</p></td>
+<tr class="row-even"><td><p><strong>driver</strong></p></td>
+<td><p>CodeIgniter\Session\Handlers\FileHandler</p></td>
+<td><p>CodeIgniter\Session\Handlers\FileHandler
+CodeIgniter\Session\Handlers\DatabaseHandler
+CodeIgniter\Session\Handlers\MemcachedHandler
+CodeIgniter\Session\Handlers\RedisHandler
+CodeIgniter\Session\Handlers\ArrayHandler</p></td>
+<td><p>The session storage driver to use.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>sessionCookieName</strong></p></td>
+<tr class="row-odd"><td><p><strong>cookieName</strong></p></td>
 <td><p>ci_session</p></td>
 <td><p>[A-Za-z_-] characters only</p></td>
-<td><p>The name used for the session cookie.
-The value will be included in the key of the
-Database/Memcached/Redis session records. So, set the value
-so that it does not exceed the maximum length of the key.</p></td>
+<td><p>The name used for the session cookie.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>sessionExpiration</strong></p></td>
+<tr class="row-even"><td><p><strong>expiration</strong></p></td>
 <td><p>7200 (2 hours)</p></td>
 <td><p>Time in seconds (integer)</p></td>
 <td><p>The number of seconds you would like the session to last.
-If you would like a non-expiring session (until browser is
-closed) set the value to zero: 0</p></td>
+If you would like a non-expiring session (until browser is closed) set the value to zero: 0</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>sessionSavePath</strong></p></td>
+<tr class="row-odd"><td><p><strong>savePath</strong></p></td>
 <td><p>null</p></td>
 <td><p>None</p></td>
-<td><p>Specifies the storage location, depends on the driver being
-used.</p></td>
+<td><p>Specifies the storage location, depends on the driver being used.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>sessionMatchIP</strong></p></td>
+<tr class="row-even"><td><p><strong>matchIP</strong></p></td>
 <td><p>false</p></td>
 <td><p>true/false (boolean)</p></td>
-<td><p>Whether to validate the user’s IP address when reading the
-session cookie. Note that some ISPs dynamically changes the IP,
-so if you want a non-expiring session you will likely set this
-to false.</p></td>
+<td><p>Whether to validate the user’s IP address when reading the session cookie.
+Note that some ISPs dynamically changes the IP, so if you want a non-expiring session you
+will likely set this to false.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>sessionTimeToUpdate</strong></p></td>
+<tr class="row-odd"><td><p><strong>timeToUpdate</strong></p></td>
 <td><p>300</p></td>
 <td><p>Time in seconds (integer)</p></td>
-<td><p>This option controls how often the session class will
-regenerate itself and create a new session ID. Setting it to 0
-will disable session ID regeneration.</p></td>
+<td><p>This option controls how often the session class will regenerate itself and create a new
+session ID. Setting it to 0 will disable session ID regeneration.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>sessionRegenerateDestroy</strong></p></td>
+<tr class="row-even"><td><p><strong>regenerateDestroy</strong></p></td>
 <td><p>false</p></td>
 <td><p>true/false (boolean)</p></td>
-<td><p>Whether to destroy session data associated with the old
-session ID when auto-regenerating
-the session ID. When set to false, the data will be later
-deleted by the garbage collector.</p></td>
+<td><p>Whether to destroy session data associated with the old session ID when auto-regenerating
+the session ID. When set to false, the data will be later deleted by the garbage collector.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>As a last resort, the Session library will try to fetch PHP’s
-session related INI settings, as well as legacy CI settings such as
+session related INI settings, as well as CodeIgniter 3 settings such as
 ‘sess_expire_on_close’ when any of the above is not configured.
 However, you should never rely on this behavior as it can cause
 unexpected results or be changed in the future. Please configure
@@ -887,14 +881,13 @@ setting set by PHP in session management will be used as-is
 (often the default value of <code class="docutils literal notranslate"><span class="pre">1440</span></code>). This needs to be changed in
 <code class="docutils literal notranslate"><span class="pre">php.ini</span></code> or via <code class="docutils literal notranslate"><span class="pre">ini_set()</span></code> as needed.</p>
 </div>
-<p>In addition to the values above, the cookie and native drivers apply the
-following configuration values shared by the <a class="reference internal" href="../incoming/incomingrequest.html"><span class="doc">IncomingRequest</span></a> and
-<a class="reference internal" href="security.html"><span class="doc">Security</span></a> classes:</p>
+<p>In addition to the values above, the Session cookie uses the
+following configuration values in your <strong>app/Config/Cookie.php</strong> file:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 18%" />
+<col style="width: 13%" />
 <col style="width: 14%" />
-<col style="width: 68%" />
+<col style="width: 72%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Preference</p></th>
@@ -903,19 +896,19 @@ following configuration values shared by the <a class="reference internal" href=
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>cookieDomain</strong></p></td>
+<tr class="row-even"><td><p><strong>domain</strong></p></td>
 <td><p>‘’</p></td>
 <td><p>The domain for which the session is applicable</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>cookiePath</strong></p></td>
+<tr class="row-odd"><td><p><strong>path</strong></p></td>
 <td><p>/</p></td>
 <td><p>The path to which the session is applicable</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>cookieSecure</strong></p></td>
+<tr class="row-even"><td><p><strong>secure</strong></p></td>
 <td><p>false</p></td>
 <td><p>Whether to create the session cookie only on encrypted (HTTPS) connections</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>cookieSameSite</strong></p></td>
+<tr class="row-odd"><td><p><strong>sameSite</strong></p></td>
 <td><p>Lax</p></td>
 <td><p>The SameSite setting for the session cookie</p></td>
 </tr>
@@ -923,7 +916,7 @@ following configuration values shared by the <a class="reference internal" href=
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The ‘cookieHTTPOnly’ setting doesn’t have an effect on sessions.
+<p>The <code class="docutils literal notranslate"><span class="pre">httponly</span></code> setting doesn’t have an effect on sessions.
 Instead the HttpOnly parameter is always enabled, for security
 reasons. Additionally, the <code class="docutils literal notranslate"><span class="pre">Config\Cookie::$prefix</span></code> setting is completely
 ignored.</p>
@@ -945,8 +938,8 @@ engines, that you can use:</p>
 <p>By default, the <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> Driver will be used when a session is initialized,
 because it is the safest choice and is expected to work everywhere
 (virtually every environment has a file system).</p>
-<p>However, any other driver may be selected via the <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">$sessionDriver</span></code>
-line in your <strong>app/Config/App.php</strong> file, if you chose to do so.
+<p>However, any other driver may be selected via the <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">$driver</span></code>
+line in your <strong>app/Config/Session.php</strong> file, if you chose to do so.
 Have it in mind though, every driver has different caveats, so be sure to
 get yourself familiar with them (below) before you make that choice.</p>
 <div class="admonition note">
@@ -964,11 +957,11 @@ mind that it is in fact not the same code and it has some limitations
 <p>To be more specific, it doesn’t support PHP’s <a class="reference external" href="https://www.php.net/manual/en/session.configuration.php#ini.session.save-path">directory level and mode
 formats used in session.save_path</a>,
 and it has most of the options hard-coded for safety. Instead, only
-absolute paths are supported for <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">$sessionSavePath</span></code>.</p>
+absolute paths are supported for <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">string</span> <span class="pre">$savePath</span></code>.</p>
 <p>Another important thing that you should know, is to make sure that you
 don’t use a publicly-readable or shared directory for storing your session
 files. Make sure that <em>only you</em> have access to see the contents of your
-chosen <em>sessionSavePath</em> directory. Otherwise, anybody who can do that, can
+chosen <em>savePath</em> directory. Otherwise, anybody who can do that, can
 also steal any of the current sessions (also known as “session fixation”
 attack).</p>
 <p>On UNIX-like operating systems, this is usually achieved by setting the
@@ -1011,7 +1004,7 @@ an application - it is just another table in your database.</p>
 </div></blockquote>
 <p>In order to use the ‘DatabaseHandler’ session driver, you must also create this
 table that we already mentioned and then set it as your
-<code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code> value.
+<code class="docutils literal notranslate"><span class="pre">$savePath</span></code> value.
 For example, if you would like to use ‘ci_sessions’ as your table name,
 you would do this:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1019,13 +1012,14 @@ you would do this:</p>
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\FileHandler</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="k">class</span> <span class="nc">Session</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionDriver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$driver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\DatabaseHandler&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;ci_sessions&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;ci_sessions&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1054,7 +1048,7 @@ you would do this:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">id</span></code> value contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>)
+<p>The <code class="docutils literal notranslate"><span class="pre">id</span></code> value contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\Session::$cookieName</span></code>)
 and the session ID and a delimiter. It should be increased as needed, for example,
 when using long session IDs.</p>
 </div>
@@ -1071,18 +1065,18 @@ setting</strong>. The examples below work both on MySQL and PostgreSQL:</p>
 </pre></div>
 </div>
 <p>You can choose the Database group to use by adding a new line to the
-<strong>app/Config/App.php</strong> file with the name of the group to use:</p>
+<strong>app/Config/Session.php</strong> file with the name of the group to use:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\FileHandler</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="k">class</span> <span class="nc">Session</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionDBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
-    <span class="c1">// ...</span>
+    <span class="k">public</span> <span class="o">?</span><span class="nx">string</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;groupName&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1092,7 +1086,7 @@ from the cli to generate a migration file for you:</p>
 <span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">migrate</span>
 </pre></div>
 </div>
-<p>This command will take the <strong>sessionSavePath</strong> and <strong>sessionMatchIP</strong> settings into account
+<p>This command will take the <strong>savePath</strong> and <strong>matchIP</strong> settings into account
 when it generates the code.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -1124,7 +1118,7 @@ Chances are, you’re only be using the RedisHandler driver only if you’re alr
 both familiar with Redis and using it for other purposes.</p>
 <p>Just as with the ‘FileHandler’ and ‘DatabaseHandler’ drivers, you must also configure
 the storage location for your sessions via the
-<code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code> setting.
+<code class="docutils literal notranslate"><span class="pre">$savePath</span></code> setting.
 The format here is a bit different and complicated at the same time. It is
 best explained by the <em>phpredis</em> extension’s README file, so we’ll simply
 link you to it:</p>
@@ -1144,13 +1138,14 @@ sufficient:</p>
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\FileHandler</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="k">class</span> <span class="nc">Session</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionDiver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$driver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\RedisHandler&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;tcp://localhost:6379&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1175,20 +1170,21 @@ is that setting value X to expire after Y seconds will result in it being
 deleted after Y seconds have passed (but not necessarily that it won’t
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">$sessionSavePath</span></code> format is fairly straightforward here,
+<p>The <code class="docutils literal notranslate"><span class="pre">$savePath</span></code> format is fairly straightforward here,
 being just a <code class="docutils literal notranslate"><span class="pre">host:port</span></code> pair:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\FileHandler</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="k">class</span> <span class="nc">Session</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionDriver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$driver</span> <span class="o">=</span> <span class="s1">&#39;CodeIgniter\Session\Handlers\MemcachedHandler&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
-    <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211&#39;</span><span class="p">;</span>
     <span class="c1">// ...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1205,14 +1201,15 @@ separate the multiple server paths with commas:</p>
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\Config\BaseConfig</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Session\Handlers\FileHandler</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
+<span class="k">class</span> <span class="nc">Session</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
     <span class="c1">// localhost will be given higher priority (5) here,</span>
     <span class="c1">// compared to 192.0.2.1 with a weight of 1.</span>
-    <span class="k">public</span> <span class="nv">$sessionSavePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$savePath</span> <span class="o">=</span> <span class="s1">&#39;localhost:11211:5,192.0.2.1:11211:1&#39;</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -1235,7 +1232,7 @@ separate the multiple server paths with commas:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

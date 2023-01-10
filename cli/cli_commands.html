@@ -391,6 +391,14 @@ from the string. These parameters can be used to customize how your scripts beha
 </div>
 <p>See the <a class="reference internal" href="cli_library.html"><span class="doc">CLI Library</span></a> page for detailed information.</p>
 </section>
+<section id="command-termination">
+<h4>Command Termination<a class="headerlink" href="#command-termination" title="Permalink to this headline"></a></h4>
+<p>By default, the command exits with a success code of <code class="docutils literal notranslate"><span class="pre">0</span></code>. If an error is encountered while executing a command,
+you can terminate the command by using the <code class="docutils literal notranslate"><span class="pre">return</span></code> language construct with an exit code in the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">EXIT_ERROR;</span></code></p>
+<p>This approach can help with debugging at the system level, if the command, for example, is run via crontab.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">EXIT_*</span></code> exit code constants defined in the <code class="docutils literal notranslate"><span class="pre">app/Config/Constants.php</span></code> file.</p>
+</section>
 </section>
 </section>
 <section id="basecommand">
@@ -494,7 +502,7 @@ be familiar with when creating your own commands. It also has a <a class="refere
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

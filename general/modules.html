@@ -424,8 +424,60 @@ present, then no auto-discovery will happen for that item, but the others in the
 <h3><a class="toc-backref" href="#id6">Discovery and Composer</a><a class="headerlink" href="#discovery-and-composer" title="Permalink to this headline"></a></h3>
 <p>Packages installed via Composer using PSR-4 namespaces will also be discovered by default.
 PSR-0 namespaced packages will not be detected.</p>
+<section id="specify-composer-packages">
+<span id="modules-specify-composer-packages"></span><h4>Specify Composer Packages<a class="headerlink" href="#specify-composer-packages" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>To avoid wasting time scanning for irrelevant Composer packages, you can manually specify packages to discover by editing the <code class="docutils literal notranslate"><span class="pre">$composerPackages</span></code> variable in <strong>app/Config/Modules.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Modules\Modules</span> <span class="k">as</span> <span class="nx">BaseModules</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Modules</span> <span class="k">extends</span> <span class="nx">BaseModules</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="nv">$composerPackages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="c1">// List up all packages to auto-discover</span>
+            <span class="s1">&#39;codeigniter4/shield&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Alternatively, you can specify which packages to exclude from discovery.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Modules\Modules</span> <span class="k">as</span> <span class="nx">BaseModules</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Modules</span> <span class="k">extends</span> <span class="nx">BaseModules</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="nv">$composerPackages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;exclude&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="c1">// List up packages to exclude.</span>
+            <span class="s1">&#39;pestphp/pest&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="disable-composer-package-discovery">
+<h4>Disable Composer Package Discovery<a class="headerlink" href="#disable-composer-package-discovery" title="Permalink to this headline"></a></h4>
 <p>If you do not want all of Composer’s known directories to be scanned when locating files, you can turn this off
-by editing the <code class="docutils literal notranslate"><span class="pre">$discoverInComposer</span></code> variable in <code class="docutils literal notranslate"><span class="pre">Config\Modules.php</span></code>:</p>
+by editing the <code class="docutils literal notranslate"><span class="pre">$discoverInComposer</span></code> variable in <strong>app/Config/Modules.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
@@ -440,6 +492,7 @@ by editing the <code class="docutils literal notranslate"><span class="pre">$dis
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 <section id="working-with-files">
@@ -598,7 +651,7 @@ This is because <code class="docutils literal notranslate"><span class="pre">mod
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

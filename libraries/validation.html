@@ -331,13 +331,14 @@ helps minimize the amount of code you’ll write.</p>
 </li>
 <li><p><a class="reference internal" href="#creating-custom-rules" id="id35">Creating Custom Rules</a></p>
 <ul>
-<li><p><a class="reference internal" href="#allowing-parameters" id="id36">Allowing Parameters</a></p></li>
+<li><p><a class="reference internal" href="#using-rule-classes" id="id36">Using Rule Classes</a></p></li>
+<li><p><a class="reference internal" href="#using-closure-rule" id="id37">Using Closure Rule</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#available-rules" id="id37">Available Rules</a></p>
+<li><p><a class="reference internal" href="#available-rules" id="id38">Available Rules</a></p>
 <ul>
-<li><p><a class="reference internal" href="#rules-for-general-use" id="id38">Rules for General Use</a></p></li>
-<li><p><a class="reference internal" href="#rules-for-file-uploads" id="id39">Rules for File Uploads</a></p></li>
+<li><p><a class="reference internal" href="#rules-for-general-use" id="id39">Rules for General Use</a></p></li>
+<li><p><a class="reference internal" href="#rules-for-file-uploads" id="id40">Rules for File Uploads</a></p></li>
 </ul>
 </li>
 </ul>
@@ -397,7 +398,7 @@ code and save it to your <strong>app/Views/</strong> folder:</p>
 <span class="o">&lt;/</span><span class="nx">head</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
+    <span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
     <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
@@ -458,17 +459,13 @@ this code and save it to your <strong>app/Controllers/</strong> folder:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">strtolower</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="o">!==</span> <span class="s1">&#39;post&#39;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;signup&#39;</span><span class="p">,</span> <span class="p">[</span>
-                <span class="s1">&#39;validation&#39;</span> <span class="o">=&gt;</span> <span class="nx">Services</span><span class="o">::</span><span class="na">validation</span><span class="p">(),</span>
-            <span class="p">]);</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;signup&#39;</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="nv">$rules</span> <span class="o">=</span> <span class="p">[];</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">(</span><span class="nv">$rules</span><span class="p">))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;signup&#39;</span><span class="p">,</span> <span class="p">[</span>
-                <span class="s1">&#39;validation&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="p">,</span>
-            <span class="p">]);</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;signup&#39;</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">);</span>
@@ -521,7 +518,7 @@ However, the benefit of using the helper is that it generates the
 action URL for you, based on the URL in your config file. This makes
 your application more portable in the event your URLs change.</p></li>
 <li><p>At the top of the form you’ll notice the following function call:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>This function will return any error messages sent back by the
@@ -562,34 +559,49 @@ form or the success page.</p>
 <h2><a class="toc-backref" href="#id12">Config for Validation</a><a class="headerlink" href="#config-for-validation" title="Permalink to this headline"></a></h2>
 <section id="traditional-and-strict-rules">
 <span id="validation-traditional-and-strict-rules"></span><h3><a class="toc-backref" href="#id13">Traditional and Strict Rules</a><a class="headerlink" href="#traditional-and-strict-rules" title="Permalink to this headline"></a></h3>
-<p>CI4 has two kinds of Validation rule classes.
-The default rule classes (<strong>Traditional Rules</strong>) have the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation</span></code>,
+<p>CodeIgniter 4 has two kinds of Validation rule classes.
+The traditional rule classes (<strong>Traditional Rules</strong>) have the namespace <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation</span></code>,
 and the new classes (<strong>Strict Rules</strong>) have <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Validation\StrictRules</span></code>, which provide strict validation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, <strong>Strict Rules</strong> are used by default for better security.</p>
+</div>
+<section id="traditional-rules">
+<h4>Traditional Rules<a class="headerlink" href="#traditional-rules" title="Permalink to this headline"></a></h4>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When validating data that contains non-string values, such as JSON data, it is recommended to use <strong>Strict Rules</strong>.</p>
+</div>
 <p>The <strong>Traditional Rules</strong> implicitly assume that string values are validated,
 and the input value may be converted implicitly to a string value.
 It works for most basic cases like validating POST data.</p>
 <p>However, for example, if you use JSON input data, it may be a type of bool/null/array.
 When you validate the boolean <code class="docutils literal notranslate"><span class="pre">true</span></code>, it is converted to string <code class="docutils literal notranslate"><span class="pre">'1'</span></code> with the Traditional rule classes.
 If you validate it with the <code class="docutils literal notranslate"><span class="pre">integer</span></code> rule, <code class="docutils literal notranslate"><span class="pre">'1'</span></code> passes the validation.</p>
-<p>The <strong>Strict Rules</strong> don’t use implicit type conversion.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>When validating data that contains non-string values, such as JSON data, it is recommended to use <strong>Strict Rules</strong>.</p>
+</section>
+<section id="strict-rules">
+<h4>Strict Rules<a class="headerlink" href="#strict-rules" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.2.0.</span></p>
 </div>
-<section id="using-strict-rules">
-<h4>Using Strict Rules<a class="headerlink" href="#using-strict-rules" title="Permalink to this headline"></a></h4>
-<p>If you want to use these rules, you need to change the rule classes in <strong>app/Config/Validation.php</strong>:</p>
+<p>The <strong>Strict Rules</strong> don’t use implicit type conversion.</p>
+</section>
+<section id="using-traditional-rules">
+<h4>Using Traditional Rules<a class="headerlink" href="#using-traditional-rules" title="Permalink to this headline"></a></h4>
+<p>If you want to use traditional rules, you need to change the rule classes in <strong>app/Config/Validation.php</strong>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Config</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="nx">\CodeIgniter\Validation\StrictRules\CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="nx">\CodeIgniter\Validation\StrictRules\FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="nx">\CodeIgniter\Validation\StrictRules\FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
-        <span class="nx">\CodeIgniter\Validation\StrictRules\Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nx">\CodeIgniter\Validation\CreditCardRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\CodeIgniter\Validation\FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\CodeIgniter\Validation\FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="nx">\CodeIgniter\Validation\Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
     <span class="p">];</span>
 
     <span class="c1">// ...</span>
@@ -1196,8 +1208,13 @@ right after the name of the field the error should belong to:</p>
 </section>
 <section id="creating-custom-rules">
 <h2><a class="toc-backref" href="#id35">Creating Custom Rules</a><a class="headerlink" href="#creating-custom-rules" title="Permalink to this headline"></a></h2>
+<section id="using-rule-classes">
+<h3><a class="toc-backref" href="#id36">Using Rule Classes</a><a class="headerlink" href="#using-rule-classes" title="Permalink to this headline"></a></h3>
 <p>Rules are stored within simple, namespaced classes. They can be stored any location you would like, as long as the
-autoloader can find it. These files are called RuleSets. To add a new RuleSet, edit <strong>Config/Validation.php</strong> and
+autoloader can find it. These files are called RuleSets.</p>
+<section id="adding-a-ruleset">
+<h4>Adding a RuleSet<a class="headerlink" href="#adding-a-ruleset" title="Permalink to this headline"></a></h4>
+<p>To add a new RuleSet, edit <strong>Config/Validation.php</strong> and
 add the new file to the <code class="docutils literal notranslate"><span class="pre">$ruleSets</span></code> array:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1210,7 +1227,9 @@ add the new file to the <code class="docutils literal notranslate"><span class="
 
 <span class="k">class</span> <span class="nc">Validation</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$ruleSets</span> <span class="o">=</span> <span class="p">[</span>
         <span class="nx">Rules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="nx">FormatRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
         <span class="nx">FileRules</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
@@ -1223,6 +1242,9 @@ add the new file to the <code class="docutils literal notranslate"><span class="
 </div>
 <p>You can add it as either a simple string with the fully qualified class name, or using the <code class="docutils literal notranslate"><span class="pre">::class</span></code> suffix as
 shown above. The primary benefit here is that it provides some extra navigation capabilities in more advanced IDEs.</p>
+</section>
+<section id="creating-a-rule-class">
+<h4>Creating a Rule Class<a class="headerlink" href="#creating-a-rule-class" title="Permalink to this headline"></a></h4>
 <p>Within the file itself, each method is a rule and must accept a string as the first parameter, and must return
 a boolean true or false value signifying true if it passed the test or false if it did not:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1256,6 +1278,9 @@ second parameter:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="using-a-custom-rule">
+<h4>Using a Custom Rule<a class="headerlink" href="#using-a-custom-rule" title="Permalink to this headline"></a></h4>
 <p>Your new custom rule could now be used just like any other rule:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -1264,8 +1289,9 @@ second parameter:</p>
 <span class="p">]);</span>
 </pre></div>
 </div>
+</section>
 <section id="allowing-parameters">
-<h3><a class="toc-backref" href="#id36">Allowing Parameters</a><a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h3>
+<h4>Allowing Parameters<a class="headerlink" href="#allowing-parameters" title="Permalink to this headline"></a></h4>
 <p>If your method needs to work with parameters, the function will need a minimum of three parameters: the string to validate,
 the parameter string, and an array with all of the data that was submitted the form. The <code class="docutils literal notranslate"><span class="pre">$data</span></code> array is especially handy
 for rules like <code class="docutils literal notranslate"><span class="pre">required_with</span></code> that needs to check the value of another submitted field to base its result on:</p>
@@ -1309,8 +1335,65 @@ for rules like <code class="docutils literal notranslate"><span class="pre">requ
 <p>Custom errors can be returned as the fourth parameter, just as described above.</p>
 </section>
 </section>
+<section id="using-closure-rule">
+<span id="validation-using-closure-rule"></span><h3><a class="toc-backref" href="#id37">Using Closure Rule</a><a class="headerlink" href="#using-closure-rule" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>If you only need the functionality of a custom rule once throughout your application,
+you may use a closure instead of a rule class.</p>
+<p>You need to use an array for validation rules:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+            <span class="k">static</span> <span class="nx">fn</span> <span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="c1">// Errors</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="c1">// Specify the array key for the closure rule.</span>
+            <span class="mi">1</span> <span class="o">=&gt;</span> <span class="s1">&#39;The value is not even.&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">);</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">run</span><span class="p">(</span><span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// handle validation errors</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You must set the error message for the closure rule.
+When you specify the error message, set the array key for the closure rule.
+In the above code, the <code class="docutils literal notranslate"><span class="pre">required</span></code> rule has the key <code class="docutils literal notranslate"><span class="pre">0</span></code>, and the closure has <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>Or you can use the following parameters:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">setRules</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;required&#39;</span><span class="p">,</span>
+            <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">$error</span><span class="p">,</span> <span class="nv">$field</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">((</span><span class="nx">int</span><span class="p">)</span> <span class="nv">$value</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="nv">$error</span> <span class="o">=</span> <span class="s1">&#39;The value is not even.&#39;</span><span class="p">;</span>
+
+                <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="available-rules">
-<h2><a class="toc-backref" href="#id37">Available Rules</a><a class="headerlink" href="#available-rules" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id38">Available Rules</a><a class="headerlink" href="#available-rules" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Rule is a string; there must be <strong>no spaces</strong> between the parameters, especially the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule.
@@ -1329,7 +1412,7 @@ There can be no spaces before and after <code class="docutils literal notranslat
 </pre></div>
 </div>
 <section id="rules-for-general-use">
-<h3><a class="toc-backref" href="#id38">Rules for General Use</a><a class="headerlink" href="#rules-for-general-use" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id39">Rules for General Use</a><a class="headerlink" href="#rules-for-general-use" title="Permalink to this headline"></a></h3>
 <p>The following is a list of all the native rules that are available to use:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -1643,7 +1726,7 @@ The Validation library <strong>never alters the data</strong> to validate.</p>
 </div>
 </section>
 <section id="rules-for-file-uploads">
-<span id="id2"></span><h3><a class="toc-backref" href="#id39">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Permalink to this headline"></a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id40">Rules for File Uploads</a><a class="headerlink" href="#rules-for-file-uploads" title="Permalink to this headline"></a></h3>
 <p>These validation rules enable you to do the basic checks you might need to verify that uploaded files meet your business needs.
 Since the value of a file upload HTML field doesn’t exist, and is stored in the <code class="docutils literal notranslate"><span class="pre">$_FILES</span></code> global, the name of the input field will
 need to be used twice. Once to specify the field name as you would for any other rule, but again as the first parameter of all
@@ -1735,7 +1818,7 @@ an image based on the mime type.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

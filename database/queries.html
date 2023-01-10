@@ -436,10 +436,10 @@ prefixing set <code class="docutils literal notranslate"><span class="pre">true<
 it into your database. CodeIgniter has three methods that help you do
 this:</p>
 <section id="db-escape">
-<h3><a class="toc-backref" href="#id8">1. $db-&gt;escape()</a><a class="headerlink" href="#db-escape" title="Permalink to this headline"></a></h3>
-<p>This function determines the data type so
-that it can escape only string data. It also automatically adds
-single quotes around the data so you don’t have to:</p>
+<span id="database-queries-db-escape"></span><h3><a class="toc-backref" href="#id8">1. $db-&gt;escape()</a><a class="headerlink" href="#db-escape" title="Permalink to this headline"></a></h3>
+<p>This function determines the data type so that it can escape only string
+data. It also automatically adds single quotes around the data so you
+don’t have to:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;INSERT INTO table (title) VALUES(&#39;</span> <span class="o">.</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$title</span><span class="p">)</span> <span class="o">.</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
@@ -622,19 +622,28 @@ query:</p>
 <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$email</span><span class="p">,</span> <span class="nv">$country</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>This returns a standard <a class="reference internal" href="results.html"><span class="doc">result set</span></a>.</p>
+<p>For queries of type “write” it returns true or false, indicating the success or failure of the query.
+For queries of type “read” it returns a standard <a class="reference internal" href="results.html"><span class="doc">result set</span></a>.</p>
 </section>
 <section id="other-methods">
 <h3><a class="toc-backref" href="#id18">Other Methods</a><a class="headerlink" href="#other-methods" title="Permalink to this headline"></a></h3>
 <p>In addition to these two primary methods, the prepared query object also has the following methods:</p>
 <section id="close">
-<h4>close()<a class="headerlink" href="#close" title="Permalink to this headline"></a></h4>
+<span id="database-queries-stmt-close"></span><h4>close()<a class="headerlink" href="#close" title="Permalink to this headline"></a></h4>
 <p>While PHP does a pretty good job of closing all open statements with the database it’s always a good idea to
 close out the prepared statement when you’re done with it:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$pQuery</span><span class="o">-&gt;</span><span class="na">close</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Success!&#39;</span><span class="p">;</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s1">&#39;Deallocation of prepared statements failed!&#39;</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, the <code class="docutils literal notranslate"><span class="pre">close()</span></code> method deallocates the prepared statement in all DBMS. Previously, they were not deallocated in Postgre, SQLSRV and OCI8.</p>
 </div>
 </section>
 <section id="getquerystring">
@@ -769,7 +778,7 @@ parameter is the value you want it replaced with:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

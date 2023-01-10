@@ -275,13 +275,19 @@
              
   <section id="times-and-dates">
 <h1>Times and Dates<a class="headerlink" href="#times-and-dates" title="Permalink to this headline"></a></h1>
-<p>CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP’s DateTime object, but uses the Intl
+<p>CodeIgniter provides a fully-localized, immutable, date/time class that is built on PHP’s DateTimeImmutable object, but uses the Intl
 extension’s features to convert times across timezones and display the output correctly for different locales. This class
 is the <code class="docutils literal notranslate"><span class="pre">Time</span></code> class and lives in the <code class="docutils literal notranslate"><span class="pre">CodeIgniter\I18n</span></code> namespace.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Since the Time class extends DateTime, if there are features that you need that this class doesn’t provide,
-you can likely find them within the <a class="reference external" href="https://www.php.net/manual/en/class.datetime.php">DateTime</a>  class itself.</p>
+<p>Since the Time class extends <code class="docutils literal notranslate"><span class="pre">DateTimeImmutable</span></code>, if there are features that you need that this class doesn’t provide,
+you can likely find them within the <a class="reference external" href="https://www.php.net/manual/en/class.datetimeimmutable.php">DateTimeImmutable</a>  class itself.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.3.0, the Time class extended <code class="docutils literal notranslate"><span class="pre">DateTime</span></code> and some inherited methods changed
+the current object state. The bug was fixed in v4.3.0. If you need the old Time class for backward
+compatibility, you can use deprecated <code class="docutils literal notranslate"><span class="pre">TimeLegay</span></code> class for the time being.</p>
 </div>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -356,7 +362,7 @@ in the second and parameters, respectively. If no locale or timezone is provided
 </section>
 <section id="parse">
 <h3><a class="toc-backref" href="#id4">parse()</a><a class="headerlink" href="#parse" title="Permalink to this headline"></a></h3>
-<p>This helper method is a static version of the default constructor. It takes a string acceptable as DateTime’s
+<p>This helper method is a static version of the default constructor. It takes a string acceptable as DateTimeImmutable’s
 constructor as the first parameter, a timezone as the second parameter, and the locale as the third parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -433,8 +439,8 @@ timezone and locale in the fourth and fifth parameters:</p>
 </section>
 <section id="createfromformat">
 <h3><a class="toc-backref" href="#id11">createFromFormat()</a><a class="headerlink" href="#createfromformat" title="Permalink to this headline"></a></h3>
-<p>This is a replacement for DateTime’s method of the same name. This allows the timezone to be set at the same time,
-and returns a <code class="docutils literal notranslate"><span class="pre">Time</span></code> instance, instead of DateTime:</p>
+<p>This is a replacement for DateTimeImmutable’s method of the same name. This allows the timezone to be set at the same time,
+and returns a <code class="docutils literal notranslate"><span class="pre">Time</span></code> instance, instead of DateTimeImmutable:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$time</span> <span class="o">=</span> <span class="nx">Time</span><span class="o">::</span><span class="na">createFromFormat</span><span class="p">(</span><span class="s1">&#39;j-M-Y&#39;</span><span class="p">,</span> <span class="s1">&#39;15-Feb-2009&#39;</span><span class="p">,</span> <span class="s1">&#39;America/Chicago&#39;</span><span class="p">);</span>
@@ -476,12 +482,12 @@ not aware of locales:</p>
 </section>
 <section id="displaying-the-value">
 <h2><a class="toc-backref" href="#id15">Displaying the Value</a><a class="headerlink" href="#displaying-the-value" title="Permalink to this headline"></a></h2>
-<p>Since the Time class extends DateTime, you get all of the output methods that provides, including the <code class="docutils literal notranslate"><span class="pre">format()</span></code> method.
-However, the DateTime methods do not provide a localized result. The Time class does provide a number of helper methods
+<p>Since the Time class extends DateTimeImmutable, you get all of the output methods that provides, including the <code class="docutils literal notranslate"><span class="pre">format()</span></code> method.
+However, the DateTimeImmutable methods do not provide a localized result. The Time class does provide a number of helper methods
 to display localized versions of the value, though.</p>
 <section id="tolocalizedstring">
 <h3><a class="toc-backref" href="#id16">toLocalizedString()</a><a class="headerlink" href="#tolocalizedstring" title="Permalink to this headline"></a></h3>
-<p>This is the localized version of DateTime’s <code class="docutils literal notranslate"><span class="pre">format()</span></code> method. Instead of using the values you might be familiar with, though,
+<p>This is the localized version of DateTimeImmutable’s <code class="docutils literal notranslate"><span class="pre">format()</span></code> method. Instead of using the values you might be familiar with, though,
 you must use values acceptable to the <a class="reference external" href="https://www.php.net/manual/en/class.intldateformatter.php">IntlDateFormatter</a> class.
 A full listing of values can be found <a class="reference external" href="https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classSimpleDateFormat.html#details">here</a>.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -978,7 +984,7 @@ human readable format that is geared towards being easily understood. It can cre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

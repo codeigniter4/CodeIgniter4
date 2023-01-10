@@ -279,12 +279,17 @@
 HTML.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
-<li><p><a class="reference internal" href="#available-functions" id="id2">Available Functions</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id1">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id2">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></p></li>
 </ul>
 </div>
+<section id="configuration">
+<h2><a class="toc-backref" href="#id1">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<p>Since <code class="docutils literal notranslate"><span class="pre">v4.3.0</span></code>, void HTML elements (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code>) in <code class="docutils literal notranslate"><span class="pre">html_helper</span></code> functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the <code class="docutils literal notranslate"><span class="pre">$html5</span></code> property in <strong>app/Config/DocTypes.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</section>
 <section id="loading-this-helper">
-<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -293,7 +298,7 @@ HTML.</p>
 </div>
 </section>
 <section id="available-functions">
-<h2><a class="toc-backref" href="#id2">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
 <dl class="php function">
 <dt class="sig sig-object php" id="img">
@@ -318,7 +323,7 @@ image source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;img src=&quot;http://site.com/images/picture.jpg&quot; /&gt;</span>
+<span class="c1">// &lt;img src=&quot;http://site.com/images/picture.jpg&quot;&gt;</span>
 </pre></div>
 </div>
 <p>There is an optional second parameter that is a true/false value that
@@ -328,7 +333,7 @@ Presumably, this would be if you were using a media controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">img</span><span class="p">(</span><span class="s1">&#39;images/picture.jpg&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;&quot; /&gt;</span>
+<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;&quot;&gt;</span>
 </pre></div>
 </div>
 <p>Additionally, an associative array can be passed as the first parameter,
@@ -348,7 +353,7 @@ is not provided, CodeIgniter will generate an empty string.</p>
 <span class="p">];</span>
 
 <span class="nx">img</span><span class="p">(</span><span class="nv">$imageProperties</span><span class="p">);</span>
-<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;Me, demonstrating how to eat 4 slices of pizza at one time&quot; class=&quot;post_images&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;That was quite a night&quot; rel=&quot;lightbox&quot; /&gt;</span>
+<span class="c1">// &lt;img src=&quot;http://site.com/index.php/images/picture.jpg&quot; alt=&quot;Me, demonstrating how to eat 4 slices of pizza at one time&quot; class=&quot;post_images&quot; width=&quot;200&quot; height=&quot;200&quot; title=&quot;That was quite a night&quot; rel=&quot;lightbox&quot;&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -421,17 +426,17 @@ the page specified by <code class="docutils literal notranslate"><span class="pr
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;css/mystyles.css&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/css/mystyles.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/css/mystyles.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</span>
 </pre></div>
 </div>
 <p>Further examples:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;favicon.ico&#39;</span><span class="p">,</span> <span class="s1">&#39;shortcut icon&#39;</span><span class="p">,</span> <span class="s1">&#39;image/ico&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/ico&quot; /&gt;</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/ico&quot;&gt;</span>
 
 <span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">,</span> <span class="s1">&#39;alternate&#39;</span><span class="p">,</span> <span class="s1">&#39;application/rss+xml&#39;</span><span class="p">,</span> <span class="s1">&#39;My RSS Feed&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/feed&quot; rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;My RSS Feed&quot; /&gt;</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/feed&quot; rel=&quot;alternate&quot; type=&quot;application/rss+xml&quot; title=&quot;My RSS Feed&quot;&gt;</span>
 </pre></div>
 </div>
 <p>Alternately, an associative array can be passed to the <code class="docutils literal notranslate"><span class="pre">link_tag()</span></code> function
@@ -446,7 +451,7 @@ for complete control over all attributes and values:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">link_tag</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
-<span class="c1">// &lt;link href=&quot;http://site.com/css/printer.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;</span>
+<span class="c1">// &lt;link href=&quot;http://site.com/css/printer.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;print&quot;&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -475,7 +480,7 @@ the page specified by <code class="docutils literal notranslate"><span class="pr
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="s1">&#39;js/mystyles.js&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;script src=&quot;http://site.com/js/mystyles.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
+<span class="c1">// &lt;script src=&quot;http://site.com/js/mystyles.js&quot;&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 <p>Alternately, an associative array can be passed to the <code class="docutils literal notranslate"><span class="pre">script_tag()</span></code> function
@@ -485,7 +490,7 @@ for complete control over all attributes and values:</p>
 <span class="nv">$script</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;src&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;js/printer.js&#39;</span><span class="p">,</span> <span class="s1">&#39;defer&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">script_tag</span><span class="p">(</span><span class="nv">$script</span><span class="p">);</span>
-<span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; defer type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</span>
+<span class="c1">// &lt;script src=&quot;http://site.com/js/printer.js&quot; defer&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -764,7 +769,7 @@ source source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">source</span><span class="p">(</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;video/mp4&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;source src=&quot;movie.mp4&quot; type=&quot;video/mp4&quot; class=&quot;test&quot; /&gt;</span>
+<span class="c1">// &lt;source src=&quot;movie.mp4&quot; type=&quot;video/mp4&quot; class=&quot;test&quot;&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -793,7 +798,7 @@ embed source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">embed</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;embed src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;/&gt;</span>
+<span class="c1">// &lt;embed src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -868,7 +873,7 @@ param source. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">param</span><span class="p">(</span><span class="s1">&#39;movie.mov&#39;</span><span class="p">,</span> <span class="s1">&#39;video/quicktime&#39;</span><span class="p">,</span> <span class="s1">&#39;class=&quot;test&quot;&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;param src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;/&gt;</span>
+<span class="c1">// &lt;param src=&quot;movie.mov&quot; type=&quot;video/quicktime&quot; class=&quot;test&quot;&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -896,7 +901,7 @@ formatted in WebVTT format. Example:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">track</span><span class="p">(</span><span class="s1">&#39;subtitles_no.vtt&#39;</span><span class="p">,</span> <span class="s1">&#39;subtitles&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;Norwegian No&#39;</span><span class="p">);</span>
-<span class="c1">// &lt;track src=&quot;subtitles_no.vtt&quot; kind=&quot;subtitles&quot; srclang=&quot;no&quot; label=&quot;Norwegian No&quot; /&gt;</span>
+<span class="c1">// &lt;track src=&quot;subtitles_no.vtt&quot; kind=&quot;subtitles&quot; srclang=&quot;no&quot; label=&quot;Norwegian No&quot;&gt;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1039,7 +1044,7 @@ pulled from <strong>app/Config/DocTypes.php</strong>, or they could be over-ridd
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

@@ -277,21 +277,22 @@
 <h1>Helper Functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#what-are-helpers" id="id1">What are Helpers?</a></p></li>
-<li><p><a class="reference internal" href="#loading-a-helper" id="id2">Loading a Helper</a></p>
+<li><p><a class="reference internal" href="#what-are-helpers" id="id2">What are Helpers?</a></p></li>
+<li><p><a class="reference internal" href="#loading-a-helper" id="id3">Loading a Helper</a></p>
 <ul>
-<li><p><a class="reference internal" href="#loading-multiple-helpers" id="id3">Loading Multiple Helpers</a></p></li>
-<li><p><a class="reference internal" href="#loading-in-a-controller" id="id4">Loading in a Controller</a></p></li>
-<li><p><a class="reference internal" href="#loading-from-non-standard-locations" id="id5">Loading from Non-standard Locations</a></p></li>
+<li><p><a class="reference internal" href="#loading-multiple-helpers" id="id4">Loading Multiple Helpers</a></p></li>
+<li><p><a class="reference internal" href="#loading-in-a-controller" id="id5">Loading in a Controller</a></p></li>
+<li><p><a class="reference internal" href="#loading-from-non-standard-locations" id="id6">Loading from Non-standard Locations</a></p></li>
+<li><p><a class="reference internal" href="#auto-loading-helpers" id="id7">Auto-loading Helpers</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#using-a-helper" id="id6">Using a Helper</a></p></li>
-<li><p><a class="reference internal" href="#extending-helpers" id="id7">“Extending” Helpers</a></p></li>
-<li><p><a class="reference internal" href="#now-what" id="id8">Now What?</a></p></li>
+<li><p><a class="reference internal" href="#using-a-helper" id="id8">Using a Helper</a></p></li>
+<li><p><a class="reference internal" href="#extending-helpers" id="id9">“Extending” Helpers</a></p></li>
+<li><p><a class="reference internal" href="#now-what" id="id10">Now What?</a></p></li>
 </ul>
 </div>
 <section id="what-are-helpers">
-<h2><a class="toc-backref" href="#id1">What are Helpers?</a><a class="headerlink" href="#what-are-helpers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">What are Helpers?</a><a class="headerlink" href="#what-are-helpers" title="Permalink to this headline"></a></h2>
 <p>Helpers, as the name suggests, help you with tasks. Each helper file is
 simply a collection of functions in a particular category. There are <strong>URL
 Helpers</strong>, that assist in creating links, there are <strong>Form Helpers</strong> that help
@@ -313,7 +314,7 @@ specified helper is not located there CI will instead look in your
 global <strong>system/Helpers</strong> directory.</p>
 </section>
 <section id="loading-a-helper">
-<h2><a class="toc-backref" href="#id2">Loading a Helper</a><a class="headerlink" href="#loading-a-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Loading a Helper</a><a class="headerlink" href="#loading-a-helper" title="Permalink to this headline"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The URL helper is always loaded so you do not need to load it yourself.</p>
@@ -345,7 +346,7 @@ such as Linux.</p>
 don’t try to assign it to a variable. Just use it as shown.</p>
 </div>
 <section id="loading-multiple-helpers">
-<h3><a class="toc-backref" href="#id3">Loading Multiple Helpers</a><a class="headerlink" href="#loading-multiple-helpers" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id4">Loading Multiple Helpers</a><a class="headerlink" href="#loading-multiple-helpers" title="Permalink to this headline"></a></h3>
 <p>If you need to load more than one helper at a time, you can pass
 an array of file names in and all of them will be loaded:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -355,7 +356,7 @@ an array of file names in and all of them will be loaded:</p>
 </div>
 </section>
 <section id="loading-in-a-controller">
-<h3><a class="toc-backref" href="#id4">Loading in a Controller</a><a class="headerlink" href="#loading-in-a-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Loading in a Controller</a><a class="headerlink" href="#loading-in-a-controller" title="Permalink to this headline"></a></h3>
 <p>A helper can be loaded anywhere within your controller methods (or
 even within your View files, although that’s not a good practice), as
 long as you load it before you use it.</p>
@@ -367,7 +368,7 @@ it.</p>
 property in Controller instead. See <a class="reference internal" href="../incoming/controllers.html#controllers-helpers"><span class="std std-ref">Controllers</span></a>.</p>
 </section>
 <section id="loading-from-non-standard-locations">
-<span id="helpers-loading-from-non-standard-locations"></span><h3><a class="toc-backref" href="#id5">Loading from Non-standard Locations</a><a class="headerlink" href="#loading-from-non-standard-locations" title="Permalink to this headline"></a></h3>
+<span id="helpers-loading-from-non-standard-locations"></span><h3><a class="toc-backref" href="#id6">Loading from Non-standard Locations</a><a class="headerlink" href="#loading-from-non-standard-locations" title="Permalink to this headline"></a></h3>
 <p>Helpers can be loaded from directories outside of <strong>app/Helpers</strong> and
 <strong>system/Helpers</strong>, as long as that path can be found through a namespace that
 has been set up within the PSR-4 section of the <a class="reference internal" href="../concepts/autoloader.html"><span class="doc">Autoloader config file</span></a>.
@@ -397,9 +398,19 @@ use the following command to load the helper for us:</p>
 The namespace is simply used as a convenient way to locate the files.</p>
 </div>
 </section>
+<section id="auto-loading-helpers">
+<span id="id1"></span><h3><a class="toc-backref" href="#id7">Auto-loading Helpers</a><a class="headerlink" href="#auto-loading-helpers" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>If you find that you need a particular helper globally throughout your application,
+you can tell CodeIgniter to auto-load it during system initialization.
+This is done by opening the <strong>app/Config/Autoload.php</strong> file
+and adding the helper to the <code class="docutils literal notranslate"><span class="pre">$helpers</span></code> property.</p>
+</section>
 </section>
 <section id="using-a-helper">
-<h2><a class="toc-backref" href="#id6">Using a Helper</a><a class="headerlink" href="#using-a-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Using a Helper</a><a class="headerlink" href="#using-a-helper" title="Permalink to this headline"></a></h2>
 <p>Once you’ve loaded the Helper File containing the function you intend to
 use, you’ll call it the way you would a standard PHP function.</p>
 <p>For example, to create a link using the <a class="reference internal" href="../helpers/url_helper.html#anchor" title="anchor"><code class="xref php php-func docutils literal notranslate"><span class="pre">anchor()</span></code></a> function in one of
@@ -413,7 +424,7 @@ your view files you would do this:</p>
 URI to the controller/method you wish to link to.</p>
 </section>
 <section id="extending-helpers">
-<h2><a class="toc-backref" href="#id7">“Extending” Helpers</a><a class="headerlink" href="#extending-helpers" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">“Extending” Helpers</a><a class="headerlink" href="#extending-helpers" title="Permalink to this headline"></a></h2>
 <p>To “extend” Helpers, create a file in your <strong>app/Helpers/</strong> folder
 with an identical name to the existing Helper.</p>
 <p>If all you need to do is add some functionality to an existing helper -
@@ -470,7 +481,7 @@ is as follows:</p>
 </ol>
 </section>
 <section id="now-what">
-<h2><a class="toc-backref" href="#id8">Now What?</a><a class="headerlink" href="#now-what" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id10">Now What?</a><a class="headerlink" href="#now-what" title="Permalink to this headline"></a></h2>
 <p>In the Table of Contents, you’ll find a list of all the available <a class="reference internal" href="../helpers/index.html"><span class="doc">Helpers</span></a>.
 Browse each one to see what they do.</p>
 </section>
@@ -488,7 +499,7 @@ Browse each one to see what they do.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

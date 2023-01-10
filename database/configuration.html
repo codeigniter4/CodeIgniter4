@@ -574,7 +574,7 @@ installations to share one database.</p></td>
 <td><p>true/false (boolean) - Whether to use a persistent connection.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>DBDebug</strong></p></td>
-<td><p>true/false (boolean) - Whether database errors should be displayed.</p></td>
+<td><p>true/false (boolean) - Whether to throw exceptions or not when database errors occur.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>charset</strong></p></td>
 <td><p>The character set used in communicating with the database.</p></td>
@@ -621,6 +621,9 @@ To enforce Foreign Key constraint, set this config item to true.</p>
 </div>
 </td>
 </tr>
+<tr class="row-even"><td><p><strong>busyTimeout</strong></p></td>
+<td><p>milliseconds (int) - Sleeps for a specified amount of time when a table is locked (<code class="docutils literal notranslate"><span class="pre">SQLite3</span></code> only).</p></td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
@@ -645,7 +648,7 @@ will be the path to your database file.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

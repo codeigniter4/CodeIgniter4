@@ -279,26 +279,27 @@
 etc. You can also scaffold a complete set of files with just one command.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#introduction" id="id25">Introduction</a></p></li>
-<li><p><a class="reference internal" href="#built-in-generators" id="id26">Built-in Generators</a></p>
+<li><p><a class="reference internal" href="#introduction" id="id28">Introduction</a></p></li>
+<li><p><a class="reference internal" href="#built-in-generators" id="id29">Built-in Generators</a></p>
 <ul>
-<li><p><a class="reference internal" href="#make-command" id="id27">make:command</a></p></li>
-<li><p><a class="reference internal" href="#make-config" id="id28">make:config</a></p></li>
-<li><p><a class="reference internal" href="#make-controller" id="id29">make:controller</a></p></li>
-<li><p><a class="reference internal" href="#make-entity" id="id30">make:entity</a></p></li>
-<li><p><a class="reference internal" href="#make-filter" id="id31">make:filter</a></p></li>
-<li><p><a class="reference internal" href="#make-model" id="id32">make:model</a></p></li>
-<li><p><a class="reference internal" href="#make-seeder" id="id33">make:seeder</a></p></li>
-<li><p><a class="reference internal" href="#make-migration" id="id34">make:migration</a></p></li>
-<li><p><a class="reference internal" href="#make-validation" id="id35">make:validation</a></p></li>
+<li><p><a class="reference internal" href="#make-cell" id="id30">make:cell</a></p></li>
+<li><p><a class="reference internal" href="#make-command" id="id31">make:command</a></p></li>
+<li><p><a class="reference internal" href="#make-config" id="id32">make:config</a></p></li>
+<li><p><a class="reference internal" href="#make-controller" id="id33">make:controller</a></p></li>
+<li><p><a class="reference internal" href="#make-entity" id="id34">make:entity</a></p></li>
+<li><p><a class="reference internal" href="#make-filter" id="id35">make:filter</a></p></li>
+<li><p><a class="reference internal" href="#make-model" id="id36">make:model</a></p></li>
+<li><p><a class="reference internal" href="#make-seeder" id="id37">make:seeder</a></p></li>
+<li><p><a class="reference internal" href="#make-migration" id="id38">make:migration</a></p></li>
+<li><p><a class="reference internal" href="#make-validation" id="id39">make:validation</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#scaffolding-a-complete-set-of-stock-code" id="id36">Scaffolding a Complete Set of Stock Code</a></p></li>
-<li><p><a class="reference internal" href="#generatortrait" id="id37">GeneratorTrait</a></p></li>
+<li><p><a class="reference internal" href="#scaffolding-a-complete-set-of-stock-code" id="id40">Scaffolding a Complete Set of Stock Code</a></p></li>
+<li><p><a class="reference internal" href="#generatortrait" id="id41">GeneratorTrait</a></p></li>
 </ul>
 </div>
 <section id="introduction">
-<h2><a class="toc-backref" href="#id25">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id28">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline"></a></h2>
 <p>All built-in generators reside under the <code class="docutils literal notranslate"><span class="pre">Generators</span></code> group when listed using <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">list</span></code>.
 To view the full description and usage information on a particular generator, use the command:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">generator_command</span><span class="o">&gt;</span>
@@ -333,25 +334,52 @@ to use instead of the deprecated <code class="docutils literal notranslate"><spa
 </div>
 </section>
 <section id="built-in-generators">
-<h2><a class="toc-backref" href="#id26">Built-in Generators</a><a class="headerlink" href="#built-in-generators" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id29">Built-in Generators</a><a class="headerlink" href="#built-in-generators" title="Permalink to this headline"></a></h2>
 <p>CodeIgniter4 ships the following generators by default.</p>
-<section id="make-command">
-<h3><a class="toc-backref" href="#id27">make:command</a><a class="headerlink" href="#make-command" title="Permalink to this headline"></a></h3>
-<p>Creates a new spark command.</p>
+<section id="make-cell">
+<h3><a class="toc-backref" href="#id30">make:cell</a><a class="headerlink" href="#make-cell" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Creates a new Cell file and its view.</p>
 <section id="usage">
 <h4>Usage:<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h4>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">command</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">cell</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
 <section id="argument">
 <h4>Argument:<a class="headerlink" href="#argument" title="Permalink to this headline"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the command class. <strong>[REQUIRED]</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the cell class. It should be in PascalCase.</p></li>
 </ul>
 </section>
 <section id="options">
 <h4>Options:<a class="headerlink" href="#options" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+</ul>
+</section>
+</section>
+<section id="make-command">
+<h3><a class="toc-backref" href="#id31">make:command</a><a class="headerlink" href="#make-command" title="Permalink to this headline"></a></h3>
+<p>Creates a new spark command.</p>
+<section id="id1">
+<h4>Usage:<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">command</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>Argument:<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the command class. <strong>[REQUIRED]</strong></p></li>
+</ul>
+</section>
+<section id="id3">
+<h4>Options:<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--command</span></code>: The command name to run in spark. Defaults to <code class="docutils literal notranslate"><span class="pre">command:name</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--group</span></code>: The group/namespace of the command. Defaults to <code class="docutils literal notranslate"><span class="pre">CodeIgniter</span></code> for basic commands, and <code class="docutils literal notranslate"><span class="pre">Generators</span></code> for generator commands.</p></li>
@@ -363,22 +391,22 @@ to use instead of the deprecated <code class="docutils literal notranslate"><spa
 </section>
 </section>
 <section id="make-config">
-<h3><a class="toc-backref" href="#id28">make:config</a><a class="headerlink" href="#make-config" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id32">make:config</a><a class="headerlink" href="#make-config" title="Permalink to this headline"></a></h3>
 <p>Creates a new config file.</p>
-<section id="id1">
-<h4>Usage:<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h4>
+<section id="id4">
+<h4>Usage:<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">config</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-<section id="id2">
-<h4>Argument:<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h4>
+<section id="id5">
+<h4>Argument:<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the config class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
-<section id="id3">
-<h4>Options:<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h4>
+<section id="id6">
+<h4>Options:<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
@@ -387,22 +415,22 @@ to use instead of the deprecated <code class="docutils literal notranslate"><spa
 </section>
 </section>
 <section id="make-controller">
-<h3><a class="toc-backref" href="#id29">make:controller</a><a class="headerlink" href="#make-controller" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id33">make:controller</a><a class="headerlink" href="#make-controller" title="Permalink to this headline"></a></h3>
 <p>Creates a new controller file.</p>
-<section id="id4">
-<h4>Usage:<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h4>
+<section id="id7">
+<h4>Usage:<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h4>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">controller</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-<section id="id5">
-<h4>Argument:<a class="headerlink" href="#id5" title="Permalink to this headline"></a></h4>
+<section id="id8">
+<h4>Argument:<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the controller class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
-<section id="id6">
-<h4>Options:<a class="headerlink" href="#id6" title="Permalink to this headline"></a></h4>
+<section id="id9">
+<h4>Options:<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--bare</span></code>: Extends from <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller</span></code> instead of <code class="docutils literal notranslate"><span class="pre">BaseController</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--restful</span></code>: Extends from a RESTful resource. Choices are <code class="docutils literal notranslate"><span class="pre">controller</span></code> and <code class="docutils literal notranslate"><span class="pre">presenter</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">controller</span></code>.</p></li>
@@ -422,42 +450,18 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </section>
 </section>
 <section id="make-entity">
-<h3><a class="toc-backref" href="#id30">make:entity</a><a class="headerlink" href="#make-entity" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id34">make:entity</a><a class="headerlink" href="#make-entity" title="Permalink to this headline"></a></h3>
 <p>Creates a new entity file.</p>
-<section id="id7">
-<h4>Usage:<a class="headerlink" href="#id7" title="Permalink to this headline"></a></h4>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">entity</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="id8">
-<h4>Argument:<a class="headerlink" href="#id8" title="Permalink to this headline"></a></h4>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the entity class. <strong>[REQUIRED]</strong></p></li>
-</ul>
-</section>
-<section id="id9">
-<h4>Options:<a class="headerlink" href="#id9" title="Permalink to this headline"></a></h4>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
-</ul>
-</section>
-</section>
-<section id="make-filter">
-<h3><a class="toc-backref" href="#id31">make:filter</a><a class="headerlink" href="#make-filter" title="Permalink to this headline"></a></h3>
-<p>Creates a new filter file.</p>
 <section id="id10">
 <h4>Usage:<a class="headerlink" href="#id10" title="Permalink to this headline"></a></h4>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">filter</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">entity</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
 <section id="id11">
 <h4>Argument:<a class="headerlink" href="#id11" title="Permalink to this headline"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the filter class. <strong>[REQUIRED]</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the entity class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
 <section id="id12">
@@ -469,23 +473,47 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </ul>
 </section>
 </section>
-<section id="make-model">
-<h3><a class="toc-backref" href="#id32">make:model</a><a class="headerlink" href="#make-model" title="Permalink to this headline"></a></h3>
-<p>Creates a new model file.</p>
+<section id="make-filter">
+<h3><a class="toc-backref" href="#id35">make:filter</a><a class="headerlink" href="#make-filter" title="Permalink to this headline"></a></h3>
+<p>Creates a new filter file.</p>
 <section id="id13">
 <h4>Usage:<a class="headerlink" href="#id13" title="Permalink to this headline"></a></h4>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">model</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">filter</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
 <section id="id14">
 <h4>Argument:<a class="headerlink" href="#id14" title="Permalink to this headline"></a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the model class. <strong>[REQUIRED]</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the filter class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
 <section id="id15">
 <h4>Options:<a class="headerlink" href="#id15" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code>: Set this flag to overwrite existing files on destination.</p></li>
+</ul>
+</section>
+</section>
+<section id="make-model">
+<h3><a class="toc-backref" href="#id36">make:model</a><a class="headerlink" href="#make-model" title="Permalink to this headline"></a></h3>
+<p>Creates a new model file.</p>
+<section id="id16">
+<h4>Usage:<a class="headerlink" href="#id16" title="Permalink to this headline"></a></h4>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">model</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h4>Argument:<a class="headerlink" href="#id17" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the model class. <strong>[REQUIRED]</strong></p></li>
+</ul>
+</section>
+<section id="id18">
+<h4>Options:<a class="headerlink" href="#id18" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--dbgroup</span></code>: Database group to use. Defaults to <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--return</span></code>: Set the return type from <code class="docutils literal notranslate"><span class="pre">array</span></code>, <code class="docutils literal notranslate"><span class="pre">object</span></code>, or <code class="docutils literal notranslate"><span class="pre">entity</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">array</span></code>.</p></li>
@@ -497,22 +525,22 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </section>
 </section>
 <section id="make-seeder">
-<h3><a class="toc-backref" href="#id33">make:seeder</a><a class="headerlink" href="#make-seeder" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id37">make:seeder</a><a class="headerlink" href="#make-seeder" title="Permalink to this headline"></a></h3>
 <p>Creates a new seeder file.</p>
-<section id="id16">
-<h4>Usage:<a class="headerlink" href="#id16" title="Permalink to this headline"></a></h4>
+<section id="id19">
+<h4>Usage:<a class="headerlink" href="#id19" title="Permalink to this headline"></a></h4>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">seeder</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-<section id="id17">
-<h4>Argument:<a class="headerlink" href="#id17" title="Permalink to this headline"></a></h4>
+<section id="id20">
+<h4>Argument:<a class="headerlink" href="#id20" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the seeder class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
-<section id="id18">
-<h4>Options:<a class="headerlink" href="#id18" title="Permalink to this headline"></a></h4>
+<section id="id21">
+<h4>Options:<a class="headerlink" href="#id21" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
@@ -521,22 +549,22 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </section>
 </section>
 <section id="make-migration">
-<h3><a class="toc-backref" href="#id34">make:migration</a><a class="headerlink" href="#make-migration" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id38">make:migration</a><a class="headerlink" href="#make-migration" title="Permalink to this headline"></a></h3>
 <p>Creates a new migration file.</p>
-<section id="id19">
-<h4>Usage:<a class="headerlink" href="#id19" title="Permalink to this headline"></a></h4>
+<section id="id22">
+<h4>Usage:<a class="headerlink" href="#id22" title="Permalink to this headline"></a></h4>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">migration</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-<section id="id20">
-<h4>Argument:<a class="headerlink" href="#id20" title="Permalink to this headline"></a></h4>
+<section id="id23">
+<h4>Argument:<a class="headerlink" href="#id23" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the migration class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
-<section id="id21">
-<h4>Options:<a class="headerlink" href="#id21" title="Permalink to this headline"></a></h4>
+<section id="id24">
+<h4>Options:<a class="headerlink" href="#id24" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--session</span></code>: Generate a migration file for database sessions.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--table</span></code>: Set the table name to use for database sessions. Defaults to <code class="docutils literal notranslate"><span class="pre">ci_sessions</span></code>.</p></li>
@@ -548,22 +576,22 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </section>
 </section>
 <section id="make-validation">
-<h3><a class="toc-backref" href="#id35">make:validation</a><a class="headerlink" href="#make-validation" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id39">make:validation</a><a class="headerlink" href="#make-validation" title="Permalink to this headline"></a></h3>
 <p>Creates a new validation file.</p>
-<section id="id22">
-<h4>Usage:<a class="headerlink" href="#id22" title="Permalink to this headline"></a></h4>
+<section id="id25">
+<h4>Usage:<a class="headerlink" href="#id25" title="Permalink to this headline"></a></h4>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">make</span><span class="o">:</span><span class="nx">validation</span> <span class="o">&lt;</span><span class="nx">name</span><span class="o">&gt;</span> <span class="p">[</span><span class="nx">options</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
-<section id="id23">
-<h4>Argument:<a class="headerlink" href="#id23" title="Permalink to this headline"></a></h4>
+<section id="id26">
+<h4>Argument:<a class="headerlink" href="#id26" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the validation class. <strong>[REQUIRED]</strong></p></li>
 </ul>
 </section>
-<section id="id24">
-<h4>Options:<a class="headerlink" href="#id24" title="Permalink to this headline"></a></h4>
+<section id="id27">
+<h4>Options:<a class="headerlink" href="#id27" title="Permalink to this headline"></a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--namespace</span></code>: Set the root namespace. Defaults to value of <code class="docutils literal notranslate"><span class="pre">APP_NAMESPACE</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--suffix</span></code>: Append the component suffix to the generated class name.</p></li>
@@ -573,7 +601,7 @@ when you use <a class="reference internal" href="../incoming/routing.html#define
 </section>
 </section>
 <section id="scaffolding-a-complete-set-of-stock-code">
-<h2><a class="toc-backref" href="#id36">Scaffolding a Complete Set of Stock Code</a><a class="headerlink" href="#scaffolding-a-complete-set-of-stock-code" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id40">Scaffolding a Complete Set of Stock Code</a><a class="headerlink" href="#scaffolding-a-complete-set-of-stock-code" title="Permalink to this headline"></a></h2>
 <p>Sometimes in our development phase we are creating functionalities by groups, such as creating an <em>Admin</em> group.
 This group will contain its own controller, model, migration files, or even entities. You may be tempted to type
 each generator command one-by-one in the terminal and wishfully thinking it would be great to have a single generator
@@ -597,7 +625,7 @@ generator command are recognized by the scaffold command.</p>
 and it will be passed to the model generator.</p>
 </section>
 <section id="generatortrait">
-<h2><a class="toc-backref" href="#id37">GeneratorTrait</a><a class="headerlink" href="#generatortrait" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id41">GeneratorTrait</a><a class="headerlink" href="#generatortrait" title="Permalink to this headline"></a></h2>
 <p>All generator commands must use the <code class="docutils literal notranslate"><span class="pre">GeneratorTrait</span></code> to fully utilize its methods that are used in code
 generation.</p>
 </section>
@@ -615,7 +643,7 @@ generation.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

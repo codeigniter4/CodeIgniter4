@@ -360,9 +360,9 @@ includes the following code:</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you look closely in <strong>header.php</strong> template we are using an <code class="docutils literal notranslate"><span class="pre">esc()</span></code>
+<p>If you look closely in <strong>header.php</strong> template we are using an <a class="reference internal" href="../general/common_functions.html#esc" title="esc"><code class="xref php php-func docutils literal notranslate"><span class="pre">esc()</span></code></a>
 function. It’s a global function provided by CodeIgniter to help prevent
-XSS attacks. You can read more about it <a class="reference internal" href="../general/common_functions.html"><span class="doc">here</span></a>.</p>
+XSS attacks. You can read more about it in <a class="reference internal" href="../general/common_functions.html"><span class="doc">Global Functions and Constants</span></a>.</p>
 </div>
 </section>
 <section id="adding-logic-to-the-controller">
@@ -381,13 +381,17 @@ in the <code class="docutils literal notranslate"><span class="pre">Pages</span>
 
 <span class="k">namespace</span> <span class="nx">App\Controllers</span><span class="p">;</span>
 
+<span class="k">use</span> <span class="nx">CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">;</span> <span class="c1">// Add this line</span>
+
 <span class="k">class</span> <span class="nc">Pages</span> <span class="k">extends</span> <span class="nx">BaseController</span>
 <span class="p">{</span>
+    <span class="c1">// ...</span>
+
     <span class="k">public</span> <span class="k">function</span> <span class="nf">view</span><span class="p">(</span><span class="nv">$page</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">is_file</span><span class="p">(</span><span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Views/pages/&#39;</span> <span class="o">.</span> <span class="nv">$page</span> <span class="o">.</span> <span class="s1">&#39;.php&#39;</span><span class="p">))</span> <span class="p">{</span>
             <span class="c1">// Whoops, we don&#39;t have a page for that!</span>
-            <span class="k">throw</span> <span class="k">new</span> <span class="nx">\CodeIgniter\Exceptions\PageNotFoundException</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">PageNotFoundException</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ucfirst</span><span class="p">(</span><span class="nv">$page</span><span class="p">);</span> <span class="c1">// Capitalize the first letter</span>
@@ -399,9 +403,16 @@ in the <code class="docutils literal notranslate"><span class="pre">Pages</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>And add <code class="docutils literal notranslate"><span class="pre">use</span> <span class="pre">CodeIgniter\Exceptions\PageNotFoundException;</span></code> after the <code class="docutils literal notranslate"><span class="pre">namespace</span></code> line
+to import the <code class="docutils literal notranslate"><span class="pre">PageNotFoundException</span></code> class.</p>
 <p>Now, when the requested page does exist, it is loaded, including the header and
-footer, and displayed to the user. If the requested page doesn’t exist, a “404
-Page not found” error is shown.</p>
+footer, and returned to the user. If a controller returns a string, it is
+displayed to the user.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Controllers must return a string or a <a class="reference internal" href="../outgoing/response.html"><span class="doc">Response</span></a> object.</p>
+</div>
+<p>If the requested page doesn’t exist, a “404 Page not found” error is shown.</p>
 <p>The first line in this method checks whether the page actually exists.
 PHP’s native <code class="docutils literal notranslate"><span class="pre">is_file()</span></code> function is used to check whether the file
 is where it’s expected to be. The <code class="docutils literal notranslate"><span class="pre">PageNotFoundException</span></code> is a CodeIgniter
@@ -411,7 +422,7 @@ page title. The value of title is defined in this method, but instead of
 assigning the value to a variable, it is assigned to the title element
 in the <code class="docutils literal notranslate"><span class="pre">$data</span></code> array.</p>
 <p>The last thing that has to be done is loading the views in the order
-they should be displayed. The <code class="docutils literal notranslate"><span class="pre">view()</span></code> function built-in to
+they should be displayed. The <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function built-in to
 CodeIgniter will be used to do this. The second parameter in the <code class="docutils literal notranslate"><span class="pre">view()</span></code>
 function is used to pass values to the view. Each value in the <code class="docutils literal notranslate"><span class="pre">$data</span></code> array
 is assigned to a variable with the name of its key. So the value of
@@ -419,10 +430,10 @@ is assigned to a variable with the name of its key. So the value of
 view.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Any files and directory names passed into the <code class="docutils literal notranslate"><span class="pre">view()</span></code> function MUST
+<p>Any files and directory names passed into the <a class="reference internal" href="../general/common_functions.html#view" title="view"><code class="xref php php-func docutils literal notranslate"><span class="pre">view()</span></code></a> function MUST
 match the case of the actual directory and file itself or the system will
-throw errors on case-sensitive platforms. You can read more about it
-<a class="reference internal" href="../outgoing/views.html"><span class="doc">here</span></a>.</p>
+throw errors on case-sensitive platforms. You can read more about it in
+<a class="reference internal" href="../outgoing/views.html"><span class="doc">Views</span></a>.</p>
 </div>
 </section>
 <section id="routing">
@@ -447,18 +458,19 @@ section of the configuration file.</p>
 <p>This directive says that any incoming request without any content
 specified should be handled by the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method inside the <code class="docutils literal notranslate"><span class="pre">Home</span></code> controller.</p>
 <p>Add the following lines, <strong>after</strong> the route directive for ‘/’.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::index&#39;</span><span class="p">);</span>
-<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:segment)&#39;</span><span class="p">,</span> <span class="s1">&#39;Pages::view/$1&#39;</span><span class="p">);</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">App\Controllers\Pages</span><span class="p">;</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;pages&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;(:segment)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">Pages</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">]);</span>
 </pre></div>
 </div>
 <p>CodeIgniter reads its routing rules from top to bottom and routes the
 request to the first matching rule. Each rule is a regular expression
-(left-side) mapped to a controller and method name separated by slashes
+(left-side) mapped to a controller and method name
 (right-side). When a request comes in, CodeIgniter looks for the first
 match, and calls the appropriate controller and method, possibly with
 arguments.</p>
-<p>More information about routing can be found in the URI Routing
-<a class="reference internal" href="../incoming/routing.html"><span class="doc">documentation</span></a>.</p>
+<p>More information about routing can be found in the <a class="reference internal" href="../incoming/routing.html"><span class="doc">URI Routing</span></a>.</p>
 <p>Here, the second rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches a GET request
 to the URI path <code class="docutils literal notranslate"><span class="pre">/pages</span></code>, and it maps to the <code class="docutils literal notranslate"><span class="pre">index()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">Pages</span></code> class.</p>
 <p>The third rule in the <code class="docutils literal notranslate"><span class="pre">$routes</span></code> object matches a GET request to a URI segment
@@ -469,7 +481,7 @@ using the placeholder <code class="docutils literal notranslate"><span class="pr
 <h2><a class="toc-backref" href="#id4">Running the App</a><a class="headerlink" href="#running-the-app" title="Permalink to this headline"></a></h2>
 <p>Ready to test? You cannot run the app using PHP’s built-in server,
 since it will not properly process the <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> rules that are provided in
-<code class="docutils literal notranslate"><span class="pre">public</span></code>, and which eliminate the need to specify “index.php/”
+<code class="docutils literal notranslate"><span class="pre">public</span></code>, and which eliminate the need to specify “<strong>index.php/</strong>”
 as part of a URL. CodeIgniter has its own command that you can use though.</p>
 <p>From the command line, at the root of your project:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">serve</span>
@@ -532,7 +544,7 @@ asked for it.</p></td>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

@@ -617,11 +617,23 @@ This is to avoid validation errors when updating only some fields.</p>
 <section id="afterinsert">
 <h5>$afterInsert<a class="headerlink" href="#afterinsert" title="Permalink to this headline"></a></h5>
 </section>
+<section id="beforeinsertbatch">
+<h5>$beforeInsertBatch<a class="headerlink" href="#beforeinsertbatch" title="Permalink to this headline"></a></h5>
+</section>
+<section id="afterinsertbatch">
+<h5>$afterInsertBatch<a class="headerlink" href="#afterinsertbatch" title="Permalink to this headline"></a></h5>
+</section>
 <section id="beforeupdate">
 <h5>$beforeUpdate<a class="headerlink" href="#beforeupdate" title="Permalink to this headline"></a></h5>
 </section>
 <section id="afterupdate">
 <h5>$afterUpdate<a class="headerlink" href="#afterupdate" title="Permalink to this headline"></a></h5>
+</section>
+<section id="beforeupdatebatch">
+<h5>$beforeUpdateBatch<a class="headerlink" href="#beforeupdatebatch" title="Permalink to this headline"></a></h5>
+</section>
+<section id="afterupdatebatch">
+<h5>$afterUpdateBatch<a class="headerlink" href="#afterupdatebatch" title="Permalink to this headline"></a></h5>
 </section>
 <section id="beforefind">
 <h5>$beforeFind<a class="headerlink" href="#beforefind" title="Permalink to this headline"></a></h5>
@@ -762,6 +774,19 @@ which indicates the success or failure of the query.</p>
 </pre></div>
 </div>
 </section>
+<section id="allowemptyinserts">
+<span id="model-allow-empty-inserts"></span><h4>allowEmptyInserts()<a class="headerlink" href="#allowemptyinserts" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts()</span></code> method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">allowEmptyInserts</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([]);</span>
+</pre></div>
+</div>
+<p>You can enable the check again by calling <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts(false)</span></code>.</p>
+</section>
 <section id="update">
 <h4>update()<a class="headerlink" href="#update" title="Permalink to this headline"></a></h4>
 <p>Updates an existing record in the database. The first parameter is the <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code> of the record to update.
@@ -779,7 +804,11 @@ of the columns in a <code class="docutils literal notranslate"><span class="pre"
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If the <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code> field is set to <code class="docutils literal notranslate"><span class="pre">null</span></code> then the update will affect all records in the table.</p>
+<p>Since v4.3.0, this method raises a <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code>
+if it generates an SQL statement without a WHERE clause.
+In previous versions, if it is called without <code class="docutils literal notranslate"><span class="pre">$primaryKey</span></code> specified and
+an SQL statement was generated without a WHERE clause, the query would still
+execute and all records in the table would be updated.</p>
 </div>
 <p>Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -803,7 +832,7 @@ update command, with the added benefit of validation, events, etc:</p>
 </div>
 </section>
 <section id="save">
-<h4>save()<a class="headerlink" href="#save" title="Permalink to this headline"></a></h4>
+<span id="model-save"></span><h4>save()<a class="headerlink" href="#save" title="Permalink to this headline"></a></h4>
 <p>This is a wrapper around the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods that handle inserting or updating the record
 automatically, based on whether it finds an array key matching the <strong>primary key</strong> value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -1274,7 +1303,7 @@ parameter is a Closure that will be called for each row of data.</p>
 </section>
 </section>
 <section id="working-with-query-builder">
-<h2><a class="toc-backref" href="#id17">Working with Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline"></a></h2>
+<span id="model-events-callbacks"></span><h2><a class="toc-backref" href="#id17">Working with Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this headline"></a></h2>
 <section id="getting-query-builder-for-the-model-s-table">
 <h3><a class="toc-backref" href="#id18">Getting Query Builder for the Model’s Table</a><a class="headerlink" href="#getting-query-builder-for-the-model-s-table" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter Model has one instance of the Query Builder for that model’s database connection.
@@ -1342,7 +1371,13 @@ and specify the model’s method at the end of the method chaining.</p>
 <p>There are several points within the model’s execution that you can specify multiple callback methods to run.
 These methods can be used to normalize data, hash passwords, save related entities, and much more. The following
 points in the model’s execution can be affected, each through a class property: <code class="docutils literal notranslate"><span class="pre">$beforeInsert</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterInsert</span></code>,
-<code class="docutils literal notranslate"><span class="pre">$beforeUpdate</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterUpdate</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterFind</span></code>, and <code class="docutils literal notranslate"><span class="pre">$afterDelete</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">$beforeInsertBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterInsertBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$beforeUpdate</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterUpdate</span></code>, <code class="docutils literal notranslate"><span class="pre">$beforeUpdateBatch</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$afterUpdateBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterFind</span></code>, and <code class="docutils literal notranslate"><span class="pre">$afterDelete</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">$beforeInsertBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterInsertBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$beforeUpdateBatch</span></code> and
+<code class="docutils literal notranslate"><span class="pre">$afterUpdateBatch</span></code> can be used since v4.3.0.</p>
+</div>
 <section id="defining-callbacks">
 <h3><a class="toc-backref" href="#id22">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this headline"></a></h3>
 <p>You specify the callbacks by first creating a new class method in your model to use. This class will always
@@ -1437,15 +1472,31 @@ insert method, it is first converted to an array.</p></td>
 <strong>data</strong> = the key/value pairs being inserted.
 <strong>result</strong> = the results of the insert() method used through the Query Builder.</p></td>
 </tr>
+<tr class="row-even"><td><p>beforeInsertBatch</p></td>
+<td><p><strong>data</strong> = associative array of values that are being inserted. If an object or Entity class is passed to the
+insertBatch method, it is first converted to an array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>afterInsertBatch</p></td>
+<td><p><strong>data</strong> = the associative array of values being inserted.
+<strong>result</strong> = the results of the insertbatch() method used through the Query Builder.</p></td>
+</tr>
 <tr class="row-even"><td><p>beforeUpdate</p></td>
 <td><p><strong>id</strong> = the array of primary keys of the rows being updated.
-<strong>data</strong> = the key/value pairs that are being inserted. If an object or Entity class is passed to the
-insert method, it is first converted to an array.</p></td>
+<strong>data</strong> = the key/value pairs that are being updated. If an object or Entity class is passed to the
+update method, it is first converted to an array.</p></td>
 </tr>
 <tr class="row-odd"><td><p>afterUpdate</p></td>
 <td><p><strong>id</strong> = the array of primary keys of the rows being updated.
 <strong>data</strong> = the key/value pairs being updated.
 <strong>result</strong> = the results of the update() method used through the Query Builder.</p></td>
+</tr>
+<tr class="row-even"><td><p>beforeUpdateBatch</p></td>
+<td><p><strong>data</strong> = associative array of values that are being updated. If an object or Entity class is passed to the
+updateBatch method, it is first converted to an array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>afterUpdateBatch</p></td>
+<td><p><strong>data</strong> = the key/value pairs being updated.
+<strong>result</strong> = the results of the updateBatch() method used through the Query Builder.</p></td>
 </tr>
 <tr class="row-even"><td><p>beforeFind</p></td>
 <td><p>The name of the calling <strong>method</strong>, whether a <strong>singleton</strong> was requested, and these additional fields:</p></td>
@@ -1563,7 +1614,7 @@ Model gives you out of the box, and create a fully custom experience.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

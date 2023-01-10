@@ -279,13 +279,18 @@
 forms.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#loading-this-helper" id="id1">Loading this Helper</a></p></li>
-<li><p><a class="reference internal" href="#escaping-field-values" id="id2">Escaping field values</a></p></li>
-<li><p><a class="reference internal" href="#available-functions" id="id3">Available Functions</a></p></li>
+<li><p><a class="reference internal" href="#configuration" id="id1">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#loading-this-helper" id="id2">Loading this Helper</a></p></li>
+<li><p><a class="reference internal" href="#escaping-field-values" id="id3">Escaping field values</a></p></li>
+<li><p><a class="reference internal" href="#available-functions" id="id4">Available Functions</a></p></li>
 </ul>
 </div>
+<section id="configuration">
+<h2><a class="toc-backref" href="#id1">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline"></a></h2>
+<p>Since <code class="docutils literal notranslate"><span class="pre">v4.3.0</span></code>, void HTML elements (e.g. <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;</span></code>) in <code class="docutils literal notranslate"><span class="pre">form_helper</span></code> functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the <code class="docutils literal notranslate"><span class="pre">$html5</span></code> property in <strong>app/Config/DocTypes.php</strong> to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</section>
 <section id="loading-this-helper">
-<h2><a class="toc-backref" href="#id1">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Loading this Helper</a><a class="headerlink" href="#loading-this-helper" title="Permalink to this headline"></a></h2>
 <p>This helper is loaded using the following code:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -294,7 +299,7 @@ forms.</p>
 </div>
 </section>
 <section id="escaping-field-values">
-<h2><a class="toc-backref" href="#id2">Escaping field values</a><a class="headerlink" href="#escaping-field-values" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Escaping field values</a><a class="headerlink" href="#escaping-field-values" title="Permalink to this headline"></a></h2>
 <p>You may need to use HTML and characters such as quotes within your form
 elements. In order to do that safely, you’ll need to use
 <a class="reference internal" href="../general/common_functions.html"><span class="doc">common function</span></a>
@@ -306,7 +311,7 @@ elements. In order to do that safely, you’ll need to use
 
 <span class="cp">?&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;myfield&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$string</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;myfield&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$string</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 <p>Since the above string contains a set of quotes, it will cause the form
@@ -325,7 +330,7 @@ form elements, which you would pass as strings.</p>
 </div>
 </section>
 <section id="available-functions">
-<h2><a class="toc-backref" href="#id3">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">Available Functions</a><a class="headerlink" href="#available-functions" title="Permalink to this headline"></a></h2>
 <p>The following functions are available:</p>
 <dl class="php function">
 <dt class="sig sig-object php" id="form_open">
@@ -474,7 +479,7 @@ name/value string to create one field:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">);</span>
-<span class="c1">// Would produce: &lt;input type=&quot;hidden&quot; name=&quot;username&quot; value=&quot;johndoe&quot; /&gt;</span>
+<span class="c1">// Would produce: &lt;input type=&quot;hidden&quot; name=&quot;username&quot; value=&quot;johndoe&quot;&gt;</span>
 </pre></div>
 </div>
 <p>… or you can submit an associative array to create multiple fields:</p>
@@ -489,9 +494,9 @@ name/value string to create one field:</p>
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;John Doe&quot; /&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; /&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;url&quot; value=&quot;http://example.com&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;name&quot; value=&quot;John Doe&quot;&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot;&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;url&quot; value=&quot;http://example.com&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -507,9 +512,9 @@ name/value string to create one field:</p>
 <span class="k">echo</span> <span class="nx">form_hidden</span><span class="p">(</span><span class="s1">&#39;my_array&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[name]&quot; value=&quot;John Doe&quot; /&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[email]&quot; value=&quot;john@example.com&quot; /&gt;</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[url]&quot; value=&quot;http://example.com&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[name]&quot; value=&quot;John Doe&quot;&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[email]&quot; value=&quot;john@example.com&quot;&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;my_array[url]&quot; value=&quot;http://example.com&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -527,7 +532,7 @@ name/value string to create one field:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; id=&quot;hiddenemail&quot; class=&quot;hiddenemail&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;hidden&quot; name=&quot;email&quot; value=&quot;john@example.com&quot; id=&quot;hiddenemail&quot; class=&quot;hiddenemail&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -559,7 +564,7 @@ the field name and value in the first and second parameter:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -578,7 +583,7 @@ form to contain:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; id=&quot;username&quot; maxlength=&quot;100&quot; size=&quot;50&quot; style=&quot;width:50%&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; id=&quot;username&quot; maxlength=&quot;100&quot; size=&quot;50&quot; style=&quot;width:50%&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -594,7 +599,7 @@ form to contain:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;&quot; id=&quot;username&quot; required  /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;&quot; id=&quot;username&quot; required&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -606,7 +611,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ()&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ()&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -617,7 +622,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;johndoe&#39;</span><span class="p">,</span> <span class="nv">$js</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ();&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;johndoe&quot; onClick=&quot;some_function ();&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -627,7 +632,7 @@ JavaScript, you can pass it as a string in the third parameter:</p>
 <span class="k">echo</span> <span class="nx">form_input</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;joe@example.com&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;placeholder&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Email Address...&#39;</span><span class="p">],</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
 <span class="cm">/*</span>
 <span class="cm"> * Would produce:</span>
-<span class="cm"> * &lt;input type=&quot;email&quot; name=&quot;email&quot; value=&quot;joe@example.com&quot; placeholder=&quot;Email Address...&quot; /&gt;</span>
+<span class="cm"> * &lt;input type=&quot;email&quot; name=&quot;email&quot; value=&quot;joe@example.com&quot; placeholder=&quot;Email Address...&quot;&gt;</span>
 <span class="cm"> */</span>
 </pre></div>
 </div>
@@ -925,7 +930,7 @@ the tag. For example</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="s1">&#39;newsletter&#39;</span><span class="p">,</span> <span class="s1">&#39;accept&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
-<span class="c1">// Would produce:  &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot; /&gt;</span>
+<span class="c1">// Would produce:  &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot;&gt;</span>
 </pre></div>
 </div>
 <p>The third parameter contains a boolean true/false to determine whether
@@ -943,7 +948,7 @@ array of attributes to the function:</p>
 <span class="p">];</span>
 
 <span class="k">echo</span> <span class="nx">form_checkbox</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
-<span class="c1">// Would produce: &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; id=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot; style=&quot;margin:10px&quot; /&gt;</span>
+<span class="c1">// Would produce: &lt;input type=&quot;checkbox&quot; name=&quot;newsletter&quot; id=&quot;newsletter&quot; value=&quot;accept&quot; checked=&quot;checked&quot; style=&quot;margin:10px&quot;&gt;</span>
 </pre></div>
 </div>
 <p>Also as with other functions, if you would like the tag to contain
@@ -1050,7 +1055,7 @@ third parameter if you prefer to set additional attributes.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">echo</span> <span class="nx">form_submit</span><span class="p">(</span><span class="s1">&#39;mysubmit&#39;</span><span class="p">,</span> <span class="s1">&#39;Submit Post!&#39;</span><span class="p">);</span>
-<span class="c1">// Would produce:  &lt;input type=&quot;submit&quot; name=&quot;mysubmit&quot; value=&quot;Submit Post!&quot; /&gt;</span>
+<span class="c1">// Would produce:  &lt;input type=&quot;submit&quot; name=&quot;mysubmit&quot; value=&quot;Submit Post!&quot;&gt;</span>
 </pre></div>
 </div>
 <p>Similar to other functions, you can submit an associative array in the
@@ -1280,6 +1285,89 @@ This function is identical to the <a class="reference internal" href="#set_check
 </div>
 </dd></dl>
 
+<dl class="php function">
+<dt class="sig sig-object php" id="validation_errors">
+<span class="sig-name descname"><span class="pre">validation_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#validation_errors" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The validation errors</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span></p>
+</dd>
+</dl>
+<p>Returns the validation errors. First, this function checks the validation errors
+that are stored in the session. To store the errors in the session, you need to use <code class="docutils literal notranslate"><span class="pre">withInput()</span></code> with <a class="reference internal" href="../general/common_functions.html#redirect" title="redirect"><code class="xref php php-func docutils literal notranslate"><span class="pre">redirect()</span></code></a>.</p>
+<p>The returned array is the same as <code class="docutils literal notranslate"><span class="pre">Validation::getErrors()</span></code>.
+See <a class="reference internal" href="../libraries/validation.html#validation-getting-all-errors"><span class="std std-ref">Validation</span></a> for details.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$errors</span> <span class="o">=</span> <span class="nx">validation_errors</span><span class="p">();</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php function">
+<dt class="sig sig-object php" id="validation_list_errors">
+<span class="sig-name descname"><span class="pre">validation_list_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$template</span> <span class="pre">=</span> <span class="pre">'list'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#validation_list_errors" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$template</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Validation template name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Rendered HTML of the validation errors</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+</dd>
+</dl>
+<p>Returns the rendered HTML of the validation errors.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">$template</span></code> is a Validation template name.
+See <a class="reference internal" href="../libraries/validation.html#validation-customizing-error-display"><span class="std std-ref">Customizing Error Display</span></a> for details.</p>
+<p>This function uses <a class="reference internal" href="#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a> internally.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php function">
+<dt class="sig sig-object php" id="validation_show_error">
+<span class="sig-name descname"><span class="pre">validation_show_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$template</span> <span class="pre">=</span> <span class="pre">'single'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#validation_show_error" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Field name</p></li>
+<li><p><strong>$template</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Validation template name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Rendered HTML of the validation error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+</dd>
+</dl>
+<p>Returns a single error for the specified field in formatted HTML.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">$template</span></code> is a Validation template name.
+See <a class="reference internal" href="../libraries/validation.html#validation-customizing-error-display"><span class="std std-ref">Customizing Error Display</span></a> for details.</p>
+<p>This function uses <a class="reference internal" href="#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a> internally.</p>
+<p>Example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">validation_show_error</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 </section>
 
@@ -1295,7 +1383,7 @@ This function is identical to the <a class="reference internal" href="#set_check
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

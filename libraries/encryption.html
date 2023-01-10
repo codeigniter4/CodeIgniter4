@@ -307,16 +307,31 @@ been deprecated as of PHP 7.2.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#using-the-encryption-library" id="id3">Using the Encryption Library</a></p>
 <ul>
-<li><p><a class="reference internal" href="#configuring-the-library" id="id4">Configuring the Library</a></p></li>
-<li><p><a class="reference internal" href="#default-behavior" id="id5">Default Behavior</a></p></li>
-<li><p><a class="reference internal" href="#setting-your-encryption-key" id="id6">Setting Your Encryption Key</a></p></li>
-<li><p><a class="reference internal" href="#padding" id="id7">Padding</a></p></li>
-<li><p><a class="reference internal" href="#encryption-handler-notes" id="id8">Encryption Handler Notes</a></p></li>
-<li><p><a class="reference internal" href="#message-length" id="id9">Message Length</a></p></li>
-<li><p><a class="reference internal" href="#using-the-encryption-service-directly" id="id10">Using the Encryption Service Directly</a></p></li>
+<li><p><a class="reference internal" href="#configuring-the-library" id="id4">Configuring the Library</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration-to-maintain-compatibility-with-ci3" id="id5">Configuration to Maintain Compatibility with CI3</a></p></li>
+<li><p><a class="reference internal" href="#supported-hmac-authentication-algorithms" id="id6">Supported HMAC Authentication Algorithms</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#namespace-CodeIgniter\Encryption" id="id11">Class Reference</a></p></li>
+<li><p><a class="reference internal" href="#default-behavior" id="id7">Default Behavior</a></p></li>
+<li><p><a class="reference internal" href="#setting-your-encryption-key" id="id8">Setting Your Encryption Key</a></p>
+<ul>
+<li><p><a class="reference internal" href="#encoding-keys-or-results" id="id9">Encoding Keys or Results</a></p></li>
+<li><p><a class="reference internal" href="#using-prefixes-in-storing-keys" id="id10">Using Prefixes in Storing Keys</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#padding" id="id11">Padding</a></p></li>
+<li><p><a class="reference internal" href="#encryption-handler-notes" id="id12">Encryption Handler Notes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#openssl-notes" id="id13">OpenSSL Notes</a></p></li>
+<li><p><a class="reference internal" href="#sodium-notes" id="id14">Sodium Notes</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#message-length" id="id15">Message Length</a></p></li>
+<li><p><a class="reference internal" href="#using-the-encryption-service-directly" id="id16">Using the Encryption Service Directly</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#namespace-CodeIgniter\Encryption" id="id17">Class Reference</a></p></li>
 </ul>
 </div>
 <section id="using-the-encryption-library">
@@ -347,8 +362,8 @@ You don’t need to worry about it.</p>
 <p>The example above uses the configuration settings found in <strong>app/Config/Encryption.php</strong>.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 85%" />
+<col style="width: 14%" />
+<col style="width: 86%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
@@ -368,6 +383,15 @@ You don’t need to worry about it.</p>
 <tr class="row-odd"><td><p>digest</p></td>
 <td><p>Message digest algorithm (<code class="docutils literal notranslate"><span class="pre">SHA512</span></code>)</p></td>
 </tr>
+<tr class="row-even"><td><p>encryptKeyInfo</p></td>
+<td><p>Encryption key info (<code class="docutils literal notranslate"><span class="pre">''</span></code>). This is only used by OpenSSLHandler.</p></td>
+</tr>
+<tr class="row-odd"><td><p>authKeyInfo</p></td>
+<td><p>Authentication key info (<code class="docutils literal notranslate"><span class="pre">''</span></code>). This is only used by OpenSSLHandler.</p></td>
+</tr>
+<tr class="row-even"><td><p>rawData</p></td>
+<td><p>Whether the cipher-text should be raw (<code class="docutils literal notranslate"><span class="pre">true</span></code>). This is only used by OpenSSLHandler.</p></td>
+</tr>
 </tbody>
 </table>
 <p>You can replace the config file’s settings by passing a configuration
@@ -382,14 +406,78 @@ an instance of the <code class="docutils literal notranslate"><span class="pre">
 <span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">\Config\Services</span><span class="o">::</span><span class="na">encrypter</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 </pre></div>
 </div>
+<section id="configuration-to-maintain-compatibility-with-ci3">
+<span id="encryption-compatible-with-ci3"></span><h4><a class="toc-backref" href="#id5">Configuration to Maintain Compatibility with CI3</a><a class="headerlink" href="#configuration-to-maintain-compatibility-with-ci3" title="Permalink to this headline"></a></h4>
+<p>Since v4.3.0, you can decrypt data encrypted with CI3’s Encryption.
+If you need to decrypt such data, use the following settings to maintain compatibility.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Config\Encryption</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Config\Services</span><span class="p">;</span>
+
+<span class="nv">$config</span>         <span class="o">=</span> <span class="k">new</span> <span class="nx">Encryption</span><span class="p">();</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">driver</span> <span class="o">=</span> <span class="s1">&#39;OpenSSL&#39;</span><span class="p">;</span>
+<span class="c1">// Your CI3&#39;s encryption_key</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">key</span>            <span class="o">=</span> <span class="nb">hex2bin</span><span class="p">(</span><span class="s1">&#39;64c70b0b8d45b80b9eba60b8b3c8a34d0193223d20fea46f8644b848bf7ce67f&#39;</span><span class="p">);</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">rawData</span>        <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">encryptKeyInfo</span> <span class="o">=</span> <span class="s1">&#39;encryption&#39;</span><span class="p">;</span>
+<span class="nv">$config</span><span class="o">-&gt;</span><span class="na">authKeyInfo</span>    <span class="o">=</span> <span class="s1">&#39;authentication&#39;</span><span class="p">;</span>
+
+<span class="nv">$encrypter</span> <span class="o">=</span> <span class="nx">Services</span><span class="o">::</span><span class="na">encrypter</span><span class="p">(</span><span class="nv">$config</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="supported-hmac-authentication-algorithms">
+<h4><a class="toc-backref" href="#id6">Supported HMAC Authentication Algorithms</a><a class="headerlink" href="#supported-hmac-authentication-algorithms" title="Permalink to this headline"></a></h4>
+<p>For HMAC message authentication, the Encryption library supports
+usage of the SHA-2 family of algorithms:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 34%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Raw length (bytes)</p></th>
+<th class="head"><p>Hex-encoded length (bytes)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SHA512</p></td>
+<td><p>64</p></td>
+<td><p>128</p></td>
+</tr>
+<tr class="row-odd"><td><p>SHA384</p></td>
+<td><p>48</p></td>
+<td><p>96</p></td>
+</tr>
+<tr class="row-even"><td><p>SHA256</p></td>
+<td><p>32</p></td>
+<td><p>64</p></td>
+</tr>
+<tr class="row-odd"><td><p>SHA224</p></td>
+<td><p>28</p></td>
+<td><p>56</p></td>
+</tr>
+</tbody>
+</table>
+<p>The reason for not including other popular algorithms, such as
+MD5 or SHA1 is that they are no longer considered secure enough
+and as such, we don’t want to encourage their usage.
+If you absolutely need to use them, it is easy to do so via PHP’s
+native <a class="reference external" href="http://php.net/manual/en/function.hash-hmac.php">hash_hmac()</a> function.</p>
+<p>Stronger algorithms of course will be added in the future as they
+appear and become widely available.</p>
+</section>
 </section>
 <section id="default-behavior">
-<h3><a class="toc-backref" href="#id5">Default Behavior</a><a class="headerlink" href="#default-behavior" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Default Behavior</a><a class="headerlink" href="#default-behavior" title="Permalink to this headline"></a></h3>
 <p>By default, the Encryption Library uses the OpenSSL handler. That handler encrypts using
 the AES-256-CTR algorithm, your configured <em>key</em>, and SHA512 HMAC authentication.</p>
 </section>
 <section id="setting-your-encryption-key">
-<h3><a class="toc-backref" href="#id6">Setting Your Encryption Key</a><a class="headerlink" href="#setting-your-encryption-key" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id8">Setting Your Encryption Key</a><a class="headerlink" href="#setting-your-encryption-key" title="Permalink to this headline"></a></h3>
 <p>Your encryption key <strong>must</strong> be as long as the encryption algorithm in use allows.
 For AES-256, that’s 256 bits or 32 bytes (characters) long.</p>
 <p>The key should be as random as possible, and it <strong>must not</strong> be a regular text string,
@@ -424,7 +512,7 @@ and set:</p>
 </pre></div>
 </div>
 <section id="encoding-keys-or-results">
-<h4>Encoding Keys or Results<a class="headerlink" href="#encoding-keys-or-results" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id9">Encoding Keys or Results</a><a class="headerlink" href="#encoding-keys-or-results" title="Permalink to this headline"></a></h4>
 <p>You’ll notice that the <code class="docutils literal notranslate"><span class="pre">createKey()</span></code> method outputs binary data, which
 is hard to deal with (i.e., a copy-paste may damage it), so you may use
 <code class="docutils literal notranslate"><span class="pre">bin2hex()</span></code>, or <code class="docutils literal notranslate"><span class="pre">base64_encode</span></code> to work with the key in
@@ -449,7 +537,7 @@ of encryption:</p>
 </div>
 </section>
 <section id="using-prefixes-in-storing-keys">
-<h4>Using Prefixes in Storing Keys<a class="headerlink" href="#using-prefixes-in-storing-keys" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id10">Using Prefixes in Storing Keys</a><a class="headerlink" href="#using-prefixes-in-storing-keys" title="Permalink to this headline"></a></h4>
 <p>You may take advantage of two special prefixes in storing your
 encryption keys: <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> and <code class="docutils literal notranslate"><span class="pre">base64:</span></code>. When these prefixes
 immediately precede the value of your key, <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> will
@@ -482,7 +570,7 @@ the library.</p>
 </section>
 </section>
 <section id="padding">
-<h3><a class="toc-backref" href="#id7">Padding</a><a class="headerlink" href="#padding" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id11">Padding</a><a class="headerlink" href="#padding" title="Permalink to this headline"></a></h3>
 <p>Sometimes, the length of a message may provide a lot of information about its nature. If
 a message is one of “yes”, “no” and “maybe”, encrypting the message doesn’t help: knowing
 the length is enough to know what the message is.</p>
@@ -502,9 +590,9 @@ effortlessly get a copy of the password.</p>
 </div>
 </section>
 <section id="encryption-handler-notes">
-<h3><a class="toc-backref" href="#id8">Encryption Handler Notes</a><a class="headerlink" href="#encryption-handler-notes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id12">Encryption Handler Notes</a><a class="headerlink" href="#encryption-handler-notes" title="Permalink to this headline"></a></h3>
 <section id="openssl-notes">
-<h4>OpenSSL Notes<a class="headerlink" href="#openssl-notes" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id13">OpenSSL Notes</a><a class="headerlink" href="#openssl-notes" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference external" href="https://www.php.net/openssl">OpenSSL</a> extension has been a standard part of PHP for a long time.</p>
 <p>CodeIgniter’s OpenSSL handler uses the AES-256-CTR cipher.</p>
 <p>The <em>key</em> your configuration provides is used to derive two other keys, one for
@@ -512,7 +600,7 @@ encryption and one for authentication. This is achieved by way of a technique kn
 as an <a class="reference external" href="https://en.wikipedia.org/wiki/HKDF">HMAC-based Key Derivation Function</a> (HKDF).</p>
 </section>
 <section id="sodium-notes">
-<h4>Sodium Notes<a class="headerlink" href="#sodium-notes" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id14">Sodium Notes</a><a class="headerlink" href="#sodium-notes" title="Permalink to this headline"></a></h4>
 <p>The <a class="reference external" href="https://www.php.net/manual/en/book.sodium">Sodium</a> extension is bundled by default in PHP as
 of PHP 7.2.0.</p>
 <p>Sodium uses the algorithms XSalsa20 to encrypt, Poly1305 for MAC, and XS25519 for key exchange in
@@ -528,7 +616,7 @@ wiped out from the buffers. You may need to provide again the key before startin
 </section>
 </section>
 <section id="message-length">
-<h3><a class="toc-backref" href="#id9">Message Length</a><a class="headerlink" href="#message-length" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Message Length</a><a class="headerlink" href="#message-length" title="Permalink to this headline"></a></h3>
 <p>An encrypted string is usually longer than the original, plain-text string (depending on the cipher).</p>
 <p>This is influenced by the cipher algorithm itself, the initialization vector (IV)
 prepended to the cipher-text, and the HMAC authentication message that is also prepended.
@@ -538,7 +626,7 @@ for storage and transmission regardless of the character-set in use.</p>
 Cookies, for example, can only hold 4K of information.</p>
 </section>
 <section id="using-the-encryption-service-directly">
-<h3><a class="toc-backref" href="#id10">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id16">Using the Encryption Service Directly</a><a class="headerlink" href="#using-the-encryption-service-directly" title="Permalink to this headline"></a></h3>
 <p>Instead of (or in addition to) using <code class="docutils literal notranslate"><span class="pre">Services</span></code> as described in <a class="reference internal" href="#usage"><span class="std std-ref">Using the Encryption Library</span></a>,
 you can create an “Encrypter” directly, or change the settings of an existing instance.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -554,7 +642,7 @@ you can create an “Encrypter” directly, or change the settings of an existin
 </section>
 </section>
 <section id="namespace-CodeIgniter\Encryption">
-<span id="class-reference"></span><h2><a class="toc-backref" href="#id11">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Encryption" title="Permalink to this headline"></a></h2>
+<span id="class-reference"></span><h2><a class="toc-backref" href="#id17">Class Reference</a><a class="headerlink" href="#namespace-CodeIgniter\Encryption" title="Permalink to this headline"></a></h2>
 <dl class="php class">
 <dt class="sig sig-object php" id="CodeIgniter\Encryption\Encryption">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\Encryption\</span></span><span class="sig-name descname"><span class="pre">Encryption</span></span><a class="headerlink" href="#CodeIgniter\Encryption\Encryption" title="Permalink to this definition"></a></dt>
@@ -705,7 +793,7 @@ on runtime, pass the <code class="docutils literal notranslate"><span class="pre
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

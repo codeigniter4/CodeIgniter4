@@ -965,7 +965,7 @@ parameter as mime-type:</p>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$list</span> <span class="k">as</span> <span class="nv">$address</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$address</span><span class="p">);</span>
     <span class="nv">$cid</span> <span class="o">=</span> <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setAttachmentCID</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
-    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;&lt;img src=&quot;cid:&#39;</span> <span class="o">.</span> <span class="nv">$cid</span> <span class="o">.</span> <span class="s1">&#39;&quot; alt=&quot;photo1&quot; /&gt;&#39;</span><span class="p">);</span>
+    <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">setMessage</span><span class="p">(</span><span class="s1">&#39;&lt;img src=&quot;cid:&#39;</span> <span class="o">.</span> <span class="nv">$cid</span> <span class="o">.</span> <span class="s1">&#39;&quot; alt=&quot;photo1&quot;&gt;&#39;</span><span class="p">);</span>
     <span class="nv">$email</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
@@ -1031,7 +1031,7 @@ Valid options are: <strong>headers</strong>, <strong>subject</strong>, <strong>b
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

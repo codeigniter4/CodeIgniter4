@@ -325,7 +325,7 @@ Command-line requests will not have these features.</p>
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">string</span> <span class="nv">$defaultLocale</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -359,7 +359,7 @@ The first value tells the Request class that we do want to negotiate a locale, s
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nx">bool</span> <span class="nv">$negotiateLocale</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -377,7 +377,7 @@ the following example, the <strong>en</strong> locale would be used if no match 
 
 <span class="k">class</span> <span class="nc">App</span> <span class="k">extends</span> <span class="nx">BaseConfig</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
+    <span class="k">public</span> <span class="k">array</span> <span class="nv">$supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">,</span> <span class="s1">&#39;fr-FR&#39;</span><span class="p">];</span>
 
     <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -385,7 +385,7 @@ the following example, the <strong>en</strong> locale would be used if no match 
 </div>
 </section>
 <section id="in-routes">
-<h4>In Routes<a class="headerlink" href="#in-routes" title="Permalink to this headline"></a></h4>
+<span id="localization-in-routes"></span><h4>In Routes<a class="headerlink" href="#in-routes" title="Permalink to this headline"></a></h4>
 <p>The second method uses a custom placeholder to detect the desired locale and set it on the Request. The
 placeholder <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> can be placed as a segment in your route. If present, the contents of the matching
 segment will be your locale:</p>
@@ -396,10 +396,17 @@ segment will be your locale:</p>
 </div>
 <p>In this example, if the user tried to visit <code class="docutils literal notranslate"><span class="pre">http://example.com/fr/books</span></code>, then the locale would be
 set to <code class="docutils literal notranslate"><span class="pre">fr</span></code>, assuming it was configured as a valid locale.</p>
+<p>If the value doesn’t match a valid locale as defined in <code class="docutils literal notranslate"><span class="pre">$supportedLocales</span></code> in <strong>app/Config/App.php</strong>, the default
+locale will be used in it’s place, unless you set to use only the supported locales defined in the App configuration
+file:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">useSupportedLocalesOnly</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the value doesn’t match a valid locale as defined in the App configuration file, the default
-locale will be used in it’s place.</p>
+<p><code class="docutils literal notranslate"><span class="pre">useSupportedLocalesOnly()</span></code> can be used since v4.3.0.</p>
 </div>
 </section>
 </section>
@@ -664,7 +671,7 @@ up because the translations folders get mapped appropriately.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

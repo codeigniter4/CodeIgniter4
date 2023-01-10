@@ -622,13 +622,17 @@ current timezone, as set in <strong>app/Config/App.php</strong>:</p>
 </div>
 </section>
 <section id="property-casting">
-<h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline"></a></h3>
+<span id="entities-property-casting"></span><h3><a class="toc-backref" href="#id11">Property Casting</a><a class="headerlink" href="#property-casting" title="Permalink to this headline"></a></h3>
 <p>You can specify that properties in your Entity should be converted to common data types with the <code class="docutils literal notranslate"><span class="pre">$casts</span></code> property.
 This option should be an array where the key is the name of the class property, and the value is the data type it
 should be cast to. Casting only affects when values are read. No conversions happen that affect the permanent value in
 either the entity or the database. Properties can be cast to any of the following data types:
-<strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, and <strong>uri</strong>.
+<strong>integer</strong>, <strong>float</strong>, <strong>double</strong>, <strong>string</strong>, <strong>boolean</strong>, <strong>object</strong>, <strong>array</strong>, <strong>datetime</strong>, <strong>timestamp</strong>, <strong>uri</strong> and <strong>int-bool</strong>.
 Add a question mark at the beginning of type to mark property as nullable, i.e., <strong>?string</strong>, <strong>?integer</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>int-bool</strong> can be used since v4.3.0.</p>
+</div>
 <p>For example, if you had a User entity with an <code class="docutils literal notranslate"><span class="pre">is_banned</span></code> property, you can cast it as a boolean:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -880,7 +884,7 @@ attribute to check:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

@@ -304,6 +304,7 @@
 <li><p>CI4 validation has no Callbacks nor Callable in CI3.</p></li>
 <li><p>CI4 validation format rules do not permit empty string.</p></li>
 <li><p>CI4 validation never changes your data.</p></li>
+<li><p>Since v4.3.0, <a class="reference internal" href="../helpers/form_helper.html#validation_errors" title="validation_errors"><code class="xref php php-func docutils literal notranslate"><span class="pre">validation_errors()</span></code></a> has been introduced, but the API is different from CI3’s.</p></li>
 </ul>
 </section>
 <section id="upgrade-guide">
@@ -312,7 +313,7 @@
 <li><p>Within the view which contains the form you have to change:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;?php</span> <span class="pre">echo</span> <span class="pre">validation_errors();</span> <span class="pre">?&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;?=</span> <span class="pre">$validation-&gt;listErrors()</span> <span class="pre">?&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;?php</span> <span class="pre">echo</span> <span class="pre">validation_errors();</span> <span class="pre">?&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;?=</span> <span class="pre">validation_list_errors()</span> <span class="pre">?&gt;</span></code></p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -406,7 +407,7 @@
 <span class="o">&lt;/</span><span class="nx">head</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
 
-    <span class="o">&lt;?=</span> <span class="nv">$validation</span><span class="o">-&gt;</span><span class="na">listErrors</span><span class="p">()</span> <span class="cp">?&gt;</span>
+    <span class="o">&lt;?=</span> <span class="nx">validation_list_errors</span><span class="p">()</span> <span class="cp">?&gt;</span>
 
     <span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">form_open</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
@@ -446,9 +447,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validate</span><span class="p">([</span>
             <span class="c1">// Validation rules</span>
         <span class="p">]))</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;myform&#39;</span><span class="p">,</span> <span class="p">[</span>
-                <span class="s1">&#39;validation&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">validator</span><span class="p">,</span>
-            <span class="p">]);</span>
+            <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;myform&#39;</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;formsuccess&#39;</span><span class="p">);</span>
@@ -472,7 +471,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

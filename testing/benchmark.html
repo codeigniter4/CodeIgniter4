@@ -285,14 +285,18 @@ sending the output to the user, enabling a very accurate timing of the entire sy
 <ul class="simple">
 <li><p><a class="reference internal" href="#using-the-timer" id="id1">Using the Timer</a></p>
 <ul>
-<li><p><a class="reference internal" href="#viewing-your-benchmark-points" id="id2">Viewing Your Benchmark Points</a></p></li>
-<li><p><a class="reference internal" href="#displaying-execution-time" id="id3">Displaying Execution Time</a></p></li>
+<li><p><a class="reference internal" href="#timer-start" id="id2">Timer::start()</a></p></li>
+<li><p><a class="reference internal" href="#timer-stop" id="id3">Timer::stop()</a></p></li>
+<li><p><a class="reference internal" href="#timer" id="id4">timer()</a></p></li>
+<li><p><a class="reference internal" href="#timer-record" id="id5">Timer::record()</a></p></li>
+<li><p><a class="reference internal" href="#viewing-your-benchmark-points" id="id6">Viewing Your Benchmark Points</a></p></li>
+<li><p><a class="reference internal" href="#displaying-execution-time" id="id7">Displaying Execution Time</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#using-the-iterator" id="id4">Using the Iterator</a></p>
+<li><p><a class="reference internal" href="#using-the-iterator" id="id8">Using the Iterator</a></p>
 <ul>
-<li><p><a class="reference internal" href="#creating-tasks-to-run" id="id5">Creating Tasks To Run</a></p></li>
-<li><p><a class="reference internal" href="#running-the-tasks" id="id6">Running the Tasks</a></p></li>
+<li><p><a class="reference internal" href="#creating-tasks-to-run" id="id9">Creating Tasks To Run</a></p></li>
+<li><p><a class="reference internal" href="#running-the-tasks" id="id10">Running the Tasks</a></p></li>
 </ul>
 </li>
 </ul>
@@ -302,6 +306,8 @@ sending the output to the user, enabling a very accurate timing of the entire sy
 <p>With the Timer, you can measure the time between two moments in the execution of your application. This makes
 it simple to measure the performance of different aspects of your application. All measurement is done using
 the <code class="docutils literal notranslate"><span class="pre">start()</span></code> and <code class="docutils literal notranslate"><span class="pre">stop()</span></code> methods.</p>
+<section id="timer-start">
+<h3><a class="toc-backref" href="#id2">Timer::start()</a><a class="headerlink" href="#timer-start" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">start()</span></code> methods takes a single parameter: the name of this timer. You can use any string as the name
 of the timer. It is only used for you to reference later to know which measurement is which:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -310,6 +316,9 @@ of the timer. It is only used for you to reference later to know which measureme
 <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+<section id="timer-stop">
+<h3><a class="toc-backref" href="#id3">Timer::stop()</a><a class="headerlink" href="#timer-stop" title="Permalink to this headline"></a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">stop()</span></code> method takes the name of the timer that you want to stop as the only parameter, also:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -317,6 +326,9 @@ of the timer. It is only used for you to reference later to know which measureme
 </pre></div>
 </div>
 <p>The name is not case-sensitive, but otherwise must match the name you gave it when you started the timer.</p>
+</section>
+<section id="timer">
+<h3><a class="toc-backref" href="#id4">timer()</a><a class="headerlink" href="#timer" title="Permalink to this headline"></a></h3>
 <p>Alternatively, you can use the <a class="reference internal" href="../general/common_functions.html"><span class="doc">global function</span></a> <code class="docutils literal notranslate"><span class="pre">timer()</span></code> to start
 and stop timers:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -328,8 +340,63 @@ and stop timers:</p>
 <span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;render view&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</section>
+<section id="timer-record">
+<span id="benchmark-timer-record"></span><h3><a class="toc-backref" href="#id5">Timer::record()</a><a class="headerlink" href="#timer-record" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Since v4.3.0, if you use very small code blocks to benchmark, you can also use the <code class="docutils literal notranslate"><span class="pre">record()</span></code> method. It accepts
+a no-parameter callable and measures its execution time. Methods <code class="docutils literal notranslate"><span class="pre">start()</span></code> and <code class="docutils literal notranslate"><span class="pre">stop()</span></code> will be called
+automatically around the function call.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">record</span><span class="p">(</span><span class="s1">&#39;slow_function&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">()</span> <span class="p">{</span> <span class="nx">slow_function</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">);</span> <span class="p">});</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Same as:</span>
+<span class="cm"> *</span>
+<span class="cm"> * $benchmark-&gt;start(&#39;slow_function&#39;);</span>
+<span class="cm"> * slow_function(&#39;...&#39;);</span>
+<span class="cm"> * $benchmark-&gt;stop(&#39;slow_function&#39;);</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>You can also return the callable’s return value for further processing.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$length</span> <span class="o">=</span> <span class="nv">$benchmark</span><span class="o">-&gt;</span><span class="na">record</span><span class="p">(</span><span class="s1">&#39;string length&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="s1">&#39;CI4&#39;</span><span class="p">));</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * $length = 3</span>
+<span class="cm"> *</span>
+<span class="cm"> * Same as:</span>
+<span class="cm"> *</span>
+<span class="cm"> * $benchmark-&gt;start(&#39;string length&#39;);</span>
+<span class="cm"> * $length = strlen(&#39;CI4&#39;);</span>
+<span class="cm"> * $benchmark-&gt;stop(&#39;string length&#39;);</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>The same functionality is also available when passing callable to <code class="docutils literal notranslate"><span class="pre">timer()</span></code> as second parameter.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$length</span> <span class="o">=</span> <span class="nx">timer</span><span class="p">(</span><span class="s1">&#39;string length&#39;</span><span class="p">,</span> <span class="k">static</span> <span class="nx">fn</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="s1">&#39;CI4&#39;</span><span class="p">));</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * $length = 3</span>
+<span class="cm"> *</span>
+<span class="cm"> * Same as:</span>
+<span class="cm"> *</span>
+<span class="cm"> * timer(&#39;string length&#39;);</span>
+<span class="cm"> * $length = strlen(&#39;CI4&#39;);</span>
+<span class="cm"> * timer(&#39;string length&#39;);</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+</section>
 <section id="viewing-your-benchmark-points">
-<h3><a class="toc-backref" href="#id2">Viewing Your Benchmark Points</a><a class="headerlink" href="#viewing-your-benchmark-points" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">Viewing Your Benchmark Points</a><a class="headerlink" href="#viewing-your-benchmark-points" title="Permalink to this headline"></a></h3>
 <p>When your application runs, all of the timers that you have set are collected by the Timer class. It does
 not automatically display them, though. You can retrieve all of your timers by calling the <code class="docutils literal notranslate"><span class="pre">getTimers()</span></code> method.
 This returns an array of benchmark information, including start, end, and duration:</p>
@@ -358,7 +425,7 @@ the only parameter. The default value is 4 numbers behind the decimal point:</p>
 <p>The timers are automatically displayed in the <a class="reference internal" href="debugging.html"><span class="doc">Debug Toolbar</span></a>.</p>
 </section>
 <section id="displaying-execution-time">
-<h3><a class="toc-backref" href="#id3">Displaying Execution Time</a><a class="headerlink" href="#displaying-execution-time" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Displaying Execution Time</a><a class="headerlink" href="#displaying-execution-time" title="Permalink to this headline"></a></h3>
 <p>While the <code class="docutils literal notranslate"><span class="pre">getTimers()</span></code> method will give you the raw data for all of the timers in your project, you can retrieve
 the duration of a single timer, in seconds, with the <code class="docutils literal notranslate"><span class="pre">getElapsedTime()</span></code> method. The first parameter is the name of
 the timer to display. The second is the number of decimal places to display. This defaults to 4:</p>
@@ -371,13 +438,13 @@ the timer to display. The second is the number of decimal places to display. Thi
 </section>
 </section>
 <section id="using-the-iterator">
-<h2><a class="toc-backref" href="#id4">Using the Iterator</a><a class="headerlink" href="#using-the-iterator" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Using the Iterator</a><a class="headerlink" href="#using-the-iterator" title="Permalink to this headline"></a></h2>
 <p>The Iterator is a simple tool that is designed to allow you to try out multiple variations on a solution to
 see the speed differences and different memory usage patterns. You can add any number of “tasks” for it to
 run and the class will run the task hundreds or thousands of times to get a clearer picture of performance.
 The results can then be retrieved and used by your script, or displayed as an HTML table.</p>
 <section id="creating-tasks-to-run">
-<h3><a class="toc-backref" href="#id5">Creating Tasks To Run</a><a class="headerlink" href="#creating-tasks-to-run" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">Creating Tasks To Run</a><a class="headerlink" href="#creating-tasks-to-run" title="Permalink to this headline"></a></h3>
 <p>Tasks are defined within Closures. Any output the task creates will be discarded automatically. They are
 added to the Iterator class through the <code class="docutils literal notranslate"><span class="pre">add()</span></code> method. The first parameter is a name you want to refer to
 this test by. The second parameter is the Closure, itself:</p>
@@ -392,7 +459,7 @@ this test by. The second parameter is the Closure, itself:</p>
 </div>
 </section>
 <section id="running-the-tasks">
-<h3><a class="toc-backref" href="#id6">Running the Tasks</a><a class="headerlink" href="#running-the-tasks" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Running the Tasks</a><a class="headerlink" href="#running-the-tasks" title="Permalink to this headline"></a></h3>
 <p>Once you’ve added the tasks to run, you can use the <code class="docutils literal notranslate"><span class="pre">run()</span></code> method to loop over the tasks many times.
 By default, it will run each task 1000 times. This is probably sufficient for most simple tests. If you need
 to run the tests more times than that, you can pass the number as the first parameter:</p>
@@ -426,7 +493,7 @@ If you don’t want the results, you can pass in <code class="docutils literal n
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

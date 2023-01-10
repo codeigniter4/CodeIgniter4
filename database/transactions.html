@@ -289,10 +289,11 @@ transactions.</p>
 <li><p><a class="reference internal" href="#running-transactions" id="id2">Running Transactions</a></p></li>
 <li><p><a class="reference internal" href="#strict-mode" id="id3">Strict Mode</a></p></li>
 <li><p><a class="reference internal" href="#managing-errors" id="id4">Managing Errors</a></p></li>
-<li><p><a class="reference internal" href="#disabling-transactions" id="id5">Disabling Transactions</a></p></li>
-<li><p><a class="reference internal" href="#test-mode" id="id6">Test Mode</a></p></li>
-<li><p><a class="reference internal" href="#running-transactions-manually" id="id7">Running Transactions Manually</a></p></li>
-<li><p><a class="reference internal" href="#nested-transactions" id="id8">Nested Transactions</a></p></li>
+<li><p><a class="reference internal" href="#throwing-exceptions" id="id5">Throwing Exceptions</a></p></li>
+<li><p><a class="reference internal" href="#disabling-transactions" id="id6">Disabling Transactions</a></p></li>
+<li><p><a class="reference internal" href="#test-mode" id="id7">Test Mode</a></p></li>
+<li><p><a class="reference internal" href="#running-transactions-manually" id="id8">Running Transactions Manually</a></p></li>
+<li><p><a class="reference internal" href="#nested-transactions" id="id9">Nested Transactions</a></p></li>
 </ul>
 </div>
 <section id="codeigniter-s-approach-to-transactions">
@@ -308,6 +309,11 @@ of your queries. This is particularly cumbersome with nested queries. In
 contrast, we’ve implemented a smart transaction system that does all
 this for you automatically (you can also manage your transactions
 manually if you choose to, but there’s really no benefit).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, during transactions, exceptions are not thrown by default
+even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
+</div>
 </section>
 <section id="running-transactions">
 <h2><a class="toc-backref" href="#id2">Running Transactions</a><a class="headerlink" href="#running-transactions" title="Permalink to this headline"></a></h2>
@@ -342,7 +348,7 @@ group will not affect any others.</p>
 </div>
 </section>
 <section id="managing-errors">
-<h2><a class="toc-backref" href="#id4">Managing Errors</a><a class="headerlink" href="#managing-errors" title="Permalink to this headline"></a></h2>
+<span id="transactions-managing-errors"></span><h2><a class="toc-backref" href="#id4">Managing Errors</a><a class="headerlink" href="#managing-errors" title="Permalink to this headline"></a></h2>
 <p>When you have <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> true in your <strong>app/Config/Database.php</strong> file,
 if a query error occurs, all the queries will be rolled backed, and an exception
 will be thrown. So you’ll see a standard error page.</p>
@@ -360,8 +366,40 @@ will be thrown. So you’ll see a standard error page.</p>
 </pre></div>
 </div>
 </section>
+<section id="throwing-exceptions">
+<span id="transactions-throwing-exceptions"></span><h2><a class="toc-backref" href="#id5">Throwing Exceptions</a><a class="headerlink" href="#throwing-exceptions" title="Permalink to this headline"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.0, during transactions, exceptions are not thrown by default
+even if <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> is true.</p>
+</div>
+<p>If you want an exception to be thrown when a query error occurs, you can use
+<code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transException(true)</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// When DBDebug in the Database Config must be true.</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\Exceptions\DatabaseException</span><span class="p">;</span>
+
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transException</span><span class="p">(</span><span class="k">true</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">transStart</span><span class="p">();</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;AN SQL QUERY...&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;ANOTHER QUERY...&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">&#39;AND YET ANOTHER QUERY...&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">transComplete</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">DatabaseException</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Automatically rolled back already.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If a query error occurs, all the queries will be rolled backed, and a
+<code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code> will be thrown.</p>
+</section>
 <section id="disabling-transactions">
-<h2><a class="toc-backref" href="#id5">Disabling Transactions</a><a class="headerlink" href="#disabling-transactions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">Disabling Transactions</a><a class="headerlink" href="#disabling-transactions" title="Permalink to this headline"></a></h2>
 <p>Transactions are enabled by default. If you would like to disable transactions you
 can do so using <code class="docutils literal notranslate"><span class="pre">$this-&gt;db-&gt;transOff()</span></code>:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -376,7 +414,7 @@ can do so using <code class="docutils literal notranslate"><span class="pre">$th
 as they are when running queries without transactions.</p>
 </section>
 <section id="test-mode">
-<h2><a class="toc-backref" href="#id6">Test Mode</a><a class="headerlink" href="#test-mode" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id7">Test Mode</a><a class="headerlink" href="#test-mode" title="Permalink to this headline"></a></h2>
 <p>You can optionally put the transaction system into “test mode”, which
 will cause your queries to be rolled back – even if the queries produce
 a valid result. To use test mode simply set the first parameter in the
@@ -390,7 +428,7 @@ a valid result. To use test mode simply set the first parameter in the
 </div>
 </section>
 <section id="running-transactions-manually">
-<h2><a class="toc-backref" href="#id7">Running Transactions Manually</a><a class="headerlink" href="#running-transactions-manually" title="Permalink to this headline"></a></h2>
+<span id="transactions-manual-transactions"></span><h2><a class="toc-backref" href="#id8">Running Transactions Manually</a><a class="headerlink" href="#running-transactions-manually" title="Permalink to this headline"></a></h2>
 <p>When you have <code class="docutils literal notranslate"><span class="pre">DBDebug</span></code> false in your <strong>app/Config/Database.php</strong> file, and
 if you would like to run transactions manually you can do so as follows:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -415,7 +453,7 @@ transactions, <strong>NOT</strong> <code class="docutils literal notranslate"><s
 </div>
 </section>
 <section id="nested-transactions">
-<h2><a class="toc-backref" href="#id8">Nested Transactions</a><a class="headerlink" href="#nested-transactions" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">Nested Transactions</a><a class="headerlink" href="#nested-transactions" title="Permalink to this headline"></a></h2>
 <p>In CodeIgniter, transactions can be nested in a way such that only the
 outmost or top-level transaction commands are executed. You can include as
 many pairs of <code class="docutils literal notranslate"><span class="pre">transStart()</span></code>/<code class="docutils literal notranslate"><span class="pre">transComplete()</span></code> or <code class="docutils literal notranslate"><span class="pre">transBegin()</span></code>/<code class="docutils literal notranslate"><span class="pre">transCommit()</span></code>/<code class="docutils literal notranslate"><span class="pre">transRollback()</span></code>
@@ -455,7 +493,7 @@ commits/rollbacks.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

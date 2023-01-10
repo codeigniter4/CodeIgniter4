@@ -275,34 +275,57 @@
              
   <section id="view-cells">
 <h1>View Cells<a class="headerlink" href="#view-cells" title="Permalink to this headline"></a></h1>
-<p>View Cells allow you to insert HTML that is generated outside of your controller. It simply calls the specified
-class and method, which must return a string of valid HTML. This method could be in any callable method, found in any class
-that the autoloader can locate. The only restriction is that the class can not have any constructor parameters.
-This is intended to be used within views, and is a great aid to modularizing your code.</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<p>Many applications have small view fragments that can be repeated from page to page, or in different places on the pages. These are often help boxes, navigation controls, ads, login forms, etc. CodeIgniter lets you encapsulate the logic for these presentation blocks within View Cells. They are basically mini-views that can be included in other views. They can have logic built in to handle any cell-specific display logic. They can be used to make your views more readable and maintainable by separating the logic for each cell into its own class.</p>
+<p>CodeIgniter supports two types of View Cells: simple and controlled. Simple View Cells can be generated from any class and method of your choice and does not have to follow any rules, except that it must return a string. Controlled View Cells must be generated from a class that extends <code class="docutils literal notranslate"><span class="pre">Codeigniter\View\Cells\Cell</span></code> class which provides additional capability making your View Cells more flexible and faster to use.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#calling-a-view-cell" id="id3">Calling a View Cell</a></p></li>
+<li><p><a class="reference internal" href="#simple-cells" id="id4">Simple Cells</a></p></li>
+<li><p><a class="reference internal" href="#controlled-cells" id="id5">Controlled Cells</a></p>
+<ul>
+<li><p><a class="reference internal" href="#creating-a-controlled-cell" id="id6">Creating a Controlled Cell</a></p></li>
+<li><p><a class="reference internal" href="#generating-cell-via-command" id="id7">Generating Cell via Command</a></p></li>
+<li><p><a class="reference internal" href="#using-a-different-view" id="id8">Using a Different View</a></p></li>
+<li><p><a class="reference internal" href="#customize-the-rendering" id="id9">Customize the Rendering</a></p></li>
+<li><p><a class="reference internal" href="#computed-properties" id="id10">Computed Properties</a></p></li>
+<li><p><a class="reference internal" href="#presentation-methods" id="id11">Presentation Methods</a></p></li>
+<li><p><a class="reference internal" href="#performing-setup-logic" id="id12">Performing Setup Logic</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cell-caching" id="id13">Cell Caching</a></p></li>
+</ul>
+</div>
+<section id="calling-a-view-cell">
+<span id="app-cells"></span><h2><a class="toc-backref" href="#id3">Calling a View Cell</a><a class="headerlink" href="#calling-a-view-cell" title="Permalink to this headline"></a></h2>
+<p>No matter which type of View Cell you are using, you can call it from any view by using the <code class="docutils literal notranslate"><span class="pre">view_cell()</span></code> helper method. The first parameter is the name of the class and method to call, and the second parameter is an array of parameters to pass to the method. The method must return a string, which will be inserted into the view where the <code class="docutils literal notranslate"><span class="pre">view_cell()</span></code> method was called.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;App\Cells\MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>In this example, the class <code class="docutils literal notranslate"><span class="pre">App\Libraries\Blog</span></code> is loaded, and the method <code class="docutils literal notranslate"><span class="pre">recentPosts()</span></code> is run. The method
-must return the generated HTML as a string. The method can be either a static method or not. Either way works.</p>
-<section id="cell-parameters">
-<h2>Cell Parameters<a class="headerlink" href="#cell-parameters" title="Permalink to this headline"></a></h2>
-<p>You can further refine the call by passing a list of parameters in the second parameter to the method. The values passed
-can be an array of key/value pairs, or a comma-separated string of key/value pairs:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Passing Parameter Array</span>
-<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;category&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;codeigniter&#39;</span><span class="p">,</span> <span class="s1">&#39;limit&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">])</span> <span class="cp">?&gt;</span>
+<p>If you do not include the full namespace for the class, it will assume in can be found in the <code class="docutils literal notranslate"><span class="pre">App\Cells</span></code> namespace. So, the above example would attempt to find the <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> class in <code class="docutils literal notranslate"><span class="pre">app/Cells/MyClass.php</span></code>. If it is not found there, all namespaces will be scanned until it is found, searching within a <code class="docutils literal notranslate"><span class="pre">Cells</span></code> subdirectory of each namespace.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;param1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;param2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value2&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+<p>You can also pass the parameters along as a key/value string:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;MyClass::myMethod&#39;</span><span class="p">,</span> <span class="s1">&#39;param1=value1, param2=value2&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="simple-cells">
+<h2><a class="toc-backref" href="#id4">Simple Cells</a><a class="headerlink" href="#simple-cells" title="Permalink to this headline"></a></h2>
+<p>Simple Cells are classes that return a string from the chosen method. An example of a simple Alert Message cell might look like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
 
-// Passing Parameter String
-<span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;\App\Libraries\Blog::recentPosts&#39;</span><span class="p">,</span> <span class="s1">&#39;category=codeigniter, limit=5&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
-
-public function recentPosts(array $params = [])
-{
-    $posts = $this-&gt;blogModel-&gt;where(&#39;category&#39;, $params[&#39;category&#39;])
-                             -&gt;orderBy(&#39;published_on&#39;, &#39;desc&#39;)
-                             -&gt;limit($params[&#39;limit&#39;])
-                             -&gt;get();
-
-    return view(&#39;recentPosts&#39;, [&#39;posts&#39; =&gt; $posts]);
-}
+<span class="k">class</span> <span class="nc">AlertMessage</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$params</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;div class=&quot;</span><span class="nx">alert</span> <span class="nx">alert</span><span class="o">-</span><span class="p">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]}</span><span class="s2">&quot;&gt;</span><span class="si">{</span><span class="nv">$params</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You would call it from within a view like:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;AlertMessage::show&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;The user has been updated.&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>Additionally, you can use parameter names that match the parameter variables in the method for better readability.
@@ -321,8 +344,175 @@ public function recentPosts(string $category, int $limit)
 </pre></div>
 </div>
 </section>
+<section id="controlled-cells">
+<span id="id1"></span><h2><a class="toc-backref" href="#id5">Controlled Cells</a><a class="headerlink" href="#controlled-cells" title="Permalink to this headline"></a></h2>
+<p>Controlled Cells have two primary goals: to make it as fast as possible to build the cell, and provide additional logic and flexibility to your views, if they need it. The class must extend <code class="docutils literal notranslate"><span class="pre">CodeIgniter\View\Cells\Cell</span></code>. They should have a view file in the same folder. By convention the class name should be PascalCase and the view should be the snake_cased version of the class name. So, for example, if you have a <code class="docutils literal notranslate"><span class="pre">MyCell</span></code> class, the view file should be <code class="docutils literal notranslate"><span class="pre">my_cell.php</span></code>.</p>
+<section id="creating-a-controlled-cell">
+<h3><a class="toc-backref" href="#id6">Creating a Controlled Cell</a><a class="headerlink" href="#creating-a-controlled-cell" title="Permalink to this headline"></a></h3>
+<p>At the most basic level, all you need to implement within the class are public properties. These properties will be made available to the view file automatically. Implementing the AlertMessage from above as a Controlled Cell would look like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// app/Cells/AlertMessageCell.php</span>
+<span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AlertMessageCell</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// app/Cells/alert_message_cell.php</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">class</span><span class="o">=</span><span class="s2">&quot;alert alert-&lt;?= </span><span class="si">$type</span><span class="s2">; ?&gt;&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;?=</span> <span class="nv">$message</span><span class="p">;</span> <span class="cp">?&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="generating-cell-via-command">
+<span id="id2"></span><h3><a class="toc-backref" href="#id7">Generating Cell via Command</a><a class="headerlink" href="#generating-cell-via-command" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>You can also create a controlled cell via a built in command from the CLI. The command is <code class="docutils literal notranslate"><span class="pre">php</span> <span class="pre">spark</span> <span class="pre">make:cell</span></code>. It takes one argument, the name of the cell to create. The name should be in PascalCase, and the class will be created in the <code class="docutils literal notranslate"><span class="pre">app/Cells</span></code> directory. The view file will also be created in the <code class="docutils literal notranslate"><span class="pre">app/Cells</span></code> directory.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">php</span> <span class="nx">spark</span> <span class="nx">make</span><span class="o">:</span><span class="nx">cell</span> <span class="nx">AlertMessage</span>
+</pre></div>
+</div>
+</section>
+<section id="using-a-different-view">
+<h3><a class="toc-backref" href="#id8">Using a Different View</a><a class="headerlink" href="#using-a-different-view" title="Permalink to this headline"></a></h3>
+<p>You can specify a custom view name by setting the <code class="docutils literal notranslate"><span class="pre">view</span></code> property in the class. The view will be located like any view would be normally.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AlertMessage</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$view</span> <span class="o">=</span> <span class="s1">&#39;my/custom/view&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="customize-the-rendering">
+<h3><a class="toc-backref" href="#id9">Customize the Rendering</a><a class="headerlink" href="#customize-the-rendering" title="Permalink to this headline"></a></h3>
+<p>If you need more control over the rendering of the HTML, you can implement a <code class="docutils literal notranslate"><span class="pre">render()</span></code> method. This method allows you to perform additional logic and pass extra data the view, if needed. The <code class="docutils literal notranslate"><span class="pre">render()</span></code> method must return a string. To take advantage of the full features of controlled Cells, you should use <code class="docutils literal notranslate"><span class="pre">$this-&gt;view()</span></code> instead of the normal <code class="docutils literal notranslate"><span class="pre">view()</span></code> helper function.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AlertMessage</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$type</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$message</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">render</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="s1">&#39;my/custom/view&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;extra&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;data&#39;</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="computed-properties">
+<h3><a class="toc-backref" href="#id10">Computed Properties</a><a class="headerlink" href="#computed-properties" title="Permalink to this headline"></a></h3>
+<p>If you need to perform additional logic for one or more properties you can use computed properties. These require setting the property to either <code class="docutils literal notranslate"><span class="pre">protected</span></code> or <code class="docutils literal notranslate"><span class="pre">private</span></code> and implementing a public method whose name consists of the property name surrounded by <code class="docutils literal notranslate"><span class="pre">get</span></code> and <code class="docutils literal notranslate"><span class="pre">Property</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AlertMessage</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$type</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$message</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getTypeProperty</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">type</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getMessageProperty</span><span class="p">()</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">message</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="presentation-methods">
+<h3><a class="toc-backref" href="#id11">Presentation Methods</a><a class="headerlink" href="#presentation-methods" title="Permalink to this headline"></a></h3>
+<p>Sometimes you need to perform additional logic for the view, but you don’t want to pass it as a parameter. You can implement a method that will be called from within the cell’s view itself. This can help the readability of your views.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// app/Cells/RecentPostsCell.php</span>
+<span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RecentPosts</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$posts</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">linkPost</span><span class="p">(</span><span class="nv">$post</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">anchor</span><span class="p">(</span><span class="s1">&#39;posts/&#39;</span> <span class="o">.</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// app/Cells/recent_posts.php</span>
+<span class="o">&lt;</span><span class="nx">ul</span><span class="o">&gt;</span>
+    <span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">linkPost</span><span class="p">(</span><span class="nv">$post</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="performing-setup-logic">
+<h3><a class="toc-backref" href="#id12">Performing Setup Logic</a><a class="headerlink" href="#performing-setup-logic" title="Permalink to this headline"></a></h3>
+<p>If you need to perform additional logic before the view is rendered, you can implement a <code class="docutils literal notranslate"><span class="pre">mount()</span></code> method. This method will be called just after the class is instantiated, and can be used to set additional properties or perform other logic.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RecentPosts</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$posts</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getRecent</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can pass additional parameters to the <code class="docutils literal notranslate"><span class="pre">mount()</span></code> method by passing them as an array to the <code class="docutils literal notranslate"><span class="pre">view_cell()</span></code> helper function. Any of the parameters sent that match a parameter name of the <code class="docutils literal notranslate"><span class="pre">mount</span></code> method will be passed in.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// app/Cells/RecentPosts.php</span>
+<span class="k">namespace</span> <span class="nx">App\Cells</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\View\Cells\Cell</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">RecentPosts</span> <span class="k">extends</span> <span class="nx">Cell</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$posts</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">mount</span><span class="p">(</span><span class="o">?</span><span class="nx">int</span> <span class="nv">$categoryId</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">posts</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;PostModel&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">when</span><span class="p">(</span><span class="nv">$categoryId</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$query</span><span class="p">,</span> <span class="nv">$category</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;category_id&#39;</span><span class="p">,</span> <span class="nv">$categoryId</span><span class="p">);</span>
+            <span class="p">})</span>
+            <span class="o">-&gt;</span><span class="na">getRecent</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Called in main View:</span>
+<span class="o">&lt;?=</span> <span class="nx">view_cell</span><span class="p">(</span><span class="s1">&#39;RecentPosts::show&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;categoryId&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="cell-caching">
-<h2>Cell Caching<a class="headerlink" href="#cell-caching" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id13">Cell Caching</a><a class="headerlink" href="#cell-caching" title="Permalink to this headline"></a></h2>
 <p>You can cache the results of the view cell call by passing the number of seconds to cache the data for as the
 third parameter. This will use the currently configured cache engine.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cache the view for 5 minutes</span>
@@ -350,7 +540,7 @@ as the fourth parameter:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

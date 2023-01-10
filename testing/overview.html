@@ -280,48 +280,58 @@ Support for <a class="reference external" href="https://phpunit.de/">PHPUnit</a>
 helper methods to make testing every aspect of your application as painless as possible.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#system-set-up" id="id2">System Set Up</a></p>
+<li><p><a class="reference internal" href="#system-set-up" id="id4">System Set Up</a></p>
 <ul>
-<li><p><a class="reference internal" href="#installing-phpunit" id="id3">Installing PHPUnit</a></p>
+<li><p><a class="reference internal" href="#installing-phpunit" id="id5">Installing PHPUnit</a></p>
 <ul>
-<li><p><a class="reference internal" href="#composer" id="id4">Composer</a></p></li>
-<li><p><a class="reference internal" href="#phar" id="id5">Phar</a></p></li>
+<li><p><a class="reference internal" href="#composer" id="id6">Composer</a></p></li>
+<li><p><a class="reference internal" href="#phar" id="id7">Phar</a></p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#testing-your-application" id="id6">Testing Your Application</a></p>
+<li><p><a class="reference internal" href="#testing-your-application" id="id8">Testing Your Application</a></p>
 <ul>
-<li><p><a class="reference internal" href="#phpunit-configuration" id="id7">PHPUnit Configuration</a></p></li>
-<li><p><a class="reference internal" href="#the-test-class" id="id8">The Test Class</a></p>
+<li><p><a class="reference internal" href="#phpunit-configuration" id="id9">PHPUnit Configuration</a></p></li>
+<li><p><a class="reference internal" href="#the-test-class" id="id10">The Test Class</a></p>
 <ul>
-<li><p><a class="reference internal" href="#staging" id="id9">Staging</a></p></li>
-<li><p><a class="reference internal" href="#traits" id="id10">Traits</a></p></li>
-<li><p><a class="reference internal" href="#additional-assertions" id="id11">Additional Assertions</a></p></li>
-<li><p><a class="reference internal" href="#accessing-protected-private-properties" id="id12">Accessing Protected/Private Properties</a></p></li>
+<li><p><a class="reference internal" href="#staging" id="id11">Staging</a></p></li>
+<li><p><a class="reference internal" href="#traits" id="id12">Traits</a></p></li>
+<li><p><a class="reference internal" href="#additional-assertions" id="id13">Additional Assertions</a></p></li>
+<li><p><a class="reference internal" href="#accessing-protected-private-properties" id="id14">Accessing Protected/Private Properties</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#mocking-services" id="id13">Mocking Services</a></p>
+<li><p><a class="reference internal" href="#mocking-services" id="id15">Mocking Services</a></p>
 <ul>
-<li><p><a class="reference internal" href="#services-injectmock" id="id14">Services::injectMock()</a></p></li>
-<li><p><a class="reference internal" href="#services-reset" id="id15">Services::reset()</a></p></li>
-<li><p><a class="reference internal" href="#services-resetsingle-string-name" id="id16">Services::resetSingle(string $name)</a></p></li>
+<li><p><a class="reference internal" href="#services-injectmock" id="id16">Services::injectMock()</a></p></li>
+<li><p><a class="reference internal" href="#services-reset" id="id17">Services::reset()</a></p></li>
+<li><p><a class="reference internal" href="#services-resetsingle-string-name" id="id18">Services::resetSingle(string $name)</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#mocking-factory-instances" id="id17">Mocking Factory Instances</a></p></li>
-<li><p><a class="reference internal" href="#stream-filters" id="id18">Stream Filters</a></p></li>
+<li><p><a class="reference internal" href="#mocking-factory-instances" id="id19">Mocking Factory Instances</a></p></li>
+<li><p><a class="reference internal" href="#testing-cli-output" id="id20">Testing CLI Output</a></p>
+<ul>
+<li><p><a class="reference internal" href="#streamfiltertrait" id="id21">StreamFilterTrait</a></p></li>
+<li><p><a class="reference internal" href="#citeststreamfilter" id="id22">CITestStreamFilter</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#testing-cli-input" id="id23">Testing CLI Input</a></p>
+<ul>
+<li><p><a class="reference internal" href="#phpstreamwrapper" id="id24">PhpStreamWrapper</a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <section id="system-set-up">
-<h2><a class="toc-backref" href="#id2">System Set Up</a><a class="headerlink" href="#system-set-up" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id4">System Set Up</a><a class="headerlink" href="#system-set-up" title="Permalink to this headline"></a></h2>
 <section id="installing-phpunit">
-<h3><a class="toc-backref" href="#id3">Installing PHPUnit</a><a class="headerlink" href="#installing-phpunit" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id5">Installing PHPUnit</a><a class="headerlink" href="#installing-phpunit" title="Permalink to this headline"></a></h3>
 <p>CodeIgniter uses <a class="reference external" href="https://phpunit.de/">PHPUnit</a> as the basis for all of its testing. There are two ways to install
 PHPUnit to use within your system.</p>
 <section id="composer">
-<h4><a class="toc-backref" href="#id4">Composer</a><a class="headerlink" href="#composer" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id6">Composer</a><a class="headerlink" href="#composer" title="Permalink to this headline"></a></h4>
 <p>The recommended method is to install it in your project using <a class="reference external" href="https://getcomposer.org/">Composer</a>. While it’s possible
 to install it globally we do not recommend it, since it can cause compatibility issues with other projects on your
 system as time goes on.</p>
@@ -341,16 +351,16 @@ tests for this project by typing:</p>
 </div>
 </section>
 <section id="phar">
-<h4><a class="toc-backref" href="#id5">Phar</a><a class="headerlink" href="#phar" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id7">Phar</a><a class="headerlink" href="#phar" title="Permalink to this headline"></a></h4>
 <p>The other option is to download the .phar file from the <a class="reference external" href="https://phpunit.de/getting-started/phpunit-9.html">PHPUnit</a> site.
 This is a standalone file that should be placed within your project root.</p>
 </section>
 </section>
 </section>
 <section id="testing-your-application">
-<h2><a class="toc-backref" href="#id6">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id8">Testing Your Application</a><a class="headerlink" href="#testing-your-application" title="Permalink to this headline"></a></h2>
 <section id="phpunit-configuration">
-<h3><a class="toc-backref" href="#id7">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id9">PHPUnit Configuration</a><a class="headerlink" href="#phpunit-configuration" title="Permalink to this headline"></a></h3>
 <p>The framework has a <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> file in the project root. This controls unit
 testing of the framework itself. If you provide your own <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code>, it will
 over-ride this.</p>
@@ -358,7 +368,7 @@ over-ride this.</p>
 <code class="docutils literal notranslate"><span class="pre">ThirdParty</span></code> folders, if you are unit testing your application.</p>
 </section>
 <section id="the-test-class">
-<h3><a class="toc-backref" href="#id8">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">The Test Class</a><a class="headerlink" href="#the-test-class" title="Permalink to this headline"></a></h3>
 <p>In order to take advantage of the additional tools provided, your tests must extend <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code>. All tests
 are expected to be located in the <strong>tests/app</strong> directory by default.</p>
 <p>To test a new library, <strong>Foo</strong>, you would create a new file at <strong>tests/app/Libraries/FooTest.php</strong>:</p>
@@ -402,7 +412,7 @@ have the correct namespace relative to <code class="docutils literal notranslate
 </div>
 <p>When testing database results, you must use the <a class="reference internal" href="database.html"><span class="doc">DatabaseTestTrait</span></a> in your class.</p>
 <section id="staging">
-<h4><a class="toc-backref" href="#id9">Staging</a><a class="headerlink" href="#staging" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id11">Staging</a><a class="headerlink" href="#staging" title="Permalink to this headline"></a></h4>
 <p>Most tests require some preparation in order to run correctly. PHPUnit’s <code class="docutils literal notranslate"><span class="pre">TestCase</span></code> provides four methods
 to help with staging and clean up:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">setUpBeforeClass</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
@@ -437,7 +447,7 @@ parent as well so extended test cases do not interfere with staging:</p>
 </div>
 </section>
 <section id="traits">
-<h4><a class="toc-backref" href="#id10">Traits</a><a class="headerlink" href="#traits" title="Permalink to this headline"></a></h4>
+<span id="testing-overview-traits"></span><h4><a class="toc-backref" href="#id12">Traits</a><a class="headerlink" href="#traits" title="Permalink to this headline"></a></h4>
 <p>A common way to enhance your tests is by using traits to consolidate staging across different
 test cases. <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> will detect any class traits and look for staging methods
 to run named for the trait itself (i.e. <cite>setUp{NameOfTrait}()</cite> and <cite>tearDown{NameOfTrait}()</cite>).</p>
@@ -469,20 +479,28 @@ logged in user:</p>
 </div>
 </section>
 <section id="additional-assertions">
-<h4><a class="toc-backref" href="#id11">Additional Assertions</a><a class="headerlink" href="#additional-assertions" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id13">Additional Assertions</a><a class="headerlink" href="#additional-assertions" title="Permalink to this headline"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides additional unit testing assertions that you might find useful.</p>
 <section id="assertlogged-level-expectedmessage">
 <h5>assertLogged($level, $expectedMessage)<a class="headerlink" href="#assertlogged-level-expectedmessage" title="Permalink to this headline"></a></h5>
-<p>Ensure that something you expected to be logged actually was:</p>
+<p>Ensure that something you expected to be logged was actually logged:</p>
+</section>
+<section id="assertlogcontains-level-logmessage">
+<h5>assertLogContains($level, $logMessage)<a class="headerlink" href="#assertlogcontains-level-logmessage" title="Permalink to this headline"></a></h5>
+<p>Ensure that there’s a record in the logs which contains a message part.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LoggerConfig</span><span class="p">();</span>
-<span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Logger</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
+<span class="nv">$config</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Config\Logger</span><span class="p">();</span>
+<span class="nv">$logger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CodeIgniter\Log\Logger</span><span class="p">(</span><span class="nv">$config</span><span class="p">);</span>
 
-<span class="c1">// ... do something that you expect a log entry from</span>
+<span class="c1">// check verbatim the log message</span>
 <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
-
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogged</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s2">&quot;That&#39;s no moon&quot;</span><span class="p">);</span>
+
+<span class="c1">// check that a portion of the message is found in the logs</span>
+<span class="nv">$exception</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RuntimeException</span><span class="p">(</span><span class="s1">&#39;Hello world.&#39;</span><span class="p">);</span>
+<span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getTraceAsString</span><span class="p">());</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertLogContains</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;{main}&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
@@ -569,7 +587,7 @@ between expected and actual time, formatted as strings, is within the prescribed
 </section>
 </section>
 <section id="accessing-protected-private-properties">
-<h4><a class="toc-backref" href="#id12">Accessing Protected/Private Properties</a><a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id14">Accessing Protected/Private Properties</a><a class="headerlink" href="#accessing-protected-private-properties" title="Permalink to this headline"></a></h4>
 <p>When testing, you can use the following setter and getter methods to access protected and private methods and
 properties in the classes that you are testing.</p>
 <section id="getprivatemethodinvoker-instance-method">
@@ -622,13 +640,13 @@ parameter is the name of the property to set the value of. The third parameter i
 </section>
 </section>
 <section id="mocking-services">
-<h3><a class="toc-backref" href="#id13">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id15">Mocking Services</a><a class="headerlink" href="#mocking-services" title="Permalink to this headline"></a></h3>
 <p>You will often find that you need to mock one of the services defined in <strong>app/Config/Services.php</strong> to limit
 your tests to only the code in question, while simulating various responses from the services. This is especially
 true when testing controllers and other integration testing. The <strong>Services</strong> class provides the following methods
 to simplify this.</p>
 <section id="services-injectmock">
-<h4><a class="toc-backref" href="#id14">Services::injectMock()</a><a class="headerlink" href="#services-injectmock" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id16">Services::injectMock()</a><a class="headerlink" href="#services-injectmock" title="Permalink to this headline"></a></h4>
 <p>This method allows you to define the exact instance that will be returned by the Services class. You can use this to
 set properties of a service so that it behaves in a certain way, or replace a service with a mocked class.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
@@ -654,12 +672,12 @@ set properties of a service so that it behaves in a certain way, or replace a se
 class exactly. The second parameter is the instance to replace it with.</p>
 </section>
 <section id="services-reset">
-<h4><a class="toc-backref" href="#id15">Services::reset()</a><a class="headerlink" href="#services-reset" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id17">Services::reset()</a><a class="headerlink" href="#services-reset" title="Permalink to this headline"></a></h4>
 <p>Removes all mocked classes from the Services class, bringing it back to its original state.</p>
 <p>You can also use the <code class="docutils literal notranslate"><span class="pre">$this-&gt;resetServices()</span></code> method that <code class="docutils literal notranslate"><span class="pre">CIUnitTestCase</span></code> provides.</p>
 </section>
 <section id="services-resetsingle-string-name">
-<h4><a class="toc-backref" href="#id16">Services::resetSingle(string $name)</a><a class="headerlink" href="#services-resetsingle-string-name" title="Permalink to this headline"></a></h4>
+<h4><a class="toc-backref" href="#id18">Services::resetSingle(string $name)</a><a class="headerlink" href="#services-resetsingle-string-name" title="Permalink to this headline"></a></h4>
 <p>Removes any mock and shared instances for a single service, by its name.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -668,7 +686,7 @@ class exactly. The second parameter is the instance to replace it with.</p>
 </section>
 </section>
 <section id="mocking-factory-instances">
-<h3><a class="toc-backref" href="#id17">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id19">Mocking Factory Instances</a><a class="headerlink" href="#mocking-factory-instances" title="Permalink to this headline"></a></h3>
 <p>Similar to Services, you may find yourself needing to supply a pre-configured class instance
 during testing that will be used with <code class="docutils literal notranslate"><span class="pre">Factories</span></code>. Use the same <code class="docutils literal notranslate"><span class="pre">Factories::injectMock()</span></code> and <code class="docutils literal notranslate"><span class="pre">Factories::reset()</span></code>
 static methods like <strong>Services</strong>, but they take an additional preceding parameter for the
@@ -695,12 +713,65 @@ component name:</p>
 <p>All component Factories are reset by default between each test. Modify your test case’s <code class="docutils literal notranslate"><span class="pre">$setUpMethods</span></code> if you need instances to persist.</p>
 </div>
 </section>
-<section id="stream-filters">
-<h3><a class="toc-backref" href="#id18">Stream Filters</a><a class="headerlink" href="#stream-filters" title="Permalink to this headline"></a></h3>
-<p><strong>CITestStreamFilter</strong> provides an alternate to these helper methods.</p>
+<section id="testing-cli-output">
+<span id="id2"></span><h3><a class="toc-backref" href="#id20">Testing CLI Output</a><a class="headerlink" href="#testing-cli-output" title="Permalink to this headline"></a></h3>
+<section id="streamfiltertrait">
+<h4><a class="toc-backref" href="#id21">StreamFilterTrait</a><a class="headerlink" href="#streamfiltertrait" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p><strong>StreamFilterTrait</strong> provides an alternate to these helper methods.</p>
 <p>You may need to test things that are difficult to test. Sometimes, capturing a stream, like PHP’s own STDOUT, or STDERR,
-might be helpful. The <code class="docutils literal notranslate"><span class="pre">CITestStreamFilter</span></code> helps you capture the output from the stream of your choice.</p>
+might be helpful. The <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code> helps you capture the output from the stream of your choice.</p>
+<p><strong>Overview of methods</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">StreamFilterTrait::getStreamFilterBuffer()</span></code> Get the captured data from the buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">StreamFilterTrait::resetStreamFilterBuffer()</span></code> Reset captured data.</p></li>
+</ul>
 <p>An example demonstrating this inside one of your test cases:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\StreamFilterTrait</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">use</span> <span class="nx">StreamFilterTrait</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomeOutput</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">first.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">resetStreamFilterBuffer</span><span class="p">();</span>
+
+        <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;second.&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="s2">&quot;second.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStreamFilterBuffer</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code> has a configurator that is called automatically.
+See <a class="reference internal" href="#testing-overview-traits"><span class="std std-ref">Testing Traits</span></a>.</p>
+<p>If you override the <code class="docutils literal notranslate"><span class="pre">setUp()</span></code> or <code class="docutils literal notranslate"><span class="pre">tearDown()</span></code> methods in your test, then you must call the <code class="docutils literal notranslate"><span class="pre">parent::setUp()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">parent::tearDown()</span></code> methods respectively to configure the <code class="docutils literal notranslate"><span class="pre">StreamFilterTrait</span></code>.</p>
+</section>
+<section id="citeststreamfilter">
+<h4><a class="toc-backref" href="#id22">CITestStreamFilter</a><a class="headerlink" href="#citeststreamfilter" title="Permalink to this headline"></a></h4>
+<p><strong>CITestStreamFilter</strong> for manual/single use.</p>
+<p>If you need to capture streams in only one test, then instead of using the StreamFilterTrait trait, you can manually
+add a filter to streams.</p>
+<p><strong>Overview of methods</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::registration()</span></code> Filter registration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::addOutputFilter()</span></code> Adding a filter to the output stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::addErrorFilter()</span></code> Adding a filter to the error stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::removeOutputFilter()</span></code> Removing a filter from the output stream.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CITestStreamFilter::removeErrorFilter()</span></code> Removing a filter from the error stream.</p></li>
+</ul>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
@@ -709,27 +780,80 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 
 <span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
 <span class="p">{</span>
-    <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
-    <span class="p">{</span>
-        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="nv">$buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">stream_filter</span>        <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDOUT</span><span class="p">,</span> <span class="s1">&#39;CITestStreamFilter&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
-    <span class="p">{</span>
-        <span class="nb">stream_filter_remove</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">stream_filter</span><span class="p">);</span>
-    <span class="p">}</span>
-
     <span class="k">public</span> <span class="k">function</span> <span class="nf">testSomeOutput</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
     <span class="p">{</span>
+        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">registration</span><span class="p">();</span>
+        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">addOutputFilter</span><span class="p">();</span>
+
         <span class="nx">CLI</span><span class="o">::</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;first.&#39;</span><span class="p">);</span>
 
-        <span class="nv">$expected</span> <span class="o">=</span> <span class="s2">&quot;first.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="nv">$buffer</span><span class="p">);</span>
+        <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">removeOutputFilter</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+</section>
+<section id="testing-cli-input">
+<span id="id3"></span><h3><a class="toc-backref" href="#id23">Testing CLI Input</a><a class="headerlink" href="#testing-cli-input" title="Permalink to this headline"></a></h3>
+<section id="phpstreamwrapper">
+<h4><a class="toc-backref" href="#id24">PhpStreamWrapper</a><a class="headerlink" href="#phpstreamwrapper" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p><strong>PhpStreamWrapper</strong> provides a way to write tests for methods that require user input,
+such as <code class="docutils literal notranslate"><span class="pre">CLI::prompt()</span></code>, <code class="docutils literal notranslate"><span class="pre">CLI::wait()</span></code>, and <code class="docutils literal notranslate"><span class="pre">CLI::input()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The PhpStreamWrapper is a stream wrapper class.
+If you don’t know PHP’s stream wrapper,
+see <a class="reference external" href="https://www.php.net/manual/en/class.streamwrapper.php">The streamWrapper class</a>
+in the PHP maual.</p>
+</div>
+<p><strong>Overview of methods</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper::register()</span></code> Register the <code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper</span></code> to the <code class="docutils literal notranslate"><span class="pre">php</span></code> protocol.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper::restore()</span></code> Restore the php protocol wrapper back to the PHP built-in wrapper.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper::setContent()</span></code> Set the input data.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The PhpStreamWrapper is intended for only testing <code class="docutils literal notranslate"><span class="pre">php://stdin</span></code>.
+But when you register it, it handles all the <a class="reference external" href="https://www.php.net/manual/en/wrappers.php.php">php protocol</a> streams,
+such as <code class="docutils literal notranslate"><span class="pre">php://stdout</span></code>, <code class="docutils literal notranslate"><span class="pre">php://stderr</span></code>, <code class="docutils literal notranslate"><span class="pre">php://memory</span></code>.
+So it is strongly recommended that <code class="docutils literal notranslate"><span class="pre">PhpStreamWrapper</span></code> be registered/unregistered
+only when needed. Otherwise, it will interfere with other built-in php streams
+while registered.</p>
+</div>
+<p>An example demonstrating this inside one of your test cases:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\CLI\CLI</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\CIUnitTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Test\PhpStreamWrapper</span><span class="p">;</span>
+
+<span class="k">final</span> <span class="k">class</span> <span class="nc">SomeTest</span> <span class="k">extends</span> <span class="nx">CIUnitTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testPrompt</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
+    <span class="p">{</span>
+        <span class="c1">// Register the PhpStreamWrapper.</span>
+        <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+
+        <span class="c1">// Set the user input to &#39;red&#39;. It will be provided as `php://stdin` output.</span>
+        <span class="nv">$expected</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">;</span>
+        <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">setContent</span><span class="p">(</span><span class="nv">$expected</span><span class="p">);</span>
+
+        <span class="nv">$output</span> <span class="o">=</span> <span class="nx">CLI</span><span class="o">::</span><span class="na">prompt</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">);</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertSame</span><span class="p">(</span><span class="nv">$expected</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+
+        <span class="c1">// Restore php protocol wrapper.</span>
+        <span class="nx">PhpStreamWrapper</span><span class="o">::</span><span class="na">restore</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 </section>
@@ -746,7 +870,7 @@ might be helpful. The <code class="docutils literal notranslate"><span class="pr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

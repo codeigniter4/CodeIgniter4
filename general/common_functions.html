@@ -822,6 +822,41 @@ modern browsers to automatically modify any HTTP requests to HTTPS requests for 
 </dd></dl>
 
 <dl class="php function">
+<dt class="sig sig-object php" id="is_windows">
+<span class="sig-name descname"><span class="pre">is_windows</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$mock</span> <span class="pre">=</span> <span class="pre">null</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#is_windows" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$mock</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool|null</span></code></span>) – If given and is a boolean then it will be used as the return value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+<p>Detect if platform is running in Windows.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The boolean value provided to $mock will persist in subsequent calls. To reset this
+mock value, the user must pass an explicit <code class="docutils literal notranslate"><span class="pre">null</span></code> to the function call. This will
+refresh the function to use auto-detection.</p>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nx">is_windows</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+
+<span class="c1">// some code ...</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">is_windows</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// do something ..</span>
+<span class="p">}</span>
+
+<span class="nx">is_windows</span><span class="p">(</span><span class="k">null</span><span class="p">);</span> <span class="c1">// reset</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php function">
 <dt class="sig sig-object php" id="log_message">
 <span class="sig-name descname"><span class="pre">log_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$level</span></em>, <em class="sig-param"><span class="pre">$message</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">$context</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#log_message" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -936,13 +971,47 @@ characters, like Java\0script.</p>
 </dd></dl>
 
 <dl class="php function">
+<dt class="sig sig-object php" id="request">
+<span class="sig-name descname"><span class="pre">request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#request" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The shared Request object.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">IncomingRequest|CLIRequest</span></code></span></p>
+</dd>
+</dl>
+<p>This function is a wrapper for <code class="docutils literal notranslate"><span class="pre">Services::request()</span></code>.</p>
+</dd></dl>
+
+<dl class="php function">
+<dt class="sig sig-object php" id="response">
+<span class="sig-name descname"><span class="pre">response</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#response" title="Permalink to this definition"></a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The shared Response object.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">Response</span></code></span></p>
+</dd>
+</dl>
+<p>This function is a wrapper for <code class="docutils literal notranslate"><span class="pre">Services::response()</span></code>.</p>
+</dd></dl>
+
+<dl class="php function">
 <dt class="sig sig-object php" id="route_to">
 <span class="sig-name descname"><span class="pre">route_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$method</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">...$params</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#route_to" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$method</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – The named route alias, or name of the controller/method to match.</p></li>
-<li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|string</span></code></span>) – One or more parameters to be passed to be matched in the route.</p></li>
+<li><p><strong>$params</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int|string</span></code></span>) – One or more parameters to be passed to be matched in the route. The last parameter allows you to set the locale.</p></li>
 </ul>
 </dd>
 </dl>
@@ -950,8 +1019,7 @@ characters, like Java\0script.</p>
 <p class="admonition-title">Note</p>
 <p>This function requires the controller/method to have a route defined in <strong>app/Config/routes.php</strong>.</p>
 </div>
-<p>Generates a route for you based on either a named route alias,
-or a controller::method combination. Will take parameters into effect, if provided.</p>
+<p>Generates a route for you based on a controller::method combination. Will take parameters into effect, if provided.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
@@ -966,6 +1034,7 @@ or a controller::method combination. Will take parameters into effect, if provid
 <span class="c1">// Result: &#39;/users/15/gallery/12&#39;</span>
 </pre></div>
 </div>
+<p>Generates a route for you based on a named route alias.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="c1">// The route is defined as:</span>
@@ -978,6 +1047,25 @@ or a controller::method combination. Will take parameters into effect, if provid
 <span class="c1">// Generate the route with user ID 15, gallery 12:</span>
 <span class="nx">route_to</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
 <span class="c1">// Result: &#39;/users/15/gallery/12&#39;</span>
+</pre></div>
+</div>
+<p>Since v4.3.0, when you use <code class="docutils literal notranslate"><span class="pre">{locale}</span></code> in your route, you can optionally specify the locale value as the last parameter.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// The route is defined as:</span>
+<span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
+    <span class="s1">&#39;{locale}/users/(:num)/gallery(:any)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Galleries::showUserGallery/$1/$2&#39;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s1">&#39;as&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;user_gallery&#39;</span><span class="p">]</span>
+<span class="p">);</span>
+
+<span class="cp">?&gt;</span>
+
+<span class="cp">&lt;?php</span>
+
+<span class="c1">// Generate the route with user ID 15, gallery 12 and locale en:</span>
+<span class="nx">route_to</span><span class="p">(</span><span class="s1">&#39;user_gallery&#39;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
+<span class="c1">// Result: &#39;/en/users/15/gallery/12&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -1182,7 +1270,7 @@ instance every time.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 

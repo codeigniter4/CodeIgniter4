@@ -297,6 +297,7 @@
 <ul>
 <li><p><a class="reference internal" href="#support-methods" id="id11">Support Methods</a></p></li>
 <li><p><a class="reference internal" href="#outputting-files" id="id12">Outputting Files</a></p></li>
+<li><p><a class="reference internal" href="#modifying-files" id="id13">Modifying Files</a></p></li>
 </ul>
 </li>
 </ul>
@@ -567,9 +568,9 @@ into an application for use:</p>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="k">array</span> <span class="nv">$params</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Use the Autoloader to figure out the module path</span>
-        <span class="nv">$source</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;Math\\Auth&#39;</span><span class="p">);</span>
+        <span class="nv">$source</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;Math\\Auth&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 
-        <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPATH</span><span class="p">);</span>
+        <span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
 
         <span class="k">try</span> <span class="p">{</span>
             <span class="c1">// Add only the desired components</span>
@@ -714,6 +715,80 @@ affect other files in the destination. Returns success or failure, use <code cla
 </div>
 </section>
 </section>
+<section id="modifying-files">
+<span id="publisher-modifying-files"></span><h3><a class="toc-backref" href="#id13">Modifying Files</a><a class="headerlink" href="#modifying-files" title="Permalink to this headline"></a></h3>
+<section id="replace-string-file-array-replaces-bool">
+<h4>replace(string $file, array $replaces): bool<a class="headerlink" href="#replace-string-file-array-replaces-bool" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Replaces the <code class="docutils literal notranslate"><span class="pre">$file</span></code> contents. The second parameter <code class="docutils literal notranslate"><span class="pre">$replaces</span></code> array specifies the search strings as keys and the replacements as values.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
+
+<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\\Shield&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
+
+<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/Auth.php&#39;</span><span class="p">;</span>
+
+<span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">replace</span><span class="p">(</span>
+    <span class="nv">$file</span><span class="p">,</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;use CodeIgniter\Config\BaseConfig;&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;class App extends BaseConfig&#39;</span>              <span class="o">=&gt;</span> <span class="s1">&#39;class App extends \Some\Package\SomeConfig&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="addlineafter-string-file-string-line-string-after-bool">
+<h4>addLineAfter(string $file, string $line, string $after): bool<a class="headerlink" href="#addlineafter-string-file-string-line-string-after-bool" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Adds <code class="docutils literal notranslate"><span class="pre">$line</span></code> after a line with specific string <code class="docutils literal notranslate"><span class="pre">$after</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
+
+<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\\Shield&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
+
+<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/App.php&#39;</span><span class="p">;</span>
+
+<span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addLineAfter</span><span class="p">(</span>
+    <span class="nv">$file</span><span class="p">,</span>
+    <span class="s1">&#39;    public int $myOwnConfig = 1000;&#39;</span><span class="p">,</span> <span class="c1">// Adds this line</span>
+    <span class="s1">&#39;public bool $CSPEnabled = false;&#39;</span>     <span class="c1">// After this line</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="addlinebefore-string-file-string-line-string-after-bool">
+<h4>addLineBefore(string $file, string $line, string $after): bool<a class="headerlink" href="#addlinebefore-string-file-string-line-string-after-bool" title="Permalink to this headline"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Adds <code class="docutils literal notranslate"><span class="pre">$line</span></code> before a line with specific string <code class="docutils literal notranslate"><span class="pre">$after</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Publisher\Publisher</span><span class="p">;</span>
+
+<span class="nv">$source</span>    <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;autoloader&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getNamespace</span><span class="p">(</span><span class="s1">&#39;CodeIgniter\\Shield&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$publisher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Publisher</span><span class="p">(</span><span class="nv">$source</span><span class="p">,</span> <span class="nx">APPPATH</span><span class="p">);</span>
+
+<span class="nv">$file</span> <span class="o">=</span> <span class="nx">APPPATH</span> <span class="o">.</span> <span class="s1">&#39;Config/App.php&#39;</span><span class="p">;</span>
+
+<span class="nv">$publisher</span><span class="o">-&gt;</span><span class="na">addLineBefore</span><span class="p">(</span>
+    <span class="nv">$file</span><span class="p">,</span>
+    <span class="s1">&#39;    public int $myOwnConfig = 1000;&#39;</span><span class="p">,</span> <span class="c1">// Add this line</span>
+    <span class="s1">&#39;public bool $CSPEnabled = false;&#39;</span>     <span class="c1">// Before this line</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 </section>
 
@@ -729,7 +804,7 @@ affect other files in the destination. Returns success or failure, use <code cla
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 09, 2023.
+      <span class="lastupdated">Last updated on Jan 10, 2023.
       </span></p>
   </div>
 
