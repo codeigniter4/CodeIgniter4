@@ -334,10 +334,5 @@ All atomic type properties in ``Config`` classes have been typed:
 *   app/Views/welcome_message.php
 *   composer.json
 *   env
-*   phpstan-baseline.neon.dist
 *   phpunit.xml.dist
-*   psalm-baseline.xml
-*   psalm.xml
-*   psalm_autoload.php
-*   rector.php
 *   spark
