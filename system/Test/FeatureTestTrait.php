@@ -364,7 +364,7 @@ trait FeatureTestTrait
 
             return $request;
         }
-        
+
         $request->removeHeader('Content-Type');
         if (isset($this->bodyFormat) && $this->bodyFormat !== '') {
             if (empty($params)) {
@@ -382,7 +382,7 @@ trait FeatureTestTrait
                 $request->setHeader('Content-Type', $formatMime);
             }
         }
-        
+
         return $request;
     }
 }
