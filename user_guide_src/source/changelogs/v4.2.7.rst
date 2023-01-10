@@ -22,26 +22,11 @@ BREAKING
 -  ``Time::__toString()`` is now locale-independent. It returns database-compatible strings like '2022-09-07 12:00:00' in any locale.
 - The Validation rule ``Validation\Rule::required_without()`` and ``Validation\StrictRules\Rule::required_without()`` parameters have been changed and the logic of these rule has also been fixed.
 
-Enhancements
-************
-
-none.
-
 Message Changes
 ***************
 
 - Fixed typos in some items in ``Language/en/Email.php``.
 - Added missing item ``valid_json`` in ``Language/en/Validation.php``.
-
-Changes
-*******
-
-none.
-
-Deprecations
-************
-
-none.
 
 Bugs Fixed
 **********
