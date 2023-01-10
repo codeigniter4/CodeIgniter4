@@ -369,3 +369,7 @@ Bugs Fixed
 - Fixed a bug with variable filtering in JSON requests using with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
 - Fixed a bug when variable type may be changed when using a specified index with ``IncomingRequest::getVar()`` or ``IncomingRequest::getJsonVar()`` methods.
 - Fixed a bug that Honeypot field appears when CSP is enabled. See also :ref:`upgrade-430-honeypot-and-csp`.
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.

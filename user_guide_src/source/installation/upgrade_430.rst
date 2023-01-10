@@ -1,6 +1,6 @@
-#############################
-Upgrading from 4.2.9 to 4.3.0
-#############################
+##############################
+Upgrading from 4.2.12 to 4.3.0
+##############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
 
