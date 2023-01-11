@@ -96,6 +96,8 @@ final class ParserPluginTest extends CIUnitTestCase
     {
         // prime the pump
         $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
         $template = '{+ route myController::goto string 13 +}';
