@@ -141,13 +141,13 @@ The way error and output streams are captured has changed. Now instead of::
     protected function setUp(): void
     {
         CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
         $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->stream_filter);
+        stream_filter_remove($this->streamFilter);
     }
 
 need to use::
