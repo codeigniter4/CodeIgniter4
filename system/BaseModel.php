@@ -1291,10 +1291,10 @@ abstract class BaseModel
                 return $value;
 
             case 'datetime':
-                return date('Y-m-d H:i:s', $value);
+                return Time::createFromTimestamp($value, app_timezone())->toDateTimeString();
 
             case 'date':
-                return date('Y-m-d', $value);
+                return Time::createFromTimestamp($value, app_timezone())->toDateString();
 
             default:
                 throw ModelException::forNoDateFormat(static::class);
