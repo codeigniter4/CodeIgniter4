@@ -117,7 +117,27 @@ class Rules
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
-        return $this->nonStrictRules->is_not_unique($str, $field, $data);
+        // Grab any data for exclusion of a single row.
+        [$field, $whereField, $whereValue] = array_pad(
+            explode(',', $field),
+            3,
+            null
+        );
+
+        // Break the table and field apart
+        sscanf($field, '%[^.].%[^.]', $table, $field);
+
+        $row = Database::connect($data['DBGroup'] ?? null)
+            ->table($table)
+            ->select('1')
+            ->where($field, $str)
+            ->limit(1);
+
+        if (! empty($whereField) && ! empty($whereValue) && ! preg_match('/^\{(\w+)\}$/', $whereValue)) {
+            $row = $row->where($whereField, $whereValue);
+        }
+
+        return $row->get()->getRow() !== null;
     }
 
     /**
