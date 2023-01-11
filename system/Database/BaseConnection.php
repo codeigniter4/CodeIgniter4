@@ -32,6 +32,7 @@ use Throwable;
  * @property array|bool $encrypt
  * @property array      $failover
  * @property string     $hostname
+ * @property string     $engine
  * @property Query      $lastQuery
  * @property string     $password
  * @property bool       $pConnect
@@ -73,6 +74,13 @@ abstract class BaseConnection implements ConnectionInterface
      * @var string
      */
     protected $hostname;
+
+    /**
+     * Engine (SQL Anywhere)
+     *
+     * @var string
+     */
+    protected $engine;
 
     /**
      * Username

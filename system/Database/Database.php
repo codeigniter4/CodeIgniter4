@@ -99,6 +99,7 @@ class Database
             'DSN'      => '',
             'DBDriver' => $dsn['scheme'],
             'hostname' => isset($dsn['host']) ? rawurldecode($dsn['host']) : '',
+            'engine'   => isset($dsn['engine']) ? rawurldecode($dsn['engine']) : '',
             'port'     => isset($dsn['port']) ? rawurldecode((string) $dsn['port']) : '',
             'username' => isset($dsn['user']) ? rawurldecode($dsn['user']) : '',
             'password' => isset($dsn['pass']) ? rawurldecode($dsn['pass']) : '',
