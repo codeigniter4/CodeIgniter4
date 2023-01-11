@@ -542,14 +542,15 @@ if (! function_exists('mb_url_title')) {
 
 if (! function_exists('url_to')) {
     /**
-     * Get the full, absolute URL to a controller method
+     * Get the full, absolute URL to a route named or controller method
      * (with additional arguments)
      *
      * NOTE: This requires the controller/method to
      * have a route defined in the routes Config file.
      *
-     * @param string     $controller Named route or Controller::method
-     * @param int|string ...$args    One or more parameters to be passed to the route
+     * @param string     $controller Route name or Controller::method
+     * @param int|string ...$args    One or more parameters to be passed to the route.
+     *                               The last parameter allows you to set the locale.
      *
      * @throws RouterException
      */

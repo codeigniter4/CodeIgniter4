@@ -941,14 +941,14 @@ if (! function_exists('response')) {
 
 if (! function_exists('route_to')) {
     /**
-     * Given a controller/method string and any params,
+     * Given a route name or controller/method string and any params,
      * will attempt to build the relative URL to the
      * matching route.
      *
      * NOTE: This requires the controller/method to
      * have a route defined in the routes Config file.
      *
-     * @param string     $method    Named route or Controller::method
+     * @param string     $method    Route name or Controller::method
      * @param int|string ...$params One or more parameters to be passed to the route.
      *                              The last parameter allows you to set the locale.
      *
