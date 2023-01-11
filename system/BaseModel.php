@@ -1291,7 +1291,7 @@ abstract class BaseModel
                 return $value;
 
             case 'datetime':
-                return Time::createFromTimestamp($value, app_timezone())->toDateTimeString();
+                return (string) Time::createFromTimestamp($value, app_timezone());
 
             case 'date':
                 return Time::createFromTimestamp($value, app_timezone())->toDateString();
