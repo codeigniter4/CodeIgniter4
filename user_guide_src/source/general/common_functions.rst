@@ -367,8 +367,10 @@ Miscellaneous Functions
 
 .. php:function:: route_to($method[, ...$params])
 
-    :param   string  $method: The named route alias, or name of the controller/method to match.
-    :param   int|string   $params: One or more parameters to be passed to be matched in the route. The last parameter allows you to set the locale.
+    :param   string       $method: Route name or Controller::method
+    :param   int|string   ...$params: One or more parameters to be passed to the route. The last parameter allows you to set the locale.
+    :returns: a route (URI path)
+    :rtype: string
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
@@ -376,7 +378,7 @@ Miscellaneous Functions
 
     .. literalinclude:: common_functions/009.php
 
-    Generates a route for you based on a named route alias.
+    Generates a route for you based on a route name.
 
     .. literalinclude:: common_functions/010.php
 
