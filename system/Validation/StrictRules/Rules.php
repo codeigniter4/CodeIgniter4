@@ -117,6 +117,10 @@ class Rules
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
+        if (is_object($str) || is_array($str)) {
+            return false;
+        }
+
         // Grab any data for exclusion of a single row.
         [$field, $whereField, $whereValue] = array_pad(
             explode(',', $field),
@@ -171,6 +175,10 @@ class Rules
      */
     public function is_unique($str, string $field, array $data): bool
     {
+        if (is_object($str) || is_array($str)) {
+            return false;
+        }
+
         [$field, $ignoreField, $ignoreValue] = array_pad(
             explode(',', $field),
             3,
