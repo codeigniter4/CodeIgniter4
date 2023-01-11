@@ -142,6 +142,7 @@ The way error and output streams are captured has changed. Now instead of::
     {
         CITestStreamFilter::$buffer = '';
         $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
     protected function tearDown(): void
@@ -157,11 +158,13 @@ need to use::
     {
         CITestStreamFilter::registration();
         CITestStreamFilter::addOutputFilter();
+        CITestStreamFilter::addErrorFilter();
     }
 
     protected function tearDown(): void
     {
         CITestStreamFilter::removeOutputFilter();
+        CITestStreamFilter::removeErrorFilter();
     }
 
 Or use the trait ``CodeIgniter\Test\StreamFilterTrait``. See :ref:`testing-cli-output`.
