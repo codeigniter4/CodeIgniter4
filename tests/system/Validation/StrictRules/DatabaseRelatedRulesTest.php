@@ -55,6 +55,11 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->validation->reset();
     }
 
+    protected function createRules()
+    {
+        return new Rules();
+    }
+
     public function testIsUniqueFalse(): void
     {
         Database::connect()
@@ -130,7 +135,7 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
                 'country' => 'Elbonia',
             ]);
 
-        $this->assertFalse((new Rules())->is_unique('deva@example.com', 'user.email,id,{id}', []));
+        $this->assertFalse($this->createRules()->is_unique('deva@example.com', 'user.email,id,{id}', []));
     }
 
     public function testIsNotUniqueFalse(): void
@@ -215,6 +220,6 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
                 'country' => 'Elbonia',
             ]);
 
-        $this->assertTrue((new Rules())->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
+        $this->assertTrue($this->createRules()->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
     }
 }

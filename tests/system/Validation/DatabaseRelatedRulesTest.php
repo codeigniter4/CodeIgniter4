@@ -38,4 +38,9 @@ final class DatabaseRelatedRulesTest extends StrictDatabaseRelatedRulesTest
             ],
         ],
     ];
+
+    protected function createRules()
+    {
+        return new Rules();
+    }
 }
