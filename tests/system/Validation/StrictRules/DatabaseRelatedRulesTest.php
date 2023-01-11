@@ -21,14 +21,16 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  *
+ * @no-final
+ *
  * @group DatabaseLive
  */
-final class DatabaseRelatedRulesTest extends CIUnitTestCase
+class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
