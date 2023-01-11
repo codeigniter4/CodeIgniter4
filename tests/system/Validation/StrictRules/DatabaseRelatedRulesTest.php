@@ -138,6 +138,21 @@ class DatabaseRelatedRulesTest extends CIUnitTestCase
         $this->assertFalse($this->createRules()->is_unique('deva@example.com', 'user.email,id,{id}', []));
     }
 
+    public function testIsUniqueIntValueByManualRun(): void
+    {
+        Database::connect()
+            ->table('user')
+            ->insert([
+                'name'    => 'Developer A',
+                'email'   => 'deva@example.com',
+                'country' => 'Elbonia',
+            ]);
+
+        $result = $this->createRules()->is_unique(1, 'user.id', []);
+
+        $this->assertFalse($result);
+    }
+
     public function testIsNotUniqueFalse(): void
     {
         Database::connect()
