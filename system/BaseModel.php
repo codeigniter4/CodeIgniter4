@@ -1294,7 +1294,7 @@ abstract class BaseModel
                 return (string) Time::createFromTimestamp($value, app_timezone());
 
             case 'date':
-                return Time::createFromTimestamp($value, app_timezone())->toDateString();
+                return (string) Time::createFromTimestamp($value, app_timezone());
 
             default:
                 throw ModelException::forNoDateFormat(static::class);
