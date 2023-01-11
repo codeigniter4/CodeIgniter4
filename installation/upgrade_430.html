@@ -449,12 +449,13 @@ instead of the Validation object.</p>
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 <span class="p">{</span>
     <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="nv">$buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
-    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">stream_filter</span>        <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDOUT</span><span class="p">,</span> <span class="s1">&#39;CITestStreamFilter&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span>         <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDOUT</span><span class="p">,</span> <span class="s1">&#39;CITestStreamFilter&#39;</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span>         <span class="o">=</span> <span class="nb">stream_filter_append</span><span class="p">(</span><span class="nx">STDERR</span><span class="p">,</span> <span class="s1">&#39;CITestStreamFilter&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 <span class="p">{</span>
-    <span class="nb">stream_filter_remove</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">stream_filter</span><span class="p">);</span>
+    <span class="nb">stream_filter_remove</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">streamFilter</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -465,11 +466,13 @@ instead of the Validation object.</p>
 <span class="p">{</span>
     <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">registration</span><span class="p">();</span>
     <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">addOutputFilter</span><span class="p">();</span>
+    <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">addErrorFilter</span><span class="p">();</span>
 <span class="p">}</span>
 
 <span class="k">protected</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
 <span class="p">{</span>
     <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">removeOutputFilter</span><span class="p">();</span>
+    <span class="nx">CITestStreamFilter</span><span class="o">::</span><span class="na">removeErrorFilter</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -722,7 +725,7 @@ All atomic type properties in <code class="docutils literal notranslate"><span c
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 10, 2023.
+      <span class="lastupdated">Last updated on Jan 11, 2023.
       </span></p>
   </div>
 
