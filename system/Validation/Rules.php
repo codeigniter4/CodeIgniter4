@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Validation;
 
+use CodeIgniter\Validation\StrictRules\Rules as StrictRules;
 use Config\Database;
 use InvalidArgumentException;
 
@@ -19,6 +20,15 @@ use InvalidArgumentException;
  */
 class Rules
 {
+    private ?StrictRules $strictRules = null;
+
+    private function createStrictRules(): void
+    {
+        if ($this->strictRules === null) {
+            $this->strictRules = new StrictRules();
+        }
+    }
+
     /**
      * The value does not match another field in $data.
      *
@@ -125,21 +135,9 @@ class Rules
      */
     public function is_unique(?string $str, string $field, array $data): bool
     {
-        [$field, $ignoreField, $ignoreValue] = array_pad(explode(',', $field), 3, null);
+        $this->createStrictRules();
 
-        sscanf($field, '%[^.].%[^.]', $table, $field);
-
-        $row = Database::connect($data['DBGroup'] ?? null)
-            ->table($table)
-            ->select('1')
-            ->where($field, $str)
-            ->limit(1);
-
-        if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)) {
-            $row = $row->where("{$ignoreField} !=", $ignoreValue);
-        }
-
-        return $row->get()->getRow() === null;
+        return $this->strictRules->is_unique($str, $field, $data);
     }
 
     /**

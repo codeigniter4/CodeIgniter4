@@ -151,7 +151,25 @@ class Rules
      */
     public function is_unique($str, string $field, array $data): bool
     {
-        return $this->nonStrictRules->is_unique($str, $field, $data);
+        [$field, $ignoreField, $ignoreValue] = array_pad(
+            explode(',', $field),
+            3,
+            null
+        );
+
+        sscanf($field, '%[^.].%[^.]', $table, $field);
+
+        $row = Database::connect($data['DBGroup'] ?? null)
+            ->table($table)
+            ->select('1')
+            ->where($field, $str)
+            ->limit(1);
+
+        if (! empty($ignoreField) && ! empty($ignoreValue) && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)) {
+            $row = $row->where("{$ignoreField} !=", $ignoreValue);
+        }
+
+        return $row->get()->getRow() === null;
     }
 
     /**
