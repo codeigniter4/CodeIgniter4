@@ -329,7 +329,7 @@ Using Named Routes
 ==================
 
 You can name routes to make your application less fragile. This applies a name to a route that can be called
-later, and even if the route definition changes, all of the links in your application built with ``route_to()``
+later, and even if the route definition changes, all of the links in your application built with :php:func:`url_to()`
 will still work without you having to make any changes. A route is named by passing in the ``as`` option
 with the name of the route:
 
