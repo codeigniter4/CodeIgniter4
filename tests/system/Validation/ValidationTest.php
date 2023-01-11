@@ -288,6 +288,7 @@ class ValidationTest extends CIUnitTestCase
      */
     public function testCanValidatetArrayData($value, bool $expected): void
     {
+        $data = [];
         $this->validation->setRules(['arr' => 'is_array']);
 
         $data['arr'] = $value;

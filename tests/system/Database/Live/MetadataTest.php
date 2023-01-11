@@ -123,6 +123,8 @@ final class MetadataTest extends CIUnitTestCase
 
     public function testListTablesConstrainedByExtraneousPrefixReturnsOnlyTheExtraneousTable()
     {
+        $oldPrefix = '';
+
         try {
             $this->createExtraneousTable();
 

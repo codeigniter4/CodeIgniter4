@@ -97,6 +97,7 @@ class MigrationGenerator extends BaseCommand
      */
     protected function prepare(string $class): string
     {
+        $data            = [];
         $data['session'] = false;
 
         if ($this->getOption('session')) {
