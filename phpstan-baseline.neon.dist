@@ -26,11 +26,6 @@ parameters:
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
-			message: "#^Variable \\$data might not be defined\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
