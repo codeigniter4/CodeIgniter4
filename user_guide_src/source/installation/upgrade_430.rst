@@ -15,7 +15,7 @@ Please refer to the upgrade instructions corresponding to your installation meth
 Composer Version
 ****************
 
-.. important:: If you use Composer Installation, CodeIgniter v4.3.0 requires
+.. important:: If you use Composer, CodeIgniter v4.3.0 requires
     Composer 2.0.14 or later.
 
 If you are using older version of Composer, upgrade your ``composer`` tool,
