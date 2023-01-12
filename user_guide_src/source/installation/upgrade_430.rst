@@ -33,7 +33,18 @@ The following files received significant changes and
 Config Files
 ============
 
-- **app/Config/Kint.php** has been updated for Kint 5.0. You need to replace ``Kint\Renderer\Renderer`` with ``Kint\Renderer\AbstractRenderer`` and replace ``Renderer::SORT_FULL`` with ``AbstractRenderer::SORT_FULL``.
+app/Config/Kint.php
+-------------------
+
+- **app/Config/Kint.php** has been updated for Kint 5.0.
+- You need to replace:
+
+    - ``Kint\Renderer\Renderer`` with ``Kint\Renderer\AbstractRenderer``
+    - ``Renderer::SORT_FULL`` with ``AbstractRenderer::SORT_FULL``
+
+Mock Config Classes
+-------------------
+
 - If you are using the following Mock Config classes in testing, you need to update the corresponding Config files in **app/Config**:
 
     - ``MockAppConfig`` (``Config\App``)
