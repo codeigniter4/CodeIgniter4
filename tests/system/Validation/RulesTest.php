@@ -427,6 +427,9 @@ class RulesTest extends CIUnitTestCase
             ['-10', '-11', true],
             ['10', '9', true],
             ['10', '10', false],
+            ['10.1', '10', true],
+            ['10.0', '10', false],
+            ['9.9', '10', false],
             ['10', 'a', false],
             ['10a', '10', false],
             [null, null, false],
@@ -449,6 +452,9 @@ class RulesTest extends CIUnitTestCase
             ['0', '0', true],
             ['1', '0', true],
             ['-1', '0', false],
+            ['1.0', '1', true],
+            ['1.1', '1', true],
+            ['0.9', '1', false],
             ['10a', '0', false],
             [null, null, false],
             ['1', null, true],
@@ -473,6 +479,9 @@ class RulesTest extends CIUnitTestCase
             ['9', '10', true],
             ['10', '9', false],
             ['10', '10', false],
+            ['9.9', '10', true],
+            ['10.1', '10', false],
+            ['10.0', '10', false],
             ['10', 'a', true],
             ['10a', '10', false],
             [null, null, false],
@@ -482,7 +491,7 @@ class RulesTest extends CIUnitTestCase
     /**
      * @dataProvider lessThanEqualProvider
      */
-    public function testLessEqualThan(?string $first, ?string $second, bool $expected): void
+    public function testLessThanEqual(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
         $this->validation->setRules(['foo' => "less_than_equal_to[{$second}]"]);
@@ -495,6 +504,9 @@ class RulesTest extends CIUnitTestCase
             ['0', '0', true],
             ['1', '0', false],
             ['-1', '0', true],
+            ['1.0', '1', true],
+            ['0.9', '1', true],
+            ['1.1', '1', false],
             ['10a', '0', false],
             [null, null, false],
             ['1', null, false],

@@ -75,7 +75,7 @@ class Rules
      */
     public function greater_than($str, string $min): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
@@ -93,7 +93,7 @@ class Rules
      */
     public function greater_than_equal_to($str, string $min): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
@@ -213,7 +213,7 @@ class Rules
      */
     public function less_than($str, string $max): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
@@ -231,7 +231,7 @@ class Rules
      */
     public function less_than_equal_to($str, string $max): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
