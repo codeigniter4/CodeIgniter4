@@ -16,7 +16,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
 /**
- * Utils for SQLSRV
+ * Utils for SASQL
  */
 class Utils extends BaseUtils
 {

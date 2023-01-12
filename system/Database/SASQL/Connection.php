@@ -88,10 +88,11 @@ class Connection extends BaseConnection
             $this->connID = sasql_pconnect($dsn);
         else
             $this->connID = sasql_connect($dsn);
+        var_dump($this->connID);
         if($this->connID != false) {
-            // BH 17/09/2021 - Si on utilise une connection authentifiée (pour les licences "core"), on doit lancer une requête d'authentification
-            if(isset($this->con_auth) && $this->con_auth != '')
-                sasql_query($this->connID, "SET TEMPORARY OPTION CONNECTION_AUTHENTICATION='$this->con_auth'");
+            // In "core" mode (authenticated database), we need to execute the authentication query (or connection will be stuck after 30s)
+            if(isset($this->conAuth) && $this->conAuth != '')
+                sasql_query($this->connID, "SET TEMPORARY OPTION CONNECTION_AUTHENTICATION='$this->conAuth'");
 
             return $this->connID;
         }
@@ -183,15 +184,19 @@ class Connection extends BaseConnection
      */
     protected function _indexData(string $table): array
     {
-        $sql = 'select SYSINDEX.INDEX_NAME, SYSINDEX.REMARKS, list(SYSCOLUMN.COLUMN_NAME) as INDEX_DESCRIPTION
-                from SYSINDEX
-                left join SYSIXCOL on SYSIXCOL.TABLE_ID = SYSINDEX.TABLE_ID and SYSIXCOL.INDEX_ID = SYSINDEX.INDEX_ID
-                left join SYSCOLUMN on SYSCOLUMN.TABLE_ID = SYSIXCOL.TABLE_ID and SYSCOLUMN.COLUMN_ID = SYSIXCOL.COLUMN_ID
-                left join SYSTABLE on SYSCOLUMN.TABLE_ID = SYSTABLE.TABLE_ID
-                left join SYSUSER on SYSTABLE.CREATOR = SYSUSER.USER_ID
-                where TABLE_NAME = ' . $this->escape($table) . '
-                and SYSUSER.USER_NAME = ' . $this->escape($this->schema) . '
-                group by SYSINDEX.INDEX_NAME, SYSINDEX.REMARKS';
+        $sql = 'select SYSIDX.INDEX_NAME as index_name,
+                       if SYSIDX.INDEX_ID = 0 then \'PRIMARY\' else if SYSIDXCOL.PRIMARY_COLUMN_ID is null then \'UNIQUE\' else \'INDEX\' end if end if as type,
+                       indexType,
+                       list(SYSCOLUMN.COLUMN_NAME) as index_keys
+                  from SYSIDX
+             left join SYSTABLE on SYSTABLE.TABLE_ID = SYSIDX.TABLE_ID
+             left join SYSIDXCOL on SYSIDX.TABLE_ID = SYSIDXCOL.TABLE_ID and SYSIDX.INDEX_ID = SYSIDXCOL.INDEX_ID
+             left join SYSUSER on SYSTABLE.CREATOR = SYSUSER.USER_ID
+             left join SYSCOLUMN on SYSCOLUMN.TABLE_ID = SYSIDXCOL.TABLE_ID and SYSCOLUMN.COLUMN_ID = SYSIDXCOL.COLUMN_ID
+             left join dbo.sa_index_levels(' . $this->escape($table) . ', ' . $this->escape($this->schema) . ') on tableId = SYSIDX.TABLE_ID and IndexName = index_name
+                 where TABLE_NAME = ' . $this->escape($table) . '
+                   and SYSUSER.USER_NAME = ' . $this->escape($this->schema) . '
+              group by index_name, type, indexType';
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetIndexData'));
@@ -206,13 +211,8 @@ class Connection extends BaseConnection
 
             $_fields     = explode(',', trim($row->index_keys));
             $obj->fields = array_map(static fn ($v) => trim($v), $_fields);
-
-            // @TODO BH
-            if (strpos($row->index_description, 'primary key located on') !== false) {
-                $obj->type = 'PRIMARY';
-            } else {
-                $obj->type = (strpos($row->index_description, 'nonclustered, unique') !== false) ? 'UNIQUE' : 'INDEX';
-            }
+            // Could also check indexType
+            $obj->type   = $row->type;
 
             $retVal[$obj->name] = $obj;
         }
@@ -293,7 +293,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * // @TODO BH
      * Returns an array of objects with field data
      *
      * @return stdClass[]
@@ -302,9 +301,13 @@ class Connection extends BaseConnection
      */
     protected function _fieldData(string $table): array
     {
-        $sql = 'SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, COLUMN_DEFAULT
-			FROM INFORMATION_SCHEMA.COLUMNS
-			WHERE TABLE_NAME= ' . $this->escape(($table));
+        $sql = 'select SYSTABCOL.COLUMN_NAME, SYSDOMAIN.DOMAIN_NAME as DATA_TYPE, SYSTABCOL.WIDTH as CHARACTER_MAXIMUM_LENGTH,
+                       SYSTABCOL.SCALE as NUMERIC_PRECISION, SYSTABCOL."DEFAULT" as COLUMN_DEFAULT, SYSTABCOL.NULLS as NULLABLE,
+                       if exists (select 1 from sp_pkeys(' . $this->escape(($table)) . ') where COLUMN_NAME = SYSTABCOL.COLUMN_NAME) then 1 else 0 end if as PRIMARY_KEY
+                  from SYSTABCOL
+             left join SYSTABLE on SYSTABCOL.TABLE_ID = SYSTABLE.TABLE_ID
+             left join SYSDOMAIN on SYSDOMAIN.DOMAIN_ID = SYSTABCOL.DOMAIN_ID
+                 where SYSTABLE.TABLE_NAME = ' . $this->escape(($table));
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetFieldData'));
@@ -316,9 +319,11 @@ class Connection extends BaseConnection
         for ($i = 0, $c = count($query); $i < $c; $i++) {
             $retVal[$i] = new stdClass();
 
-            $retVal[$i]->name    = $query[$i]->COLUMN_NAME;
-            $retVal[$i]->type    = $query[$i]->DATA_TYPE;
-            $retVal[$i]->default = $query[$i]->COLUMN_DEFAULT;
+            $retVal[$i]->name           = $query[$i]->COLUMN_NAME;
+            $retVal[$i]->type           = $query[$i]->DATA_TYPE;
+            $retVal[$i]->default        = $query[$i]->COLUMN_DEFAULT;
+            $retVal[$i]->nullable       = (bool)$query[$i]->NULLABLE;
+            $retVal[$i]->primary_key    = $query[$i]->PRIMARY_KEY;
 
             $retVal[$i]->max_length = $query[$i]->CHARACTER_MAXIMUM_LENGTH > 0
                 ? $query[$i]->CHARACTER_MAXIMUM_LENGTH

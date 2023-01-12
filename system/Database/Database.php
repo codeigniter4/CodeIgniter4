@@ -100,6 +100,7 @@ class Database
             'DBDriver' => $dsn['scheme'],
             'hostname' => isset($dsn['host']) ? rawurldecode($dsn['host']) : '',
             'engine'   => isset($dsn['engine']) ? rawurldecode($dsn['engine']) : '',
+            'conAuth'  => isset($dsn['conAuth']) ? rawurldecode($dsn['conAuth']) : '',
             'port'     => isset($dsn['port']) ? rawurldecode((string) $dsn['port']) : '',
             'username' => isset($dsn['user']) ? rawurldecode($dsn['user']) : '',
             'password' => isset($dsn['pass']) ? rawurldecode($dsn['pass']) : '',

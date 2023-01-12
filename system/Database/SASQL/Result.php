@@ -16,7 +16,7 @@ use CodeIgniter\Entity\Entity;
 use stdClass;
 
 /**
- * Result for SQLSRV
+ * Result for SASQL
  */
 class Result extends BaseResult
 {
@@ -47,47 +47,40 @@ class Result extends BaseResult
     }
 
     /**
-     * //@TODO BH
      * Generates an array of objects representing field meta-data.
      */
     public function getFieldData(): array
     {
+        /*
+        bigint	    64 bits Huit octets
+        int         32 bits Quatre octets
+        smallint	16 bits Deux octets
+        tinyint	    8 bits  Un octet
+        */
         static $dataTypes = [
-            SQLSRV_SQLTYPE_BIGINT => 'bigint',
-            SQLSRV_SQLTYPE_BIT    => 'bit',
-            SQLSRV_SQLTYPE_CHAR   => 'char',
-
-            SQLSRV_SQLTYPE_DATE           => 'date',
-            SQLSRV_SQLTYPE_DATETIME       => 'datetime',
-            SQLSRV_SQLTYPE_DATETIME2      => 'datetime2',
-            SQLSRV_SQLTYPE_DATETIMEOFFSET => 'datetimeoffset',
-
-            SQLSRV_SQLTYPE_DECIMAL => 'decimal',
-            SQLSRV_SQLTYPE_FLOAT   => 'float',
-
-            SQLSRV_SQLTYPE_IMAGE   => 'image',
-            SQLSRV_SQLTYPE_INT     => 'int',
-            SQLSRV_SQLTYPE_MONEY   => 'money',
-            SQLSRV_SQLTYPE_NCHAR   => 'nchar',
-            SQLSRV_SQLTYPE_NUMERIC => 'numeric',
-
-            SQLSRV_SQLTYPE_NVARCHAR => 'nvarchar',
-            SQLSRV_SQLTYPE_NTEXT    => 'ntext',
-
-            SQLSRV_SQLTYPE_REAL          => 'real',
-            SQLSRV_SQLTYPE_SMALLDATETIME => 'smalldatetime',
-            SQLSRV_SQLTYPE_SMALLINT      => 'smallint',
-            SQLSRV_SQLTYPE_SMALLMONEY    => 'smallmoney',
-            SQLSRV_SQLTYPE_TEXT          => 'text',
-
-            SQLSRV_SQLTYPE_TIME             => 'time',
-            SQLSRV_SQLTYPE_TIMESTAMP        => 'timestamp',
-            SQLSRV_SQLTYPE_TINYINT          => 'tinyint',
-            SQLSRV_SQLTYPE_UNIQUEIDENTIFIER => 'uniqueidentifier',
-            SQLSRV_SQLTYPE_UDT              => 'udt',
-            SQLSRV_SQLTYPE_VARBINARY        => 'varbinary',
-            SQLSRV_SQLTYPE_VARCHAR          => 'varchar',
-            SQLSRV_SQLTYPE_XML              => 'xml',
+            DT_BIT          => 'tinyint',
+            DT_SMALLINT     => 'smallint',
+            DT_UNSSMALLINT  => 'smallint',
+            DT_TINYINT      => 'tinyint',
+            DT_BIGINT       => 'bigint',
+            DT_UNSBIGINT    => 'bigint',
+            DT_INT          => 'int',
+            DT_UNSINT       => 'int',
+            DT_FLOAT        => 'float',
+            DT_DOUBLE       => 'float',
+            DT_STRING       => 'text',
+            DT_NSTRING      => 'ntext',
+            DT_DATE         => 'date',
+            DT_TIME         => 'datetime',
+            DT_TIMESTAMP    => 'timestamp',
+            DT_FIXCHAR      => 'char',
+            DT_NFIXCHAR     => 'nchar',
+            DT_VARCHAR      => 'varchar',
+            DT_NVARCHAR     => 'nvarchar',
+            DT_LONGVARCHAR  => 'varchar',
+            DT_LONGNVARCHAR => 'nvarchar',
+            DT_BINARY       => 'varbinary',
+            DT_LONGBINARY   => 'varbinary'
         ];
 
         $retVal = [];
@@ -95,10 +88,14 @@ class Result extends BaseResult
         foreach (sasql_fetch_field($this->resultID) as $i => $field) {
             $retVal[$i] = new stdClass();
 
-            $retVal[$i]->name       = $field['Name'];
-            $retVal[$i]->type       = $field['Type'];
-            $retVal[$i]->type_name  = $dataTypes[$field['Type']] ?? null;
-            $retVal[$i]->max_length = $field['Size'];
+            $retVal[$i]->id         = $field['id'];
+            $retVal[$i]->name       = $field['name'];
+            $retVal[$i]->numeric    = $field['numeric'];
+            $retVal[$i]->type       = $field['type'];
+            $retVal[$i]->type_name  = $dataTypes[$field['type']] ?? null;
+            $retVal[$i]->max_length = $field['length'];
+            $retVal[$i]->precision  = $field['precision'];
+            $retVal[$i]->scale      = $field['scale'];
         }
 
         return $retVal;
@@ -158,7 +155,7 @@ class Result extends BaseResult
     }
 
     /**
-     * Returns the number of rows in the resultID (i.e., SQLSRV query result resource)
+     * Returns the number of rows in the resultID (i.e., SASQL query result resource)
      */
     public function getNumRows(): int
     {

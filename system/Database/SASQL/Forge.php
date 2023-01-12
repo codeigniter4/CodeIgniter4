@@ -15,7 +15,7 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\Forge as BaseForge;
 
 /**
- * Forge for SQLSRV
+ * Forge for SASQL
  */
 class Forge extends BaseForge
 {
