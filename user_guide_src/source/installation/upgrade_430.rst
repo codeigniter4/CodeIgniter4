@@ -12,6 +12,23 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
+Trouble Shooting
+****************
+
+Call to undefined method Composer\InstalledVersions::getAllRawData()
+====================================================================
+
+Some users reported "*Fatal error: Uncaught Error: Call to undefined method Composer\InstalledVersions::getAllRawData()*" after upgrading with Composer.
+
+If you get the error, upgrade your ``composer`` tool, and delete the **vendor/**
+directory, and run ``composer update`` again.
+
+The procedure, for example, is as follows::
+
+    > composer self-update
+    > rm -rf vendor/
+    > composer update
+
 Mandatory File Changes
 **********************
 
