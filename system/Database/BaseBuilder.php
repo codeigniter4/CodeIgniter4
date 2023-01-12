@@ -1423,6 +1423,7 @@ class BaseBuilder
      */
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
+        $qbOrderBy = [];
         if (empty($orderBy)) {
             return $this;
         }

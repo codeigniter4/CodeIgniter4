@@ -427,6 +427,7 @@ class Model extends BaseModel
      */
     protected function doDelete($id = null, bool $purge = false)
     {
+        $set     = [];
         $builder = $this->builder();
 
         if ($id) {

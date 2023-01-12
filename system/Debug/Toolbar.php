@@ -76,6 +76,7 @@ class Toolbar
      */
     public function run(float $startTime, float $totalTime, RequestInterface $request, ResponseInterface $response): string
     {
+        $data = [];
         // Data items used within the view.
         $data['url']             = current_url();
         $data['method']          = strtoupper($request->getMethod());

@@ -36,7 +36,6 @@ use Rector\EarlyReturn\Rector\If_\ChangeIfElseValueAssignToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\RemoveAlwaysElseRector;
 use Rector\EarlyReturn\Rector\Return_\PreparedValueToEarlyReturnRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
-use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
 use Rector\Php70\Rector\FuncCall\RandomFunctionRector;
 use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
@@ -105,9 +104,6 @@ return static function (RectorConfig $rectorConfig): void {
 
         // sometime too detail
         CountOnNullRector::class,
-
-        // may not be unitialized on purpose
-        AddDefaultValueForUndefinedVariableRector::class,
 
         // use mt_rand instead of random_int on purpose on non-cryptographically random
         RandomFunctionRector::class,

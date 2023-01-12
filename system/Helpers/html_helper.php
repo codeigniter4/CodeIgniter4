@@ -236,6 +236,7 @@ if (! function_exists('link_tag')) {
         bool $indexPage = false,
         string $hreflang = ''
     ): string {
+        $attributes = [];
         // extract fields if needed
         if (is_array($href)) {
             $rel       = $href['rel'] ?? $rel;
