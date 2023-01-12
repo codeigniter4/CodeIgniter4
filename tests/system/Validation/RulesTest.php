@@ -482,7 +482,7 @@ class RulesTest extends CIUnitTestCase
     /**
      * @dataProvider lessThanEqualProvider
      */
-    public function testLessEqualThan(?string $first, ?string $second, bool $expected): void
+    public function testLessThanEqual(?string $first, ?string $second, bool $expected): void
     {
         $data = ['foo' => $first];
         $this->validation->setRules(['foo' => "less_than_equal_to[{$second}]"]);
