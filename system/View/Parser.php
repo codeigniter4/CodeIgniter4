@@ -283,6 +283,12 @@ class Parser extends View
             PREG_SET_ORDER
         );
 
+        // If data is not a list of elements, convert single item to a list
+        $is_list = $data === [] || (array_keys($data) === range(0, count($data) - 1));
+        if (!$is_list){
+            $data = [$data];
+        }
+
         /*
          * Each match looks like:
          *
