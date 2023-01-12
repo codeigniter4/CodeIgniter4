@@ -339,8 +339,29 @@
 </section>
 <section id="config-files">
 <h3><a class="toc-backref" href="#id3">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
+<section id="app-config-kint-php">
+<h4>app/Config/Kint.php<a class="headerlink" href="#app-config-kint-php" title="Permalink to this headline"></a></h4>
 <ul>
-<li><p><strong>app/Config/Kint.php</strong> has been updated for Kint 5.0. You need to replace <code class="docutils literal notranslate"><span class="pre">Kint\Renderer\Renderer</span></code> with <code class="docutils literal notranslate"><span class="pre">Kint\Renderer\AbstractRenderer</span></code> and replace <code class="docutils literal notranslate"><span class="pre">Renderer::SORT_FULL</span></code> with <code class="docutils literal notranslate"><span class="pre">AbstractRenderer::SORT_FULL</span></code>.</p></li>
+<li><p><strong>app/Config/Kint.php</strong> has been updated for Kint 5.0.</p></li>
+<li><p>You need to replace:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Kint\Renderer\Renderer</span></code> with <code class="docutils literal notranslate"><span class="pre">Kint\Renderer\AbstractRenderer</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Renderer::SORT_FULL</span></code> with <code class="docutils literal notranslate"><span class="pre">AbstractRenderer::SORT_FULL</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="app-config-exceptions-php">
+<h4>app/Config/Exceptions.php<a class="headerlink" href="#app-config-exceptions-php" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><p>If you are using PHP 8.2, you need to add new properties <code class="docutils literal notranslate"><span class="pre">$logDeprecations</span></code> and <code class="docutils literal notranslate"><span class="pre">$deprecationLogLevel</span></code>.</p></li>
+</ul>
+</section>
+<section id="mock-config-classes">
+<h4>Mock Config Classes<a class="headerlink" href="#mock-config-classes" title="Permalink to this headline"></a></h4>
+<ul>
 <li><p>If you are using the following Mock Config classes in testing, you need to update the corresponding Config files in <strong>app/Config</strong>:</p>
 <blockquote>
 <div><ul class="simple">
@@ -352,6 +373,7 @@
 </li>
 <li><p>Add <strong>types</strong> to the properties in these Config classes. You may need to fix the property values to match the property types.</p></li>
 </ul>
+</section>
 </section>
 </section>
 <section id="breaking-changes">
@@ -725,7 +747,7 @@ All atomic type properties in <code class="docutils literal notranslate"><span c
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 11, 2023.
+      <span class="lastupdated">Last updated on Jan 12, 2023.
       </span></p>
   </div>
 
