@@ -266,6 +266,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         // prime the pump
         $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
@@ -275,6 +277,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         Services::createRequest(new App(), true);
         $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
         $routes->add('path/(:any)/to/(:num)', 'myController::goto/$1/$2');
 
         $this->assertSame('/path/string/to/13', route_to('myController::goto', 'string', 13));
@@ -284,6 +288,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         Services::createRequest(new App(), true);
         $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
         $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
 
         $this->assertSame(
@@ -296,6 +302,8 @@ final class CommonFunctionsTest extends CIUnitTestCase
     {
         Services::createRequest(new App(), false);
         $routes = service('routes');
+        // @TODO Do not put any placeholder after (:any).
+        //       Because the number of parameters passed to the controller method may change.
         $routes->add('{locale}/path/(:any)/to/(:num)', 'myController::goto/$1/$2', ['as' => 'path-to']);
 
         $this->assertSame(
