@@ -286,7 +286,7 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#trouble-shooting" id="id1">Trouble Shooting</a></p>
 <ul>
-<li><p><a class="reference internal" href="#call-to-undefined-method-composerinstalledversions-getallrawdata" id="id2">Call to undefined method ComposerInstalledVersions::getAllRawData()</a></p></li>
+<li><p><a class="reference internal" href="#call-to-undefined-method-composer-installedversions-getallrawdata" id="id2">Call to undefined method Composer\InstalledVersions::getAllRawData()</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#mandatory-file-changes" id="id3">Mandatory File Changes</a></p>
@@ -325,9 +325,9 @@
 </div>
 <section id="trouble-shooting">
 <h2><a class="toc-backref" href="#id1">Trouble Shooting</a><a class="headerlink" href="#trouble-shooting" title="Permalink to this headline"></a></h2>
-<section id="call-to-undefined-method-composerinstalledversions-getallrawdata">
-<h3><a class="toc-backref" href="#id2">Call to undefined method ComposerInstalledVersions::getAllRawData()</a><a class="headerlink" href="#call-to-undefined-method-composerinstalledversions-getallrawdata" title="Permalink to this headline"></a></h3>
-<p>Some users reported “<em>Fatal error: Uncaught Error: Call to undefined method ComposerInstalledVersions::getAllRawData()</em>” after upgrading with Composer.</p>
+<section id="call-to-undefined-method-composer-installedversions-getallrawdata">
+<h3><a class="toc-backref" href="#id2">Call to undefined method Composer\InstalledVersions::getAllRawData()</a><a class="headerlink" href="#call-to-undefined-method-composer-installedversions-getallrawdata" title="Permalink to this headline"></a></h3>
+<p>Some users reported “<em>Fatal error: Uncaught Error: Call to undefined method Composer\InstalledVersions::getAllRawData()</em>” after upgrading with Composer.</p>
 <p>If you get the error, upgrade your <code class="docutils literal notranslate"><span class="pre">composer</span></code> tool, and delete the <strong>vendor/</strong>
 directory, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> again.</p>
 <p>The procedure, for example, is as follows:</p>
