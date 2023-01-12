@@ -379,8 +379,8 @@ class Autoloader
         } else {
             throw new RuntimeException(
                 'Your Composer version is too old.'
-                . ' Please update Composer (run `composer self-update`) and remove your vendor/ directory,'
-                . ' and run `composer update`.'
+                . ' Please update Composer (run `composer self-update`) to v2.0.14 or later'
+                . ' and remove your vendor/ directory, and run `composer update`.'
             );
         }
 
