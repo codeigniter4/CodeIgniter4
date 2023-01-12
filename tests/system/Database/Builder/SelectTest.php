@@ -309,4 +309,18 @@ final class SelectTest extends CIUnitTestCase
 
         $this->assertSame($expected, str_replace("\n", ' ', $builder->getCompiledSelect()));
     }
+
+    public function testSelectResetQuery()
+    {
+        $builder = new BaseBuilder('users', $this->db);
+        $builder->select('name, role');
+
+        $builder->resetQuery();
+
+        $sql = $builder->getCompiledSelect();
+        $this->assertSame(
+            'SELECT * FROM "users"',
+            str_replace("\n", ' ', $sql)
+        );
+    }
 }
