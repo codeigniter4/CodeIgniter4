@@ -1,7 +1,7 @@
-<div class="alert alert-danger" role="alert">
-    <ul>
-    <?php foreach ($errors as $error): ?>
-        <li><?= esc($error) ?></li>
+<?php if (! empty($errors)): ?>
+    <div class="alert alert-danger">
+    <?php foreach ($errors as $field => $error): ?>
+        <p><?= $error ?></p>
     <?php endforeach ?>
-    </ul>
-</div>
+    </div>
+<?php endif ?>
