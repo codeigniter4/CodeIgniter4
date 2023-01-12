@@ -42,6 +42,11 @@ app/Config/Kint.php
     - ``Kint\Renderer\Renderer`` with ``Kint\Renderer\AbstractRenderer``
     - ``Renderer::SORT_FULL`` with ``AbstractRenderer::SORT_FULL``
 
+app/Config/Exceptions.php
+-------------------------
+
+- If you are using PHP 8.2, you need to add new properties ``$logDeprecations`` and ``$deprecationLogLevel``.
+
 Mock Config Classes
 -------------------
 
