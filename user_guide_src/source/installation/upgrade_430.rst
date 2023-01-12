@@ -20,7 +20,7 @@ Call to undefined method Composer\InstalledVersions::getAllRawData()
 
 Some users reported "*Fatal error: Uncaught Error: Call to undefined method Composer\InstalledVersions::getAllRawData()*" after upgrading with Composer.
 
-If you get the error, upgrade your ``composer`` command, and delete the **vendor/**
+If you get the error, upgrade your ``composer`` tool, and delete the **vendor/**
 directory, and run ``composer update`` again.
 
 The procedure, for example, is as follows::
