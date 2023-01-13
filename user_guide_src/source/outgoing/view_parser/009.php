@@ -1,10 +1,10 @@
 <?php
 
-$template = '{name} lives in {location}{city} on {planet}{/location}.';
+$template = '{name} lives in {locations}{city} on {planet}{/locations}.';
 
 $data = [
-    'name'     => 'George',
-    'location' => [
+    'name'      => 'George',
+    'locations' => [
         ['city' => 'Red City', 'planet' => 'Mars'],
     ],
 ];
