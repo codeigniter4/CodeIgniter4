@@ -303,7 +303,7 @@ cookies.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>$name</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">mixed</span></code></span>) – Cookie name <em>or</em> associative array of all of the parameters available to this function</p></li>
 <li><p><strong>$value</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie value</p></li>
-<li><p><strong>$expire</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of seconds until expiration</p></li>
+<li><p><strong>$expire</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">int</span></code></span>) – Number of seconds until expiration. If set to <code class="docutils literal notranslate"><span class="pre">0</span></code> the cookie will only last as long as the browser is open</p></li>
 <li><p><strong>$domain</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie domain (usually: .yourdomain.com)</p></li>
 <li><p><strong>$path</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie path</p></li>
 <li><p><strong>$prefix</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – Cookie name prefix. If <code class="docutils literal notranslate"><span class="pre">''</span></code>, the default from <strong>app/Config/Cookie.php</strong> is used</p></li>
@@ -435,7 +435,7 @@ parameters.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 12, 2023.
+      <span class="lastupdated">Last updated on Jan 13, 2023.
       </span></p>
   </div>
 
