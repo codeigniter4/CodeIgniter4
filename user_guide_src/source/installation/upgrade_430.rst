@@ -12,16 +12,14 @@ Please refer to the upgrade instructions corresponding to your installation meth
     :local:
     :depth: 2
 
-Trouble Shooting
+Composer Version
 ****************
 
-Call to undefined method Composer\\InstalledVersions::getAllRawData()
-=====================================================================
+.. important:: If you use Composer, CodeIgniter v4.3.0 requires
+    Composer 2.0.14 or later.
 
-Some users reported "*Fatal error: Uncaught Error: Call to undefined method Composer\\InstalledVersions::getAllRawData()*" after upgrading with Composer.
-
-If you get the error, upgrade your ``composer`` tool, and delete the **vendor/**
-directory, and run ``composer update`` again.
+If you are using older version of Composer, upgrade your ``composer`` tool,
+and delete the **vendor/** directory, and run ``composer update`` again.
 
 The procedure, for example, is as follows::
 
