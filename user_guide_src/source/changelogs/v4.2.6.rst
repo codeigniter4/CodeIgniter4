@@ -9,21 +9,6 @@ Release Date: September 4, 2022
     :local:
     :depth: 2
 
-BREAKING
-********
-
-none.
-
-Enhancements
-************
-
-none.
-
-Changes
-*******
-
-none.
-
 Deprecations
 ************
 

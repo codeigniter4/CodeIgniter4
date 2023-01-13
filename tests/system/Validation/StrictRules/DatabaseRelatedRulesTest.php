@@ -21,14 +21,16 @@ use Tests\Support\Validation\TestRules;
 /**
  * @internal
  *
+ * @no-final
+ *
  * @group DatabaseLive
  */
-final class DatabaseRelatedRulesTest extends CIUnitTestCase
+class DatabaseRelatedRulesTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    private Validation $validation;
-    private array $config = [
+    protected Validation $validation;
+    protected array $config = [
         'ruleSets' => [
             Rules::class,
             FormatRules::class,
@@ -51,6 +53,11 @@ final class DatabaseRelatedRulesTest extends CIUnitTestCase
         parent::setUp();
         $this->validation = new Validation((object) $this->config, Services::renderer());
         $this->validation->reset();
+    }
+
+    protected function createRules()
+    {
+        return new Rules();
     }
 
     public function testIsUniqueFalse(): void
@@ -128,7 +135,22 @@ final class DatabaseRelatedRulesTest extends CIUnitTestCase
                 'country' => 'Elbonia',
             ]);
 
-        $this->assertFalse((new Rules())->is_unique('deva@example.com', 'user.email,id,{id}', []));
+        $this->assertFalse($this->createRules()->is_unique('deva@example.com', 'user.email,id,{id}', []));
+    }
+
+    public function testIsUniqueIntValueByManualRun(): void
+    {
+        Database::connect()
+            ->table('user')
+            ->insert([
+                'name'    => 'Developer A',
+                'email'   => 'deva@example.com',
+                'country' => 'Elbonia',
+            ]);
+
+        $result = $this->createRules()->is_unique(1, 'user.id', []);
+
+        $this->assertFalse($result);
     }
 
     public function testIsNotUniqueFalse(): void
@@ -213,6 +235,6 @@ final class DatabaseRelatedRulesTest extends CIUnitTestCase
                 'country' => 'Elbonia',
             ]);
 
-        $this->assertTrue((new Rules())->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
+        $this->assertTrue($this->createRules()->is_not_unique('deva@example.com', 'user.email,id,{id}', []));
     }
 }

@@ -56,12 +56,10 @@ if (! function_exists('_get_uri')) {
         // Build the full URL based on $config and $relativePath
         $request = Services::request();
 
-        if ($request instanceof CLIRequest) {
-            /** @var App $config */
-            $url = rtrim($config->baseURL, '/ ') . '/';
-        } else {
-            $url = $request->getUri()->getBaseURL();
-        }
+        /** @var App $config */
+        $url = $request instanceof CLIRequest
+            ? rtrim($config->baseURL, '/ ') . '/'
+            : $request->getUri()->getBaseURL();
 
         // Check for an index page
         if ($config->indexPage !== '') {
@@ -329,6 +327,7 @@ if (! function_exists('safe_mailto')) {
      */
     function safe_mailto(string $email, string $title = '', $attributes = ''): string
     {
+        $count = 0;
         if (trim($title) === '') {
             $title = $email;
         }

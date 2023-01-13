@@ -21,16 +21,6 @@ Enhancements
 
 - Kint has been updated to 4.2.0.
 
-Changes
-*******
-
-none.
-
-Deprecations
-************
-
-none.
-
 Bugs Fixed
 **********
 - When using subqueries in the main query, prefixes are added to the table alias.

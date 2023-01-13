@@ -1423,6 +1423,7 @@ class BaseBuilder
      */
     public function orderBy(string $orderBy, string $direction = '', ?bool $escape = null)
     {
+        $qbOrderBy = [];
         if (empty($orderBy)) {
             return $this;
         }
@@ -3274,7 +3275,7 @@ class BaseBuilder
      *
      * @return $this
      */
-    public function resetQueryAsData()
+    public function resetQuery()
     {
         $this->resetSelect();
         $this->resetWrite();
@@ -3456,7 +3457,7 @@ class BaseBuilder
      */
     protected function cleanClone()
     {
-        return (clone $this)->from([], true)->resetQueryAsData();
+        return (clone $this)->from([], true)->resetQuery();
     }
 
     /**

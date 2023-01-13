@@ -26,11 +26,6 @@ parameters:
 			path: system/Cache/Handlers/MemcachedHandler.php
 
 		-
-			message: "#^Variable \\$data might not be defined\\.$#"
-			count: 1
-			path: system/Cache/Handlers/MemcachedHandler.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Cache\\\\Handlers\\\\RedisHandler\\:\\:\\$redis \\(Redis\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: system/Cache/Handlers/RedisHandler.php
@@ -201,11 +196,6 @@ parameters:
 			path: system/Helpers/number_helper.php
 
 		-
-			message: "#^Variable \\$count might not be defined\\.$#"
-			count: 1
-			path: system/Helpers/url_helper.php
-
-		-
 			message: "#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$image \\(CodeIgniter\\\\Images\\\\Image\\) in empty\\(\\) is not falsy\\.$#"
 			count: 1
 			path: system/Images/Handlers/BaseHandler.php
@@ -228,21 +218,6 @@ parameters:
 		-
 			message: "#^Property CodeIgniter\\\\Images\\\\Handlers\\\\BaseHandler\\:\\:\\$width \\(int\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 4
-			path: system/Images/Handlers/ImageMagickHandler.php
-
-		-
-			message: "#^Variable \\$gravity might not be defined\\.$#"
-			count: 1
-			path: system/Images/Handlers/ImageMagickHandler.php
-
-		-
-			message: "#^Variable \\$xAxis might not be defined\\.$#"
-			count: 1
-			path: system/Images/Handlers/ImageMagickHandler.php
-
-		-
-			message: "#^Variable \\$yAxis might not be defined\\.$#"
-			count: 1
 			path: system/Images/Handlers/ImageMagickHandler.php
 
 		-

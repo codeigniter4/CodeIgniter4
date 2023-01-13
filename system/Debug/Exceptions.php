@@ -80,6 +80,8 @@ class Exceptions
         $this->response = $response;
 
         // workaround for upgraded users
+        // This causes "Deprecated: Creation of dynamic property" in PHP 8.2.
+        // @TODO remove this after dropping PHP 8.1 support.
         if (! isset($this->config->sensitiveDataInTrace)) {
             $this->config->sensitiveDataInTrace = [];
         }

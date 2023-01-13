@@ -1,9 +1,9 @@
-Version {version}
-#################
+Version 4.3.1
+#############
 
 Release Date: Unreleased
 
-**{version} release of CodeIgniter4**
+**4.3.1 release of CodeIgniter4**
 
 .. contents::
     :local:
