@@ -221,7 +221,6 @@ class Connection extends BaseConnection
     }
 
     /**
-     * // @TODO BH
      * Returns an array of objects with Foreign key data
      * referenced_object_id  parent_object_id
      *
@@ -231,65 +230,55 @@ class Connection extends BaseConnection
      */
     protected function _foreignKeyData(string $table): array
     {
-        $sql = 'SELECT '
-            . 'f.name as constraint_name, '
-            . 'OBJECT_NAME (f.parent_object_id) as table_name, '
-            . 'COL_NAME(fc.parent_object_id,fc.parent_column_id) column_name, '
-            . 'OBJECT_NAME(f.referenced_object_id) foreign_table_name, '
-            . 'COL_NAME(fc.referenced_object_id,fc.referenced_column_id) foreign_column_name '
-            . 'FROM  '
-            . 'sys.foreign_keys AS f '
-            . 'INNER JOIN  '
-            . 'sys.foreign_key_columns AS fc  '
-            . 'ON f.OBJECT_ID = fc.constraint_object_id '
-            . 'INNER JOIN  '
-            . 'sys.tables t  '
-            . 'ON t.OBJECT_ID = fc.referenced_object_id '
-            . 'WHERE  '
-            . 'OBJECT_NAME (f.parent_object_id) = ' . $this->escape($table);
+        $sql = 'select SYSFOREIGNKEY.ROLE as constraint_name, SYSTABLE2.TABLE_NAME as table_name, SYSCOLUMN.COLUMN_NAME as column_name, SYSTABLE.TABLE_NAME as foreign_table_name, SYSCOLUMN2.COLUMN_NAME as foreign_column_name
+                  from SYSFOREIGNKEY
+             left join SYSTABLE on SYSTABLE.TABLE_ID = SYSFOREIGNKEY.FOREIGN_TABLE_ID
+             left join SYSTABLE as SYSTABLE2 on SYSTABLE2.TABLE_ID = SYSFOREIGNKEY.PRIMARY_TABLE_ID
+             left join SYSIDXCOL on SYSIDXCOL.TABLE_ID = SYSFOREIGNKEY.PRIMARY_TABLE_ID and SYSIDXCOL.INDEX_ID = SYSFOREIGNKEY.PRIMARY_INDEX_ID
+             left join SYSCOLUMN on SYSIDXCOL.TABLE_ID = SYSCOLUMN.TABLE_ID and SYSIDXCOL.COLUMN_ID = SYSCOLUMN.COLUMN_ID
+             left join SYSIDXCOL as SYSIDXCOL2 on SYSIDXCOL2.TABLE_ID = SYSFOREIGNKEY.FOREIGN_TABLE_ID and SYSIDXCOL2.INDEX_ID = SYSFOREIGNKEY.FOREIGN_KEY_ID
+             left join SYSCOLUMN as SYSCOLUMN2 on SYSIDXCOL2.TABLE_ID = SYSCOLUMN2.TABLE_ID and SYSIDXCOL2.COLUMN_ID = SYSCOLUMN2.COLUMN_ID
+                 where SYSTABLE.TABLE_NAME = ' . $this->escape($table);
 
         if (($query = $this->query($sql)) === false) {
             throw new DatabaseException(lang('Database.failGetForeignKeyData'));
         }
 
-        $query  = $query->getResultObject();
-        $retVal = [];
+        $query   = $query->getResultObject();
+        $indexes = [];
 
         foreach ($query as $row) {
-            $obj = new stdClass();
-
-            $obj->constraint_name     = $row->constraint_name;
-            $obj->table_name          = $row->table_name;
-            $obj->column_name         = $row->column_name;
-            $obj->foreign_table_name  = $row->foreign_table_name;
-            $obj->foreign_column_name = $row->foreign_column_name;
-
-            $retVal[] = $obj;
+            $indexes[$row->constraint_name]['constraint_name']       = $row->constraint_name;
+            $indexes[$row->constraint_name]['table_name']            = $row->table_name;
+            $indexes[$row->constraint_name]['column_name'][]         = $row->column_name;
+            $indexes[$row->constraint_name]['foreign_table_name']    = $row->foreign_table_name;
+            $indexes[$row->constraint_name]['foreign_column_name'][] = $row->foreign_column_name;
+            $indexes[$row->constraint_name]['on_delete']             = null;
+            $indexes[$row->constraint_name]['on_update']             = null;
+            $indexes[$row->constraint_name]['match']                 = null;
         }
 
-        return $retVal;
+        return $this->foreignKeyDataToObjects($indexes);
     }
 
     /**
-     * // @TODO BH
      * Disables foreign key checks temporarily.
      *
      * @return string
      */
     protected function _disableForeignKeyChecks()
     {
-        return 'EXEC sp_MSforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT ALL"';
+        return 'set temporary option wait_for_commit = on';
     }
 
     /**
-     * // @TODO BH
      * Enables foreign key checks temporarily.
      *
      * @return string
      */
     protected function _enableForeignKeyChecks()
     {
-        return 'EXEC sp_MSforeachtable "ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL"';
+        return 'set temporary option wait_for_commit = off';
     }
 
     /**
@@ -389,28 +378,12 @@ class Connection extends BaseConnection
     }
 
     /**
-     * // @TODO BH
      * Select a specific database table to use.
      *
      * @return mixed
      */
     public function setDatabase(?string $databaseName = null)
     {
-        if (empty($databaseName)) {
-            $databaseName = $this->database;
-        }
-
-        if (empty($this->connID)) {
-            $this->initialize();
-        }
-
-        if ($this->execute('USE ' . $this->_escapeString($databaseName))) {
-            $this->database  = $databaseName;
-            $this->dataCache = [];
-
-            return true;
-        }
-
         return false;
     }
 
@@ -484,22 +457,5 @@ class Connection extends BaseConnection
         $query = $query->getRow();
 
         return isset($query->VERSION) ? $query->VERSION : false;
-    }
-
-    /**
-     * // @TODO BH
-     * Determines if a query is a "write" type.
-     *
-     * Overrides BaseConnection::isWriteType, adding additional read query types.
-     *
-     * @param mixed $sql
-     */
-    public function isWriteType($sql): bool
-    {
-        if (preg_match('/^\s*"?(EXEC\s*sp_rename)\s/i', $sql)) {
-            return true;
-        }
-
-        return parent::isWriteType($sql);
     }
 }
