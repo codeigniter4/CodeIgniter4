@@ -632,7 +632,7 @@ link you to it:
 
     https://github.com/phpredis/phpredis
 
-.. warning:: CodeIgniter's Session library does NOT use the actual 'redis'
+.. important:::: CodeIgniter's Session library does NOT use the actual 'redis'
     ``session.save_handler``. Take note **only** of the path format in
     the link above.
 
