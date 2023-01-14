@@ -9,7 +9,9 @@ class Session extends BaseConfig
 {
     // ...
     public string $driver = 'CodeIgniter\Session\Handlers\RedisHandler';
+
     // ...
     public string $savePath = 'tcp://localhost:6379';
+
     // ...
 }

@@ -9,7 +9,9 @@ class Session extends BaseConfig
 {
     // ...
     public string $driver = 'CodeIgniter\Session\Handlers\DatabaseHandler';
+
     // ...
     public string $savePath = 'ci_sessions';
+
     // ...
 }
