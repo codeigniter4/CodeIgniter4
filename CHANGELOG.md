@@ -28,7 +28,6 @@
 * fix: exceptionHandler may return invalid HTTP status code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6228
 * feat: add Form helpers for Validation Errors by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6384
 * fix: ValidationInterface by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6253
-* [Reverted] Make Unique Index Name Unique by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6516
 * fix: types in database classes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6527
 * fix: ResponseInterface (1) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6556
 * Improve BaseConnection::getForeignKeyData() and Forge::addForeignKey() by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6468
