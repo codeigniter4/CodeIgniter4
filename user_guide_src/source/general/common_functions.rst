@@ -374,6 +374,11 @@ Miscellaneous Functions
 
     .. note:: This function requires the controller/method to have a route defined in **app/Config/routes.php**.
 
+    .. important:: ``route_to()`` returns a *route*, not a full URI path for your site.
+        If your **baseURL** contains sub folders, the return value is not the same
+        as the URI to link. In that case, just use :php:func:`url_to()` instead.
+        See also :ref:`urls-url-structure`.
+
     Generates a route for you based on a controller::method combination. Will take parameters into effect, if provided.
 
     .. literalinclude:: common_functions/009.php
@@ -385,10 +390,6 @@ Miscellaneous Functions
     Since v4.3.0, when you use ``{locale}`` in your route, you can optionally specify the locale value as the last parameter.
 
     .. literalinclude:: common_functions/011.php
-
-    .. note:: ``route_to()`` returns a route, not a full URI path for your site.
-        If your **baseURL** contains sub folders, the return value is not the same
-        as the URI to link. In that case, just use :php:func:`url_to()` instead.
 
 .. php:function:: service($name[, ...$params])
 
