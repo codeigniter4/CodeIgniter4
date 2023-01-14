@@ -75,7 +75,7 @@ class Rules
      */
     public function greater_than($str, string $min): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
@@ -93,7 +93,7 @@ class Rules
      */
     public function greater_than_equal_to($str, string $min): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
@@ -117,7 +117,34 @@ class Rules
      */
     public function is_not_unique($str, string $field, array $data): bool
     {
-        return $this->nonStrictRules->is_not_unique($str, $field, $data);
+        if (is_object($str) || is_array($str)) {
+            return false;
+        }
+
+        // Grab any data for exclusion of a single row.
+        [$field, $whereField, $whereValue] = array_pad(
+            explode(',', $field),
+            3,
+            null
+        );
+
+        // Break the table and field apart
+        sscanf($field, '%[^.].%[^.]', $table, $field);
+
+        $row = Database::connect($data['DBGroup'] ?? null)
+            ->table($table)
+            ->select('1')
+            ->where($field, $str)
+            ->limit(1);
+
+        if (
+            ! empty($whereField) && ! empty($whereValue)
+            && ! preg_match('/^\{(\w+)\}$/', $whereValue)
+        ) {
+            $row = $row->where($whereField, $whereValue);
+        }
+
+        return $row->get()->getRow() !== null;
     }
 
     /**
@@ -151,7 +178,32 @@ class Rules
      */
     public function is_unique($str, string $field, array $data): bool
     {
-        return $this->nonStrictRules->is_unique($str, $field, $data);
+        if (is_object($str) || is_array($str)) {
+            return false;
+        }
+
+        [$field, $ignoreField, $ignoreValue] = array_pad(
+            explode(',', $field),
+            3,
+            null
+        );
+
+        sscanf($field, '%[^.].%[^.]', $table, $field);
+
+        $row = Database::connect($data['DBGroup'] ?? null)
+            ->table($table)
+            ->select('1')
+            ->where($field, $str)
+            ->limit(1);
+
+        if (
+            ! empty($ignoreField) && ! empty($ignoreValue)
+            && ! preg_match('/^\{(\w+)\}$/', $ignoreValue)
+        ) {
+            $row = $row->where("{$ignoreField} !=", $ignoreValue);
+        }
+
+        return $row->get()->getRow() === null;
     }
 
     /**
@@ -161,7 +213,7 @@ class Rules
      */
     public function less_than($str, string $max): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 
@@ -179,7 +231,7 @@ class Rules
      */
     public function less_than_equal_to($str, string $max): bool
     {
-        if (is_int($str)) {
+        if (is_int($str) || is_float($str)) {
             $str = (string) $str;
         }
 

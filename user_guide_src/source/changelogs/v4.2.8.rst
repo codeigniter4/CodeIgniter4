@@ -9,26 +9,6 @@ Release Date: October 30, 2022
     :local:
     :depth: 2
 
-BREAKING
-********
-
-none.
-
-Enhancements
-************
-
-none.
-
-Message Changes
-***************
-
-none.
-
-Changes
-*******
-
-none.
-
 Deprecations
 ************
 

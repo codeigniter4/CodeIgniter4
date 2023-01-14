@@ -9,7 +9,9 @@ class Session extends BaseConfig
 {
     // ...
     public string $driver = 'CodeIgniter\Session\Handlers\MemcachedHandler';
+
     // ...
     public string $savePath = 'localhost:11211';
+
     // ...
 }

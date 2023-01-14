@@ -529,6 +529,7 @@ class Connection extends BaseConnection
      */
     public function getVersion(): string
     {
+        $info = [];
         if (isset($this->dataCache['version'])) {
             return $this->dataCache['version'];
         }

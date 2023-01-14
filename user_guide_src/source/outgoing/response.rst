@@ -366,7 +366,7 @@ The methods provided by the parent class that are available are:
 
         :param array|Cookie|string $name: Cookie name or an array of parameters or an instance of ``CodeIgniter\Cookie\Cookie``
         :param string $value: Cookie value
-        :param int $expire: Cookie expiration time in seconds
+        :param int $expire: Cookie expiration time in seconds. If set to ``0`` the cookie will only last as long as the browser is open
         :param string $domain: Cookie domain
         :param string $path: Cookie path
         :param string $prefix: Cookie name prefix. If set to ``''``, the default value from **app/Config/Cookie.php** will be used

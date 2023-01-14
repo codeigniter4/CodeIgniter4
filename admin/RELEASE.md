@@ -2,9 +2,17 @@
 
 > Documentation guide based on the releases of `4.0.5` and `4.1.0` on January 31, 2021.
 >
-> Updated for `4.2.10` on November 5, 2022.
+> Updated for `4.3.0` on January 10, 2023.
 >
-> -MGatner
+> -MGatner, kenjis
+
+## [Minor version only] Merge minor version branch into develop
+
+If you release a new minor version.
+
+* Create PR to merge `4.x` into `develop` and merge it
+* Delete the merged `4.x` branch (This closes all PRs to the branch)
+* Do the regular release process. Go to the next "Changelog" section
 
 ## Changelog
 
@@ -17,7 +25,20 @@ When generating the changelog each Pull Request to be included must have one of 
 PRs with breaking changes must have the following additional label:
 - **breaking change** ... PRs that may break existing functionalities
 
-To auto-generate, start drafting a new Release and use the "Generate release notes" button.
+### Generate Changelog
+
+To auto-generate, navigate to the [Releases](https://github.com/codeigniter4/CodeIgniter4/releases) page,
+click the "Draft a new release" button.
+
+* Tag: "v4.x.x" (Create new tag)
+* Target: develop
+
+Click the "Generate release notes" button.
+
+Check the resulting content. If there are items in the *Others* section which
+should be included in the changelog, add a label to the PR and regenerate
+the changelog.
+
 Copy the resulting content into **CHANGELOG.md** and adjust the format to match the existing content.
 
 ## Preparation
@@ -73,9 +94,9 @@ cd release-test
 composer test && composer info codeigniter4/framework
 ```
 * Verify that the user guide actions succeeded:
-    * "Deploy Distributable Repos", framework repo
-    * "Deploy Production", UG repo
-    * "pages-build-deployment", UG repo
+    * "[Deploy Distributable Repos](https://github.com/codeigniter4/CodeIgniter4/actions/workflows/deploy-distributables.yml)", the main repo
+    * "[Deploy Production](https://github.com/codeigniter4/userguide/actions/workflows/deploy.yml)", UG repo
+    * "[pages-build-deployment](https://github.com/codeigniter4/userguide/actions/workflows/pages/pages-build-deployment)", UG repo
 * Fast-forward `develop` branch to catch the merge commit from `master`
 ```console
 git fetch origin
@@ -90,6 +111,13 @@ git fetch origin
 git checkout 4.x
 git merge origin/4.x
 git merge origin/develop
+git push origin HEAD
+```
+* [Minor version only] Create the next minor upgrade branch `4.x`:
+```console
+git fetch origin
+git switch develop
+git switch -c 4.x
 git push origin HEAD
 ```
 * Publish any Security Advisories that were resolved from private forks

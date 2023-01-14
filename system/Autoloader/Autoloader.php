@@ -373,6 +373,14 @@ class Autoloader
             unset($namespacePaths['CodeIgniter\\']);
         }
 
+        if (! method_exists(InstalledVersions::class, 'getAllRawData')) {
+            throw new RuntimeException(
+                'Your Composer version is too old.'
+                . ' Please update Composer (run `composer self-update`) to v2.0.14 or later'
+                . ' and remove your vendor/ directory, and run `composer update`.'
+            );
+        }
+        // This method requires Composer 2.0.14 or later.
         $packageList = InstalledVersions::getAllRawData()[0]['versions'];
 
         // Check config for $composerPackages.

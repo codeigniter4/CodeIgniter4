@@ -1,6 +1,6 @@
-#############################
-Upgrading from 4.2.9 to 4.3.0
-#############################
+##############################
+Upgrading from 4.2.12 to 4.3.0
+##############################
 
 Please refer to the upgrade instructions corresponding to your installation method.
 
@@ -11,6 +11,21 @@ Please refer to the upgrade instructions corresponding to your installation meth
 .. contents::
     :local:
     :depth: 2
+
+Composer Version
+****************
+
+.. important:: If you use Composer, CodeIgniter v4.3.0 requires
+    Composer 2.0.14 or later.
+
+If you are using older version of Composer, upgrade your ``composer`` tool,
+and delete the **vendor/** directory, and run ``composer update`` again.
+
+The procedure, for example, is as follows::
+
+    > composer self-update
+    > rm -rf vendor/
+    > composer update
 
 Mandatory File Changes
 **********************
@@ -33,7 +48,23 @@ The following files received significant changes and
 Config Files
 ============
 
-- **app/Config/Kint.php** has been updated for Kint 5.0. You need to replace ``Kint\Renderer\Renderer`` with ``Kint\Renderer\AbstractRenderer`` and replace ``Renderer::SORT_FULL`` with ``AbstractRenderer::SORT_FULL``.
+app/Config/Kint.php
+-------------------
+
+- **app/Config/Kint.php** has been updated for Kint 5.0.
+- You need to replace:
+
+    - ``Kint\Renderer\Renderer`` with ``Kint\Renderer\AbstractRenderer``
+    - ``Renderer::SORT_FULL`` with ``AbstractRenderer::SORT_FULL``
+
+app/Config/Exceptions.php
+-------------------------
+
+- If you are using PHP 8.2, you need to add new properties ``$logDeprecations`` and ``$deprecationLogLevel``.
+
+Mock Config Classes
+-------------------
+
 - If you are using the following Mock Config classes in testing, you need to update the corresponding Config files in **app/Config**:
 
     - ``MockAppConfig`` (``Config\App``)
@@ -141,12 +172,13 @@ The way error and output streams are captured has changed. Now instead of::
     protected function setUp(): void
     {
         CITestStreamFilter::$buffer = '';
-        $this->stream_filter        = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter         = stream_filter_append(STDOUT, 'CITestStreamFilter');
+        $this->streamFilter         = stream_filter_append(STDERR, 'CITestStreamFilter');
     }
 
     protected function tearDown(): void
     {
-        stream_filter_remove($this->stream_filter);
+        stream_filter_remove($this->streamFilter);
     }
 
 need to use::
@@ -157,11 +189,13 @@ need to use::
     {
         CITestStreamFilter::registration();
         CITestStreamFilter::addOutputFilter();
+        CITestStreamFilter::addErrorFilter();
     }
 
     protected function tearDown(): void
     {
         CITestStreamFilter::removeOutputFilter();
+        CITestStreamFilter::removeErrorFilter();
     }
 
 Or use the trait ``CodeIgniter\Test\StreamFilterTrait``. See :ref:`testing-cli-output`.

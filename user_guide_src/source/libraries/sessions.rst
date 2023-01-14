@@ -525,6 +525,14 @@ into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in
 DatabaseHandler Driver
 ======================
 
+.. important:: Only MySQL and PostgreSQL databases are officially
+    supported, due to lack of advisory locking mechanisms on other
+    platforms. Using sessions without locks can cause all sorts of
+    problems, especially with heavy usage of AJAX, and we will not
+    support such cases. Use ``session_write_close()`` after you've
+    done processing session data if you're having performance
+    issues.
+
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
 because it allows the developer easy access to the session data within
@@ -533,6 +541,9 @@ an application - it is just another table in your database.
 However, there are some conditions that must be met:
 
   - You can NOT use a persistent connection.
+
+Configure DatabaseHandler
+-------------------------
 
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
@@ -569,7 +580,7 @@ For PostgreSQL::
     and the session ID and a delimiter. It should be increased as needed, for example,
     when using long session IDs.
 
-You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
+You will also need to add a PRIMARY KEY **depending on your $matchIP
 setting**. The examples below work both on MySQL and PostgreSQL::
 
     // When sessionMatchIP = true
@@ -592,16 +603,8 @@ from the cli to generate a migration file for you::
   > php spark make:migration --session
   > php spark migrate
 
-This command will take the **savePath** and **matchIP** settings into account
+This command will take the ``$savePath`` and ``$matchIP`` settings into account
 when it generates the code.
-
-.. important:: Only MySQL and PostgreSQL databases are officially
-    supported, due to lack of advisory locking mechanisms on other
-    platforms. Using sessions without locks can cause all sorts of
-    problems, especially with heavy usage of AJAX, and we will not
-    support such cases. Use ``session_write_close()`` after you've
-    done processing session data if you're having performance
-    issues.
 
 .. _sessions-redishandler-driver:
 
@@ -623,6 +626,9 @@ bundled with PHP.
 Chances are, you're only be using the RedisHandler driver only if you're already
 both familiar with Redis and using it for other purposes.
 
+Configure RedisHandler
+----------------------
+
 Just as with the 'FileHandler' and 'DatabaseHandler' drivers, you must also configure
 the storage location for your sessions via the
 ``$savePath`` setting.
@@ -632,7 +638,7 @@ link you to it:
 
     https://github.com/phpredis/phpredis
 
-.. warning:: CodeIgniter's Session library does NOT use the actual 'redis'
+.. important:::: CodeIgniter's Session library does NOT use the actual 'redis'
     ``session.save_handler``. Take note **only** of the path format in
     the link above.
 
@@ -664,6 +670,9 @@ is that setting value X to expire after Y seconds will result in it being
 deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
+
+Configure RedisHandler
+----------------------
 
 The ``$savePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:
