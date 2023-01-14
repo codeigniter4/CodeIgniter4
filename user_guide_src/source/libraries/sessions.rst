@@ -603,7 +603,7 @@ from the cli to generate a migration file for you::
   > php spark make:migration --session
   > php spark migrate
 
-This command will take the **savePath** and **matchIP** settings into account
+This command will take the ``$savePath`` and ``$matchIP`` settings into account
 when it generates the code.
 
 .. _sessions-redishandler-driver:
