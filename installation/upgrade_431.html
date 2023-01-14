@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrading from 4.2.10 to 4.2.11 &mdash; CodeIgniter 4.3.1 documentation</title>
+  <title>Upgrading from 4.3.0 to 4.3.1 &mdash; CodeIgniter 4.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Upgrading from 4.2.9 to 4.2.10" href="upgrade_4210.html" />
-    <link rel="prev" title="Upgrading from 4.2.11 to 4.2.12" href="upgrade_4212.html" /> 
+    <link rel="next" title="Upgrading from 4.2.12 to 4.3.0" href="upgrade_430.html" />
+    <link rel="prev" title="Backward Compatibility Notes" href="backward_compatibility_notes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -258,14 +258,14 @@
 
       <div class="wy-nav-content">
         <div class="rst-content">
-<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_4211.rst">Edit this page</a>
+<a class="btn btn-neutral float-right" href="https://github.com/codeigniter4/CodeIgniter4/edit/develop/user_guide_src/source/installation/upgrade_431.rst">Edit this page</a>
 
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Installation</a></li>
           <li class="breadcrumb-item"><a href="upgrading.html">Upgrading From a Previous Version</a></li>
-      <li class="breadcrumb-item active">Upgrading from 4.2.10 to 4.2.11</li>
+      <li class="breadcrumb-item active">Upgrading from 4.3.0 to 4.3.1</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -274,8 +274,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="upgrading-from-4-2-10-to-4-2-11">
-<h1>Upgrading from 4.2.10 to 4.2.11<a class="headerlink" href="#upgrading-from-4-2-10-to-4-2-11" title="Permalink to this headline"></a></h1>
+  <section id="upgrading-from-4-3-0-to-4-3-1">
+<h1>Upgrading from 4.3.0 to 4.3.1<a class="headerlink" href="#upgrading-from-4-3-0-to-4-3-1" title="Permalink to this headline"></a></h1>
 <p>Please refer to the upgrade instructions corresponding to your installation method.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installing_composer.html#app-starter-upgrading"><span class="std std-ref">Composer Installation App Starter Upgrading</span></a></p></li>
@@ -284,69 +284,91 @@
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#breaking-changes" id="id1">Breaking Changes</a></p>
+<li><p><a class="reference internal" href="#composer-version" id="id1">Composer Version</a></p></li>
+<li><p><a class="reference internal" href="#mandatory-file-changes" id="id2">Mandatory File Changes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#config-app-proxyips" id="id2">Config\App::$proxyIPs</a></p></li>
-<li><p><a class="reference internal" href="#session-handler-key-changes" id="id3">Session Handler Key Changes</a></p></li>
+<li><p><a class="reference internal" href="#config-files" id="id3">Config Files</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#project-files" id="id4">Project Files</a></p>
 <ul>
-<li><p><a class="reference internal" href="#all-changes" id="id5">All Changes</a></p></li>
+<li><p><a class="reference internal" href="#content-changes" id="id5">Content Changes</a></p></li>
+<li><p><a class="reference internal" href="#all-changes" id="id6">All Changes</a></p></li>
 </ul>
 </li>
 </ul>
 </div>
-<section id="breaking-changes">
-<h2><a class="toc-backref" href="#id1">Breaking Changes</a><a class="headerlink" href="#breaking-changes" title="Permalink to this headline"></a></h2>
-<section id="config-app-proxyips">
-<span id="upgrade-4211-proxyips"></span><h3><a class="toc-backref" href="#id2">Config\App::$proxyIPs</a><a class="headerlink" href="#config-app-proxyips" title="Permalink to this headline"></a></h3>
-<p>The config value format has been changed. Now you must set your proxy IP address and the HTTP header name for the client IP address pair as an array:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nv">$proxyIPs</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;10.0.1.200&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;X-Forwarded-For&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;192.168.5.0/24&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;X-Forwarded-For&#39;</span><span class="p">,</span>
-<span class="p">];</span>
+<section id="composer-version">
+<h2><a class="toc-backref" href="#id1">Composer Version</a><a class="headerlink" href="#composer-version" title="Permalink to this headline"></a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you use Composer, CodeIgniter v4.3 requires
+Composer 2.0.14 or later.</p>
+</div>
+<p>If you are using older version of Composer, upgrade your <code class="docutils literal notranslate"><span class="pre">composer</span></code> tool,
+and delete the <strong>vendor/</strong> directory, and run <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code> again.</p>
+<p>The procedure, for example, is as follows:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">self</span><span class="o">-</span><span class="nx">update</span>
+<span class="o">&gt;</span> <span class="nx">rm</span> <span class="o">-</span><span class="nx">rf</span> <span class="nx">vendor</span><span class="o">/</span>
+<span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">update</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">ConfigException</span></code> will be thrown for old format config value.</p>
 </section>
-<section id="session-handler-key-changes">
-<span id="upgrade-4211-session-key"></span><h3><a class="toc-backref" href="#id3">Session Handler Key Changes</a><a class="headerlink" href="#session-handler-key-changes" title="Permalink to this headline"></a></h3>
-<p>The key of the session data record for <a class="reference internal" href="../libraries/sessions.html#sessions-databasehandler-driver"><span class="std std-ref">DatabaseHandler Driver</span></a>,
-<a class="reference internal" href="../libraries/sessions.html#sessions-memcachedhandler-driver"><span class="std std-ref">MemcachedHandler Driver</span></a> and <a class="reference internal" href="../libraries/sessions.html#sessions-redishandler-driver"><span class="std std-ref">RedisHandler Driver</span></a>
-has changed. Therefore, any existing session data will be invalidated after
-the upgrade if you are using these session handlers.</p>
+<section id="mandatory-file-changes">
+<h2><a class="toc-backref" href="#id2">Mandatory File Changes</a><a class="headerlink" href="#mandatory-file-changes" title="Permalink to this headline"></a></h2>
+<section id="config-files">
+<h3><a class="toc-backref" href="#id3">Config Files</a><a class="headerlink" href="#config-files" title="Permalink to this headline"></a></h3>
+<section id="app-config-email-php">
+<h4>app/Config/Email.php<a class="headerlink" href="#app-config-email-php" title="Permalink to this headline"></a></h4>
 <ul class="simple">
-<li><p>When using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code>, the <code class="docutils literal notranslate"><span class="pre">id</span></code> column value in the session table
-now contains the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
-<li><p>When using <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code> or <code class="docutils literal notranslate"><span class="pre">RedisHandler</span></code>, the key value contains
-the session cookie name (<code class="docutils literal notranslate"><span class="pre">Config\App::$sessionCookieName</span></code>).</p></li>
+<li><p>If you updated <strong>app/Config/Email.php</strong> when upgrading to v4.3.0, you must
+set the default values to <code class="docutils literal notranslate"><span class="pre">$fromEmail</span></code>, <code class="docutils literal notranslate"><span class="pre">$fromName</span></code>,  <code class="docutils literal notranslate"><span class="pre">$recipients</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$SMTPHost</span></code>, <code class="docutils literal notranslate"><span class="pre">$SMTPUser</span></code> and <code class="docutils literal notranslate"><span class="pre">$SMTPPass</span></code> to apply environment variable
+(<strong>.env</strong>) values.</p></li>
+<li><p>If no default values are set, setting environment variables for them will not
+be reflected in the Config object.</p></li>
 </ul>
-<p>There is maximum length for the <code class="docutils literal notranslate"><span class="pre">id</span></code> column and Memcached key (250 bytes).
-If the following values exceed those maximum length, the session will not work properly.</p>
+</section>
+<section id="app-config-exceptions-php">
+<h4>app/Config/Exceptions.php<a class="headerlink" href="#app-config-exceptions-php" title="Permalink to this headline"></a></h4>
 <ul class="simple">
-<li><p>the session cookie name, delimiter, and session id (32 characters by default)
-when using <code class="docutils literal notranslate"><span class="pre">DatabaseHandler</span></code></p></li>
-<li><p>the prefix (<code class="docutils literal notranslate"><span class="pre">ci_session</span></code>), session cookie name, delimiters, and session id
-when using  <code class="docutils literal notranslate"><span class="pre">MemcachedHandler</span></code></p></li>
+<li><p>If you are using PHP 8.2, you need to add new properties <code class="docutils literal notranslate"><span class="pre">$logDeprecations</span></code> and <code class="docutils literal notranslate"><span class="pre">$deprecationLogLevel</span></code>.</p></li>
 </ul>
+</section>
 </section>
 </section>
 <section id="project-files">
 <h2><a class="toc-backref" href="#id4">Project Files</a><a class="headerlink" href="#project-files" title="Permalink to this headline"></a></h2>
-<p>Version <code class="docutils literal notranslate"><span class="pre">4.2.11</span></code> did not alter any executable code in project files.</p>
+<p>Some files in the <strong>project space</strong> (root, app, public, writable) received updates. Due to
+these files being outside of the <strong>system</strong> scope they will not be changed without your intervention.</p>
+<p>There are some third-party CodeIgniter modules available to assist with merging changes to
+the project space: <a class="reference external" href="https://packagist.org/explore/?query=codeigniter4%20updates">Explore on Packagist</a>.</p>
+<section id="content-changes">
+<h3><a class="toc-backref" href="#id5">Content Changes</a><a class="headerlink" href="#content-changes" title="Permalink to this headline"></a></h3>
+<p>The following files received significant changes (including deprecations or visual adjustments)
+and it is recommended that you merge the updated versions with your application:</p>
+<section id="config">
+<h4>Config<a class="headerlink" href="#config" title="Permalink to this headline"></a></h4>
+<ul class="simple">
+<li><dl class="simple">
+<dt>app/Config/Encryption.php</dt><dd><ul>
+<li><p>Set the default value <code class="docutils literal notranslate"><span class="pre">''</span></code> to <code class="docutils literal notranslate"><span class="pre">$fromEmail</span></code>, <code class="docutils literal notranslate"><span class="pre">$fromName</span></code>,
+<code class="docutils literal notranslate"><span class="pre">$recipients</span></code>, <code class="docutils literal notranslate"><span class="pre">$SMTPHost</span></code>, <code class="docutils literal notranslate"><span class="pre">$SMTPUser</span></code> and <code class="docutils literal notranslate"><span class="pre">$SMTPPass</span></code>
+to apply environment variable (<strong>.env</strong>) values.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
 <section id="all-changes">
-<h3><a class="toc-backref" href="#id5">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id6">All Changes</a><a class="headerlink" href="#all-changes" title="Permalink to this headline"></a></h3>
 <p>This is a list of all files in the <strong>project space</strong> that received changes;
 many will be simple comments or formatting that have no effect on the runtime:</p>
 <ul class="simple">
-<li><p>app/Config/App.php</p></li>
-<li><p>app/Config/Autoload.php</p></li>
-<li><p>app/Config/Logger.php</p></li>
-<li><p>app/Config/Toolbar.php</p></li>
-<li><p>app/Views/welcome_message.php</p></li>
+<li><p>app/Config/Email.php</p></li>
 <li><p>composer.json</p></li>
-<li><p>phpunit.xml.dist</p></li>
 </ul>
 </section>
 </section>
@@ -356,8 +378,8 @@ many will be simple comments or formatting that have no effect on the runtime:</
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upgrade_4212.html" class="btn btn-neutral float-left" title="Upgrading from 4.2.11 to 4.2.12" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="upgrade_4210.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.9 to 4.2.10" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="backward_compatibility_notes.html" class="btn btn-neutral float-left" title="Backward Compatibility Notes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upgrade_430.html" class="btn btn-neutral float-right" title="Upgrading from 4.2.12 to 4.3.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
