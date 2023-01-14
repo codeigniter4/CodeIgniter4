@@ -542,6 +542,9 @@ However, there are some conditions that must be met:
 
   - You can NOT use a persistent connection.
 
+Configure DatabaseHandler
+-------------------------
+
 In order to use the 'DatabaseHandler' session driver, you must also create this
 table that we already mentioned and then set it as your
 ``$savePath`` value.
@@ -623,6 +626,9 @@ bundled with PHP.
 Chances are, you're only be using the RedisHandler driver only if you're already
 both familiar with Redis and using it for other purposes.
 
+Configure RedisHandler
+----------------------
+
 Just as with the 'FileHandler' and 'DatabaseHandler' drivers, you must also configure
 the storage location for your sessions via the
 ``$savePath`` setting.
@@ -664,6 +670,9 @@ is that setting value X to expire after Y seconds will result in it being
 deleted after Y seconds have passed (but not necessarily that it won't
 expire earlier than that time). This happens very rarely, but should be
 considered as it may result in loss of sessions.
+
+Configure RedisHandler
+----------------------
 
 The ``$savePath`` format is fairly straightforward here,
 being just a ``host:port`` pair:
