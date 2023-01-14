@@ -569,7 +569,7 @@ For PostgreSQL::
     and the session ID and a delimiter. It should be increased as needed, for example,
     when using long session IDs.
 
-You will also need to add a PRIMARY KEY **depending on your 'sessionMatchIP'
+You will also need to add a PRIMARY KEY **depending on your $matchIP
 setting**. The examples below work both on MySQL and PostgreSQL::
 
     // When sessionMatchIP = true
