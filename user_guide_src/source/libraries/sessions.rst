@@ -525,6 +525,14 @@ into using `tmpfs <https://eddmann.com/posts/storing-php-sessions-file-caches-in
 DatabaseHandler Driver
 ======================
 
+.. important:: Only MySQL and PostgreSQL databases are officially
+    supported, due to lack of advisory locking mechanisms on other
+    platforms. Using sessions without locks can cause all sorts of
+    problems, especially with heavy usage of AJAX, and we will not
+    support such cases. Use ``session_write_close()`` after you've
+    done processing session data if you're having performance
+    issues.
+
 The 'DatabaseHandler' driver uses a relational database such as MySQL or
 PostgreSQL to store sessions. This is a popular choice among many users,
 because it allows the developer easy access to the session data within
@@ -594,14 +602,6 @@ from the cli to generate a migration file for you::
 
 This command will take the **savePath** and **matchIP** settings into account
 when it generates the code.
-
-.. important:: Only MySQL and PostgreSQL databases are officially
-    supported, due to lack of advisory locking mechanisms on other
-    platforms. Using sessions without locks can cause all sorts of
-    problems, especially with heavy usage of AJAX, and we will not
-    support such cases. Use ``session_write_close()`` after you've
-    done processing session data if you're having performance
-    issues.
 
 .. _sessions-redishandler-driver:
 
