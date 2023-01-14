@@ -1,5 +1,21 @@
 # Changelog
 
+## [v4.3.1](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.1) (2023-01-14)
+[Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.3.0...v4.3.1)
+
+### Fixed Bugs
+
+* fix: Email config in the .env doesn't appear as expected by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7078
+* fix: TypeError in Validation is_unique/is_not_unique by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7085
+* fix: revert method name resetQuery() changed accidentally by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7083
+* fix: handling float in Validation Strcit Rules (greater_than, greater_than_equal_to, less_than, less_than_equal_to) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7098
+* docs: add missing instruction for Config/Exceptions in PHP 8.2 by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7100
+* fix: Call to undefined method Composer\InstalledVersions::getAllRawData() error by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/7107
+
+### Refactoring
+
+* [Rector] Enable AddDefaultValueForUndefinedVariableRector by @samsonasik in https://github.com/codeigniter4/CodeIgniter4/pull/7088
+
 ## [v4.3.0](https://github.com/codeigniter4/CodeIgniter4/tree/v4.3.0) (2023-01-10)
 [Full Changelog](https://github.com/codeigniter4/CodeIgniter4/compare/v4.2.12...v4.3.0)
 
@@ -12,7 +28,6 @@
 * fix: exceptionHandler may return invalid HTTP status code by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6228
 * feat: add Form helpers for Validation Errors by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6384
 * fix: ValidationInterface by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6253
-* [Reverted] Make Unique Index Name Unique by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6516
 * fix: types in database classes by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6527
 * fix: ResponseInterface (1) by @kenjis in https://github.com/codeigniter4/CodeIgniter4/pull/6556
 * Improve BaseConnection::getForeignKeyData() and Forge::addForeignKey() by @sclubricants in https://github.com/codeigniter4/CodeIgniter4/pull/6468
