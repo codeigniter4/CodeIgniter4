@@ -335,6 +335,7 @@ Message Changes
 
 - Updated English language strings to be more consistent.
 - Added ``CLI.generator.className.cell`` and ``CLI.generator.viewName.cell``.
+- Added **en/Errors.php** file.
 
 Changes
 *******
