@@ -325,6 +325,17 @@ Config
 - app/Config/Validation.php
     - The default Validation Rules have been changed to Strict Rules for better security. See :ref:`validation-traditional-and-strict-rules`.
 
+View Files
+----------
+
+The following view files have been changed to HTML5 compatible tags.
+Also, error messages are now defined in the **Errors** language file.
+
+- app/Views/errors/html/error_404.php
+- app/Views/errors/html/error_exception.php
+- app/Views/errors/html/production.php
+- app/Views/welcome_message.php
+
 All Changes
 ===========
 
