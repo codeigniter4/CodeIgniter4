@@ -19,7 +19,7 @@ Enhancements
 - Support for setting SameSite attribute on Session and CSRF cookies has been added. For security and compatibility with latest browser versions, the default setting is ``Lax``.
 - Guessing file extensions from mime type in ``Config\Mimes::guessExtensionFromType`` now only reverse searches the ``$mimes`` array if no extension is proposed (i.e., usually not for uploaded files).
 - The getter functions for file extensions of uploaded files now have different fallback values (``$this->getClientExtension()`` for ``UploadedFile->getExtension()`` and ``''`` for ``UploadedFile->guessExtension()``). This is a security fix and makes the process less dependent on the client.
-- The Cache ``FileHandler`` now allows setting the file permissions mode via ``Config\Cache``
+- The Cache ``FileHandler`` now allows setting the file permissions mode via ``Config\Cache``.
 
 Changes
 -------
