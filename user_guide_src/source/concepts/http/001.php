@@ -22,7 +22,7 @@ $request->getJSON();
 $request->getServer('Host');
 
 // Retrieve an HTTP Request header, with case-insensitive names
-$request->getHeader('host');
-$request->getHeader('Content-Type');
+$request->header('host');
+$request->header('Content-Type');
 
 $request->getMethod();  // get, post, put, etc
