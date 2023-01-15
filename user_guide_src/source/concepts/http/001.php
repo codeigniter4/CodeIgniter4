@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\IncomingRequest;
 
-$request = service('request');
+$request = request();
 
 // the URI path being requested (i.e., /about)
 $request->getUri()->getPath();
@@ -25,4 +25,6 @@ $request->getServer('Host');
 $request->header('host');
 $request->header('Content-Type');
 
-$request->getMethod();  // get, post, put, etc
+// Checks the HTTP method
+$request->is('get');
+$request->is('post');
