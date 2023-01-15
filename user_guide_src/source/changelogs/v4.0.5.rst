@@ -36,11 +36,11 @@ Bugs Fixed
 Deprecations
 ------------
 
-- Deprecated ``BaseCommand::getPad`` in favor of ``BaseCommand::setPad``.
-- Deprecated ``CodeIgniter\Controller::loadHelpers`` in favor of ``helper`` function.
-- Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
-- Deprecated ``CodeIgniter\Security\Security::CSRFVerify`` in favor of ``CodeIgniter\Security\Security::verify``
-- Deprecated ``CodeIgniter\Security\Security::getCSRFHash`` in favor of ``CodeIgniter\Security\Security::getHash``
+- Deprecated ``BaseCommand::getPad()`` in favor of ``BaseCommand::setPad()``.
+- Deprecated ``CodeIgniter\Controller::loadHelpers()`` in favor of ``helper()`` function.
+- Deprecated ``Config\Format::getFormatter()`` in favor of ``CodeIgniter\Format\Format::getFormatter()``
+- Deprecated ``CodeIgniter\Security\Security::CSRFVerify()`` in favor of ``CodeIgniter\Security\Security::verify()``
+- Deprecated ``CodeIgniter\Security\Security::getCSRFHash()`` in favor of ``CodeIgniter\Security\Security::getHash()``
 - Deprecated ``CodeIgniter\Security\Security::getCSRTokenName()`` in favor of ``CodeIgniter\Security\Security::getTokenName()``
 - Deprecated ``Config\App::$CSRFTokenName`` in favor of ``Config\Security::$tokenName``
 - Deprecated ``Config\App::$CSRFHeaderName`` in favor of ``Config\Security::$headerName``
@@ -52,6 +52,6 @@ Deprecations
 - Deprecated ``migrate:create`` command in favor of ``make:migration`` command.
 - Deprecated ``CodeIgniter\Database\ModelFactory`` in favor of ``CodeIgniter\Config\Factories::models()``
 - Deprecated ``CodeIgniter\Config\Config`` in favor of ``CodeIgniter\Config\Factories::config()``
-- Deprecated ``CodeIgniter\HTTP\Message::getHeader`` in favor of ``header()`` to prepare for PSR-7
-- Deprecated ``CodeIgniter\HTTP\Message::getHeaders`` in favor of ``headers()`` to prepare for PSR-7
+- Deprecated ``CodeIgniter\HTTP\Message::getHeader()`` in favor of ``header()`` to prepare for PSR-7
+- Deprecated ``CodeIgniter\HTTP\Message::getHeaders()`` in favor of ``headers()`` to prepare for PSR-7
 - Deprecated ``Config\Cache::$storePath`` in favor of ``Config\Cache::$file['storePath']``
