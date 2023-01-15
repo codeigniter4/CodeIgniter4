@@ -31,8 +31,21 @@ E.g. **app/Views/default.php**::
     </body>
     </html>
 
-The ``renderSection()`` method only has one argument - the name of the section. That way any child views know
-what to name the content section.
+The ``renderSection()`` method have two arguments ``$sectionName`` - the name of the section. That way any child views know
+what to name the content section. And ``$saveData`` - If true, saves data for subsequent calls, if false, cleans the data after displaying.
+
+E.g. **app/Views/welcome_message.php**::
+
+    <!doctype html>
+    <html>
+    <head>
+        <title><?= $this->renderSection('page_title', true) ?></title>
+    </head>
+    <body>
+        <h1><?= $this->renderSection('page_title') ?><h1>
+        <p><?= $this->renderSection('content') ?></p>
+    </body>
+    </html>
 
 **********************
 Using Layouts in Views

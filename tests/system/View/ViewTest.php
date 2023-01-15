@@ -387,4 +387,14 @@ final class ViewTest extends CIUnitTestCase
         $this->assertStringContainsString('<p>Second</p>', $content);
         $this->assertStringContainsString('<p>Third</p>', $content);
     }
+
+    public function testRenderSectionSavingData()
+    {
+        $view     = new View($this->config, $this->viewsDir, $this->loader);
+        $expected = "<title>Welcome to CodeIgniter 4!</title>\n<h1>Welcome to CodeIgniter 4!</h1>\n<p>Hello World</p>";
+
+        $view->setVar('pageTitle', 'Welcome to CodeIgniter 4!');
+        $view->setVar('testString', 'Hello World');
+        $this->assertSame($expected, $view->render('extend_reuse_section'));
+    }
 }
