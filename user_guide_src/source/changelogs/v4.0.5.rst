@@ -41,7 +41,7 @@ Deprecations
 - Deprecated ``Config\Format::getFormatter`` in favor of ``CodeIgniter\Format\Format::getFormatter``
 - Deprecated ``CodeIgniter\Security\Security::CSRFVerify`` in favor of ``CodeIgniter\Security\Security::verify``
 - Deprecated ``CodeIgniter\Security\Security::getCSRFHash`` in favor of ``CodeIgniter\Security\Security::getHash``
-- Deprecated ``CodeIgniter\Security\Security::getCSRTokenName`` in favor of ``CodeIgniter\Security\Security::getCSRTokenName``
+- Deprecated ``CodeIgniter\Security\Security::getCSRTokenName()`` in favor of ``CodeIgniter\Security\Security::getTokenName()``
 - Deprecated ``Config\App::$CSRFTokenName`` in favor of ``Config\Security::$tokenName``
 - Deprecated ``Config\App::$CSRFHeaderName`` in favor of ``Config\Security::$headerName``
 - Deprecated ``Config\App::$CSRFCookieName`` in favor of ``Config\Security::$cookieName``
