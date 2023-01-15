@@ -24,7 +24,7 @@ Enhancements
 Changes
 -------
 
-- System messages defined in ``system/Language/en/`` are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.
+- System messages defined in **system/Language/en/** are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.
 
 Bugs Fixed
 ----------
