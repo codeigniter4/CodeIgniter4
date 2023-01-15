@@ -1,5 +1,5 @@
 ##########################
-Working With HTTP Requests
+Working with HTTP Requests
 ##########################
 
 In order to get the most out of CodeIgniter, you need to have a basic understanding of how HTTP requests
