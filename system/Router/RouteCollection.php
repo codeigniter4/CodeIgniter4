@@ -1161,7 +1161,7 @@ class RouteCollection implements RouteCollectionInterface
     {
         $options = $this->loadRoutesOptions($verb);
 
-        if (! array_key_exists($search, $options)) {
+        if (! array_key_exists($search, $options) || ! array_key_exists('filter', $options[$search])) {
             return [];
         }
 
@@ -1169,7 +1169,7 @@ class RouteCollection implements RouteCollectionInterface
             return [$options[$search]['filter']];
         }
 
-        return $options[$search]['filter'] ?? [];
+        return $options[$search]['filter'];
     }
 
     /**
