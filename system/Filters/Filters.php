@@ -86,6 +86,8 @@ class Filters
      *
      * @var array<string, array<int, string>> [name => params]
      * @phpstan-var array<string, list<string>>
+     *
+     * @deprecated When running filters, $argumentsClass is used now. This should be removed.
      */
     protected $arguments = [];
 
@@ -387,6 +389,8 @@ class Filters
      * Returns the arguments for a specified key, or all.
      *
      * @return mixed
+     *
+     * @deprecated $this->arguments is deprecated, and this method seems only for testing.
      */
     public function getArguments(?string $key = null)
     {
