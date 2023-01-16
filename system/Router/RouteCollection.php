@@ -527,6 +527,8 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Returns one or all routes options
+     *
+     * @return array<string, int|string> [key => value]
      */
     public function getRoutesOptions(?string $from = null, ?string $verb = null): array
     {
@@ -1149,6 +1151,11 @@ class RouteCollection implements RouteCollectionInterface
      *    'role:admin,manager'
      *
      * has a filter of "role", with parameters of ['admin', 'manager'].
+     *
+     * @param string $search routeKey
+     *
+     * @return array<int, string> filter_name or filter_name:arguments like 'role:admin,manager'
+     * @phpstan-return list<string>
      */
     public function getFiltersForRoute(string $search, ?string $verb = null): array
     {
@@ -1520,6 +1527,15 @@ class RouteCollection implements RouteCollectionInterface
 
     /**
      * Load routes options based on verb
+     *
+     * @return array<string, array<string, array|int|string>> [routeKey(or from) => [key => value]]
+     * @phpstan-return array<
+     *     string,
+     *     array{
+     *         filter?: string|list<string>, namespace?: string, hostname?: string,
+     *         subdomain?: string, offset?: int, priority?: int
+     *     }
+     * >
      */
     protected function loadRoutesOptions(?string $verb = null): array
     {
