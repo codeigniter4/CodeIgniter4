@@ -118,7 +118,8 @@ Explanation of Values:
 **database**    The name of the database you want to connect to.
 
                 .. note:: CodeIgniter doesn't support dots (``.``) in the database, table, and column names.
-**DBDriver**    The database driver name. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name
+**DBDriver**    The database driver name. e.g.,: ``MySQLi``, ``Postgres``, etc. The case must match the driver name.
+                You can set a fully qualified classname to use your custom driver.
 **DBPrefix**    An optional table prefix which will added to the table name when running
                 :doc:`Query Builder <query_builder>` queries. This permits multiple CodeIgniter
                 installations to share one database.
