@@ -125,7 +125,7 @@ Explanation of Values:
 **pConnect**    true/false (boolean) - Whether to use a persistent connection.
 **DBDebug**     true/false (boolean) - Whether to throw exceptions or not when database errors occur.
 **charset**     The character set used in communicating with the database.
-**DBCollat**    The character collation used in communicating with the database (``MySQLi`` only)
+**DBCollat**    The character collation used in communicating with the database (``MySQLi`` only).
 **swapPre**     A default table prefix that should be swapped with ``DBPrefix``. This is useful for distributed
                 applications where you might run manually written queries, and need the prefix to still be
                 customizable by the end user.
