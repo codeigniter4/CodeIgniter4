@@ -1,0 +1,78 @@
+Version 4.4.0
+#############
+
+Release Date: Unreleased
+
+**4.4.0 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+Highlights
+**********
+
+- TBD
+
+BREAKING
+********
+
+Behavior Changes
+================
+
+Interface Changes
+=================
+
+Method Signature Changes
+========================
+
+Enhancements
+************
+
+Commands
+========
+
+Testing
+=======
+
+Database
+========
+
+Query Builder
+-------------
+
+Forge
+-----
+
+Others
+------
+
+Model
+=====
+
+Libraries
+=========
+
+Helpers and Functions
+=====================
+
+Others
+======
+- **View:** Added optional 2nd argument on ``renderSection('page_title', true)`` to prevent from auto cleans the data after displaying. See ([#7126](https://github.com/codeigniter4/CodeIgniter4/pull/7126)) for details.
+
+
+Message Changes
+***************
+
+Changes
+*******
+
+Deprecations
+************
+
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.
