@@ -1,0 +1,22 @@
+Version 4.3.2
+#############
+
+Release Date: Unreleased
+
+**4.3.2 release of CodeIgniter4**
+
+.. contents::
+    :local:
+    :depth: 3
+
+Deprecations
+************
+
+- ``Filters::$arguments`` and ``Filters::getArguments()`` are deprecated.
+
+Bugs Fixed
+**********
+
+See the repo's
+`CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_
+for a complete list of bugs fixed.
