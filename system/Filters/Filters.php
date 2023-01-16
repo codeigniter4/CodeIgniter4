@@ -63,7 +63,7 @@ class Filters
      * The processed filters that will
      * be used to check against.
      *
-     * @var array
+     * @var array<string, array>
      */
     protected $filters = [
         'before' => [],
@@ -74,7 +74,7 @@ class Filters
      * The collection of filters' class names that will
      * be used to execute in each position.
      *
-     * @var array
+     * @var array<string, array>
      */
     protected $filtersClass = [
         'before' => [],
@@ -84,14 +84,16 @@ class Filters
     /**
      * Any arguments to be passed to filters.
      *
-     * @var array
+     * @var array<string, array<int, string>> [name => params]
+     * @phpstan-var array<string, list<string>>
      */
     protected $arguments = [];
 
     /**
      * Any arguments to be passed to filtersClass.
      *
-     * @var array
+     * @var array<string, array|null> [classname => arguments]
+     * @phpstan-var array<class-string, array<string, list<string>>|null>
      */
     protected $argumentsClass = [];
 
@@ -367,6 +369,8 @@ class Filters
      * Filters can have "arguments". This is done by placing a colon immediately
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
+     *
+     * @params array<string> $names Filter names
      *
      * @return Filters
      */
