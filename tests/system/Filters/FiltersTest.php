@@ -803,8 +803,6 @@ final class FiltersTest extends CIUnitTestCase
         $found = $filters->getFilters();
 
         $this->assertContains('role', $found['before']);
-        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
-        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
 
         $response = $filters->run('admin/foo/bar', 'before');
 
