@@ -172,7 +172,10 @@ class Filters
             }
 
             if ($position === 'before') {
-                $result = $class->before($this->request, $this->argumentsClass[$className] ?? null);
+                $result = $class->before(
+                    $this->request,
+                    $this->argumentsClass[$className] ?? null
+                );
 
                 if ($result instanceof RequestInterface) {
                     $this->request = $result;
@@ -195,7 +198,11 @@ class Filters
             }
 
             if ($position === 'after') {
-                $result = $class->after($this->request, $this->response, $this->argumentsClass[$className] ?? null);
+                $result = $class->after(
+                    $this->request,
+                    $this->response,
+                    $this->argumentsClass[$className] ?? null
+                );
 
                 if ($result instanceof ResponseInterface) {
                     $this->response = $result;
