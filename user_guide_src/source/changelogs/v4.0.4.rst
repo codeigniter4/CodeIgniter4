@@ -9,6 +9,11 @@ Release Date: July 15, 2020
     :local:
     :depth: 2
 
+BREAKING
+--------
+
+- Added ``$arguments`` parameter to ``after()`` and ``before()`` in ``FilterInterface``. This is a breaking change, so all code implementing the ``FilterInterface`` must be updated.
+
 Enhancements
 ------------
 
@@ -59,5 +64,4 @@ Bugs Fixed
 - Fixed bug in Image GD handler that would try to compress images twice in certain cases
 - Ensure get translation output logic work on selected locale, dashed locale, and fallback "en"
 - Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql
-- Added ``$arguments`` parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated
 - Fixed a bug where filter arguments were not passed to after()
