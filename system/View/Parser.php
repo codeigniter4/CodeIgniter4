@@ -257,7 +257,9 @@ class Parser extends View
      */
     protected function parseSingle(string $key, string $val): array
     {
-        $pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key, '#') . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?' . $this->rightDelimiter . '#ums';
+        $pattern = '#' . $this->leftDelimiter . '!?\s*' . preg_quote($key, '#')
+            . '(?(?=\s*\|\s*)(\s*\|*\s*([|\w<>=\(\),:.\-\s\+\\\\/]+)*\s*))(\s*)!?'
+            . $this->rightDelimiter . '#ums';
 
         return [$pattern => $val];
     }
