@@ -44,9 +44,13 @@ Do one of the following:
 
 E.g.::
 
-    if (strtolower($this->request->getMethod()) !== 'post') {
+    if (! $this->request->is('post')) {
         return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
     }
+
+.. note:: The :ref:`$this->request->is() <incomingrequest-is>` method can be used since v4.3.0.
+    In previous versions, you need to use
+    ``if (strtolower($this->request->getMethod()) !== 'post')``.
 
 When Auto-Routing is Enabled
 ----------------------------
@@ -55,7 +59,7 @@ When Auto-Routing is Enabled
 
 E.g.::
 
-    if (strtolower($this->request->getMethod()) !== 'post') {
+    if (! $this->request->is('post')) {
         return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
     }
 

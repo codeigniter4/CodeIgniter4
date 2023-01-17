@@ -121,6 +121,10 @@ this code and save it to your **app/Controllers/** folder:
 
 .. literalinclude:: validation/001.php
 
+.. note:: The :ref:`$this->request->is() <incomingrequest-is>` method can be used since v4.3.0.
+    In previous versions, you need to use
+    ``if (strtolower($this->request->getMethod()) !== 'post')``.
+
 The Routes
 ==========
 

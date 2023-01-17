@@ -10,7 +10,7 @@ class Form extends BaseController
 
     public function index()
     {
-        if (strtolower($this->request->getMethod()) !== 'post') {
+        if (! $this->request->is('post')) {
             return view('signup');
         }
 
