@@ -183,15 +183,14 @@ if (! function_exists('uri_string')) {
     /**
      * URL String
      *
-     * Returns the path part of the current URL
-     *
-     * @param bool $relative Whether the resulting path should be relative to baseURL
+     * Returns the path part (relative to baseURL) of the current URL
      */
-    function uri_string(bool $relative = false): string
+    function uri_string(): string
     {
-        return $relative
-            ? ltrim(Services::request()->getPath(), '/')
-            : Services::request()->getUri()->getPath();
+        // The value of Services::request()->getUri()->getPath() is overridden
+        // by IncomingRequest constructor. If we use it here, the current tests
+        // in CurrentUrlTest will fail.
+        return ltrim(Services::request()->getPath(), '/');
     }
 }
 
@@ -583,7 +582,7 @@ if (! function_exists('url_is')) {
     {
         // Setup our regex to allow wildcards
         $path        = '/' . trim(str_replace('*', '(\S)*', $path), '/ ');
-        $currentPath = '/' . trim(uri_string(true), '/ ');
+        $currentPath = '/' . trim(uri_string(), '/ ');
 
         return (bool) preg_match("|^{$path}$|", $currentPath, $matches);
     }
