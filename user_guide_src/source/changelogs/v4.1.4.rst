@@ -57,3 +57,7 @@ BREAKING
     * ``CodeIgniter\Session\Handlers\FileHandler``
     * ``CodeIgniter\Session\Handlers\MemcachedHandler``
     * ``CodeIgniter\Session\Handlers\RedisHandler``
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of changes.

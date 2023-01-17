@@ -65,3 +65,7 @@ Bugs Fixed
 - Ensure get translation output logic work on selected locale, dashed locale, and fallback "en".
 - Fix ``is_unique``/``is_not_unique`` validation called on POST/PUT via API in PostgreSQL.
 - Fixed a bug where filter arguments were not passed to ``after()``.
+
+See the repo's
+`CHANGELOG_4.0.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.0.md>`_
+for a complete list of bugs fixed.
