@@ -1,5 +1,5 @@
 # Disable directory browsing
-Options All -Indexes
+Options -Indexes
 
 # ----------------------------------------------------------------------
 # Rewrite engine
