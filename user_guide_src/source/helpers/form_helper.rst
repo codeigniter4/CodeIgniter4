@@ -30,7 +30,7 @@ Escaping Field Values
 You may need to use HTML and characters such as quotes within your form
 elements. In order to do that safely, you'll need to use
 :doc:`common function <../general/common_functions>`
-:func:`esc()`.
+:php:func:`esc()`.
 
 Consider the following example:
 
@@ -103,7 +103,7 @@ The following functions are available:
 
             <form action="http://example.com/index.php/email/send" class="email" id="myform" method="post" accept-charset="utf-8">
 
-        If CSRF filter is turned on ``form_open()`` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
+        If :ref:`CSRF <cross-site-request-forgery>` filter is turned on ``form_open()`` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
 
         .. literalinclude:: form_helper/007.php
 
