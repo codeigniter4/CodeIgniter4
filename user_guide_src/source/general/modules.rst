@@ -208,7 +208,7 @@ Seeds
 Seed files can be used from both the CLI and called from within other seed files as long as the full namespace
 is provided. If calling on the CLI, you will need to provide double backslashes::
 
-    > php public/index.php migrations seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder
+    > php spark db:seed Acme\\Blog\\Database\\Seeds\\TestPostSeeder
 
 Helpers
 =======
