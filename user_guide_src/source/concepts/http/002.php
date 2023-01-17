@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\Response;
 
-$response = service('response');
+$response = response();
 
 $response->setStatusCode(Response::HTTP_OK);
 $response->setBody($output);
