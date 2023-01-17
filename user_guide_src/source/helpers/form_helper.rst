@@ -9,25 +9,28 @@ forms.
     :local:
     :depth: 2
 
+*************
 Configuration
-=============
+*************
 
-Since ``v4.3.0``, void HTML elements (e.g. ``<input>``) in ``form_helper`` functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
+Since v4.3.0, void HTML elements (e.g. ``<input>``) in ``form_helper`` functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
 
+*******************
 Loading this Helper
-===================
+*******************
 
 This helper is loaded using the following code:
 
 .. literalinclude:: form_helper/001.php
 
-Escaping field values
-=====================
+*********************
+Escaping Field Values
+*********************
 
 You may need to use HTML and characters such as quotes within your form
 elements. In order to do that safely, you'll need to use
 :doc:`common function <../general/common_functions>`
-:func:`esc()`.
+:php:func:`esc()`.
 
 Consider the following example:
 
@@ -37,7 +40,7 @@ Since the above string contains a set of quotes, it will cause the form
 to break. The :php:func:`esc()` function converts HTML special
 characters so that it can be used safely::
 
-    <input type="text" name="myfield" value="<?= esc($string) ?>" />
+    <input type="text" name="myfield" value="<?= esc($string) ?>">
 
 .. note:: If you use any of the form helper functions listed on this page,
     and you pass values as an associative array,
@@ -45,8 +48,9 @@ characters so that it can be used safely::
     to call this function. Use it only if you are creating your own
     form elements, which you would pass as strings.
 
+*******************
 Available Functions
-===================
+*******************
 
 The following functions are available:
 
@@ -99,14 +103,14 @@ The following functions are available:
 
             <form action="http://example.com/index.php/email/send" class="email" id="myform" method="post" accept-charset="utf-8">
 
-        If CSRF filter is turned on ``form_open()`` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
+        If :ref:`CSRF <cross-site-request-forgery>` filter is turned on ``form_open()`` will generate CSRF field at the beginning of the form. You can specify ID of this field by passing csrf_id as one of the ``$attribute`` array:
 
         .. literalinclude:: form_helper/007.php
 
         will return::
 
             <form action="http://example.com/index.php/u/sign-up" method="post" accept-charset="utf-8">
-            <input type="hidden" id="my-id" name="csrf_field" value="964ede6e0ae8a680f7b8eab69136717d" />
+            <input type="hidden" id="my-id" name="csrf_field" value="964ede6e0ae8a680f7b8eab69136717d">
 
         .. note:: To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page. In most cases it is requested using the ``GET`` method.
 
@@ -122,8 +126,8 @@ The following functions are available:
         The above example would create a form similar to this::
 
             <form action="http://example.com/index.php/email/send" method="post" accept-charset="utf-8">
-                <input type="hidden" name="username" value="Joe" />
-                <input type="hidden" name="member_id" value="234" />
+                <input type="hidden" name="username" value="Joe">
+                <input type="hidden" name="member_id" value="234">
 
 .. php:function:: form_open_multipart([$action = ''[, $attributes = ''[, $hidden = []]]])
 
@@ -457,7 +461,7 @@ The following functions are available:
 
     Example::
 
-        <input type="text" name="quantity" value="<?= set_value('quantity', '0') ?>" size="50" />
+        <input type="text" name="quantity" value="<?= set_value('quantity', '0') ?>" size="50">
 
     The above form will show "0" when loaded for the first time.
 
@@ -500,8 +504,8 @@ The following functions are available:
 
     Example::
 
-        <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?> />
-        <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?> />
+        <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?>>
+        <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?>>
 
 .. php:function:: set_radio($field[, $value = ''[, $default = false]])
 
@@ -516,8 +520,8 @@ The following functions are available:
 
     Example::
 
-        <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?> />
-        <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?> />
+        <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?>>
+        <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?>>
 
 .. php:function:: validation_errors()
 
