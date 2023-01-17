@@ -508,7 +508,10 @@ class Parser extends View
         // Replace the content in the template
         return preg_replace_callback($pattern, function ($matches) use ($content, $escape) {
             // Check for {! !} syntax to not escape this one.
-            if (strpos($matches[0], '{!') === 0 && substr($matches[0], -2) === '!}') {
+            if (
+                strpos($matches[0], $this->leftDelimiter . '!') === 0
+                && substr($matches[0], -1 - strlen($this->rightDelimiter)) === '!' . $this->rightDelimiter
+            ) {
                 $escape = false;
             }
 
