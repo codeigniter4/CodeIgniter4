@@ -605,6 +605,19 @@ final class ParserTest extends CIUnitTestCase
         $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
     }
 
+    public function testParserNoEscapeAndDelimiterChange()
+    {
+        $this->parser->setDelimiters('{{', '}}');
+
+        $data = [
+            'title' => '<script>Heroes</script>',
+        ];
+        $this->parser->setData($data);
+
+        $template = '{{! title !}}';
+        $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
+    }
+
     public function testIgnoresComments()
     {
         $data = [
