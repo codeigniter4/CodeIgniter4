@@ -37,7 +37,7 @@ Since the above string contains a set of quotes, it will cause the form
 to break. The :php:func:`esc()` function converts HTML special
 characters so that it can be used safely::
 
-    <input type="text" name="myfield" value="<?= esc($string) ?>" />
+    <input type="text" name="myfield" value="<?= esc($string) ?>">
 
 .. note:: If you use any of the form helper functions listed on this page,
     and you pass values as an associative array,
@@ -106,7 +106,7 @@ The following functions are available:
         will return::
 
             <form action="http://example.com/index.php/u/sign-up" method="post" accept-charset="utf-8">
-            <input type="hidden" id="my-id" name="csrf_field" value="964ede6e0ae8a680f7b8eab69136717d" />
+            <input type="hidden" id="my-id" name="csrf_field" value="964ede6e0ae8a680f7b8eab69136717d">
 
         .. note:: To use auto-generation of CSRF field, you need to turn CSRF filter on to the form page. In most cases it is requested using the ``GET`` method.
 
@@ -122,8 +122,8 @@ The following functions are available:
         The above example would create a form similar to this::
 
             <form action="http://example.com/index.php/email/send" method="post" accept-charset="utf-8">
-                <input type="hidden" name="username" value="Joe" />
-                <input type="hidden" name="member_id" value="234" />
+                <input type="hidden" name="username" value="Joe">
+                <input type="hidden" name="member_id" value="234">
 
 .. php:function:: form_open_multipart([$action = ''[, $attributes = ''[, $hidden = []]]])
 
@@ -457,7 +457,7 @@ The following functions are available:
 
     Example::
 
-        <input type="text" name="quantity" value="<?= set_value('quantity', '0') ?>" size="50" />
+        <input type="text" name="quantity" value="<?= set_value('quantity', '0') ?>" size="50">
 
     The above form will show "0" when loaded for the first time.
 
@@ -500,8 +500,8 @@ The following functions are available:
 
     Example::
 
-        <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?> />
-        <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?> />
+        <input type="checkbox" name="mycheck" value="1" <?= set_checkbox('mycheck', '1') ?>>
+        <input type="checkbox" name="mycheck" value="2" <?= set_checkbox('mycheck', '2') ?>>
 
 .. php:function:: set_radio($field[, $value = ''[, $default = false]])
 
@@ -516,8 +516,8 @@ The following functions are available:
 
     Example::
 
-        <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?> />
-        <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?> />
+        <input type="radio" name="myradio" value="1" <?= set_radio('myradio', '1', true) ?>>
+        <input type="radio" name="myradio" value="2" <?= set_radio('myradio', '2') ?>>
 
 .. php:function:: validation_errors()
 
