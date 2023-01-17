@@ -286,7 +286,7 @@ trait FeatureTestTrait
     {
         $path    = URI::removeDotSegments($path);
         $config  = config(App::class);
-        $request = Services::request($config, true);
+        $request = Services::request($config, false);
 
         // $path may have a query in it
         $parts                   = explode('?', $path);
