@@ -17,7 +17,7 @@ additional functionality that not every site will need or want.
 Shield
 ******
 
-`CodeIgniter Shield <https://github.com/codeigniter4/shield>`_ is an authentication
+`CodeIgniter Shield <https://codeigniter4.github.io/shield/>`_ is an authentication
 and authorization framework for CodeIgniter 4. It is designed to be secure, flexible,
 and easily extendable to meet the needs of many different types of websites.
 Among the many features, it includes:
