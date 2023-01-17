@@ -337,10 +337,16 @@ Otherwise, the CSRF protection may be bypassed.</p>
 <li><p>Check the request method in the controller method before processing.</p></li>
 </ol>
 <p>E.g.:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strtolower</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="o">!==</span> <span class="s1">&#39;post&#39;</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;Method Not Allowed&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="../incoming/incomingrequest.html#incomingrequest-is"><span class="std std-ref">$this-&gt;request-&gt;is()</span></a> method can be used since v4.3.0.
+In previous versions, you need to use
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(strtolower($this-&gt;request-&gt;getMethod())</span> <span class="pre">!==</span> <span class="pre">'post')</span></code>.</p>
 </div>
 </section>
 <section id="when-auto-routing-is-enabled">
@@ -349,7 +355,7 @@ Otherwise, the CSRF protection may be bypassed.</p>
 <li><p>Check the request method in the controller method before processing.</p></li>
 </ol>
 <p>E.g.:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">strtolower</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="o">!==</span> <span class="s1">&#39;post&#39;</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">405</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;Method Not Allowed&#39;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
