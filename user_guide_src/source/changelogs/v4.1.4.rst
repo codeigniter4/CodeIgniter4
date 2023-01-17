@@ -12,8 +12,8 @@ Release Date: September 6, 2021
 This release focuses on code style. All changes (except those noted below) are cosmetic to bring the code in line with the new
 `CodeIgniter Coding Standard <https://github.com/CodeIgniter/coding-standard>`_ (based on PSR-12).
 
-Breaking Changes
-----------------
+BREAKING
+--------
 
 - The following methods were changed from "public" to "protected" to match their parent class methods and better align with their uses:
 
