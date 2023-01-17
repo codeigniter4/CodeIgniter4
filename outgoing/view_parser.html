@@ -534,29 +534,31 @@ an associative array of values, like a record from a database:</p>
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;blog_title&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Title&#39;</span><span class="p">,</span>
     <span class="s1">&#39;blog_heading&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;My Blog Heading&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;blog_entry&#39;</span>   <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Body 1&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;blog_entries&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s1">&#39;title&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Title 1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;body&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Body 1&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
     <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">return</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;blog_template&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>The value for the pseudo-variable <code class="docutils literal notranslate"><span class="pre">blog_entry</span></code> is an associative
+<p>The value for the pseudo-variable <code class="docutils literal notranslate"><span class="pre">blog_entries</span></code> is an associative
 array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.</p>
 <p>A <strong>blog_template.php</strong> that might work for the above:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">blog_title</span><span class="p">}</span> <span class="o">-</span> <span class="p">{</span><span class="nx">blog_heading</span><span class="p">}</span><span class="o">&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
-<span class="p">{</span><span class="nx">blog_entry</span><span class="p">}</span>
+<span class="p">{</span><span class="nx">blog_entries</span><span class="p">}</span>
     <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
         <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">title</span><span class="p">}</span><span class="o">&lt;/</span><span class="nx">h2</span><span class="o">&gt;</span>
         <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">body</span><span class="p">}</span><span class="o">&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
     <span class="o">&lt;/</span><span class="nx">div</span><span class="o">&gt;</span>
-<span class="p">{</span><span class="o">/</span><span class="nx">blog_entry</span><span class="p">}</span>
+<span class="p">{</span><span class="o">/</span><span class="nx">blog_entries</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>If you would like the other pseudo-variables accessible inside the <code class="docutils literal notranslate"><span class="pre">blog_entry</span></code>
+<p>If you would like the other pseudo-variables accessible inside the <code class="docutils literal notranslate"><span class="pre">blog_entries</span></code>
 scope, then make sure that the <code class="docutils literal notranslate"><span class="pre">cascadeData</span></code> option is set to true.</p>
 </section>
 <section id="comments">
@@ -580,11 +582,13 @@ data pairs into the inner substitution.</p>
 <p>The following example is not impacted by cascading:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;{name} lives in {location}{city} on {planet}{/location}.&#39;</span><span class="p">;</span>
+<span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;{name} lives in {locations}{city} on {planet}{/locations}.&#39;</span><span class="p">;</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;locations&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">return</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">);</span>
@@ -594,11 +598,13 @@ data pairs into the inner substitution.</p>
 <p>This example gives different results, depending on cascading:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;{location}{name} lives in {city} on {planet}{/location}.&#39;</span><span class="p">;</span>
+<span class="nv">$template</span> <span class="o">=</span> <span class="s1">&#39;{locations}{name} lives in {city} on {planet}{/locations}.&#39;</span><span class="p">;</span>
 
 <span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;name&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;location&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;George&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;locations&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;city&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Red City&#39;</span><span class="p">,</span> <span class="s1">&#39;planet&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Mars&#39;</span><span class="p">],</span>
+    <span class="p">],</span>
 <span class="p">];</span>
 
 <span class="k">return</span> <span class="nv">$parser</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderString</span><span class="p">(</span><span class="nv">$template</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;cascadeData&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">]);</span>
