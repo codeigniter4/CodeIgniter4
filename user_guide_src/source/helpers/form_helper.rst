@@ -9,20 +9,23 @@ forms.
     :local:
     :depth: 2
 
+*************
 Configuration
-=============
+*************
 
 Since v4.3.0, void HTML elements (e.g. ``<input>``) in ``form_helper`` functions have been changed to be HTML5-compatible by default and if you need to be compatible with XHTML, you must set the ``$html5`` property in **app/Config/DocTypes.php** to ``false``.
 
+*******************
 Loading this Helper
-===================
+*******************
 
 This helper is loaded using the following code:
 
 .. literalinclude:: form_helper/001.php
 
-Escaping field values
-=====================
+*********************
+Escaping Field Values
+*********************
 
 You may need to use HTML and characters such as quotes within your form
 elements. In order to do that safely, you'll need to use
@@ -45,8 +48,9 @@ characters so that it can be used safely::
     to call this function. Use it only if you are creating your own
     form elements, which you would pass as strings.
 
+*******************
 Available Functions
-===================
+*******************
 
 The following functions are available:
 
