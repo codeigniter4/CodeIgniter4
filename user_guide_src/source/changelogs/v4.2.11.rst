@@ -23,6 +23,11 @@ BREAKING
   :ref:`sessions-memcachedhandler-driver` and :ref:`sessions-redishandler-driver`
   has changed. See :ref:`Upgrading Guide <upgrade-4211-session-key>`.
 
+Enhancements
+************
+
+- Full support for PHP 8.2.
+
 Bugs Fixed
 **********
 
