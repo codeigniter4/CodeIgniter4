@@ -600,7 +600,7 @@ final class ParserTest extends CIUnitTestCase
             'title' => '<script>Heroes</script>',
         ];
 
-        $template = '{! title!}';
+        $template = '{! title !}';
         $this->parser->setData($data);
         $this->assertSame('<script>Heroes</script>', $this->parser->renderString($template));
     }
