@@ -174,6 +174,51 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expectedBinds, $builder->getBinds());
     }
 
+    public function testWhereValueRawSql()
+    {
+        $sql = $this->db->table('auth_bearer')
+            ->select('*')
+            ->where('expires', new RawSql('DATE_ADD(NOW(), INTERVAL 2 HOUR)'))
+            ->getCompiledSelect(true);
+
+        $expected = <<<'SQL'
+            SELECT *
+            FROM "auth_bearer"
+            WHERE "expires" = DATE_ADD(NOW(), INTERVAL 2 HOUR)
+            SQL;
+        $this->assertSame($expected, $sql);
+    }
+
+    public function testWhereKeyAndValueRawSql()
+    {
+        $sql = $this->db->table('auth_bearer')
+            ->select('*')
+            ->where(new RawSql('CURRENT_TIMESTAMP()'), new RawSql('DATE_ADD(column, INTERVAL 2 HOUR)'))
+            ->getCompiledSelect(true);
+
+        $expected = <<<'SQL'
+            SELECT *
+            FROM "auth_bearer"
+            WHERE CURRENT_TIMESTAMP() = DATE_ADD(column, INTERVAL 2 HOUR)
+            SQL;
+        $this->assertSame($expected, $sql);
+    }
+
+    public function testWhereKeyAndValueRawSqlWithOperator()
+    {
+        $sql = $this->db->table('auth_bearer')
+            ->select('*')
+            ->where(new RawSql('CURRENT_TIMESTAMP() >='), new RawSql('DATE_ADD(column, INTERVAL 2 HOUR)'))
+            ->getCompiledSelect(true);
+
+        $expected = <<<'SQL'
+            SELECT *
+            FROM "auth_bearer"
+            WHERE CURRENT_TIMESTAMP() >= DATE_ADD(column, INTERVAL 2 HOUR)
+            SQL;
+        $this->assertSame($expected, $sql);
+    }
+
     public function testWhereValueSubQuery()
     {
         $expectedSQL = 'SELECT * FROM "neworder" WHERE "advance_amount" < (SELECT MAX(advance_amount) FROM "orders" WHERE "id" > 2)';
