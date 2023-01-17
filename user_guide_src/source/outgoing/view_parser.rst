@@ -200,21 +200,21 @@ an associative array of values, like a record from a database:
 
 .. literalinclude:: view_parser/008.php
 
-The value for the pseudo-variable ``blog_entry`` is an associative
+The value for the pseudo-variable ``blog_entries`` is an associative
 array. The key/value pairs defined inside it will be exposed inside
 the variable pair loop for that variable.
 
 A **blog_template.php** that might work for the above::
 
     <h1>{blog_title} - {blog_heading}</h1>
-    {blog_entry}
+    {blog_entries}
         <div>
             <h2>{title}</h2>
             <p>{body}</p>
         </div>
-    {/blog_entry}
+    {/blog_entries}
 
-If you would like the other pseudo-variables accessible inside the ``blog_entry``
+If you would like the other pseudo-variables accessible inside the ``blog_entries``
 scope, then make sure that the ``cascadeData`` option is set to true.
 
 Comments

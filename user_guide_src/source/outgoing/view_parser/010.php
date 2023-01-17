@@ -1,10 +1,12 @@
 <?php
 
-$template = '{location}{name} lives in {city} on {planet}{/location}.';
+$template = '{locations}{name} lives in {city} on {planet}{/locations}.';
 
 $data = [
-    'name'     => 'George',
-    'location' => ['city' => 'Red City', 'planet' => 'Mars'],
+    'name'      => 'George',
+    'locations' => [
+        ['city' => 'Red City', 'planet' => 'Mars'],
+    ],
 ];
 
 return $parser->setData($data)->renderString($template, ['cascadeData' => false]);
