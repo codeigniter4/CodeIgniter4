@@ -1259,6 +1259,8 @@ abstract class BaseModel
      * @return int|string
      *
      * @throws ModelException
+     *
+     * @deprecated The parameter $userData are deprecated.
      */
     protected function setDate(?int $userData = null)
     {
@@ -1291,10 +1293,10 @@ abstract class BaseModel
                 return $value;
 
             case 'datetime':
-                return (string) Time::createFromTimestamp($value, app_timezone());
+                return date('Y-m-d H:i:s', $value);
 
             case 'date':
-                return (string) Time::createFromTimestamp($value, app_timezone());
+                return date('Y-m-d', $value);
 
             default:
                 throw ModelException::forNoDateFormat(static::class);
