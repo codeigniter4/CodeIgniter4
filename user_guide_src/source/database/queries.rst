@@ -56,16 +56,25 @@ fetchable results.
 Working with Database Prefixes Manually
 ***************************************
 
+$db->prefixTable()
+==================
+
 If you have configured a database prefix and would like to prepend it to
 a table name for use in a native SQL query for example, then you can use
 the following:
 
 .. literalinclude:: queries/004.php
 
+$db->setPrefix()
+================
+
 If for any reason you would like to change the prefix programmatically
 without needing to create a new connection you can use this method:
 
 .. literalinclude:: queries/005.php
+
+$db->getPrefix()
+================
 
 You can get the current prefix any time with this method:
 
@@ -74,6 +83,9 @@ You can get the current prefix any time with this method:
 **********************
 Protecting Identifiers
 **********************
+
+$db->protectIdentifiers()
+=========================
 
 In many databases, it is advisable to protect table and field names - for
 example with backticks in MySQL. **Query Builder queries are
