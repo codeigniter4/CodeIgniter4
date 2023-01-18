@@ -189,6 +189,21 @@ final class WhereTest extends CIUnitTestCase
         $this->assertSame($expected, $sql);
     }
 
+    public function testWhereKeyOnlyRawSql()
+    {
+        $sql = $this->db->table('auth_bearer')
+            ->select('*')
+            ->where(new RawSql('DATE_ADD(NOW(), INTERVAL 2 HOUR)'), '2023-01-01')
+            ->getCompiledSelect(true);
+
+        $expected = <<<'SQL'
+            SELECT *
+            FROM "auth_bearer"
+            WHERE DATE_ADD(NOW(), INTERVAL 2 HOUR) = '2023-01-01'
+            SQL;
+        $this->assertSame($expected, $sql);
+    }
+
     public function testWhereKeyAndValueRawSql()
     {
         $sql = $this->db->table('auth_bearer')

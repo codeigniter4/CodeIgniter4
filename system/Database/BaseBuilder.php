@@ -737,7 +737,6 @@ class BaseBuilder
             } else {
                 $keyValue = [(string) $key => $value];
             }
-            $escape = false;
         } elseif (! is_array($key)) {
             $keyValue = [$key => $value];
         } else {
