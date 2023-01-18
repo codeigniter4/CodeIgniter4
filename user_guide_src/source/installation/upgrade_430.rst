@@ -231,6 +231,22 @@ The data returned has the following structure::
      * ]
      */
 
+Query Builder where() Change
+============================
+
+When you pass a **custom string** and the third parameter ``$escape = false``
+to :ref:`where() <query-builder-where>`, the following code worked in previous
+versions::
+
+    $where = 'CURRENT_TIMESTAMP() = DATE_ADD(column, INTERVAL 2 HOUR)';
+    $builder->where($where, '', false); // The second parameter is empty string.
+
+But it is a misuse and it does not work in v4.3.0. You need to pass ``null`` as
+the second parameter::
+
+    $where = 'CURRENT_TIMESTAMP() = DATE_ADD(column, INTERVAL 2 HOUR)';
+    $builder->where($where, null, false); // The second parameter is null.
+
 Breaking Enhancements
 *********************
 

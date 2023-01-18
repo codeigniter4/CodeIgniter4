@@ -275,6 +275,8 @@ Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` ins
 Looking for Specific Data
 *************************
 
+.. _query-builder-where:
+
 Where
 =====
 
@@ -329,6 +331,10 @@ methods:
     .. warning:: If you are using user-supplied data within the string, you MUST escape the values and protect the identifiers manually. Failure to do so could result in SQL injections.
 
         .. literalinclude:: query_builder/027.php
+
+    When you set the third parameter ``$escape`` to ``false``, set ``null`` as the second parameter:
+
+    .. literalinclude:: query_builder/120.php
 
 .. _query-builder-where-rawsql:
 
