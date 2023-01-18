@@ -443,7 +443,7 @@ class Validation implements ValidationInterface
             $ruleSet[$field]['errors'] = $errors;
         }
 
-        $this->setRules($ruleSet + $this->getRules(), $this->customErrors);
+        $this->setRules(array_merge($this->getRules(), $ruleSet), $this->customErrors);
 
         return $this;
     }
