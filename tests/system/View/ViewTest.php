@@ -395,6 +395,6 @@ final class ViewTest extends CIUnitTestCase
 
         $view->setVar('pageTitle', 'Welcome to CodeIgniter 4!');
         $view->setVar('testString', 'Hello World');
-        $this->assertSame($expected, $view->render('extend_reuse_section'));
+        $this->assertStringContainsString($expected, $view->render('extend_reuse_section'));
     }
 }

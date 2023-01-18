@@ -31,8 +31,9 @@ E.g. **app/Views/default.php**::
     </body>
     </html>
 
-The ``renderSection()`` method have two arguments ``$sectionName`` - the name of the section. That way any child views know
-what to name the content section. And ``$saveData`` - If true, saves data for subsequent calls, if false, cleans the data after displaying.
+The ``renderSection()`` method has two arguments: ``$sectionName`` and ``$saveData``. ``$sectionName`` is the name of
+the section used by any child view to name the content section. If the boolean argument ``$saveData`` is set to true,
+the method saves data for subsequent calls. Otherwise, the method cleans the data after displaying the contents.
 
 E.g. **app/Views/welcome_message.php**::
 
@@ -46,6 +47,8 @@ E.g. **app/Views/welcome_message.php**::
         <p><?= $this->renderSection('content') ?></p>
     </body>
     </html>
+
+.. note:: ``$saveData`` can be used since v4.4.0.
 
 **********************
 Using Layouts in Views
