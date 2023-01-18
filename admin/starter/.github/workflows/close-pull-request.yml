@@ -13,6 +13,6 @@ jobs:
         with:
           comment: >
             Thank you for your pull request. However, you have submitted your PR on a read-only
-            split of `codeigniter4/CodeIgniter4`. This repository, unfortunately, does
+            split of <code>codeigniter4/CodeIgniter4</code>. This repository, unfortunately, does
             not accept PRs. Please submit your PR at https://github.com/codeigniter4/CodeIgniter4
             repository.<br/><br/>Thank you.
