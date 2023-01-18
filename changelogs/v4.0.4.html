@@ -280,12 +280,19 @@
 <p><strong>4.0.4 release of CodeIgniter4</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#enhancements" id="id1">Enhancements</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id2">Bugs Fixed</a></p></li>
+<li><p><a class="reference internal" href="#breaking" id="id1">BREAKING</a></p></li>
+<li><p><a class="reference internal" href="#enhancements" id="id2">Enhancements</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id3">Bugs Fixed</a></p></li>
 </ul>
 </div>
+<section id="breaking">
+<h2><a class="toc-backref" href="#id1">BREAKING</a><a class="headerlink" href="#breaking" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">after()</span></code> and <code class="docutils literal notranslate"><span class="pre">before()</span></code> in <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code>. This is a breaking change, so all code implementing the <code class="docutils literal notranslate"><span class="pre">FilterInterface</span></code> must be updated.</p></li>
+</ul>
+</section>
 <section id="enhancements">
-<h2><a class="toc-backref" href="#id1">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id2">Enhancements</a><a class="headerlink" href="#enhancements" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>The location for the SQLite3 database has changed and by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</p></li>
 <li><p>New CLI command: <code class="docutils literal notranslate"><span class="pre">cache:clear</span></code> that will destroy all data within the current cache engine.</p></li>
@@ -299,11 +306,11 @@
 <li><p>New <a class="reference internal" href="../cli/spark_commands.html"><span class="doc">command() helper function</span></a> to programatically run your CLI commands. Useful for testing and cron jobs.</p></li>
 <li><p>New command, <code class="docutils literal notranslate"><span class="pre">make:seeder</span></code> to generate a <a class="reference internal" href="../dbmgmt/seeds.html"><span class="doc">Database Seed class</span></a> skeleton file.</p></li>
 <li><p>Colors now available on the CLI within Windows, as well as other Windows-related CLI improvements.</p></li>
-<li><p>New helper <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">mb_url_title</span></a> that functions like <code class="docutils literal notranslate"><span class="pre">url_title</span></code> but automatically escapes and extended URL characters.</p></li>
+<li><p>New helper <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">mb_url_title()</span></a> that functions like <code class="docutils literal notranslate"><span class="pre">url_title()</span></code> but automatically escapes and extended URL characters.</p></li>
 <li><p><a class="reference internal" href="../libraries/images.html"><span class="doc">Image library</span></a> now supports <code class="docutils literal notranslate"><span class="pre">webp</span></code> images.</p></li>
 <li><p>Added Unicode support for regular expressions in the Router.</p></li>
-<li><p>Added support for removing hidden folders in the <a class="reference internal" href="../helpers/filesystem_helper.html"><span class="doc">delete_files</span></a> helper</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fetchGlobal</span></code> in the Request class now supports applying filters to arrays of data, not just the first item.</p></li>
+<li><p>Added support for removing hidden folders in the <a class="reference internal" href="../helpers/filesystem_helper.html"><span class="doc">delete_files()</span></a> helper.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fetchGlobal()</span></code> in the Request class now supports applying filters to arrays of data, not just the first item.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">file</span></code> validation now works with arrays of files.</p></li>
 <li><p>URI class now supports a <code class="docutils literal notranslate"><span class="pre">setSilent()</span></code> method that will disable the throwing of Exceptions.</p></li>
 <li><p>New argument to <code class="docutils literal notranslate"><span class="pre">URI::getSegment()</span></code> that allows us to change the default value returned if nothing exists.</p></li>
@@ -313,30 +320,29 @@
 </ul>
 </section>
 <section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id2">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Fixed location for the SQLite3 database which by default will be now located in a <code class="docutils literal notranslate"><span class="pre">writable</span></code> folder instead of the <code class="docutils literal notranslate"><span class="pre">public</span></code> folder.</p></li>
-<li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">force_https</span></code> could add <code class="docutils literal notranslate"><span class="pre">https://</span></code> a second time.</p></li>
+<li><p>Fixed bug where <code class="docutils literal notranslate"><span class="pre">force_https()</span></code> could add <code class="docutils literal notranslate"><span class="pre">https://</span></code> a second time.</p></li>
 <li><p>Fixed a bug with CurlRequest that could result in incorrect “100 Continue” headers.</p></li>
-<li><p>Image::save() bug fixed when <code class="docutils literal notranslate"><span class="pre">$target</span></code> parameter was <code class="docutils literal notranslate"><span class="pre">null</span></code></p></li>
-<li><p>fixes for <code class="docutils literal notranslate"><span class="pre">set_checkbox()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_radio()</span></code> when the $default parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
-<li><p>fix for result object handling in Model class .</p></li>
-<li><p>fixed escape character SQLite database</p></li>
-<li><p>fix for inserts on Postgres and Entities when the primary key was null</p></li>
+<li><p>Image::save() bug fixed when <code class="docutils literal notranslate"><span class="pre">$target</span></code> parameter was <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p></li>
+<li><p>fixes for <code class="docutils literal notranslate"><span class="pre">set_checkbox()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_radio()</span></code> when the $default parameter is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
+<li><p>fix for result object handling in Model class.</p></li>
+<li><p>fixed escape character SQLite database.</p></li>
+<li><p>fix for inserts on Postgres and Entities when the primary key was null.</p></li>
 <li><p>CLI scripts can now correctly recognize dashes within arguments.</p></li>
-<li><p>CURLRequest now properly sets content length with multipart data</p></li>
-<li><p>Misc. stability improvements for the ImageMagick handler</p></li>
-<li><p>setting validation errors within a config file should now work</p></li>
+<li><p>CURLRequest now properly sets content length with multipart data.</p></li>
+<li><p>Misc. stability improvements for the ImageMagick handler.</p></li>
+<li><p>setting validation errors within a config file should now work.</p></li>
 <li><p>Unicode characters are not escaped when saving JSON from Entities.</p></li>
-<li><p>redirecting with a custom HTTP code should work correctly now</p></li>
-<li><p>Time::setTimezone now working correctly</p></li>
-<li><p>added full outer join support for Postgres</p></li>
+<li><p>redirecting with a custom HTTP code should work correctly now.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Time::setTimezone()</span></code> now working correctly.</p></li>
+<li><p>added full outer join support for Postgres.</p></li>
 <li><p>some cast items in the Entity (like array, json) were not being set correctly during a <code class="docutils literal notranslate"><span class="pre">fill()</span></code> process.</p></li>
-<li><p>Fixed bug in Image GD handler that would try to compress images twice in certain cases</p></li>
-<li><p>Ensure get translation output logic work on selected locale, dashed locale, and fallback “en”</p></li>
-<li><p>Fix is_unique/is_not_unique validation called on POST/PUT via API in Postgresql</p></li>
-<li><p>Added <code class="docutils literal notranslate"><span class="pre">$arguments</span></code> parameter to after() and before() in FilterInterface. This is a breaking change, so all code implementing the FilterInterface must be updated</p></li>
-<li><p>Fixed a bug where filter arguments were not passed to after()</p></li>
+<li><p>Fixed bug in Image GD handler that would try to compress images twice in certain cases.</p></li>
+<li><p>Ensure get translation output logic work on selected locale, dashed locale, and fallback “en”.</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">is_unique</span></code>/<code class="docutils literal notranslate"><span class="pre">is_not_unique</span></code> validation called on POST/PUT via API in PostgreSQL.</p></li>
+<li><p>Fixed a bug where filter arguments were not passed to <code class="docutils literal notranslate"><span class="pre">after()</span></code>.</p></li>
 </ul>
 </section>
 </section>
@@ -353,7 +359,7 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 17, 2023.
+      <span class="lastupdated">Last updated on Jan 18, 2023.
       </span></p>
   </div>
 
