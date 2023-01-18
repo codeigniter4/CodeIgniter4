@@ -80,6 +80,7 @@ You can get the current prefix any time with this method:
 
 .. literalinclude:: queries/006.php
 
+
 **********************
 Protecting Identifiers
 **********************
@@ -104,6 +105,7 @@ have a prefix specified in your database config file. To enable the
 prefixing set ``true`` (boolean) via the second parameter:
 
 .. literalinclude:: queries/008.php
+
 
 ***************
 Escaping Values
@@ -195,6 +197,7 @@ will return an array containing its code and message. Here's a quick
 example:
 
 .. literalinclude:: queries/015.php
+
 
 ****************
 Prepared Queries
