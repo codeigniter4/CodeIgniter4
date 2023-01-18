@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Working With HTTP Requests &mdash; CodeIgniter 4.3.1 documentation</title>
+  <title>Working with HTTP Requests &mdash; CodeIgniter 4.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/citheme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -79,7 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="autoloader.html">Autoloading Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="services.html">Services</a></li>
 <li class="toctree-l2"><a class="reference internal" href="factories.html">Factories</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Working With HTTP Requests</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Working with HTTP Requests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="security.html">Security Guidelines</a></li>
 </ul>
 </li>
@@ -264,7 +264,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">CodeIgniter4 Overview</a></li>
-      <li class="breadcrumb-item active">Working With HTTP Requests</li>
+      <li class="breadcrumb-item active">Working with HTTP Requests</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -274,7 +274,7 @@
            <div itemprop="articleBody">
              
   <section id="working-with-http-requests">
-<h1>Working With HTTP Requests<a class="headerlink" href="#working-with-http-requests" title="Permalink to this headline"></a></h1>
+<h1>Working with HTTP Requests<a class="headerlink" href="#working-with-http-requests" title="Permalink to this headline"></a></h1>
 <p>In order to get the most out of CodeIgniter, you need to have a basic understanding of how HTTP requests
 and responses work. Since this is what you work with while developing web applications, understanding the
 concepts behind HTTP is a <strong>must</strong> for all developers that want to be successful.</p>
@@ -347,9 +347,9 @@ is an object-oriented representation of the HTTP request. It provides everything
 
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\IncomingRequest</span><span class="p">;</span>
 
-<span class="nv">$request</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">);</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">request</span><span class="p">();</span>
 
-<span class="c1">// the URI being requested (i.e., /about)</span>
+<span class="c1">// the URI path being requested (i.e., /about)</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getUri</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getPath</span><span class="p">();</span>
 
 <span class="c1">// Retrieve $_GET and $_POST variables</span>
@@ -367,10 +367,12 @@ is an object-oriented representation of the HTTP request. It provides everything
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getServer</span><span class="p">(</span><span class="s1">&#39;Host&#39;</span><span class="p">);</span>
 
 <span class="c1">// Retrieve an HTTP Request header, with case-insensitive names</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">header</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">);</span>
 
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>  <span class="c1">// get, post, put, etc</span>
+<span class="c1">// Checks the HTTP method</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">is</span><span class="p">(</span><span class="s1">&#39;post&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The request class does a lot of work in the background for you, that you never need to worry about.
@@ -385,7 +387,7 @@ of the HTTP response. This gives you an easy and powerful way to construct your 
 
 <span class="k">use</span> <span class="nx">CodeIgniter\HTTP\Response</span><span class="p">;</span>
 
-<span class="nv">$response</span> <span class="o">=</span> <span class="nx">service</span><span class="p">(</span><span class="s1">&#39;response&#39;</span><span class="p">);</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nx">response</span><span class="p">();</span>
 
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_OK</span><span class="p">);</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="nv">$output</span><span class="p">);</span>
