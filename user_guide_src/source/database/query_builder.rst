@@ -332,10 +332,6 @@ methods:
 
         .. literalinclude:: query_builder/027.php
 
-    When you set the third parameter ``$escape`` to ``false``, set ``null`` as the second parameter:
-
-    .. literalinclude:: query_builder/120.php
-
 .. _query-builder-where-rawsql:
 
 5. RawSql
