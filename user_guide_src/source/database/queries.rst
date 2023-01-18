@@ -269,8 +269,10 @@ hasError()
 
 Returns boolean true/false if the last ``execute()`` call created any errors.
 
-getErrorCode() getErrorMessage()
---------------------------------
+getErrorCode()
+--------------
+getErrorMessage()
+-----------------
 
 If any errors were encountered these methods can be used to retrieve the error code and string.
 
@@ -283,8 +285,8 @@ Internally, all queries are processed and stored as instances of
 the parameters, otherwise preparing the query, and storing performance
 data about its query.
 
-getLastQuery()
-==============
+$db->getLastQuery()
+===================
 
 When you just need to retrieve the last Query object, use the
 ``getLastQuery()`` method:
