@@ -282,8 +282,8 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#enhancements" id="id1">Enhancements</a></p></li>
 <li><p><a class="reference internal" href="#changes" id="id2">Changes</a></p></li>
-<li><p><a class="reference internal" href="#bugs-fixed" id="id3">Bugs Fixed</a></p></li>
-<li><p><a class="reference internal" href="#deprecations" id="id4">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#deprecations" id="id3">Deprecations</a></p></li>
+<li><p><a class="reference internal" href="#bugs-fixed" id="id4">Bugs Fixed</a></p></li>
 </ul>
 </div>
 <section id="enhancements">
@@ -305,16 +305,8 @@
 <li><p>System messages defined in <strong>system/Language/en/</strong> are now strictly for internal framework use and are not covered by backwards compatibility (BC) promise. Users may use these messages in their applications but at their own risks.</p></li>
 </ul>
 </section>
-<section id="bugs-fixed">
-<h2><a class="toc-backref" href="#id3">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
-<ul class="simple">
-<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</p></li>
-<li><p>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> (in <strong>app/Config/Services.php</strong>) now extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code> to allow proper discovery of third-party services.</p></li>
-</ul>
-</section>
 <section id="deprecations">
-<h2><a class="toc-backref" href="#id4">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id3">Deprecations</a><a class="headerlink" href="#deprecations" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">BaseCommand::getPad()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">BaseCommand::setPad()</span></code>.</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Controller::loadHelpers()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">helper()</span></code> function.</p></li>
@@ -336,6 +328,17 @@
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">CodeIgniter\HTTP\Message::getHeaders()</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">headers()</span></code> to prepare for PSR-7</p></li>
 <li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">Config\Cache::$storePath</span></code> in favor of <code class="docutils literal notranslate"><span class="pre">Config\Cache::$file['storePath']</span></code></p></li>
 </ul>
+</section>
+<section id="bugs-fixed">
+<h2><a class="toc-backref" href="#id4">Bugs Fixed</a><a class="headerlink" href="#bugs-fixed" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Fixed a bug in <code class="docutils literal notranslate"><span class="pre">Entity</span></code> class where declaring class parameters was preventing data propagation to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array.</p></li>
+<li><p>Handling for the environment variable <code class="docutils literal notranslate"><span class="pre">encryption.key</span></code> has changed. Previously, explicit function calls, like <code class="docutils literal notranslate"><span class="pre">getenv('encryption.key')</span></code> or <code class="docutils literal notranslate"><span class="pre">env('encryption.key')</span></code> where the value has the special prefix <code class="docutils literal notranslate"><span class="pre">hex2bin:</span></code> returns an automatically converted binary string. This is now changed to just return the character string with the prefix. This change was due to incompatibility with handling binary strings in environment variables on Windows platforms. However, accessing <code class="docutils literal notranslate"><span class="pre">$key</span></code> using <code class="docutils literal notranslate"><span class="pre">Encryption</span></code> class config remains unchanged and still returns a binary string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Config\Services</span></code> (in <strong>app/Config/Services.php</strong>) now extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Config\BaseService</span></code> to allow proper discovery of third-party services.</p></li>
+</ul>
+<p>See the repo’s
+<a class="reference external" href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.0.md">CHANGELOG_4.0.md</a>
+for a complete list of bugs fixed.</p>
 </section>
 </section>
 
