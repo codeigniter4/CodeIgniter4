@@ -34,4 +34,6 @@ Bugs Fixed
 - Fixed a ``FileLocator::locateFile()`` bug where a similar namespace name could be replaced by another, causing a failure to find a file that exists.
 - Fixed a ``RedisHandler`` session class to use the correct config when used with a socket connection.
 
-See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
+See the repo's
+`CHANGELOG_4.2.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.2.md>`_
+for a complete list of bugs fixed.
