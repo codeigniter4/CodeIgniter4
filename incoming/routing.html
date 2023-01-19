@@ -536,6 +536,9 @@ routes. With the examples URLs from above:</p>
 </section>
 <section id="array-callable-syntax">
 <h3><a class="toc-backref" href="#id19">Array Callable Syntax</a><a class="headerlink" href="#array-callable-syntax" title="Permalink to this headline"></a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.2.0.</span></p>
+</div>
 <p>Since v4.2.0, you can use array callable syntax to specify the controller:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$routes</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">[</span><span class="nx">\App\Controllers\Home</span><span class="o">::</span><span class="na">class</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">]);</span>
 </pre></div>
@@ -929,6 +932,9 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 </section>
 <section id="classname-filter">
 <h5>Classname Filter<a class="headerlink" href="#classname-filter" title="Permalink to this headline"></a></h5>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.1.5.</span></p>
+</div>
 <p>You specify a filter classname for the filter value:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -938,6 +944,9 @@ See <a class="reference internal" href="#use-defined-routes-only"><span class="s
 </section>
 <section id="multiple-filters">
 <h5>Multiple Filters<a class="headerlink" href="#multiple-filters" title="Permalink to this headline"></a></h5>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.1.5.</span></p>
+</div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p><em>Multiple filters</em> is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See <a class="reference internal" href="../installation/upgrade_415.html#upgrade-415-multiple-filters-for-a-route"><span class="std std-ref">Multiple Filters for a Route</span></a> for the details.</p>
@@ -1167,6 +1176,9 @@ For an example use of lowering the priority see <a class="reference internal" hr
 </section>
 <section id="auto-routing-improved">
 <span id="id9"></span><h2><a class="toc-backref" href="#id41">Auto Routing (Improved)</a><a class="headerlink" href="#auto-routing-improved" title="Permalink to this headline"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.2.0.</span></p>
+</div>
 <p>Since v4.2.0, the new more secure Auto Routing has been introduced.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
