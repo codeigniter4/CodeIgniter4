@@ -128,7 +128,7 @@ You can use (migrate) with the following options:
 
 This example will migrate ``Acme\Blog`` namespace with any new migrations on the test database group::
 
-    > php spark migrate -g test -n 'Acme\Blog'
+    > php spark migrate -g test -n Acme\\Blog
 
 When using the ``--all`` option, it will scan through all namespaces attempting to find any migrations that have
 not been run. These will all be collected and then sorted as a group by date created. This should help
