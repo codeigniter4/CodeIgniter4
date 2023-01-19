@@ -119,6 +119,8 @@ redirect code to use instead of the default (``302``, "temporary redirect"):
 Specify HTTP Status Code in Your Exception
 ==========================================
 
+.. versionadded:: 4.3.0
+
 Since v4.3.0, you can specify the HTTP status code for your Exception class to implement
 ``HTTPExceptionInterface``.
 
@@ -128,6 +130,8 @@ When an exception implementing ``HTTPExceptionInterface`` is caught by CodeIgnit
 
 Specify Exit Code in Your Exception
 ===================================
+
+.. versionadded:: 4.3.0
 
 Since v4.3.0, you can specify the exit code for your Exception class to implement
 ``HasExitCodeInterface``.

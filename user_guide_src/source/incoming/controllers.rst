@@ -153,6 +153,8 @@ Auto-routing also will not work.
 Auto Routing (Improved)
 ************************
 
+.. versionadded:: 4.2.0
+
 Since v4.2.0, the new more secure Auto Routing has been introduced.
 
 .. note:: If you are familiar with Auto Routing, which was enabled by default
