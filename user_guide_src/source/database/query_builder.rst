@@ -148,6 +148,8 @@ escaping of fields may break them.
 RawSql
 ^^^^^^
 
+.. versionadded:: 4.2.0
+
 Since v4.2.0, ``$builder->select()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
 
 .. literalinclude:: query_builder/099.php
@@ -265,6 +267,8 @@ outer``, and ``right outer``.
 RawSql
 ^^^^^^
 
+.. versionadded:: 4.2.0
+
 Since v4.2.0, ``$builder->join()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
 
 .. literalinclude:: query_builder/102.php
@@ -334,6 +338,8 @@ methods:
 
 5. RawSql
 ^^^^^^^^^
+
+    .. versionadded:: 4.2.0
 
     Since v4.2.0, ``$builder->where()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
 
@@ -449,6 +455,8 @@ searches.
 
 3. RawSql
 ^^^^^^^^^
+
+    .. versionadded:: 4.2.0
 
     Since v4.2.0, ``$builder->like()`` accepts a ``CodeIgniter\Database\RawSql`` instance, which expresses raw SQL strings.
 

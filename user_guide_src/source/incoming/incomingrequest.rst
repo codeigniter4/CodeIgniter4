@@ -45,7 +45,7 @@ be checked with the ``isAJAX()`` and ``isCLI()`` methods:
 is()
 ====
 
-    .. versionadded:: 4.3.0
+.. versionadded:: 4.3.0
 
 Since v4.3.0, you can use the ``is()`` method. It returns boolean.
 

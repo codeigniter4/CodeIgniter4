@@ -151,6 +151,8 @@ will only match **product/123** and generate 404 errors for other example.
 Array Callable Syntax
 =====================
 
+.. versionadded:: 4.2.0
+
 Since v4.2.0, you can use array callable syntax to specify the controller:
 
 .. literalinclude:: routing/013.php
@@ -427,12 +429,16 @@ You may also supply arguments to be passed to the alias filter's ``before()`` an
 Classname Filter
 ^^^^^^^^^^^^^^^^
 
+.. versionadded:: 4.1.5
+
 You specify a filter classname for the filter value:
 
 .. literalinclude:: routing/036.php
 
 Multiple Filters
 ^^^^^^^^^^^^^^^^
+
+.. versionadded:: 4.1.5
 
 .. important:: *Multiple filters* is disabled by default. Because it breaks backward compatibility. If you want to use it, you need to configure. See :ref:`upgrade-415-multiple-filters-for-a-route` for the details.
 
@@ -603,6 +609,8 @@ For an example use of lowering the priority see :ref:`routing-priority`:
 
 Auto Routing (Improved)
 ***********************
+
+.. versionadded:: 4.2.0
 
 Since v4.2.0, the new more secure Auto Routing has been introduced.
 
