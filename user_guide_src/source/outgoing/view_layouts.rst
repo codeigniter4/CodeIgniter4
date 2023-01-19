@@ -12,6 +12,8 @@ any view being rendered. You could create different layouts to support one-colum
 blog archive pages, and more. Layouts are never directly rendered. Instead, you render a view, which
 specifies the layout that it wants to extend.
 
+.. _creating-a-layout:
+
 *****************
 Creating A Layout
 *****************
