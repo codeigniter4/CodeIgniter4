@@ -30,3 +30,7 @@ Bugs Fixed
 - Fixed a bug where CLI mode was not detected under ``cgi-fcgi``
 - Fixed a logic bug in Cookie construction
 - Fixed numerous issues in SQLite3's ``Forge`` class related to an incorrect attribute name
+
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.

@@ -68,4 +68,6 @@ And the following methods are deprecated:
 Bugs Fixed
 **********
 
-See the repo's `CHANGELOG.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/CHANGELOG.md>`_ for a complete list of bugs fixed.
+See the repo's
+`CHANGELOG_4.1.md <https://github.com/codeigniter4/CodeIgniter4/blob/develop/changelogs/CHANGELOG_4.1.md>`_
+for a complete list of bugs fixed.
