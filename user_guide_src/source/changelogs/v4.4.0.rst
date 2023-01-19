@@ -58,7 +58,7 @@ Helpers and Functions
 
 Others
 ======
-- **View:** Added optional 2nd argument on ``renderSection('page_title', true)`` to prevent from auto cleans the data after displaying. See :ref:`View Layouts <creating-a-layout>` for details.
+- **View:** Added optional 2nd parameter ``$saveData`` on ``renderSection()`` to prevent from auto cleans the data after displaying. See :ref:`View Layouts <creating-a-layout>` for details.
 
 
 Message Changes
