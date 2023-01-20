@@ -1095,8 +1095,6 @@ class URI
             $return[hex2bin($key)] = $value;
         }
 
-        $query = $params = null;
-
         return $return;
     }
 }
