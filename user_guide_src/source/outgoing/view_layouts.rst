@@ -12,6 +12,8 @@ any view being rendered. You could create different layouts to support one-colum
 blog archive pages, and more. Layouts are never directly rendered. Instead, you render a view, which
 specifies the layout that it wants to extend.
 
+.. _creating-a-layout:
+
 *****************
 Creating A Layout
 *****************
@@ -31,8 +33,24 @@ E.g. **app/Views/default.php**::
     </body>
     </html>
 
-The ``renderSection()`` method only has one argument - the name of the section. That way any child views know
-what to name the content section.
+The ``renderSection()`` method has two arguments: ``$sectionName`` and ``$saveData``. ``$sectionName`` is the name of
+the section used by any child view to name the content section. If the boolean argument ``$saveData`` is set to true,
+the method saves data for subsequent calls. Otherwise, the method cleans the data after displaying the contents.
+
+E.g. **app/Views/welcome_message.php**::
+
+    <!doctype html>
+    <html>
+    <head>
+        <title><?= $this->renderSection('page_title', true) ?></title>
+    </head>
+    <body>
+        <h1><?= $this->renderSection('page_title') ?><h1>
+        <p><?= $this->renderSection('content') ?></p>
+    </body>
+    </html>
+
+.. note:: ``$saveData`` can be used since v4.4.0.
 
 **********************
 Using Layouts in Views
