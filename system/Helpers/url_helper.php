@@ -542,7 +542,7 @@ if (! function_exists('mb_url_title')) {
 
 if (! function_exists('url_to')) {
     /**
-     * Get the full, absolute URL to a route named or controller method
+     * Get the full, absolute URL to a route name or controller method
      * (with additional arguments)
      *
      * NOTE: This requires the controller/method to
