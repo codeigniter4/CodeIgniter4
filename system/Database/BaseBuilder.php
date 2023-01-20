@@ -3215,6 +3215,10 @@ class BaseBuilder
             return $object;
         }
 
+        if ($object instanceof RawSql) {
+            throw new InvalidArgumentException('RawSql "' . $object . '" cannot be used here.');
+        }
+
         $array = [];
 
         foreach (get_object_vars($object) as $key => $val) {

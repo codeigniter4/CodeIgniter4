@@ -16,6 +16,7 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Database\RawSql;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockConnection;
+use InvalidArgumentException;
 
 /**
  * @internal
@@ -278,5 +279,23 @@ final class InsertTest extends CIUnitTestCase
         $this->expectException(DatabaseException::class);
         $this->expectExceptionMessage('insertBatch() has no data.');
         $builder->insertBatch([]);
+    }
+
+    public function testSetIncorrectRawSqlUsage()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'RawSql "expires = DATE_ADD(NOW(), INTERVAL 2 HOUR)" cannot be used here.'
+        );
+
+        $builder = $this->db->table('auth_bearer');
+
+        $builder->testMode()
+            ->set([
+                'jti'       => 'jti',
+                'proctorID' => '12',
+            ])
+            ->set(new RawSql('expires = DATE_ADD(NOW(), INTERVAL 2 HOUR)'))
+            ->insert();
     }
 }
