@@ -761,9 +761,9 @@ class BaseBuilder
                     $k = trim($k);
 
                     end($op);
-
                     $op = trim(current($op));
 
+                    // Does the key end with operator?
                     if (substr($k, -strlen($op)) === $op) {
                         $k  = rtrim(substr($k, 0, -strlen($op)));
                         $op = " {$op}";
