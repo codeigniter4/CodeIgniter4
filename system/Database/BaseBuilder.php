@@ -783,7 +783,15 @@ class BaseBuilder
             } elseif (! $this->hasOperator($k) && $qbKey !== 'QBHaving') {
                 // value appears not to have been set, assign the test to IS NULL
                 $op = ' IS NULL';
-            } elseif (preg_match('/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i', $k, $match, PREG_OFFSET_CAPTURE)) {
+            } elseif (
+                // The key ends with !=, =, <>, IS, IS NOT
+                preg_match(
+                    '/\s*(!?=|<>|IS(?:\s+NOT)?)\s*$/i',
+                    $k,
+                    $match,
+                    PREG_OFFSET_CAPTURE
+                )
+            ) {
                 $k  = substr($k, 0, $match[0][1]);
                 $op = $match[1][0] === '=' ? ' IS NULL' : ' IS NOT NULL';
             } else {
