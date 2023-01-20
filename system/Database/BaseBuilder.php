@@ -3413,13 +3413,17 @@ class BaseBuilder
         $whereKey = trim($whereKey);
 
         $pregOperators = [
-            '\s*(?:<|>|!)?=', // =, <=, >=, !=
-            '\s*<>?',         // <, <>
-            '\s*>',           // >
-            '\s+IS NULL',     // IS NULL
-            '\s+IS NOT NULL', // IS NOT NULL
-            '\s+LIKE',        // LIKE
-            '\s+NOT LIKE',    // NOT LIKE
+            '\s*(?:<|>|!)?=',         // =, <=, >=, !=
+            '\s*<>?',                 // <, <>
+            '\s*>',                   // >
+            '\s+IS NULL',             // IS NULL
+            '\s+IS NOT NULL',         // IS NOT NULL
+            '\s+EXISTS\s*\(.*\)',     // EXISTS (sql)
+            '\s+NOT EXISTS\s*\(.*\)', // NOT EXISTS (sql)
+            '\s+BETWEEN\s+',          // BETWEEN value AND value
+            '\s+IN\s*\(.*\)',         // IN (list)
+            '\s+LIKE',                // LIKE
+            '\s+NOT LIKE',            // NOT LIKE
         ];
 
         return preg_match_all(
