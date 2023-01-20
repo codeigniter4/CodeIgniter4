@@ -455,35 +455,37 @@ then a sanitized version of HTTP_REFERER will be used.</p>
 
 <dl class="php function">
 <dt class="sig sig-object php" id="uri_string">
-<span class="sig-name descname"><span class="pre">uri_string</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="pre">$relative</span> <span class="pre">=</span> <span class="pre">false</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uri_string" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">uri_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uri_string" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>$relative</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">boolean</span></code></span>) – True if you would like the string relative to baseURL</p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A URI string</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>A URI string</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span></p>
 </dd>
 </dl>
-<p>Returns the path part of the current URL.
-For example, if your URL was this:</p>
+<p>Returns the path part of the current URL relative to baseURL.</p>
+<p>For example, when your baseURL is <strong>http://some-site.com/</strong> and the current URL is:</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
 <p>The function would return:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
 </div>
-<p>Or with the optional relative parameter:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">app</span><span class="o">.</span><span class="nx">baseURL</span> <span class="o">=</span> <span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">subfolder</span><span class="o">/</span>
-
-<span class="nx">uri_string</span><span class="p">();</span> <span class="c1">// &quot;/subfolder/blog/comments/123&quot;</span>
-<span class="nx">uri_string</span><span class="p">(</span><span class="k">true</span><span class="p">);</span> <span class="c1">// &quot;blog/comments/123&quot;</span>
+<p>When your baseURL is <strong>http://some-site.com/subfolder/</strong> and the current URL is:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">http</span><span class="o">://</span><span class="nx">some</span><span class="o">-</span><span class="nx">site</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">subfolder</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
 </pre></div>
+</div>
+<p>The function would return:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">blog</span><span class="o">/</span><span class="nx">comments</span><span class="o">/</span><span class="mi">123</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In previous versions, the parameter <code class="docutils literal notranslate"><span class="pre">$relative</span> <span class="pre">=</span> <span class="pre">false</span></code> was defined.
+However, due to a bug, this function always returned a path relative to baseURL.
+Since v4.3.2, the parameter has been removed.</p>
 </div>
 </dd></dl>
 
@@ -967,7 +969,7 @@ any other applicable characters in the URL:</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 19, 2023.
+      <span class="lastupdated">Last updated on Jan 20, 2023.
       </span></p>
   </div>
 
