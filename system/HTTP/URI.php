@@ -1089,9 +1089,9 @@ class URI
         ), $query);
 
         $params = implode('&', $params);
-        parse_str($params, $params);
+        parse_str($params, $result);
 
-        foreach ($params as $key => $value) {
+        foreach ($result as $key => $value) {
             $return[hex2bin($key)] = $value;
         }
 
