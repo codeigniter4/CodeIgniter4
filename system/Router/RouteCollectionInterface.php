@@ -172,7 +172,7 @@ interface RouteCollectionInterface
      * @param string     $search    Named route or Controller::method
      * @param int|string ...$params
      *
-     * @return false|string
+     * @return false|string The route (URI path relative to baseURL) or false if not found.
      */
     public function reverseRoute(string $search, ...$params);
 
