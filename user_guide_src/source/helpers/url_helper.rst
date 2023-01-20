@@ -121,27 +121,32 @@ The following functions are available:
         use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
         then a sanitized version of HTTP_REFERER will be used.
 
-.. php:function:: uri_string([$relative = false])
+.. php:function:: uri_string()
 
-    :param    boolean    $relative: True if you would like the string relative to baseURL
     :returns: A URI string
-    :rtype:    string
+    :rtype:   string
 
-    Returns the path part of the current URL.
-    For example, if your URL was this::
+    Returns the path part of the current URL relative to baseURL.
+
+    For example, when your baseURL is **http://some-site.com/** and the current URL is::
 
         http://some-site.com/blog/comments/123
 
     The function would return::
 
-        /blog/comments/123
+        blog/comments/123
 
-    Or with the optional relative parameter::
+    When your baseURL is **http://some-site.com/subfolder/** and the current URL is::
 
-        app.baseURL = http://some-site.com/subfolder/
+        http://some-site.com/subfolder/blog/comments/123
 
-        uri_string(); // "/subfolder/blog/comments/123"
-        uri_string(true); // "blog/comments/123"
+    The function would return::
+
+        blog/comments/123
+
+    .. note:: In previous versions, the parameter ``$relative = false`` was defined.
+        However, due to a bug, this function always returned a path relative to baseURL.
+        Since v4.3.2, the parameter has been removed.
 
 .. php:function:: index_page([$altConfig = null])
 
