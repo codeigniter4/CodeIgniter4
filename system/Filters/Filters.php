@@ -325,22 +325,18 @@ class Filters
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
      *
+     * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
+     *
      * @return Filters
      *
      * @deprecated Use enableFilters(). This method will be private.
      */
     public function enableFilter(string $name, string $when = 'before')
     {
-        // Get parameters and clean name
-        if (strpos($name, ':') !== false) {
-            [$name, $params] = explode(':', $name);
-
-            $params = explode(',', $params);
-            array_walk($params, static function (&$item) {
-                $item = trim($item);
-            });
-
-            $this->arguments[$name] = $params;
+        // Get arguments and clean name
+        [$name, $arguments] = $this->getCleanName($name);
+        if ($arguments !== []) {
+            $this->arguments[$name] = $arguments;
         }
 
         if (class_exists($name)) {
@@ -361,6 +357,29 @@ class Filters
         }
 
         return $this;
+    }
+
+    /**
+     * Get clean name and arguments
+     *
+     * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
+     *
+     * @return array [name, arguments]
+     */
+    private function getCleanName(string $name): array
+    {
+        $arguments = [];
+
+        if (strpos($name, ':') !== false) {
+            [$name, $arguments] = explode(':', $name);
+
+            $arguments = explode(',', $arguments);
+            array_walk($arguments, static function (&$item) {
+                $item = trim($item);
+            });
+        }
+
+        return [$name, $arguments];
     }
 
     /**
