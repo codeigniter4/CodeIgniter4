@@ -139,26 +139,14 @@ a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
 
+.. _filters-filters-filter-arguments:
+
 Filter Arguments
-================
+----------------
 
-When configuring filters, additional arguments may be passed to a filter.
+.. versionadded:: 4.4.0
 
-Route
------
-
-When setting up the route:
-
-.. literalinclude:: filters/010.php
-
-In this example, the array ``['dual', 'noreturn']`` will be passed in ``$arguments`` to the filter's ``before()`` and ``after()`` implementation methods.
-
-.. _filter-arguments-filters:
-
-$filters
---------
-
-When setting up the ``$filters``:
+When configuring ``$filters``, additional arguments may be passed to a filter:
 
 .. literalinclude:: filters/012.php
 
