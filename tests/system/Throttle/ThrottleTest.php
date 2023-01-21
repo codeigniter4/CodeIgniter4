@@ -193,7 +193,7 @@ final class ThrottleTest extends CIUnitTestCase
      */
     public function testTokenTimeCalculationUCs(int $capacity, int $seconds, array $checkInputs): void
     {
-        $key = 'testkey';
+        $key       = 'testkey';
         $throttler = new Throttler($this->cache);
 
         // clear $key before test start
@@ -203,8 +203,8 @@ final class ThrottleTest extends CIUnitTestCase
             $throttler->setTestTime($checkInput['testTime']);
             $checkResult = $throttler->check($key, $capacity, $seconds, $checkInput['cost']);
 
-            $this->assertEquals($checkInput['expectedCheckResult'], $checkResult, "Input#{$index}: Wrong check() result");
-            $this->assertEquals($checkInput['expectedTokenTime'], $throttler->getTokenTime(), "Input#{$index}: Wrong tokenTime");
+            $this->assertSame($checkInput['expectedCheckResult'], $checkResult, "Input#{$index}: Wrong check() result");
+            $this->assertSame($checkInput['expectedTokenTime'], $throttler->getTokenTime(), "Input#{$index}: Wrong tokenTime");
         }
     }
 
