@@ -5,7 +5,7 @@
 <body>
     <h1><?= esc($heading) ?></h1>
 
-    <h3>My Todo List</h3>
+    <h2>My Todo List</h2>
 
     <ul>
     <?php foreach ($todo_list as $item): ?>
