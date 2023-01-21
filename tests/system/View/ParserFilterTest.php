@@ -396,6 +396,20 @@ final class ParserFilterTest extends CIUnitTestCase
         $this->assertSame("1.234.567,89\u{a0}€", $parser->renderString($template));
     }
 
+    public function testLocalCurrencyWithoutFraction()
+    {
+        $parser = new Parser($this->config, $this->viewsDir, $this->loader);
+
+        $data = [
+            'mynum' => 1_234_567.8912346,
+        ];
+
+        $template = '{ mynum|local_currency(EUR,de_DE) }';
+
+        $parser->setData($data);
+        $this->assertSame("1.234.568\u{a0}€", $parser->renderString($template));
+    }
+
     public function testParsePairWithAbs()
     {
         $parser = new Parser($this->config, $this->viewsDir, $this->loader);
