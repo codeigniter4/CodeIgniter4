@@ -139,14 +139,33 @@ a list of URI patterns that filter should apply to:
 
 .. literalinclude:: filters/009.php
 
-Filter arguments
-=================
+Filter Arguments
+================
 
-When configuring filters, additional arguments may be passed to a filter when setting up the route:
+When configuring filters, additional arguments may be passed to a filter.
+
+Route
+-----
+
+When setting up the route:
 
 .. literalinclude:: filters/010.php
 
 In this example, the array ``['dual', 'noreturn']`` will be passed in ``$arguments`` to the filter's ``before()`` and ``after()`` implementation methods.
+
+.. _filter-arguments-filters:
+
+$filters
+--------
+
+When setting up the ``$filters``:
+
+.. literalinclude:: filters/012.php
+
+In this example, when the URI matches ``admin/*'``, the array ``['admin', 'superadmin']``
+will be passed in ``$arguments`` to the ``group`` filter's ``before()`` methods.
+When the URI matches ``admin/users/*'``, the array ``['users.manage']``
+will be passed in ``$arguments`` to the ``permission`` filter's ``before()`` methods.
 
 ******************
 Confirming Filters
