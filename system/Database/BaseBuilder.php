@@ -3382,7 +3382,7 @@ class BaseBuilder
             $this->pregOperators = [
                 '\s*(?:<|>|!)?=\s*', // =, <=, >=, !=
                 '\s*<>?\s*',         // <, <>
-                '\s*>\s*',           // >å
+                '\s*>\s*',           // >
                 '\s+IS NULL',             // IS NULL
                 '\s+IS NOT NULL',         // IS NOT NULL
                 '\s+EXISTS\s*\(.*\)',     // EXISTS (sql)
@@ -3422,6 +3422,7 @@ class BaseBuilder
             '\s+NOT EXISTS\s*\(.*\)', // NOT EXISTS (sql)
             '\s+BETWEEN\s+',          // BETWEEN value AND value
             '\s+IN\s*\(.*\)',         // IN (list)
+            '\s+NOT IN\s*\(.*\)',     // NOT IN (list)
             '\s+LIKE',                // LIKE
             '\s+NOT LIKE',            // NOT LIKE
         ];
