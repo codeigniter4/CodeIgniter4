@@ -728,9 +728,15 @@ class BaseBuilder
      */
     protected function whereHaving(string $qbKey, $key, $value = null, string $type = 'AND ', ?bool $escape = null)
     {
+        $rawSqlOnly = false;
+
         if ($key instanceof RawSql) {
-            $keyValue = [(string) $key => $key];
-            $escape   = false;
+            if ($value === null) {
+                $keyValue   = [(string) $key => $key];
+                $rawSqlOnly = true;
+            } else {
+                $keyValue = [(string) $key => $value];
+            }
         } elseif (! is_array($key)) {
             $keyValue = [$key => $value];
         } else {
@@ -745,7 +751,7 @@ class BaseBuilder
         foreach ($keyValue as $k => $v) {
             $prefix = empty($this->{$qbKey}) ? $this->groupGetType('') : $this->groupGetType($type);
 
-            if ($v instanceof RawSql) {
+            if ($rawSqlOnly === true) {
                 $k  = '';
                 $op = '';
             } elseif ($v !== null) {
@@ -3207,6 +3213,10 @@ class BaseBuilder
     {
         if (! is_object($object)) {
             return $object;
+        }
+
+        if ($object instanceof RawSql) {
+            throw new InvalidArgumentException('RawSql "' . $object . '" cannot be used here.');
         }
 
         $array = [];
