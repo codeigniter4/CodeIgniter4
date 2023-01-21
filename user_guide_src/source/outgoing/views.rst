@@ -19,7 +19,7 @@ Using the example controller you created in the controller page, let's add a vie
 Creating a View
 ===============
 
-Using your text editor, create a file called ``blog_view.php`` and put this in it::
+Using your text editor, create a file called **blog_view.php** and put this in it::
 
     <html>
         <head>
@@ -136,7 +136,7 @@ into the ``$option`` array in the third parameter.
 .. literalinclude:: views/010.php
 
 Additionally, if you would like the default functionality of the ``view()`` function to be that it does clear the data
-between calls, you can set ``$saveData`` to **false** in **app/Config/Views.php**.
+between calls, you can set ``$saveData`` to ``false`` in **app/Config/Views.php**.
 
 Creating Loops
 ==============
