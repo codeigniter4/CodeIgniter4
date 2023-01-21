@@ -327,7 +327,7 @@ class Filters
      *
      * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
      *
-     * @return Filters
+     * @return $this
      *
      * @deprecated Use enableFilters(). This method will be private.
      */
