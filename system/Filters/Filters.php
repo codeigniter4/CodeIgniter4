@@ -494,17 +494,46 @@ class Filters
             // Look for inclusion rules
             if (isset($settings['before'])) {
                 $path = $settings['before'];
+
                 if ($this->pathApplies($uri, $path)) {
-                    $this->filters['before'][] = $alias;
+                    // Get arguments and clean name
+                    [$name, $arguments] = $this->getCleanName($alias);
+
+                    $this->filters['before'][] = $name;
+
+                    $this->registerArguments($name, $arguments);
                 }
             }
 
             if (isset($settings['after'])) {
                 $path = $settings['after'];
+
                 if ($this->pathApplies($uri, $path)) {
-                    $this->filters['after'][] = $alias;
+                    // Get arguments and clean name
+                    [$name, $arguments] = $this->getCleanName($alias);
+
+                    $this->filters['after'][] = $name;
+
+                    $this->registerArguments($name, $arguments);
                 }
             }
+        }
+    }
+
+    /**
+     * @param string $name      filter alias
+     * @param array  $arguments filter arguments
+     */
+    private function registerArguments(string $name, $arguments): void
+    {
+        if ($arguments !== []) {
+            $this->arguments[$name] = $arguments;
+        }
+
+        $classNames = (array) $this->config->aliases[$name];
+
+        foreach ($classNames as $className) {
+            $this->argumentsClass[$className] = $this->arguments[$name] ?? null;
         }
     }
 

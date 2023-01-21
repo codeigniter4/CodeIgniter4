@@ -783,6 +783,40 @@ final class FiltersTest extends CIUnitTestCase
         $this->assertContains('google', $filters['before']);
     }
 
+    public function testFiltersWithArguments()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $config = [
+            'aliases' => ['role' => Role::class],
+            'globals' => [
+            ],
+            'filters' => [
+                'role:admin,super' => [
+                    'before' => ['admin/*'],
+                    'after'  => ['admin/*'],
+                ],
+            ],
+        ];
+        $filtersConfig = $this->createConfigFromArray(FiltersConfig::class, $config);
+        $filters       = $this->createFilters($filtersConfig);
+
+        $filters = $filters->initialize('admin/foo/bar');
+        $found   = $filters->getFilters();
+
+        $this->assertContains('role', $found['before']);
+        $this->assertSame(['admin', 'super'], $filters->getArguments('role'));
+        $this->assertSame(['role' => ['admin', 'super']], $filters->getArguments());
+
+        $response = $filters->run('admin/foo/bar', 'before');
+
+        $this->assertSame('admin;super', $response);
+
+        $response = $filters->run('admin/foo/bar', 'after');
+
+        $this->assertSame('admin;super', $response->getBody());
+    }
+
     public function testEnableFilterWithArguments()
     {
         $_SERVER['REQUEST_METHOD'] = 'GET';
