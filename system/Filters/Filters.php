@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Filters;
 
+use CodeIgniter\Exceptions\ConfigException;
 use CodeIgniter\Filters\Exceptions\FilterException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -84,8 +85,8 @@ class Filters
     /**
      * Any arguments to be passed to filters.
      *
-     * @var array<string, array<int, string>> [name => params]
-     * @phpstan-var array<string, list<string>>
+     * @var array<string, array<int, string>|null> [name => params]
+     * @phpstan-var array<string, list<string>|null>
      */
     protected $arguments = [];
 
@@ -337,6 +338,8 @@ class Filters
         [$name, $arguments] = $this->getCleanName($name);
         if ($arguments !== []) {
             $this->arguments[$name] = $arguments;
+        } else {
+            $this->arguments[$name] = null;
         }
 
         if (class_exists($name)) {
@@ -514,7 +517,9 @@ class Filters
 
                     $this->filters['after'][] = $name;
 
-                    $this->registerArguments($name, $arguments);
+                    // The arguments may have already been registered in the before filter.
+                    // So disable check.
+                    $this->registerArguments($name, $arguments, false);
                 }
             }
         }
@@ -523,10 +528,18 @@ class Filters
     /**
      * @param string $name      filter alias
      * @param array  $arguments filter arguments
+     * @param bool   $check     if true, check if already defined
      */
-    private function registerArguments(string $name, $arguments): void
+    private function registerArguments(string $name, array $arguments, bool $check = true): void
     {
         if ($arguments !== []) {
+            if ($check && array_key_exists($name, $this->arguments)) {
+                throw new ConfigException(
+                    '"' . $name . '" has already arguments: '
+                    . (($this->arguments[$name] === null) ? 'null' : implode(',', $this->arguments[$name]))
+                );
+            }
+
             $this->arguments[$name] = $arguments;
         }
 
