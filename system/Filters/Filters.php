@@ -365,6 +365,7 @@ class Filters
      * @param string $name filter_name or filter_name:arguments like 'role:admin,manager'
      *
      * @return array [name, arguments]
+     * @phpstan-return array{0: string, 1: list<string>}
      */
     private function getCleanName(string $name): array
     {
@@ -388,6 +389,8 @@ class Filters
      * Filters can have "arguments". This is done by placing a colon immediately
      * after the filter name, followed by a comma-separated list of arguments that
      * are passed to the filter when executed.
+     *
+     * @params array<string> $names filter_name or filter_name:arguments like 'role:admin,manager'
      *
      * @return Filters
      */
