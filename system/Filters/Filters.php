@@ -531,8 +531,8 @@ class Filters
             }
         }
 
-        // when using enableFilter() we already write the class name in ->filtersClass as well as the
-        // alias in ->filters. This leads to duplicates when using route filters.
+        // when using enableFilter() we already write the class name in $filtersClass as well as the
+        // alias in $filters. This leads to duplicates when using route filters.
         // Since some filters like rate limiters rely on being executed once a request we filter em here.
         $this->filtersClass[$position] = array_values(array_unique($this->filtersClass[$position]));
     }
