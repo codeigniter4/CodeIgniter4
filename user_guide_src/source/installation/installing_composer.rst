@@ -48,14 +48,14 @@ If you omit the "project-root" argument, the command will create an
     The symbols that can be used are ``/``, ``_``, ``.``, ``:``, ``\`` and space.
     So if you install CodeIgniter under the folder that contains the special characters like ``(``, ``)``, etc., CodeIgniter won't work.
 
-If you don't need or want phpunit installed, and all of its composer
-dependencies, then add the ``--no-dev`` option to the end of the above
-command line. That will result in only the framework, and the three
-trusted dependencies that we bundle, being composer-installed.
+.. important:: When you deploy to your production server, don't forget to run the
+    following command::
 
-A sample such installation command, using the default project-root "appstarter"::
+    > composer install --no-dev
 
-    > composer create-project codeigniter4/appstarter --no-dev
+    The above command will removes the Composer packages only for development
+    that are not needed in the production environment. This will greatly reduce
+    the folder size.
 
 Initial Configuration
 ---------------------
@@ -133,6 +133,15 @@ will be your document root.
 In your project root::
 
     > composer require codeigniter4/framework
+
+.. important:: When you deploy to your production server, don't forget to run the
+    following command::
+
+    > composer install --no-dev
+
+    The above command will removes the Composer packages only for development
+    that are not needed in the production environment. This will greatly reduce
+    the folder size.
 
 Setting Up
 ----------
