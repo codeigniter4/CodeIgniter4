@@ -77,9 +77,9 @@ for the file where the database will be created using the ``--ext`` option. Vali
     produce a success message but no database file is created. This is because SQLite3 will just use
     an in-memory database.
 
-****************************
-Creating and Dropping Tables
-****************************
+***************
+Creating Tables
+***************
 
 There are several things you may wish to do when creating tables. Add
 fields, add keys to the table, alter columns. CodeIgniter provides a
@@ -176,10 +176,6 @@ and unique keys with specific methods:
 
 .. note:: When you add a primary key, MySQL and SQLite will assume the name ``PRIMARY`` even if a name is provided.
 
-You may add keys to an existing table by using ``processIndexes()``:
-
-.. literalinclude:: forge/029.php
-
 .. _adding-foreign-keys:
 
 Adding Foreign Keys
@@ -216,6 +212,10 @@ You could also pass optional table attributes, such as MySQL's ``ENGINE``:
     ``createTable()`` will always add them with your configured *charset*
     and *DBCollat* values, as long as they are not empty (MySQL only).
 
+***************
+Dropping Tables
+***************
+
 Dropping a Table
 ================
 
@@ -228,6 +228,10 @@ drivers to handle removal of tables with foreign keys.
 
 .. literalinclude:: forge/018.php
 
+****************
+Modifying Tables
+****************
+
 Dropping a Foreign Key
 ======================
 
@@ -236,7 +240,7 @@ Execute a DROP FOREIGN KEY.
 .. literalinclude:: forge/019.php
 
 Dropping a Key
-======================
+===============
 
 Execute a DROP KEY.
 
@@ -260,10 +264,6 @@ Executes a TABLE rename
 
 .. literalinclude:: forge/021.php
 
-****************
-Modifying Tables
-****************
-
 Adding a Column to a Table
 ==========================
 
@@ -284,7 +284,7 @@ Examples:
 .. literalinclude:: forge/023.php
 
 Dropping Columns From a Table
-==============================
+=============================
 
 .. _db-forge-dropColumn:
 
@@ -310,6 +310,15 @@ alters an existing column rather than adding a new one. In order to
 change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
+
+Adding Keys to a Table
+======================
+
+.. versionadded:: 4.3.0
+
+You may add keys to an existing table by using ``processIndexes()``:
+
+.. literalinclude:: forge/029.php
 
 ***************
 Class Reference
