@@ -168,13 +168,13 @@ final class AutoRouterImproved implements AutoRouterInterface
             '\\'
         );
 
-        // Ensure routes registered via $routes->cli() are not accessible via web.
+        // Ensure the controller is not defined in routes.
         $this->protectDefinedRoutes();
 
-        // Check _remap()
+        // Ensure the controller does not have _remap() method.
         $this->checkRemap();
 
-        // Check parameters
+        // Check parameter count
         try {
             $this->checkParameters($uri);
         } catch (ReflectionException $e) {
