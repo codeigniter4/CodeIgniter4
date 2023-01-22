@@ -18,7 +18,7 @@ The second technique described below lets you add CodeIgniter4 to an existing
 webapp,
 
 .. note:: If you are using a Git repository to store your code, or for
-   collaboration with others, then the ``vendor`` folder would normally
+   collaboration with others, then the **vendor** folder would normally
    be "git ignored". In such a case, you will need to do a ``composer update``
    when you clone the repository to a new system.
 
@@ -39,7 +39,7 @@ In the folder above your project root::
 
     > composer create-project codeigniter4/appstarter project-root
 
-The command above will create a "project-root" folder.
+The command above will create a **project-root** folder.
 
 If you omit the "project-root" argument, the command will create an
 "appstarter" folder, which can be renamed as appropriate.
@@ -137,8 +137,8 @@ In your project root::
 Setting Up
 ----------
 
-    1. Copy the ``app``, ``public``, ``tests`` and ``writable`` folders from ``vendor/codeigniter4/framework`` to your project root
-    2. Copy the ``env``, ``phpunit.xml.dist`` and ``spark`` files, from ``vendor/codeigniter4/framework`` to your project root
+    1. Copy the **app**, **public**, **tests** and **writable** folders from **vendor/codeigniter4/framework** to your project root
+    2. Copy the **env**, **phpunit.xml.dist** and **spark** files, from **vendor/codeigniter4/framework** to your project root
     3. You will have to adjust the ``$systemDirectory`` property in **app/Config/Paths.php** to refer to the vendor one, e.g., ``ROOTPATH . '/vendor/codeigniter4/framework/system'``.
 
 Initial Configuration
