@@ -232,38 +232,6 @@ drivers to handle removal of tables with foreign keys.
 Modifying Tables
 ****************
 
-Dropping a Foreign Key
-======================
-
-Execute a DROP FOREIGN KEY.
-
-.. literalinclude:: forge/019.php
-
-Dropping a Key
-===============
-
-Execute a DROP KEY.
-
-.. literalinclude:: forge/020.php
-
-.. _dropping-a-primary-key:
-
-Dropping a Primary Key
-======================
-
-.. versionadded:: 4.3.0
-
-Execute a DROP PRIMARY KEY.
-
-.. literalinclude:: forge/028.php
-
-Renaming a Table
-================
-
-Executes a TABLE rename
-
-.. literalinclude:: forge/021.php
-
 Adding a Column to a Table
 ==========================
 
@@ -319,6 +287,38 @@ Adding Keys to a Table
 You may add keys to an existing table by using ``processIndexes()``:
 
 .. literalinclude:: forge/029.php
+
+Dropping a Primary Key
+======================
+
+.. versionadded:: 4.3.0
+
+Execute a DROP PRIMARY KEY.
+
+.. literalinclude:: forge/028.php
+
+Dropping a Key
+===============
+
+Execute a DROP KEY.
+
+.. literalinclude:: forge/020.php
+
+.. _dropping-a-primary-key:
+
+Dropping a Foreign Key
+======================
+
+Execute a DROP FOREIGN KEY.
+
+.. literalinclude:: forge/019.php
+
+Renaming a Table
+================
+
+Executes a TABLE rename
+
+.. literalinclude:: forge/021.php
 
 ***************
 Class Reference
