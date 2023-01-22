@@ -199,6 +199,19 @@ final class AutoRouterImprovedTest extends CIUnitTestCase
         $this->assertSame([], $params);
     }
 
+    public function testAutoRouteFallbackToDefaultMethod()
+    {
+        $router = $this->createNewAutoRouter();
+
+        [$directory, $controller, $method, $params]
+            = $router->getRoute('index/15');
+
+        $this->assertNull($directory);
+        $this->assertSame('\\' . Index::class, $controller);
+        $this->assertSame('getIndex', $method);
+        $this->assertSame(['15'], $params);
+    }
+
     public function testAutoRouteRejectsSingleDot()
     {
         $this->expectException(PageNotFoundException::class);
