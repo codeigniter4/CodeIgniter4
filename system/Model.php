@@ -410,7 +410,12 @@ class Model extends BaseModel
      */
     protected function doUpdateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
     {
-        return $this->builder()->testMode($returnSQL)->updateBatch($set, $index, $batchSize);
+        $escape       = $this->escape[0] ?? null;
+        $this->escape = [];
+
+        $builder = $this->builder()->setData($set, $escape);
+
+        return $builder->testMode($returnSQL)->updateBatch(null, $index, $batchSize);
     }
 
     /**
@@ -649,6 +654,32 @@ class Model extends BaseModel
     }
 
     /**
+     * Allows a row or multiple rows to be set for batch inserts/upserts/updates
+     *
+     * @param array|object $set
+     * @param string       $alias alias for sql table
+     *
+     * @return $this|null
+     */
+    public function setData($set, ?bool $escape = null, string $alias = '')
+    {
+        if (empty($set)) {
+            if ($this->db->DBDebug) {
+                throw new DatabaseException('setData() has no data.');
+            }
+
+            return null; // @codeCoverageIgnore
+        }
+
+        $this->setAlias($alias);
+
+        $this->tempData['data']   = array_merge($this->tempData['data'] ?? [], $set);
+        $this->tempData['escape'] = $escape;
+
+        return $this;
+    }
+
+    /**
      * Captures the builder's set() method so that we can validate the
      * data here. This allows it to be used with any of the other
      * builder methods and still get validated data, like replace.
@@ -753,6 +784,29 @@ class Model extends BaseModel
         $this->tempData = [];
 
         return parent::update($id, $data);
+    }
+
+    /**
+     * Compiles an update and runs the query.
+     *
+     * @param array|null  $set       An associative array of update values
+     * @param string|null $index     The where key
+     * @param int         $batchSize The size of the batch to run
+     * @param bool        $returnSQL True means SQL is returned, false will execute the query
+     *
+     * @return false|int|string[] Number of rows affected or FALSE on failure, SQL array when testMode
+     *
+     * @throws DatabaseException
+     * @throws ReflectionException
+     */
+    public function updateBatch(?array $set = null, ?string $index = null, int $batchSize = 100, bool $returnSQL = false)
+    {
+        $set ??= $this->tempData['data'] ?? null;
+
+        $this->escape[0] = $this->tempData['escape'] ?? null;
+        $this->tempData  = [];
+
+        return parent::updateBatch($set, $index, $batchSize, $returnSQL);
     }
 
     /**
