@@ -288,6 +288,8 @@ You may add keys to an existing table by using ``processIndexes()``:
 
 .. literalinclude:: forge/029.php
 
+.. _dropping-a-primary-key:
+
 Dropping a Primary Key
 ======================
 
@@ -303,8 +305,6 @@ Dropping a Key
 Execute a DROP KEY.
 
 .. literalinclude:: forge/020.php
-
-.. _dropping-a-primary-key:
 
 Dropping a Foreign Key
 ======================
