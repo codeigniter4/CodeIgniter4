@@ -2000,7 +2000,7 @@ class BaseBuilder
     /**
      * Set table alias for dataset pseudo table.
      */
-    private function setAlias(string $alias): BaseBuilder
+    public function setAlias(string $alias): BaseBuilder
     {
         if ($alias !== '') {
             $this->db->addTableAlias($alias);
