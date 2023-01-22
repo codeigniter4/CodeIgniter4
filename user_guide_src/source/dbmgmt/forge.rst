@@ -1,3 +1,4 @@
+####################
 Database Forge Class
 ####################
 
@@ -142,7 +143,7 @@ string into the field definitions with ``addField()``:
 
 .. note:: Multiple calls to ``addField()`` are cumulative.
 
-Creating an id field
+Creating an id Field
 --------------------
 
 There is a special exception for creating id fields. A field with type
@@ -156,6 +157,9 @@ Primary Key.
 Adding Keys
 ===========
 
+$forge->addKey()
+----------------
+
 Generally speaking, you'll want your table to have Keys. This is
 accomplished with ``$forge->addKey('field')``. The optional second
 parameter set to true will make it a primary key and the third
@@ -168,6 +172,12 @@ Multiple column non-primary keys must be sent as an array. Sample output
 below is for MySQL.
 
 .. literalinclude:: forge/010.php
+
+$forge->addPrimaryKey()
+-----------------------
+
+$forge->addUniqueKey()
+----------------------
 
 To make code reading more objective it is also possible to add primary
 and unique keys with specific methods:
@@ -279,12 +289,15 @@ change the name, you can add a "name" key into the field defining array.
 
 .. literalinclude:: forge/026.php
 
+.. _db-forge-adding-keys-to-a-table:
+
 Adding Keys to a Table
 ======================
 
 .. versionadded:: 4.3.0
 
-You may add keys to an existing table by using ``processIndexes()``:
+You may add keys to an existing table by using ``addKey()``, ``addPrimaryKey()``,
+``addUniqueKey()`` or ``addForeignKey()`` and ``processIndexes()``:
 
 .. literalinclude:: forge/029.php
 
@@ -467,12 +480,15 @@ Class Reference
 
     .. php:method:: processIndexes($table)
 
+        .. versionadded:: 4.3.0
+
         :param    string    $table: Name of the table to add indexes to
         :returns:    true on success, false on failure
         :rtype:    bool
 
         Used following ``addKey()``, ``addPrimaryKey()``, ``addUniqueKey()``,
         and ``addForeignKey()`` to add indexes to an existing table.
+        See `Adding Keys to a Table`_.
 
     .. php:method:: modifyColumn($table, $field)
 
