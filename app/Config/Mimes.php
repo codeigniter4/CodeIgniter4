@@ -53,6 +53,8 @@ class Mimes
         'lzh' => 'application/octet-stream',
         'exe' => [
             'application/octet-stream',
+            'application/vnd.microsoft.portable-executable',
+            'application/x-dosexec',
             'application/x-msdownload',
         ],
         'class' => 'application/octet-stream',

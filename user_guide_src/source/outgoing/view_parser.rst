@@ -389,8 +389,9 @@ limit_chars       limit            Limits the number of characters to $limit.   
 
 limit_words       limit            Limits the number of words to $limit.                       { v|limit_words(20) }
 
-local_currency    currency, locale Displays a localized version of a currency. "currency"      { v|local_currency(EUR,en_US) }
-                                   valueis any 3-letter ISO 4217 currency code.
+local_currency    currency,        Displays a localized version of a currency. "currency"      { v|local_currency(EUR,en_US) }
+                  locale,          valueis any 3-letter ISO 4217 currency code.
+                  fraction
 
 local_number      type, precision, Displays a localized version of a number. "type" can be     { v|local_number(decimal,2,en_US) }
                   locale           one of: decimal, currency, percent, scientific, spellout,
