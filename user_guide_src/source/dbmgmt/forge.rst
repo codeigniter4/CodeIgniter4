@@ -232,8 +232,8 @@ drivers to handle removal of tables with foreign keys.
 Modifying Tables
 ****************
 
-Adding a Column to a Table
-==========================
+Adding a Field to a Table
+=========================
 
 $forge->addColumn()
 -------------------
@@ -251,8 +251,8 @@ Examples:
 
 .. literalinclude:: forge/023.php
 
-Dropping Columns From a Table
-=============================
+Dropping Fields From a Table
+============================
 
 .. _db-forge-dropColumn:
 
@@ -267,8 +267,8 @@ Used to remove multiple columns from a table.
 
 .. literalinclude:: forge/025.php
 
-Modifying a Column in a Table
-=============================
+Modifying a Field in a Table
+============================
 
 $forge->modifyColumn()
 ----------------------
@@ -335,7 +335,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Adds a column to a table. Usage:  See `Adding a Column to a Table`_.
+        Adds a column to a table. Usage:  See `Adding a Field to a Table`_.
 
     .. php:method:: addField($field)
 
@@ -423,7 +423,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Drops single or multiple columns from a table. Usage:  See `Dropping Columns From a Table`_.
+        Drops single or multiple columns from a table. Usage:  See `Dropping Fields From a Table`_.
 
     .. php:method:: dropDatabase($dbName)
 
@@ -481,7 +481,7 @@ Class Reference
         :returns:    true on success, false on failure
         :rtype:    bool
 
-        Modifies a table column. Usage:  See `Modifying a Column in a Table`_.
+        Modifies a table column. Usage:  See `Modifying a Field in a Table`_.
 
     .. php:method:: renameTable($table_name, $new_table_name)
 
