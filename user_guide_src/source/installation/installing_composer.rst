@@ -9,6 +9,9 @@ Composer can be used in several ways to install CodeIgniter4 on your system.
 
 .. important:: CodeIgniter4 requires Composer 2.0.14 or later.
 
+.. note:: If you are not familiar with Composer, we recommend you read
+    `Basic usage <https://getcomposer.org/doc/01-basic-usage.md>`_ first.
+
 The first technique describes creating a skeleton project
 using CodeIgniter4, that you would then use as the base for a new webapp.
 The second technique described below lets you add CodeIgniter4 to an existing
