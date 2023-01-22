@@ -356,7 +356,7 @@ Class Reference
         :returns:    \CodeIgniter\Database\Forge instance (method chaining)
         :rtype:    \CodeIgniter\Database\Forge
 
-                Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
+        Adds a field to the set that will be used to create a table. Usage:  See `Adding Fields`_.
 
     .. php:method:: addForeignKey($fieldName, $tableName, $tableField[, $onUpdate = '', $onDelete = '', $fkName = ''])
 
