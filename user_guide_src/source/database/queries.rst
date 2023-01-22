@@ -56,24 +56,37 @@ fetchable results.
 Working with Database Prefixes Manually
 ***************************************
 
+$db->prefixTable()
+==================
+
 If you have configured a database prefix and would like to prepend it to
 a table name for use in a native SQL query for example, then you can use
 the following:
 
 .. literalinclude:: queries/004.php
 
+$db->setPrefix()
+================
+
 If for any reason you would like to change the prefix programmatically
 without needing to create a new connection you can use this method:
 
 .. literalinclude:: queries/005.php
 
+$db->getPrefix()
+================
+
 You can get the current prefix any time with this method:
 
 .. literalinclude:: queries/006.php
 
+
 **********************
 Protecting Identifiers
 **********************
+
+$db->protectIdentifiers()
+=========================
 
 In many databases, it is advisable to protect table and field names - for
 example with backticks in MySQL. **Query Builder queries are
@@ -92,6 +105,7 @@ have a prefix specified in your database config file. To enable the
 prefixing set ``true`` (boolean) via the second parameter:
 
 .. literalinclude:: queries/008.php
+
 
 ***************
 Escaping Values
@@ -184,6 +198,7 @@ example:
 
 .. literalinclude:: queries/015.php
 
+
 ****************
 Prepared Queries
 ****************
@@ -257,8 +272,10 @@ hasError()
 
 Returns boolean true/false if the last ``execute()`` call created any errors.
 
-getErrorCode() getErrorMessage()
---------------------------------
+getErrorCode()
+--------------
+getErrorMessage()
+-----------------
 
 If any errors were encountered these methods can be used to retrieve the error code and string.
 
@@ -271,8 +288,8 @@ Internally, all queries are processed and stored as instances of
 the parameters, otherwise preparing the query, and storing performance
 data about its query.
 
-getLastQuery()
-==============
+$db->getLastQuery()
+===================
 
 When you just need to retrieve the last Query object, use the
 ``getLastQuery()`` method:
