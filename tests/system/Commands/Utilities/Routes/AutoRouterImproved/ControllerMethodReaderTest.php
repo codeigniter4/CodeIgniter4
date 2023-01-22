@@ -43,9 +43,11 @@ final class ControllerMethodReaderTest extends CIUnitTestCase
             0 => [
                 'method'       => 'get',
                 'route'        => 'newautorouting',
-                'route_params' => '',
+                'route_params' => '[/..]',
                 'handler'      => '\Tests\Support\Controllers\Newautorouting::getIndex',
-                'params'       => [],
+                'params'       => [
+                    'm' => false,
+                ],
             ],
             [
                 'method'       => 'post',
