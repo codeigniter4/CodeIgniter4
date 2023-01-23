@@ -26,6 +26,7 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use CodeIgniter\Database\RawSql;
 use stdClass;
 
 /**
@@ -1001,7 +1002,7 @@ abstract class BaseModel
                 }
 
                 if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $row)) {
-                    $row[$this->updatedField] = $this->setDate();
+                    $this->updateFields(['updated_at' => new RawSql($this->db->escape($this->setDate()))], true);
                 }
             }
         }
