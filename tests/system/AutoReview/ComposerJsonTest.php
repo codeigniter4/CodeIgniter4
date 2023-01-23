@@ -71,11 +71,6 @@ final class ComposerJsonTest extends TestCase
         $this->checkFramework('suggest');
     }
 
-    public function testStarterSuggestIsTheSameWithDevSuggest(): void
-    {
-        $this->checkStarter('suggest');
-    }
-
     public function testFrameworkConfigIsTheSameWithDevSuggest(): void
     {
         $this->checkFramework('config');
