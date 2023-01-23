@@ -81,11 +81,7 @@ final class ComposerJsonTest extends TestCase
 
     public function testStarterSuggestIsTheSameWithDevSuggest(): void
     {
-        $this->assertSame(
-            $this->devComposer['suggest'],
-            $this->starterComposer['suggest'],
-            'The starter\'s "suggest" section is not updated with the main composer.json.'
-        );
+        $this->checkStarter('suggest');
     }
 
     public function testFrameworkConfigIsTheSameWithDevSuggest(): void
@@ -99,10 +95,15 @@ final class ComposerJsonTest extends TestCase
 
     public function testStarterConfigIsTheSameWithDevSuggest(): void
     {
+        $this->checkStarter('config');
+    }
+
+    private function checkStarter(string $section): void
+    {
         $this->assertSame(
-            $this->devComposer['config'],
-            $this->starterComposer['config'],
-            'The starter\'s "config" section is not updated with the main composer.json.'
+            $this->devComposer[$section],
+            $this->starterComposer[$section],
+            'The starter\'s "' . $section . '" section is not updated with the main composer.json.'
         );
     }
 
