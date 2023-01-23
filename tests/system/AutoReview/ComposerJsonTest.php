@@ -40,11 +40,7 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkRequireIsTheSameWithDevRequire(): void
     {
-        $this->assertSame(
-            $this->devComposer['require'],
-            $this->frameworkComposer['require'],
-            'The framework\'s "require" section is not updated with the main composer.json.'
-        );
+        $this->checkFramework('require');
     }
 
     public function testFrameworkRequireDevIsTheSameWithDevRequireDev(): void
@@ -72,11 +68,7 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkSuggestIsTheSameWithDevSuggest(): void
     {
-        $this->assertSame(
-            $this->devComposer['suggest'],
-            $this->frameworkComposer['suggest'],
-            'The framework\'s "suggest" section is not updated with the main composer.json.'
-        );
+        $this->checkFramework('suggest');
     }
 
     public function testStarterSuggestIsTheSameWithDevSuggest(): void
@@ -86,16 +78,21 @@ final class ComposerJsonTest extends TestCase
 
     public function testFrameworkConfigIsTheSameWithDevSuggest(): void
     {
-        $this->assertSame(
-            $this->devComposer['config'],
-            $this->frameworkComposer['config'],
-            'The framework\'s "config" section is not updated with the main composer.json.'
-        );
+        $this->checkFramework('config');
     }
 
     public function testStarterConfigIsTheSameWithDevSuggest(): void
     {
         $this->checkStarter('config');
+    }
+
+    private function checkFramework(string $section): void
+    {
+        $this->assertSame(
+            $this->devComposer[$section],
+            $this->frameworkComposer[$section],
+            'The framework\'s "' . $section . '" section is not updated with the main composer.json.'
+        );
     }
 
     private function checkStarter(string $section): void
