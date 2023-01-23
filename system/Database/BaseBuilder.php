@@ -2037,7 +2037,12 @@ class BaseBuilder
 
                 if ($ignore === null || ! in_array($key, $ignore, true)) {
                     if ($addToDefault) {
-                        $this->QBOptions['updateFieldsAdditional'][$this->db->protectIdentifiers($key)] = $value;
+                        // if fields are already defined add to updateFields
+                        if ($this->QBOptions['updateFields'] ?? [] !== []) {
+                            $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
+                        } else { // else store seperately for later when fields are defined
+                            $this->QBOptions['updateFieldsAdditional'][$this->db->protectIdentifiers($key)] = $value;
+                        }
                     } else {
                         $this->QBOptions['updateFields'][$this->db->protectIdentifiers($key)] = $value;
                     }
