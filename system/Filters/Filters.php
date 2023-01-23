@@ -335,12 +335,8 @@ class Filters
     public function enableFilter(string $name, string $when = 'before')
     {
         // Get arguments and clean name
-        [$name, $arguments] = $this->getCleanName($name);
-        if ($arguments !== []) {
-            $this->arguments[$name] = $arguments;
-        } else {
-            $this->arguments[$name] = null;
-        }
+        [$name, $arguments]     = $this->getCleanName($name);
+        $this->arguments[$name] = ($arguments !== []) ? $arguments : null;
 
         if (class_exists($name)) {
             $this->config->aliases[$name] = $name;
