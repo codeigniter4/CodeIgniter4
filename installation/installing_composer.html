@@ -307,6 +307,11 @@
 <p class="admonition-title">Important</p>
 <p>CodeIgniter4 requires Composer 2.0.14 or later.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are not familiar with Composer, we recommend you read
+<a class="reference external" href="https://getcomposer.org/doc/01-basic-usage.md">Basic usage</a> first.</p>
+</div>
 <p>The first technique describes creating a skeleton project
 using CodeIgniter4, that you would then use as the base for a new webapp.
 The second technique described below lets you add CodeIgniter4 to an existing
@@ -314,7 +319,7 @@ webapp,</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are using a Git repository to store your code, or for
-collaboration with others, then the <code class="docutils literal notranslate"><span class="pre">vendor</span></code> folder would normally
+collaboration with others, then the <strong>vendor</strong> folder would normally
 be “git ignored”. In such a case, you will need to do a <code class="docutils literal notranslate"><span class="pre">composer</span> <span class="pre">update</span></code>
 when you clone the repository to a new system.</p>
 </div>
@@ -331,7 +336,7 @@ a new CodeIgniter4 based project.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="nx">project</span><span class="o">-</span><span class="nx">root</span>
 </pre></div>
 </div>
-<p>The command above will create a “project-root” folder.</p>
+<p>The command above will create a <strong>project-root</strong> folder.</p>
 <p>If you omit the “project-root” argument, the command will create an
 “appstarter” folder, which can be renamed as appropriate.</p>
 <div class="admonition note">
@@ -340,13 +345,16 @@ a new CodeIgniter4 based project.</p>
 The symbols that can be used are <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">:</span></code>, <code class="docutils literal notranslate"><span class="pre">\</span></code> and space.
 So if you install CodeIgniter under the folder that contains the special characters like <code class="docutils literal notranslate"><span class="pre">(</span></code>, <code class="docutils literal notranslate"><span class="pre">)</span></code>, etc., CodeIgniter won’t work.</p>
 </div>
-<p>If you don’t need or want phpunit installed, and all of its composer
-dependencies, then add the <code class="docutils literal notranslate"><span class="pre">--no-dev</span></code> option to the end of the above
-command line. That will result in only the framework, and the three
-trusted dependencies that we bundle, being composer-installed.</p>
-<p>A sample such installation command, using the default project-root “appstarter”:</p>
-<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">create</span><span class="o">-</span><span class="nx">project</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">appstarter</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When you deploy to your production server, don’t forget to run the
+following command:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
 </pre></div>
+</div>
+<p>The above command will removes the Composer packages only for development
+that are not needed in the production environment. This will greatly reduce
+the vendor folder size.</p>
 </div>
 </section>
 <section id="initial-configuration">
@@ -414,13 +422,24 @@ will be your document root.</p>
 <div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="k">require</span> <span class="nx">codeigniter4</span><span class="o">/</span><span class="nx">framework</span>
 </pre></div>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When you deploy to your production server, don’t forget to run the
+following command:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="nx">composer</span> <span class="nx">install</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">dev</span>
+</pre></div>
+</div>
+<p>The above command will removes the Composer packages only for development
+that are not needed in the production environment. This will greatly reduce
+the vendor folder size.</p>
+</div>
 </section>
 <section id="setting-up">
 <h3><a class="toc-backref" href="#id17">Setting Up</a><a class="headerlink" href="#setting-up" title="Permalink to this headline"></a></h3>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">app</span></code>, <code class="docutils literal notranslate"><span class="pre">public</span></code>, <code class="docutils literal notranslate"><span class="pre">tests</span></code> and <code class="docutils literal notranslate"><span class="pre">writable</span></code> folders from <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework</span></code> to your project root</p></li>
-<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">env</span></code>, <code class="docutils literal notranslate"><span class="pre">phpunit.xml.dist</span></code> and <code class="docutils literal notranslate"><span class="pre">spark</span></code> files, from <code class="docutils literal notranslate"><span class="pre">vendor/codeigniter4/framework</span></code> to your project root</p></li>
+<li><p>Copy the <strong>app</strong>, <strong>public</strong>, <strong>tests</strong> and <strong>writable</strong> folders from <strong>vendor/codeigniter4/framework</strong> to your project root</p></li>
+<li><p>Copy the <strong>env</strong>, <strong>phpunit.xml.dist</strong> and <strong>spark</strong> files, from <strong>vendor/codeigniter4/framework</strong> to your project root</p></li>
 <li><p>You will have to adjust the <code class="docutils literal notranslate"><span class="pre">$systemDirectory</span></code> property in <strong>app/Config/Paths.php</strong> to refer to the vendor one, e.g., <code class="docutils literal notranslate"><span class="pre">ROOTPATH</span> <span class="pre">.</span> <span class="pre">'/vendor/codeigniter4/framework/system'</span></code>.</p></li>
 </ol>
 </div></blockquote>
@@ -480,7 +499,7 @@ they can be added to your project in a similar fashion.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2019-2023 CodeIgniter Foundation.
-      <span class="lastupdated">Last updated on Jan 22, 2023.
+      <span class="lastupdated">Last updated on Jan 23, 2023.
       </span></p>
   </div>
 
