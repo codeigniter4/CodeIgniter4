@@ -14,7 +14,29 @@
         "phpunit/phpunit": "^9.1"
     },
     "suggest": {
-        "ext-fileinfo": "Improves mime type detection for files"
+        "ext-curl": "If you use CURLRequest class",
+        "ext-imagick": "If you use Image class ImageMagickHandler",
+        "ext-gd": "If you use Image class GDHandler",
+        "ext-exif": "If you run Image class tests",
+        "ext-simplexml": "If you format XML",
+        "ext-mysqli": "If you use MySQL",
+        "ext-oci8": "If you use Oracle Database",
+        "ext-pgsql": "If you use PostgreSQL",
+        "ext-sqlsrv": "If you use SQL Server",
+        "ext-sqlite3": "If you use SQLite3",
+        "ext-memcache": "If you use Cache class MemcachedHandler with Memcache",
+        "ext-memcached": "If you use Cache class MemcachedHandler with Memcached",
+        "ext-redis": "If you use Cache class RedisHandler",
+        "ext-dom": "If you use TestResponse",
+        "ext-libxml": "If you use TestResponse",
+        "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()",
+        "ext-fileinfo": "Improves mime type detection for files",
+        "ext-readline": "Improves CLI::input() usability"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     },
     "autoload": {
         "exclude-from-classmap": [
