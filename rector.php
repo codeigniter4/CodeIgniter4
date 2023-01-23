@@ -74,7 +74,6 @@ return static function (RectorConfig $rectorConfig): void {
 
     // is there a file you need to skip?
     $rectorConfig->skip([
-        __DIR__ . '/app/Views',
         __DIR__ . '/system/Debug/Toolbar/Views/toolbar.tpl.php',
         __DIR__ . '/system/ThirdParty',
         __DIR__ . '/tests/system/Config/fixtures',
