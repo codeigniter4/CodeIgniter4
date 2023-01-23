@@ -83,7 +83,7 @@ Cons
 ----
 
 You still need to check for file changes in the **project space**
-(root, app, public, writable) after updating.
+(root, app, public, writable) and merge them after updating.
 
 .. note:: There are some third-party CodeIgniter modules available to assist
     with merging changes to the project space:
