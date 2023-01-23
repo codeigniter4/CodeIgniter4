@@ -49,7 +49,8 @@ Download and run.
 Cons
 ====
 
-You are responsible for merge conflicts when updating.
+You need to check for file changes in the **project space**
+(root, app, public, tests, writable) and merge them by yourself.
 
 Structure
 =========
