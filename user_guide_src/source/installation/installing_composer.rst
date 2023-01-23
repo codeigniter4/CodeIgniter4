@@ -85,6 +85,10 @@ Cons
 You still need to check for file changes in the **project space**
 (root, app, public, writable) after updating.
 
+.. note:: There are some third-party CodeIgniter modules available to assist
+    with merging changes to the project space:
+    `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
+
 Structure
 ---------
 
@@ -177,6 +181,10 @@ Cons
 
 You still need to check for file changes in the **project space**
 (root, app, public, writable) after updating.
+
+.. note:: There are some third-party CodeIgniter modules available to assist
+    with merging changes to the project space:
+    `Explore on Packagist <https://packagist.org/explore/?query=codeigniter4%20updates>`_.
 
 Structure
 ---------
