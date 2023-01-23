@@ -6,10 +6,12 @@ Controller Filters
     :local:
     :depth: 2
 
-Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`events </extending/events>`,
-you can choose the specific URIs in which the filters will be applied to. Incoming filters may
+Controller Filters allow you to perform actions either before or after the controllers execute. Unlike :doc:`/extending/events`,
+you can choose the specific URIs or routes in which the filters will be applied to. Before filters may
 modify the Request while after filters can act on and even modify the Response, allowing for a lot of flexibility
-and power. Some common examples of tasks that might be performed with filters are:
+and power.
+
+Some common examples of tasks that might be performed with filters are:
 
 * Performing CSRF protection on the incoming requests
 * Restricting areas of your site based upon their Role
@@ -64,10 +66,12 @@ the final output, or even to filter the final output with a bad words filter.
 Configuring Filters
 *******************
 
-Once you've created your filters, you need to configure when they get run. This is done in **app/Config/Filters.php**.
-This file contains four properties that allow you to configure exactly when the filters run.
+Once you've created your filters, you need to configure when they get run. This is done in **app/Config/Filters.php** or **app/Config/Routes.php**.
 
 .. Note:: The safest way to apply filters is to :ref:`disable auto-routing <use-defined-routes-only>`, and :ref:`set filters to routes <applying-filters>`.
+
+The **app/Config/Filters.php** file contains four properties that allow you to
+configure exactly when the filters run.
 
 .. Warning:: It is recommended that you should always add ``*`` at the end of a URI in the filter settings.
     Because a controller method might be accessible by different URLs than you think.
