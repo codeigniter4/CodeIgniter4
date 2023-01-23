@@ -27,6 +27,7 @@ final class ComposerJsonTest extends TestCase
 {
     private array $devComposer;
     private array $frameworkComposer;
+    private array $starterComposer;
 
     protected function setUp(): void
     {
@@ -34,6 +35,7 @@ final class ComposerJsonTest extends TestCase
 
         $this->devComposer       = $this->getComposerJson(dirname(__DIR__, 3) . '/composer.json');
         $this->frameworkComposer = $this->getComposerJson(dirname(__DIR__, 3) . '/admin/framework/composer.json');
+        $this->starterComposer   = $this->getComposerJson(dirname(__DIR__, 3) . '/admin/starter/composer.json');
     }
 
     public function testFrameworkRequireIsTheSameWithDevRequire(): void
@@ -74,6 +76,33 @@ final class ComposerJsonTest extends TestCase
             $this->devComposer['suggest'],
             $this->frameworkComposer['suggest'],
             'The framework\'s "suggest" section is not updated with the main composer.json.'
+        );
+    }
+
+    public function testStarterSuggestIsTheSameWithDevSuggest(): void
+    {
+        $this->assertSame(
+            $this->devComposer['suggest'],
+            $this->starterComposer['suggest'],
+            'The starter\'s "suggest" section is not updated with the main composer.json.'
+        );
+    }
+
+    public function testFrameworkConfigIsTheSameWithDevSuggest(): void
+    {
+        $this->assertSame(
+            $this->devComposer['config'],
+            $this->frameworkComposer['config'],
+            'The framework\'s "config" section is not updated with the main composer.json.'
+        );
+    }
+
+    public function testStarterConfigIsTheSameWithDevSuggest(): void
+    {
+        $this->assertSame(
+            $this->devComposer['config'],
+            $this->starterComposer['config'],
+            'The starter\'s "config" section is not updated with the main composer.json.'
         );
     }
 
