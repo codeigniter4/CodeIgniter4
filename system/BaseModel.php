@@ -1000,10 +1000,10 @@ abstract class BaseModel
                 if ($updateIndex !== null) {
                     $row[$index] = $updateIndex;
                 }
+            }
 
-                if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, $row)) {
-                    $this->updateFields(['updated_at' => new RawSql($this->db->escape($this->setDate()))], true);
-                }
+            if ($this->useTimestamps && $this->updatedField && ! array_key_exists($this->updatedField, current($set))) {
+                $this->updateFields([$this->updatedField => new RawSql($this->db->escape($this->setDate()))], true);
             }
         }
 
