@@ -55,7 +55,7 @@ If you omit the "project-root" argument, the command will create an
 
     The above command will removes the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
-    the folder size.
+    the vendor folder size.
 
 Initial Configuration
 ---------------------
@@ -141,7 +141,7 @@ In your project root::
 
     The above command will removes the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
-    the folder size.
+    the vendor folder size.
 
 Setting Up
 ----------
