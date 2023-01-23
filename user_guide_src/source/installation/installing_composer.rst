@@ -53,7 +53,7 @@ If you omit the "project-root" argument, the command will create an
 
     > composer install --no-dev
 
-    The above command will removes the Composer packages only for development
+    The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
@@ -139,7 +139,7 @@ In your project root::
 
     > composer install --no-dev
 
-    The above command will removes the Composer packages only for development
+    The above command will remove the Composer packages only for development
     that are not needed in the production environment. This will greatly reduce
     the vendor folder size.
 
